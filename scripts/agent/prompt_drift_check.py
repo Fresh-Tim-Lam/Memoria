@@ -34,15 +34,18 @@
      - 声明依赖的最近变更时间（git 提交时间优先，无 git 用 mtime）比 reviewed-on 新
        超过 N 天 ⇒ WARN（C4 指纹没变时才会走到这里）。
 
-退出码：0 = 无 FAIL（可含 WARN/INFO）；1 = 有 FAIL；2 = 用法错误。
+退出码（task-158/PD-1 起）：
+  0 = 全部检查已执行且无 FAIL（可含 WARN/INFO）；
+  1 = 有 FAIL（提示词漂移）；
+  2 = **有检查未能执行**（NOT_RUN：输入不可读/依赖缺失/检查自身异常）——「跳过 ≠ 通过」；
+  3 = 用法错误。
+`--json` 的 `summary.status ∈ {ok, fail, not_run}` 与退出码一一对应；team_audit 对 not_run 判 FAIL。
+
 自测：`python scripts/agent/prompt_drift_check.py --selftest`
       —— 每条检查都有一份必红 fixture；fixture 不红 ⇒ selftest 自己红。
 
-接入（见 artifacts/agent/verify/todo/prompt-drift-audit.md 第 5 节）：
-  - 建议挂 `scripts/agent/team_audit.py`（每轮团队自检跑）；改动只需一行
-    `subprocess.run([sys.executable, "scripts/agent/prompt_drift_check.py"], ...)`；
-    因 task-151 写域不含 team_audit.py，本文件**不自行改** team_audit。
-  - 发版前也可直接跑（无网络、无第三方依赖、~1s）。
+接入（已落地）：`scripts/agent/team_audit.py::check_prompt_drift` 以子进程消费 `--json`；
+脚本缺失/崩溃/超时/无输出/输出不可解析/NOT_RUN 一律在 team_audit 报 FAIL（静默跳过 = 门禁失效）。
 
 维护（提示词 owner 改完提示词后）：
   1. 更新内容；
@@ -95,9 +98,15 @@ RENDER_CORE_REL = "src/memoria/ui/static/app/js/surface/render-core.js"
 PACKAGING_REL = "packaging/build.py"
 
 FAIL = "FAIL"
+NOT_RUN = "NOT_RUN"  # 检查无法执行（输入不可读/依赖缺失/自身异常）——「跳过 ≠ 通过」
 WARN = "WARN"
 INFO = "INFO"
-_SEV_ORDER = {FAIL: 0, WARN: 1, INFO: 2}
+_SEV_ORDER = {FAIL: 0, NOT_RUN: 1, WARN: 2, INFO: 3}
+
+EXIT_OK = 0
+EXIT_FAIL = 1
+EXIT_NOT_RUN = 2
+EXIT_USAGE = 3
 
 STALE_DAYS_DEFAULT = 90
 
@@ -122,6 +131,13 @@ APP_OWNED_AGENT_NAMES = frozenset(
 # 判定依据见 audit 报告 §3：ui.get_agent_prompt 读 `organize.{lang}.md`。
 APP_INTERNAL_ASSETS = {
     "organize.zh-CN.md": "ui.py::get_agent_prompt（程序内整理提示词弹窗，单一事实源）",
+}
+
+# 隐藏分发路径探测的"已人工核验"清单（仍然扫描；命中只记 INFO 并写明理由，不静默跳过）。
+# PD-3 的要求是"不再无条件跳过危险位置"，不是"把它们变成永远免检"——核验理由必须可读。
+HIDDEN_SCAN_REVIEWED = {
+    "packaging/build.py": "打包态整目录随包（不是 KB 分发路径；KB 分发仍由 FILE_MAP 白名单决定）",
+    "scripts/agent/prompt_drift_check.py": "本检查脚本自身（自引用误报）",
 }
 
 
@@ -158,12 +174,23 @@ class Ctx:
     repo: Path
     kb_agent: dict = field(default_factory=dict)
     findings: list = field(default_factory=list)
+    not_run_checks: list = field(default_factory=list)
     _src_text: str | None = None
     _edge_types: dict | None = None
 
     # ── 基础 ────────────────────────────────────────────────────────────
     def add(self, check: str, severity: str, message: str, evidence: str = "") -> None:
         self.findings.append(Finding(check, severity, message, evidence))
+
+    def not_run(self, check: str, message: str, evidence: str = "") -> None:
+        """登记一次「检查无法执行」。
+
+        PD-1（task-158）：**跳过 ≠ 通过**。任何因输入不可读/依赖缺失/自身异常而没跑的
+        检查，必须产出 NOT_RUN finding（而不是 WARN/静默），最终 exit 非 0。
+        """
+        self.findings.append(Finding(check, NOT_RUN, message, evidence))
+        if check not in self.not_run_checks:
+            self.not_run_checks.append(check)
 
     def read(self, rel: str) -> str | None:
         try:
@@ -397,7 +424,7 @@ def check_distribution(ctx: Ctx) -> None:
             break
     readme_rel = "resources/agent-prompts/<README 源>"
     if readme is None:
-        ctx.add(check, WARN, "未找到分发到 README.md 的源文件，无法核对目录声明", readme_rel)
+        ctx.not_run(check, "未找到分发到 README.md 的源文件，目录声明无法核对（跳过≠通过）", readme_rel)
     else:
         claimed = set(re.findall(r"^\|\s*`([^`]+)`\s*\|", readme, re.M))
         dst_set = set(dst_names)
@@ -436,9 +463,16 @@ def check_distribution(ctx: Ctx) -> None:
                 f"resources/agent-prompts/{src_name}",
             )
 
-    # 孤儿资源：目录里有、但既不分发也不在"内部资源"白名单 ⇒ 需要人工归类
+    # 孤儿资源（PD-4：**递归**，不再只看顶层）：目录里有、但既不分发也不在"内部资源"白名单
     if src_dir.is_dir():
-        on_disk = {p.name for p in src_dir.iterdir() if p.is_file()}
+        on_disk = {
+            str(p.relative_to(src_dir)).replace("\\", "/")
+            for p in src_dir.rglob("*")
+            if p.is_file()
+            and "__pycache__" not in p.parts
+            and p.suffix != ".pyc"
+            and not any(part.startswith(".") for part in p.relative_to(src_dir).parts)
+        }
         for name in sorted(on_disk - set(src_names) - set(APP_INTERNAL_ASSETS)):
             ctx.add(
                 check,
@@ -447,35 +481,55 @@ def check_distribution(ctx: Ctx) -> None:
                 "（可能是隐藏分发路径或死文件，须人工归类）",
                 str(src_dir / name),
             )
-        for name, why in APP_INTERNAL_ASSETS.items():
-            if name in on_disk and why.split("::")[0] not in (ctx.read("src/memoria/presentation/api/ui.py") or ""):
-                ctx.add(check, WARN, f"内部资源 {name} 的引用证据失效（{why} 未在代码中找到）", str(src_dir / name))
+        ui_text = ctx.read("src/memoria/presentation/api/ui.py")
+        if ui_text is None:
+            ctx.not_run(check, "无法读取 ui.py，内部资源引用证据无法核对（跳过≠通过）",
+                        "src/memoria/presentation/api/ui.py")
+        else:
+            for name, why in APP_INTERNAL_ASSETS.items():
+                if name in on_disk and why.split("::")[0] not in ui_text:
+                    ctx.add(check, WARN, f"内部资源 {name} 的引用证据失效（{why} 未在代码中找到）", str(src_dir / name))
 
-    # 隐藏分发路径探测：除 FILE_MAP 外还有没有按目录 scan 复制 agent-prompts 的代码
-    for rel in ("src/memoria", "packaging"):
+    # 隐藏分发路径探测（PD-3：不再跳过 kb_agent/ui.py/build.py —— 恰是最可能藏目录扫描的位置）
+    for rel in ("src/memoria", "packaging", "scripts"):
         base = ctx.repo / rel
         if not base.is_dir():
             continue
-        for path in base.rglob("*.py"):
+        for path in base.rglob("*"):
+            if not path.is_file() or path.suffix.lower() not in (".py", ".js", ".mjs"):
+                continue
+            rel_path = str(path.relative_to(ctx.repo)).replace("\\", "/")
+            if "/vendor/" in rel_path or "/node_modules/" in rel_path or "__pycache__" in rel_path:
+                continue
             try:
                 text = path.read_text(encoding="utf-8", errors="ignore")
-            except OSError:
+            except OSError as exc:
+                ctx.not_run(check, f"隐藏分发路径探测无法读取文件：{rel_path}（{exc}）", rel_path)
                 continue
-            if "agent-prompts" not in text or "kb_agent" in str(path) or "ui.py" in str(path) or "build.py" in str(path):
+            if "agent-prompts" not in text:
                 continue
-            if re.search(r"iterdir\(|glob\(|rglob\(", text):
-                ctx.add(
-                    check,
-                    WARN,
-                    f"疑似按目录扫描分发 agent-prompts 的代码：{path.relative_to(ctx.repo)}"
-                    "（若真存在，本检查的覆盖口径需改为目录全量）",
-                    str(path),
-                )
+            if re.search(r"iterdir\(|rglob\(|glob\(", text):
+                if rel_path in HIDDEN_SCAN_REVIEWED:
+                    ctx.add(
+                        check,
+                        INFO,
+                        f"隐藏分发路径探测命中已核验文件（非 KB 分发路径）：{rel_path}"
+                        f"（理由：{HIDDEN_SCAN_REVIEWED[rel_path]}）",
+                        rel_path,
+                    )
+                else:
+                    ctx.add(
+                        check,
+                        WARN,
+                        f"疑似按目录扫描分发 agent-prompts 的代码：{rel_path}"
+                        "（若真存在，本检查的覆盖口径需改为目录全量）",
+                        rel_path,
+                    )
 
     # 打包白名单：发布态缺一个源文件 ⇒ install_kb_agent 直接报"内置资源缺失"
-    packaging = ctx.read(PACKAGING_REL) or ""
-    if not packaging:
-        ctx.add(check, WARN, f"未找到 {PACKAGING_REL}，无法核对随包白名单", PACKAGING_REL)
+    packaging = ctx.read(PACKAGING_REL)
+    if packaging is None:
+        ctx.not_run(check, f"未找到 {PACKAGING_REL}，随包白名单无法核对（跳过≠通过）", PACKAGING_REL)
     else:
         for src_name in src_names:
             if f"agent-prompts/{src_name}" not in packaging:
@@ -562,6 +616,7 @@ def check_symbols(ctx: Ctx) -> None:
     for rel in prompt_rels:
         text = ctx.read(rel)
         if text is None:
+            ctx.not_run(check, f"无法读取提示词文档：{rel}（跳过≠通过）", rel)
             continue
         unclassified: list[str] = []
         for span in sorted(set(CODE_SPAN.findall(text))):
@@ -632,12 +687,22 @@ def check_symbols(ctx: Ctx) -> None:
                     continue
                 ctx.add(check, FAIL, f"提示词提到的文件名在代码/分发清单中不存在：{token}", rel)
                 continue
-            # 点分字段路径（range.end.snippet / links.edge_type）：逐段校验 snake 段
+            # 点分字段路径（range.end.snippet / links.edge_type）：**每一段**都校验（PD-2）
+            # 旧实现只校验 snake_case 段 ⇒ `range.fakeCamelField` 隐形放行。
             if "." in token and "/" not in token and not token.endswith((".md", ".json", ".py", ".yaml")):
                 segs = [seg for seg in token.split(".") if seg]
-                bad = [seg for seg in segs if SNAKE.match(seg) and seg not in code]
+                bad = [
+                    seg
+                    for seg in segs
+                    if seg not in code and seg not in edge["edge_types"] and seg not in img_attrs
+                ]
                 if bad:
-                    ctx.add(check, FAIL, f"点分字段里有代码中不存在的符号：{'.'.join(bad)}（原文 {token}）", rel)
+                    ctx.add(
+                        check,
+                        FAIL,
+                        f"点分字段里有代码中不存在的符号：{'.'.join(bad)}（原文 {token}）",
+                        rel,
+                    )
                 continue
             # snake_case 标识符 / RPC 名 / 字段名
             if SNAKE.match(token):
@@ -673,10 +738,14 @@ def check_symbols(ctx: Ctx) -> None:
             )
 
     # fsrs.py 命令行块：子命令与 flag 必须与 argparse 一致
-    fsrs_text = ctx.read(FSRS_REL) or ""
+    fsrs_text = ctx.read(FSRS_REL)
+    if fsrs_text is None:
+        ctx.not_run(check, f"无法读取 {FSRS_REL}，fsrs 子命令/参数校验无法执行（跳过≠通过）", FSRS_REL)
+        fsrs_text = ""
     for rel in prompt_rels:
         text = ctx.read(rel)
         if text is None:
+            ctx.not_run(check, f"无法读取提示词文档：{rel}（跳过≠通过）", rel)
             continue
         for match in re.finditer(r"fsrs\.py\s+([a-z][a-z0-9-]*)", text):
             sub = match.group(1)
@@ -691,14 +760,21 @@ def check_symbols(ctx: Ctx) -> None:
 
     # 规范章节号引用：prompt 里的 `§N.M` 必须在 kb-spec 中真实存在（防重编号漂移）
     spec_text = ""
+    spec_rel = ""
     for src_name, dst in info.get("FILE_MAP") or ():
         if str(dst) == "kb-spec.zh-CN.md":
-            spec_text = ctx.read(f"resources/agent-prompts/{src_name}") or ""
+            spec_rel = f"resources/agent-prompts/{src_name}"
+            spec_text = ctx.read(spec_rel) or ""
+    if not spec_text:
+        ctx.not_run(check, "无法读取 kb-spec 提示词，章节引用校验无法执行（跳过≠通过）", spec_rel or "resources/agent-prompts/kb-spec.zh-CN.md")
     if spec_text:
         spec_sections = set(re.findall(r"^#{2,3}\s+(\d+(?:\.\d+)?)[.、\s]", spec_text, re.M))
         for rel in prompt_rels:
             text = ctx.read(rel)
-            if text is None or rel.endswith("kb-spec.zh-CN.md"):
+            if text is None:
+                ctx.not_run(check, f"无法读取提示词文档：{rel}（跳过≠通过）", rel)
+                continue
+            if rel.endswith("kb-spec.zh-CN.md"):
                 continue
             for ref in sorted(set(re.findall(r"§(\d+(?:\.\d+)?)", text))):
                 if ref not in spec_sections:
@@ -708,15 +784,56 @@ def check_symbols(ctx: Ctx) -> None:
 # ══════════════════════════════════════════════════════════════════════
 # C3 禁止教"会被代码剥离"的语法
 # ══════════════════════════════════════════════════════════════════════
+# PD-5：豁免词必须"紧邻"该语法 —— 同一位置窗口内，且语法与限定词之间不能夹句读分隔。
+# 旧实现是"同一行任意位置出现限定词 ⇒ 整行豁免"，`[[某#contain]]，不要写错别字` 会因此放行。
+PROXIMITY_CHARS = 24
+_PROXIMITY_BREAKS = ("，", ",", "；", ";", "。", "！", "？", "\n")
+
+
+def _qualifier_near(line: str, syntax_start: int, syntax_end: int) -> bool:
+    """语法附近是否有豁免词（同一窗口 + 中间无句读分隔）。"""
+    for word in LEGACY_QUALIFIERS:
+        cursor = 0
+        while True:
+            pos = line.find(word, cursor)
+            if pos < 0:
+                break
+            cursor = pos + 1
+            if pos >= syntax_end:
+                if pos - syntax_end > PROXIMITY_CHARS:
+                    continue
+                between = line[syntax_end:pos]
+            elif pos + len(word) <= syntax_start:
+                if syntax_start - (pos + len(word)) > PROXIMITY_CHARS:
+                    continue
+                between = line[pos + len(word):syntax_start]
+            else:
+                continue  # 与语法重叠，不算
+            if not any(ch in between for ch in _PROXIMITY_BREAKS):
+                return True
+    return False
+
+
 def check_forbidden_syntax(ctx: Ctx) -> None:
     check = "forbidden_syntax"
     edge = ctx.edge_types()
     aliases = edge["aliases"] | edge["edge_types"]
     if not aliases:
-        ctx.add(check, WARN, "无法从 edge_types.py 读取边类型片段集合，跳过", EDGE_TYPES_REL)
+        ctx.not_run(
+            check,
+            "无法从 edge_types.py 读取边类型片段集合，C3 无法执行（跳过≠通过）",
+            EDGE_TYPES_REL,
+        )
         return
-    build_text = ctx.read(KB_BUILD_REL) or ""
-    link_text = ctx.read(LINK_MD_REL) or ""
+    build_text = ctx.read(KB_BUILD_REL)
+    link_text = ctx.read(LINK_MD_REL)
+    if build_text is None or link_text is None:
+        ctx.not_run(
+            check,
+            "无法读取 kb_build.py / link_md.py，正文剥离行为无法判定（跳过≠通过）",
+            f"{KB_BUILD_REL} / {LINK_MD_REL}",
+        )
+        return
     strip_active = "strip_known_wikilink_edge_hints(" in build_text and "def strip_known_wikilink_edge_hints" in link_text
     if not strip_active:
         ctx.add(
@@ -726,17 +843,17 @@ def check_forbidden_syntax(ctx: Ctx) -> None:
             f"{KB_BUILD_REL} / {LINK_MD_REL}",
         )
 
-    info = ctx.kb_agent
     for rel in prompt_doc_rels(ctx):
         text = ctx.read(rel)
         if text is None:
+            ctx.not_run(check, f"无法读取提示词文档：{rel}（跳过≠通过）", rel)
             continue
         for lineno, line in enumerate(text.splitlines(), 1):
             for match in WIKILINK_TYPE.finditer(line):
                 hint = match.group(1).lower()
                 if hint not in aliases:
                     continue
-                if any(word in line for word in LEGACY_QUALIFIERS):
+                if _qualifier_near(line, match.start(), match.end()):
                     continue
                 if not strip_active:
                     continue
@@ -772,6 +889,7 @@ def check_version_stamps(ctx: Ctx) -> None:
         src_name = rel.rsplit("/", 1)[-1]
         text = ctx.read(rel)
         if text is None:
+            ctx.not_run(check, f"无法读取提示词文档：{rel}（跳过≠通过）", rel)
             continue
         head = "\n".join(text.splitlines()[:14])
         stamp_md = STAMP_MD.search(head)
@@ -836,6 +954,7 @@ def check_staleness(ctx: Ctx, now: date, stale_days: int = STALE_DAYS_DEFAULT) -
     for rel in prompt_doc_rels(ctx):
         text = ctx.read(rel)
         if text is None:
+            ctx.not_run(check, f"无法读取提示词文档：{rel}（跳过≠通过）", rel)
             continue
         head = "\n".join(text.splitlines()[:14])
         match = REVIEWED.search(head)
@@ -877,25 +996,49 @@ def check_staleness(ctx: Ctx, now: date, stale_days: int = STALE_DAYS_DEFAULT) -
 # ══════════════════════════════════════════════════════════════════════
 # 运行 / 输出
 # ══════════════════════════════════════════════════════════════════════
+_CHECK_FUNCS = (
+    ("distribution_integrity", check_distribution),
+    ("symbol_reference", check_symbols),
+    ("forbidden_syntax", check_forbidden_syntax),
+    ("version_stamp", check_version_stamps),
+)
+
+
 def run_checks(ctx: Ctx, now: date | None = None, stale_days: int = STALE_DAYS_DEFAULT) -> list[Finding]:
-    check_distribution(ctx)
-    check_symbols(ctx)
-    check_forbidden_syntax(ctx)
-    check_version_stamps(ctx)
-    check_staleness(ctx, now or date.today(), stale_days)
+    """跑全部检查。**任何检查自身异常都转成 NOT_RUN（不是崩溃、也不是静默跳过）**。"""
+    for name, func in _CHECK_FUNCS:
+        try:
+            func(ctx)
+        except Exception as exc:  # noqa: BLE001 —— PD-1：自身异常=未执行，必须可见
+            ctx.not_run(name, f"检查执行异常（{type(exc).__name__}）：{exc}")
+    try:
+        check_staleness(ctx, now or date.today(), stale_days)
+    except Exception as exc:  # noqa: BLE001
+        ctx.not_run("staleness", f"检查执行异常（{type(exc).__name__}）：{exc}")
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 
 
-def _summary(findings: list[Finding]) -> dict:
-    counts = {FAIL: 0, WARN: 0, INFO: 0}
+def _summary(findings: list[Finding], not_run_checks: list[str] | None = None) -> dict:
+    counts = {FAIL: 0, NOT_RUN: 0, WARN: 0, INFO: 0}
     for finding in findings:
         counts[finding.severity] = counts.get(finding.severity, 0) + 1
-    return {"findings": len(findings), **counts}
+    if counts[FAIL]:
+        status = "fail"
+    elif counts[NOT_RUN]:
+        status = "not_run"
+    else:
+        status = "ok"
+    return {
+        "findings": len(findings),
+        **counts,
+        "status": status,
+        "not_run": sorted(not_run_checks or []),
+    }
 
 
-def _emit(findings: list[Finding], as_json: bool) -> None:
-    summary = _summary(findings)
+def _emit(findings: list[Finding], as_json: bool, not_run_checks: list[str] | None = None) -> None:
+    summary = _summary(findings, not_run_checks)
     if as_json:
         print(
             json.dumps(
@@ -915,9 +1058,19 @@ def _emit(findings: list[Finding], as_json: bool) -> None:
         if finding.evidence:
             print(f"        证据：{finding.evidence}")
     print(
-        f"\n汇总：FAIL={summary[FAIL]} WARN={summary[WARN]} INFO={summary[INFO]} 合计 {summary['findings']} 条"
+        f"\n汇总：FAIL={summary[FAIL]} NOT_RUN={summary[NOT_RUN]} WARN={summary[WARN]} "
+        f"INFO={summary[INFO]} 合计 {summary['findings']} 条"
     )
-    print("结论：提示词与代码一致（无 FAIL）" if summary[FAIL] == 0 else "结论：存在 FAIL，提示词已漂移，须修")
+    if summary["status"] == "fail":
+        print("结论：存在 FAIL，提示词已漂移，须修")
+    elif summary["status"] == "not_run":
+        print(
+            "结论：有检查未能执行（NOT_RUN："
+            + ", ".join(summary["not_run"])
+            + "）—— 跳过 ≠ 通过，不得判绿"
+        )
+    else:
+        print("结论：提示词与代码一致（无 FAIL，且全部检查已执行）")
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -1026,16 +1179,16 @@ def resign(repo: Path, rel: str, dep_paths: list[str], note: str, reviewed_on: s
     valid = set(prompt_doc_rels(ctx))
     if rel not in valid:
         print(f"用法错误：{rel} 不是受管的提示词文档。可选：{', '.join(sorted(valid))}", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     text = ctx.read(rel)
     if text is None:
         print(f"用法错误：读不到 {rel}", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     head = "\n".join(text.splitlines()[:14])
     deps, _raw = ctx.deps_of(head)
     if not deps:
         print(f"用法错误：{rel} 没有 spec-deps 头，无法重签", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     declared = {path for path, _digest in deps}
     current = {path: _sha12(ctx.repo / path) for path in declared if (ctx.repo / path).is_file()}
     changed = {
@@ -1050,7 +1203,7 @@ def resign(repo: Path, rel: str, dep_paths: list[str], note: str, reviewed_on: s
     unknown = requested - declared
     if unknown:
         print(f"用法错误：--dep 里的路径不在 {rel} 的 spec-deps 中：{sorted(unknown)}", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     missing = changed - requested
     if missing:
         print(
@@ -1058,10 +1211,10 @@ def resign(repo: Path, rel: str, dep_paths: list[str], note: str, reviewed_on: s
             + ", ".join(sorted(missing)),
             file=sys.stderr,
         )
-        return 2
+        return EXIT_USAGE
     if len((note or "").strip()) < 10:
         print("拒绝重签：--note 必须写 ≥10 字的复核说明（写清复核了哪些断言）", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     new_digests = dict(current)
     updated = _rewrite_deps_header(text, new_digests)
     reviewed = reviewed_on or date.today().isoformat()
@@ -1069,13 +1222,13 @@ def resign(repo: Path, rel: str, dep_paths: list[str], note: str, reviewed_on: s
         date.fromisoformat(reviewed)
     except ValueError:
         print(f"用法错误：--reviewed-on 不是合法日期：{reviewed}", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     updated = REVIEWED.sub(
         lambda m: m.group(0).replace(m.group(1) or m.group(2), reviewed), updated, count=1
     )
     if not REVIEWED.search("\n".join(updated.splitlines()[:14])):
         print(f"用法错误：{rel} 没有 reviewed-on 头，无法重签", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     # newline="\n"：Windows 默认文本写会把 \n 翻成 \r\n ⇒ 重签一次会把整份提示词的换行全改掉
     (ctx.repo / rel).write_text(updated, encoding="utf-8", newline="\n")
 
@@ -1096,8 +1249,13 @@ def resign(repo: Path, rel: str, dep_paths: list[str], note: str, reviewed_on: s
     print(f"已重签 {len(requested)} 条依赖；复核记录追加到 {RECHECK_LOG_REL}")
     print("重跑检查：\n")
     findings = run_checks(ctx)
-    _emit(findings, as_json=False)
-    return 1 if any(f.severity == FAIL for f in findings) else 0
+    _emit(findings, as_json=False, not_run_checks=ctx.not_run_checks)
+    summary = _summary(findings, ctx.not_run_checks)
+    if summary["status"] == "fail":
+        return EXIT_FAIL
+    if summary["status"] == "not_run":
+        return EXIT_NOT_RUN
+    return EXIT_OK
 
 
 # ══════════════════════════════════════════════════════════════════════
@@ -1219,6 +1377,11 @@ def _fixture_repo(tmp: Path, *, edge_hash: str | None = None, build_hash: str | 
     _write(repo / RENDER_CORE_REL, GREEN_RENDER)
     _write(repo / "src/memoria/services/agent/mcp_server.py", GREEN_MCP)
     _write(repo / "src/memoria/services/agent/tools/kb.py", GREEN_TOOLS_KB)
+    # C1 需要 ui.py 作为"应用内部资源"的引用证据来源（缺失会触发 NOT_RUN，绿基线必须是"全执行"）
+    _write(
+        repo / "src/memoria/presentation/api/ui.py",
+        'def get_agent_prompt(lang="zh-CN"):\n    return "organize.%s.md" % lang\n',
+    )
     packaging = "\n".join(
         [
             '"agent-prompts/kb-agent-readme.md",',
@@ -1253,9 +1416,14 @@ GREEN_BUILD_PATH = KB_BUILD_REL
 GREEN_LINK_MD_PATH = LINK_MD_REL
 
 
-def _findings_for(repo: Path, now: date | None = None, stale_days: int = STALE_DAYS_DEFAULT) -> list[Finding]:
+def _context_for(repo: Path, now: date | None = None, stale_days: int = STALE_DAYS_DEFAULT) -> Ctx:
     ctx = Ctx(repo=repo, kb_agent=load_kb_agent(repo))
-    return run_checks(ctx, now=now, stale_days=stale_days)
+    run_checks(ctx, now=now, stale_days=stale_days)
+    return ctx
+
+
+def _findings_for(repo: Path, now: date | None = None, stale_days: int = STALE_DAYS_DEFAULT) -> list[Finding]:
+    return _context_for(repo, now=now, stale_days=stale_days).findings
 
 
 def selftest() -> int:
@@ -1272,9 +1440,12 @@ def selftest() -> int:
 
     def assert_green(findings: list[Finding], label: str) -> None:
         bad = [f for f in findings if f.severity == FAIL]
-        if bad:
-            failures.append(f"{label}: 绿 fixture 出现 FAIL：{[(f.check, f.message) for f in bad]}")
-            print(f"  FAIL {label}: 绿 fixture 有 FAIL")
+        not_run = [f for f in findings if f.severity == NOT_RUN]
+        if bad or not_run:
+            reason = f"FAIL={[(f.check, f.message) for f in bad]}" if bad else ""
+            reason += f" NOT_RUN={[(f.check, f.message) for f in not_run]}" if not_run else ""
+            failures.append(f"{label}: 绿 fixture 出现 FAIL/NOT_RUN：{reason}")
+            print(f"  FAIL {label}: 绿 fixture 有 FAIL/NOT_RUN")
         else:
             print(f"  PASS {label}")
 
@@ -1285,6 +1456,24 @@ def selftest() -> int:
         else:
             failures.append(f"{label}: {check} 未红（needle={needle!r}）")
             print(f"  FAIL {label}: {check} 未红")
+
+    def expect_warn(findings: list[Finding], check: str, label: str, needle: str = "") -> None:
+        hit = [f for f in findings if f.severity == WARN and f.check == check and needle in f.message]
+        if hit:
+            print(f"  PASS {label}")
+        else:
+            failures.append(f"{label}: {check} 未报 WARN（needle={needle!r}）")
+            print(f"  FAIL {label}: {check} 未报 WARN")
+
+    def expect_not_run(repo: Path, check: str, label: str, needle: str = "") -> None:
+        ctx = _context_for(repo)
+        hit = [f for f in ctx.findings if f.severity == NOT_RUN and f.check == check and needle in f.message]
+        status = _summary(ctx.findings, ctx.not_run_checks)["status"]
+        if hit and status == "not_run":
+            print(f"  PASS {label}")
+        else:
+            failures.append(f"{label}: 未报 NOT_RUN（check={check}, status={status}）")
+            print(f"  FAIL {label}: 未报 NOT_RUN")
 
     tmp = Path(tempfile.mkdtemp(prefix="prompt-drift-selftest-"))
     try:
@@ -1373,7 +1562,7 @@ def selftest() -> int:
             print("  FAIL resign:--recheck-deps 未列出变更依赖")
 
         code = main(["--repo", str(repo), "--resign", rel, "--note", "复核了边剥离断言，确认一致"])
-        if code == 2:
+        if code == EXIT_USAGE:
             print("  PASS resign:拒绝漏列依赖")
         else:
             failures.append(f"resign:漏列依赖未被拒（exit={code}）")
@@ -1382,7 +1571,7 @@ def selftest() -> int:
         code = main(
             ["--repo", str(repo), "--resign", rel, "--dep", GREEN_BUILD_PATH, "--note", "短"]
         )
-        if code == 2:
+        if code == EXIT_USAGE:
             print("  PASS resign:拒绝过短 note")
         else:
             failures.append(f"resign:过短 note 未被拒（exit={code}）")
@@ -1413,6 +1602,93 @@ def selftest() -> int:
         else:
             failures.append("resign:正确重签后未变绿/未写日志/换行被改成 CRLF")
             print("  FAIL resign:正确重签后未变绿或未写日志或换行被改")
+
+        # ── PD-1【高】检查无法执行 ⇒ NOT_RUN（跳过≠通过），且 exit=2 ──
+        repo = _fixture_repo(tmp / "pd1")
+        # 让 edge_types 仍存在（C4 指纹可匹配）但内容解析不出边类型 ⇒ 只有 C3 无法执行
+        edge_file = repo / EDGE_TYPES_REL
+        edge_file.write_text("EDGE_TYPES = frozenset()\n", encoding="utf-8")
+        new_edge_hash = _sha12(edge_file)
+        for fixture_name in ("kb-agent-readme.md", "kb-agent.zh-CN.md", "kb-spec.zh-CN.md"):
+            fixture_path = repo / "resources" / "agent-prompts" / fixture_name
+            fixture_text = fixture_path.read_text(encoding="utf-8")
+            fixture_text = re.sub(
+                r"src/memoria/graph/edge_types\.py@[0-9a-f]+",
+                f"src/memoria/graph/edge_types.py@{new_edge_hash}",
+                fixture_text,
+            )
+            fixture_path.write_text(fixture_text, encoding="utf-8", newline="\n")
+        expect_not_run(repo, "forbidden_syntax", "PD-1 C3 依赖不可读 ⇒ NOT_RUN", "C3 无法执行")
+        code = main(["--repo", str(repo)])
+        if code == EXIT_NOT_RUN:
+            print(f"  PASS PD-1 依赖不可读 ⇒ exit={EXIT_NOT_RUN}（not_run 不得判绿）")
+        else:
+            failures.append(f"PD-1 依赖不可读时 exit 应为 {EXIT_NOT_RUN}，实得 {code}")
+            print("  FAIL PD-1 exit 码错误")
+
+        # ── PD-1b 检查自身异常 ⇒ NOT_RUN（不崩溃、不静默）──
+        repo = _fixture_repo(tmp / "pd1b")
+        original_funcs = globals()["_CHECK_FUNCS"]
+
+        def _probe_boom(_ctx) -> None:
+            raise RuntimeError("probe boom")
+
+        try:
+            globals()["_CHECK_FUNCS"] = (("probe_crash", _probe_boom),)
+            ctx_crash = _context_for(repo)
+        finally:
+            globals()["_CHECK_FUNCS"] = original_funcs
+        crash_status = _summary(ctx_crash.findings, ctx_crash.not_run_checks)["status"]
+        if crash_status == "not_run" and any(
+            f.severity == NOT_RUN and "检查执行异常" in f.message for f in ctx_crash.findings
+        ):
+            print("  PASS PD-1b 检查自身异常 ⇒ NOT_RUN（不崩溃）")
+        else:
+            failures.append("PD-1b 检查自身异常未被登记为 NOT_RUN")
+            print("  FAIL PD-1b 检查自身异常未被登记为 NOT_RUN")
+
+        # ── PD-2 点分字段必须每一段都校验（camelCase 不得隐形）──
+        repo = _fixture_repo(tmp / "pd2")
+        spec = repo / "resources/agent-prompts/kb-spec.zh-CN.md"
+        spec.write_text(
+            spec.read_text(encoding="utf-8") + "\n字段 `range.fakeCamelField`。\n", encoding="utf-8"
+        )
+        expect_red(_findings_for(repo), "symbol_reference", "PD-2 点分 camelCase 隐形", "fakeCamelField")
+
+        # ── PD-3 隐藏分发路径探测不再跳过 ui.py / kb_agent / build.py ──
+        repo = _fixture_repo(tmp / "pd3")
+        _write(
+            repo / "src/memoria/presentation/api/ui.py",
+            'AGENT_DIR = "agent-prompts"\nfor item in AGENT_DIR.iterdir():\n    pass\n',
+        )
+        expect_warn(
+            _findings_for(repo), "distribution_integrity", "PD-3 ui.py 里的目录扫描不再被跳过", "疑似按目录扫描"
+        )
+
+        # ── PD-4 孤儿检测递归（嵌套文件也要报）──
+        repo = _fixture_repo(tmp / "pd4")
+        _write(repo / "resources/agent-prompts/nested/orphan.md", "# orphan\n")
+        expect_warn(
+            _findings_for(repo), "distribution_integrity", "PD-4 嵌套孤儿 WARN", "nested/orphan.md"
+        )
+
+        # ── PD-5 豁免必须紧邻：同行远处的「不要写错别字」不能整行豁免 ──
+        repo = _fixture_repo(tmp / "pd5")
+        spec = repo / "resources/agent-prompts/kb-spec.zh-CN.md"
+        spec.write_text(
+            spec.read_text(encoding="utf-8") + "\n| `[[kp-id#contain]]`，不要写错别字 |\n",
+            encoding="utf-8",
+        )
+        expect_red(_findings_for(repo), "forbidden_syntax", "PD-5 远处限定词不豁免", "#contain")
+
+        # ── 退出码：正常绿 fixture = 0 ──
+        repo = _fixture_repo(tmp / "exit0")
+        code = main(["--repo", str(repo)])
+        if code == EXIT_OK:
+            print(f"  PASS 退出码：绿 fixture ⇒ {EXIT_OK}")
+        else:
+            failures.append(f"绿 fixture exit 应为 {EXIT_OK}，实得 {code}")
+            print("  FAIL 绿 fixture exit 码错误")
 
         # ── 绿：限定词豁免（遗留写法说明不算教）──
         assert_green(_findings_for(base), "green:legacy-note-allowed")
@@ -1454,9 +1730,9 @@ def main(argv: list[str] | None = None) -> int:
         except (OSError, AttributeError):
             pass
     parser = argparse.ArgumentParser(
-        description="Memoria 知识库 Agent 提示词漂移机检（task-151）",
+        description="Memoria 知识库 Agent 提示词漂移机检（task-151；task-158 增 NOT_RUN 语义）",
         epilog=(
-            "退出码：0 无 FAIL / 1 有 FAIL / 2 用法错误。"
+            "退出码：0 全部执行且无 FAIL / 1 有 FAIL / 2 有检查未执行（NOT_RUN） / 3 用法错误。"
             " 依赖指纹变更后的标准动作：先 --recheck-deps 看清单，"
             "再 --resign <文件> --dep <依赖> --note <复核说明> 逐条重签。"
         ),
@@ -1483,7 +1759,7 @@ def main(argv: list[str] | None = None) -> int:
     repo = Path(args.repo).resolve() if args.repo else ROOT
     if not repo.is_dir():
         print(f"用法错误：仓库目录不存在：{repo}", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     if args.print_deps:
         return _print_deps(repo, args.print_deps)
     if args.recheck_deps:
@@ -1494,23 +1770,25 @@ def main(argv: list[str] | None = None) -> int:
         return selftest()
     if not (repo / KB_AGENT_REL).is_file():
         print(f"用法错误：{KB_AGENT_REL} 不存在（--repo 指错了？）", file=sys.stderr)
-        return 2
+        return EXIT_USAGE
     now = date.today()
     if args.now:
         try:
             now = date.fromisoformat(args.now)
         except ValueError:
             print(f"用法错误：--now 不是合法日期：{args.now}", file=sys.stderr)
-            return 2
+            return EXIT_USAGE
     ctx = Ctx(repo=repo, kb_agent=load_kb_agent(repo))
     findings = run_checks(ctx, now=now, stale_days=args.stale_days)
-    _emit(findings, args.json)
-    summary = _summary(findings)
-    if summary[FAIL]:
-        return 1
+    _emit(findings, args.json, ctx.not_run_checks)
+    summary = _summary(findings, ctx.not_run_checks)
+    if summary["status"] == "fail":
+        return EXIT_FAIL
+    if summary["status"] == "not_run":
+        return EXIT_NOT_RUN
     if args.strict and summary[WARN]:
-        return 1
-    return 0
+        return EXIT_FAIL
+    return EXIT_OK
 
 
 if __name__ == "__main__":

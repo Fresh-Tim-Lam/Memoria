@@ -357,6 +357,8 @@ python scripts/agent/prompt_drift_check.py --resign resources/agent-prompts/kb-s
 ```
 
 **拒绝规则（脚本强制，不可绕过）**：
+> task-158 起退出码改为 **0=全执行且无 FAIL / 1=有 FAIL / 2=有检查未执行（NOT_RUN）/ 3=用法错误**；
+> 下文的"exit 2"（用法错误）应读作 **exit 3**。详见 §10.1。
 - `--resign` 的文件不在受管提示词清单 ⇒ exit 2；
 - 无 `spec-deps` 头 / 无 `reviewed-on` 头 ⇒ exit 2；
 - **漏列任一"已变更"依赖** ⇒ exit 2（杜绝"一把全签"）；
@@ -396,4 +398,119 @@ python scripts/agent/prompt_drift_check.py --resign resources/agent-prompts/kb-s
 - `python scripts/agent/prompt_drift_check.py --selftest` = **PASS（含 4 个重签 fixture）**；
 - `python scripts/agent/team_audit.py` = **FAIL=1**（唯一 `steward_self_audit`，见 §9.4；`prompt_drift` 项 0 FAIL）；
   当前 `scripts/agent/team_audit.py` sha12 = `4c697128255f`（与 steward r3 收据 `ee806e3af079` 不同 ⇒ 待 steward 新轮重签）。
+
+---
+
+## 10. task-158：修 5 个静默放行面（PD-1..PD-5）+ freeze `--check`（2026-10-26）
+
+> 来源：steward 守卫强度审计（台账 SF-2026-10-26-037..041，纯读 + monkeypatch 探针）。
+> 核心一句：**"检查没跑"和"检查通过"在门禁里必须不同**。
+
+### 10.0 退出码契约（变更，破坏性但必要）
+
+| 旧（task-151/152） | 新（task-158） | 含义 |
+|---|---|---|
+| 0 | **0** | 全部检查已执行且无 FAIL（可含 WARN/INFO） |
+| 1 | **1** | 有 FAIL（提示词漂移） |
+| 2（用法错误） | **2** | **有检查未能执行（NOT_RUN）** —— 跳过 ≠ 通过 |
+| 2（用法错误沿用） | **3** | 用法错误（含 `--resign` 的所有拒绝路径） |
+
+`--json` 的 `summary` 新增 `NOT_RUN` 计数、`status ∈ {ok, fail, not_run}`、`not_run: [检查名…]`；
+`findings[].severity` 新增 `NOT_RUN`。`team_audit.check_prompt_drift` 对 `not_run` / `exit 2` **判 FAIL**。
+
+### 10.1 PD-1【高】检查无法执行 ⇒ 可见地红（不是 WARN）
+
+**实现**：
+- `Ctx.not_run(check, message, evidence)`：新增 severity `NOT_RUN` + 去重登记 `ctx.not_run_checks`；
+- `run_checks()` 把 5 个检查逐个包 `try/except`：**检查自身抛异常 ⇒ NOT_RUN（不崩溃、不静默）**；
+- 所有"因输入不可读/依赖缺失而跳过"的点改为 NOT_RUN：
+  `C1`（ui.py / packaging / README 不可读、隐藏分发探测读文件失败）、
+  `C2`（提示词文档 / fsrs.py / kb-spec 不可读）、
+  `C3`（edge_types 解析不出边类型；kb_build.py / link_md.py 不可读 → 剥离行为无法判定）、
+  `C4`/`C5`（提示词文档不可读）；
+- `main` 退出码由 `status` 决定（fail→1，not_run→2，ok→0）；`--resign` 重跑后同样按 status 返回；
+- `team_audit.check_prompt_drift`：接受 exit 0/1/2 → 解析 JSON；`summary.status` 必须合法且与 exit 码一致
+  （不一致=FAIL）；`NOT_RUN > 0` ⇒ 追加 FAIL「N 项检查未能执行（NOT_RUN：…）—— 跳过 ≠ 通过」；
+  逐条 `NOT_RUN` finding 也映射为 FAIL「检查未执行：…」；summary.FAIL 与 findings 计数不一致 ⇒ FAIL。
+
+**验收（双向，全部实测，非推论）**：
+
+1) `--selftest`（新增 fixture，`prompt_drift_check.py` 内部）：
+```
+PASS PD-1 C3 依赖不可读 ⇒ NOT_RUN
+PASS PD-1 依赖不可读 ⇒ exit=2（not_run 不得判绿）
+PASS PD-1b 检查自身异常 ⇒ NOT_RUN（不崩溃）
+```
+2) **真实仓库 + 构造 not_run JSON**（临时把脚本替换为 stub，输出 `status=not_run` exit 2，跑完恢复并字节校验）：
+```
+REAL-REPO stub exit=1 crash=False
+[FAIL] prompt_drift: 提示词漂移机检有 1 项检查未能执行（NOT_RUN：forbidden_syntax）—— 跳过 ≠ 通过
+restored_byte_equal=True
+```
+3) **端到端（team_audit 主程序 × 完整 fixture 仓库）**：把真实 `team_audit.py` 指向合成仓库
+（`prompt_drift_check._fixture_repo` + 真实脚本副本；`--repo` 不碰真实 `src/**`）：
+```
+NORMAL          exit=1  prompt_drift findings = 2×INFO，0 FAIL
+C3-UNREADABLE   exit=1  prompt_drift findings =
+   [FAIL] [forbidden_syntax] 检查未执行：无法从 edge_types.py 读取边类型片段集合，C3 无法执行（跳过≠通过）
+   [FAIL] 提示词漂移机检有 1 项检查未能执行（NOT_RUN：forbidden_syntax）—— 跳过 ≠ 通过
+   （汇总 FAIL 8→10；crash=False）
+```
+⇒ "构造 C3 依赖不可读 ⇒ 跑 team_audit.py ⇒ 看到 FAIL（不是绿/不是崩）" 成立。
+
+### 10.2 PD-2..PD-5
+
+| ID | 旧缺陷（steward 探针） | 修法 | selftest |
+|---|---|---|---|
+| PD-2 | 点分字段只校验 snake 段 ⇒ `range.fakeCamelField` 无 finding | 点分路径**每段**都校验（仅 `edge_types`/图片属性白名单豁免） | `PASS PD-2 点分 camelCase 隐形` |
+| PD-3 | 隐藏分发探测**显式跳过**含 `kb_agent/ui.py/build.py` 的文件 | 不再无条件跳过；扫描 `src/memoria`、`packaging`、`scripts` 的 `.py/.js/.mjs`，含 `agent-prompts` 且出现 `iterdir/glob/rglob` ⇒ 复核清单外一律 WARN；**已人工核验**的两处（`packaging/build.py`=打包整目录随包、本检查脚本自身）记 INFO 并带理由（不静默） | `PASS PD-3 ui.py 里的目录扫描不再被跳过` |
+| PD-4 | 孤儿检测只 `iterdir()` 顶层 | 递归 `rglob`（排除 `__pycache__`/`.pyc`/点文件）；嵌套孤儿报相对路径 | `PASS PD-4 嵌套孤儿 WARN` |
+| PD-5 | 同一行任意位置有"不要/禁止"即整行豁免 | `_qualifier_near()`：豁免词必须在语法前/后 **24 字符内**，且**中间不得夹句读分隔**（`，,；;。！？`） | `PASS PD-5 远处限定词不豁免`；绿 fixture `green:base` 的"遗留写法…不要用"仍豁免 |
+
+> PD-5 同时满足任务书两条约束：豁免词必须**同一行**且**紧邻**；跨行警示不会误报（窗口只在本行）。
+> 真实提示词在收紧后仍然 `FAIL=0`（逐条人工复核过 `kb-spec` §4/§8 的"不要用/剥离"写法都紧邻）。
+
+### 10.3 freeze `--check`（只读；`--apply` 待 L12）
+
+新文件 `scripts/agent/freeze_refreeze.py`（独立脚本，不塞进 `team_audit.py`，避免"改实现→自身 sha 变→再重签"自指循环）：
+- **口径共用**：`import team_audit; content_sha256 = team_audit.content_sha256`（与 dq5 同一实现，杜绝"refreeze 说匹配、dq5 说漂移"）；输出里明示 `sha_impl`。
+- `--check`（默认动作）：逐项 `MATCH/DRIFT` + 漂移清单（记录 @… → 当前 @…）+ 按 `role` 分「决策标准（dq5 FAIL）/ tooling（dq5 只 WARN）」+ **打印建议的 `standards_updated` 条目（不写盘）**；exit 0=MATCH / 1=DRIFT / 2=用法·schema 错误。
+- `--apply`：**明确报"待 L12 批准后实现"并 exit 4**（不是静默不做，也不偷偷改冻结物——否则就是 A3 违规的"自动改收据"）。
+- `--selftest`：MATCH→0 / 决策标准漂移→1+建议条目 / tooling 分类 / 损坏 freeze→2 / `--apply`→4，全部 PASS。
+
+**当前真实仓库 `--check` 输出（如实）**：
+```
+MATCH   AGENTS.md  [Lead 派发不变量 L1-L10]
+MATCH   docs/guides/lead-dispatch-rules.md  [派发细则]
+MATCH   docs/guides/agent-team-lessons.md  [教训台账]
+MATCH   docs/guides/agent-team-org.md  [组织与角色章程]
+DRIFT   scripts/agent/team_audit.py  [机检实现]  ← 记录 @d8f6a7d7f9b7… 当前 @beec3c714c84…（tooling：dq5 只 WARN）
+汇总：5 项；MATCH=4，DRIFT=1（决策标准 0 / tooling 1）
+```
+⇒ 这正是"本轮改了 team_audit.py"的可见证据；**没有写 freeze**（Lead 写域 + 待 L12）。Lead 提交后是否 refreeze 由 Lead 决定。
+
+### 10.4 一次重签 / 收据状态（如实）
+
+- `python scripts/agent/prompt_drift_check.py --recheck-deps` = **0 变更依赖**（本轮没改提示词依赖的任何代码；提示词文件本身也未改）⇒ **无 `--resign` 可做**（`--resign` 在无变更时会明确"已一致，无需重签"，不会空写日志）。
+- **steward r6 仍必须跑**：`STEWARD_STANDARDS` 含 `scripts/agent/team_audit.py` 与 `scripts/agent/prompt_drift_check.py`（SF-031），两者本轮都改了 ⇒ `steward_self_audit` 现已 FAIL=2（收据 r5 vs 磁盘）。这属 B3 设计要求，**未伪造收据**；已通知 steward 跑 r6。
+
+### 10.5 残余 / 未决
+
+1. `team_audit` 当前 **FAIL=2**，全部是 `steward_self_audit`（上面两条标准）——等 steward r6 重签；`prompt_drift` 项 0 FAIL。
+2. freeze `--check` 当前 1 条 tooling DRIFT（`team_audit.py`）——等 Lead 决定 refreeze（`--apply` 待 L12）。
+3. PD-3 的"人工核验清单"（`HIDDEN_SCAN_REVIEWED`）是**显式 allowlist**：新增条目会被 INFO 暴露在门禁输出里，不会静默；若将来 `packaging/build.py` 真的加入目录扫描分发逻辑，需改这里的理由或降级为 WARN。
+4. 过程事故（如实记录）：一次用 PowerShell `Get-Content/Set-Content` 批量替换把 `prompt_drift_check.py` 双重编码（cp1252 误解码 + BOM）；
+   已用 cp1252 反向映射 + UTF-8 校验逐字节恢复，并以 `py_compile` / `--selftest` / `git diff`（180+/49-，无整文件重写）验证；之后所有文本编辑只用 `edit` 工具。**教训：源码文本不要用 shell 文本管道重写。**
+
+### 10.6 本轮全量回归（2026-10-26）
+
+- `pytest -q tests` = **1485 passed / 0 failed**（与 task-158 基线一致，未降）；
+- `node --check` × 全部 `src/memoria/ui/static/app/js/**/*.js` = **0 失败**；
+- `node scripts/i18n_selftest.js` = **PASS**；
+- `python scripts/agent/prompt_drift_check.py` = **exit 0（FAIL=0 / NOT_RUN=0 / WARN=0 / INFO=6）**；
+- `python scripts/agent/prompt_drift_check.py --selftest` = **PASS（19 条 fixture，含 PD-1/1b/2/3/4/5）**；
+- `python scripts/agent/freeze_refreeze.py --check` = **exit 1（1 条 tooling DRIFT，见 10.3）**；`--selftest` = **PASS**；
+- `python scripts/agent/team_audit.py --selftest` = **PASS**（既有 11 类 fixture 全通过，未被本轮改动破坏）；
+- `python scripts/agent/team_audit.py` = **FAIL=2**（唯一 `steward_self_audit` ×2，见 10.5；`prompt_drift` 项 0 FAIL）。
+
 

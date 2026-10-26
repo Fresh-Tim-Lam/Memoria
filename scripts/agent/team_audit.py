@@ -2864,8 +2864,8 @@ PROMPT_DRIFT_SCRIPT = "scripts/agent/prompt_drift_check.py"
 def check_prompt_drift(ctx: AuditContext) -> None:
     """把 prompt_drift_check.py 变成跑不掉的门禁（子进程消费其 --json）。
 
-    设计口径（task-152）：**门禁失败必须可见**。脚本缺失/崩溃/超时/输出不可解析/
-    自相矛盾一律 FAIL，**绝不静默跳过**——静默跳过等于门禁失效。
+    设计口径（task-152 + task-158/PD-1）：**门禁失败必须可见**。脚本缺失/崩溃/超时/输出不可解析/
+    自相矛盾一律 FAIL；**NOT_RUN（检查未能执行）也判 FAIL**——「跳过 ≠ 通过」。
     只在真实 Memoria 仓库跑：team_audit 自测用的 fixture 仓库没有 `kb_agent.py`，
     视为"不适用"（INFO），避免误伤 selftest。
     """
@@ -2890,7 +2890,7 @@ def check_prompt_drift(ctx: AuditContext) -> None:
                 f"提示词漂移机检执行失败（{type(exc).__name__}）：{exc}",
                 ctx.rel(script))
         return
-    if proc.returncode not in (0, 1):
+    if proc.returncode not in (0, 1, 2):
         detail = ((proc.stderr or "") or (proc.stdout or "")).strip()[:400]
         ctx.add(check, FAIL,
                 f"提示词漂移机检执行失败（exit={proc.returncode}）：{detail or '无输出'}",
@@ -2913,20 +2913,38 @@ def check_prompt_drift(ctx: AuditContext) -> None:
     summary = payload.get("summary") or {}
     try:
         fail_count = int(summary.get("FAIL") or 0)
+        not_run_count = int(summary.get("NOT_RUN") or 0)
     except (TypeError, ValueError):
-        fail_count = -1
-    if fail_count < 0:
-        ctx.add(check, FAIL, "提示词漂移机检 summary.FAIL 非整数（输出不可信）", ctx.rel(script))
+        ctx.add(check, FAIL, "提示词漂移机检 summary.FAIL/NOT_RUN 非整数（输出不可信）", ctx.rel(script))
         return
-    if proc.returncode == 0 and fail_count > 0:
+    status = str(summary.get("status") or "")
+    if status not in ("ok", "fail", "not_run"):
+        ctx.add(check, FAIL, f"提示词漂移机检 summary.status={status!r} 非法（门禁契约不完整）", ctx.rel(script))
+        return
+    expected_rc = {"ok": 0, "fail": 1, "not_run": 2}[status]
+    if proc.returncode != expected_rc:
         ctx.add(check, FAIL,
-                f"提示词漂移机检自相矛盾：exit=0 但 summary.FAIL={fail_count}（门禁不可信）",
+                f"提示词漂移机检自相矛盾：exit={proc.returncode} vs status={status}"
+                f"（期望 exit={expected_rc}；门禁不可信）",
+                ctx.rel(script))
+    # PD-1（task-158）：**跳过 ≠ 通过**。NOT_RUN 在团队门禁里必须判 FAIL。
+    if status == "not_run" or not_run_count > 0:
+        not_run_list = summary.get("not_run") or []
+        detail = ", ".join(str(x) for x in not_run_list) or "（未列出检查名）"
+        ctx.add(check, FAIL,
+                f"提示词漂移机检有 {not_run_count or len(not_run_list)} 项检查未能执行（NOT_RUN：{detail}）"
+                "—— 跳过 ≠ 通过，不得判绿",
                 ctx.rel(script))
     for item in items:
         if not isinstance(item, dict):
             ctx.add(check, FAIL, f"提示词漂移机检返回非法 finding：{item!r}", ctx.rel(script))
             continue
         sev = str(item.get("severity") or "").upper()
+        if sev == "NOT_RUN":
+            ctx.add(check, FAIL,
+                    f"[{item.get('check')}] 检查未执行：{item.get('message')}",
+                    str(item.get("evidence") or ctx.rel(script)))
+            continue
         if sev not in (FAIL, WARN, INFO):
             ctx.add(check, FAIL,
                     f"提示词漂移机检返回未知严重度 {item.get('severity')!r}（门禁输出不可信）",
@@ -2935,6 +2953,11 @@ def check_prompt_drift(ctx: AuditContext) -> None:
         ctx.add(check, sev,
                 f"[{item.get('check')}] {item.get('message')}",
                 str(item.get("evidence") or ctx.rel(script)))
+    counted_fail = sum(1 for item in items if isinstance(item, dict) and str(item.get("severity")).upper() == FAIL)
+    if counted_fail != fail_count:
+        ctx.add(check, FAIL,
+                f"提示词漂移机检 summary.FAIL={fail_count} 与 findings 中 FAIL={counted_fail} 不一致（门禁不可信）",
+                ctx.rel(script))
 
 
 def _read_jsonl_safe(path: Path) -> tuple[list[dict], list[dict]]:
