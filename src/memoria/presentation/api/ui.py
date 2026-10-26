@@ -1720,6 +1720,65 @@ class UIAPI:
             return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
         records = take_proposals(kb)
         return {"status": "ok", "records": records, "plans": [row.get("plan") for row in records]}
+    # ── 版本更新（task-180；受「出网」开关控制，fail-open）─────────────────
+
+    def get_update_state(self) -> dict:
+        """更新页初始化：当前版本 / 出网开关 / 自动检查配置 / 上次检查缓存（**不发请求**）。"""
+        from memoria.services import update as upd
+
+        try:
+            return upd.get_update_state()
+        except Exception as e:  # noqa: BLE001 - 更新功能永不影响主功能
+            return {"status": "error", "message": str(e)}
+
+    def check_for_update(self, manual: bool = False) -> dict:
+        """检查 GitHub Releases 最新版。出网关闭 ⇒ 返回 offline 且**不发任何请求**（fail-open）。"""
+        from memoria.services import update as upd
+
+        try:
+            return upd.check_for_update(manual=bool(manual))
+        except Exception as e:  # noqa: BLE001
+            return {
+                "status": "error",
+                "code": "exception",
+                "message": "检查失败，稍后再试",
+                "detail": str(e)[:300],
+            }
+
+    def start_update_download(self, asset_name: str) -> dict:
+        """后台下载 release 资产到 Downloads（默认 lite；full 由前端显式选择）。"""
+        from memoria.services import update as upd
+
+        try:
+            return upd.start_update_download(str(asset_name or ""))
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "code": "exception", "message": str(e)[:300]}
+
+    def get_update_download_status(self, job_id: str) -> dict:
+        from memoria.services import update as upd
+
+        try:
+            return upd.get_update_download_status(str(job_id or ""))
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "code": "exception", "message": str(e)[:300]}
+
+    def cancel_update_download(self, job_id: str) -> dict:
+        from memoria.services import update as upd
+
+        try:
+            return upd.cancel_update_download(str(job_id or ""))
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "code": "exception", "message": str(e)[:300]}
+
+    def open_update_folder(self) -> dict:
+        """打开下载目录（只在用户主动点击时调用；不自动打开）。"""
+        from memoria.services import update as upd
+
+        try:
+            return upd.open_download_folder()
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)[:300]}
+
 
 
 # ── 写冲突保护（文件版本令牌）：import 刻意放在**文件末尾** —— 上方所有 `ui.py:<行>` 锚点

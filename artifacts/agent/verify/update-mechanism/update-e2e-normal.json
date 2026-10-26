@@ -1,0 +1,166 @@
+{
+  "offline": false,
+  "startedAt": "2026-10-26T15:21:54.790Z",
+  "steps": {
+    "requestsBeforeManual": 1,
+    "autoCheckEvidence": 1,
+    "bodyInitial": "版本更新\n当前版本\n0.4.9\n启动后静默检查（每 24 小时最多一次）\n\n检查会延迟执行，不阻塞窗口显示；「出网」关闭时不检查。\n\n检查更新\n有新版本可用：0.4.10\n当前版本\n0.4.9\n最新版本\n0.4.10\n发布日期\n2026/10/26 08:00:00\n更新说明\n## 更新说明（mock）\n\n- 版本更新机制真机验证\n- 修复若干问题\n安装包\nlite（推荐，不含模型）\n1.6 KB\n· 推荐\nfull（含模型，体积约 1.2 GB）\n8.0 MB\n· 需显式选择\n\n下载安装包\n\n下载完成后会校验包结构与完整性（不含数字签名）。\n\n检查与下载只发送标准 HTTP GET（User-Agent），不发送任何本地数据。",
+    "shotInitial": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\update-mechanism\\shots\\normal-update-tab.png",
+    "forbiddenWords": [],
+    "bodyChecked": "版本更新\n当前版本\n0.4.9\n启动后静默检查（每 24 小时最多一次）\n\n检查会延迟执行，不阻塞窗口显示；「出网」关闭时不检查。\n\n检查更新\n有新版本可用：0.4.10\n当前版本\n0.4.9\n最新版本\n0.4.10\n发布日期\n2026/10/26 08:00:00\n更新说明\n## 更新说明（mock）\n\n- 版本更新机制真机验证\n- 修复若干问题\n安装包\nlite（推荐，不含模型）\n1.6 KB\n· 推荐\nfull（含模型，体积约 1.2 GB）\n8.0 MB\n· 需显式选择\n\n下载安装包\n\n下载完成后会校验包结构与完整性（不含数字签名）。\n\n检查与下载只发送标准 HTTP GET（User-Agent），不发送任何本地数据。",
+    "shotChecked": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\update-mechanism\\shots\\normal-checked.png",
+    "fullSelected": true,
+    "fullWarn": "full 包约 1.2 GB；默认推荐 lite，请确认磁盘空间后再下载。",
+    "downloadingUI": {
+      "text": "版本更新\n当前版本\n0.4.9\n启动后静默检查（每 24 小时最多一次）\n\n检查会延迟执行，不阻塞窗口显示；「出网」关闭时不检查。\n\n检查更新\n有新版本可用：0.4.10\n当前版本\n0.4.9\n最新版本\n0.4.10\n发布日期\n2026/10/26 08:00:00\n更新说明\n## 更新说明（mock）\n\n- 版本更新机制真机验证\n- 修复若干问题\n安装包\nlite（推荐，不含模型）\n1.6 KB\n· 推荐\nfull（含模型，体积约 1.2 GB）\n8.0 MB\n· 需显式选择\n\nfull 包约 1.2 GB；默认推荐 lite，请确认磁盘空间后再下载。\n\n下载安装包\n\n下载完成后会校验包结构与完整性（不含数字签名）。\n\n正在下载…\n37.5% (3.0 MB / 8.0 MB)\n取消下载\n\n检查与下载只发送标准 HTTP GET（User-Agent），不发送任何本地数据。",
+      "progress": "37.5%  (3.0 MB / 8.0 MB)",
+      "hasCancel": true
+    },
+    "cancelUI": {
+      "text": true,
+      "files": []
+    },
+    "liteSelected": true,
+    "bodyDone": "版本更新\n当前版本\n0.4.9\n启动后静默检查（每 24 小时最多一次）\n\n检查会延迟执行，不阻塞窗口显示；「出网」关闭时不检查。\n\n检查更新\n有新版本可用：0.4.10\n当前版本\n0.4.9\n最新版本\n0.4.10\n发布日期\n2026/10/26 08:00:00\n更新说明\n## 更新说明（mock）\n\n- 版本更新机制真机验证\n- 修复若干问题\n安装包\nlite（推荐，不含模型）\n1.6 KB\n· 推荐\nfull（含模型，体积约 1.2 GB）\n8.0 MB\n· 需显式选择\n\n下载安装包\n\n下载完成后会校验包结构与完整性（不含数字签名）。\n\n下载完成\n保存到\nC:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t180_normal_11324_98206707\\Downloads\\Memoria-v0.4.10-win64-lite.zip\n校验结果\n已校验包结构与完整性（不含数字签名）\n打开所在文件夹\n手动更新步骤（不会自动替换）\n关闭 Memoria 进程（exe 被占用时替换会失败）。\n只替换应用文件夹；不要动知识库文件夹（你的笔记与 agent 会话都在知识库里）。\n配置在 C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t180_normal_11324_98206707\\config，替换应用文件夹不影响配置。\n你下载的是 lite 包：不要把旧的 hf/ 文件夹删掉（lite 不含模型，删了就无法离线使用）。\n\nMemoria 不会自动替换任何文件，请按以上步骤手动完成。\n\n检查与下载只发送标准 HTTP GET（User-Agent），不发送任何本地数据。",
+    "shotDone": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\update-mechanism\\shots\\normal-downloaded-bottom.png",
+    "updateState": {
+      "jobId": "",
+      "done": {
+        "job_id": "cef8655a55b8",
+        "status": "done",
+        "asset": {
+          "name": "Memoria-v0.4.10-win64-lite.zip",
+          "kind": "lite",
+          "bytes": 1621,
+          "size_human": "1.6 KB",
+          "url": "http://127.0.0.1:62819/asset/Memoria-v0.4.10-win64-lite.zip",
+          "sha256": "216cf0cb3f70df1d498f79e6a35692cfd5c054022f63a9d480823a1bb3758a75",
+          "recommended": true,
+          "requires_explicit_choice": false,
+          "version": "0.4.10"
+        },
+        "target": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t180_normal_11324_98206707\\Downloads\\Memoria-v0.4.10-win64-lite.zip",
+        "received": 1621,
+        "total": 1621,
+        "failures": [],
+        "updated_at": 1793028126.0136395,
+        "path": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t180_normal_11324_98206707\\Downloads\\Memoria-v0.4.10-win64-lite.zip",
+        "filename": "Memoria-v0.4.10-win64-lite.zip",
+        "verification": {
+          "ok": true,
+          "mode": "manifest",
+          "failures": [],
+          "verified_label": "已校验包结构与完整性（不含数字签名）",
+          "file_count": 7,
+          "version": "0.4.10"
+        },
+        "progress": 100,
+        "received_human": "1.6 KB",
+        "total_human": "1.6 KB",
+        "assetKind": "lite"
+      },
+      "verify": {
+        "ok": true,
+        "mode": "manifest",
+        "failures": [],
+        "verified_label": "已校验包结构与完整性（不含数字签名）",
+        "file_count": 7,
+        "version": "0.4.10"
+      }
+    },
+    "done": {
+      "downloaded": true,
+      "failed": false,
+      "manifestVerified": true,
+      "zipOnly": false,
+      "steps": {
+        "close": true,
+        "appFolder": true,
+        "config": true,
+        "liteHf": true,
+        "noAuto": true
+      },
+      "savedPath": "C:\\Users\\LAMTIM~1\\AppData\\Local\\Temp\\memoria_t180_normal_11324_98206707\\Downloads\\Memoria-v0.4.10-win64-lite.zip"
+    },
+    "requestLogs": [
+      {
+        "ts": 1793028120.88756,
+        "method": "GET",
+        "path": "/latest",
+        "header_names": [
+          "accept",
+          "accept-encoding",
+          "connection",
+          "host",
+          "user-agent"
+        ],
+        "user_agent": "Memoria/0.4.9 (update-check)",
+        "has_cookie": false,
+        "has_auth": false
+      },
+      {
+        "ts": 1793028123.8985412,
+        "method": "GET",
+        "path": "/latest",
+        "header_names": [
+          "accept",
+          "accept-encoding",
+          "connection",
+          "host",
+          "user-agent"
+        ],
+        "user_agent": "Memoria/0.4.9 (update-check)",
+        "has_cookie": false,
+        "has_auth": false
+      },
+      {
+        "ts": 1793028124.4690688,
+        "method": "GET",
+        "path": "/asset/Memoria-v0.4.10-win64.zip",
+        "header_names": [
+          "accept-encoding",
+          "connection",
+          "host",
+          "user-agent"
+        ],
+        "user_agent": "Memoria/0.4.9 (update-check)",
+        "has_cookie": false,
+        "has_auth": false
+      },
+      {
+        "ts": 1793028126.0044818,
+        "method": "GET",
+        "path": "/asset/Memoria-v0.4.10-win64-lite.zip",
+        "header_names": [
+          "accept-encoding",
+          "connection",
+          "host",
+          "user-agent"
+        ],
+        "user_agent": "Memoria/0.4.9 (update-check)",
+        "has_cookie": false,
+        "has_auth": false
+      }
+    ],
+    "privacy": {
+      "count": 4,
+      "allGet": true,
+      "noCookies": true,
+      "noAuth": true,
+      "paths": [
+        "/latest",
+        "/asset/Memoria-v0.4.10-win64.zip",
+        "/asset/Memoria-v0.4.10-win64-lite.zip"
+      ],
+      "headerNames": [
+        "accept",
+        "accept-encoding",
+        "connection",
+        "host",
+        "user-agent"
+      ],
+      "autoBeforeManual": 2
+    }
+  },
+  "finishedAt": "2026-10-26T15:22:07.477Z"
+}

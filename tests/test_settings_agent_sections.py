@@ -7,7 +7,8 @@
 1. **页签条 = `#settings-tabs` 可横向滚动**：`overflow-x: auto` + `flex-wrap: nowrap`
    （不 nowrap 就会换行、永不溢出 ⇒ 也就谈不上滚动）；滚条**整条隐藏**（`scrollbar-width: none`
    + `::-webkit-scrollbar` 归零）；滚轮绑定在 `graph-settings.js`（写法同 `#tabs` 的那条）。
-2. **页签集合**：`renderTabsHtml()` 出 7 个按钮（含 `agent`、**不含** `plugins`）。
+2. **页签集合**：`renderTabsHtml()` 出 8 个按钮（含 `agent`、`update`；**不含** `plugins`）。
+   `update` 是 task-180 新增的「更新」页签（检查/下载/手动说明），不属于原 7 页；
 3. **Agent 页两个子版块**：`<details>` + `ensureAgentSections()`；「对话」默认展开、装着原
    `#agent-settings`（**移动节点**而不是重建 ⇒ 字段 id 与 `agent-panel.js` 的事件绑定原样保留）；
    「能力插件」默认折叠、装着能力面板。
@@ -51,11 +52,11 @@ def test_tab_strip_scrolls_with_the_wheel_and_hides_the_bar() -> None:
     assert 'document.getElementById("settings-tabs")' in graph
 
 
-def test_tab_set_is_seven_with_agent_and_without_plugins() -> None:
-    """页签 = 7 个（`2D/3D/群/检索/检查/显示/Agent`）；`plugins` 已并入 Agent 页。"""
+def test_tab_set_is_eight_with_update_tab() -> None:
+    """页签 = 8 个（原 7 个 + task-180 的「更新」页签）；`plugins` 已并入 Agent 页。"""
     tabs = _graph().split("function renderTabsHtml")[1].split("</div>`")[0]
     names = re.findall(r'data-settings-tab="([a-zA-Z0-9]+)"', tabs)
-    assert names == ["graph2d", "graph3d", "graphGroups", "search", "check", "view", "agent"], names
+    assert names == ["graph2d", "graph3d", "graphGroups", "search", "check", "view", "agent", "update"], names
     assert "settings.tab.plugins" not in tabs and "plugins" not in names
 
 

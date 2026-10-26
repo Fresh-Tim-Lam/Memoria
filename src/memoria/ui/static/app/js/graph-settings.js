@@ -798,7 +798,7 @@
       <button type="button" class="-config-tab${active === "graphGroups" ? " active" : ""}" data-settings-tab="graphGroups" role="tab">${T("settings.tab.groups")}</button>
       <button type="button" class="-config-tab${active === "search" ? " active" : ""}" data-settings-tab="search" role="tab">${T("settings.tab.search")}</button>
       <button type="button" class="-config-tab${active === "check" ? " active" : ""}" data-settings-tab="check" role="tab">${T("settings.tab.check")}</button>
-      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">${T("settings.tab.view")}</button><button type="button" class="-config-tab${active === "agent" ? " active" : ""}" data-settings-tab="agent" role="tab">${T("settings.tab.agent")}</button>
+      <button type="button" class="-config-tab${active === "view" ? " active" : ""}" data-settings-tab="view" role="tab">${T("settings.tab.view")}</button><button type="button" class="-config-tab${active === "agent" ? " active" : ""}" data-settings-tab="agent" role="tab">${T("settings.tab.agent")}</button><button type="button" class="-config-tab${active === "update" ? " active" : ""}" data-settings-tab="update" role="tab">${T("settings.tab.update")}</button>
     </div>`;
   }
 
@@ -843,6 +843,15 @@
       teardownPreview(); stopPreview();
       bodyEl.innerHTML = global.MemoriaDisplaySettings.renderSettingsBody();
       global.MemoriaDisplaySettings.bindSettingsForm(bodyEl);
+    } else if (tab === "update") {
+      // task-180：更新页签按需动态注入 `update-settings.js`（不改 index.html 的静态结构）；
+      // 该页只调后端 update RPC，所有网络请求受「出网」开关控制。
+      teardownPreview(); stopPreview();
+      bodyEl.innerHTML = `<p class="-muted">${TT("update.loading")}</p>`;
+      ensureUpdateSettings().then((mod) => {
+        if (!mod || settingsTab !== "update") return;
+        try { mod.openSettings(bodyEl); } catch (_) { bodyEl.textContent = TT("update.loadError"); }
+      });
     // 2026-09-23：「能力插件」**不再单独占一个页签** —— 它已并入「Agent」页签的第二个可折叠子版块
     // （装配在 `ensureAgentSections()`，见本文件末尾）。原动态体分支 `else if (tab === "plugins" …)`
     // 随之退役：面板仍在、仍只调后端网关，只是宿主从 `#settings-body` 换成子版块里的容器。
@@ -977,6 +986,25 @@
     sidebarSplitState.tab = tab || "files";
     sidebarSplitState.ratio = loadGraphSplit(sidebarSplitState.tab);
     applySidebarNavKpSplit(sidebarSplitState.ratio, onResize);
+  }
+
+  /** task-180：按需加载更新页模块（失败不阻断设置弹窗其余页签）。 */
+  let _updateScriptPromise = null;
+  function ensureUpdateSettings() {
+    if (global.MemoriaUpdateSettings) return Promise.resolve(global.MemoriaUpdateSettings);
+    if (_updateScriptPromise) return _updateScriptPromise;
+    _updateScriptPromise = new Promise((resolve) => {
+      const done = () => resolve(global.MemoriaUpdateSettings || null);
+      const exist = document.getElementById("memoria-update-settings-script");
+      if (exist) { exist.addEventListener("load", done, { once: true }); return; }
+      const script = document.createElement("script");
+      script.id = "memoria-update-settings-script";
+      script.src = "/app/js/update-settings.js";
+      script.onload = done;
+      script.onerror = () => resolve(null);
+      document.head.appendChild(script);
+    });
+    return _updateScriptPromise;
   }
 
   function bindModal() {
@@ -1228,4 +1256,10 @@
     pending: () => _telPending,
     coalesceMs: TEL_COALESCE_MS,
   };
+
+  // task-180：更新页模块在启动后**延迟**自行做一次静默检查（6s setTimeout，不阻塞窗口显示）；
+  // 出网关闭时后端零请求。这里只负责把脚本按需加载进页面。
+  ensureUpdateSettings().then((mod) => {
+    try { mod && mod.init(); } catch (_) { /* 更新功能永不影响主功能 */ }
+  });
 })(typeof window !== "undefined" ? window : globalThis);
