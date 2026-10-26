@@ -8,6 +8,12 @@
 
   const STORAGE_KEY = "-display-settings";
 
+  //: `contentMinPx` 允许范围。**`def` 是"文档区保底宽度默认值"的唯一事实源**（task-170）：
+  //  `DEFAULTS.contentMinPx` 直接引用它，agent-panel 也经 `getContentMinDef()` 读取它——
+  //  改默认值只改这一处即可生效；agent-panel 里只留"模块缺席时的最后兜底"。
+  //  2026-10-26（人）：下限 320 → 180（窄屏/小窗口下希望文档区能更窄）。
+  const CONTENT_MIN_RANGE = { min: 180, max: 560, step: 10, def: 360 };
+
   const DEFAULTS = {
     previewFontSize: 14, // 预览区正文字号（px）
     uiScale: 1.0,        // 界面整体缩放倍率
@@ -16,13 +22,9 @@
     //: 顶栏 "MEMORIA" 的字体（空 = 跟随正文字体）
     fontBrand: "", backgroundPreload: false, // 顶栏字体 / 后台预加载（2026-09-23 追加，见文件末尾「后台预加载」块）
     //: 文档区（#content）保底宽度 px（2026-10-25 task-144 ②：用户要可调）。
-    //  调大 ⇒ 三栏空间不足时**对话栏更早让位**（task-93 响应式联动）；默认 360 保持既有体验。
-    contentMinPx: 360,
+    //  调大 ⇒ 三栏空间不足时**对话栏更早让位**（task-93 响应式联动）；默认值 = CONTENT_MIN_RANGE.def（单源）。
+    contentMinPx: CONTENT_MIN_RANGE.def,
   };
-  //: `contentMinPx` 允许范围（与 agent-panel 的 CONTENT_MIN_PX 语义一致）。超出范围 ⇒ 拒绝/夹紧。
-  //  2026-10-26（人）：下限 320 → 180（窄屏/小窗口下希望文档区能更窄）。
-  //  ⚠️ 改这里必须同步 `agent-panel.js` 的 `currentContentMinPx()` 夹紧上下限与 i18n 的 contentMinHint 文案。
-  const CONTENT_MIN_RANGE = { min: 180, max: 560, step: 10, def: 360 };
 
   //: 字体名候选（下拉的选项；用户只能从这些里选 —— 人 2026-09-23：「你应该给下拉可选样式而不是输入」）
   const FONT_CHOICES = [
@@ -479,7 +481,12 @@
     resetUiScale,
     renderSettingsBody,
     bindSettingsForm,
-    /** 当前生效的「文档区保底宽度」px（task-144 ②；agent-panel 动态读取，默认 360）。 */
+    /** 「文档区保底宽度」默认值的唯一读取口（task-170）：agent-panel 等模块必须经此取 def，
+     *  不得再各自写死一份默认值。 */
+    getContentMinDef() {
+      return CONTENT_MIN_RANGE.def;
+    },
+    /** 当前生效的「文档区保底宽度」px（task-144 ②；agent-panel 动态读取）。 */
     getContentMinPx() {
       const v = clamp(load().contentMinPx, CONTENT_MIN_RANGE.min, CONTENT_MIN_RANGE.max);
       return v === null ? CONTENT_MIN_RANGE.def : Math.round(v);

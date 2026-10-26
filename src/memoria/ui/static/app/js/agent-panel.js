@@ -64,7 +64,7 @@
  *
  * 宽度分「**期望宽度**」与「**生效宽度**」（见 applyDockLayout()）：
  * `agentDockWidth` 是期望宽度（只在拖拽/显式操作时写盘）；生效宽度按可用空间实时算出
- * ——文档区（`#content`）保底 `CONTENT_MIN_PX=360`，不够就让 dock 先缩到 16rem、
+ * ——文档区（`#content`）保底宽度（默认值唯一事实源 = display-settings 的 `CONTENT_MIN_RANGE.def`，默认 360），不够就让 dock 先缩到 16rem、
  * 再整体**临时自动隐藏**（加 `-agent-dock--auto-hidden`，不写盘、窗口变宽自动还原）。
  *
  * 与后端的分工（见 `presentation/api/ui.py` 的 10 个 RPC）：
@@ -208,7 +208,7 @@ window.MemoriaAgentPanel = (function () {
   const DOCK_MIN_REM = 16; // 与 app.css 的 #-agent-dock min-width 一致
   // 2026-10-23（0.4.7）：**取消静态上限**。用户报「会话栏宽度上限不够大」。
   // 原先 DOCK_MAX_REM = 34（≈544px）把可拖宽度钉死。现在上限完全由
-  // `availableDockPx()` =「#main 内宽 − 左栏生效宽 − CONTENT_MIN_PX」动态决定：
+  // `availableDockPx()` =「#main 内宽 − 左栏生效宽 − 文档区保底宽度（currentContentMinPx()）」动态决定：
   // 宽屏可拖到任意宽（文档区始终保留 360px），窄屏仍自动收缩/隐藏。
   // ⚠️ 必须保留一个**有限**上限：否则用户把会话栏拖满后、再拖动窗口变窄时，
   //    `dockWidthRem` 会记住一个超宽值，展开时永远只能贴到边。故用
@@ -218,20 +218,38 @@ window.MemoriaAgentPanel = (function () {
   const DOCK_DEFAULT_REM = 22; // 与 width 一致
   // 文档区（#content）最小宽度保护：三栏（左栏 + #content + dock）都是固定/自动宽，
   // 空间不足时**只让 dock 让位**（先缩到 16rem，再整体临时隐藏），#content 永不小于它。
-  // 2026-10-25 task-144 ②：改为**可配置**（设置 → 显示 → 文档区保底宽度，默认 360）。
-  // 2026-10-26（人）：下限 320 → 180。⚠️ 这里与 display-settings.js 的 CONTENT_MIN_RANGE 必须同口径。
-  // 方向语义：调大 ⇒ 对话栏更早被自动隐藏（与 task-93 响应式联动一致）；默认值不变。
-  const CONTENT_MIN_PX = 360; // 默认值（设置缺省/非法时回退）
-  /** 当前生效的「文档区保底宽度」：读设置模块（存在时），否则回退默认 360。 */
+  // 2026-10-25 task-144 ②：改为**可配置**（设置 → 显示 → 文档区保底宽度）。
+  // 2026-10-26（人）：下限 320 → 180。
+  // 2026-10-26 task-170：**默认值不再在本文件独立写死** —— 唯一事实源 = display-settings.js 的
+  //   `CONTENT_MIN_RANGE.def`（经 `MemoriaDisplaySettings.getContentMinDef()` 读取）。
+  //   下面的常量是"最后兜底"：仅当 display-settings 模块缺席/异常时才使用，**不是第二事实源**；
+  //   改默认值只改 display-settings.js 一处（改这里不会生效）。
+  const CONTENT_MIN_PX_LAST_RESORT = 360;
+  /** 文档区保底宽度的默认值：优先读 display-settings 暴露的 def 唯一来源，模块缺席才最后兜底。 */
+  function contentMinDefPx() {
+    try {
+      const ds = window.MemoriaDisplaySettings;
+      if (ds && typeof ds.getContentMinDef === "function") {
+        const v = Number(ds.getContentMinDef());
+        if (isFinite(v) && v > 0) return v;
+      }
+    } catch (_) { /* 设置模块缺席/异常 ⇒ 最后兜底 */ }
+    return CONTENT_MIN_PX_LAST_RESORT;
+  }
+  /** 当前生效的「文档区保底宽度」：读设置模块（存在时；夹紧范围也取自设置模块），否则最后兜底。 */
   function currentContentMinPx() {
     try {
       const ds = window.MemoriaDisplaySettings;
       if (ds && typeof ds.getContentMinPx === "function") {
         const v = Number(ds.getContentMinPx());
-        if (isFinite(v) && v >= 180 && v <= 560) return v;
+        const range = ds.CONTENT_MIN_RANGE || {};
+        const lo = Number(range.min), hi = Number(range.max);
+        if (isFinite(v) &&
+            (!isFinite(lo) || v >= lo) &&
+            (!isFinite(hi) || v <= hi)) return v;
       }
-    } catch (_) { /* 设置模块缺席/异常 ⇒ 回退默认 */ }
-    return CONTENT_MIN_PX;
+    } catch (_) { /* 设置模块缺席/异常 ⇒ 最后兜底 */ }
+    return contentMinDefPx();
   }
   let dockWidthRem = DOCK_DEFAULT_REM; // **期望宽度**（rem）：只在拖拽/显式操作时改写
   let dockCollapsed = false; // 手动折叠（用户意图，落盘）
@@ -283,7 +301,7 @@ window.MemoriaAgentPanel = (function () {
 
   /**
    * 重算**生效宽度**并落到 DOM。期望宽度 ≠ 生效宽度：
-   *   available = `#main` 内宽 − 左栏生效宽 − CONTENT_MIN_PX(360)
+   *   available = `#main` 内宽 − 左栏生效宽 − 文档区保底宽度（默认 360，来自 display-settings）
    *   手动折叠                    → 0
    *   available ≥ dockMin(16rem)  → clamp(期望, 16rem, min(34rem, available))
    *   否则                        → 0（空间不足：临时自动隐藏）
@@ -7512,7 +7530,7 @@ window.MemoriaAgentPanel = (function () {
         minRem: DOCK_MIN_REM,
         softMaxRem: DOCK_SOFT_MAX_REM,
         availablePx: availableDockPx(),
-        contentMinPx: CONTENT_MIN_PX,
+        contentMinPx: contentMinDefPx(),
         getContentMinPx: currentContentMinPx,
         collapsed: dockCollapsed,
         autoHidden: dockAutoHidden,
