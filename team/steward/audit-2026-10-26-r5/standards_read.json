@@ -1,0 +1,60 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-26T08:35:26+08:00",
+  "round": "r5",
+  "tool": "team_audit.py@d8f6a7d7f9b7",
+  "git_base": "d655277e",
+  "worktree_dirty_standards": [],
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T08:35:26+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部（含 §1.2b/§1.3b/§5.4/§6.5）",
+      "sha256": "488d7ebd78c917e2c62b71c20635d1111a275a60306b5b742bb4247387beeb39",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T08:35:26+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部（含 L9.6/L9.7）",
+      "sha256": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T08:35:26+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "检查清单 + --determinism + --sha-explain + deliberation_quality",
+      "sha256": "d8f6a7d7f9b722a03207c7448e1f4bc974234da0806ea4abb8c876f10a34bc74",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T08:35:26+08:00"
+    },
+    {
+      "path": "scripts/agent/prompt_drift_check.py",
+      "sections": "C1-C5 + --json/--selftest/--recheck-deps/--resign 接口",
+      "sha256": "6cbc9f8687e3a4d8aa206a81162745843625c3c71d106bd578fcc7e98d04f1d0",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-26T08:35:26+08:00"
+    }
+  ],
+  "portability_evidence": {
+    "selftest_assertions": "content_sha256(LF)==content_sha256(CRLF)；raw_sha256(LF)!=raw_sha256(CRLF)",
+    "old_receipt_red_fixture": "steward-crlf-raw（收据记原始 CRLF 字节 sha ⇒ FAIL）",
+    "crlf_workspace_green_fixture": "steward-crlf-lf（CRLF 工作区 + LF 口径收据 ⇒ 无 FAIL）"
+  },
+  "determinism": {
+    "checked": true,
+    "command": "python scripts/agent/team_audit.py --determinism",
+    "result": "PASS: audit determinism（2 次运行除 generatedAt 外逐字节一致；sha256=b7fb379a0ace7812…，compared_findings=81）"
+  },
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（本轮只读 §2.3/§2.6，未逐条复核 §13 台账）",
+    "src/**（产品代码质量/性能不在 steward 审计范围）",
+    "session 正文（按设计不读，只作证据引用）"
+  ]
+}

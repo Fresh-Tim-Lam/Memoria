@@ -49,7 +49,9 @@
 16. model_policy     : **成员模型白名单**（org.md §2.1 维护纪律 6）。task-103 新增。
                      snapshot.members[].model 必须 deepseek-flash，或 agents.json 有 model_exemption{reason,approved_at,approved_by}。
 17. steward_self_audit: **steward 自己可被机审**（org.md §2.6 B3/B4）。task-103 新增。
-                     standards_read 的 4 个标准 sha256 必须与磁盘一致；finding 的 rule_ref 可解析或标 proposal；
+                     standards_read 的 5 个标准 sha256 必须与磁盘一致——口径是 **LF 归一化内容 sha**
+                     （`\r\n→\n` 后算；task-110：不是工作区原始字节，跨平台可复算）；
+                     finding 的 rule_ref 可解析或标 proposal；
                      open>14d WARN；SUMMARY 缺 blind_spots WARN。
 18. deliberation_quality: **辩论过程可复核**（PROTOCOL.md §1-§4；task-116 新增）。
                      dq1 证据身份可解析 / dq2 rejected 必带 UEH / dq3 falsifiers / dq4 claim→evidence /
@@ -140,14 +142,34 @@ DECISION_TRAIL_ORG_PATHS = {
     "team/team-board-snapshot.json",
 }
 STEWARD_DIR = "team/steward"
+# task-110：收据 sha 跨平台口径 —— 必须是 LF 归一化 **内容** sha，不是工作区原始字节。
+# BOM 处理：**保留** BOM（BOM 是内容字节的一部分，不剥离）；若将来发现 BOM 差异造成
+# 跨平台假红，再单独加 BOM 归一化（应为显式决策，不静默做）。
 STEWARD_STANDARDS = (
     ("AGENTS.md", "§0.5"),
     ("docs/guides/lead-dispatch-rules.md", "全部"),
     ("docs/guides/agent-team-lessons.md", "全部"),
     ("scripts/agent/team_audit.py", "检查清单"),
+    # task-110/SF-031：prompt_drift_check.py 已进入 team_audit 门禁（check_prompt_drift 子进程），
+    # 它是标准的一部分 ⇒ 单独变更也必须让收据过期（否则覆盖缺口）。
+    ("scripts/agent/prompt_drift_check.py", "C1-C5 + --json/--selftest 接口"),
 )
 STEWARD_FINDING_DISPOSITIONS = ("open", "fixed", "dismissed", "mechanized", "proposal")
 STEWARD_OPEN_WARN_DAYS = 14
+
+
+def content_sha256(path: Path) -> str:
+    """LF 归一化后的内容 sha256（跨平台可复算；task-110 / org.md §2.6 B3 补充）。
+
+    口径：
+      - 先做 `\\r\\n -> \\n` 的字节归一化（同时处理 CRLF；孤立的 `\\r` 不动）；
+      - 再按字节算 sha256（不 decode，避免编码差异；文件内容本身就是 UTF-8）；
+      - **BOM 保留**：BOM 是内容的一部分，不剥离；若将来 BOM 差异导致假红，再加 BOM 归一化。
+    为什么不是 `hashlib.sha256(read_bytes())`：Windows `core.autocrlf=true` 工作区是 CRLF、
+    Linux/`autocrlf=false` 克隆是 LF ⇒ 同一标准在不同机器上原始字节 sha 不同 ⇒ 收据假红/假绿。
+    """
+    return hashlib.sha256(path.read_bytes().replace(b"\r\n", b"\n")).hexdigest()
+
 # lead-dispatch-rules §1.2b（task-109 新增）：共享产出根 —— 根 vs 其子路径只报 INFO（假重叠）
 SHARED_OUTPUT_ROOTS = ("artifacts/agent/verify", "docs/design", "team", "scripts/benchmark")
 # ---- task-116：deliberation_quality（辩论过程机检，PROTOCOL.md §2/§3/§4/§9）----
@@ -2356,11 +2378,44 @@ def check_model_policy(ctx: AuditContext, data: dict | None) -> None:
                 f"{ctx.rel(ctx.snapshot_path)}:members[].model")
 
 
+def sha_explain(repo: Path, rel_path: str) -> int:
+    """`--sha-explain <path>`：并列输出 原始 sha / LF 归一化 sha / git blob sha（task-110 调试）。
+
+    - `raw_sha256`：工作区原始字节（旧口径；跨平台不可复算）
+    - `content_sha256_lf`：LF 归一化内容 sha（**收据应使用此值**）
+    - `git_blob_sha`：`git hash-object <path>`（与 git 对象库对账用；未跟踪也有值）
+    - `head_blob_sha`：`git rev-parse HEAD:<path>`（已提交版本；未跟踪/无提交 = n/a）
+    """
+    path = Path(rel_path)
+    if not path.is_absolute():
+        path = repo / rel_path
+    if not path.is_file():
+        print(f"用法错误：文件不存在：{rel_path}", file=sys.stderr)
+        return 2
+    raw = hashlib.sha256(path.read_bytes()).hexdigest()
+    lf = content_sha256(path)
+    git_blob = _git(repo, "hash-object", str(path)).strip() or "n/a"
+    try:
+        rel = path.resolve().relative_to(repo.resolve()).as_posix()
+    except ValueError:
+        rel = None
+    head_blob = _git(repo, "rev-parse", f"HEAD:{rel}").strip() if rel else ""
+    head_blob = head_blob or "n/a"
+    print(f"path            : {rel or path}")
+    print(f"raw_sha256      : {raw}")
+    print(f"content_sha256_lf: {lf}")
+    print(f"git_blob_sha    : {git_blob}")
+    print(f"head_blob_sha   : {head_blob}")
+    print(f"raw_equals_lf   : {'YES' if raw == lf else 'NO（该文件在盘上不是 LF；收据应记 content_sha256_lf）'}")
+    return 0
+
+
 def check_steward_self_audit(ctx: AuditContext) -> None:
     """steward 自身可被机审（org.md §2.6 B3/B4；设计稿 §6.3）。
 
     检查最近一轮 `team/steward/audit-*/`：
-      ① `standards_read.json` 必须覆盖四个标准且 sha256 与磁盘当前文件一致（不一致 = 用缓存标准 ⇒ FAIL）；
+      ① `standards_read.json` 必须覆盖五个标准且 sha256 与磁盘当前文件一致
+         （sha256 口径 = LF 归一化内容 sha，task-110；不一致 = 用缓存标准 ⇒ FAIL）；
       ② 每条 finding 的 `rule_ref` 可解析，或 `disposition=proposal`（把偏好当规范 ⇒ FAIL）；
       ③ `disposition=open` 且 `audit_ts` 超过 14 天 ⇒ WARN；
       ④ `SUMMARY.md` 必须存在且写 `blind_spots`（盲区声明）⇒ 否则 WARN。
@@ -2408,7 +2463,7 @@ def check_steward_self_audit(ctx: AuditContext) -> None:
                 problems += 1
                 ctx.add(check, FAIL, f"标准文件不存在，无法核对收据：{path_rel}", f"{ctx.rel(path)}")
                 continue
-            current = hashlib.sha256(path.read_bytes()).hexdigest()
+            current = content_sha256(path)
             recorded = recordings.get(path_rel)
             if recorded is None:
                 problems += 1
@@ -2489,7 +2544,8 @@ def check_steward_self_audit(ctx: AuditContext) -> None:
 
     if problems == 0:
         ctx.add(check, INFO,
-                f"最近审计 {latest.name} 可机审通过：standards 4/4 sha256 匹配；findings {len(findings)} 条"
+                f"最近审计 {latest.name} 可机审通过：standards {len(STEWARD_STANDARDS)}/"
+                f"{len(STEWARD_STANDARDS)} sha256 匹配（LF 归一化内容 sha）；findings {len(findings)} 条"
                 f"（rule_ref 可解析/或 proposal）；blind_spots 已写",
                 f"{ctx.rel(latest)}")
 
@@ -3159,10 +3215,11 @@ def selftest() -> int:
         _write(green / "scripts/ok.py", "print('ok')\n")
         _write(green / "artifacts/agent/verify/ok-report.md",
                "# 报告\n\n已落盘 `scripts/ok.py`。\n")
-        # task-103：steward_self_audit 绿 fixture（四个标准 + 审计收据 + findings + blind_spots）
+        # task-103：steward_self_audit 绿 fixture（五个标准 + 审计收据 + findings + blind_spots）
         _write(green / "AGENTS.md", "# AGENTS\n\n## 0.5 派发不变量\nL1. selftest fixture\n")
         _write(green / "docs/guides/lead-dispatch-rules.md", "# rules\n\n## 6. 决策记录义务\n")
         _write(green / "scripts/agent/team_audit.py", "CHECKS = ()\n")
+        _write(green / "scripts/agent/prompt_drift_check.py", "CHECKS = ()\n")
         green_audit = green / STEWARD_DIR / "audit-2099-01-01"
         green_receipt = {
             "schema": "steward-standards-read/v1",
@@ -3170,7 +3227,7 @@ def selftest() -> int:
             "tool": "team_audit.py@selftest",
             "standards": [
                 {"path": path_rel, "sections": sections, "read_at": "2099-01-01T00:00:00+08:00",
-                 "sha256": hashlib.sha256((green / path_rel).read_bytes()).hexdigest()}
+                 "sha256": content_sha256(green / path_rel)}
                 for path_rel, sections in STEWARD_STANDARDS
             ],
             "not_read": [],
@@ -3421,12 +3478,21 @@ def selftest() -> int:
             _write(repo_dir / "docs/guides/lead-dispatch-rules.md", "# rules\n\n## 6. 决策\n")
             _write(repo_dir / "docs/guides/agent-team-lessons.md", "# lessons\n\n## 1. 假绿\n")
             _write(repo_dir / "scripts/agent/team_audit.py", "CHECKS = ()\n")
+            _write(repo_dir / "scripts/agent/prompt_drift_check.py", "CHECKS = ()\n")
 
-        def _write_audit(repo_dir, correct_sha: bool, bad_rule_ref: bool, blind_spots: bool):
+        def _write_audit(repo_dir, sha_mode: str, bad_rule_ref: bool, blind_spots: bool):
+            """sha_mode: correct=content_sha256（LF 归一化）；raw_crlf=AGENTS.md 记录原始 CRLF 字节 sha；
+            zero=全 0（缓存标准）。"""
             audit = repo_dir / STEWARD_DIR / "audit-2026-10-24"
             standards = []
             for path_rel, sections in STEWARD_STANDARDS:
-                sha = hashlib.sha256((repo_dir / path_rel).read_bytes()).hexdigest() if correct_sha else "0" * 64
+                target = repo_dir / path_rel
+                if sha_mode == "zero":
+                    sha = "0" * 64
+                elif sha_mode == "raw_crlf" and path_rel == "AGENTS.md":
+                    sha = hashlib.sha256(target.read_bytes()).hexdigest()   # 旧口径：原始字节
+                else:
+                    sha = content_sha256(target)                            # 新口径：LF 归一化
                 standards.append({"path": path_rel, "sections": sections,
                                   "read_at": "2026-10-24T20:00:00+08:00", "sha256": sha})
             _write(audit / "standards_read.json", json.dumps({
@@ -3444,7 +3510,7 @@ def selftest() -> int:
 
         sa_red = tmp / "steward-red"
         _write_standards(sa_red)
-        _write_audit(sa_red, correct_sha=False, bad_rule_ref=True, blind_spots=False)
+        _write_audit(sa_red, sha_mode="zero", bad_rule_ref=True, blind_spots=False)
         sa_red_findings = _isolated(check_steward_self_audit, _ctx(sa_red))
         expect(sa_red_findings, "steward_self_audit", FAIL, "缓存标准")
         expect(sa_red_findings, "steward_self_audit", FAIL, "rule_ref 不可解析")
@@ -3452,11 +3518,39 @@ def selftest() -> int:
 
         sa_green = tmp / "steward-green"
         _write_standards(sa_green)
-        _write_audit(sa_green, correct_sha=True, bad_rule_ref=False, blind_spots=True)
+        _write_audit(sa_green, sha_mode="correct", bad_rule_ref=False, blind_spots=True)
         sa_green_findings = _isolated(check_steward_self_audit, _ctx(sa_green))
         if any(f.check == "steward_self_audit" and f.severity in (FAIL, WARN) for f in sa_green_findings):
             failures.append("steward_self_audit 绿 fixture 误报：" + "; ".join(
                 f"{f.check}:{f.message}" for f in sa_green_findings if f.severity in (FAIL, WARN)))
+
+        # (c2) task-110：收据 sha 口径 —— LF 归一化 vs 原始 CRLF 字节
+        port_lf = tmp / "port-lf.txt"
+        port_crlf = tmp / "port-crlf.txt"
+        port_lf.write_bytes(b"a\nb\n")
+        port_crlf.write_bytes(b"a\r\nb\r\n")
+        if content_sha256(port_lf) != content_sha256(port_crlf):
+            failures.append("content_sha256 未做到 LF/CRLF 等价（移植性判据失败）")
+        if (hashlib.sha256(port_lf.read_bytes()).hexdigest()
+                == hashlib.sha256(port_crlf.read_bytes()).hexdigest()):
+            failures.append("原始字节 sha 对 LF/CRLF 相同 ⇒ 测试无判别力（fixture 写错了）")
+
+        # 红：CRLF 工作区 + 收据记原始字节 sha（旧口径）⇒ 必须 FAIL（否则 task-110 没修好）
+        crlf_red = tmp / "steward-crlf-raw"
+        _write_standards(crlf_red)
+        (crlf_red / "AGENTS.md").write_bytes(b"# AGENTS\r\n\r\n## 0.5 \xe4\xb8\x8d\xe5\x8f\x98\xe9\x87\x8f\r\nL1.\r\n")
+        _write_audit(crlf_red, sha_mode="raw_crlf", bad_rule_ref=False, blind_spots=True)
+        expect(_isolated(check_steward_self_audit, _ctx(crlf_red)), "steward_self_audit", FAIL, "缓存标准")
+
+        # 绿：CRLF 工作区 + 收据记 LF 归一化 sha ⇒ 必须通过（跨平台正确性）
+        crlf_green = tmp / "steward-crlf-lf"
+        _write_standards(crlf_green)
+        (crlf_green / "AGENTS.md").write_bytes(b"# AGENTS\r\n\r\n## 0.5 \xe4\xb8\x8d\xe5\x8f\x98\xe9\x87\x8f\r\nL1.\r\n")
+        _write_audit(crlf_green, sha_mode="correct", bad_rule_ref=False, blind_spots=True)
+        crlf_green_findings = _isolated(check_steward_self_audit, _ctx(crlf_green))
+        if any(f.check == "steward_self_audit" and f.severity in (FAIL, WARN) for f in crlf_green_findings):
+            failures.append("steward_self_audit CRLF+LF收据 绿 fixture 误报：" + "; ".join(
+                f"{f.check}:{f.message}" for f in crlf_green_findings if f.severity in (FAIL, WARN)))
 
         def expect_true(name: str, condition: bool) -> None:
             if not condition:
@@ -3646,7 +3740,8 @@ def selftest() -> int:
               "task-109 三处收口（determinism 归一化/差异定位、write_scope 分级「共享根 vs 子路径=INFO」、"
               "mode_policy 区分「显式未决定」）各自必红/必绿 fixture 通过；"
               "task-116 辩论过程机检 deliberation_quality：dq1-dq6 六条 FAIL 判据各自必红 fixture + 绿 fixture 不误报，"
-              "dq7-dq10 宽限 WARN 已注册。")
+              "dq7-dq10 宽限 WARN 已注册；"
+              "task-110 收据 sha 口径 = LF 归一化内容 sha（LF/CRLF 版本等价性 + 旧「原始 CRLF 字节 sha」必红 fixture 通过）。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)
@@ -3730,6 +3825,8 @@ def main(argv: list[str] | None = None) -> int:
     parser.add_argument("--selftest", action="store_true", help="自测：证明脚本会红也会绿")
     parser.add_argument("--determinism", action="store_true",
                         help="§5.4 确定性自检：连跑两次 --json，除 generatedAt 外逐字节比对")
+    parser.add_argument("--sha-explain", default=None, metavar="PATH",
+                        help="task-110：并列打印 原始 sha / LF 归一化 sha / git blob sha（调试收据口径）")
     parser.add_argument("--git-days", type=int, default=COMMIT_WINDOW_DAYS,
                         help=f"commit_hygiene 扫描窗口天数（默认 {COMMIT_WINDOW_DAYS}）")
     args = parser.parse_args(argv)
@@ -3738,6 +3835,8 @@ def main(argv: list[str] | None = None) -> int:
         return selftest()
 
     repo = Path(args.repo).resolve() if args.repo else Path(__file__).resolve().parents[2]
+    if args.sha_explain:
+        return sha_explain(repo, args.sha_explain)
     if args.determinism:
         return determinism_check(repo, args.json)
     ctx = AuditContext(

@@ -247,9 +247,20 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 
 **B3 standards_read 收据（防"带教落伍"）**
 每次审计必须**重读**当前标准并在收据里记 `sha256`：
-`AGENTS.md §0.5` / `lead-dispatch-rules.md` / `agent-team-lessons.md` / `team_audit.py` 现有检查。
+`AGENTS.md §0.5` / `lead-dispatch-rules.md` / `agent-team-lessons.md` / `team_audit.py` 现有检查 /
+**`scripts/agent/prompt_drift_check.py`（2026-10-26，SF-031）**。
 标准 sha 变化而收据未更新 ⇒ `steward_self_audit` FAIL。
 **它不"记得"标准，它"读"标准** —— 这是人不设"共享记忆"的裁决（「带教空几代反而他落伍了」）。
+
+> **B3-c 第 5 项为何必须单独列入（2026-10-26，SF-031）**：`prompt_drift_check.py` 已接入
+> `team_audit.py` 成为第 12 类门禁，但它自己**不在** `STEWARD_STANDARDS` 里 ⇒
+> 它单独变更时收据不会过期（覆盖缺口：门禁的判据本身没人审）。
+> **判据**：凡"被 team_audit 调用、且其变更会改变门禁结论"的脚本，都必须是 `STEWARD_STANDARDS` 成员。
+>
+> **B3-d `content_sha256` 的 BOM 口径（2026-10-26，task-110）**：LF 归一化只做 `\r\n → \n`，
+> **BOM 保留**（BOM 是内容的一部分，剥掉会让"有 BOM 的文件"与"无 BOM 的文件"同 sha ⇒ 假绿）。
+> 若将来发现某类文件因 BOM 差异导致假红，再显式加归一化并在本条款记录理由。
+> 读取端与写入端必须**同一函数**（`content_sha256`），否则只改一边会立刻全红。
 
 **B4 finding 生命周期**
 `FAIL` ⇒ 24h 内建任务；`WARN` ⇒ 进 `findings.jsonl`（有强制 disposition，open>14d 报警）；
