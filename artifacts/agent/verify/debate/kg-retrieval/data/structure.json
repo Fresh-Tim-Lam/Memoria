@@ -1,21 +1,21 @@
 {
  "total": {
-  "md_files": 28,
-  "bytes": 2572881,
-  "chars": 1760098,
-  "cjk_chars": 353115,
-  "est_tokens": 745752,
+  "md_files": 29,
+  "bytes": 2587495,
+  "chars": 1770236,
+  "cjk_chars": 354822,
+  "est_tokens": 751818,
   "textbook_files": 14,
-  "textbook_bytes": 2132212,
-  "textbook_cjk_chars": 307706,
-  "textbook_est_tokens": 606619,
+  "textbook_bytes": 2132683,
+  "textbook_cjk_chars": 307799,
+  "textbook_est_tokens": 608157,
   "textbook_heading_levels": {
    "2": 371,
    "1": 1,
    "5": 1
   },
   "textbook_images": 477,
-  "textbook_inline_math": 9441,
+  "textbook_inline_math": 9444,
   "textbook_display_math": 2827,
   "textbook_para_p90_max": 2010.5,
   "textbook_long_paras_over_2k": 12
@@ -83,7 +83,7 @@
    "para_chars_p99": 460.1,
    "para_chars_max": 547,
    "max_para_head": "- **统计量替换**：求功率不必真的积频域 —— 把式 (2.9.7) 取 $\\tau=0$，整个频域积分换成 $R(0)=E[X^2(t)]$。依据 [[ch2-9-power-spectral-density]] 式 (2.9.8)。",
-   "est_tokens": 1554,
+   "est_tokens": 1557,
    "bytes_per_char": 1.558
   },
   {
@@ -116,7 +116,7 @@
    "para_chars_p99": 317.1,
    "para_chars_max": 359,
    "max_para_head": "- [[\\h:#FADBD8:#922B21|$h(t)=0\\,(t<0)$ 这条判据只对 LTI 成立]]：本题 $T\\{\\delta(t)\\}=\\delta(t)$，看着像「满足」判据，可系统本身是时变的 —— $h(t)$ 根本不足以",
-   "est_tokens": 2048,
+   "est_tokens": 2053,
    "bytes_per_char": 1.675
   },
   {
@@ -149,7 +149,7 @@
    "para_chars_p99": 487.0,
    "para_chars_max": 559,
    "max_para_head": "- [[\\h:#FADBD8:#922B21|符号]]：结果是 $\\dfrac{1}{3+\\mathrm{j}\\omega}$，不是 $\\dfrac{1}{\\mathrm{j}\\omega-3}$。$\\mathrm{e}^{-3t}$ 配 ",
-   "est_tokens": 2243,
+   "est_tokens": 2249,
    "bytes_per_char": 1.425
   },
   {
@@ -182,7 +182,7 @@
    "para_chars_p99": 313.7,
    "para_chars_max": 777,
    "max_para_head": "- (1) $\\int _ { - \\infty } ^ { + \\infty } \\sin ( t ) \\cdot \\delta ( t - \\frac { \\pi } { 4 } ) \\mathrm { d } t \\ = \\sin (",
-   "est_tokens": 23893,
+   "est_tokens": 23950,
    "bytes_per_char": 1.293
   },
   {
@@ -215,7 +215,7 @@
    "para_chars_p99": 349.5,
    "para_chars_max": 662,
    "max_para_head": "$$\n\\begin{array}{l} = \\int_ {- \\infty} ^ {\\infty} x _ {2} (t) \\mathrm{e} ^ {- \\mathrm{j} \\omega t} [ \\frac {1}{2 \\pi} \\i",
-   "est_tokens": 54186,
+   "est_tokens": 54314,
    "bytes_per_char": 1.273
   },
   {
@@ -248,7 +248,7 @@
    "para_chars_p99": 446.9,
    "para_chars_max": 770,
    "max_para_head": "$$\n\\begin{array}{l} R _ {Y} \\left(t _ {1}, t _ {2}\\right) = E \\left[ Y \\left(t _ {1}\\right) Y \\left(t _ {2}\\right) \\righ",
-   "est_tokens": 13492,
+   "est_tokens": 13524,
    "bytes_per_char": 1.333
   },
   {
@@ -280,7 +280,7 @@
    "para_chars_p99": 362.7,
    "para_chars_max": 1056,
    "max_para_head": "$$\n\\frac {\\mathrm{d} v _ {\\mathrm{C}} ^ {2} (t)}{\\mathrm{d} t ^ {2}} + \\frac {v} \\frac {\\mathrm{d} v _ {\\mathrm{C}} ^ {2",
-   "est_tokens": 10013,
+   "est_tokens": 10037,
    "bytes_per_char": 1.381
   },
   {
@@ -312,7 +312,7 @@
    "para_chars_p99": 256.5,
    "para_chars_max": 390,
    "max_para_head": "1. 在冲激信号的抽样特性中，其在冲激信号的大小下，但其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信号的大小下，其在冲激信",
-   "est_tokens": 5587,
+   "est_tokens": 5600,
    "bytes_per_char": 1.376
   },
   {
@@ -345,7 +345,7 @@
    "para_chars_p99": 435.8,
    "para_chars_max": 1308,
    "max_para_head": "$$\n\\begin{array}{c} = \\frac { h ^ { ( n ) } \\left( { \\iota } \\right) + } { b _ { m } \\delta ^ { ( m ) } \\left( { \\iota }",
-   "est_tokens": 12913,
+   "est_tokens": 12943,
    "bytes_per_char": 1.262
   },
   {
@@ -377,7 +377,7 @@
    "para_chars_p99": 393.9,
    "para_chars_max": 397,
    "max_para_head": "求输出噪声方差：\n$$\n\\begin{aligned}\n\\mathrm{Var}(y_n)\n&=E\\left[\\left(\\frac1M\\sum_{n=0}^{M-1}n[k-n]\\right)^2\\right]\\\\\n&=\\frac{1}{",
-   "est_tokens": 691,
+   "est_tokens": 693,
    "bytes_per_char": 1.471
   },
   {
@@ -410,7 +410,7 @@
    "para_chars_p99": 779.4,
    "para_chars_max": 863,
    "max_para_head": "- 拉普拉斯存在的条件：$\\int_{0^-}^{\\infty}|x(t)\\mathrm{e}^{-\\sigma t}|\\mathrm{d}t=C$，即 $\\lim_{t\\to\\infty}x(t)\\mathrm{e}^{-\\sigma t",
-   "est_tokens": 11141,
+   "est_tokens": 11167,
    "bytes_per_char": 1.732
   },
   {
@@ -442,8 +442,41 @@
    "para_chars_p99": 483.5,
    "para_chars_max": 488,
    "max_para_head": "---\n### 已知\n$$\n\\begin{align*}\n&X(\\omega)=0,\\ |\\omega|\\notin[\\omega_L,\\omega_H],\\quad W=\\omega_H-\\omega_L\\\\\n&X_s(\\omega)=\\",
-   "est_tokens": 1071,
+   "est_tokens": 1074,
    "bytes_per_char": 1.14
+  },
+  {
+   "file": "notes/非均匀量化噪声推导-附录.md",
+   "bytes": 14143,
+   "chars": 9887,
+   "cjk_chars": 1614,
+   "ascii_other_chars": 8273,
+   "cjk_ratio": 0.163,
+   "lines": 423,
+   "headings": 32,
+   "heading_levels": {
+    "2": 1,
+    "3": 8,
+    "4": 23
+   },
+   "max_heading_level": 4,
+   "inline_math": 152,
+   "display_math_blocks": 40,
+   "images": 0,
+   "image_only_lines": 0,
+   "table_rows": 16,
+   "code_fences": 0,
+   "hilite_macros": 0,
+   "link_macros": 0,
+   "paragraphs": 149,
+   "non_image_paragraphs": 149,
+   "para_chars_p50": 39.0,
+   "para_chars_p90": 146.8,
+   "para_chars_p99": 289.0,
+   "para_chars_max": 457,
+   "max_para_head": "| 结论 | 式号 | 严格 / 近似 | 成立条件 |\n|---|---|---|---|\n| $\\mathrm{var}(e_y)=\\Delta_y^2/12$ | (3.3.25) | 近似 | $p_Y$ 在格内近似平坦 |\n| $",
+   "est_tokens": 4199,
+   "bytes_per_char": 1.43
   },
   {
    "file": "教材/00_前言与目录.md",
@@ -474,7 +507,7 @@
    "para_chars_p99": 520.1,
    "para_chars_max": 8507,
    "max_para_head": "| 符号 | 说明 | 出现节号 |\n|---|---|---|\n| arg | 函数的自变量值 ( argf(x)=x ) | 4.6 |\n| Bc | 相干带宽 | 7.4.3 |\n| BD | 多普勒扩展 | 7.4.3 |\n| BL",
-   "est_tokens": 8677,
+   "est_tokens": 8698,
    "bytes_per_char": 1.97
   },
   {
@@ -506,7 +539,7 @@
    "para_chars_p99": 688.2,
    "para_chars_max": 813,
    "max_para_head": "**比特能量 $E_{\\mathrm{b}}$ 与噪声功率谱密度 $N_{0}$ 的比** **$(E_{\\mathrm{b}} / N_{0})$** \n比特能量 $E_{\\mathrm{b}}$ 是指传输1比特信息所需要的能量，噪声功率",
-   "est_tokens": 5870,
+   "est_tokens": 5884,
    "bytes_per_char": 2.411
   },
   {
@@ -537,39 +570,39 @@
    "para_chars_p99": 700.9,
    "para_chars_max": 913,
    "max_para_head": "$$\n\\begin{array}{l} P _ {T} (f) = \\frac {1}{2 T} \\int_ {- T} ^ {T} \\int_ {- T} ^ {T} R \\left(t _ {1} - t _ {2}\\right) \\m",
-   "est_tokens": 49914,
+   "est_tokens": 50031,
    "bytes_per_char": 1.376
   },
   {
    "file": "教材/03_第3章_模拟信号的数字编码.md",
-   "bytes": 190639,
-   "chars": 129950,
-   "cjk_chars": 26588,
-   "ascii_other_chars": 103362,
+   "bytes": 191110,
+   "chars": 130201,
+   "cjk_chars": 26681,
+   "ascii_other_chars": 103520,
    "cjk_ratio": 0.205,
-   "lines": 2956,
+   "lines": 2960,
    "headings": 32,
    "heading_levels": {
     "2": 32
    },
    "max_heading_level": 2,
-   "inline_math": 1032,
+   "inline_math": 1035,
    "display_math_blocks": 266,
    "images": 60,
    "image_only_lines": 60,
    "table_rows": 221,
    "code_fences": 30,
    "hilite_macros": 45,
-   "link_macros": 45,
-   "paragraphs": 937,
-   "non_image_paragraphs": 890,
-   "para_chars_p50": 104.0,
-   "para_chars_p90": 301.1,
-   "para_chars_p99": 645.7,
+   "link_macros": 47,
+   "paragraphs": 939,
+   "non_image_paragraphs": 892,
+   "para_chars_p50": 104.5,
+   "para_chars_p90": 300.9,
+   "para_chars_p99": 645.4,
    "para_chars_max": 1733,
    "max_para_head": "| 线段编号 | 量化间隔/量化间隔数 | 段落起点/终点值 | 分层电平编号 | 分层电平值 | 编码输出码组 | 量化电平值 | 量化电平编号 |\n|---|---|---|---|---|---|---|---|\n| 1 | $2^1",
-   "est_tokens": 55060,
-   "bytes_per_char": 1.467
+   "est_tokens": 55296,
+   "bytes_per_char": 1.468
   },
   {
    "file": "教材/04_第4章_信息论基础.md",
@@ -599,7 +632,7 @@
    "para_chars_p99": 629.6,
    "para_chars_max": 2412,
    "max_para_head": "$$\n\\begin{array}{l} I (X; Y) - \\alpha I _ {1} (X; Y) - (1 - \\alpha) I _ {2} (X; Y) \\\\ = \\sum_ {i = 1} ^ {M} \\sum_ {j = 1",
-   "est_tokens": 76869,
+   "est_tokens": 77051,
    "bytes_per_char": 1.438
   },
   {
@@ -630,7 +663,7 @@
    "para_chars_p99": 681.3,
    "para_chars_max": 1069,
    "max_para_head": "$$\n\\begin{array}{l} h (k T - T / 2) = \\frac {1}{2 \\pi} \\int_ {- \\infty} ^ {\\infty} H (\\omega) \\mathrm{e} ^ {\\mathrm{j} \\",
-   "est_tokens": 41087,
+   "est_tokens": 41184,
    "bytes_per_char": 1.539
   },
   {
@@ -661,7 +694,7 @@
    "para_chars_p99": 866.4,
    "para_chars_max": 14186,
    "max_para_head": "```mermaid\ngraph LR\n  r[\"r(t)\"] --> Sum1((×))\n  Sum1 --> Sum2((×))\n  Sum2 --> Sum3((×))\n  Sum3 --> Sum4((×))\n  Sum4 --> ",
-   "est_tokens": 108442,
+   "est_tokens": 108698,
    "bytes_per_char": 1.339
   },
   {
@@ -692,7 +725,7 @@
    "para_chars_p99": 674.5,
    "para_chars_max": 2309,
    "max_para_head": "$$\n\\begin{array}{l} R _ {H _ {\\mathrm{L} \\tau}} (f _ {1}, f _ {2}; \\Delta t) = E \\Big [ H _ {\\mathrm{L} \\tau} ^ {*} (f _",
-   "est_tokens": 43147,
+   "est_tokens": 43248,
    "bytes_per_char": 1.526
   },
   {
@@ -723,7 +756,7 @@
    "para_chars_p99": 913.3,
    "para_chars_max": 2236,
    "max_para_head": "```mermaid\ngraph LR\n  S0S100[\"S0S1=00\"] -->|11| S0S110[\"S0S1=10\"]\n  S0S100 -->|00| S0S111[\"S0S1=11\"]\n  S0S110 -->|01| S0",
-   "est_tokens": 120633,
+   "est_tokens": 120918,
    "bytes_per_char": 1.465
   },
   {
@@ -754,7 +787,7 @@
    "para_chars_p99": 707.7,
    "para_chars_max": 1129,
    "max_para_head": "$$\n\\begin{array}{l} s _ {\\mathrm{MPSK}} (t) u _ {\\mathrm{L}} (t) = A \\cos (\\omega_ {\\mathrm{c}} t + \\phi_ {m}) \\cdot \\co",
-   "est_tokens": 33209,
+   "est_tokens": 33288,
    "bytes_per_char": 1.552
   },
   {
@@ -785,7 +818,7 @@
    "para_chars_p99": 615.3,
    "para_chars_max": 1014,
    "max_para_head": "10.1 扩频系统可以分为哪几类？它们的主要区别是什么？  \n10.2 试简述扩频系统的优点。  \n10.3 试从频域分析直扩系统对强窄带干扰的抑制作用。  \n10.4 试比较直扩和跳频系统抗干扰能力的差异。  \n10.5 要求系统能在干扰",
-   "est_tokens": 23376,
+   "est_tokens": 23431,
    "bytes_per_char": 2.002
   },
   {
@@ -816,7 +849,7 @@
    "para_chars_p99": 591.0,
    "para_chars_max": 3024,
    "max_para_head": "```mermaid\ngraph LR\n  Center[\"BS\"] --> Module1[\"UE1\"]\n  Center --> Module2[\"UE2\"]\n  Center --> Module3[\"UE3\"]\n  Center -",
-   "est_tokens": 13134,
+   "est_tokens": 13165,
    "bytes_per_char": 1.856
   },
   {
@@ -847,7 +880,7 @@
    "para_chars_p99": 946.7,
    "para_chars_max": 1490,
    "max_para_head": "式中， $M_{\\mathrm{R}} \\times M_{\\mathrm{R}}$ 维矩阵 $\\boldsymbol{U}$ 和 $M_{\\mathrm{T}} \\times M_{\\mathrm{T}}$ 维矩阵 $\\boldsymbo",
-   "est_tokens": 25476,
+   "est_tokens": 25536,
    "bytes_per_char": 1.421
   },
   {
@@ -876,7 +909,7 @@
    "para_chars_p99": 3801.1,
    "para_chars_max": 4000,
    "max_para_head": "| 缩写 | 英文全称 | 中文名称 | 出现节号 |\n|---|---|---|---|\n| 3G | Third Generation | 第三代(移动通信系统) | 1.2 |\n| ADC | Analog to Digital Co",
-   "est_tokens": 1725,
+   "est_tokens": 1729,
    "bytes_per_char": 1.269
   },
   {

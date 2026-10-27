@@ -2,7 +2,7 @@
  "coverage_per_chapter": [
   {
    "file": "教材/00_前言与目录.md",
-   "est_tokens": 8677,
+   "est_tokens": 8698,
    "lines": 833,
    "n_kps": 0,
    "has_sidecar": false,
@@ -12,7 +12,7 @@
   },
   {
    "file": "教材/01_第1章_绪论.md",
-   "est_tokens": 5870,
+   "est_tokens": 5884,
    "lines": 299,
    "n_kps": 21,
    "has_sidecar": true,
@@ -22,7 +22,7 @@
   },
   {
    "file": "教材/02_第2章_信号分析基础.md",
-   "est_tokens": 49914,
+   "est_tokens": 50031,
    "lines": 2712,
    "n_kps": 21,
    "has_sidecar": true,
@@ -32,17 +32,17 @@
   },
   {
    "file": "教材/03_第3章_模拟信号的数字编码.md",
-   "est_tokens": 55060,
-   "lines": 2956,
+   "est_tokens": 55296,
+   "lines": 2960,
    "n_kps": 28,
    "has_sidecar": true,
-   "covered_lines": 2712,
-   "line_coverage_pct": 91.7,
-   "uncovered_lines": 244
+   "covered_lines": 2710,
+   "line_coverage_pct": 91.6,
+   "uncovered_lines": 250
   },
   {
    "file": "教材/04_第4章_信息论基础.md",
-   "est_tokens": 76869,
+   "est_tokens": 77051,
    "lines": 4184,
    "n_kps": 0,
    "has_sidecar": false,
@@ -52,7 +52,7 @@
   },
   {
    "file": "教材/05_第5章_数字基带传输系统.md",
-   "est_tokens": 41087,
+   "est_tokens": 41184,
    "lines": 2265,
    "n_kps": 0,
    "has_sidecar": false,
@@ -62,7 +62,7 @@
   },
   {
    "file": "教材/06_第6章_数字载波调制传输系统.md",
-   "est_tokens": 108442,
+   "est_tokens": 108698,
    "lines": 6261,
    "n_kps": 0,
    "has_sidecar": false,
@@ -72,7 +72,7 @@
   },
   {
    "file": "教材/07_第7章_传输信道.md",
-   "est_tokens": 43147,
+   "est_tokens": 43248,
    "lines": 2201,
    "n_kps": 0,
    "has_sidecar": false,
@@ -82,7 +82,7 @@
   },
   {
    "file": "教材/08_第8章_差错控制编码.md",
-   "est_tokens": 120633,
+   "est_tokens": 120918,
    "lines": 5879,
    "n_kps": 1,
    "has_sidecar": true,
@@ -92,7 +92,7 @@
   },
   {
    "file": "教材/09_第9章_同步原理与技术.md",
-   "est_tokens": 33209,
+   "est_tokens": 33288,
    "lines": 1888,
    "n_kps": 0,
    "has_sidecar": false,
@@ -102,7 +102,7 @@
   },
   {
    "file": "教材/10_第10章_扩展频谱通信技术.md",
-   "est_tokens": 23376,
+   "est_tokens": 23431,
    "lines": 1378,
    "n_kps": 0,
    "has_sidecar": false,
@@ -112,7 +112,7 @@
   },
   {
    "file": "教材/11_第11章_信道复用与多址技术.md",
-   "est_tokens": 13134,
+   "est_tokens": 13165,
    "lines": 965,
    "n_kps": 0,
    "has_sidecar": false,
@@ -122,7 +122,7 @@
   },
   {
    "file": "教材/12_第12章_空时无线通信技术概述.md",
-   "est_tokens": 25476,
+   "est_tokens": 25536,
    "lines": 1040,
    "n_kps": 0,
    "has_sidecar": false,
@@ -132,7 +132,7 @@
   },
   {
    "file": "教材/13_附录_缩写索引表.md",
-   "est_tokens": 1725,
+   "est_tokens": 1729,
    "lines": 86,
    "n_kps": 0,
    "has_sidecar": false,
@@ -157,9 +157,9 @@
    "教材/12_第12章_空时无线通信技术概述.md",
    "教材/13_附录_缩写索引表.md"
   ],
-  "unindexed_est_tokens": 375142,
-  "indexed_est_tokens": 231477,
-  "textbook_est_tokens": 606619,
+  "unindexed_est_tokens": 376028,
+  "indexed_est_tokens": 232129,
+  "textbook_est_tokens": 608157,
   "unindexed_token_share_pct": 61.8,
   "chapter_mean_line_coverage_pct": 62.4
  },
@@ -177,12 +177,12 @@
    "inverted_ranges": 0
   },
   "notes": {
-   "n_kps": 1,
-   "span_p50": 1364.0,
-   "span_p90": 1364.0,
-   "span_max": 1364,
+   "n_kps": 2,
+   "span_p50": 5625.0,
+   "span_p90": 9033.8,
+   "span_max": 9886,
    "span_lt_200": 0,
-   "name_len_p50": 6.0,
+   "name_len_p50": 9.5,
    "duplicate_name_kps": 0,
    "structural_names": 0,
    "ocr_dirty_names": 0,
@@ -206,10 +206,10 @@
    "id": "linear-pcm-error-performance",
    "name": "线性 PCM 编码的误码性能分析",
    "file": "教材/03_第3章_模拟信号的数字编码.md",
-   "start_line": 2788,
-   "end_line": 2748,
-   "start_hint": 2788,
-   "end_hint": 2792
+   "start_line": 2792,
+   "end_line": 2752,
+   "start_hint": 2792,
+   "end_hint": 2796
   }
  ],
  "duplicate_names_within_file": [
@@ -535,10 +535,10 @@
  ],
  "duplicate_name_kp_total": 102,
  "index_cost": {
-  "kps": 357,
-  "names_only_tokens_est": 2063,
-  "name_plus_tags_tokens_est": 3581,
-  "name_plus_first40_snippet_tokens_est": 4601,
+  "kps": 358,
+  "names_only_tokens_est": 2074,
+  "name_plus_tags_tokens_est": 3611,
+  "name_plus_first40_snippet_tokens_est": 4624,
   "tokens_per_kp_names_only": 5.8,
   "tokens_per_kp_name_plus40": 12.9
  }

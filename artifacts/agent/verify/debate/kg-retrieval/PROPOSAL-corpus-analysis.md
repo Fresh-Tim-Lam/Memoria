@@ -5,6 +5,7 @@
 > **语料**：`D:\AAA_Courses\数字通信原理`（59 md / 5.27MB，已建库，12 sidecar）+ 同目录另外 4 个已建库 KB（只读，用于粒度外部校验）。
 > **纪律**：全程只读 `D:\AAA_Courses`；未建库、未 rebuild、未改任何原文；产物只落 `artifacts/agent/verify/debate/kg-retrieval/`；未 commit。
 > **数据**：`data/*.json` + `data/log-0*.txt`（脚本原始输出）；人工判定记录在 `data/manual-judgments.json`。
+> **Phase 1.5 增量**（「怎样科学地建索引」R9/R10/R13/R14）见同目录 `INDEXING-R9R10R13R14.md`。
 > **复跑**：见文末 §6。
 > 本文所有「判断」均显式标注；数字均可复跑。
 

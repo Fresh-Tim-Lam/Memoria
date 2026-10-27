@@ -1,0 +1,4689 @@
+{
+ "routing": {
+  "variants": [
+   {
+    "label": "V0 name only (358)",
+    "n": 13,
+    "hit1": 4,
+    "hit3": 7,
+    "hit1_pct": 30.8,
+    "hit3_pct": 53.8,
+    "wrong_top1_pct": 61.5,
+    "zero_score_pct": 7.7,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "top3": [
+       "log-linear-pcm",
+       "a-law-mu-law-pcm",
+       "pcm-coding-methods"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 6,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 8,
+      "top1": "信道",
+      "top3": [
+       "信道",
+       "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+       "信道编码器"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "ideal-sampling",
+      "top3": [
+       "ideal-sampling",
+       "bandpass-sampling",
+       "sampling-theorem"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "sampling-theorem"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "ideal-sampling",
+       "natural-sampling"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 12,
+      "top1": null,
+      "top3": [],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 16,
+      "top1": "img-ch2-4-04-n-功率信号-实信号若满足条件",
+      "top3": [
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "nonuniform-quantization-noise-derivation",
+       "img-ch2-4-01-第2章信号分析基础-随机信号分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 18,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "nonuniform-quantization-noise-derivation"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "nonuniform-quantization-noise-derivation"
+      ],
+      "hit1": true,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 8,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 3,
+      "top1": "scalar-quantization",
+      "sim_to_ideal": 0.147,
+      "harmful": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.014,
+      "harmful": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "sim_to_ideal": 0.048,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "scalar-quantization",
+      "sim_to_ideal": 0.147,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "信道",
+      "sim_to_ideal": 0.04,
+      "harmful": false
+     },
+     {
+      "q": 11,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.019,
+      "harmful": false
+     }
+    ]
+   },
+   {
+    "label": "V1 name+tags (358)",
+    "n": 13,
+    "hit1": 4,
+    "hit3": 8,
+    "hit1_pct": 30.8,
+    "hit3_pct": 61.5,
+    "wrong_top1_pct": 61.5,
+    "zero_score_pct": 7.7,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "uniform-quantization",
+       "vector-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "ch3-intro",
+      "top3": [
+       "ch3-intro",
+       "scalar-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "top3": [
+       "log-linear-pcm",
+       "a-law-mu-law-pcm",
+       "img-ch2-3-91-为什么进行系统的频域分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 6,
+      "top1": "ch3-intro",
+      "top3": [
+       "ch3-intro",
+       "scalar-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 8,
+      "top1": "信道",
+      "top3": [
+       "信道",
+       "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+       "信道编码器"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "ideal-sampling",
+      "top3": [
+       "ideal-sampling",
+       "bandpass-sampling",
+       "sampling-theorem"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "sampling-theorem",
+       "img-ch2-4-04-n-功率信号-实信号若满足条件"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "sampling-theorem",
+       "img-ch2-3-124-线性相位理想低通滤波器"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 12,
+      "top1": null,
+      "top3": [],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 16,
+      "top1": "img-ch2-4-04-n-功率信号-实信号若满足条件",
+      "top3": [
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "nonuniform-quantization-noise-derivation",
+       "img-ch2-4-01-第2章信号分析基础-随机信号分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 18,
+      "top1": "nonuniform-quantization-noise-derivation",
+      "top3": [
+       "nonuniform-quantization-noise-derivation",
+       "uniform-quantization",
+       "nonuniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "nonuniform-quantization-noise-derivation"
+      ],
+      "hit1": true,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 8,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 3,
+      "top1": "ch3-intro",
+      "sim_to_ideal": 0.1,
+      "harmful": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.014,
+      "harmful": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "sim_to_ideal": 0.048,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "ch3-intro",
+      "sim_to_ideal": 0.053,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "信道",
+      "sim_to_ideal": 0.04,
+      "harmful": false
+     },
+     {
+      "q": 11,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.019,
+      "harmful": false
+     }
+    ]
+   },
+   {
+    "label": "V2 name+snippet40 (358)",
+    "n": 13,
+    "hit1": 3,
+    "hit3": 5,
+    "hit1_pct": 23.1,
+    "hit3_pct": 38.5,
+    "wrong_top1_pct": 76.9,
+    "zero_score_pct": 0.0,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "top3": [
+       "log-linear-pcm",
+       "a-law-mu-law-pcm",
+       "img-ch2-3-91-为什么进行系统的频域分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 6,
+      "top1": "m点滑动平均滤波去噪-数学原理",
+      "top3": [
+       "m点滑动平均滤波去噪-数学原理",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 8,
+      "top1": "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+      "top3": [
+       "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+       "信道",
+       "信道编码器"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "ideal-sampling",
+      "top3": [
+       "ideal-sampling",
+       "bandpass-sampling",
+       "sampling-theorem"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "aliasing"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "ideal-sampling",
+       "natural-sampling"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 12,
+      "top1": "ch2-10-white-noise",
+      "top3": [
+       "ch2-10-white-noise"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 16,
+      "top1": "img-ch2-4-04-n-功率信号-实信号若满足条件",
+      "top3": [
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "nonuniform-quantization-noise-derivation",
+       "img-ch2-4-01-第2章信号分析基础-随机信号分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 18,
+      "top1": "nonuniform-quantization-noise-derivation",
+      "top3": [
+       "nonuniform-quantization-noise-derivation",
+       "uniform-quantization",
+       "nonuniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "nonuniform-quantization-noise-derivation"
+      ],
+      "hit1": true,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 10,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 1,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.019,
+      "harmful": false
+     },
+     {
+      "q": 3,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.027,
+      "harmful": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.014,
+      "harmful": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "sim_to_ideal": 0.048,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "m点滑动平均滤波去噪-数学原理",
+      "sim_to_ideal": 0.044,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+      "sim_to_ideal": 0.003,
+      "harmful": false
+     }
+    ]
+   },
+   {
+    "label": "V3 name+snippet160 (358)",
+    "n": 13,
+    "hit1": 3,
+    "hit3": 5,
+    "hit1_pct": 23.1,
+    "hit3_pct": 38.5,
+    "wrong_top1_pct": 76.9,
+    "zero_score_pct": 0.0,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "top3": [
+       "log-linear-pcm",
+       "a-law-mu-law-pcm",
+       "img-ch2-3-91-为什么进行系统的频域分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 6,
+      "top1": "m点滑动平均滤波去噪-数学原理",
+      "top3": [
+       "m点滑动平均滤波去噪-数学原理",
+       "scalar-quantization",
+       "vector-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 8,
+      "top1": "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+      "top3": [
+       "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+       "信道",
+       "信道编码器"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "ideal-sampling",
+      "top3": [
+       "ideal-sampling",
+       "bandpass-sampling",
+       "sampling-theorem"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "aliasing"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "ideal-sampling",
+       "natural-sampling"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 12,
+      "top1": "ch2-10-white-noise",
+      "top3": [
+       "ch2-10-white-noise"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 16,
+      "top1": "img-ch2-4-04-n-功率信号-实信号若满足条件",
+      "top3": [
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "nonuniform-quantization-noise-derivation",
+       "img-ch2-4-01-第2章信号分析基础-随机信号分析"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 18,
+      "top1": "nonuniform-quantization-noise-derivation",
+      "top3": [
+       "nonuniform-quantization-noise-derivation",
+       "uniform-quantization",
+       "nonuniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "nonuniform-quantization-noise-derivation"
+      ],
+      "hit1": true,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 10,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 1,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.019,
+      "harmful": false
+     },
+     {
+      "q": 3,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.027,
+      "harmful": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.014,
+      "harmful": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "sim_to_ideal": 0.048,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "m点滑动平均滤波去噪-数学原理",
+      "sim_to_ideal": 0.044,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+      "sim_to_ideal": 0.003,
+      "harmful": false
+     }
+    ]
+   },
+   {
+    "label": "V4 name+full unit (358)",
+    "n": 13,
+    "hit1": 4,
+    "hit3": 8,
+    "hit1_pct": 30.8,
+    "hit3_pct": 61.5,
+    "wrong_top1_pct": 69.2,
+    "zero_score_pct": 0.0,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "nonuniform-quantization",
+      "top3": [
+       "nonuniform-quantization",
+       "predictive-coding-basics",
+       "scalar-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "quantization-overview",
+      "top3": [
+       "quantization-overview",
+       "predictive-coding-basics",
+       "ch3-summary"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "top3": [
+       "img-ch2-3-91-为什么进行系统的频域分析",
+       "a-law-mu-law-pcm",
+       "img-ch2-3-90-目录"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 5,
+      "top1": "img-ch2-2-31-系统的时域分析",
+      "top3": [
+       "img-ch2-2-31-系统的时域分析",
+       "log-linear-pcm",
+       "predictive-coding-basics"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 6,
+      "top1": "quantization-overview",
+      "top3": [
+       "quantization-overview",
+       "img-ch2-3-142-拉普拉斯-Laplace-Pierre-Simon-1749-1827",
+       "img-ch2-2-09-莱昂哈德-欧拉-Leonhard-Euler"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 8,
+      "top1": "ch3-intro",
+      "top3": [
+       "ch3-intro",
+       "dpcm",
+       "信道编码器"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "ch3-summary",
+      "top3": [
+       "ch3-summary",
+       "ideal-sampling",
+       "bandpass-sampling"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "sampling-theorem",
+       "ch3-summary"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "img-ch2-3-121-目录",
+       "img-ch2-3-91-为什么进行系统的频域分析"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 12,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "bandpass-sampling",
+       "ch2-7-random-variable-function"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 16,
+      "top1": "img-ch2-4-04-n-功率信号-实信号若满足条件",
+      "top3": [
+       "img-ch2-4-04-n-功率信号-实信号若满足条件",
+       "ch2-2-deterministic-signal-review",
+       "img-ch2-4-05-n-相关函数与信号的能量-功率密度谱间的关系"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 18,
+      "top1": "nonuniform-quantization",
+      "top3": [
+       "nonuniform-quantization",
+       "nonuniform-quantization-noise-derivation",
+       "scalar-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "nonuniform-quantization-noise-derivation",
+      "top3": [
+       "nonuniform-quantization-noise-derivation",
+       "uniform-quantization",
+       "nonuniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 9,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 1,
+      "top1": "nonuniform-quantization",
+      "sim_to_ideal": 0.121,
+      "harmful": false
+     },
+     {
+      "q": 4,
+      "top1": "img-ch2-3-91-为什么进行系统的频域分析",
+      "sim_to_ideal": 0.014,
+      "harmful": false
+     },
+     {
+      "q": 5,
+      "top1": "img-ch2-2-31-系统的时域分析",
+      "sim_to_ideal": 0.019,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "quantization-overview",
+      "sim_to_ideal": 0.1,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "ch3-intro",
+      "sim_to_ideal": 0.114,
+      "harmful": false
+     },
+     {
+      "q": 9,
+      "top1": "ch3-summary",
+      "sim_to_ideal": 0.087,
+      "harmful": false
+     }
+    ]
+   },
+   {
+    "label": "V6 ch03 28 names only",
+    "n": 13,
+    "hit1": 5,
+    "hit3": 9,
+    "hit1_pct": 38.5,
+    "hit3_pct": 69.2,
+    "wrong_top1_pct": 53.8,
+    "zero_score_pct": 7.7,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 4,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "top3": [
+       "log-linear-pcm",
+       "a-law-mu-law-pcm",
+       "pcm-coding-methods"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 6,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 8,
+      "top1": "scalar-quantization",
+      "top3": [
+       "scalar-quantization",
+       "vector-quantization",
+       "uniform-quantization"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "ideal-sampling",
+      "top3": [
+       "ideal-sampling",
+       "bandpass-sampling",
+       "sampling-theorem"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "sampling-theorem",
+       "aliasing"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "ideal-sampling",
+      "top3": [
+       "ideal-sampling",
+       "natural-sampling",
+       "sampling-theorem"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 12,
+      "top1": null,
+      "top3": [],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 16,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "quantization-overview"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 18,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "log-linear-pcm"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "scalar-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 7,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 3,
+      "top1": "scalar-quantization",
+      "sim_to_ideal": 0.147,
+      "harmful": false
+     },
+     {
+      "q": 4,
+      "top1": "scalar-quantization",
+      "sim_to_ideal": 0.147,
+      "harmful": false
+     },
+     {
+      "q": 5,
+      "top1": "log-linear-pcm",
+      "sim_to_ideal": 0.048,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "scalar-quantization",
+      "sim_to_ideal": 0.147,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "scalar-quantization",
+      "sim_to_ideal": 0.108,
+      "harmful": false
+     },
+     {
+      "q": 11,
+      "top1": "ideal-sampling",
+      "sim_to_ideal": 0.081,
+      "harmful": false
+     }
+    ]
+   },
+   {
+    "label": "V7 ch03 28 name+question-worded desc",
+    "n": 13,
+    "hit1": 7,
+    "hit3": 10,
+    "hit1_pct": 53.8,
+    "hit3_pct": 76.9,
+    "wrong_top1_pct": 46.2,
+    "zero_score_pct": 0.0,
+    "detail": [
+     {
+      "q": 1,
+      "top1": "quantization-overview",
+      "top3": [
+       "quantization-overview",
+       "uniform-quantization",
+       "logarithmic-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 3,
+      "top1": "natural-sampling",
+      "top3": [
+       "natural-sampling",
+       "vector-quantization",
+       "bandpass-sampling"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 4,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "quantization-overview",
+       "logarithmic-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 5,
+      "top1": "pcm",
+      "top3": [
+       "pcm",
+       "log-linear-pcm",
+       "pcm-coding-methods"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 6,
+      "top1": "vector-quantization",
+      "top3": [
+       "vector-quantization",
+       "natural-sampling",
+       "delta-sigma-modulation"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 8,
+      "top1": "quantization-overview",
+      "top3": [
+       "quantization-overview",
+       "simple-delta-modulation",
+       "ideal-sampling"
+      ],
+      "hit1": false,
+      "hit3": false
+     },
+     {
+      "q": 9,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "ideal-sampling",
+       "natural-sampling"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 10,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "sampling-theorem",
+       "natural-sampling"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 11,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling",
+       "uniform-quantization",
+       "logarithmic-quantization"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 12,
+      "top1": "bandpass-sampling",
+      "top3": [
+       "bandpass-sampling"
+      ],
+      "hit1": true,
+      "hit3": true
+     },
+     {
+      "q": 16,
+      "top1": "nonuniform-quantization",
+      "top3": [
+       "nonuniform-quantization",
+       "uniform-quantization",
+       "natural-sampling"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 18,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "logarithmic-quantization"
+      ],
+      "hit1": false,
+      "hit3": true
+     },
+     {
+      "q": 19,
+      "top1": "uniform-quantization",
+      "top3": [
+       "uniform-quantization",
+       "nonuniform-quantization",
+       "quantization-overview"
+      ],
+      "hit1": true,
+      "hit3": true
+     }
+    ],
+    "wrong_top1": 6,
+    "harmful_misroute": 0,
+    "harmful_misroute_pct": 0.0,
+    "harmful_examples": [
+     {
+      "q": 3,
+      "top1": "natural-sampling",
+      "sim_to_ideal": 0.139,
+      "harmful": false
+     },
+     {
+      "q": 6,
+      "top1": "vector-quantization",
+      "sim_to_ideal": 0.106,
+      "harmful": false
+     },
+     {
+      "q": 8,
+      "top1": "quantization-overview",
+      "sim_to_ideal": 0.071,
+      "harmful": false
+     },
+     {
+      "q": 9,
+      "top1": "bandpass-sampling",
+      "sim_to_ideal": 0.145,
+      "harmful": false
+     },
+     {
+      "q": 16,
+      "top1": "nonuniform-quantization",
+      "sim_to_ideal": 0.177,
+      "harmful": false
+     },
+     {
+      "q": 18,
+      "top1": "uniform-quantization",
+      "sim_to_ideal": 0.177,
+      "harmful": false
+     }
+    ]
+   }
+  ],
+  "line_anchored": {
+   "n": 2,
+   "rule": "file#line -> unit whose range contains the line (no lexical routing)",
+   "detail": [
+    {
+     "q": 15,
+     "ideal": [
+      "uniform-quantization"
+     ],
+     "range": [
+      479,
+      644
+     ]
+    },
+    {
+     "q": 17,
+     "ideal": [
+      "nonuniform-quantization"
+     ],
+     "range": [
+      646,
+      933
+     ]
+    }
+   ]
+  },
+  "hot_ids": [
+   "a-law-mu-law-pcm",
+   "aliasing",
+   "bandpass-sampling",
+   "ideal-sampling",
+   "logarithmic-quantization",
+   "nonuniform-quantization",
+   "pcm",
+   "pcm-coding-methods",
+   "quantization-overview",
+   "scalar-quantization",
+   "uniform-quantization"
+  ],
+  "core_hot": [
+   "quantization-overview",
+   "uniform-quantization",
+   "nonuniform-quantization",
+   "bandpass-sampling",
+   "aliasing",
+   "pcm"
+  ],
+  "mvi": {
+   "units": [
+    "aliasing",
+    "bandpass-sampling",
+    "quantization-overview",
+    "uniform-quantization",
+    "nonuniform-quantization",
+    "logarithmic-quantization",
+    "pcm"
+   ],
+   "questions_covered": 15,
+   "questions_total": 15,
+   "detail": [
+    {
+     "q": 1,
+     "ideal": [
+      "quantization-overview",
+      "scalar-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 3,
+     "ideal": [
+      "aliasing",
+      "quantization-overview",
+      "uniform-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 4,
+     "ideal": [
+      "uniform-quantization",
+      "nonuniform-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 5,
+     "ideal": [
+      "pcm"
+     ],
+     "covered": true
+    },
+    {
+     "q": 6,
+     "ideal": [
+      "aliasing",
+      "uniform-quantization",
+      "nonuniform-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 8,
+     "ideal": [
+      "pcm",
+      "a-law-mu-law-pcm",
+      "pcm-coding-methods"
+     ],
+     "covered": true
+    },
+    {
+     "q": 9,
+     "ideal": [
+      "aliasing",
+      "ideal-sampling"
+     ],
+     "covered": true
+    },
+    {
+     "q": 10,
+     "ideal": [
+      "bandpass-sampling"
+     ],
+     "covered": true
+    },
+    {
+     "q": 11,
+     "ideal": [
+      "bandpass-sampling"
+     ],
+     "covered": true
+    },
+    {
+     "q": 12,
+     "ideal": [
+      "bandpass-sampling"
+     ],
+     "covered": true
+    },
+    {
+     "q": 15,
+     "ideal": [
+      "uniform-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 16,
+     "ideal": [
+      "uniform-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 17,
+     "ideal": [
+      "nonuniform-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 18,
+     "ideal": [
+      "nonuniform-quantization",
+      "logarithmic-quantization"
+     ],
+     "covered": true
+    },
+    {
+     "q": 19,
+     "ideal": [
+      "quantization-overview",
+      "uniform-quantization"
+     ],
+     "covered": true
+    }
+   ]
+  }
+ },
+ "centrality": {
+  "definition": "per unit: mean over its top20 non-stop bigrams of idf*(df-1); higher = unit vocabulary reused across many units",
+  "all_units": [
+   {
+    "id": "a-law-mu-law-pcm",
+    "rank": 326
+   },
+   {
+    "id": "aliasing",
+    "rank": 163
+   },
+   {
+    "id": "bandpass-sampling",
+    "rank": 296
+   },
+   {
+    "id": "ideal-sampling",
+    "rank": 153
+   },
+   {
+    "id": "logarithmic-quantization",
+    "rank": 294
+   },
+   {
+    "id": "nonuniform-quantization",
+    "rank": 251
+   },
+   {
+    "id": "pcm",
+    "rank": 262
+   },
+   {
+    "id": "pcm-coding-methods",
+    "rank": 328
+   },
+   {
+    "id": "quantization-overview",
+    "rank": 322
+   },
+   {
+    "id": "scalar-quantization",
+    "rank": 238
+   },
+   {
+    "id": "uniform-quantization",
+    "rank": 230
+   }
+  ],
+  "textbook_units_only": [
+   {
+    "id": "a-law-mu-law-pcm",
+    "rank": 46
+   },
+   {
+    "id": "aliasing",
+    "rank": 19
+   },
+   {
+    "id": "bandpass-sampling",
+    "rank": 29
+   },
+   {
+    "id": "ideal-sampling",
+    "rank": 8
+   },
+   {
+    "id": "logarithmic-quantization",
+    "rank": 28
+   },
+   {
+    "id": "nonuniform-quantization",
+    "rank": 30
+   },
+   {
+    "id": "pcm",
+    "rank": 22
+   },
+   {
+    "id": "pcm-coding-methods",
+    "rank": 51
+   },
+   {
+    "id": "quantization-overview",
+    "rank": 36
+   },
+   {
+    "id": "scalar-quantization",
+    "rank": 14
+   },
+   {
+    "id": "uniform-quantization",
+    "rank": 2
+   }
+  ],
+  "n_all": 358,
+  "n_textbook": 71,
+  "hot_in_top20pct_all": 0,
+  "hot_in_top20pct_textbook": 3,
+  "top20_all": [
+   {
+    "id": "img-ch2-2-20-性质2-抽样特性",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "centrality": 89.829
+   },
+   {
+    "id": "img-ch2-3-26-连续时间Fourier级数的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 86.626
+   },
+   {
+    "id": "img-ch2-3-06-连续周期信号的频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 86.338
+   },
+   {
+    "id": "img-ch2-3-55-7-余弦信号-cos-omega-_-0-t",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 84.991
+   },
+   {
+    "id": "img-ch2-3-05-目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 82.513
+   },
+   {
+    "id": "img-ch2-3-120-无失真传输系统",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 81.81
+   },
+   {
+    "id": "img-ch2-3-41-目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 81.134
+   },
+   {
+    "id": "img-ch2-3-56-8-一般周期信号",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 81.049
+   },
+   {
+    "id": "img-ch2-3-93-目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 80.054
+   },
+   {
+    "id": "img-ch2-3-80-10-时域积分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 79.957
+   },
+   {
+    "id": "img-ch2-2-75-连续时间LTI系统分析举例",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "centrality": 79.348
+   },
+   {
+    "id": "img-ch2-3-57-9-周期冲激串-delta-_-T-t",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 77.649
+   },
+   {
+    "id": "img-ch2-3-85-连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 77.371
+   },
+   {
+    "id": "img-ch2-3-118-无失真传输系统的频域特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 76.535
+   },
+   {
+    "id": "img-ch2-2-61-平移特性",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "centrality": 76.252
+   },
+   {
+    "id": "img-ch2-3-46-目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 76.187
+   },
+   {
+    "id": "img-ch2-4-21-平稳随机过程-续",
+    "file": "img/ch02-4_随机信号分析.md",
+    "centrality": 75.269
+   },
+   {
+    "id": "img-ch2-3-65-3-互易对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 75.17
+   },
+   {
+    "id": "img-ch2-3-50-1-单位冲激信号d-t",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 74.72
+   },
+   {
+    "id": "img-ch2-3-11-三角形式Fourier级数",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "centrality": 74.445
+   }
+  ],
+  "top20_textbook": [
+   {
+    "id": "linear-pcm-error-performance",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 17.886
+   },
+   {
+    "id": "uniform-quantization",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 17.523
+   },
+   {
+    "id": "ch2-9-power-spectral-density",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 17.179
+   },
+   {
+    "id": "ch2-12-cyclostationary-random-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 17.174
+   },
+   {
+    "id": "ch2-7-random-variable-function",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 16.981
+   },
+   {
+    "id": "ch2-2-deterministic-signal-review",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 16.172
+   },
+   {
+    "id": "ch2-13-matched-filter",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 16.121
+   },
+   {
+    "id": "ideal-sampling",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 15.75
+   },
+   {
+    "id": "predictive-coding-basics",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 15.658
+   },
+   {
+    "id": "ch2-5-random-signal-basics",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 15.649
+   },
+   {
+    "id": "数字通信系统的基本性能指标及其度量参数",
+    "file": "教材/01_第1章_绪论.md",
+    "centrality": 15.37
+   },
+   {
+    "id": "ch2-6-random-process-statistics",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 15.271
+   },
+   {
+    "id": "ch2-8-stationary-random-signal",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 15.106
+   },
+   {
+    "id": "scalar-quantization",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 14.763
+   },
+   {
+    "id": "delta-sigma-modulation",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 14.696
+   },
+   {
+    "id": "数字通信的特点",
+    "file": "教材/01_第1章_绪论.md",
+    "centrality": 14.666
+   },
+   {
+    "id": "ch2-10-white-noise",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 14.625
+   },
+   {
+    "id": "ch2-10-narrowband-random-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "centrality": 14.406
+   },
+   {
+    "id": "aliasing",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 14.334
+   },
+   {
+    "id": "natural-sampling",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "centrality": 14.194
+   }
+  ]
+ },
+ "coverage": {
+  "book_tokens": 608157,
+  "budget_20pct_tokens": 121631,
+  "indexed_unit_tokens_total": 206389,
+  "by_tokens": [
+   {
+    "policy": "P1 教材按书序（从第1章起）",
+    "units": 71,
+    "tokens": 111943,
+    "hot_covered": 11,
+    "hot_total": 11,
+    "hot_cover_pct": 100.0
+   },
+   {
+    "policy": "P1b 全部按书序（教材优先）",
+    "units": 114,
+    "tokens": 121650,
+    "hot_covered": 11,
+    "hot_total": 11,
+    "hot_cover_pct": 100.0
+   },
+   {
+    "policy": "P2 单元从大到小",
+    "units": 42,
+    "tokens": 121745,
+    "hot_covered": 7,
+    "hot_total": 11,
+    "hot_cover_pct": 63.6
+   },
+   {
+    "policy": "P3 中心度从高到低",
+    "units": 188,
+    "tokens": 121786,
+    "hot_covered": 2,
+    "hot_total": 11,
+    "hot_cover_pct": 18.2
+   },
+   {
+    "policy": "P4 后见之明：只建理想 KP",
+    "units": 11,
+    "tokens": 27872,
+    "hot_covered": 11,
+    "hot_total": 11,
+    "hot_cover_pct": 100.0
+   },
+   {
+    "policy": "P6 定义/结论线索密度从高到低",
+    "units": 139,
+    "tokens": 122518,
+    "hot_covered": 10,
+    "hot_total": 11,
+    "hot_cover_pct": 90.9
+   },
+   {
+    "policy": "P7 公式密度从高到低",
+    "units": 142,
+    "tokens": 121734,
+    "hot_covered": 5,
+    "hot_total": 11,
+    "hot_cover_pct": 45.5
+   },
+   {
+    "policy": "P5 随机（60 单元，300 次期望）",
+    "units": 60,
+    "tokens": null,
+    "hot_covered": 1.83,
+    "hot_total": 11,
+    "hot_cover_pct": 16.6
+   }
+  ],
+  "budget_20pct_units": 71,
+  "by_units": [
+   {
+    "policy": "教材按书序",
+    "units": 71,
+    "hot_covered": 11,
+    "hot_cover_pct": 100.0
+   },
+   {
+    "policy": "全部按书序",
+    "units": 71,
+    "hot_covered": 11,
+    "hot_cover_pct": 100.0
+   },
+   {
+    "policy": "单元从大到小",
+    "units": 71,
+    "hot_covered": 8,
+    "hot_cover_pct": 72.7
+   },
+   {
+    "policy": "中心度",
+    "units": 71,
+    "hot_covered": 0,
+    "hot_cover_pct": 0.0
+   },
+   {
+    "policy": "定义线索密度",
+    "units": 71,
+    "hot_covered": 5,
+    "hot_cover_pct": 45.5
+   }
+  ],
+  "hot_ids": [
+   "a-law-mu-law-pcm",
+   "aliasing",
+   "bandpass-sampling",
+   "ideal-sampling",
+   "logarithmic-quantization",
+   "nonuniform-quantization",
+   "pcm",
+   "pcm-coding-methods",
+   "quantization-overview",
+   "scalar-quantization",
+   "uniform-quantization"
+  ],
+  "core_hot": [
+   "quantization-overview",
+   "uniform-quantization",
+   "nonuniform-quantization",
+   "bandpass-sampling",
+   "aliasing",
+   "pcm"
+  ],
+  "hot_tokens": {
+   "a-law-mu-law-pcm": 3515,
+   "aliasing": 2865,
+   "bandpass-sampling": 3851,
+   "ideal-sampling": 716,
+   "logarithmic-quantization": 5353,
+   "nonuniform-quantization": 5652,
+   "pcm": 170,
+   "pcm-coding-methods": 540,
+   "quantization-overview": 442,
+   "scalar-quantization": 1273,
+   "uniform-quantization": 3495
+  }
+ },
+ "blocks": {
+  "files": 29,
+  "total_blocks": 14560,
+  "mean_blocks_per_file": 502.1,
+  "kind_totals": {
+   "heading": 1139,
+   "prose": 8504,
+   "list": 165,
+   "table": 211,
+   "formula-only": 3557,
+   "image-only": 984
+  },
+  "per_file": [
+   {
+    "file": "homework/README.md",
+    "blocks": 7,
+    "kinds": {
+     "heading": 3,
+     "prose": 2,
+     "list": 1,
+     "table": 1
+    }
+   },
+   {
+    "file": "homework/hw-001-conv-exp-gate.md",
+    "blocks": 44,
+    "kinds": {
+     "heading": 11,
+     "prose": 18,
+     "formula-only": 11,
+     "list": 3,
+     "table": 1
+    }
+   },
+   {
+    "file": "homework/hw-002-system-properties.md",
+    "blocks": 54,
+    "kinds": {
+     "heading": 12,
+     "prose": 29,
+     "formula-only": 7,
+     "table": 4,
+     "list": 2
+    }
+   },
+   {
+    "file": "homework/hw-003-frequency-response.md",
+    "blocks": 50,
+    "kinds": {
+     "heading": 11,
+     "prose": 23,
+     "formula-only": 13,
+     "table": 1,
+     "list": 2
+    }
+   },
+   {
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "blocks": 812,
+    "kinds": {
+     "heading": 127,
+     "prose": 362,
+     "list": 25,
+     "image-only": 125,
+     "formula-only": 173
+    }
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "blocks": 1649,
+    "kinds": {
+     "heading": 280,
+     "prose": 638,
+     "list": 72,
+     "image-only": 270,
+     "formula-only": 388,
+     "table": 1
+    }
+   },
+   {
+    "file": "img/ch02-4_随机信号分析.md",
+    "blocks": 414,
+    "kinds": {
+     "heading": 57,
+     "prose": 219,
+     "list": 4,
+     "formula-only": 104,
+     "image-only": 30
+    }
+   },
+   {
+    "file": "img/ppt1.md",
+    "blocks": 459,
+    "kinds": {
+     "heading": 73,
+     "prose": 281,
+     "image-only": 57,
+     "table": 5,
+     "formula-only": 40,
+     "list": 3
+    }
+   },
+   {
+    "file": "img/ppt2.md",
+    "blocks": 268,
+    "kinds": {
+     "heading": 49,
+     "prose": 134,
+     "image-only": 42,
+     "formula-only": 39,
+     "table": 1,
+     "list": 3
+    }
+   },
+   {
+    "file": "img/ppt3.md",
+    "blocks": 371,
+    "kinds": {
+     "heading": 36,
+     "prose": 213,
+     "image-only": 58,
+     "formula-only": 61,
+     "list": 3
+    }
+   },
+   {
+    "file": "img/平滑系统滤除信号证明.md",
+    "blocks": 8,
+    "kinds": {
+     "heading": 6,
+     "prose": 2
+    }
+   },
+   {
+    "file": "notes/qa-notes.md",
+    "blocks": 171,
+    "kinds": {
+     "heading": 61,
+     "prose": 61,
+     "list": 41,
+     "formula-only": 7,
+     "table": 1
+    }
+   },
+   {
+    "file": "notes/通带抽样定理-附录.md",
+    "blocks": 9,
+    "kinds": {
+     "heading": 7,
+     "prose": 1,
+     "formula-only": 1
+    }
+   },
+   {
+    "file": "notes/非均匀量化噪声推导-附录.md",
+    "blocks": 149,
+    "kinds": {
+     "heading": 32,
+     "prose": 75,
+     "table": 2,
+     "formula-only": 39,
+     "list": 1
+    }
+   },
+   {
+    "file": "教材/00_前言与目录.md",
+    "blocks": 231,
+    "kinds": {
+     "heading": 70,
+     "prose": 159,
+     "list": 1,
+     "table": 1
+    }
+   },
+   {
+    "file": "教材/01_第1章_绪论.md",
+    "blocks": 108,
+    "kinds": {
+     "heading": 9,
+     "prose": 88,
+     "image-only": 4,
+     "formula-only": 6,
+     "table": 1
+    }
+   },
+   {
+    "file": "教材/02_第2章_信号分析基础.md",
+    "blocks": 925,
+    "kinds": {
+     "heading": 19,
+     "prose": 579,
+     "formula-only": 268,
+     "image-only": 36,
+     "table": 20,
+     "list": 3
+    }
+   },
+   {
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "blocks": 939,
+    "kinds": {
+     "heading": 32,
+     "prose": 576,
+     "formula-only": 261,
+     "image-only": 47,
+     "list": 1,
+     "table": 22
+    }
+   },
+   {
+    "file": "教材/04_第4章_信息论基础.md",
+    "blocks": 1449,
+    "kinds": {
+     "heading": 37,
+     "prose": 884,
+     "formula-only": 493,
+     "image-only": 20,
+     "table": 15
+    }
+   },
+   {
+    "file": "教材/05_第5章_数字基带传输系统.md",
+    "blocks": 748,
+    "kinds": {
+     "heading": 25,
+     "prose": 491,
+     "image-only": 30,
+     "table": 25,
+     "formula-only": 177
+    }
+   },
+   {
+    "file": "教材/06_第6章_数字载波调制传输系统.md",
+    "blocks": 1571,
+    "kinds": {
+     "heading": 31,
+     "prose": 975,
+     "formula-only": 452,
+     "image-only": 80,
+     "table": 33
+    }
+   },
+   {
+    "file": "教材/07_第7章_传输信道.md",
+    "blocks": 713,
+    "kinds": {
+     "heading": 26,
+     "prose": 438,
+     "image-only": 38,
+     "formula-only": 190,
+     "table": 21
+    }
+   },
+   {
+    "file": "教材/08_第8章_差错控制编码.md",
+    "blocks": 1889,
+    "kinds": {
+     "heading": 42,
+     "prose": 1241,
+     "formula-only": 528,
+     "table": 33,
+     "image-only": 45
+    }
+   },
+   {
+    "file": "教材/09_第9章_同步原理与技术.md",
+    "blocks": 563,
+    "kinds": {
+     "heading": 21,
+     "prose": 356,
+     "image-only": 40,
+     "formula-only": 137,
+     "table": 9
+    }
+   },
+   {
+    "file": "教材/10_第10章_扩展频谱通信技术.md",
+    "blocks": 385,
+    "kinds": {
+     "heading": 23,
+     "prose": 289,
+     "image-only": 27,
+     "formula-only": 41,
+     "table": 5
+    }
+   },
+   {
+    "file": "教材/11_第11章_信道复用与多址技术.md",
+    "blocks": 225,
+    "kinds": {
+     "heading": 11,
+     "prose": 162,
+     "image-only": 21,
+     "formula-only": 29,
+     "table": 2
+    }
+   },
+   {
+    "file": "教材/12_第12章_空时无线通信技术概述.md",
+    "blocks": 342,
+    "kinds": {
+     "heading": 27,
+     "prose": 203,
+     "image-only": 14,
+     "formula-only": 92,
+     "table": 6
+    }
+   },
+   {
+    "file": "教材/13_附录_缩写索引表.md",
+    "blocks": 6,
+    "kinds": {
+     "prose": 5,
+     "table": 1
+    }
+   },
+   {
+    "file": "跳转渲染测试.md",
+    "blocks": 1,
+    "kinds": {
+     "heading": 1
+    }
+   }
+  ],
+  "stability": {
+   "blocks": 939,
+   "insert_blank_line_changed_blocks": 0,
+   "delete_blank_line_blocks_before": 939,
+   "delete_blank_line_blocks_after": 938,
+   "delete_blank_line_blocks_destroyed": 2,
+   "reflow_note": "wrapped lines are rare in this corpus (paragraphs are single lines)",
+   "content_edit_changed_blocks": 1,
+   "sections_base": 32,
+   "sections_after_insert": 32,
+   "sections_after_delete": 32
+  },
+  "definition": "block = run of non-empty lines separated by one or more blank lines"
+ },
+ "quality": {
+  "dup_groups": 32,
+  "dup_units": 102,
+  "dup_low_divergence_groups": 22,
+  "dup_examples": [
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "连续时间Fourier变换的性质",
+    "n": 12,
+    "mean_jaccard": 0.225,
+    "min_jaccard": 0.048,
+    "kps": [
+     "img-ch2-3-59-连续时间Fourier变换的性质",
+     "img-ch2-3-63-连续时间Fourier变换的性质",
+     "img-ch2-3-67-连续时间Fourier变换的性质",
+     "img-ch2-3-70-连续时间Fourier变换的性质",
+     "img-ch2-3-72-连续时间Fourier变换的性质",
+     "img-ch2-3-74-连续时间Fourier变换的性质",
+     "img-ch2-3-76-连续时间Fourier变换的性质",
+     "img-ch2-3-79-连续时间Fourier变换的性质",
+     "img-ch2-3-81-连续时间Fourier变换的性质",
+     "img-ch2-3-83-连续时间Fourier变换的性质",
+     "img-ch2-3-85-连续时间Fourier变换的性质",
+     "img-ch2-3-87-连续时间Fourier变换的性质"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "目录",
+    "n": 7,
+    "mean_jaccard": 0.285,
+    "min_jaccard": 0.092,
+    "kps": [
+     "img-ch2-3-05-目录",
+     "img-ch2-3-41-目录",
+     "img-ch2-3-46-目录",
+     "img-ch2-3-90-目录",
+     "img-ch2-3-93-目录",
+     "img-ch2-3-114-目录",
+     "img-ch2-3-121-目录"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "连续时间Fourier级数的性质",
+    "n": 5,
+    "mean_jaccard": 0.187,
+    "min_jaccard": 0.112,
+    "kps": [
+     "img-ch2-3-26-连续时间Fourier级数的性质",
+     "img-ch2-3-28-连续时间Fourier级数的性质",
+     "img-ch2-3-30-连续时间Fourier级数的性质",
+     "img-ch2-3-34-连续时间Fourier级数的性质",
+     "img-ch2-3-36-连续时间Fourier级数的性质"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "※线性相位理想低通滤波器",
+    "n": 5,
+    "mean_jaccard": 0.35,
+    "min_jaccard": 0.232,
+    "kps": [
+     "img-ch2-3-124-线性相位理想低通滤波器",
+     "img-ch2-3-125-线性相位理想低通滤波器",
+     "img-ch2-3-126-线性相位理想低通滤波器",
+     "img-ch2-3-127-线性相位理想低通滤波器",
+     "img-ch2-3-128-线性相位理想低通滤波器"
+    ]
+   },
+   {
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "name": "目录",
+    "n": 4,
+    "mean_jaccard": 0.322,
+    "min_jaccard": 0.133,
+    "kps": [
+     "img-ch2-2-02-目录",
+     "img-ch2-2-50-目录",
+     "img-ch2-2-54-目录",
+     "img-ch2-2-66-目录"
+    ]
+   },
+   {
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "name": "2. 单位冲激信号",
+    "n": 4,
+    "mean_jaccard": 0.075,
+    "min_jaccard": 0.05,
+    "kps": [
+     "img-ch2-2-13-2-单位冲激信号",
+     "img-ch2-2-19-2-单位冲激信号",
+     "img-ch2-2-22-2-单位冲激信号",
+     "img-ch2-2-24-2-单位冲激信号"
+    ]
+   },
+   {
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "name": "连续时间LTI系统分析举例",
+    "n": 4,
+    "mean_jaccard": 0.181,
+    "min_jaccard": 0.132,
+    "kps": [
+     "img-ch2-2-75-连续时间LTI系统分析举例",
+     "img-ch2-2-77-连续时间LTI系统分析举例",
+     "img-ch2-2-79-连续时间LTI系统分析举例",
+     "img-ch2-2-81-连续时间LTI系统分析举例"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "常见连续时间信号的频谱",
+    "n": 4,
+    "mean_jaccard": 0.2,
+    "min_jaccard": 0.061,
+    "kps": [
+     "img-ch2-3-48-常见连续时间信号的频谱",
+     "img-ch2-3-51-常见连续时间信号的频谱",
+     "img-ch2-3-54-常见连续时间信号的频谱",
+     "img-ch2-3-58-常见连续时间信号的频谱"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "为何进行信号与系统的复频域分析",
+    "n": 4,
+    "mean_jaccard": 0.285,
+    "min_jaccard": 0.091,
+    "kps": [
+     "img-ch2-3-136-为何进行信号与系统的复频域分析",
+     "img-ch2-3-139-为何进行信号与系统的复频域分析",
+     "img-ch2-3-152-为何进行信号与系统的复频域分析",
+     "img-ch2-3-155-为何进行信号与系统的复频域分析"
+    ]
+   },
+   {
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "name": "狄拉克(Dirac)定义",
+    "n": 3,
+    "mean_jaccard": 0.123,
+    "min_jaccard": 0.038,
+    "kps": [
+     "img-ch2-2-14-狄拉克-Dirac-定义",
+     "img-ch2-2-15-狄拉克-Dirac-定义",
+     "img-ch2-2-16-狄拉克-Dirac-定义"
+    ]
+   },
+   {
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "name": "【例】描述某因果的连续LTI系统的微分方程为",
+    "n": 3,
+    "mean_jaccard": 0.523,
+    "min_jaccard": 0.439,
+    "kps": [
+     "img-ch2-2-76-例-描述某因果的连续LTI系统的微分方程为",
+     "img-ch2-2-78-例-描述某因果的连续LTI系统的微分方程为",
+     "img-ch2-2-80-例-描述某因果的连续LTI系统的微分方程为"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "三角形式Fourier级数",
+    "n": 3,
+    "mean_jaccard": 0.378,
+    "min_jaccard": 0.3,
+    "kps": [
+     "img-ch2-3-10-三角形式Fourier级数",
+     "img-ch2-3-11-三角形式Fourier级数",
+     "img-ch2-3-12-三角形式Fourier级数"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "对称特性",
+    "n": 3,
+    "mean_jaccard": 0.239,
+    "min_jaccard": 0.161,
+    "kps": [
+     "img-ch2-3-24-对称特性",
+     "img-ch2-3-25-对称特性",
+     "img-ch2-3-27-对称特性"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "连续时间LTI系统的频率响应",
+    "n": 3,
+    "mean_jaccard": 0.249,
+    "min_jaccard": 0.216,
+    "kps": [
+     "img-ch2-3-94-连续时间LTI系统的频率响应",
+     "img-ch2-3-97-连续时间LTI系统的频率响应",
+     "img-ch2-3-107-连续时间LTI系统的频率响应"
+    ]
+   },
+   {
+    "file": "img/ch02-3_信号的频域分析.md",
+    "name": "连续LTI系统的频率响应计算",
+    "n": 3,
+    "mean_jaccard": 0.278,
+    "min_jaccard": 0.223,
+    "kps": [
+     "img-ch2-3-99-连续LTI系统的频率响应计算",
+     "img-ch2-3-103-连续LTI系统的频率响应计算",
+     "img-ch2-3-105-连续LTI系统的频率响应计算"
+    ]
+   }
+  ],
+  "unit_kinds": {
+   "too-small": 73,
+   "ok": 114,
+   "formula-heavy(warn)": 111,
+   "formula-only": 53,
+   "toc-like": 2,
+   "image-only": 5
+  },
+  "bad_units": [
+   {
+    "id": "img-ch2-2-01-第2章信号处理基础",
+    "name": "第2章信号处理基础",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 32
+   },
+   {
+    "id": "img-ch2-2-02-目录",
+    "name": "目录",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 120
+   },
+   {
+    "id": "img-ch2-2-03-普通信号",
+    "name": "普通信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 37
+   },
+   {
+    "id": "img-ch2-2-04-奇异信号",
+    "name": "奇异信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 37
+   },
+   {
+    "id": "img-ch2-2-06-1-直流信号",
+    "name": "1. 直流信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 344
+   },
+   {
+    "id": "img-ch2-2-07-2-正弦信号",
+    "name": "2. 正弦信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 936
+   },
+   {
+    "id": "img-ch2-2-08-3-指数类信号",
+    "name": "3. 指数类信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1108
+   },
+   {
+    "id": "img-ch2-2-10-3-指数类信号",
+    "name": "3. 指数类信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 768
+   },
+   {
+    "id": "img-ch2-2-12-1-单位阶跃信号",
+    "name": "1. 单位阶跃信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 754
+   },
+   {
+    "id": "img-ch2-2-16-狄拉克-Dirac-定义",
+    "name": "狄拉克(Dirac)定义",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 318
+   },
+   {
+    "id": "img-ch2-2-18-极限模型",
+    "name": "极限模型",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 195
+   },
+   {
+    "id": "img-ch2-2-20-性质2-抽样特性",
+    "name": "性质2：抽样特性",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 448
+   },
+   {
+    "id": "img-ch2-2-21-性质3-展缩特性",
+    "name": "性质3：展缩特性",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 699
+   },
+   {
+    "id": "img-ch2-2-23-例-计算下列各式",
+    "name": "[例] 计算下列各式",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 792
+   },
+   {
+    "id": "img-ch2-2-24-2-单位冲激信号",
+    "name": "2. 单位冲激信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "toc-like",
+    "chars": 233
+   },
+   {
+    "id": "img-ch2-2-25-3-单位斜坡信号",
+    "name": "3. 单位斜坡信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 146
+   },
+   {
+    "id": "img-ch2-2-26-斜坡信号与阶跃信号之间的关系",
+    "name": "斜坡信号与阶跃信号之间的关系",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 155
+   },
+   {
+    "id": "img-ch2-2-27-表示任意的三角脉冲信号",
+    "name": "表示任意的三角脉冲信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 149
+   },
+   {
+    "id": "img-ch2-2-28-定义",
+    "name": "定义：",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 183
+   },
+   {
+    "id": "img-ch2-2-29-4-单位冲激偶信号",
+    "name": "4. 单位冲激偶信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 523
+   },
+   {
+    "id": "img-ch2-2-30-四种奇异信号之间的关系",
+    "name": "四种奇异信号之间的关系",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 570
+   },
+   {
+    "id": "img-ch2-2-32-线性非时变系统的时域描述",
+    "name": "线性非时变系统的时域描述",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 220
+   },
+   {
+    "id": "img-ch2-2-33-1-连续LTI系统的时域描述",
+    "name": "1. 连续LTI系统的时域描述",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2504
+   },
+   {
+    "id": "img-ch2-2-34-2-离散LTI系统的时域描述",
+    "name": "2. 离散LTI系统的时域描述",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1747
+   },
+   {
+    "id": "img-ch2-2-35-利用M点的滑动平均系统滤除信号噪声",
+    "name": "利用M点的滑动平均系统滤除信号噪声。",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 791
+   },
+   {
+    "id": "img-ch2-2-37-1-基于求解线性常系数微分方程的方法",
+    "name": "1. 基于求解线性常系数微分方程的方法",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2252
+   },
+   {
+    "id": "img-ch2-2-38-基于求解常系数微分方程的方法不足之处",
+    "name": "基于求解常系数微分方程的方法不足之处",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 104
+   },
+   {
+    "id": "img-ch2-2-41-零输入响应",
+    "name": "零输入响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 484
+   },
+   {
+    "id": "img-ch2-2-43-零状态响应分析方法",
+    "name": "零状态响应分析方法",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 141
+   },
+   {
+    "id": "img-ch2-2-45-连续LTI系统的零输入响应",
+    "name": "连续LTI系统的零输入响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 95
+   },
+   {
+    "id": "img-ch2-2-46-求解过程",
+    "name": "求解过程",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 68
+   },
+   {
+    "id": "img-ch2-2-47-零输入响应-gamma-_-mathrm-z-i-t-的形式",
+    "name": "零输入响应 $\\gamma _ { \\mathrm { z i } } ( t )$ 的形式",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 661
+   },
+   {
+    "id": "img-ch2-2-48-例-已知描述某连续LTI系统的微分方程为",
+    "name": "【例】已知描述某连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 803
+   },
+   {
+    "id": "img-ch2-2-49-例-已知描述某连续LTI系统的微分方程为",
+    "name": "【例】已知描述某连续LTI系统的微分方程为:",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1422
+   },
+   {
+    "id": "img-ch2-2-50-目录",
+    "name": "目录",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 143
+   },
+   {
+    "id": "img-ch2-2-52-例-描述某连续LTI系统的微分方程为",
+    "name": "【例】描述某连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1708
+   },
+   {
+    "id": "img-ch2-2-53-连续LTI系统的冲激响应",
+    "name": "连续LTI系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1145
+   },
+   {
+    "id": "img-ch2-2-54-目录",
+    "name": "目录",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 136
+   },
+   {
+    "id": "img-ch2-2-56-解析方法",
+    "name": "解析方法：",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 735
+   },
+   {
+    "id": "img-ch2-2-57-例-计算-x-t-h-t-x-t-2-bf-e-2-t-bf-u-t-h",
+    "name": "【例】计算 $x ( t ) ^ { * } h ( t ) , x ( t ) = 2 { \\bf e } ^ { - 2 t } { \\bf u } ( t ) , h ( t ) = 3 { \\bf e } ^ { - t } { \\bf u } ( t )$",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 883
+   },
+   {
+    "id": "img-ch2-2-59-例-计算-y-t-x-t-h-t",
+    "name": "【例】计算 $y ( t ) = x ( t ) ^ { * } h ( t )$ 。",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 2918
+   },
+   {
+    "id": "img-ch2-2-60-信号卷积积分的性质",
+    "name": "信号卷积积分的性质",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 433
+   },
+   {
+    "id": "img-ch2-2-61-平移特性",
+    "name": "※平移特性：",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 427
+   },
+   {
+    "id": "img-ch2-2-62-信号卷积积分的性质",
+    "name": "信号卷积积分的性质",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 764
+   },
+   {
+    "id": "img-ch2-2-64-例-计算信号-x-_-1-t-与-widetilde-x-_-2-t-当",
+    "name": "【例】计算信号 $x _ { 1 } ( t )$ 与 $\\widetilde { x } _ { 2 } ( t )$ 当T=2和T=1时的卷积。",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1816
+   },
+   {
+    "id": "img-ch2-2-65-例-利用信号卷积的等效特性-计算-gamma-t-x-t-h-t-O",
+    "name": "【例】利用信号卷积的等效特性，计算 $\\gamma ( t ) = x ( t ) ^ { * } h ( t )$ O",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 534
+   },
+   {
+    "id": "img-ch2-2-66-目录",
+    "name": "目录",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 70
+   },
+   {
+    "id": "img-ch2-2-67-冲激响应表示的连续系统特性",
+    "name": "冲激响应表示的连续系统特性",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 147
+   },
+   {
+    "id": "img-ch2-2-68-几个常见系统的冲激响应",
+    "name": "几个常见系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 439
+   },
+   {
+    "id": "img-ch2-2-69-1-级联连续系统的冲激响应",
+    "name": "1. 级联连续系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 584
+   },
+   {
+    "id": "img-ch2-2-70-2-并联连续系统的冲激响应",
+    "name": "2. 并联连续系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 1574
+   },
+   {
+    "id": "img-ch2-2-73-例-已知某连续LTI系统的冲激响应为-h-t-mathbf-e-a-t",
+    "name": "[例] 已知某连续LTI系统的冲激响应为 $h ( t ) = \\mathbf { e } ^ { a t } \\mathbf { u } ( t )$ 试判断该系统是否为因果、稳定的系统。",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 731
+   },
+   {
+    "id": "img-ch2-2-74-小结",
+    "name": "小结",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "too-small",
+    "chars": 87
+   },
+   {
+    "id": "img-ch2-2-75-连续时间LTI系统分析举例",
+    "name": "连续时间LTI系统分析举例",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 2380
+   },
+   {
+    "id": "img-ch2-2-77-连续时间LTI系统分析举例",
+    "name": "连续时间LTI系统分析举例",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2763
+   },
+   {
+    "id": "img-ch2-2-78-例-描述某因果的连续LTI系统的微分方程为",
+    "name": "【例】描述某因果的连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 785
+   },
+   {
+    "id": "img-ch2-2-80-例-描述某因果的连续LTI系统的微分方程为",
+    "name": "【例】描述某因果的连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-only",
+    "chars": 897
+   },
+   {
+    "id": "img-ch2-2-81-连续时间LTI系统分析举例",
+    "name": "连续时间LTI系统分析举例",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1846
+   },
+   {
+    "id": "img-ch2-3-01-第2章信号处理基础",
+    "name": "第2章信号处理基础",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 32
+   },
+   {
+    "id": "img-ch2-3-02-信号的频域分析",
+    "name": "信号的频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 54
+   },
+   {
+    "id": "img-ch2-3-03-系统的频域分析",
+    "name": "系统的频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 64
+   },
+   {
+    "id": "img-ch2-3-04-为何引入信号的频域分析",
+    "name": "为何引入信号的频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "image-only",
+    "chars": 1944
+   },
+   {
+    "id": "img-ch2-3-05-目录",
+    "name": "目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 53
+   },
+   {
+    "id": "img-ch2-3-06-连续周期信号的频域表示",
+    "name": "连续周期信号的频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 105
+   },
+   {
+    "id": "img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加",
+    "name": "一系列不同频率的正弦波的加权线性叠加",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 112
+   },
+   {
+    "id": "img-ch2-3-08-连续周期信号的频域表示",
+    "name": "连续周期信号的频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2663
+   },
+   {
+    "id": "img-ch2-3-09-指数形式Fourier级数",
+    "name": "指数形式Fourier级数",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 380
+   },
+   {
+    "id": "img-ch2-3-10-三角形式Fourier级数",
+    "name": "三角形式Fourier级数",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 720
+   },
+   {
+    "id": "img-ch2-3-11-三角形式Fourier级数",
+    "name": "三角形式Fourier级数",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 664
+   },
+   {
+    "id": "img-ch2-3-12-三角形式Fourier级数",
+    "name": "三角形式Fourier级数",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 371
+   },
+   {
+    "id": "img-ch2-3-13-周期信号可以表示为正弦类信号x-t",
+    "name": "周期信号可以表示为正弦类信号x(t)",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 725
+   },
+   {
+    "id": "img-ch2-3-14-连续周期信号的频谱概念",
+    "name": "连续周期信号的频谱概念",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 7400
+   },
+   {
+    "id": "img-ch2-3-17-吉布斯-Gibbs-现象",
+    "name": "吉布斯(Gibbs)现象",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1483
+   },
+   {
+    "id": "img-ch2-3-19-吉布斯-Gibbs-现象",
+    "name": "吉布斯(Gibbs)现象",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 221
+   },
+   {
+    "id": "img-ch2-3-20-没有间断点的连续时间信号不会出现Gibbs现象",
+    "name": "没有间断点的连续时间信号不会出现Gibbs现象",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "image-only",
+    "chars": 392
+   },
+   {
+    "id": "img-ch2-3-21-单选题",
+    "name": "单选题",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 180
+   },
+   {
+    "id": "img-ch2-3-22-线性特性",
+    "name": "线性特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 502
+   },
+   {
+    "id": "img-ch2-3-23-u-对称特性",
+    "name": "u 对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 735
+   },
+   {
+    "id": "img-ch2-3-24-对称特性",
+    "name": "对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 767
+   },
+   {
+    "id": "img-ch2-3-25-对称特性",
+    "name": "对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 456
+   },
+   {
+    "id": "img-ch2-3-26-连续时间Fourier级数的性质",
+    "name": "连续时间Fourier级数的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 115
+   },
+   {
+    "id": "img-ch2-3-27-对称特性",
+    "name": "对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 228
+   },
+   {
+    "id": "img-ch2-3-28-连续时间Fourier级数的性质",
+    "name": "连续时间Fourier级数的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1819
+   },
+   {
+    "id": "img-ch2-3-29-u-频移特性",
+    "name": "u 频移特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 419
+   },
+   {
+    "id": "img-ch2-3-30-连续时间Fourier级数的性质",
+    "name": "连续时间Fourier级数的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1429
+   },
+   {
+    "id": "img-ch2-3-31-u-微分特性",
+    "name": "u 微分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 629
+   },
+   {
+    "id": "img-ch2-3-33-周期信号的功率频谱",
+    "name": "周期信号的功率频谱：",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 116
+   },
+   {
+    "id": "img-ch2-3-34-连续时间Fourier级数的性质",
+    "name": "连续时间Fourier级数的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2253
+   },
+   {
+    "id": "img-ch2-3-36-连续时间Fourier级数的性质",
+    "name": "连续时间Fourier级数的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 560
+   },
+   {
+    "id": "img-ch2-3-38-连续周期信号频域分析的应用",
+    "name": "连续周期信号频域分析的应用",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "image-only",
+    "chars": 414
+   },
+   {
+    "id": "img-ch2-3-40-信号正交表示与Fourier级数",
+    "name": "信号正交表示与Fourier级数",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 2237
+   },
+   {
+    "id": "img-ch2-3-41-目录",
+    "name": "目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 56
+   },
+   {
+    "id": "img-ch2-3-42-连续非周期信号的频域表示",
+    "name": "连续非周期信号的频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 2143
+   },
+   {
+    "id": "img-ch2-3-44-连续非周期信号的频谱特性",
+    "name": "连续非周期信号的频谱特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 64
+   },
+   {
+    "id": "img-ch2-3-46-目录",
+    "name": "目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 35
+   },
+   {
+    "id": "img-ch2-3-48-常见连续时间信号的频谱",
+    "name": "常见连续时间信号的频谱",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 339
+   },
+   {
+    "id": "img-ch2-3-49-常见连续时间信号",
+    "name": "常见连续时间信号",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 79
+   },
+   {
+    "id": "img-ch2-3-50-1-单位冲激信号d-t",
+    "name": "1. 单位冲激信号d(t)",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 282
+   },
+   {
+    "id": "img-ch2-3-51-常见连续时间信号的频谱",
+    "name": "常见连续时间信号的频谱",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 844
+   },
+   {
+    "id": "img-ch2-3-52-3-符号函数信号sgn-t",
+    "name": "3. 符号函数信号sgn(t)",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 859
+   },
+   {
+    "id": "img-ch2-3-53-4-单位阶跃信号u-t",
+    "name": "4. 单位阶跃信号u(t)",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 256
+   },
+   {
+    "id": "img-ch2-3-54-常见连续时间信号的频谱",
+    "name": "常见连续时间信号的频谱",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 1435
+   },
+   {
+    "id": "img-ch2-3-55-7-余弦信号-cos-omega-_-0-t",
+    "name": "7. 余弦信号 $\\cos ( \\omega _ { 0 } t )$",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 507
+   },
+   {
+    "id": "img-ch2-3-56-8-一般周期信号",
+    "name": "8. 一般周期信号",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 563
+   },
+   {
+    "id": "img-ch2-3-57-9-周期冲激串-delta-_-T-t",
+    "name": "9. 周期冲激串 $\\delta _ { T } ( t )$",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 644
+   },
+   {
+    "id": "img-ch2-3-60-1-线性特性",
+    "name": "1. 线性特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 197
+   },
+   {
+    "id": "img-ch2-3-61-1-线性特性",
+    "name": "1. 线性特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 387
+   },
+   {
+    "id": "img-ch2-3-63-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2887
+   },
+   {
+    "id": "img-ch2-3-62-2-对称特性",
+    "name": "2. 对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 647
+   },
+   {
+    "id": "img-ch2-3-64-3-互易对称特性",
+    "name": "3. 互易对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 85
+   },
+   {
+    "id": "img-ch2-3-65-3-互易对称特性",
+    "name": "3. 互易对称特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 555
+   },
+   {
+    "id": "img-ch2-3-67-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 738
+   },
+   {
+    "id": "img-ch2-3-66-4-展缩特性",
+    "name": "4. 展缩特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 580
+   },
+   {
+    "id": "img-ch2-3-68-单选题",
+    "name": "单选题",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 259
+   },
+   {
+    "id": "img-ch2-3-70-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1233
+   },
+   {
+    "id": "img-ch2-3-69-5-时移特性",
+    "name": "5. 时移特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 637
+   },
+   {
+    "id": "img-ch2-3-71-6-频移特性-调制定理",
+    "name": "6. 频移特性(调制定理)",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 144
+   },
+   {
+    "id": "img-ch2-3-72-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 104
+   },
+   {
+    "id": "img-ch2-3-73-7-卷积特性",
+    "name": "7. 卷积特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 97
+   },
+   {
+    "id": "img-ch2-3-74-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 1032
+   },
+   {
+    "id": "img-ch2-3-75-8-频域卷积特性",
+    "name": "8. 频域卷积特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 116
+   },
+   {
+    "id": "img-ch2-3-76-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 1398
+   },
+   {
+    "id": "img-ch2-3-77-9-时域微分特性",
+    "name": "9. 时域微分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 809
+   },
+   {
+    "id": "img-ch2-3-79-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1953
+   },
+   {
+    "id": "img-ch2-3-78-9-时域微分特性",
+    "name": "9. 时域微分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 251
+   },
+   {
+    "id": "img-ch2-3-80-10-时域积分特性",
+    "name": "10. 时域积分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 517
+   },
+   {
+    "id": "img-ch2-3-81-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 2680
+   },
+   {
+    "id": "img-ch2-3-82-10-时域积分特性",
+    "name": "10. 时域积分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 231
+   },
+   {
+    "id": "img-ch2-3-83-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 3052
+   },
+   {
+    "id": "img-ch2-3-84-11-频域微分特性",
+    "name": "11. 频域微分特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 428
+   },
+   {
+    "id": "img-ch2-3-85-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 836
+   },
+   {
+    "id": "img-ch2-3-87-连续时间Fourier变换的性质",
+    "name": "连续时间Fourier变换的性质",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 4860
+   },
+   {
+    "id": "img-ch2-3-86-12-Parseval定理",
+    "name": "12. Parseval定理",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 353
+   },
+   {
+    "id": "img-ch2-3-88-信号频域分析举例",
+    "name": "信号频域分析举例",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 4235
+   },
+   {
+    "id": "img-ch2-3-89-信号频域分析应用",
+    "name": "信号频域分析应用",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "image-only",
+    "chars": 1580
+   },
+   {
+    "id": "img-ch2-3-92-信号传输",
+    "name": "信号传输",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 124
+   },
+   {
+    "id": "img-ch2-3-93-目录",
+    "name": "目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 90
+   },
+   {
+    "id": "img-ch2-3-94-连续时间LTI系统的频率响应",
+    "name": "连续时间LTI系统的频率响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 927
+   },
+   {
+    "id": "img-ch2-3-95-幅度响应与相位响应",
+    "name": "幅度响应与相位响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 195
+   },
+   {
+    "id": "img-ch2-3-96-连续时间LTI系统的频域响应",
+    "name": "连续时间LTI系统的频域响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1156
+   },
+   {
+    "id": "img-ch2-3-97-连续时间LTI系统的频率响应",
+    "name": "连续时间LTI系统的频率响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 402
+   },
+   {
+    "id": "img-ch2-3-98-连续时间LTI系统的频域描述",
+    "name": "连续时间LTI系统的频域描述",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 3159
+   },
+   {
+    "id": "img-ch2-3-100-连续LTI系统频率响应的计算",
+    "name": "连续LTI系统频率响应的计算",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 473
+   },
+   {
+    "id": "img-ch2-3-101-根据描述连续LTI系统的微分方程-计算系统的频率响应",
+    "name": "※ 根据描述连续LTI系统的微分方程，计算系统的频率响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 803
+   },
+   {
+    "id": "img-ch2-3-102-连续LTI系统频率响应的计算方法",
+    "name": "连续LTI系统频率响应的计算方法",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 642
+   },
+   {
+    "id": "img-ch2-3-103-连续LTI系统的频率响应计算",
+    "name": "连续LTI系统的频率响应计算",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1360
+   },
+   {
+    "id": "img-ch2-3-104-电感的频域模型",
+    "name": "电感的频域模型",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 399
+   },
+   {
+    "id": "img-ch2-3-108-非周期信号通过连续LTI系统的零状态响应",
+    "name": "※ 非周期信号通过连续LTI系统的零状态响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "image-only",
+    "chars": 386
+   },
+   {
+    "id": "img-ch2-3-109-例-已知描述某稳定的连续LTI系统的微分方程为",
+    "name": "【例】已知描述某稳定的连续LTI系统的微分方程为",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2752
+   },
+   {
+    "id": "img-ch2-3-111-周期信号通过LTI系统的零状态响应",
+    "name": "※ 周期信号通过LTI系统的零状态响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 767
+   },
+   {
+    "id": "img-ch2-3-112-例-试求如图所示周期为4的矩形波通过系统的响应",
+    "name": "【例】试求如图所示周期为4的矩形波通过系统的响应。",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 439
+   },
+   {
+    "id": "img-ch2-3-114-目录",
+    "name": "目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 119
+   },
+   {
+    "id": "img-ch2-3-115-无失真传输系统的基本概念",
+    "name": "※无失真传输系统的基本概念",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 143
+   },
+   {
+    "id": "img-ch2-3-117-连续时间LTI系统的频域分析",
+    "name": "连续时间LTI系统的频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 157
+   },
+   {
+    "id": "img-ch2-3-118-无失真传输系统的频域特性",
+    "name": "※无失真传输系统的频域特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 206
+   },
+   {
+    "id": "img-ch2-3-120-无失真传输系统",
+    "name": "无失真传输系统",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 156
+   },
+   {
+    "id": "img-ch2-3-121-目录",
+    "name": "目录",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 135
+   },
+   {
+    "id": "img-ch2-3-122-理想模拟滤波器的频率特性",
+    "name": "理想模拟滤波器的频率特性",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 818
+   },
+   {
+    "id": "img-ch2-3-123-理想低通滤波器的频率响应",
+    "name": "理想低通滤波器的频率响应",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 332
+   },
+   {
+    "id": "img-ch2-3-124-线性相位理想低通滤波器",
+    "name": "※线性相位理想低通滤波器",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 422
+   },
+   {
+    "id": "img-ch2-3-125-线性相位理想低通滤波器",
+    "name": "※线性相位理想低通滤波器",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 413
+   },
+   {
+    "id": "img-ch2-3-126-线性相位理想低通滤波器",
+    "name": "※线性相位理想低通滤波器",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1080
+   },
+   {
+    "id": "img-ch2-3-127-线性相位理想低通滤波器",
+    "name": "※线性相位理想低通滤波器",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 466
+   },
+   {
+    "id": "img-ch2-3-128-线性相位理想低通滤波器",
+    "name": "※线性相位理想低通滤波器",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 816
+   },
+   {
+    "id": "img-ch2-3-130-连续时间LTI系统的频域分析应用",
+    "name": "连续时间LTI系统的频域分析应用",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 132
+   },
+   {
+    "id": "img-ch2-3-132-连续时间LTI系统的频域分析应用",
+    "name": "连续时间LTI系统的频域分析应用",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 6485
+   },
+   {
+    "id": "img-ch2-3-131-传连续时间LTI系统的频域分析应用",
+    "name": "传连续时间LTI系统的频域分析应用",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 208
+   },
+   {
+    "id": "img-ch2-3-133-连续系统响应的频域分析方法",
+    "name": "连续系统响应的频域分析方法",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 143
+   },
+   {
+    "id": "img-ch2-3-134-补充1-连续时间信号与系统的复频域分析-拉普拉斯变换",
+    "name": "补充1：连续时间信号与系统的复频域分析(拉普拉斯变换)",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 151
+   },
+   {
+    "id": "img-ch2-3-135-连续时间信号的复频域表示",
+    "name": "连续时间信号的复频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 92
+   },
+   {
+    "id": "img-ch2-3-136-为何进行信号与系统的复频域分析",
+    "name": "为何进行信号与系统的复频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 109
+   },
+   {
+    "id": "img-ch2-3-138-如何有效分析连续时间LTI系统",
+    "name": "※ 如何有效分析连续时间LTI系统？",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 142
+   },
+   {
+    "id": "img-ch2-3-139-为何进行信号与系统的复频域分析",
+    "name": "为何进行信号与系统的复频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 583
+   },
+   {
+    "id": "img-ch2-3-140-从Fourier变换到Laplace变换",
+    "name": "从Fourier变换到Laplace变换",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 1191
+   },
+   {
+    "id": "img-ch2-3-141-1-连续时间信号Laplace变换",
+    "name": "1. 连续时间信号Laplace变换",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 755
+   },
+   {
+    "id": "img-ch2-3-143-2-单边Laplace变换的定义",
+    "name": "2. 单边Laplace变换的定义",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 196
+   },
+   {
+    "id": "img-ch2-3-144-3-单边Laplace变换的收敛域",
+    "name": "3. 单边Laplace变换的收敛域",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 913
+   },
+   {
+    "id": "img-ch2-3-145-例-试求解信号-mathrm-e-2-t-mathrm-u-t-的单边拉",
+    "name": "【例】试求解信号 $\\mathrm { e } ^ { 2 t } \\mathrm { u } ( t )$ 的单边拉氏变换及其收敛域。",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 378
+   },
+   {
+    "id": "img-ch2-3-146-例-试求解信号-mathbf-e-2-t-mathbf-u-t-的单边拉",
+    "name": "【例】试求解信号 $\\mathbf { e } ^ { - 2 t } \\mathbf { u } ( t )$ 的单边拉氏变换及其收敛域。",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 386
+   },
+   {
+    "id": "img-ch2-3-147-例-试求解信号-mathrm-u-t-mathrm-u-t-tau-的单",
+    "name": "【例】试求解信号 $\\mathrm { u } ( t ) - \\mathrm { u } ( t - \\tau )$ 的单边拉氏变换及其收敛域。",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 316
+   },
+   {
+    "id": "img-ch2-3-148-连续时间信号的复频域表示",
+    "name": "连续时间信号的复频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 366
+   },
+   {
+    "id": "img-ch2-3-149-双边Laplace变换及反变换",
+    "name": "双边Laplace变换及反变换",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 192
+   },
+   {
+    "id": "img-ch2-3-150-双边Laplace变换的定义",
+    "name": "双边Laplace变换的定义",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 644
+   },
+   {
+    "id": "img-ch2-3-151-离散时间信号的复频域表示",
+    "name": "离散时间信号的复频域表示",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 56
+   },
+   {
+    "id": "img-ch2-3-152-为何进行信号与系统的复频域分析",
+    "name": "为何进行信号与系统的复频域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 109
+   },
+   {
+    "id": "img-ch2-3-153-为何进行离散信号与系统的z域分析",
+    "name": "为何进行离散信号与系统的z域分析",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 95
+   },
+   {
+    "id": "img-ch2-3-154-如何有效分析离散时间LTI系统",
+    "name": "※ 如何有效分析离散时间LTI系统？",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "too-small",
+    "chars": 142
+   },
+   {
+    "id": "img-ch2-3-156-由离散时间Fourier变换到z变换",
+    "name": "由离散时间Fourier变换到z变换",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-only",
+    "chars": 949
+   },
+   {
+    "id": "img-ch2-3-157-1-离散时间信号z变换",
+    "name": "1. 离散时间信号z变换",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 575
+   },
+   {
+    "id": "img-ch2-3-159-3-单边z变换的收敛域",
+    "name": "3. 单边z变换的收敛域",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 872
+   },
+   {
+    "id": "img-ch2-3-160-例-求序列-x-k-2-k-mathrm-u-k-的单边z变换及其收敛域",
+    "name": "【例】求序列 $x [ k ] = ( - 2 ) ^ { k } \\mathrm { u } [ k ]$ 的单边z变换及其收敛域",
+    "file": "img/ch02-3_信号的频域分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 394
+   },
+   {
+    "id": "img-ch2-4-01-第2章信号分析基础-随机信号分析",
+    "name": "第2章信号分析基础：随机信号分析",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "toc-like",
+    "chars": 268
+   },
+   {
+    "id": "img-ch2-4-03-确定",
+    "name": "确定",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1335
+   },
+   {
+    "id": "img-ch2-4-04-n-功率信号-实信号若满足条件",
+    "name": "n 功率信号：实信号若满足条件",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1581
+   },
+   {
+    "id": "img-ch2-4-05-n-相关函数与信号的能量-功率密度谱间的关系",
+    "name": "n 相关函数与信号的能量/功率密度谱间的关系：",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 693
+   },
+   {
+    "id": "img-ch2-4-07-1-两个正交的脉冲信号",
+    "name": "(1) 两个正交的脉冲信号",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 665
+   },
+   {
+    "id": "img-ch2-4-08-2-两个正交的已调信号",
+    "name": "(2) 两个正交的已调信号",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "too-small",
+    "chars": 167
+   },
+   {
+    "id": "img-ch2-4-09-n-卷积运算",
+    "name": "n 卷积运算",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 572
+   },
+   {
+    "id": "img-ch2-4-11-n-随机过程的统计特性",
+    "name": "n 随机过程的统计特性",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1918
+   },
+   {
+    "id": "img-ch2-4-12-两个随机过程独立的充要条件",
+    "name": "两个随机过程独立的充要条件",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-only",
+    "chars": 944
+   },
+   {
+    "id": "img-ch2-4-14-随机过程的统计值-续",
+    "name": "随机过程的统计值(续)",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-only",
+    "chars": 1170
+   },
+   {
+    "id": "img-ch2-4-13-随机过程的统计值",
+    "name": "随机过程的统计值",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-only",
+    "chars": 1174
+   },
+   {
+    "id": "img-ch2-4-15-随机变量函数的分布及数字特征",
+    "name": "随机变量函数的分布及数字特征",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 964
+   },
+   {
+    "id": "img-ch2-4-16-n-随机变量函数的分布",
+    "name": "n 随机变量函数的分布",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 577
+   },
+   {
+    "id": "img-ch2-4-18-n-随机变量函数的统计值-数字特征-续",
+    "name": "n 随机变量函数的统计值(数字特征)(续)",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 809
+   },
+   {
+    "id": "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+    "name": "n 随机变量函数的统计值(数字特征)",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 813
+   },
+   {
+    "id": "img-ch2-4-21-平稳随机过程-续",
+    "name": "平稳随机过程（续）",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 266
+   },
+   {
+    "id": "img-ch2-4-23-实平稳随机过程相关函数与自协方差函数的性质",
+    "name": "实平稳随机过程相关函数与自协方差函数的性质",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1658
+   },
+   {
+    "id": "img-ch2-4-24-例-续",
+    "name": "例 (续)",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 816
+   },
+   {
+    "id": "img-ch2-4-26-1-高斯随机过程-其概率密度函数",
+    "name": "(1)高斯随机过程，其概率密度函数",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 961
+   },
+   {
+    "id": "img-ch2-4-28-3-窄带随机过程",
+    "name": "(3) 窄带随机过程",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 636
+   },
+   {
+    "id": "img-ch2-4-30-4-窄带高斯随机过程-续",
+    "name": "(4) 窄带高斯随机过程(续)",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1008
+   },
+   {
+    "id": "img-ch2-4-31-5-正弦-余弦-信号加窄带高斯随机过程",
+    "name": "(5) 正弦(余弦)信号加窄带高斯随机过程",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1630
+   },
+   {
+    "id": "img-ch2-4-29-4-窄带高斯随机过程",
+    "name": "(4) 窄带高斯随机过程",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1009
+   },
+   {
+    "id": "img-ch2-4-33-瑞利分布与莱斯分布的比较",
+    "name": "瑞利分布与莱斯分布的比较",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "too-small",
+    "chars": 71
+   },
+   {
+    "id": "img-ch2-4-34-平稳随机过程与线性时不变系统",
+    "name": "2.11 平稳随机过程与线性时不变系统",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "too-small",
+    "chars": 133
+   },
+   {
+    "id": "img-ch2-4-35-n-随机过程与线性时不变系统",
+    "name": "n 随机过程与线性时不变系统",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1591
+   },
+   {
+    "id": "img-ch2-4-37-n-平稳随机过程与线性时不变系统-续",
+    "name": "n 平稳随机过程与线性时不变系统(续)",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 694
+   },
+   {
+    "id": "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+    "name": "n 平稳随机过程与线性时不变系统",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 695
+   },
+   {
+    "id": "img-ch2-4-40-示例2",
+    "name": "示例2",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 509
+   },
+   {
+    "id": "img-ch2-4-41-示例3",
+    "name": "示例3",
+    "file": "img/ch02-4_随机信号分析.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 510
+   },
+   {
+    "id": "通带抽样定理",
+    "name": "通带抽样定理",
+    "file": "notes/通带抽样定理-附录.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1364
+   },
+   {
+    "id": "信道编码器",
+    "name": "信道编码器",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 135
+   },
+   {
+    "id": "数字调制器",
+    "name": "数字调制器",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 177
+   },
+   {
+    "id": "信道",
+    "name": "信道",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 171
+   },
+   {
+    "id": "数字解调器",
+    "name": "数字解调器",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 51
+   },
+   {
+    "id": "信道译码器",
+    "name": "信道译码器",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 67
+   },
+   {
+    "id": "信源译码器",
+    "name": "信源译码器",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 64
+   },
+   {
+    "id": "抗噪声和抗干扰能力强",
+    "name": "抗噪声和抗干扰能力强",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 188
+   },
+   {
+    "id": "便于采用大规模集成电路实现",
+    "name": "便于采用大规模集成电路实现",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 166
+   },
+   {
+    "id": "比特率",
+    "name": "比特率",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 174
+   },
+   {
+    "id": "带宽",
+    "name": "带宽",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 156
+   },
+   {
+    "id": "误码率",
+    "name": "误码率",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 120
+   },
+   {
+    "id": "误比特率",
+    "name": "误比特率",
+    "file": "教材/01_第1章_绪论.md",
+    "kind": "too-small",
+    "chars": 122
+   },
+   {
+    "id": "ch2-4-hilbert-transform",
+    "name": "2.4 希尔伯特变换及应用",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 17344
+   },
+   {
+    "id": "ch2-9-power-spectral-density",
+    "name": "2.9 信号功率谱密度",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 4463
+   },
+   {
+    "id": "ch2-10-common-random-processes",
+    "name": "2.10 通信系统中几种常用的随机过程",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 18198
+   },
+   {
+    "id": "ch2-10-gaussian-random-process",
+    "name": "高斯随机过程",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 2253
+   },
+   {
+    "id": "ch2-10-narrowband-gaussian-process",
+    "name": "窄带高斯随机过程",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 4811
+   },
+   {
+    "id": "ch2-10-cosine-plus-narrowband-gaussian",
+    "name": "余弦信号加窄带高斯随机信号",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 9374
+   },
+   {
+    "id": "ch2-12-cyclostationary-random-process",
+    "name": "2.12 循环平稳随机过程",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 9844
+   },
+   {
+    "id": "ch2-15-special-functions",
+    "name": "2.15 常用的几种特殊函数",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 1018
+   },
+   {
+    "id": "signal-prediction-methods",
+    "name": "信号预测的基本方法",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "kind": "formula-heavy(warn)",
+    "chars": 12119
+   },
+   {
+    "id": "linear-pcm-error-performance",
+    "name": "线性 PCM 编码的误码性能分析",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "kind": "too-small",
+    "chars": 25
+   }
+  ],
+  "bad_unit_count": 244,
+  "boundary_ambiguous": 151,
+  "boundary_examples": [
+   {
+    "id": "img-ch2-2-08-3-指数类信号",
+    "name": "3. 指数类信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-10-3-指数类信号",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-10-3-指数类信号",
+    "name": "3. 指数类信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-08-3-指数类信号",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-13-2-单位冲激信号",
+    "name": "2. 单位冲激信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-19-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-22-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-24-2-单位冲激信号",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-14-狄拉克-Dirac-定义",
+    "name": "狄拉克(Dirac)定义",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-15-狄拉克-Dirac-定义",
+      1.0
+     ],
+     [
+      "img-ch2-2-16-狄拉克-Dirac-定义",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-15-狄拉克-Dirac-定义",
+    "name": "狄拉克(Dirac)定义",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-14-狄拉克-Dirac-定义",
+      1.0
+     ],
+     [
+      "img-ch2-2-16-狄拉克-Dirac-定义",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-16-狄拉克-Dirac-定义",
+    "name": "狄拉克(Dirac)定义",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-14-狄拉克-Dirac-定义",
+      1.0
+     ],
+     [
+      "img-ch2-2-15-狄拉克-Dirac-定义",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-19-2-单位冲激信号",
+    "name": "2. 单位冲激信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-13-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-22-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-24-2-单位冲激信号",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-22-2-单位冲激信号",
+    "name": "2. 单位冲激信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-13-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-19-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-24-2-单位冲激信号",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-24-2-单位冲激信号",
+    "name": "2. 单位冲激信号",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-13-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-19-2-单位冲激信号",
+      1.0
+     ],
+     [
+      "img-ch2-2-22-2-单位冲激信号",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-33-1-连续LTI系统的时域描述",
+    "name": "1. 连续LTI系统的时域描述",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-34-2-离散LTI系统的时域描述",
+      0.78
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-34-2-离散LTI系统的时域描述",
+    "name": "2. 离散LTI系统的时域描述",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-33-1-连续LTI系统的时域描述",
+      0.78
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-39-2-基于零输入响应与零状态响应的方法",
+    "name": "2. 基于零输入响应与零状态响应的方法",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-44-2-基于零输入响应与零状态响应的方法",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-40-零输入响应",
+    "name": "零输入响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-41-零输入响应",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-41-零输入响应",
+    "name": "零输入响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-40-零输入响应",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-44-2-基于零输入响应与零状态响应的方法",
+    "name": "2. 基于零输入响应与零状态响应的方法",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-39-2-基于零输入响应与零状态响应的方法",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-48-例-已知描述某连续LTI系统的微分方程为",
+    "name": "【例】已知描述某连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-49-例-已知描述某连续LTI系统的微分方程为",
+      1.0
+     ],
+     [
+      "img-ch2-2-52-例-描述某连续LTI系统的微分方程为",
+      0.86
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-49-例-已知描述某连续LTI系统的微分方程为",
+    "name": "【例】已知描述某连续LTI系统的微分方程为:",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-48-例-已知描述某连续LTI系统的微分方程为",
+      1.0
+     ],
+     [
+      "img-ch2-2-52-例-描述某连续LTI系统的微分方程为",
+      0.86
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-51-连续LTI系统的冲激响应",
+    "name": "连续LTI系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-53-连续LTI系统的冲激响应",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-52-例-描述某连续LTI系统的微分方程为",
+    "name": "【例】描述某连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-48-例-已知描述某连续LTI系统的微分方程为",
+      0.86
+     ],
+     [
+      "img-ch2-2-49-例-已知描述某连续LTI系统的微分方程为",
+      0.86
+     ],
+     [
+      "img-ch2-2-76-例-描述某因果的连续LTI系统的微分方程为",
+      0.69
+     ],
+     [
+      "img-ch2-2-78-例-描述某因果的连续LTI系统的微分方程为",
+      0.69
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-53-连续LTI系统的冲激响应",
+    "name": "连续LTI系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-51-连续LTI系统的冲激响应",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-60-信号卷积积分的性质",
+    "name": "信号卷积积分的性质",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-62-信号卷积积分的性质",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-62-信号卷积积分的性质",
+    "name": "信号卷积积分的性质",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-60-信号卷积积分的性质",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-63-例-计算信号x_-1-t-与-x_-2-t-当T-2和T-1时的卷积",
+    "name": "【例】计算信号x_{1}(t)与 x_{2}(t)当T=2和T=1时的卷积。",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-64-例-计算信号-x-_-1-t-与-widetilde-x-_-2-t-当",
+      0.75
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-64-例-计算信号-x-_-1-t-与-widetilde-x-_-2-t-当",
+    "name": "【例】计算信号 $x _ { 1 } ( t )$ 与 $\\widetilde { x } _ { 2 } ( t )$ 当T=2和T=1时的卷积。",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-63-例-计算信号x_-1-t-与-x_-2-t-当T-2和T-1时的卷积",
+      0.75
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-69-1-级联连续系统的冲激响应",
+    "name": "1. 级联连续系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-70-2-并联连续系统的冲激响应",
+      0.82
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-70-2-并联连续系统的冲激响应",
+    "name": "2. 并联连续系统的冲激响应",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-69-1-级联连续系统的冲激响应",
+      0.82
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-75-连续时间LTI系统分析举例",
+    "name": "连续时间LTI系统分析举例",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-77-连续时间LTI系统分析举例",
+      1.0
+     ],
+     [
+      "img-ch2-2-79-连续时间LTI系统分析举例",
+      1.0
+     ],
+     [
+      "img-ch2-2-81-连续时间LTI系统分析举例",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-76-例-描述某因果的连续LTI系统的微分方程为",
+    "name": "【例】描述某因果的连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-52-例-描述某连续LTI系统的微分方程为",
+      0.69
+     ],
+     [
+      "img-ch2-2-78-例-描述某因果的连续LTI系统的微分方程为",
+      1.0
+     ],
+     [
+      "img-ch2-2-80-例-描述某因果的连续LTI系统的微分方程为",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-77-连续时间LTI系统分析举例",
+    "name": "连续时间LTI系统分析举例",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-75-连续时间LTI系统分析举例",
+      1.0
+     ],
+     [
+      "img-ch2-2-79-连续时间LTI系统分析举例",
+      1.0
+     ],
+     [
+      "img-ch2-2-81-连续时间LTI系统分析举例",
+      1.0
+     ]
+    ]
+   },
+   {
+    "id": "img-ch2-2-78-例-描述某因果的连续LTI系统的微分方程为",
+    "name": "【例】描述某因果的连续LTI系统的微分方程为",
+    "file": "img/ch02-2_信号与系统的时域分析.md",
+    "near": [
+     [
+      "img-ch2-2-52-例-描述某连续LTI系统的微分方程为",
+      0.69
+     ],
+     [
+      "img-ch2-2-76-例-描述某因果的连续LTI系统的微分方程为",
+      1.0
+     ],
+     [
+      "img-ch2-2-80-例-描述某因果的连续LTI系统的微分方程为",
+      1.0
+     ]
+    ]
+   }
+  ]
+ },
+ "costs": {
+  "textbook_headings": 373,
+  "numbered_sections": 300,
+  "skeleton_est_tokens": 2935,
+  "avg_heading_chars": 14.1,
+  "chapter03_content_tokens": 55296,
+  "mvi_units": 7,
+  "mvi_read_tokens_if_all_opened": 21828,
+  "mvi_entry_tokens": 143,
+  "mvi_question_coverage": "15/15 content+line questions",
+  "full_build_read_tokens": 608157,
+  "projected_full_index_entry_tokens": 21272,
+  "token_per_char": 0.4237,
+  "assumption": "build cost model: index writing needs reading each unit once (book tokens) + emitting entries; entry ~= num+title14.6+desc40+anchors80 chars"
+ }
+}

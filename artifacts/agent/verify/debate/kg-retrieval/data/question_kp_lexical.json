@@ -4,6 +4,12 @@
   "question": "你看教材，什么叫量化",
   "top3": [
    {
+    "id": "nonuniform-quantization-noise-derivation",
+    "name": "非均匀量化噪声推导（附录）",
+    "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+    "score_bigrams": 2
+   },
+   {
     "id": "img-ch2-4-33-瑞利分布与莱斯分布的比较",
     "name": "瑞利分布与莱斯分布的比较",
     "sidecar": ".memoria/sidecars/img/ch02-4_随机信号分析.memoria.yaml",
@@ -11,12 +17,6 @@
    },
    {
     "id": "img-ch2-3-93-目录",
-    "name": "目录",
-    "sidecar": ".memoria/sidecars/img/ch02-3_信号的频域分析.memoria.yaml",
-    "score_bigrams": 1
-   },
-   {
-    "id": "img-ch2-3-114-目录",
     "name": "目录",
     "sidecar": ".memoria/sidecars/img/ch02-3_信号的频域分析.memoria.yaml",
     "score_bigrams": 1
@@ -340,6 +340,12 @@
   "question": "@教材/03_第3章_模拟信号的数字编码.md#L499 3.3.19推导跳步了",
   "top3": [
    {
+    "id": "nonuniform-quantization-noise-derivation",
+    "name": "非均匀量化噪声推导（附录）",
+    "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+    "score_bigrams": 22
+   },
+   {
     "id": "数字通信系统的基本组成",
     "name": "数字通信系统的基本组成",
     "sidecar": ".memoria/sidecars/教材/01_第1章_绪论.memoria.yaml",
@@ -348,12 +354,6 @@
    {
     "id": "ch3-intro",
     "name": "引言",
-    "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
-    "score_bigrams": 9
-   },
-   {
-    "id": "ch3-summary",
-    "name": "本章小结",
     "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
     "score_bigrams": 9
    }
@@ -388,6 +388,12 @@
   "question": "@教材/03_第3章_模拟信号的数字编码.md#L675C1-L675C85 为什么要这样设计",
   "top3": [
    {
+    "id": "nonuniform-quantization-noise-derivation",
+    "name": "非均匀量化噪声推导（附录）",
+    "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+    "score_bigrams": 17
+   },
+   {
     "id": "ch3-intro",
     "name": "引言",
     "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
@@ -398,12 +404,6 @@
     "name": "数字通信系统的基本组成",
     "sidecar": ".memoria/sidecars/教材/01_第1章_绪论.memoria.yaml",
     "score_bigrams": 9
-   },
-   {
-    "id": "ch3-summary",
-    "name": "本章小结",
-    "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
-    "score_bigrams": 8
    }
   ]
  },
@@ -436,6 +436,12 @@
   "question": "@教材中量化的含义 你这个公式之际把e_x代入，但是这个公式是均匀分布的时候才成立的，也就是说只能带入  y^hat - y",
   "top3": [
    {
+    "id": "nonuniform-quantization-noise-derivation",
+    "name": "非均匀量化噪声推导（附录）",
+    "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+    "score_bigrams": 12
+   },
+   {
     "id": "logarithmic-quantization",
     "name": "对数量化",
     "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
@@ -446,12 +452,30 @@
     "name": "本章小结",
     "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
     "score_bigrams": 6
+   }
+  ]
+ },
+ {
+  "no": 20,
+  "question": "公式推导要一步一步写别跳步，你可以写成附件，然后在教材当中引用",
+  "top3": [
+   {
+    "id": "nonuniform-quantization-noise-derivation",
+    "name": "非均匀量化噪声推导（附录）",
+    "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+    "score_bigrams": 5
    },
    {
-    "id": "ch2-10-white-noise",
-    "name": "白噪声",
-    "sidecar": ".memoria/sidecars/教材/02_第2章_信号分析基础.memoria.yaml",
-    "score_bigrams": 6
+    "id": "抗噪声和抗干扰能力强",
+    "name": "抗噪声和抗干扰能力强",
+    "sidecar": ".memoria/sidecars/教材/01_第1章_绪论.memoria.yaml",
+    "score_bigrams": 2
+   },
+   {
+    "id": "test",
+    "name": "跳转测试节点",
+    "sidecar": ".memoria/sidecars/教材/08_第8章_差错控制编码.memoria.yaml",
+    "score_bigrams": 2
    }
   ]
  }

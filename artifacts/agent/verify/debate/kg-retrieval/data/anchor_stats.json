@@ -1,7 +1,7 @@
 {
  "all_kbs": {
-  "n": 1575,
-  "start_ok_hint_verified": 1563,
+  "n": 1576,
+  "start_ok_hint_verified": 1564,
   "start_ok_snippet_unique": 8,
   "start_ambiguous": 4,
   "start_not_found": 0,
@@ -17,8 +17,8 @@
  },
  "per_kb": {
   "数字通信原理": {
-   "n": 357,
-   "start_ok_hint_verified": 353,
+   "n": 358,
+   "start_ok_hint_verified": 354,
    "start_ok_snippet_unique": 0,
    "start_ambiguous": 4,
    "start_not_found": 0,
@@ -98,8 +98,8 @@
   }
  },
  "target_kb": {
-  "n": 357,
-  "start_ok_hint_verified": 353,
+  "n": 358,
+  "start_ok_hint_verified": 354,
   "start_ok_snippet_unique": 0,
   "start_ambiguous": 4,
   "start_not_found": 0,
@@ -113,23 +113,23 @@
   "end_snippet_ge_2_matches": 54,
   "degenerate_start_eq_end": 1,
   "start_line_delta_hist": {
-   "0": 353,
+   "0": 354,
    "-4": 1,
    "-31": 1,
    "-66": 1,
    "-72": 1
   },
   "snippet_chars_dist": {
-   "n": 357,
+   "n": 358,
    "p50": 16.0,
-   "p90": 25.4,
+   "p90": 25.3,
    "max": 136,
    "min": 3
   },
   "end_snippet_chars_dist": {
-   "n": 353,
+   "n": 354,
    "p50": 54.0,
-   "p90": 190.8,
+   "p90": 190.7,
    "max": 525,
    "min": 2
   },
@@ -146,7 +146,7 @@
    "13": 16,
    "14": 21,
    "15": 29,
-   "16": 28,
+   "16": 29,
    "17": 27,
    "18": 16,
    "19": 33,
@@ -787,7 +787,7 @@
     "name": "增量调制编码的误码性能分析",
     "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
     "matches": 500,
-    "snippet": 2744,
+    "snippet": 2742,
     "end_snippet_chars": 2
    },
    {
@@ -795,7 +795,7 @@
     "name": "线性 PCM 编码的误码性能分析",
     "sidecar": ".memoria/sidecars/教材/03_第3章_模拟信号的数字编码.memoria.yaml",
     "matches": 500,
-    "snippet": 2792,
+    "snippet": 2796,
     "end_snippet_chars": 2
    },
    {
@@ -960,6 +960,17 @@
    "delete_hint_error_max": 31,
    "delete_found_pct": 100.0,
    "rewrite_found_pct": 100.0
+  },
+  {
+   "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+   "n_anchors": 1,
+   "insert_hint_error_mean": 40.0,
+   "insert_hint_error_max": 40,
+   "insert_found_pct": 100.0,
+   "delete_hint_error_mean": 0.0,
+   "delete_hint_error_max": 0,
+   "delete_found_pct": 0.0,
+   "rewrite_found_pct": 0.0
   },
   {
    "sidecar": ".memoria/sidecars/教材/01_第1章_绪论.memoria.yaml",

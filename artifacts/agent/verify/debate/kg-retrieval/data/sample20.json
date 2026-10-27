@@ -69,7 +69,7 @@
   "end_snippet": "y (t) = \\mathrm{Re} \\Big [ y _ {\\mathrm{L}} (t) \\mathrm{e} ^ {\\mathrm{j} \\omega_",
   "span_head": "## 2.4 希尔伯特变换及应用\n\n希尔伯特变换是获得某一函数相应的正交函数的一种变换。在对通信信号的处理过程中，利用希尔伯特变换，可将一频带信号变换为较为简单的低通信号来分析。\n\n希尔伯特变换 希尔伯特变换是构建某一函数相应的正交函数的变换，定义实函数 $f(t)$ 的希尔伯特变换为\n\n$$\n\\hat {f} (t) = H [ f (t) ] = f (t) * \\frac {1}{\\pi t} = \\frac {1}{\\pi} \\int_ {- \\infty} ^ {\\infty} \\frac {f (\\ta",
   "span_tail": "{0} t} \\Big ] = \\frac {1}{2} \\Big [ \\int_ {t - T} ^ {t} m (\\tau) \\mathrm{d} \\tau \\Big ] \\cos \\omega_ {0} t \\quad \\square",
-  "est_tokens": 7349
+  "est_tokens": 7366
  },
  {
   "no": 5,
@@ -79,8 +79,8 @@
   "id": "linear-pcm-error-performance",
   "name": "线性 PCM 编码的误码性能分析",
   "heading_path": "3.7.2 线性 PCM 编码的误码性能分析",
-  "start_line": 2788,
-  "end_line": 2748,
+  "start_line": 2792,
+  "end_line": 2752,
   "span_chars": 0,
   "span_lines": 0,
   "start_snippet": "## 3.7.2 线性 PCM 编码的误码性能分析",
@@ -98,14 +98,14 @@
   "name": "非均匀量化",
   "heading_path": "3.3.4 非均匀量化",
   "start_line": 646,
-  "end_line": 929,
-  "span_chars": 13057,
-  "span_lines": 284,
+  "end_line": 933,
+  "span_chars": 13308,
+  "span_lines": 288,
   "start_snippet": "## 3.3.4 非均匀量化",
   "end_snippet": "综上，当满足条件 $M \\gg 1$ 时，进行均匀的量化分层，量化电平取量化区间的中点，即可获得近似最佳的量化效果。此时最佳量化退化到均匀量化，这同时也说明，均",
   "span_head": "## 3.3.4 非均匀量化\n\n在实际系统中，信号可能会在很大的范围内变化。如在电话通信中，对不同的人，说话的音量可以差别很大。即使对同一个人，受环境和情绪的影响，音量的变化也可能很大，语音信号平均功率的变动范围可达到 [[\\h:#FDEBD0:#A04000|30dB，即 1000 倍]]。在这样的应用场合，由于均匀量化的固有缺点，采用均匀量化难以获得好的量化效果。图 3.3.2(b) 给出了一个非均匀量化示例，其基本思想是[[\\h:#D6E4F0:#1B4F72|根据信号幅度所处的不同区间来确定量化间隔的大小]",
   "span_tail": "pt}} \\tag {3.3.57}\n$$\n\n综上，当满足条件 $M \\gg 1$ 时，进行均匀的量化分层，量化电平取量化区间的中点，即可获得近似最佳的量化效果。此时最佳量化退化到均匀量化，这同时也说明，均匀量化本身是非均匀量化的一个特例。",
-  "est_tokens": 5532
+  "est_tokens": 5652
  },
  {
   "no": 7,
@@ -141,7 +141,7 @@
   "end_snippet": "图 2.9.2 相关函数与功率密度谱",
   "span_head": "## 2.9 信号功率谱密度\n\n在通信系统中出现的信号大多是随机信号，一般的随机信号有多种甚至无穷多种可能的实现，难以简单地根据傅里叶变换分析信号的频谱特性。但对于平稳随机信号，通过其相关函数与功率谱的关系，往往比较容易确定信号在频谱上的分布。下面讨论这种关系。\n\n在有限时间段 $-T < t < T$ 内，取平稳随机信号 $X(t)$ 的截短函数 $X_{\\mathrm{T}}(t): \\{X(t), -T < t < T\\}$ ，其傅里叶变换形式上可以表示为\n\n$$\nF _ {X _ {\\mathrm{T}}}",
   "span_tail": "2 相关函数与功率密度谱](.memoria/images/fbd751bb80a85295798cd160cd6c173c0b104cd64de4719a002a1cd8b9501842.jpg)  \n图 2.9.2 相关函数与功率密度谱",
-  "est_tokens": 1891
+  "est_tokens": 1895
  },
  {
   "no": 9,
@@ -169,8 +169,8 @@
   "id": "delta-modulation",
   "name": "增量调制（ $\\Delta \\mathbf{M}$ 调制）",
   "heading_path": "3.6 增量调制（ $\\Delta \\mathbf{M}$ 调制）",
-  "start_line": 2235,
-  "end_line": 2237,
+  "start_line": 2239,
+  "end_line": 2241,
   "span_chars": 294,
   "span_lines": 3,
   "start_snippet": "## 3.6 增量调制（ $\\Delta \\mathbf{M}$ 调制）",
@@ -195,7 +195,7 @@
   "end_snippet": "（更多随机过程的联合分布可以类推）",
   "span_head": "## n 随机过程的统计特性\n> 📖 教材对照：[[ch2-5-random-signal-basics|2.5 随机信号的基本概念和特点]]\n\n随机过程的分布函数和概率密度函数：\n\n一维分布函数：\n\n$$\nF \\big (x _ {1}, t _ {1} \\big) = P \\big (X \\big (t _ {1} \\big) \\leq x _ {1} \\big)\n$$\n\n一维概率密度函数：\n\n$$\np (x _ {1}, t _ {1}) = \\frac {\\partial F (x _ {1} , t _ ",
   "span_tail": "ts , \\partial x _ {n} \\partial y _ {1} \\partial y _ {2} , \\dots , \\partial y _ {m}} \\\\ \\end{array}\n$$\n\n（更多随机过程的联合分布可以类推）",
-  "est_tokens": 813
+  "est_tokens": 815
  },
  {
   "no": 12,
@@ -231,7 +231,7 @@
   "end_snippet": "注意：高斯随机信号经线性系统后一般均值和方差会发生变化。",
   "span_head": "## n 高斯随机信号经过线性系统后的统计特性\n> 📖 教材对照：[[ch2-11-stationary-process-lti-system|2.11 平稳随机过程与时不变线性系统]]\n\n\n\n高斯随机信号X(t)经线性系统后的输出可表示为\n\n$$\nY (t) = \\int_ {- \\infty} ^ {\\infty} h (t, \\tau) X (\\tau) d \\tau\n$$\n\n输出为输入随机信号的线性加权和。因为高斯随机变量的线性组合仍是高斯随机变量，因此\n\n高斯随机信号经过线性系统后仍为高斯随机信号；\n\n可",
   "span_tail": "入随机信号的线性加权和。因为高斯随机变量的线性组合仍是高斯随机变量，因此\n\n高斯随机信号经过线性系统后仍为高斯随机信号；\n\n可根据输出的高斯随机信号的均值和方差确定其全部统计特性；\n\n注意：高斯随机信号经线性系统后一般均值和方差会发生变化。",
-  "est_tokens": 134
+  "est_tokens": 135
  },
  {
   "no": 14,
@@ -249,7 +249,7 @@
   "end_snippet": "\\xrightarrow [ a <   0 ]{u = a t} \\int_ {\\infty} ^ {- \\infty} \\varphi (u / a) \\delta (u) \\mathrm{d} t / a = - \\frac {1}{a} \\varphi (0)",
   "span_head": "## 性质3：展缩特性\n\n$$\n\\delta (a t) = \\frac {1}{| a |} \\delta (t) \\quad (a \\neq 0)\n$$\n\n(1) 取 $a = - 1$ , 可得 $\\delta ( t ) = \\delta ( - t )$\n\n推论：冲激信号是偶函数\n\n$$\n\\delta (a t + b) = \\frac {1}{| a |} \\delta (t + b / a) \\quad (a \\neq 0) \\tag {2}\n$$\n\n$$\n\\int_ {- \\infty} ^ {\\i",
   "span_tail": " a <   0 ]{u = a t} \\int_ {\\infty} ^ {- \\infty} \\varphi (u / a) \\delta (u) \\mathrm{d} t / a = - \\frac {1}{a} \\varphi (0)",
-  "est_tokens": 296
+  "est_tokens": 297
  },
  {
   "no": 15,
@@ -267,7 +267,7 @@
   "end_snippet": "上式为齐次方程，因此零输入响应具有齐次解的形式",
   "span_head": "## 零输入响应\n\n描述连续LTI系统的线性常系数微分方程为\n\n$$\ny ^ {(n)} (t) + a _ {n - 1} y ^ {(n - 1)} (t) + \\dots + a _ {1} y ^ {\\prime} (t) + a _ {0} y (t)\n$$\n\n$$\n= b _ {m} x ^ {(m)} (t) + b _ {m - 1} x ^ {(m - 1)} (t) + \\dots + b _ {1} x ^ {\\prime} (t) + b _ {0} x (t)\n$$\n\n当输入 x(t)=0",
   "span_tail": "} (t) + a _ {n - 1} y ^ {(n - 1)} (t) + \\dots + a _ {1} y ^ {\\prime} (t) + a _ {0} y (t) = 0\n$$\n\n上式为齐次方程，因此零输入响应具有齐次解的形式",
-  "est_tokens": 205
+  "est_tokens": 206
  },
  {
   "no": 16,
@@ -285,7 +285,7 @@
   "end_snippet": "X (s) = \\mathcal {L} [ x (t) ] \\qquad \\quad x (t) = \\mathcal {L} ^ {- 1} [ X (s) ]",
   "span_head": "## 1. 连续时间信号Laplace变换\n\n$$\nx (t) = \\frac {1}{2 \\pi \\mathrm{j}} \\int_ {\\sigma - \\mathrm{j} \\infty} ^ {\\sigma + \\mathrm{j} \\infty} X (s) \\mathrm{e} ^ {s t} \\mathrm{d} s\n$$\n\n$$\ns = \\sigma + \\mathrm{j} \\omega\n$$\n\n$$\nX (s) = \\int_ {- \\infty} ^ {\\infty} x (t) \\mathrm",
   "span_tail": "leftarrow {\\mathscr {L}} X (s)\n$$\n\n$$\nX (s) = \\mathcal {L} [ x (t) ] \\qquad \\quad x (t) = \\mathcal {L} ^ {- 1} [ X (s) ]",
-  "est_tokens": 320
+  "est_tokens": 321
  },
  {
   "no": 17,
@@ -321,7 +321,7 @@
   "end_snippet": "\\begin{array}{l} p \\big (x _ {1}, x _ {2}, \\dots , x _ {n}, t _ {1}, t _ {2}, \\dots , t _ {n}; y _ {1}, y _ {2}, \\dots , y _ {m}, t _ {1} ^ {\\prime}, t _ {2} ^ {\\prime}, \\dots , t _ {m} ^ {\\prime} \\big) \\\\ = p \\big (x _ {1}, x _ {2}, \\dots , x _ {n}, t _ {1}, t _ {2}, \\dots , t _ {n} \\big) p \\big (y _ {1}, y _ {2}, \\dots , y _ {m}, t _ {1} ^ {\\prime}, t _ {2} ^ {\\prime}, \\dots , t _ {m} ^ {\\prime} \\big) \\\\ \\end{array}",
   "span_head": "## 两个随机过程独立的充要条件\n> 📖 教材对照：[[ch2-5-random-signal-basics|2.5 随机信号的基本概念和特点]]\n\n对任意的n和m，有\n\n$$\n\\begin{array}{l} F \\big (x _ {1}, x _ {2}, \\dots , x _ {n}, t _ {1}, t _ {2}, \\dots , t _ {n}; y _ {1}, y _ {2}, \\dots , y _ {m}, t _ {1} ^ {\\prime}, t _ {2} ^ {\\prime}, \\",
   "span_tail": "_ {1}, y _ {2}, \\dots , y _ {m}, t _ {1} ^ {\\prime}, t _ {2} ^ {\\prime}, \\dots , t _ {m} ^ {\\prime} \\big) \\\\ \\end{array}",
-  "est_tokens": 400
+  "est_tokens": 401
  },
  {
   "no": 19,
@@ -339,6 +339,24 @@
   "end_snippet": "此时对所有 $k\\in\\mathbb{Z}$，平移后的频谱区间两两交集为空，$X_s(\\omega)$ 无混叠。",
   "span_head": "### 已知\n$$\n\\begin{align*}\n&X(\\omega)=0,\\quad |\\omega|\\notin[\\omega_L,\\omega_H],\\quad W=\\omega_H-\\omega_L\\\\\n&X_s(\\omega)=\\frac1{T_s}\\sum_{k=-\\infty}^{\\infty}X(\\omega-k\\omega_s)\\\\\n&N=\\lfloor \\tfrac{\\omega_H}{W}\\rfloor,\\quad M=\\tfrac{\\omega_H}{W}-N,\\quad \\omega_{s",
   "span_tail": "合并\n$$\n\\boldsymbol{\\omega_{s,\\text{min}} \\le \\omega_s \\le 4W}\n$$\n此时对所有 $k\\in\\mathbb{Z}$，平移后的频谱区间两两交集为空，$X_s(\\omega)$ 无混叠。",
-  "est_tokens": 578
+  "est_tokens": 579
+ },
+ {
+  "no": 20,
+  "uid": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml::nonuniform-quantization-noise-derivation",
+  "sidecar": ".memoria/sidecars/notes/非均匀量化噪声推导-附录.memoria.yaml",
+  "file": "notes/非均匀量化噪声推导-附录.md",
+  "id": "nonuniform-quantization-noise-derivation",
+  "name": "非均匀量化噪声推导（附录）",
+  "heading_path": "非均匀量化噪声推导（附录）",
+  "start_line": 1,
+  "end_line": 422,
+  "span_chars": 9886,
+  "span_lines": 422,
+  "start_snippet": "## 非均匀量化噪声推导（附录）",
+  "end_snippet": "2. **噪声被重新分配而非减少**：总功率 $\\sigma_q^2=\\int\\Delta_k^2p_X\\,\\mathrm dx/12$ 通常变大，变小的是**",
+  "span_head": "## 非均匀量化噪声推导（附录）\n\n> 配套正文：`教材/03_第3章_模拟信号的数字编码.md` 3.3.4 节（压缩—量化—扩张链路）。本附录把式 (3.3.29)–(3.3.31) 与式 (3.3.33)–(3.3.43) 之间的每一步补齐，不跳步。\n\n### 符号约定\n\n| 符号 | 含义 | 所属域 |\n|---|---|---|\n| $x$ | 压缩器输入，即原信号幅度 | $x$ 域 |\n| $y=f(x)$ | 压缩器输出 | $y$ 域 |\n| $\\Delta_y$ | $y$ 域**均匀**量化",
+  "span_tail": "倍。\n2. **噪声被重新分配而非减少**：总功率 $\\sigma_q^2=\\int\\Delta_k^2p_X\\,\\mathrm dx/12$ 通常变大，变小的是**小信号区的局部噪声**，从而抬升小信号 $\\mathrm{SNR}_q$。",
+  "est_tokens": 4199
  }
 ]
