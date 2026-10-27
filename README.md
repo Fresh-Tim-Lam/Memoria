@@ -8,7 +8,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-blue)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.4.4-8A2BE2)](src/memoria/__version__.py)
 [![中文](https://img.shields.io/badge/README-中文-green)](README.cn.md)
 
@@ -227,4 +227,6 @@ See [docs/design/designV0.md](docs/design/designV0.md) for details.
 
 ## License
 
-[MIT](LICENSE) © 2026 FreshTim
+[AGPL-3.0-only](LICENSE) © 2026 FreshTim
+
+**The original release of this version was MIT. The license has been backfilled to AGPL-3.0; existing grants for v0.4.10 and earlier versions are unaffected (MIT is irrevocable).**
