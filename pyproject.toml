@@ -8,6 +8,7 @@ dynamic = ["version"]
 description = "Local knowledge-graph IDE with offline retrieval: Markdown notes with wiki-links, knowledge points, highlighters, LaTeX math, Mermaid diagrams and 2D/3D graph visualization."
 readme = "README.md"
 requires-python = ">=3.11"
+license = {text = "AGPL-3.0-only"}
 dependencies = [
     "pywebview>=5.0",
     "PyYAML>=6.0",
