@@ -1,0 +1,92 @@
+{
+ "schema": "manual-judgments/v1",
+ "note": "人工实测记录（corpus-analyst）。A 类=仅凭 name(+range 首尾 snippet) 就能决定『读不读』；B 类=只能判主题、不能决定读不读/读哪条；C 类=会判错（名字与内容不符或缺主语）。判定由人做，样本与依据见 sample20.json / sample10.json，可复核。",
+ "test1_judgeability": {
+  "protocol": "用 sample20.json 的 20 个 KP（分层：教材 10 / slides 8 / notes 2，seed=20261027）。只看 name + file + heading_path + start/end snippet + 行号；先写下『这个 KP 回答什么问题/是否需要为某个真实问题读它』，再打开 span 首尾核对。核对前不看正文。",
+  "rows": [
+   {"no": 1, "name": "误码率", "file": "教材/01_第1章_绪论.md", "verdict": "A", "missing": null, "note": "名字即标准术语；span 就是定义+公式 P_s=出错码元/总码元。判得出。"},
+   {"no": 2, "name": "信源译码器", "file": "教材/01_第1章_绪论.md", "verdict": "A", "missing": null, "note": "名字定位器件；span 是其功能描述。"},
+   {"no": 3, "name": "带宽利用率", "file": "教材/01_第1章_绪论.md", "verdict": "B", "missing": "与相邻 KP 的对比/歧义", "note": "span 内有 η_b=R_b/W 与 η_B=R_s/W 两套定义（比特 vs 符号）。只看名字无法知道有两条公式、也无法知道该给哪一条；问题『带宽利用率怎么算』会读对节但可能引错公式。"},
+   {"no": 4, "name": "2.4 希尔伯特变换及应用", "file": "教材/02_第2章_信号分析基础.md", "verdict": "B", "missing": "覆盖范围/子主题清单", "note": "17,344 字≈7.3k token 的大节。名字只说『希尔伯特变换及应用』，无法知道里面有哪些应用（解析信号/单边带/余弦…），无法在 7k token 的读取成本前做决定。"},
+   {"no": 5, "name": "线性 PCM 编码的误码性能分析", "file": "教材/03_第3章_模拟信号的数字编码.md", "verdict": "A_BROKEN", "missing": "锚点(非描述)", "note": "名字可判，但落盘锚点已坏：end snippet='$$'（2 字）解析到 2748 行，range 反转成 2788→2748，span=0。名字没问题、制品读不到。"},
+   {"no": 6, "name": "非均匀量化", "file": "教材/03_第3章_模拟信号的数字编码.md", "verdict": "B", "missing": "覆盖范围/子主题清单", "note": "13,057 字。名字只给主题；span 含『为什么非均匀(30dB 动态范围)』『最佳量化』『压扩』三个不同子问题。问『为什么用非均匀量化』名字够选，问『最佳量化条件』名字不够。"},
+   {"no": 7, "name": "数字通信缺点", "file": "教材/01_第1章_绪论.md", "verdict": "A", "missing": null, "note": "名字即内容（缺点列表）。"},
+   {"no": 8, "name": "2.9 信号功率谱密度", "file": "教材/02_第2章_信号分析基础.md", "verdict": "B", "missing": "覆盖范围/结论要点", "note": "4,463 字。名字是主题，无法知道它给的是『相关函数↔功率谱（维纳-辛钦）』这条结论；问『功率谱怎么由相关函数求』时名字只提供 50% 信息。"},
+   {"no": 9, "name": "信道编码器", "file": "教材/01_第1章_绪论.md", "verdict": "A", "missing": null, "note": "器件功能，名字+首 snippet 足够。"},
+   {"no": 10, "name": "增量调制（ ΔM 调制）", "file": "教材/03_第3章_模拟信号的数字编码.md", "verdict": "A", "missing": null, "note": "名字明确给出别名 ΔM；span 是动机+定义。"},
+   {"no": 11, "name": "n 随机过程的统计特性", "file": "img/ch02-4_随机信号分析.md", "verdict": "B", "missing": "与相邻 KP 的对比/歧义", "note": "OCR 脏名（'n ' 前缀）；『统计特性』在本文件里另有多条近义 KP（分布函数/数字特征/统计值）。只看名字无法在 3~4 条里选对。"},
+   {"no": 12, "name": "连续时间信号的复频域表示", "file": "img/ch02-3_信号的频域分析.md", "verdict": "C", "missing": "内容形态（名字承诺正文，实际只有目录）", "note": "名字像大节，span 只有 92 字、内容是 5 条提纲（引言/Laplace/收敛域…）。读它会得到 0 知识 → 名字会让我做出错误决定。"},
+   {"no": 13, "name": "n 高斯随机信号经过线性系统后的统计特性", "file": "img/ch02-4_随机信号分析.md", "verdict": "A", "missing": "OCR 前缀噪声(轻微)", "note": "名字几乎是一句结论（仍是高斯、均值方差会变），span 证实。可判。"},
+   {"no": 14, "name": "性质3：展缩特性", "file": "img/ch02-2_信号与系统的时域分析.md", "verdict": "C", "missing": "所属对象/前提", "note": "『性质3：展缩特性』没有主语：是 δ(at) 的展缩还是 Fourier/Laplace 的展缩？名字无法判，且会与其它『性质』混淆。"},
+   {"no": 15, "name": "零输入响应", "file": "img/ch02-2_信号与系统的时域分析.md", "verdict": "B", "missing": "唯一性（同文件重名 2 条）", "note": "名字可判主题，但同一文件里『零输入响应』出现 2 次（304 字 / 484 字两条），名字无法决定读哪条。"},
+   {"no": 16, "name": "1. 连续时间信号Laplace变换", "file": "img/ch02-3_信号的频域分析.md", "verdict": "A", "missing": "编号前缀噪声(轻微)", "note": "名字+内容（定义/反变换公式）一致。"},
+   {"no": 17, "name": "连续周期信号频域分析的总结", "file": "img/ch02-3_信号的频域分析.md", "verdict": "B", "missing": "结论要点", "note": "名字说『总结』，但不知道总结里含『离散非周期』『吉伯斯现象』等决定性结论；回答『周期信号频谱特点』时无法确认这条够不够。"},
+   {"no": 18, "name": "两个随机过程独立的充要条件", "file": "img/ch02-4_随机信号分析.md", "verdict": "A", "missing": null, "note": "名字是完整命题，span 是联合分布因子化条件。"},
+   {"no": 19, "name": "通带抽样定理", "file": "notes/通带抽样定理-附录.md", "verdict": "A", "missing": "heading path 异常(已知)", "note": "名字明确；heading_path 只有『已知』（片段化标题），但 name 足够。"}
+  ],
+  "summary": {
+   "n": 20,
+   "A_decisive": 9,
+   "B_partial": 7,
+   "C_wrong_decision": 2,
+   "A_but_broken_artifact": 1,
+   "cannot_decide_pct": 45.0,
+   "cannot_decide_without_any_caveat_pct": 10.0
+  },
+  "missing_info_taxonomy": {
+   "范围/子主题清单（这一节到底覆盖哪些子问题）": [4, 6, 8],
+   "与相邻 KP 的对比/唯一性（读哪一条、和谁不同）": [3, 11, 15],
+   "结论/公式要点（名字是主题，不知道结论是什么）": [17],
+   "所属对象/前提（这性质是谁的性质）": [14],
+   "内容形态（名字承诺正文，实际只有目录）": [12],
+   "锚点自身损坏（不是描述问题，是制品问题）": [5]
+  },
+  "additional_finding": "『缺例子』在 20 条里一次都不是决定『读不读』的瓶颈：例子在长节内部，影响的是『读完能不能讲清楚』而不是『路由』。因此 description 的字段优先级应是 范围>边界>结论>例子。"
+ },
+ "test2_question_mapping": {
+  "protocol": "从 .memoria/agent/sessions/session-20261027T011706Z-0cb419b6.jsonl 取 19 条 user/message，按『理想应读的 ch03 KP（id）』人工标注；再用 ch03 的 28 个 KP 名做『仅凭名字可路由』判定（名字=索引暴露的全部信息时）。行号锚定问题用 range 判定，不用名字。",
+  "rows": [
+   {"no": 1, "turn_time": "01:17:06", "question": "你看教材，什么叫量化", "type": "定义", "ideal_kps": ["quantization-overview", "scalar-quantization"], "name_alone_decisive": "partial", "note": "名字把范围收敛到『量化』4 条（模拟信号的量化/标量/均匀/非均匀），但不能决定哪条含定义；当时 0 条 ch03 KP 存在。"},
+   {"no": 2, "turn_time": "01:19:32", "question": "学到过的知识你就帮我在教材中记笔记或者划关键词（样式为：…）", "type": "写操作/元", "ideal_kps": [], "name_alone_decisive": "n/a", "note": "需要 文件+行+snippet，不是 KP。"},
+   {"no": 3, "turn_time": "01:25:01", "question": "抽样和量化有什么区别啊", "type": "对比", "ideal_kps": ["aliasing", "quantization-overview", "uniform-quantization"], "name_alone_decisive": "no", "note": "没有任何 KP 名字表达『对比』；需跨 2 个 KP 族综合。"},
+   {"no": 4, "turn_time": "01:27:17", "question": "…为什么要分这么多电平量化", "type": "设计理由", "ideal_kps": ["uniform-quantization", "nonuniform-quantization"], "name_alone_decisive": "no", "note": "理由（量化噪声 vs 过载）散在两节，名字是主题不是理由。"},
+   {"no": 5, "turn_time": "01:32:47", "question": "PCM是什么", "type": "定义", "ideal_kps": ["pcm"], "name_alone_decisive": "yes", "note": "pcm KP 400 字即定义。"},
+   {"no": 6, "turn_time": "01:34:25", "question": "我想从数学公式上学习抽样和量化的区别", "type": "公式对比", "ideal_kps": ["aliasing", "uniform-quantization", "nonuniform-quantization"], "name_alone_decisive": "no", "note": "公式分散在 4+ 个 KP；无『公式/推导』索引字段。"},
+   {"no": 7, "turn_time": "01:42:20", "question": "如果你觉得必要，你可以自己维护一些知识点和链接，辅助你检索记忆，避免爆上下文", "type": "元/需求", "ideal_kps": [], "name_alone_decisive": "n/a", "note": "用户显式提出 KP+links 索引需求；随后 01:46 起 agent 自建 28 KP+20 边。"},
+   {"no": 8, "turn_time": "01:54:20", "question": "所以信道上传输的是幅度量化之后各种频率的波（原信号傅里叶变换）？", "type": "概念纠错", "ideal_kps": ["pcm", "a-law-mu-law-pcm", "pcm-coding-methods"], "name_alone_decisive": "no", "note": "要跨 PCM 编码类 KP 综合才能纠错。"},
+   {"no": 9, "turn_time": "02:05:42", "question": "f_H是什么，只要保证大于这个的两倍，不论是带通还是理想抽样都能无损还原啊", "type": "概念澄清", "ideal_kps": ["aliasing", "ideal-sampling"], "name_alone_decisive": "yes", "note": "『混叠现象与低通抽样定理』名足够。"},
+   {"no": 10, "turn_time": "02:11:01", "question": "所以带通抽样需要满足怎样的条件才可以无损", "type": "条件", "ideal_kps": ["bandpass-sampling"], "name_alone_decisive": "yes", "note": ""},
+   {"no": 11, "turn_time": "02:13:29", "question": "为什么会有上界，原本按照低通的思路，不是保证下界…", "type": "推导理由", "ideal_kps": ["bandpass-sampling"], "name_alone_decisive": "yes", "note": "读该节内公式即可；名字足够选节。"},
+   {"no": 12, "turn_time": "02:18:07", "question": "意思是可行区域是一连串区间并上一个超宽松的区间", "type": "结论确认", "ideal_kps": ["bandpass-sampling"], "name_alone_decisive": "yes", "note": ""},
+   {"no": 13, "turn_time": "02:19:04", "question": "好", "type": "ack", "ideal_kps": [], "name_alone_decisive": "n/a", "note": ""},
+   {"no": 14, "turn_time": "02:22:03", "question": "按照你建议", "type": "ack", "ideal_kps": [], "name_alone_decisive": "n/a", "note": "触发 02:23 的高亮写入。"},
+   {"no": 15, "turn_time": "02:38:08", "question": "@教材/03…#L499 3.3.19推导跳步了", "type": "行锚定/公式", "ideal_kps": ["uniform-quantization"], "name_alone_decisive": "no", "note": "必须靠 range(479-644) 定位，名字无法把 L499 映射到 KP。"},
+   {"no": 16, "turn_time": "02:40:35", "question": "只有功率信号分布式均匀的才能这样推导吧", "type": "公式前提", "ideal_kps": ["uniform-quantization"], "name_alone_decisive": "no", "note": "需公式级内容；名字只给主题。"},
+   {"no": 17, "turn_time": "02:55:06", "question": "@教材/03…#L675C1-L675C85 为什么要这样设计", "type": "行锚定/设计理由", "ideal_kps": ["nonuniform-quantization"], "name_alone_decisive": "no", "note": "靠 range(646-929) 定位。"},
+   {"no": 18, "turn_time": "03:00:52", "question": "就是先变换然后再均匀量化吗，为什么这样可以降低噪声", "type": "机制", "ideal_kps": ["nonuniform-quantization", "logarithmic-quantization"], "name_alone_decisive": "no", "note": "『非均匀量化』与『对数量化』边界模糊，需 description 消歧。"},
+   {"no": 19, "turn_time": "03:04:51", "question": "@教材中量化的含义 你这个公式…只能带入 y^hat - y", "type": "引用/公式纠错", "ideal_kps": ["quantization-overview", "uniform-quantization"], "name_alone_decisive": "no", "note": "引用『教材中量化的含义』不是 KP id；要落到 2 个 KP 的公式。"}
+  ],
+  "summary": {
+   "n_questions": 19,
+   "content_questions": 15,
+   "meta_or_write_or_ack": 4,
+   "name_alone_single_kp_decisive": 5,
+   "name_alone_decisive_pct_of_content": 33.3,
+   "needs_multi_kp_synthesis": 7,
+   "needs_line_range_not_name": 2,
+   "no_dedicated_kp_for_question": ["Q3 抽样vs量化对比", "Q4 为什么分多电平", "Q6 公式层面抽样vs量化"],
+   "kp_hit_concentration": "28 个 ch03 KP 中只有约 6 个被 19 问真正用到（bandpass-sampling / aliasing / quantization-overview / uniform-quantization / nonuniform-quantization / pcm），≈21%",
+   "coverage_at_ask_time": "Q1–Q6（6/19=31.6%）发问时 ch03 有 0 个 KP（首个 ch03 KP 建于 01:46:34，Q7 是 01:42:20）；Q8–Q19（12 问）有 28-KP 索引。当前 357 KP 对 19 问的『话题覆盖』=15/15 内容问题都落在 ch03 范围内，但『名字可路由』=5/15。",
+   "question_type_distribution": {"定义/概念澄清": 4, "对比/区别": 2, "设计理由/为什么": 3, "公式/推导/前提": 4, "概念纠错": 2, "元/写操作/ack": 4, "行锚定编辑": 2}
+  }
+ },
+ "test3_non_kp_contamination": {
+  "protocol": "对 357 条目标库 KP 做名称与范围规则检查，再人工确认。",
+  "hard_non_kp": {"count": 18, "pct": 5.0, "items": ["目录 x11", "单选题 x2", "小结 x1", "本章小结 x1", "引言 x1", "定义： x1", "求解过程 x1"], "plus": ["跳转测试节点 x1（明确是测试节点）", "第2章信号处理基础 x2（章标题、span 仅 32 字）"]},
+  "duplicate_name_within_same_file": {"name_groups": 32, "kps_involved": 102, "pct_of_all_kps": 28.6, "examples": ["连续时间Fourier变换的性质 x12", "目录 x7", "连续时间Fourier级数的性质 x5", "※线性相位理想低通滤波器 x5", "2. 单位冲激信号 x4"]},
+  "ocr_dirty_names": {"count": 40, "pct": 11.2, "examples": ["u 有效带宽", "n 随机过程的统计特性", "※平移特性：", "连续周期信号的频域分析的总结(续)"]},
+  "near_empty_span_lt_50_chars": 5,
+  "inverted_range": 1,
+  "verdict": "若把现有 KP 直接当索引：5.0% 是明确的非知识点；28.6% 与他人同名（同文件内重名，读哪条不可判）；11.2% 名字带 OCR 噪声。合计约 1/3 条目不能唯一定位 → 『现有 KP 直接当索引单元』这个前提必须改。"
+ }
+}
