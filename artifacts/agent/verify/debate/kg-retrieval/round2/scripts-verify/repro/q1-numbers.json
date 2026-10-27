@@ -1,0 +1,419 @@
+{
+ "frozen": {
+  "source": "2026-10-27T14:09:46",
+  "md": 26,
+  "sidecars": 11,
+  "kps": 357,
+  "textbook_kps": 71,
+  "manifest": "round2/MANIFEST.json"
+ },
+ "N1": {
+  "budget_chars": 1200,
+  "kp_count_change": 0,
+  "kp_chars": {
+   "all": {
+    "n": 357,
+    "p50": 581.0,
+    "p90": 3359.8,
+    "max": 18335,
+    "mean": 1556.86
+   },
+   "textbook": {
+    "n": 71,
+    "p50": 2985.0,
+    "p90": 12593.0,
+    "max": 18335,
+    "mean": 4893.58
+   },
+   "gt1200_all_pct": 24.6,
+   "gt1200_textbook_pct": 69.0
+  },
+  "kp_chars_current_anchor": {
+   "all": {
+    "n": 357,
+    "p50": 484.0,
+    "p90": 2825.0,
+    "max": 18198,
+    "mean": 1299.83
+   },
+   "textbook": {
+    "n": 71,
+    "p50": 1931.0,
+    "p90": 9374.0,
+    "max": 18198,
+    "mean": 3734.37
+   },
+   "note": "现行 range（end snippet 解析后再夹到下一同级标题）；N1 主口径用 chars_heading（重切后的语义边界）"
+  },
+  "A1_per_kp_section": {
+   "slices": 346,
+   "slices_per_kp": {
+    "n": 357,
+    "p50": 1.0,
+    "p90": 1.0,
+    "max": 1,
+    "mean": 1.0
+   },
+   "shared_slices": 11,
+   "kps_in_shared": 22
+  },
+  "A2_section_partition": {
+   "slices": 1070,
+   "slices_kp_files": 604,
+   "slices_with_kp": 327,
+   "kp_per_slice": {
+    "n": 1070,
+    "p50": 0.0,
+    "p90": 1.0,
+    "max": 161,
+    "mean": 0.6
+   },
+   "kp_per_slice_when_nonzero": {
+    "n": 327,
+    "p50": 1.0,
+    "p90": 1.0,
+    "max": 161,
+    "mean": 1.98
+   }
+  },
+  "B1_per_kp_budget": {
+   "slices": 637,
+   "slices_per_kp": {
+    "n": 357,
+    "p50": 1.0,
+    "p90": 3.4,
+    "max": 19,
+    "mean": 1.99
+   },
+   "kps_ge2": 88
+  },
+  "B2_section_budget": {
+   "slices": 2623,
+   "slices_kp_files": 1349,
+   "slices_per_kp": {
+    "n": 357,
+    "p50": 2.0,
+    "p90": 6.0,
+    "max": 49,
+    "mean": 3.32
+   },
+   "kps_ge2": 331,
+   "kps_ge5": 63,
+   "kps_zero": 0
+  },
+  "by_role_textbook": {
+   "kps": 71,
+   "A1_slices": 71,
+   "B1_slices": 362,
+   "B1_slices_per_kp": {
+    "n": 71,
+    "p50": 3.0,
+    "p90": 12.0,
+    "max": 19,
+    "mean": 5.1
+   },
+   "B2_slices_per_kp": {
+    "n": 71,
+    "p50": 2.0,
+    "p90": 10.0,
+    "max": 18,
+    "mean": 4.11
+   },
+   "B2_unique_slices_touching_textbook_kp": 249
+  }
+ },
+ "N2": {
+  "A2_kp_section": {
+   "slices": 414,
+   "orphan_any_pct": 0.0,
+   "orphan_lt50_pct": 1.9
+  },
+  "A2_kp_files": {
+   "slices": 604,
+   "orphan_any_pct": 31.5,
+   "orphan_lt50_pct": 32.8
+  },
+  "A2_all": {
+   "slices": 1070,
+   "orphan_any_pct": 61.3,
+   "orphan_lt50_pct": 62.1
+  },
+  "B2_kp_section": {
+   "slices": 868,
+   "orphan_any_pct": 0.0,
+   "orphan_lt50_pct": 2.6
+  },
+  "B2_kp_files": {
+   "slices": 1349,
+   "orphan_any_pct": 35.7,
+   "orphan_lt50_pct": 37.4
+  },
+  "B2_all": {
+   "slices": 2623,
+   "orphan_any_pct": 66.9,
+   "orphan_lt50_pct": 67.8
+  }
+ },
+ "N3": {
+  "dup_groups": 33,
+  "dup_kps": 106,
+  "dup_share_pct": 29.7,
+  "risk_name_only": 0.6887,
+  "risk_top15_groups": 0.7857,
+  "cross_file_groups": 3,
+  "same_file_groups": 30,
+  "disambig_by_file": {
+   "collision_groups": 32,
+   "kps": 102,
+   "share_pct": 28.6,
+   "examples": [
+    {
+     "key": [
+      "目录",
+      "img/ch02-2_信号与系统的时域分析.md"
+     ],
+     "n": 4,
+     "ids": [
+      "img-ch2-2-02-目录",
+      "img-ch2-2-50-目录",
+      "img-ch2-2-54-目录",
+      "img-ch2-2-66-目录"
+     ]
+    },
+    {
+     "key": [
+      "3. 指数类信号",
+      "img/ch02-2_信号与系统的时域分析.md"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-2-08-3-指数类信号",
+      "img-ch2-2-10-3-指数类信号"
+     ]
+    },
+    {
+     "key": [
+      "2. 单位冲激信号",
+      "img/ch02-2_信号与系统的时域分析.md"
+     ],
+     "n": 4,
+     "ids": [
+      "img-ch2-2-13-2-单位冲激信号",
+      "img-ch2-2-19-2-单位冲激信号",
+      "img-ch2-2-22-2-单位冲激信号",
+      "img-ch2-2-24-2-单位冲激信号"
+     ]
+    },
+    {
+     "key": [
+      "狄拉克(Dirac)定义",
+      "img/ch02-2_信号与系统的时域分析.md"
+     ],
+     "n": 3,
+     "ids": [
+      "img-ch2-2-14-狄拉克-Dirac-定义",
+      "img-ch2-2-15-狄拉克-Dirac-定义",
+      "img-ch2-2-16-狄拉克-Dirac-定义"
+     ]
+    },
+    {
+     "key": [
+      "2. 基于零输入响应与零状态响应的方法",
+      "img/ch02-2_信号与系统的时域分析.md"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-2-39-2-基于零输入响应与零状态响应的方法",
+      "img-ch2-2-44-2-基于零输入响应与零状态响应的方法"
+     ]
+    }
+   ]
+  },
+  "disambig_by_file_start": {
+   "collision_groups": 7,
+   "kps": 14,
+   "share_pct": 3.9,
+   "examples": [
+    {
+     "key": [
+      "1. 线性特性",
+      "img/ch02-3_信号的频域分析.md",
+      1579
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-60-1-线性特性",
+      "img-ch2-3-61-1-线性特性"
+     ]
+    },
+    {
+     "key": [
+      "3. 互易对称特性",
+      "img/ch02-3_信号的频域分析.md",
+      1677
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-64-3-互易对称特性",
+      "img-ch2-3-65-3-互易对称特性"
+     ]
+    },
+    {
+     "key": [
+      "连续时间Fourier变换的性质",
+      "img/ch02-3_信号的频域分析.md",
+      2192
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-85-连续时间Fourier变换的性质",
+      "img-ch2-3-87-连续时间Fourier变换的性质"
+     ]
+    },
+    {
+     "key": [
+      "※无失真传输系统的频域特性",
+      "img/ch02-3_信号的频域分析.md",
+      3237
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-118-无失真传输系统的频域特性",
+      "img-ch2-3-119-无失真传输系统的频域特性"
+     ]
+    },
+    {
+     "key": [
+      "※线性相位理想低通滤波器",
+      "img/ch02-3_信号的频域分析.md",
+      3410
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-125-线性相位理想低通滤波器",
+      "img-ch2-3-126-线性相位理想低通滤波器"
+     ]
+    }
+   ]
+  },
+  "disambig_by_file_start_ctx": {
+   "collision_groups": 5,
+   "kps": 10,
+   "share_pct": 2.8,
+   "examples": [
+    {
+     "key": [
+      "1. 线性特性",
+      "img/ch02-3_信号的频域分析.md",
+      1579,
+      "971c0ea0c73d"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-60-1-线性特性",
+      "img-ch2-3-61-1-线性特性"
+     ]
+    },
+    {
+     "key": [
+      "连续时间Fourier变换的性质",
+      "img/ch02-3_信号的频域分析.md",
+      2192,
+      "3e6218251f38"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-85-连续时间Fourier变换的性质",
+      "img-ch2-3-87-连续时间Fourier变换的性质"
+     ]
+    },
+    {
+     "key": [
+      "※无失真传输系统的频域特性",
+      "img/ch02-3_信号的频域分析.md",
+      3237,
+      "5fad142cd630"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-118-无失真传输系统的频域特性",
+      "img-ch2-3-119-无失真传输系统的频域特性"
+     ]
+    },
+    {
+     "key": [
+      "※线性相位理想低通滤波器",
+      "img/ch02-3_信号的频域分析.md",
+      3410,
+      "77108e9bf869"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-125-线性相位理想低通滤波器",
+      "img-ch2-3-126-线性相位理想低通滤波器"
+     ]
+    },
+    {
+     "key": [
+      "※线性相位理想低通滤波器",
+      "img/ch02-3_信号的频域分析.md",
+      3452,
+      "71cc5eff5830"
+     ],
+     "n": 2,
+     "ids": [
+      "img-ch2-3-127-线性相位理想低通滤波器",
+      "img-ch2-3-128-线性相位理想低通滤波器"
+     ]
+    }
+   ]
+  }
+ },
+ "N4": {
+  "all": {
+   "n": 357,
+   "ANCHOR_VERIFIED_r1": 353,
+   "ANCHOR_VERIFIED_r1_pct": 98.9,
+   "ANCHOR_VERIFIED_strict": 226,
+   "ANCHOR_VERIFIED_strict_pct": 63.3,
+   "ANCHOR_VERIFIED_hintstrict": 353,
+   "ANCHOR_VERIFIED_hintstrict_pct": 98.9,
+   "ANCHOR_UNRESOLVED": 0,
+   "ANCHOR_UNRESOLVED_pct": 0.0,
+   "AMBIGUOUS_ANCHOR": 4,
+   "AMBIGUOUS_ANCHOR_pct": 1.1,
+   "needs_end_repair": 74,
+   "needs_end_repair_pct": 20.7
+  },
+  "textbook": {
+   "n": 71,
+   "ANCHOR_VERIFIED_r1": 71,
+   "ANCHOR_VERIFIED_r1_pct": 100.0,
+   "ANCHOR_VERIFIED_strict": 70,
+   "ANCHOR_VERIFIED_strict_pct": 98.6,
+   "ANCHOR_VERIFIED_hintstrict": 71,
+   "ANCHOR_VERIFIED_hintstrict_pct": 100.0,
+   "ANCHOR_UNRESOLVED": 0,
+   "ANCHOR_UNRESOLVED_pct": 0.0,
+   "AMBIGUOUS_ANCHOR": 0,
+   "AMBIGUOUS_ANCHOR_pct": 0.0,
+   "needs_end_repair": 17,
+   "needs_end_repair_pct": 23.9
+  },
+  "slides": {
+   "n": 285,
+   "ANCHOR_VERIFIED_r1": 281,
+   "ANCHOR_VERIFIED_r1_pct": 98.6,
+   "ANCHOR_VERIFIED_strict": 155,
+   "ANCHOR_VERIFIED_strict_pct": 54.4,
+   "ANCHOR_VERIFIED_hintstrict": 281,
+   "ANCHOR_VERIFIED_hintstrict_pct": 98.6,
+   "ANCHOR_UNRESOLVED": 0,
+   "ANCHOR_UNRESOLVED_pct": 0.0,
+   "AMBIGUOUS_ANCHOR": 4,
+   "AMBIGUOUS_ANCHOR_pct": 1.4,
+   "needs_end_repair": 57,
+   "needs_end_repair_pct": 20.0
+  }
+ }
+}

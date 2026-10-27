@@ -1,0 +1,51 @@
+[14:50:12.360] [render] currentFileDir=docs/  currentPath=docs/long-image.md
+[14:50:12.360] [lazy] pipeline epoch→3 (render:doc-change)
+[14:50:12.372] [lazy] metrics: fs=14px lhPx=22.40px paneW=800 src=probe
+[14:50:12.376] [lazy] lazy materialize ON: blocks=484 placeholders=464 materialized=20 sum=484 eq=true [fs=14 lh=22.40 paneW=800 src=probe]
+[14:50:12.378] [STAMP] mapped 484/484 blocks ⇒ BlockIndex (reset)
+[14:50:12.378] [F1] rendered 484 blocks in 15.2ms
+[14:50:12.380] [lazy] typeset: mathEls=0 mjx=0 blocks=484 ph=464
+[14:50:12.397] [lazy] scroll-rAF sync materialize: blocks=11 (viewport[0..10])
+[14:50:12.402] [lazy] unlock minHeight: 11
+[14:50:12.402] [lazy] flush delay: collect→flush = 0 ms
+[14:50:12.405] [lazy] math merge typeset (scheduler): blocks=43
+[14:50:12.408] [lazy] unlock minHeight: 32
+[14:50:13.213] [lazy] scroll-rAF sync materialize: blocks=47 (viewport[167..213])
+[14:50:13.217] [lazy] math merge typeset (scheduler): blocks=47
+[14:50:13.218] [lazy] unlock minHeight: 47
+[14:50:13.221] [lazy] flush delay: collect→flush = 3 ms
+[14:50:13.224] [lazy] evict: 60 blocks (kept=107, viewport=150..320, reason=scheduler-pressure)
+[14:50:13.225] [lazy] math merge typeset (scheduler): blocks=57
+[14:50:13.226] [lazy] evict: 3 blocks (kept=104, viewport=150..320, reason=scheduler)
+[14:50:13.228] [lazy] unlock minHeight: 68
+[14:50:14.122] [lazy] unlock minHeight: 2
+[14:50:15.081] [render] currentFileDir=docs/  currentPath=docs/long-image.md
+[14:50:15.081] [lazy] pipeline epoch→4 (render:doc-change)
+[14:50:15.084] [lazy] metrics: fs=14px lhPx=22.40px paneW=456 src=probe
+[14:50:15.090] [lazy] first-screen: avgRealH=38px viewH=707 ⇒ materialized 38 blocks (2 screens)
+[14:50:15.090] [lazy] lazy materialize ON: blocks=484 placeholders=446 materialized=38 sum=484 eq=true [fs=14 lh=22.40 paneW=456 src=probe]
+[14:50:15.091] [STAMP] mapped 484/484 blocks ⇒ BlockIndex (reset)
+[14:50:15.092] [F1] rendered 484 blocks in 9.7ms
+[14:50:15.092] [lazy] typeset: mathEls=0 mjx=0 blocks=484 ph=446
+[14:50:15.095] [EH] enterBlockEditMode: image block 242 line 243 attrs={"width":"360"}
+[14:50:15.098] [lazy] evict: 38 blocks (kept=0, viewport=157..326, reason=scheduler)
+[14:50:15.099] [lazy] scroll-rAF sync materialize: blocks=35 (viewport[224..258])
+[14:50:15.105] [lazy] unlock minHeight: 28
+[14:50:15.105] [lazy] flush delay: collect→flush = 0 ms
+[14:50:15.108] [lazy] math merge typeset (scheduler): blocks=88
+[14:50:15.110] [lazy] unlock minHeight: 56
+[14:50:15.175] [SCROLL] edit-reanchor(80ms): drift=249
+[14:50:15.181] [lazy] unlock minHeight: 2
+[14:50:15.188] [lazy] flush delay: collect→flush = 7 ms
+[14:50:15.189] [lazy] math merge typeset (scheduler): blocks=2
+[14:50:15.191] [lazy] unlock minHeight: 2
+[14:50:16.787] [render] currentFileDir=docs/  currentPath=docs/link-source.md
+[14:50:16.787] [lazy] pipeline epoch→6 (render:doc-change)
+[14:50:16.788] [lazy] lazy materialize OFF (full render): blocks=120 threshold=200 hook=unset
+[14:50:16.789] [STAMP] mapped 120/120 blocks ⇒ BlockIndex (reset)
+[14:50:16.789] [F1] rendered 120 blocks in 1.3ms
+[14:50:23.280] [render] currentFileDir=docs/  currentPath=docs/link-target.md
+[14:50:23.280] [lazy] pipeline epoch→8 (render:doc-change)
+[14:50:23.281] [lazy] lazy materialize OFF (full render): blocks=7 threshold=200 hook=unset
+[14:50:23.281] [STAMP] mapped 7/7 blocks ⇒ BlockIndex (reset)
+[14:50:23.281] [F1] rendered 7 blocks in 0.8ms

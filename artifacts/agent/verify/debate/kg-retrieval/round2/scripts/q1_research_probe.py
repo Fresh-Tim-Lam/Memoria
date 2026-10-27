@@ -187,18 +187,68 @@ def parse_sidecar(path):
     if cur:
         kps.append(cur)
 
-    # links / edges: light regex scan of raw text (structure is regular)
-    for m in re.finditer(r'^\s{2}- anchor_text:.*?(?=^\s{2}- anchor_text:|\Z)', read_text(path),
-                         re.M | re.S):
-        blk = m.group(0)
-        tgt = re.search(r'targets:\s*\n((?:\s+-\s+.*\n)+)', blk)
-        src = re.search(r'source_id:\s*(\S+)', blk)
-        links.append({'source_id': src.group(1) if src else None,
-                      'targets': re.findall(r'^\s+-\s+(\S+)\s*$', tgt.group(1), re.M) if tgt else []})
-    for m in re.finditer(r'^\s{2}- type:\s*(\S+).*?source_id:\s*(\S+).*?targets:\s*\n'
-                         r'((?:\s+-\s+.*\n)+)', read_text(path), re.M | re.S):
-        edges.append({'type': m.group(1), 'source_id': m.group(2),
-                      'targets': re.findall(r'^\s+-\s+(\S+)\s*$', m.group(3), re.M)})
+    # links / edges: line-based scan (list items start at column 0)
+    raw_lines = read_text(path).split('\n')
+    def block_after(key):
+        for idx, ln in enumerate(raw_lines):
+            if ln.rstrip() == key + ':':
+                out, i = [], idx + 1
+                while i < len(raw_lines):
+                    s = raw_lines[i]
+                    if re.match(r'^[A-Za-z_][A-Za-z0-9_]*:', s):
+                        break
+                    out.append(s)
+                    i += 1
+                return out
+        return []
+
+    links = []
+    blk = block_after('links')
+    i = 0
+    while i < len(blk):
+        m = re.match(r'^- anchor_text:\s*(.*)$', blk[i])
+        if not m:
+            i += 1
+            continue
+        blk_item = {'anchor_text': m.group(1).strip(), 'targets': [], 'source_id': None}
+        i += 1
+        while i < len(blk) and not re.match(r'^- anchor_text:', blk[i]):
+            s = blk[i]
+            mt = re.match(r'^\s*targets:\s*$', s)
+            ms = re.match(r'^\s*source_id:\s*(\S+)$', s)
+            if ms:
+                blk_item['source_id'] = ms.group(1)
+            if mt:
+                i += 1
+                while i < len(blk) and re.match(r'^\s+- (.+)$', blk[i]):
+                    blk_item['targets'].append(blk[i].strip()[2:].strip())
+                    i += 1
+                continue
+            i += 1
+        links.append(blk_item)
+    edges = []
+    blk = block_after('edges')
+    i = 0
+    while i < len(blk):
+        m = re.match(r'^- type:\s*(\S+)$', blk[i])
+        if not m:
+            i += 1
+            continue
+        item = {'type': m.group(1), 'source_id': None, 'targets': []}
+        i += 1
+        while i < len(blk) and not re.match(r'^- type:', blk[i]):
+            s = blk[i]
+            ms = re.match(r'^\s*source_id:\s*(\S+)$', s)
+            if ms:
+                item['source_id'] = ms.group(1)
+            if re.match(r'^\s*targets:\s*$', s):
+                i += 1
+                while i < len(blk) and re.match(r'^\s+- (.+)$', blk[i]):
+                    item['targets'].append(blk[i].strip()[2:].strip())
+                    i += 1
+                continue
+            i += 1
+        edges.append(item)
     return {'file': meta_file, 'kps': kps, 'links': links, 'edges': edges}
 
 
@@ -573,35 +623,109 @@ def main():
             'start_heading_pct': pct(sum(1 for r in rs if r['start_heading']), n),
         }
 
-    anchor = {'all': anchor_box(kps),
-              'textbook': anchor_box(role_box('教材')),
-              'slides': anchor_box(role_box('slides')),
-              'notes': anchor_box(role_box('notes'))}
+    def end_reasons(rs):
+        return {
+            'end_missing': sum(1 for r in rs if r['end_matches'] == 0),
+            'end_ambiguous_multi': sum(1 for r in rs if r['end_matches'] > 1),
+            'end_over_boundary': sum(1 for r in rs if r['end_line_raw'] is not None
+                                     and r['end_line_raw'] > r['boundary']),
+            'end_inverted': sum(1 for r in rs if r['end_inverted']),
+            'end_repair_total': sum(1 for r in rs if r['end_repair']),
+        }
+
+    anchor = {'all': dict(anchor_box(kps), end_reasons=end_reasons(kps)),
+              'textbook': dict(anchor_box(role_box('教材')),
+                               end_reasons=end_reasons(role_box('教材'))),
+              'slides': dict(anchor_box(role_box('slides')),
+                             end_reasons=end_reasons(role_box('slides'))),
+              'notes': dict(anchor_box(role_box('notes')),
+                            end_reasons=end_reasons(role_box('notes'))),
+              'stored_range_ok': sum(1 for r in kps
+                                     if r['end_matches'] > 0 and not r['end_inverted']
+                                     and (r['end_line_raw'] is None or r['end_line_raw'] >= r['start_line'])),
+              'stored_range_ok_pct': pct(sum(1 for r in kps
+                                             if r['end_matches'] > 0 and not r['end_inverted']
+                                             and (r['end_line_raw'] is None or r['end_line_raw'] >= r['start_line'])), N),
+              'fail_section_ids': [r['id'] for r in kps if not r['verified_section']],
+              'end_missing_ids': [r['id'] for r in kps if r['end_matches'] == 0],
+              'end_inverted_ids': [r['id'] for r in kps if r['end_inverted']],
+              'start_multi_ids_sample': [r['id'] for r in kps if r['start_matches'] > 1][:20]}
+    anchor['fail_section_detail'] = [
+        {'id': r['id'], 'file': r['file'], 'start_matches': r['start_matches'],
+         'start_line': r['start_line'], 'section_unique': r['section_unique']}
+        for r in kps if not r['verified_section']]
 
     # ---------- P3 option A
     # A1: minimal repair — only KPs with end_repair get end = boundary
     a1_changed = [r for r in kps if r['end_repair']]
     a1_sizes = [r['size_heading'] if r['end_repair'] else r['size_resolved'] for r in kps]
+
+    def a1_size(r):
+        return r['size_heading'] if r['end_repair'] else r['size_resolved']
+
+    def next_any_heading_line(rel, start_line):
+        for h in heads_by[rel]:
+            if h['line'] > start_line:
+                return h['line'] - 1
+        return len(lines_by[rel])
+
+    def a1b_size(r):
+        if not r['end_repair']:
+            return r['size_resolved']
+        if r['start_heading']:
+            end = r['boundary']
+        else:
+            end = next_any_heading_line(r['file'], r['start_line'])
+            end = max(end, r['start_line'])
+        return line_chars(lines_by[r['file']], r['start_line'], end)
+
+    a1b_sizes = [a1b_size(r) for r in kps]
+    repaired = [r for r in kps if r['end_repair']]
+    repaired_heading = [r for r in repaired if r['start_heading']]
+    repaired_nonheading = [r for r in repaired if not r['start_heading']]
+
     # A2: all ends = next same-level heading (semantic span)
     a2_changed = [r for r in kps if r['end_line'] != r['boundary']]
     optionA = {
         'A1_minimal_repair': {
             'kps_changed': len(a1_changed),
             'kps_changed_pct': pct(len(a1_changed), N),
+            'changed_by_role': {role: sum(1 for r in a1_changed if r['role'] == role)
+                                for role in ('教材', 'slides', 'notes')},
             'changed_ids_sample': [r['id'] for r in a1_changed[:20]],
             'size_all': dist(a1_sizes),
-            'size_textbook': dist([r['size_heading'] if r['end_repair'] else r['size_resolved']
-                                   for r in kps if r['role'] == '教材']),
-            'gt1200_all_pct': pct(sum(1 for v in a1_sizes if v > 1200), N),
+            'size_textbook': dist([a1_size(r) for r in kps if r['role'] == '教材']),
+            'gt1200_all_pct': pct(sum(1 for r in kps if a1_size(r) > 1200), N),
             'gt1200_textbook_pct': pct(sum(1 for r in kps if r['role'] == '教材'
-                                          and (r['size_heading'] if r['end_repair']
-                                               else r['size_resolved']) > 1200),
-                                       len(role_box('教材'))),
+                                          and a1_size(r) > 1200), len(role_box('教材'))),
+            'total_chars_before': sum(r['size_resolved'] for r in kps),
+            'total_chars_after': sum(a1_sizes),
             'term': '只修 end_repair 的 KP（坏/歧义/缺/超边界），其余 end 不动',
+            'repaired_heading': len(repaired_heading),
+            'repaired_nonheading': len(repaired_nonheading),
+            'repaired_size_dist': dist([r['size_heading'] for r in repaired]),
+            'repaired_gt3000': sum(1 for r in repaired if r['size_heading'] > 3000),
+            'repaired_nonheading_size_max': (max(r['size_heading'] for r in repaired_nonheading)
+                                             if repaired_nonheading else None),
+            'repaired_nonheading_ids': [
+                {'id': r['id'], 'file': r['file'], 'start_line': r['start_line'],
+                 'size_after': r['size_heading'], 'size_before': r['size_resolved']}
+                for r in repaired_nonheading],
+        },
+        'A1b_hybrid_repair': {
+            'rule': 'end_repair 的 KP：start 是标题行→下一同级标题；否则→下一个任意级标题前',
+            'size_all': dist(a1b_sizes),
+            'size_textbook': dist([a1b_size(r) for r in kps if r['role'] == '教材']),
+            'gt1200_all_pct': pct(sum(1 for v in a1b_sizes if v > 1200), N),
+            'gt1200_textbook_pct': pct(sum(1 for r in kps if r['role'] == '教材'
+                                          and a1b_size(r) > 1200), len(role_box('教材'))),
+            'repaired_size_dist': dist([a1b_size(r) for r in repaired]),
         },
         'A2_end_to_heading': {
             'kps_changed': len(a2_changed),
             'kps_changed_pct': pct(len(a2_changed), N),
+            'changed_by_role': {role: sum(1 for r in a2_changed if r['role'] == role)
+                                for role in ('教材', 'slides', 'notes')},
             'size_all': dist([r['size_heading'] for r in kps]),
             'size_textbook': dist([r['size_heading'] for r in kps if r['role'] == '教材']),
             'gt1200_all_pct': pct(sum(1 for r in kps if r['size_heading'] > 1200), N),
@@ -663,16 +787,29 @@ def main():
                 'slices_with_2plus_kp': multi,
                 'slices_with_2plus_kp_pct': pct(multi, n)}
 
-    def slices_per_kp(slices):
+    def slices_per_kp(slices, kp_filter=None):
         per = collections.Counter()
         for s in slices:
             for r, _ in kp_overlap(s['file'], s['start'], s['end']):
                 per[r['id']] += 1
-        vals = [per.get(r['id'], 0) for r in kps]
+        rs = [r for r in kps if (kp_filter is None or kp_filter(r))]
+        vals = [per.get(r['id'], 0) for r in rs]
         return {'dist': dist(vals),
+                'n_kps_in_scope': len(rs),
                 'kps_zero_slice': sum(1 for v in vals if v == 0),
                 'kps_ge2_slices': sum(1 for v in vals if v >= 2),
-                'kps_ge2_slices_pct': pct(sum(1 for v in vals if v >= 2), N)}
+                'kps_ge2_slices_pct': pct(sum(1 for v in vals if v >= 2), len(rs))}
+
+    def fanout_top(slices, kp_filter=None, top=8):
+        per = collections.Counter()
+        for s in slices:
+            for r, _ in kp_overlap(s['file'], s['start'], s['end']):
+                per[r['id']] += 1
+        rs = [r for r in kps if (kp_filter is None or kp_filter(r))]
+        rows = sorted(((per.get(r['id'], 0), r) for r in rs), key=lambda x: -x[0])[:top]
+        return [{'id': r['id'], 'file': r['file'], 'slices': n,
+                 'size_heading': r['size_heading'], 'span_lines': r['boundary'] - r['start_line'] + 1}
+                for n, r in rows]
 
     def per_file_orphans(slices):
         tab = collections.defaultdict(lambda: {'slices': 0, 'orphan': 0})
@@ -687,6 +824,62 @@ def main():
     kp_file_set = sorted({r['file'] for r in kps})
     slices_kp_files = build_slices(kp_file_set)
     slices_all = build_slices(md_files)
+    # variant: drop "degenerate" sidecars that exist but carry <=1 KP (00 前言目录=0, 08=1 test)
+    kp_count_by_file = collections.Counter(r['file'] for r in kps)
+    files_indexed = sorted(f for f in kp_file_set if kp_count_by_file[f] >= 2)
+    slices_indexed = build_slices(files_indexed)
+    # textbook core (3 chapters that genuinely carry KPs) / core + single-KP prose notes
+    files_core = sorted(f for f in kp_file_set if f.startswith('教材/') and kp_count_by_file[f] >= 2)
+    files_core_plus = sorted(set(files_core + [f for f in kp_file_set
+                                               if f.startswith('notes/') or '平滑' in f]))
+    slices_core = build_slices(files_core)
+    slices_core_plus = build_slices(files_core_plus)
+    # section-scoped variant: only leaf sections that overlap >=1 KP; slice the WHOLE section
+    slices_section_kp = []
+    slices_section_kp_core = []
+    for rel in kp_file_set:
+        lines, hs = lines_by[rel], heads_by[rel]
+        for (a, b) in leaf_sections(lines, hs):
+            if not kp_overlap(rel, a, b):
+                continue
+            for (x, y) in pack(lines, a, b):
+                rec = {'file': rel, 'start': x, 'end': y,
+                       'chars': line_chars(lines, x, y)}
+                slices_section_kp.append(rec)
+                if rel in files_core_plus:
+                    slices_section_kp_core.append(rec)
+    # sensitivity: slice count under different budget / min-size settings
+    def section_overlap_slices(files, budget, min_chars):
+        out = []
+        for rel in files:
+            lines, hs = lines_by[rel], heads_by[rel]
+            for (a, b) in leaf_sections(lines, hs):
+                if not kp_overlap(rel, a, b):
+                    continue
+                for (x, y) in pack(lines, a, b, budget=budget, min_chars=min_chars):
+                    out.append({'file': rel, 'start': x, 'end': y,
+                                'chars': line_chars(lines, x, y)})
+        return out
+
+    sensitivity = {}
+    for budget in (800, 1200, 2000):
+        for mn in (0, 200):
+            key = f'budget{budget}_min{mn}'
+            s_core = section_overlap_slices(files_core_plus, budget, mn)
+            s_all = section_overlap_slices(kp_file_set, budget, mn)
+            sensitivity[key] = {
+                'core_plus_slices': len(s_core),
+                'core_plus_chars_p50': pctl([s['chars'] for s in s_core], 50),
+                'core_plus_chars_max': max((s['chars'] for s in s_core), default=None),
+                'all_kp_files_slices': len(s_all),
+                'all_kp_files_slices_per_kp_p90': slices_per_kp(s_all)['dist']['p90'],
+            }
+    # chapters that pass the per-chapter 20% orphan gate (whole-file slicing metric)
+    per_file_whole = per_file_orphans(slices_kp_files)
+    files_passing = sorted(f for f in files_core_plus
+                           if per_file_whole.get(f, {}).get('orphan_pct', 100) <= 20)
+    slices_section_passing = section_overlap_slices(files_passing, BUDGET_CHARS, MIN_SLICE)
+
     # "纯 KP 内容 scope"：只对 KP 语义 span 的并集建切片（孤儿的定义域收缩到已索引内容）
     kp_union = []
     for rel in kp_file_set:
@@ -714,10 +907,40 @@ def main():
         'scope_kp_files': dict(orphan_stats(slices_kp_files),
                                slices_per_kp=slices_per_kp(slices_kp_files),
                                files=len(kp_file_set)),
+        'scope_kp_files_excl_degenerate': dict(orphan_stats(slices_indexed),
+                                               slices_per_kp=slices_per_kp(slices_indexed),
+                                               files=len(files_indexed),
+                                               files_included=files_indexed),
         'scope_all_26': orphan_stats(slices_all),
         'scope_kp_union_only': dict(orphan_stats(slices_union),
                                     slices_per_kp=slices_per_kp(slices_union)),
+        'scope_textbook_core': dict(orphan_stats(slices_core),
+                                    slices_per_kp=slices_per_kp(
+                                        slices_core, lambda r: r['file'] in files_core),
+                                    files=files_core),
+        'scope_textbook_core_plus_prose': dict(orphan_stats(slices_core_plus),
+                                               slices_per_kp=slices_per_kp(
+                                                   slices_core_plus,
+                                                   lambda r: r['file'] in files_core_plus),
+                                               files=files_core_plus),
+        'scope_section_overlap_kp': dict(orphan_stats(slices_section_kp),
+                                         slices_per_kp=slices_per_kp(slices_section_kp)),
+        'scope_section_overlap_kp_core_plus': dict(
+            orphan_stats(slices_section_kp_core),
+            slices_per_kp=slices_per_kp(slices_section_kp_core,
+                                        lambda r: r['file'] in files_core_plus),
+            files=files_core_plus),
+        'fanout_top_section_overlap': fanout_top(slices_section_kp),
+        'fanout_top_core_plus': fanout_top(slices_section_kp_core,
+                                           lambda r: r['file'] in files_core_plus),
+        'scope_passing_chapters_section_only': dict(
+            orphan_stats(slices_section_passing),
+            slices_per_kp=slices_per_kp(slices_section_passing,
+                                        lambda r: r['file'] in files_passing),
+            files=files_passing),
         'per_file_kp_files': per_file_orphans(slices_kp_files),
+        'kp_count_by_file': dict(sorted(kp_count_by_file.items())),
+        'sensitivity': sensitivity,
     }
 
     # ---------- P4 option B
@@ -761,6 +984,7 @@ def main():
             'new_kp_count': len(b2_units),
             'kp_count_change': len(b2_units) - N,
             'fanout_dist': dist([b2_fan.get(r['id'], 0) for r in kps]),
+            'mapping_rows': sum(len(u['owners']) for u in b2_units),
             'new_units_without_old_kp': b2_ownerless,
             'new_units_claimed_by_2plus_old_kp': b2_multi_owner,
             'new_units_claimed_by_2plus_old_kp_pct': pct(b2_multi_owner, len(b2_units)),
@@ -792,6 +1016,7 @@ def main():
 
     # ---------- P7 description volume (C's hidden cost)
     total_chars = sum(s['chars'] for s in slices_kp_files)
+    union_chars = sum(s['chars'] for s in slices_union)
     desc_vol = {
         'scope_kp_files_slices': len(slices_kp_files),
         'slice_chars_total': total_chars,
@@ -799,6 +1024,11 @@ def main():
             total_chars * TOKEN_PER_CHAR + len(slices_kp_files) * 300),  # + prompt overhead
         'est_output_chars_if_80_per_slice': len(slices_kp_files) * 80,
         'est_llm_calls_one_per_slice': len(slices_kp_files),
+        'scope_kp_union_slices': len(slices_union),
+        'scope_kp_union_chars': union_chars,
+        'scope_kp_union_est_input_tokens': round(
+            union_chars * TOKEN_PER_CHAR + len(slices_union) * 300),
+        'scope_kp_union_est_llm_calls': len(slices_union),
         'note': 'description 生成必须改写不能截原文（R5）；token 按 0.4237 tok/字；'
                 'prompt 开销按 300 tok/次粗估，仅量级参考',
     }
@@ -845,28 +1075,45 @@ def main():
     print(f"- KP 语义 span 重叠对={p1['kp_span_overlap_pairs']} 嵌套对={p1['kp_span_nested_pairs']} "
           f"涉及 KP={p1['kps_in_overlapping_spans']}（{p1['kps_in_overlapping_spans_pct']}%）")
     for k, v in anchor.items():
+        if not isinstance(v, dict):
+            continue
         print(f"\n## P2 anchor[{k}] n={v['n']} range_ok={v['range_ok_pct']}% "
               f"strict={v['strict_pct']}% section={v['section_pct']}% "
               f"context={v['context_pct']}% lenient={v['lenient_hint_pct']}% | "
               f"start_multi={v['start_multi_pct']}% end_repair={v['end_repair_pct']}% "
               f"inverted={v['end_inverted']} end_missing={v['end_missing']}")
+    print(f"   stored_range_ok={anchor['stored_range_ok']}/{N} ({anchor['stored_range_ok_pct']}%) "
+          f"fail_section={anchor['fail_section_ids']} end_missing_ids={anchor['end_missing_ids']}")
+    print(f"   end_reasons_all={anchor['all']['end_reasons']}")
     a = out['P3_option_A']
-    for k in ('A1_minimal_repair', 'A2_end_to_heading'):
+    for k in ('A1_minimal_repair', 'A1b_hybrid_repair', 'A2_end_to_heading'):
         v = a[k]
-        print(f"\n## P3 {k}: changed={v['kps_changed']} ({v['kps_changed_pct']}%) "
+        print(f"\n## P3 {k}: changed={v.get('kps_changed')} ({v.get('kps_changed_pct')}%) "
+              f"by_role={v.get('changed_by_role')} "
               f"gt1200_all={v['gt1200_all_pct']}% gt1200_textbook={v['gt1200_textbook_pct']}%")
         print(f"   size_all={json.dumps(v['size_all'], ensure_ascii=False)}")
+    print(f"   A1 repaired_heading={a['A1_minimal_repair']['repaired_heading']} "
+          f"repaired_nonheading={a['A1_minimal_repair']['repaired_nonheading']} "
+          f"repaired_size={json.dumps(a['A1_minimal_repair']['repaired_size_dist'], ensure_ascii=False)} "
+          f"repaired_gt3000={a['A1_minimal_repair']['repaired_gt3000']} "
+          f"nonheading_repair_max={a['A1_minimal_repair']['repaired_nonheading_size_max']}")
+    print(f"   A1b repaired_size={json.dumps(a['A1b_hybrid_repair']['repaired_size_dist'], ensure_ascii=False)}")
     b = out['P4_option_B']
     print(f"\n## P4 B1: new_kp_naive={b['B1_per_kp_budget']['new_kp_count_naive']} "
           f"(Δ={b['B1_per_kp_budget']['kp_count_change_naive']}) "
-          f"fanout={json.dumps(b['B1_per_kp_budget']['fanout_dist'], ensure_ascii=False)}")
+          f"fanout={json.dumps(b['B1_per_kp_budget']['fanout_dist'], ensure_ascii=False)} "
+          f"old_kps_ge2={b['B1_per_kp_budget']['old_kps_ge2_new_pct']}%")
     print(f"## P4 B2: new_kp={b['B2_section_rewrite']['new_kp_count']} "
           f"(Δ={b['B2_section_rewrite']['kp_count_change']}) "
           f"fanout={json.dumps(b['B2_section_rewrite']['fanout_dist'], ensure_ascii=False)}")
-    print(f"   units_no_old_kp={b['B2_section_rewrite']['new_units_without_old_kp']} "
+    print(f"   mapping_rows={b['B2_section_rewrite']['mapping_rows']} "
+          f"units_no_old_kp={b['B2_section_rewrite']['new_units_without_old_kp']} "
           f"units_2plus_owner={b['B2_section_rewrite']['new_units_claimed_by_2plus_old_kp']}")
     c = out['P5_option_C']
-    for k in ('scope_kp_files', 'scope_all_26', 'scope_kp_union_only'):
+    for k in ('scope_kp_files', 'scope_kp_files_excl_degenerate', 'scope_all_26',
+              'scope_kp_union_only', 'scope_textbook_core', 'scope_textbook_core_plus_prose',
+              'scope_section_overlap_kp', 'scope_section_overlap_kp_core_plus',
+              'scope_passing_chapters_section_only'):
         v = c[k]
         print(f"\n## P5 C[{k}]: slices={v['slices']} orphan_any={v['orphan_any_pct']}% "
               f"orphan_lt50={v['orphan_lt50_pct']}% 2+kp={v['slices_with_2plus_kp_pct']}%")
@@ -874,7 +1121,20 @@ def main():
             print(f"   slices/KP={json.dumps(v['slices_per_kp']['dist'], ensure_ascii=False)} "
                   f"zero={v['slices_per_kp']['kps_zero_slice']} "
                   f"ge2={v['slices_per_kp']['kps_ge2_slices_pct']}%")
-    print(f"\n## P6 userdata: {json.dumps(userdata, ensure_ascii=False)}")
+    print('\n## P5 per-file orphan (kp-bearing files):')
+    for f, v in c['per_file_kp_files'].items():
+        print(f"   {f}: slices={v['slices']} orphan={v['orphan']} ({v['orphan_pct']}%) "
+              f"kps={c['kp_count_by_file'].get(f, 0)}")
+    print('\n## P5 fanout_top (section_overlap_kp):')
+    for r in c['fanout_top_section_overlap']:
+        print(f"   {r['id']} slices={r['slices']} size_heading={r['size_heading']} "
+              f"span_lines={r['span_lines']}")
+    print('\n## P5 sensitivity (section_overlap scope):')
+    for k, v in c['sensitivity'].items():
+        print(f"   {k}: core_plus_slices={v['core_plus_slices']} "
+              f"p50={v['core_plus_chars_p50']} max={v['core_plus_chars_max']} "
+              f"all_kp_files={v['all_kp_files_slices']}")
+    print('\n## P6 userdata:', json.dumps(userdata, ensure_ascii=False))
     print(f"\n## P7 description volume: {json.dumps(desc_vol, ensure_ascii=False)}")
     print('\nwrote', OUT)
 

@@ -89,7 +89,14 @@
    "end_repair_pct": 20.7,
    "end_inverted": 0,
    "end_missing": 5,
-   "start_heading_pct": 93.3
+   "start_heading_pct": 93.3,
+   "end_reasons": {
+    "end_missing": 5,
+    "end_ambiguous_multi": 54,
+    "end_over_boundary": 16,
+    "end_inverted": 0,
+    "end_repair_total": 74
+   }
   },
   "textbook": {
    "n": 71,
@@ -109,7 +116,14 @@
    "end_repair_pct": 23.9,
    "end_inverted": 0,
    "end_missing": 1,
-   "start_heading_pct": 66.2
+   "start_heading_pct": 66.2,
+   "end_reasons": {
+    "end_missing": 1,
+    "end_ambiguous_multi": 16,
+    "end_over_boundary": 0,
+    "end_inverted": 0,
+    "end_repair_total": 17
+   }
   },
   "slides": {
    "n": 285,
@@ -129,7 +143,14 @@
    "end_repair_pct": 20.0,
    "end_inverted": 0,
    "end_missing": 4,
-   "start_heading_pct": 100.0
+   "start_heading_pct": 100.0,
+   "end_reasons": {
+    "end_missing": 4,
+    "end_ambiguous_multi": 38,
+    "end_over_boundary": 16,
+    "end_inverted": 0,
+    "end_repair_total": 57
+   }
   },
   "notes": {
    "n": 1,
@@ -149,13 +170,69 @@
    "end_repair_pct": 0.0,
    "end_inverted": 0,
    "end_missing": 0,
-   "start_heading_pct": 100.0
-  }
+   "start_heading_pct": 100.0,
+   "end_reasons": {
+    "end_missing": 0,
+    "end_ambiguous_multi": 0,
+    "end_over_boundary": 0,
+    "end_inverted": 0,
+    "end_repair_total": 0
+   }
+  },
+  "stored_range_ok": 352,
+  "stored_range_ok_pct": 98.6,
+  "fail_section_ids": [
+   "比特率"
+  ],
+  "end_missing_ids": [
+   "img-ch2-4-13-随机过程的统计值",
+   "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+   "img-ch2-4-29-4-窄带高斯随机过程",
+   "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+   "数字通信的特点"
+  ],
+  "end_inverted_ids": [],
+  "start_multi_ids_sample": [
+   "img-ch2-2-02-目录",
+   "img-ch2-2-03-普通信号",
+   "img-ch2-2-04-奇异信号",
+   "img-ch2-2-05-连续时间基本信号",
+   "img-ch2-2-08-3-指数类信号",
+   "img-ch2-2-10-3-指数类信号",
+   "img-ch2-2-13-2-单位冲激信号",
+   "img-ch2-2-14-狄拉克-Dirac-定义",
+   "img-ch2-2-15-狄拉克-Dirac-定义",
+   "img-ch2-2-16-狄拉克-Dirac-定义",
+   "img-ch2-2-19-2-单位冲激信号",
+   "img-ch2-2-22-2-单位冲激信号",
+   "img-ch2-2-24-2-单位冲激信号",
+   "img-ch2-2-25-3-单位斜坡信号",
+   "img-ch2-2-29-4-单位冲激偶信号",
+   "img-ch2-2-39-2-基于零输入响应与零状态响应的方法",
+   "img-ch2-2-40-零输入响应",
+   "img-ch2-2-41-零输入响应",
+   "img-ch2-2-42-零状态响应",
+   "img-ch2-2-44-2-基于零输入响应与零状态响应的方法"
+  ],
+  "fail_section_detail": [
+   {
+    "id": "比特率",
+    "file": "教材/01_第1章_绪论.md",
+    "start_matches": 3,
+    "start_line": 182,
+    "section_unique": false
+   }
+  ]
  },
  "P3_option_A": {
   "A1_minimal_repair": {
    "kps_changed": 74,
    "kps_changed_pct": 20.7,
+   "changed_by_role": {
+    "教材": 17,
+    "slides": 57,
+    "notes": 0
+   },
    "changed_ids_sample": [
     "img-ch2-2-03-普通信号",
     "img-ch2-2-04-奇异信号",
@@ -196,11 +273,103 @@
    },
    "gt1200_all_pct": 22.7,
    "gt1200_textbook_pct": 60.6,
-   "term": "只修 end_repair 的 KP（坏/歧义/缺/超边界），其余 end 不动"
+   "total_chars_before": 461578,
+   "total_chars_after": 504097,
+   "term": "只修 end_repair 的 KP（坏/歧义/缺/超边界），其余 end 不动",
+   "repaired_heading": 68,
+   "repaired_nonheading": 6,
+   "repaired_size_dist": {
+    "n": 74,
+    "p50": 479.5,
+    "p90": 5689.5,
+    "max": 18335,
+    "mean": 2025.7,
+    "min": 11
+   },
+   "repaired_gt3000": 13,
+   "repaired_nonheading_size_max": 16056,
+   "repaired_nonheading_ids": [
+    {
+     "id": "信噪比",
+     "file": "教材/01_第1章_绪论.md",
+     "start_line": 217,
+     "size_after": 1427,
+     "size_before": 269
+    },
+    {
+     "id": "误码率",
+     "file": "教材/01_第1章_绪论.md",
+     "start_line": 235,
+     "size_after": 341,
+     "size_before": 120
+    },
+    {
+     "id": "误比特率",
+     "file": "教材/01_第1章_绪论.md",
+     "start_line": 242,
+     "size_after": 219,
+     "size_before": 122
+    },
+    {
+     "id": "ch2-10-white-noise",
+     "file": "教材/02_第2章_信号分析基础.md",
+     "start_line": 1283,
+     "size_after": 16056,
+     "size_before": 667
+    },
+    {
+     "id": "ch2-10-narrowband-random-process",
+     "file": "教材/02_第2章_信号分析基础.md",
+     "start_line": 1298,
+     "size_after": 15387,
+     "size_before": 1061
+    },
+    {
+     "id": "ch2-10-cosine-plus-narrowband-gaussian",
+     "file": "教材/02_第2章_信号分析基础.md",
+     "start_line": 1429,
+     "size_after": 9511,
+     "size_before": 9374
+    }
+   ]
+  },
+  "A1b_hybrid_repair": {
+   "rule": "end_repair 的 KP：start 是标题行→下一同级标题；否则→下一个任意级标题前",
+   "size_all": {
+    "n": 357,
+    "p50": 507.0,
+    "p90": 3031.6,
+    "max": 18335,
+    "mean": 1412.04,
+    "min": 11
+   },
+   "size_textbook": {
+    "n": 71,
+    "p50": 2251.0,
+    "p90": 10588.0,
+    "max": 18335,
+    "mean": 4248.49,
+    "min": 51
+   },
+   "gt1200_all_pct": 22.7,
+   "gt1200_textbook_pct": 60.6,
+   "repaired_size_dist": {
+    "n": 74,
+    "p50": 479.5,
+    "p90": 5689.5,
+    "max": 18335,
+    "mean": 2025.7,
+    "min": 11
+   }
   },
   "A2_end_to_heading": {
    "kps_changed": 336,
    "kps_changed_pct": 94.1,
+   "changed_by_role": {
+    "教材": 70,
+    "slides": 265,
+    "notes": 1
+   },
    "size_all": {
     "n": 357,
     "p50": 581.0,
@@ -254,6 +423,7 @@
     "mean": 2.27,
     "min": 1
    },
+   "mapping_rows": 810,
    "new_units_without_old_kp": 483,
    "new_units_claimed_by_2plus_old_kp": 42,
    "new_units_claimed_by_2plus_old_kp_pct": 3.6,
@@ -280,11 +450,45 @@
      "mean": 2.27,
      "min": 1
     },
+    "n_kps_in_scope": 357,
     "kps_zero_slice": 0,
     "kps_ge2_slices": 111,
     "kps_ge2_slices_pct": 31.1
    },
    "files": 9
+  },
+  "scope_kp_files_excl_degenerate": {
+   "slices": 809,
+   "slice_chars_total": 477167,
+   "orphan_any": 172,
+   "orphan_any_pct": 21.3,
+   "orphan_lt50": 172,
+   "orphan_lt50_pct": 21.3,
+   "slices_with_2plus_kp": 42,
+   "slices_with_2plus_kp_pct": 5.2,
+   "slices_per_kp": {
+    "dist": {
+     "n": 357,
+     "p50": 1.0,
+     "p90": 4.0,
+     "max": 19,
+     "mean": 2.14,
+     "min": 0
+    },
+    "n_kps_in_scope": 357,
+    "kps_zero_slice": 3,
+    "kps_ge2_slices": 108,
+    "kps_ge2_slices_pct": 30.3
+   },
+   "files": 6,
+   "files_included": [
+    "img/ch02-2_信号与系统的时域分析.md",
+    "img/ch02-3_信号的频域分析.md",
+    "img/ch02-4_随机信号分析.md",
+    "教材/01_第1章_绪论.md",
+    "教材/02_第2章_信号分析基础.md",
+    "教材/03_第3章_模拟信号的数字编码.md"
+   ]
   },
   "scope_all_26": {
    "slices": 2422,
@@ -314,10 +518,272 @@
      "mean": 2.28,
      "min": 1
     },
+    "n_kps_in_scope": 357,
     "kps_zero_slice": 0,
     "kps_ge2_slices": 146,
     "kps_ge2_slices_pct": 40.9
    }
+  },
+  "scope_textbook_core": {
+   "slices": 283,
+   "slice_chars_total": 261566,
+   "orphan_any": 22,
+   "orphan_any_pct": 7.8,
+   "orphan_lt50": 22,
+   "orphan_lt50_pct": 7.8,
+   "slices_with_2plus_kp": 29,
+   "slices_with_2plus_kp_pct": 10.2,
+   "slices_per_kp": {
+    "dist": {
+     "n": 70,
+     "p50": 3.0,
+     "p90": 13.1,
+     "max": 19,
+     "mean": 5.36,
+     "min": 1
+    },
+    "n_kps_in_scope": 70,
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 53,
+    "kps_ge2_slices_pct": 75.7
+   },
+   "files": [
+    "教材/01_第1章_绪论.md",
+    "教材/02_第2章_信号分析基础.md",
+    "教材/03_第3章_模拟信号的数字编码.md"
+   ]
+  },
+  "scope_textbook_core_plus_prose": {
+   "slices": 323,
+   "slice_chars_total": 274576,
+   "orphan_any": 22,
+   "orphan_any_pct": 6.8,
+   "orphan_lt50": 22,
+   "orphan_lt50_pct": 6.8,
+   "slices_with_2plus_kp": 29,
+   "slices_with_2plus_kp_pct": 9.0,
+   "slices_per_kp": {
+    "dist": {
+     "n": 72,
+     "p50": 3.5,
+     "p90": 13.9,
+     "max": 34,
+     "mean": 5.76,
+     "min": 1
+    },
+    "n_kps_in_scope": 72,
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 55,
+    "kps_ge2_slices_pct": 76.4
+   },
+   "files": [
+    "img/平滑系统滤除信号证明.md",
+    "notes/非均匀量化噪声推导-附录.md",
+    "教材/01_第1章_绪论.md",
+    "教材/02_第2章_信号分析基础.md",
+    "教材/03_第3章_模拟信号的数字编码.md"
+   ]
+  },
+  "scope_section_overlap_kp": {
+   "slices": 688,
+   "slice_chars_total": 459702,
+   "orphan_any": 5,
+   "orphan_any_pct": 0.7,
+   "orphan_lt50": 5,
+   "orphan_lt50_pct": 0.7,
+   "slices_with_2plus_kp": 42,
+   "slices_with_2plus_kp_pct": 6.1,
+   "slices_per_kp": {
+    "dist": {
+     "n": 357,
+     "p50": 1.0,
+     "p90": 5.0,
+     "max": 34,
+     "mean": 2.27,
+     "min": 1
+    },
+    "n_kps_in_scope": 357,
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 111,
+    "kps_ge2_slices_pct": 31.1
+   }
+  },
+  "scope_section_overlap_kp_core_plus": {
+   "slices": 301,
+   "slice_chars_total": 260421,
+   "orphan_any": 0,
+   "orphan_any_pct": 0.0,
+   "orphan_lt50": 0,
+   "orphan_lt50_pct": 0.0,
+   "slices_with_2plus_kp": 29,
+   "slices_with_2plus_kp_pct": 9.6,
+   "slices_per_kp": {
+    "dist": {
+     "n": 72,
+     "p50": 3.5,
+     "p90": 13.9,
+     "max": 34,
+     "mean": 5.76,
+     "min": 1
+    },
+    "n_kps_in_scope": 72,
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 55,
+    "kps_ge2_slices_pct": 76.4
+   },
+   "files": [
+    "img/平滑系统滤除信号证明.md",
+    "notes/非均匀量化噪声推导-附录.md",
+    "教材/01_第1章_绪论.md",
+    "教材/02_第2章_信号分析基础.md",
+    "教材/03_第3章_模拟信号的数字编码.md"
+   ]
+  },
+  "fanout_top_section_overlap": [
+   {
+    "id": "nonuniform-quantization-noise-derivation",
+    "file": "notes/非均匀量化噪声推导-附录.md",
+    "slices": 34,
+    "size_heading": 11416,
+    "span_lines": 470
+   },
+   {
+    "id": "ch2-10-common-random-processes",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 19,
+    "size_heading": 18335,
+    "span_lines": 341
+   },
+   {
+    "id": "ch2-10-gaussian-random-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 19,
+    "size_heading": 18311,
+    "span_lines": 339
+   },
+   {
+    "id": "ch2-4-hilbert-transform",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 17,
+    "size_heading": 17348,
+    "span_lines": 395
+   },
+   {
+    "id": "ch2-10-white-noise",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 17,
+    "size_heading": 16056,
+    "span_lines": 311
+   },
+   {
+    "id": "ch2-10-narrowband-random-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 16,
+    "size_heading": 15387,
+    "span_lines": 296
+   },
+   {
+    "id": "ch2-10-narrowband-gaussian-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 15,
+    "size_heading": 14324,
+    "span_lines": 245
+   },
+   {
+    "id": "nonuniform-quantization",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "slices": 14,
+    "size_heading": 13309,
+    "span_lines": 289
+   }
+  ],
+  "fanout_top_core_plus": [
+   {
+    "id": "nonuniform-quantization-noise-derivation",
+    "file": "notes/非均匀量化噪声推导-附录.md",
+    "slices": 34,
+    "size_heading": 11416,
+    "span_lines": 470
+   },
+   {
+    "id": "ch2-10-common-random-processes",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 19,
+    "size_heading": 18335,
+    "span_lines": 341
+   },
+   {
+    "id": "ch2-10-gaussian-random-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 19,
+    "size_heading": 18311,
+    "span_lines": 339
+   },
+   {
+    "id": "ch2-4-hilbert-transform",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 17,
+    "size_heading": 17348,
+    "span_lines": 395
+   },
+   {
+    "id": "ch2-10-white-noise",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 17,
+    "size_heading": 16056,
+    "span_lines": 311
+   },
+   {
+    "id": "ch2-10-narrowband-random-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 16,
+    "size_heading": 15387,
+    "span_lines": 296
+   },
+   {
+    "id": "ch2-10-narrowband-gaussian-process",
+    "file": "教材/02_第2章_信号分析基础.md",
+    "slices": 15,
+    "size_heading": 14324,
+    "span_lines": 245
+   },
+   {
+    "id": "nonuniform-quantization",
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "slices": 14,
+    "size_heading": 13309,
+    "span_lines": 289
+   }
+  ],
+  "scope_passing_chapters_section_only": {
+   "slices": 291,
+   "slice_chars_total": 252263,
+   "orphan_any": 0,
+   "orphan_any_pct": 0.0,
+   "orphan_lt50": 0,
+   "orphan_lt50_pct": 0.0,
+   "slices_with_2plus_kp": 19,
+   "slices_with_2plus_kp_pct": 6.5,
+   "slices_per_kp": {
+    "dist": {
+     "n": 51,
+     "p50": 6.0,
+     "p90": 16.0,
+     "max": 34,
+     "mean": 7.24,
+     "min": 1
+    },
+    "n_kps_in_scope": 51,
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 41,
+    "kps_ge2_slices_pct": 80.4
+   },
+   "files": [
+    "img/平滑系统滤除信号证明.md",
+    "notes/非均匀量化噪声推导-附录.md",
+    "教材/02_第2章_信号分析基础.md",
+    "教材/03_第3章_模拟信号的数字编码.md"
+   ]
   },
   "per_file_kp_files": {
    "img/ch02-2_信号与系统的时域分析.md": {
@@ -365,18 +831,75 @@
     "orphan": 311,
     "orphan_pct": 98.1
    }
+  },
+  "kp_count_by_file": {
+   "img/ch02-2_信号与系统的时域分析.md": 81,
+   "img/ch02-3_信号的频域分析.md": 161,
+   "img/ch02-4_随机信号分析.md": 42,
+   "img/平滑系统滤除信号证明.md": 1,
+   "notes/非均匀量化噪声推导-附录.md": 1,
+   "教材/01_第1章_绪论.md": 21,
+   "教材/02_第2章_信号分析基础.md": 21,
+   "教材/03_第3章_模拟信号的数字编码.md": 28,
+   "教材/08_第8章_差错控制编码.md": 1
+  },
+  "sensitivity": {
+   "budget800_min0": {
+    "core_plus_slices": 451,
+    "core_plus_chars_p50": 653.0,
+    "core_plus_chars_max": 1071,
+    "all_kp_files_slices": 919,
+    "all_kp_files_slices_per_kp_p90": 6.0
+   },
+   "budget800_min200": {
+    "core_plus_slices": 450,
+    "core_plus_chars_p50": 653.0,
+    "core_plus_chars_max": 1071,
+    "all_kp_files_slices": 917,
+    "all_kp_files_slices_per_kp_p90": 6.0
+   },
+   "budget1200_min0": {
+    "core_plus_slices": 301,
+    "core_plus_chars_p50": 1006.0,
+    "core_plus_chars_max": 1200,
+    "all_kp_files_slices": 688,
+    "all_kp_files_slices_per_kp_p90": 5.0
+   },
+   "budget1200_min200": {
+    "core_plus_slices": 301,
+    "core_plus_chars_p50": 1006.0,
+    "core_plus_chars_max": 1200,
+    "all_kp_files_slices": 688,
+    "all_kp_files_slices_per_kp_p90": 5.0
+   },
+   "budget2000_min0": {
+    "core_plus_slices": 201,
+    "core_plus_chars_p50": 1696.0,
+    "core_plus_chars_max": 2000,
+    "all_kp_files_slices": 551,
+    "all_kp_files_slices_per_kp_p90": 4.0
+   },
+   "budget2000_min200": {
+    "core_plus_slices": 201,
+    "core_plus_chars_p50": 1696.0,
+    "core_plus_chars_max": 2000,
+    "all_kp_files_slices": 551,
+    "all_kp_files_slices_per_kp_p90": 4.0
+   }
   }
  },
  "P6_userdata": {
   "kp_ids": 357,
-  "links": 0,
-  "link_targets": 0,
-  "link_target_orphans": 0,
-  "edge_edges": 0,
-  "edge_targets": 0,
+  "links": 3,
+  "link_targets": 3,
+  "link_target_orphans": 1,
+  "edge_edges": 26,
+  "edge_targets": 26,
   "edge_target_orphans": 0,
   "cards_json": "absent (frozen snapshot 不含 .memoria/agent；live 库 review 目录为空)",
-  "orphan_link_target_ids": []
+  "orphan_link_target_ids": [
+   "通带抽样定理"
+  ]
  },
  "P7_description_volume": {
   "scope_kp_files_slices": 1166,
@@ -384,6 +907,10 @@
   "est_input_tokens_if_one_call_per_slice": 677987,
   "est_output_chars_if_80_per_slice": 93280,
   "est_llm_calls_one_per_slice": 1166,
+  "scope_kp_union_slices": 475,
+  "scope_kp_union_chars": 454779,
+  "scope_kp_union_est_input_tokens": 335190,
+  "scope_kp_union_est_llm_calls": 475,
   "note": "description 生成必须改写不能截原文（R5）；token 按 0.4237 tok/字；prompt 开销按 300 tok/次粗估，仅量级参考"
  }
 }

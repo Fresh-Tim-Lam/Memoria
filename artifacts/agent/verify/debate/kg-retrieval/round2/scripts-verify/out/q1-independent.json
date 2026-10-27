@@ -1,0 +1,492 @@
+{
+ "A_snapshot": {
+  "corpus_snapshot": {
+   "manifest_vs_snapshot_mismatch": [],
+   "snapshot_md": 26,
+   "snapshot_sidecar": 11
+  },
+  "frozen_at": "2026-10-27T14:09:46+08:00 (matches data/corpus-snapshot.json)",
+  "frozen_sha_mismatch": [],
+  "live_sha_mismatch": [],
+  "manifest": "round2/frozen/MANIFEST.json",
+  "md": 26,
+  "sidecars": 11
+ },
+ "B_inventory": {
+  "kps": 357,
+  "roles": {
+   "notes": 1,
+   "slides": 285,
+   "教材": 71
+  },
+  "sidecar_kp_md_pairs": 11,
+  "start_is_heading_pct_all": 93.3,
+  "start_is_heading_pct_textbook": 66.2
+ },
+ "C_product_resolution": {
+  "fail": 5,
+  "fail_by_error": {
+   "end_snippet_not_found": 5
+  },
+  "fail_ids": [
+   {
+    "error": "end_snippet_not_found",
+    "file": "img/ch02-4_随机信号分析.md",
+    "id": "img-ch2-4-13-随机过程的统计值"
+   },
+   {
+    "error": "end_snippet_not_found",
+    "file": "img/ch02-4_随机信号分析.md",
+    "id": "img-ch2-4-17-n-随机变量函数的统计值-数字特征"
+   },
+   {
+    "error": "end_snippet_not_found",
+    "file": "img/ch02-4_随机信号分析.md",
+    "id": "img-ch2-4-29-4-窄带高斯随机过程"
+   },
+   {
+    "error": "end_snippet_not_found",
+    "file": "img/ch02-4_随机信号分析.md",
+    "id": "img-ch2-4-36-n-平稳随机过程与线性时不变系统"
+   },
+   {
+    "error": "end_snippet_not_found",
+    "file": "教材/01_第1章_绪论.md",
+    "id": "数字通信的特点"
+   }
+  ],
+  "fresh_meaning": "产品 resolve_range.ok=True 的比例（read_kp 实际依赖该值）",
+  "ok": 352,
+  "ok_pct": 98.6
+ },
+ "D_anchor_gate": {
+  "all": {
+   "ambiguous_strict_ids": [
+    "比特率"
+   ],
+   "context": 352,
+   "context_pct": 98.6,
+   "lenient": 352,
+   "lenient_pct": 98.6,
+   "n": 357,
+   "ok": 352,
+   "ok_pct": 98.6,
+   "section": 351,
+   "section_pct": 98.3,
+   "snippet_multi": 131,
+   "snippet_multi_pct": 36.7,
+   "strict": 225,
+   "strict_pct": 63.0,
+   "unresolved_ids": [
+    "img-ch2-4-13-随机过程的统计值",
+    "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+    "img-ch2-4-29-4-窄带高斯随机过程",
+    "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+    "数字通信的特点"
+   ]
+  },
+  "notes": {
+   "ambiguous_strict_ids": [],
+   "context": 1,
+   "context_pct": 100.0,
+   "lenient": 1,
+   "lenient_pct": 100.0,
+   "n": 1,
+   "ok": 1,
+   "ok_pct": 100.0,
+   "section": 1,
+   "section_pct": 100.0,
+   "snippet_multi": 0,
+   "snippet_multi_pct": 0.0,
+   "strict": 1,
+   "strict_pct": 100.0,
+   "unresolved_ids": []
+  },
+  "slides": {
+   "ambiguous_strict_ids": [],
+   "context": 281,
+   "context_pct": 98.6,
+   "lenient": 281,
+   "lenient_pct": 98.6,
+   "n": 285,
+   "ok": 281,
+   "ok_pct": 98.6,
+   "section": 281,
+   "section_pct": 98.6,
+   "snippet_multi": 130,
+   "snippet_multi_pct": 45.6,
+   "strict": 155,
+   "strict_pct": 54.4,
+   "unresolved_ids": [
+    "img-ch2-4-13-随机过程的统计值",
+    "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+    "img-ch2-4-29-4-窄带高斯随机过程",
+    "img-ch2-4-36-n-平稳随机过程与线性时不变系统"
+   ]
+  },
+  "教材": {
+   "ambiguous_strict_ids": [
+    "比特率"
+   ],
+   "context": 70,
+   "context_pct": 98.6,
+   "lenient": 70,
+   "lenient_pct": 98.6,
+   "n": 71,
+   "ok": 70,
+   "ok_pct": 98.6,
+   "section": 69,
+   "section_pct": 97.2,
+   "snippet_multi": 1,
+   "snippet_multi_pct": 1.4,
+   "strict": 69,
+   "strict_pct": 97.2,
+   "unresolved_ids": [
+    "数字通信的特点"
+   ]
+  }
+ },
+ "E_size": {
+  "clamped": {
+   "all": {
+    "gt1200": 77,
+    "gt1200_pct": 21.6,
+    "gt3000_pct": 9.0,
+    "max": 18198,
+    "mean": 1290.8,
+    "min": 11,
+    "n": 357,
+    "p50": 484.0,
+    "p90": 2756.4
+   },
+   "textbook": {
+    "gt1200": 39,
+    "gt1200_pct": 54.9,
+    "gt3000_pct": 38.0,
+    "max": 18198,
+    "mean": 3699.7,
+    "min": 51,
+    "n": 71,
+    "p50": 1714.0,
+    "p90": 9374.0
+   }
+  },
+  "heading": {
+   "all": {
+    "gt1200": 88,
+    "gt1200_pct": 24.6,
+    "gt3000_pct": 11.2,
+    "max": 18335,
+    "mean": 1556.85,
+    "min": 11,
+    "n": 357,
+    "p50": 581.0,
+    "p90": 3359.8
+   },
+   "textbook": {
+    "gt1200": 49,
+    "gt1200_pct": 69.0,
+    "gt3000_pct": 49.3,
+    "max": 18335,
+    "mean": 4893.58,
+    "min": 219,
+    "n": 71,
+    "p50": 2985.0,
+    "p90": 12593.0
+   }
+  },
+  "hint": {
+   "all": {
+    "gt1200": 85,
+    "gt1200_pct": 23.8,
+    "gt3000_pct": 9.5,
+    "max": 18198,
+    "mean": 1363.19,
+    "min": 32,
+    "n": 357,
+    "p50": 536.0,
+    "p90": 2944.4
+   },
+   "textbook": {
+    "gt1200": 39,
+    "gt1200_pct": 54.9,
+    "gt3000_pct": 38.0,
+    "max": 18198,
+    "mean": 3719.75,
+    "min": 51,
+    "n": 71,
+    "p50": 1714.0,
+    "p90": 9374.0
+   }
+  },
+  "resolved_raw": {
+   "all": {
+    "gt1200": 84,
+    "gt1200_pct": 23.5,
+    "gt3000_pct": 9.2,
+    "max": 18198,
+    "mean": 1339.42,
+    "min": 14,
+    "n": 357,
+    "p50": 522.0,
+    "p90": 2899.4
+   },
+   "textbook": {
+    "gt1200": 38,
+    "gt1200_pct": 53.5,
+    "gt3000_pct": 36.6,
+    "max": 18198,
+    "mean": 3651.1,
+    "min": 14,
+    "n": 71,
+    "p50": 1686.0,
+    "p90": 9374.0
+   }
+  }
+ },
+ "F_end_repair": {
+  "end_beyond_boundary": 17,
+  "end_missing": 5,
+  "end_multi": 59,
+  "inverted": 0,
+  "need_repair": 80,
+  "need_repair_pct": 22.4,
+  "span_zero": 1
+ },
+ "G_duplicates": {
+  "global": {
+   "groups": 33,
+   "mean_wrong_rate_all_groups": 0.6089,
+   "mean_wrong_rate_top15": 0.7395,
+   "unit_weighted_wrong_rate": 0.6887,
+   "units": 106,
+   "units_pct": 29.7
+  },
+  "same_file": {
+   "groups": 32,
+   "mean_wrong_rate_all_groups": 0.6185,
+   "mean_wrong_rate_top15": 0.7416,
+   "unit_weighted_wrong_rate": 0.6863,
+   "units": 102,
+   "units_pct": 28.6
+  },
+  "same_file_start": {
+   "groups": 7,
+   "mean_wrong_rate_all_groups": 0.5,
+   "mean_wrong_rate_top15": 0.5,
+   "unit_weighted_wrong_rate": 0.5,
+   "units": 14,
+   "units_pct": 3.9
+  }
+ },
+ "H_userdata": {
+  "edge_pairs": 26,
+  "edge_source_orphans": [],
+  "edge_target_orphans": [],
+  "edges": 26,
+  "link_instances": 5,
+  "link_source_orphans": [],
+  "link_target_orphans": [
+   "通带抽样定理"
+  ],
+  "link_targets": 3,
+  "links": 3,
+  "links_with_instances": 3
+ },
+ "I_graph": {
+  "a2_churn": {
+   "added": 21,
+   "edges_after": 53,
+   "edges_before": 62,
+   "removed": 30
+  },
+  "by_type": {
+   "contain": 33,
+   "extend": 21,
+   "reference": 8
+  },
+  "edges": 62,
+  "nodes": 357
+ },
+ "J_orphan": {
+  "kp_to_slice_zero": 0,
+  "per_file_kp_files": {
+   "img/ch02-2_信号与系统的时域分析.md": {
+    "char_coverage_pct": 98.4,
+    "orphan_any": 25,
+    "orphan_any_pct": 19.7,
+    "orphan_lt50": 25,
+    "orphan_lt50_pct": 19.7,
+    "slices": 127
+   },
+   "img/ch02-3_信号的频域分析.md": {
+    "char_coverage_pct": 82.1,
+    "orphan_any": 96,
+    "orphan_any_pct": 34.3,
+    "orphan_lt50": 96,
+    "orphan_lt50_pct": 34.3,
+    "slices": 280
+   },
+   "img/ch02-4_随机信号分析.md": {
+    "char_coverage_pct": 86.9,
+    "orphan_any": 18,
+    "orphan_any_pct": 31.6,
+    "orphan_lt50": 18,
+    "orphan_lt50_pct": 31.6,
+    "slices": 57
+   },
+   "img/平滑系统滤除信号证明.md": {
+    "char_coverage_pct": 99.7,
+    "orphan_any": 0,
+    "orphan_any_pct": 0.0,
+    "orphan_lt50": 0,
+    "orphan_lt50_pct": 0.0,
+    "slices": 6
+   },
+   "notes/非均匀量化噪声推导-附录.md": {
+    "char_coverage_pct": 99.7,
+    "orphan_any": 0,
+    "orphan_any_pct": 0.0,
+    "orphan_lt50": 0,
+    "orphan_lt50_pct": 0.0,
+    "slices": 32
+   },
+   "教材/01_第1章_绪论.md": {
+    "char_coverage_pct": 58.9,
+    "orphan_any": 5,
+    "orphan_any_pct": 55.6,
+    "orphan_lt50": 5,
+    "orphan_lt50_pct": 55.6,
+    "slices": 9
+   },
+   "教材/02_第2章_信号分析基础.md": {
+    "char_coverage_pct": 95.4,
+    "orphan_any": 3,
+    "orphan_any_pct": 15.8,
+    "orphan_lt50": 3,
+    "orphan_lt50_pct": 15.8,
+    "slices": 19
+   },
+   "教材/03_第3章_模拟信号的数字编码.md": {
+    "char_coverage_pct": 97.6,
+    "orphan_any": 4,
+    "orphan_any_pct": 12.5,
+    "orphan_lt50": 4,
+    "orphan_lt50_pct": 12.5,
+    "slices": 32
+   },
+   "教材/08_第8章_差错控制编码.md": {
+    "char_coverage_pct": 2.1,
+    "orphan_any": 41,
+    "orphan_any_pct": 97.6,
+    "orphan_lt50": 41,
+    "orphan_lt50_pct": 97.6,
+    "slices": 42
+   }
+  },
+  "rule": "独立口径：leaf section（每个 heading 到下一个 heading 前）作为切片；折叠空白行不切；不看 200-1200 打包",
+  "scope_all_26": {
+   "files": 26,
+   "orphan_any_pct": 61.5,
+   "slices": 1071
+  },
+  "scope_kp_files": {
+   "char_coverage_pct": 58.6,
+   "files": 9,
+   "orphan_any_pct": 31.8,
+   "orphan_lt50_pct": 31.8,
+   "slices": 604
+  }
+ },
+ "K_rollback": {
+  "backups_root_exists": true,
+  "code_facts": {
+   "backup_scope": "只覆盖经 agent 计划管线写入的文件集（snapshot_pre_images 显式传入 rels）",
+   "restore_batch": "src/memoria/services/agent/backup.py:529（逐字节写回；默认 fail-closed：无 post.json 拒绝撤销）",
+   "retention": "KEEP_BATCHES_PER_SESSION / trim_backups 会按 FIFO 淘汰旧批次",
+   "undo_step": "src/memoria/services/agent/backup.py:1148（走会话栈 txids/cursor）"
+  },
+  "sessions": [
+   {
+    "batches": [
+     {
+      "journal": true,
+      "post": true,
+      "txid": "20261027T022320Z-01"
+     }
+    ],
+    "n_batches": 1,
+    "session": "manual-force"
+   },
+   {
+    "batches": [
+     {
+      "journal": true,
+      "post": true,
+      "txid": "20261027T010516Z-01"
+     },
+     {
+      "journal": true,
+      "post": true,
+      "txid": "20261027T010948Z-01"
+     },
+     {
+      "journal": true,
+      "post": false,
+      "txid": "origin"
+     }
+    ],
+    "n_batches": 6,
+    "session": "session-20260929T033424Z-8950ea2f"
+   },
+   {
+    "batches": [
+     {
+      "journal": true,
+      "post": true,
+      "txid": "20261027T052426Z-01"
+     },
+     {
+      "journal": true,
+      "post": true,
+      "txid": "20261027T052440Z-01"
+     },
+     {
+      "journal": true,
+      "post": false,
+      "txid": "origin"
+     }
+    ],
+    "n_batches": 6,
+    "session": "session-20261027T011706Z-0cb419b6"
+   }
+  ]
+ },
+ "L_schema": {
+  "normalize_sidecar_data": "src/memoria/storage/sidecar.py:42 只规整 range，不白名单字段",
+  "save_sidecar": "src/memoria/storage/sidecar.py:116 atomic_write_yaml(path, data) 原样落盘",
+  "sidecar_kp_fields_observed": {
+   "id": 357,
+   "name": 357,
+   "range": 357,
+   "range.end.line_hint": 357,
+   "range.end.snippet": 357,
+   "range.start.line_hint": 357,
+   "range.start.snippet": 357,
+   "tags": 50
+  }
+ },
+ "M_live_moving": {
+  "frozen_snapshot_contains_agent_dir": false,
+  "live_sessions": [
+   {
+    "bytes": 506,
+    "file": "manual-force.jsonl"
+   },
+   {
+    "bytes": 2333232,
+    "file": "session-20261027T011706Z-0cb419b6.jsonl"
+   }
+  ]
+ }
+}
