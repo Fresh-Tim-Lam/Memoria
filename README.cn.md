@@ -6,7 +6,7 @@
 
 [![Python](https://img.shields.io/badge/Python-3.11%2B-3776AB)](https://www.python.org/)
 [![Platform](https://img.shields.io/badge/Platform-Windows-blue)](https://github.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-blue)](LICENSE)
 [![Version](https://img.shields.io/badge/Version-0.4.5-8A2BE2)](src/memoria/__version__.py)
 [![English](https://img.shields.io/badge/README-English-green)](README.md)
 
@@ -227,4 +227,6 @@ Memoria 的文档体系专为人机协作设计：每个一级目录顶部有 `R
 
 ## License
 
-[MIT](LICENSE) © 2026 FreshTim
+[AGPL-3.0-only](LICENSE) © 2026 FreshTim
+
+**本版本原始发布时为 MIT；许可已回填为 AGPL-3.0。v0.4.10 及更早版本的既有授权不受影响（MIT 不可撤回）。**
