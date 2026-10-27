@@ -1,0 +1,540 @@
+{
+  "chapter3": {
+    "chars": 129950,
+    "file": "教材/03_第3章_模拟信号的数字编码.md",
+    "headings": {
+      "h1": 0,
+      "h2": 32,
+      "h3": 0,
+      "h4": 0
+    },
+    "lines": 2956
+  },
+  "chapter3_kps": [
+    {
+      "chars": 13057,
+      "id": "nonuniform-quantization",
+      "name": "非均匀量化",
+      "tokens": 3730.6
+    },
+    {
+      "chars": 12605,
+      "id": "logarithmic-quantization",
+      "name": "对数量化",
+      "tokens": 3601.4
+    },
+    {
+      "chars": 12119,
+      "id": "signal-prediction-methods",
+      "name": "信号预测的基本方法",
+      "tokens": 3462.6
+    },
+    {
+      "chars": 9067,
+      "id": "bandpass-sampling",
+      "name": "带通抽样定理",
+      "tokens": 2590.6
+    },
+    {
+      "chars": 8277,
+      "id": "a-law-mu-law-pcm",
+      "name": "A 律与 $\\mu$ 律 PCM 编码",
+      "tokens": 2364.9
+    },
+    {
+      "chars": 8230,
+      "id": "uniform-quantization",
+      "name": "均匀量化",
+      "tokens": 2351.4
+    },
+    {
+      "chars": 7896,
+      "id": "simple-delta-modulation",
+      "name": "简单增量调制",
+      "tokens": 2256.0
+    },
+    {
+      "chars": 6745,
+      "id": "aliasing",
+      "name": "混叠现象与低通抽样定理",
+      "tokens": 1927.1
+    },
+    {
+      "chars": 6145,
+      "id": "delta-sigma-modulation",
+      "name": "增量总和调制—— $\\Delta-\\Sigma$ 调制",
+      "tokens": 1755.7
+    },
+    {
+      "chars": 5703,
+      "id": "adpcm",
+      "name": "自适应差分脉冲编码调制",
+      "tokens": 1629.4
+    },
+    {
+      "chars": 4509,
+      "id": "log-linear-pcm",
+      "name": "对数 PCM 与线性 PCM 间的变换",
+      "tokens": 1288.3
+    },
+    {
+      "chars": 3462,
+      "id": "predictive-coding-basics",
+      "name": "预测编码的基本概念",
+      "tokens": 989.1
+    },
+    {
+      "chars": 2998,
+      "id": "scalar-quantization",
+      "name": "标量量化",
+      "tokens": 856.6
+    },
+    {
+      "chars": 2819,
+      "id": "dm-error-performance",
+      "name": "增量调制编码的误码性能分析",
+      "tokens": 805.4
+    },
+    {
+      "chars": 2250,
+      "id": "natural-sampling",
+      "name": "低通信号自然抽样",
+      "tokens": 642.9
+    },
+    {
+      "chars": 2086,
+      "id": "dm-pcm-error-comparison",
+      "name": "两种编码的抗误码性能比较",
+      "tokens": 596.0
+    },
+    {
+      "chars": 1931,
+      "id": "digital-companded-adm",
+      "name": "数字压扩自适应增量调制",
+      "tokens": 551.7
+    },
+    {
+      "chars": 1686,
+      "id": "ideal-sampling",
+      "name": "低通信号理想抽样",
+      "tokens": 481.7
+    },
+    {
+      "chars": 1514,
+      "id": "vector-quantization",
+      "name": "向量量化",
+      "tokens": 432.6
+    },
+    {
+      "chars": 1272,
+      "id": "pcm-coding-methods",
+      "name": "常用的PCM编码方式",
+      "tokens": 363.4
+    },
+    {
+      "chars": 1118,
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）",
+      "tokens": 319.4
+    },
+    {
+      "chars": 1040,
+      "id": "quantization-overview",
+      "name": "模拟信号的量化",
+      "tokens": 297.1
+    },
+    {
+      "chars": 721,
+      "id": "sampling-theorem",
+      "name": "低通和带通信号抽样定理",
+      "tokens": 206.0
+    },
+    {
+      "chars": 624,
+      "id": "ch3-summary",
+      "name": "本章小结",
+      "tokens": 178.3
+    },
+    {
+      "chars": 400,
+      "id": "pcm",
+      "name": "脉冲编码调制",
+      "tokens": 114.3
+    },
+    {
+      "chars": 345,
+      "id": "ch3-intro",
+      "name": "引言",
+      "tokens": 98.6
+    },
+    {
+      "chars": 294,
+      "id": "delta-modulation",
+      "name": "增量调制（ $\\Delta \\mathbf{M}$ 调制）",
+      "tokens": 84.0
+    },
+    {
+      "chars": 282,
+      "id": "linear-pcm-error-performance",
+      "name": "线性 PCM 编码的误码性能分析",
+      "tokens": 80.6
+    }
+  ],
+  "coarse_kps": [
+    {
+      "chars": 18198,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-10-common-random-processes",
+      "name": "2.10 通信系统中几种常用的随机过程",
+      "tokens": 5199.4
+    },
+    {
+      "chars": 17344,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-4-hilbert-transform",
+      "name": "2.4 希尔伯特变换及应用",
+      "tokens": 4955.4
+    },
+    {
+      "chars": 13057,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "nonuniform-quantization",
+      "name": "非均匀量化",
+      "tokens": 3730.6
+    },
+    {
+      "chars": 12605,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "logarithmic-quantization",
+      "name": "对数量化",
+      "tokens": 3601.4
+    },
+    {
+      "chars": 12119,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "signal-prediction-methods",
+      "name": "信号预测的基本方法",
+      "tokens": 3462.6
+    },
+    {
+      "chars": 10587,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-13-matched-filter",
+      "name": "2.13 匹配滤波器",
+      "tokens": 3024.9
+    },
+    {
+      "chars": 9844,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-12-cyclostationary-random-process",
+      "name": "2.12 循环平稳随机过程",
+      "tokens": 2812.6
+    },
+    {
+      "chars": 9374,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-10-cosine-plus-narrowband-gaussian",
+      "name": "余弦信号加窄带高斯随机信号",
+      "tokens": 2678.3
+    },
+    {
+      "chars": 9176,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-2-deterministic-signal-review",
+      "name": "2.2 确定信号分析方法回顾",
+      "tokens": 2621.7
+    },
+    {
+      "chars": 9067,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "bandpass-sampling",
+      "name": "带通抽样定理",
+      "tokens": 2590.6
+    },
+    {
+      "chars": 8277,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "a-law-mu-law-pcm",
+      "name": "A 律与 $\\mu$ 律 PCM 编码",
+      "tokens": 2364.9
+    },
+    {
+      "chars": 8230,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "uniform-quantization",
+      "name": "均匀量化",
+      "tokens": 2351.4
+    },
+    {
+      "chars": 8127,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-14-signal-bandwidth",
+      "name": "2.14 信号的带宽",
+      "tokens": 2322.0
+    },
+    {
+      "chars": 8125,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "id": "ch2-11-stationary-process-lti-system",
+      "name": "2.11 平稳随机过程与时不变线性系统",
+      "tokens": 2321.4
+    },
+    {
+      "chars": 7896,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "id": "simple-delta-modulation",
+      "name": "简单增量调制",
+      "tokens": 2256.0
+    }
+  ],
+  "fine_kps": [
+    {
+      "chars": 53,
+      "file": "img/ch02-3_信号的频域分析.md",
+      "id": "img-ch2-3-05-目录",
+      "name": "目录",
+      "tokens": 15.1
+    },
+    {
+      "chars": 51,
+      "file": "教材/01_第1章_绪论.md",
+      "id": "数字解调器",
+      "name": "数字解调器",
+      "tokens": 14.6
+    },
+    {
+      "chars": 37,
+      "file": "img/ch02-2_信号与系统的时域分析.md",
+      "id": "img-ch2-2-03-普通信号",
+      "name": "普通信号",
+      "tokens": 10.6
+    },
+    {
+      "chars": 37,
+      "file": "img/ch02-2_信号与系统的时域分析.md",
+      "id": "img-ch2-2-04-奇异信号",
+      "name": "奇异信号",
+      "tokens": 10.6
+    },
+    {
+      "chars": 35,
+      "file": "img/ch02-3_信号的频域分析.md",
+      "id": "img-ch2-3-46-目录",
+      "name": "目录",
+      "tokens": 10.0
+    },
+    {
+      "chars": 32,
+      "file": "img/ch02-2_信号与系统的时域分析.md",
+      "id": "img-ch2-2-01-第2章信号处理基础",
+      "name": "第2章信号处理基础",
+      "tokens": 9.1
+    },
+    {
+      "chars": 32,
+      "file": "img/ch02-3_信号的频域分析.md",
+      "id": "img-ch2-3-01-第2章信号处理基础",
+      "name": "第2章信号处理基础",
+      "tokens": 9.1
+    },
+    {
+      "chars": 0,
+      "file": "img/ch02-4_随机信号分析.md",
+      "id": "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+      "name": "n 随机变量函数的统计值(数字特征)",
+      "tokens": 0.0
+    },
+    {
+      "chars": 0,
+      "file": "img/ch02-4_随机信号分析.md",
+      "id": "img-ch2-4-29-4-窄带高斯随机过程",
+      "name": "(4) 窄带高斯随机过程",
+      "tokens": 0.0
+    },
+    {
+      "chars": 0,
+      "file": "img/ch02-4_随机信号分析.md",
+      "id": "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+      "name": "n 平稳随机过程与线性时不变系统",
+      "tokens": 0.0
+    }
+  ],
+  "heading_counts": {
+    "h1": 91,
+    "h2": 880,
+    "h3": 138,
+    "h4": 2
+  },
+  "kb": "D:\\AAA_Courses\\数字通信原理",
+  "kp_chars": {
+    "max": 18198,
+    "mean": 1326.9,
+    "p50": 523,
+    "p90": 2887,
+    "p99": 12119
+  },
+  "kp_count": 357,
+  "kp_tokens": {
+    "max": 5199.4,
+    "mean": 379.1,
+    "p50": 149.4,
+    "p90": 824.9,
+    "p99": 3462.6
+  },
+  "largest_files": [
+    {
+      "chars": 284714,
+      "file": "教材/08_第8章_差错控制编码.md",
+      "headings": {
+        "h1": 0,
+        "h2": 42,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 5879
+    },
+    {
+      "chars": 255941,
+      "file": "教材/06_第6章_数字载波调制传输系统.md",
+      "headings": {
+        "h1": 0,
+        "h2": 31,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 6260
+    },
+    {
+      "chars": 181424,
+      "file": "教材/04_第4章_信息论基础.md",
+      "headings": {
+        "h1": 0,
+        "h2": 37,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 4183
+    },
+    {
+      "chars": 129950,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "headings": {
+        "h1": 0,
+        "h2": 32,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 2956
+    },
+    {
+      "chars": 127888,
+      "file": "img/ch02-3_信号的频域分析.md",
+      "headings": {
+        "h1": 1,
+        "h2": 242,
+        "h3": 37,
+        "h4": 0
+      },
+      "lines": 4295
+    },
+    {
+      "chars": 117804,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "headings": {
+        "h1": 0,
+        "h2": 19,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 2712
+    },
+    {
+      "chars": 101833,
+      "file": "教材/07_第7章_传输信道.md",
+      "headings": {
+        "h1": 0,
+        "h2": 26,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 2200
+    },
+    {
+      "chars": 96972,
+      "file": "教材/05_第5章_数字基带传输系统.md",
+      "headings": {
+        "h1": 0,
+        "h2": 25,
+        "h3": 0,
+        "h4": 0
+      },
+      "lines": 2264
+    }
+  ],
+  "md_count": 28,
+  "md_total_chars": 1760098,
+  "md_total_tokens": 502885.1,
+  "sidecar_rows": [
+    {
+      "kp_count": 81,
+      "md": "img/ch02-2_信号与系统的时域分析.md",
+      "sidecar": "ch02-2_信号与系统的时域分析.memoria.yaml"
+    },
+    {
+      "kp_count": 161,
+      "md": "img/ch02-3_信号的频域分析.md",
+      "sidecar": "ch02-3_信号的频域分析.memoria.yaml"
+    },
+    {
+      "kp_count": 42,
+      "md": "img/ch02-4_随机信号分析.md",
+      "sidecar": "ch02-4_随机信号分析.memoria.yaml"
+    },
+    {
+      "kp_count": 0,
+      "md": "img/ppt3.md",
+      "sidecar": "ppt3.memoria.yaml"
+    },
+    {
+      "kp_count": 1,
+      "md": "img/平滑系统滤除信号证明.md",
+      "sidecar": "平滑系统滤除信号证明.memoria.yaml"
+    },
+    {
+      "kp_count": 1,
+      "md": "notes/通带抽样定理-附录.md",
+      "sidecar": "通带抽样定理-附录.memoria.yaml"
+    },
+    {
+      "kp_count": 0,
+      "md": "教材/00_前言与目录.md",
+      "sidecar": "00_前言与目录.memoria.yaml"
+    },
+    {
+      "kp_count": 21,
+      "md": "教材/01_第1章_绪论.md",
+      "sidecar": "01_第1章_绪论.memoria.yaml"
+    },
+    {
+      "kp_count": 21,
+      "md": "教材/02_第2章_信号分析基础.md",
+      "sidecar": "02_第2章_信号分析基础.memoria.yaml"
+    },
+    {
+      "kp_count": 28,
+      "md": "教材/03_第3章_模拟信号的数字编码.md",
+      "sidecar": "03_第3章_模拟信号的数字编码.memoria.yaml"
+    },
+    {
+      "kp_count": 1,
+      "md": "教材/08_第8章_差错控制编码.md",
+      "sidecar": "08_第8章_差错控制编码.memoria.yaml"
+    },
+    {
+      "kp_count": 0,
+      "md": "跳转渲染测试.md",
+      "sidecar": "跳转渲染测试.memoria.yaml"
+    }
+  ],
+  "sidecars": 12
+}

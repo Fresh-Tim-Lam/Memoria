@@ -1,0 +1,811 @@
+{
+  "T-base-1_composition": {
+    "components_estimated": {
+      "system_prompt": 0,
+      "tool_results_cumulative": 108995,
+      "tools_schema": 4349
+    },
+    "note": "分项是估算：tools schema 来自 kb.py 实测 4349 token；tool_results 来自日志文本按字符估算；history 是剩余项（prompt 总量 - 已知项）",
+    "rounds_with_usage": 28,
+    "source": "usage 真实值 + 分项估算",
+    "total_completion_tokens_measured": 198889,
+    "total_prompt_tokens_measured": 4648155
+  },
+  "T-base-2_tool_results": {
+    "by_tool": {
+      "grep": {
+        "calls": 28,
+        "chars": 84063,
+        "est_tokens": 38038,
+        "max_tokens": 15638
+      },
+      "kb_overview": {
+        "calls": 2,
+        "chars": 1868,
+        "est_tokens": 702,
+        "max_tokens": 351
+      },
+      "outline": {
+        "calls": 3,
+        "chars": 3306,
+        "est_tokens": 1277,
+        "max_tokens": 451
+      },
+      "propose_write": {
+        "calls": 7,
+        "chars": 2842,
+        "est_tokens": 1255,
+        "max_tokens": 184
+      },
+      "pwsh": {
+        "calls": 1,
+        "chars": 2929,
+        "est_tokens": 855,
+        "max_tokens": 855
+      },
+      "read_document": {
+        "calls": 37,
+        "chars": 117103,
+        "est_tokens": 47048,
+        "max_tokens": 3171
+      },
+      "read_kp": {
+        "calls": 6,
+        "chars": 30060,
+        "est_tokens": 10723,
+        "max_tokens": 2898
+      },
+      "search_kb": {
+        "calls": 7,
+        "chars": 7087,
+        "est_tokens": 2984,
+        "max_tokens": 617
+      },
+      "skill": {
+        "calls": 1,
+        "chars": 2671,
+        "est_tokens": 1061,
+        "max_tokens": 1061
+      },
+      "snippet": {
+        "calls": 11,
+        "chars": 4993,
+        "est_tokens": 2133,
+        "max_tokens": 332
+      },
+      "validate_kb": {
+        "calls": 2,
+        "chars": 7952,
+        "est_tokens": 2919,
+        "max_tokens": 1501
+      }
+    },
+    "error_results": 0,
+    "top10_largest": [
+      {
+        "chars": 34249,
+        "est_tokens": 15638,
+        "event_index": 16,
+        "head": "命中 250/1225 处（pattern='量化'）  .memoria/agent/backups/session-20260929T033424Z-8950ea2f/20261027T010516Z-01/after/教材/03_第3章_模拟信号的数字编码.md Line 5: 在数字通信系统中，许多需传输的信号",
+        "is_error": false,
+        "tool": "grep"
+      },
+      {
+        "chars": 9882,
+        "est_tokens": 5035,
+        "event_index": 77,
+        "head": "命中 49 处（pattern='电平数|M 元|多元|每个符号|符号携带|log _ \\\\{ 2 \\\\} M|\\\\\\\\log _ \\\\{2\\\\} M'）  教材/00_前言与目录.md Line 87: 数字通信已成为现代通信系统的一项基本技术。近几十年来，国内外出版了大量有关通信原理和通信系统方面的教材，特别是有关",
+        "is_error": false,
+        "tool": "grep"
+      },
+      {
+        "chars": 8857,
+        "est_tokens": 3171,
+        "event_index": 162,
+        "head": "文档 教材/03_第3章_模拟信号的数字编码.md：共 2916 行，0 个知识点。  知识点（`文件:行号`）： - （该文档没有 sidecar 知识点）  正文： ## 3.3.3 均匀量化  前面已经对标量信号的均匀量化做了简要的分析，均匀量化简单、易于实现，是应用最为广泛的量化方式之一。均匀量化最基本的特点就",
+        "is_error": false,
+        "tool": "read_document"
+      },
+      {
+        "chars": 8334,
+        "est_tokens": 2898,
+        "event_index": 243,
+        "head": "知识点 uniform-quantization（均匀量化）@ 教材/03_第3章_模拟信号的数字编码.md:439-604 tags: 量化, 均匀量化, 量化阶距, 量化信噪比, 6.02N, 第3章  ## 3.3.3 均匀量化  前面已经对标量信号的均匀量化做了简要的分析，均匀量化简单、易于实现，是应用最为广泛",
+        "is_error": false,
+        "tool": "read_kp"
+      },
+      {
+        "chars": 8055,
+        "est_tokens": 2978,
+        "event_index": 345,
+        "head": "文档 教材/03_第3章_模拟信号的数字编码.md：共 2916 行，28 个知识点。  知识点（`文件:行号`）： - 教材/03_第3章_模拟信号的数字编码.md:3  引言 - 教材/03_第3章_模拟信号的数字编码.md:7  低通和带通信号抽样定理 - 教材/03_第3章_模拟信号的数字编码.md:26  低",
+        "is_error": false,
+        "tool": "read_document"
+      },
+      {
+        "chars": 7169,
+        "est_tokens": 2513,
+        "event_index": 152,
+        "head": "文档 教材/03_第3章_模拟信号的数字编码.md：共 2916 行，0 个知识点。  知识点（`文件:行号`）： - （该文档没有 sidecar 知识点）  正文： ## 3.2.3 混叠现象与低通抽样定理  混叠现象与混叠失真 前面[[\\h:#8c1111:green|讨论了抽样频率 $f_{\\mathrm{S}",
+        "is_error": false,
+        "tool": "read_document"
+      },
+      {
+        "chars": 6866,
+        "est_tokens": 2416,
+        "event_index": 312,
+        "head": "知识点 bandpass-sampling（带通抽样定理）@ 教材/03_第3章_模拟信号的数字编码.md:202-293 tags: 带通抽样, 抽样定理, 中频, 第3章  ## 3.2.4 带通抽样定理  在无线通信系统中应用的绝大多数无线信号，通常都是第2章中讨论过的窄带信号。这里所说的窄带信号并不一定意味着信",
+        "is_error": false,
+        "tool": "read_kp"
+      },
+      {
+        "chars": 6838,
+        "est_tokens": 2365,
+        "event_index": 271,
+        "head": "知识点 aliasing（混叠现象与低通抽样定理）@ 教材/03_第3章_模拟信号的数字编码.md:90-200 tags: 混叠, 抽样定理, 抗混叠, 重建, sinc, 第3章  ## 3.2.3 混叠现象与低通抽样定理  混叠现象与混叠失真 前面[[\\h:#8c1111:green|讨论了抽样频率 $f_{\\m",
+        "is_error": false,
+        "tool": "read_kp"
+      },
+      {
+        "chars": 6838,
+        "est_tokens": 2365,
+        "event_index": 315,
+        "head": "知识点 aliasing（混叠现象与低通抽样定理）@ 教材/03_第3章_模拟信号的数字编码.md:90-200 tags: 混叠, 抽样定理, 抗混叠, 重建, sinc, 第3章  ## 3.2.3 混叠现象与低通抽样定理  混叠现象与混叠失真 前面[[\\h:#8c1111:green|讨论了抽样频率 $f_{\\m",
+        "is_error": false,
+        "tool": "read_kp"
+      },
+      {
+        "chars": 6543,
+        "est_tokens": 3118,
+        "event_index": 90,
+        "head": "命中 34 处（pattern='^## 3\\\\.4|码组|N 位二进制|位二进制码|编码位数|一个量化值|折叠二进制|自然二进制'）  教材/03_第3章_模拟信号的数字编码.md Line 5: 在数字通信系统中，许多需传输的信号都是模拟信号，如音频信号和视频信号等，但这些信号不能在数字通信系统中直接传输。因此，在",
+        "is_error": false,
+        "tool": "grep"
+      }
+    ],
+    "total_chars": 264874,
+    "total_est_tokens": 108995,
+    "total_tool_results": 105
+  },
+  "T-base-2b_chapter_size": {
+    "chapter_count": 8,
+    "chapters": [
+      {
+        "bytes": 417147,
+        "chars": 284714,
+        "est_tokens": 103477,
+        "exceeds_read_limit": true,
+        "lines": 5879,
+        "path": "教材/08_第8章_差错控制编码.md"
+      },
+      {
+        "bytes": 342716,
+        "chars": 255941,
+        "est_tokens": 87006,
+        "exceeds_read_limit": true,
+        "lines": 6261,
+        "path": "教材/06_第6章_数字载波调制传输系统.md"
+      },
+      {
+        "bytes": 260977,
+        "chars": 181424,
+        "est_tokens": 64986,
+        "exceeds_read_limit": true,
+        "lines": 4184,
+        "path": "教材/04_第4章_信息论基础.md"
+      },
+      {
+        "bytes": 186304,
+        "chars": 126895,
+        "est_tokens": 46188,
+        "exceeds_read_limit": true,
+        "lines": 2920,
+        "path": "教材/03_第3章_模拟信号的数字编码.md"
+      },
+      {
+        "bytes": 162762,
+        "chars": 127888,
+        "est_tokens": 41908,
+        "exceeds_read_limit": true,
+        "lines": 4296,
+        "path": "img/ch02-3_信号的频域分析.md"
+      },
+      {
+        "bytes": 162095,
+        "chars": 117804,
+        "est_tokens": 40947,
+        "exceeds_read_limit": true,
+        "lines": 2712,
+        "path": "教材/02_第2章_信号分析基础.md"
+      },
+      {
+        "bytes": 155418,
+        "chars": 101833,
+        "est_tokens": 38184,
+        "exceeds_read_limit": true,
+        "lines": 2201,
+        "path": "教材/07_第7章_传输信道.md"
+      },
+      {
+        "bytes": 149228,
+        "chars": 96972,
+        "est_tokens": 36449,
+        "exceeds_read_limit": true,
+        "lines": 2265,
+        "path": "教材/05_第5章_数字基带传输系统.md"
+      }
+    ],
+    "sum_est_tokens_top8": 459145
+  },
+  "T-base-3_cache_curve": {
+    "count": 28,
+    "rows": [
+      {
+        "cache_hit_tokens": 140032,
+        "cache_miss_tokens": 21545,
+        "completion_tokens": 2012,
+        "estimated": false,
+        "event_index": 25,
+        "event_type": "loop/end",
+        "hit_ratio": 0.8667,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 161577,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 0,
+        "cache_miss_tokens": 130,
+        "completion_tokens": 6,
+        "estimated": false,
+        "event_index": 26,
+        "event_type": "session/title",
+        "hit_ratio": 0.0,
+        "model": null,
+        "prompt_tokens": 130,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 150784,
+        "cache_miss_tokens": 5948,
+        "completion_tokens": 11272,
+        "estimated": false,
+        "event_index": 49,
+        "event_type": "loop/end",
+        "hit_ratio": 0.962,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 156732,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 66816,
+        "cache_miss_tokens": 5065,
+        "completion_tokens": 1614,
+        "estimated": false,
+        "event_index": 61,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9295,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 71881,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 356096,
+        "cache_miss_tokens": 18441,
+        "completion_tokens": 4795,
+        "estimated": false,
+        "event_index": 109,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9508,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 374537,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 173568,
+        "cache_miss_tokens": 14454,
+        "completion_tokens": 2366,
+        "estimated": false,
+        "event_index": 134,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9231,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 188022,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 29824,
+        "cache_miss_tokens": 18929,
+        "completion_tokens": 2384,
+        "estimated": false,
+        "event_index": 136,
+        "event_type": "compaction",
+        "hit_ratio": 0.6117,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 48753,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 393344,
+        "cache_miss_tokens": 23760,
+        "completion_tokens": 12272,
+        "estimated": false,
+        "event_index": 189,
+        "event_type": "loop/end",
+        "hit_ratio": 0.943,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 417104,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 33664,
+        "cache_miss_tokens": 8497,
+        "completion_tokens": 3629,
+        "estimated": false,
+        "event_index": 191,
+        "event_type": "compaction",
+        "hit_ratio": 0.7985,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 42161,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 635392,
+        "cache_miss_tokens": 21426,
+        "completion_tokens": 18592,
+        "estimated": false,
+        "event_index": 264,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9674,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 656818,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 36352,
+        "cache_miss_tokens": 7013,
+        "completion_tokens": 3649,
+        "estimated": false,
+        "event_index": 266,
+        "event_type": "compaction",
+        "hit_ratio": 0.8383,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 43365,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 242432,
+        "cache_miss_tokens": 18276,
+        "completion_tokens": 5483,
+        "estimated": false,
+        "event_index": 307,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9299,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 260708,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 274688,
+        "cache_miss_tokens": 11854,
+        "completion_tokens": 5941,
+        "estimated": false,
+        "event_index": 339,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9586,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 286542,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 39936,
+        "cache_miss_tokens": 1756,
+        "completion_tokens": 3531,
+        "estimated": false,
+        "event_index": 340,
+        "event_type": "compaction",
+        "hit_ratio": 0.9579,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 41692,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 66816,
+        "cache_miss_tokens": 10788,
+        "completion_tokens": 6998,
+        "estimated": false,
+        "event_index": 349,
+        "event_type": "loop/end",
+        "hit_ratio": 0.861,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 77604,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 86528,
+        "cache_miss_tokens": 6513,
+        "completion_tokens": 11136,
+        "estimated": false,
+        "event_index": 358,
+        "event_type": "loop/end",
+        "hit_ratio": 0.93,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 93041,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 40448,
+        "cache_miss_tokens": 570,
+        "completion_tokens": 4617,
+        "estimated": false,
+        "event_index": 359,
+        "event_type": "compaction",
+        "hit_ratio": 0.9861,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 41018,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 29824,
+        "cache_miss_tokens": 9545,
+        "completion_tokens": 4716,
+        "estimated": false,
+        "event_index": 363,
+        "event_type": "loop/end",
+        "hit_ratio": 0.7576,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 39369,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 235904,
+        "cache_miss_tokens": 5689,
+        "completion_tokens": 12960,
+        "estimated": false,
+        "event_index": 391,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9765,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 241593,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 268800,
+        "cache_miss_tokens": 15662,
+        "completion_tokens": 18194,
+        "estimated": false,
+        "event_index": 434,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9449,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 284462,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 44544,
+        "cache_miss_tokens": 382,
+        "completion_tokens": 4049,
+        "estimated": false,
+        "event_index": 435,
+        "event_type": "compaction",
+        "hit_ratio": 0.9915,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 44926,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 107648,
+        "cache_miss_tokens": 10049,
+        "completion_tokens": 11132,
+        "estimated": false,
+        "event_index": 449,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9146,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 117697,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 171264,
+        "cache_miss_tokens": 9909,
+        "completion_tokens": 5901,
+        "estimated": false,
+        "event_index": 474,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9453,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 181173,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 40960,
+        "cache_miss_tokens": 463,
+        "completion_tokens": 5572,
+        "estimated": false,
+        "event_index": 475,
+        "event_type": "compaction",
+        "hit_ratio": 0.9888,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 41423,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 367104,
+        "cache_miss_tokens": 21111,
+        "completion_tokens": 14557,
+        "estimated": false,
+        "event_index": 529,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9456,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 388215,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 38400,
+        "cache_miss_tokens": 7041,
+        "completion_tokens": 5049,
+        "estimated": false,
+        "event_index": 530,
+        "event_type": "compaction",
+        "hit_ratio": 0.8451,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 45441,
+        "stop_reason": null
+      },
+      {
+        "cache_hit_tokens": 150272,
+        "cache_miss_tokens": 10387,
+        "completion_tokens": 5205,
+        "estimated": false,
+        "event_index": 549,
+        "event_type": "loop/end",
+        "hit_ratio": 0.9353,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 160659,
+        "stop_reason": "final-answer"
+      },
+      {
+        "cache_hit_tokens": 131328,
+        "cache_miss_tokens": 10184,
+        "completion_tokens": 11257,
+        "estimated": false,
+        "event_index": 566,
+        "event_type": "loop/end",
+        "hit_ratio": 0.928,
+        "model": "deepseek-v4-flash",
+        "prompt_tokens": 141512,
+        "stop_reason": "final-answer"
+      }
+    ]
+  },
+  "T-base-4_prefix_stability": {
+    "note": "prefix_stable_tokens = 该轮与前一轮逐段完全相同的前缀所含 token；只有这部分可能命中缓存（还需服务端缓存策略配合）",
+    "pairs": [
+      {
+        "all_stable": true,
+        "common_prefix_events": 9,
+        "cur_len": 18,
+        "diverged_at": null,
+        "prefix_ratio": 0.5962,
+        "prefix_stable_tokens": 18928,
+        "prev_len": 9,
+        "round_pair": "1->2",
+        "total_tokens": 31747
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 18,
+        "cur_len": 23,
+        "diverged_at": null,
+        "prefix_ratio": 0.8802,
+        "prefix_stable_tokens": 31747,
+        "prev_len": 18,
+        "round_pair": "2->3",
+        "total_tokens": 36067
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 23,
+        "cur_len": 42,
+        "diverged_at": null,
+        "prefix_ratio": 0.6727,
+        "prefix_stable_tokens": 36067,
+        "prev_len": 23,
+        "round_pair": "3->4",
+        "total_tokens": 53612
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 42,
+        "cur_len": 52,
+        "diverged_at": null,
+        "prefix_ratio": 0.9029,
+        "prefix_stable_tokens": 53612,
+        "prev_len": 42,
+        "round_pair": "4->5",
+        "total_tokens": 59376
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 52,
+        "cur_len": 73,
+        "diverged_at": null,
+        "prefix_ratio": 0.7461,
+        "prefix_stable_tokens": 59376,
+        "prev_len": 52,
+        "round_pair": "5->6",
+        "total_tokens": 79578
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 73,
+        "cur_len": 99,
+        "diverged_at": null,
+        "prefix_ratio": 0.7722,
+        "prefix_stable_tokens": 79578,
+        "prev_len": 73,
+        "round_pair": "6->7",
+        "total_tokens": 103060
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 99,
+        "cur_len": 115,
+        "diverged_at": null,
+        "prefix_ratio": 0.8964,
+        "prefix_stable_tokens": 103060,
+        "prev_len": 99,
+        "round_pair": "7->8",
+        "total_tokens": 114970
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 115,
+        "cur_len": 128,
+        "diverged_at": null,
+        "prefix_ratio": 0.9119,
+        "prefix_stable_tokens": 114970,
+        "prev_len": 115,
+        "round_pair": "8->9",
+        "total_tokens": 126079
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 128,
+        "cur_len": 132,
+        "diverged_at": null,
+        "prefix_ratio": 0.9433,
+        "prefix_stable_tokens": 126079,
+        "prev_len": 128,
+        "round_pair": "9->10",
+        "total_tokens": 133653
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 132,
+        "cur_len": 136,
+        "diverged_at": null,
+        "prefix_ratio": 0.9433,
+        "prefix_stable_tokens": 133653,
+        "prev_len": 132,
+        "round_pair": "10->11",
+        "total_tokens": 141687
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 136,
+        "cur_len": 138,
+        "diverged_at": null,
+        "prefix_ratio": 0.9782,
+        "prefix_stable_tokens": 141687,
+        "prev_len": 136,
+        "round_pair": "11->12",
+        "total_tokens": 144840
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 138,
+        "cur_len": 149,
+        "diverged_at": null,
+        "prefix_ratio": 0.9196,
+        "prefix_stable_tokens": 144840,
+        "prev_len": 138,
+        "round_pair": "12->13",
+        "total_tokens": 157504
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 149,
+        "cur_len": 165,
+        "diverged_at": null,
+        "prefix_ratio": 0.879,
+        "prefix_stable_tokens": 157504,
+        "prev_len": 149,
+        "round_pair": "13->14",
+        "total_tokens": 179180
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 165,
+        "cur_len": 171,
+        "diverged_at": null,
+        "prefix_ratio": 0.9422,
+        "prefix_stable_tokens": 179180,
+        "prev_len": 165,
+        "round_pair": "14->15",
+        "total_tokens": 190173
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 171,
+        "cur_len": 181,
+        "diverged_at": null,
+        "prefix_ratio": 0.9619,
+        "prefix_stable_tokens": 190173,
+        "prev_len": 171,
+        "round_pair": "15->16",
+        "total_tokens": 197697
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 181,
+        "cur_len": 202,
+        "diverged_at": null,
+        "prefix_ratio": 0.9108,
+        "prefix_stable_tokens": 197697,
+        "prev_len": 181,
+        "round_pair": "16->17",
+        "total_tokens": 217056
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 202,
+        "cur_len": 210,
+        "diverged_at": null,
+        "prefix_ratio": 0.9732,
+        "prefix_stable_tokens": 217056,
+        "prev_len": 202,
+        "round_pair": "17->18",
+        "total_tokens": 223033
+      },
+      {
+        "all_stable": true,
+        "common_prefix_events": 210,
+        "cur_len": 217,
+        "diverged_at": null,
+        "prefix_ratio": 0.9546,
+        "prefix_stable_tokens": 223033,
+        "prev_len": 210,
+        "round_pair": "18->19",
+        "total_tokens": 233636
+      }
+    ],
+    "rounds_detected": 19
+  },
+  "artifact_sha256": "42516a42ed5384d7c2911011c7f2e9cdede6dc01a768121ae085f33b282c7be2",
+  "event_types": {
+    "approval/asked": 1,
+    "approval/decided": 1,
+    "approval/policy": 2,
+    "assistant/message": 93,
+    "capability/apply": 7,
+    "compaction": 8,
+    "compaction/prune": 3,
+    "exec/run": 1,
+    "loop/end": 19,
+    "permission/preset": 2,
+    "session/header": 1,
+    "session/title": 2,
+    "step/start": 93,
+    "tool/call": 105,
+    "tool/result": 105,
+    "trace/call": 105,
+    "user/message": 19
+  },
+  "events_total": 567,
+  "head": "b65a966795a2c9546126ce2b5a639456de4cbe97",
+  "measured_at": "2026-10-27T11:40:43.393761+08:00",
+  "schema": "kg-retrieval-baseline/v1",
+  "session_file": "D:\\AAA_Courses\\数字通信原理\\.memoria\\agent\\sessions\\session-20261027T011706Z-0cb419b6.jsonl",
+  "session_sha256": "ecd2fd2b43f1630956a7e8a1fe7988454841b35732a73b71ea70ae79864b010b"
+}
