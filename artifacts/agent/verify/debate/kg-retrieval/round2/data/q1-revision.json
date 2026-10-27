@@ -1,0 +1,727 @@
+{
+ "snapshot": {
+  "md": 26,
+  "sidecars": 11,
+  "kps": 357,
+  "token_calibration": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\debate\\kg-retrieval\\data\\token_calibration.json"
+ },
+ "sizes": {
+  "literal_hint": {
+   "all": {
+    "n": 354,
+    "p50": 530.5,
+    "p90": 2964.2,
+    "max": 18198,
+    "gt1200_pct": 24.0
+   },
+   "textbook": {
+    "n": 71,
+    "p50": 1714.0,
+    "p90": 9374.0,
+    "max": 18198,
+    "gt1200_pct": 54.9
+   }
+  },
+  "hint_end_only": {
+   "all": {
+    "n": 357,
+    "p50": 536.0,
+    "p90": 2944.4,
+    "max": 18198,
+    "gt1200_pct": 23.8
+   },
+   "textbook": {
+    "n": 71,
+    "p50": 1714.0,
+    "p90": 9374.0,
+    "max": 18198,
+    "gt1200_pct": 54.9
+   }
+  },
+  "raw_resolved": {
+   "all": {
+    "n": 352,
+    "p50": 526.0,
+    "p90": 2914.9,
+    "max": 18198,
+    "gt1200_pct": 23.9
+   },
+   "textbook": {
+    "n": 70,
+    "p50": 1700.0,
+    "p90": 9421.0,
+    "max": 18198,
+    "gt1200_pct": 54.3
+   }
+  },
+  "clamped": {
+   "all": {
+    "n": 357,
+    "p50": 484.0,
+    "p90": 2756.4,
+    "max": 18198,
+    "gt1200_pct": 21.6
+   },
+   "textbook": {
+    "n": 71,
+    "p50": 1714.0,
+    "p90": 9374.0,
+    "max": 18198,
+    "gt1200_pct": 54.9
+   }
+  },
+  "heading": {
+   "all": {
+    "n": 357,
+    "p50": 581.0,
+    "p90": 3359.8,
+    "max": 18335,
+    "gt1200_pct": 24.6
+   },
+   "textbook": {
+    "n": 71,
+    "p50": 2985.0,
+    "p90": 12593.0,
+    "max": 18335,
+    "gt1200_pct": 69.0
+   }
+  }
+ },
+ "totals": {
+  "literal_hint": 484058,
+  "raw_resolved": 478069,
+  "clamped": 461578,
+  "heading": 555798,
+  "raw_to_heading_pct": 16.3,
+  "clamped_to_heading_pct": 20.4
+ },
+ "A2_changed_raw": {
+  "n": 357,
+  "changed": 357,
+  "changed_pct": 100.0,
+  "end_lt_boundary": 336,
+  "end_gt_boundary": 16,
+  "end_missing": 5,
+  "changed_by_role": {
+   "教材": 71,
+   "slides": 285,
+   "notes": 1
+  }
+ },
+ "anchor_product_ok": {
+  "product_range_ok": 352,
+  "product_range_ok_pct": 98.6,
+  "ok_strict": 225,
+  "ok_strict_pct": 63.9,
+  "ok_section": 351,
+  "ok_section_pct": 99.7,
+  "ok_context": 352,
+  "ok_context_pct": 100.0,
+  "bad_ids": [
+   "img-ch2-4-13-随机过程的统计值",
+   "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+   "img-ch2-4-29-4-窄带高斯随机过程",
+   "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+   "数字通信的特点"
+  ],
+  "end_missing_ids": [
+   "img-ch2-4-13-随机过程的统计值",
+   "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+   "img-ch2-4-29-4-窄带高斯随机过程",
+   "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+   "数字通信的特点"
+  ]
+ },
+ "bitrate_context": {
+  "occurrences": 3,
+  "distinct_pre40": 3,
+  "detail": [
+   {
+    "line": 182,
+    "pre40": "数字通信系统的性能有许多不同的指标和参数，本节介绍最基本的性能指标及其度量参数。",
+    "line_head": "比特率 $R_{\\mathrm{b}}$ "
+   },
+   {
+    "line": 186,
+    "pre40": "{lb} M$]] 比特的信息, 码元速率 $R_{\\mathrm{S}}$ 与",
+    "line_head": "又称[[\\c:yellow|符号速率、波特率,]] 指单位时间内传输的码元的个数, 单位是波特 (Baud)。对于一个 $M$ 进制的传输系统, 一般有 $M$"
+   },
+   {
+    "line": 233,
+    "pre40": "标量。通过后面的内容将了解到，已知符号速率 $R_{\\mathrm{s}}$ 、",
+    "line_head": "为了更有效地比较不同数字通信系统的性能，引入**比特能量 $E_{\\mathrm{b}}$ 与噪声功率谱密度 $N_{0}$ 的比**这一指标，即 $E_{\\m"
+   }
+  ]
+ },
+ "tokens": {
+  "calibration_uniform": 0.4247,
+  "read_kp_textbook_raw_p50_chars": 1700.0,
+  "read_kp_textbook_raw_p50_tokens": 722,
+  "read_kp_textbook_heading_p50_tokens": 1268
+ },
+ "pathological_repaired_textbook": [
+  {
+   "id": "ch2-10-white-noise",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": false,
+   "raw_chars": 667,
+   "heading_chars": 16056
+  },
+  {
+   "id": "ch2-10-narrowband-random-process",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": false,
+   "raw_chars": 1061,
+   "heading_chars": 15387
+  },
+  {
+   "id": "ch2-10-cosine-plus-narrowband-gaussian",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": false,
+   "raw_chars": 9374,
+   "heading_chars": 9511
+  },
+  {
+   "id": "信噪比",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": false,
+   "raw_chars": 269,
+   "heading_chars": 1427
+  },
+  {
+   "id": "误码率",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": false,
+   "raw_chars": 120,
+   "heading_chars": 341
+  },
+  {
+   "id": "误比特率",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": false,
+   "raw_chars": 122,
+   "heading_chars": 219
+  }
+ ],
+ "pathological_all": [
+  {
+   "id": "ch2-10-common-random-processes",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": true,
+   "raw_chars": 18198,
+   "heading_chars": 18335
+  },
+  {
+   "id": "ch2-10-white-noise",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": false,
+   "raw_chars": 667,
+   "heading_chars": 16056
+  },
+  {
+   "id": "ch2-10-narrowband-random-process",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": false,
+   "raw_chars": 1061,
+   "heading_chars": 15387
+  },
+  {
+   "id": "signal-prediction-methods",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 12119,
+   "heading_chars": 12541
+  },
+  {
+   "id": "ch2-13-matched-filter",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": true,
+   "raw_chars": 10587,
+   "heading_chars": 10588
+  },
+  {
+   "id": "ch2-10-cosine-plus-narrowband-gaussian",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": false,
+   "raw_chars": 9374,
+   "heading_chars": 9511
+  },
+  {
+   "id": "img-ch2-3-14-连续周期信号的频谱概念",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 7400,
+   "heading_chars": 7401
+  },
+  {
+   "id": "dm-error-performance",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 2625,
+   "heading_chars": 6063
+  },
+  {
+   "id": "img-ch2-3-88-信号频域分析举例",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 4235,
+   "heading_chars": 4818
+  },
+  {
+   "id": "ch2-9-power-spectral-density",
+   "file": "教材/02_第2章_信号分析基础.md",
+   "start_heading": true,
+   "raw_chars": 4463,
+   "heading_chars": 4464
+  },
+  {
+   "id": "scalar-quantization",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 2998,
+   "heading_chars": 4171
+  },
+  {
+   "id": "数字通信的特点",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": true,
+   "raw_chars": null,
+   "heading_chars": 3465
+  },
+  {
+   "id": "linear-pcm-error-performance",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 557,
+   "heading_chars": 3018
+  },
+  {
+   "id": "img-ch2-3-81-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 2680,
+   "heading_chars": 2775
+  },
+  {
+   "id": "natural-sampling",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 2250,
+   "heading_chars": 2251
+  },
+  {
+   "id": "img-ch2-3-103-连续LTI系统的频率响应计算",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1360,
+   "heading_chars": 1797
+  },
+  {
+   "id": "ideal-sampling",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 1686,
+   "heading_chars": 1687
+  },
+  {
+   "id": "img-ch2-3-54-常见连续时间信号的频谱",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1435,
+   "heading_chars": 1530
+  },
+  {
+   "id": "img-ch2-3-17-吉布斯-Gibbs-现象",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1483,
+   "heading_chars": 1484
+  },
+  {
+   "id": "信噪比",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": false,
+   "raw_chars": 269,
+   "heading_chars": 1427
+  },
+  {
+   "id": "img-ch2-3-140-从Fourier变换到Laplace变换",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1191,
+   "heading_chars": 1195
+  },
+  {
+   "id": "img-ch2-4-13-随机过程的统计值",
+   "file": "img/ch02-4_随机信号分析.md",
+   "start_heading": true,
+   "raw_chars": null,
+   "heading_chars": 1174
+  },
+  {
+   "id": "img-ch2-4-29-4-窄带高斯随机过程",
+   "file": "img/ch02-4_随机信号分析.md",
+   "start_heading": true,
+   "raw_chars": null,
+   "heading_chars": 1009
+  },
+  {
+   "id": "img-ch2-3-52-3-符号函数信号sgn-t",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 859,
+   "heading_chars": 954
+  },
+  {
+   "id": "img-ch2-3-156-由离散时间Fourier变换到z变换",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 949,
+   "heading_chars": 953
+  },
+  {
+   "id": "img-ch2-3-72-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 104,
+   "heading_chars": 907
+  },
+  {
+   "id": "img-ch2-2-57-例-计算-x-t-h-t-x-t-2-bf-e-2-t-bf-u-t-h",
+   "file": "img/ch02-2_信号与系统的时域分析.md",
+   "start_heading": true,
+   "raw_chars": 883,
+   "heading_chars": 887
+  },
+  {
+   "id": "img-ch2-3-51-常见连续时间信号的频谱",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 844,
+   "heading_chars": 848
+  },
+  {
+   "id": "img-ch2-3-129-理想模拟滤波器",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 522,
+   "heading_chars": 843
+  },
+  {
+   "id": "img-ch2-3-87-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 4860,
+   "heading_chars": 837
+  },
+  {
+   "id": "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+   "file": "img/ch02-4_随机信号分析.md",
+   "start_heading": true,
+   "raw_chars": null,
+   "heading_chars": 813
+  },
+  {
+   "id": "img-ch2-3-126-线性相位理想低通滤波器",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1080,
+   "heading_chars": 739
+  },
+  {
+   "id": "img-ch2-3-10-三角形式Fourier级数",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 720,
+   "heading_chars": 724
+  },
+  {
+   "id": "sampling-theorem",
+   "file": "教材/03_第3章_模拟信号的数字编码.md",
+   "start_heading": true,
+   "raw_chars": 721,
+   "heading_chars": 722
+  },
+  {
+   "id": "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+   "file": "img/ch02-4_随机信号分析.md",
+   "start_heading": true,
+   "raw_chars": null,
+   "heading_chars": 695
+  },
+  {
+   "id": "img-ch2-3-26-连续时间Fourier级数的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 115,
+   "heading_chars": 652
+  },
+  {
+   "id": "img-ch2-3-160-例-求序列-x-k-2-k-mathrm-u-k-的单边z变换及其收敛域",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 394,
+   "heading_chars": 489
+  },
+  {
+   "id": "img-ch2-3-128-线性相位理想低通滤波器",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 816,
+   "heading_chars": 470
+  },
+  {
+   "id": "img-ch2-3-53-4-单位阶跃信号u-t",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 256,
+   "heading_chars": 442
+  },
+  {
+   "id": "img-ch2-3-65-3-互易对称特性",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 555,
+   "heading_chars": 430
+  },
+  {
+   "id": "img-ch2-3-124-线性相位理想低通滤波器",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 422,
+   "heading_chars": 426
+  },
+  {
+   "id": "img-ch2-3-97-连续时间LTI系统的频率响应",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 402,
+   "heading_chars": 406
+  },
+  {
+   "id": "img-ch2-3-89-信号频域分析应用",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1580,
+   "heading_chars": 399
+  },
+  {
+   "id": "误码率",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": false,
+   "raw_chars": 120,
+   "heading_chars": 341
+  },
+  {
+   "id": "img-ch2-4-07-1-两个正交的脉冲信号",
+   "file": "img/ch02-4_随机信号分析.md",
+   "start_heading": true,
+   "raw_chars": 665,
+   "heading_chars": 327
+  },
+  {
+   "id": "img-ch2-3-19-吉布斯-Gibbs-现象",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 221,
+   "heading_chars": 316
+  },
+  {
+   "id": "img-ch2-2-40-零输入响应",
+   "file": "img/ch02-2_信号与系统的时域分析.md",
+   "start_heading": true,
+   "raw_chars": 304,
+   "heading_chars": 305
+  },
+  {
+   "id": "img-ch2-3-113-连续系统响应的频域分析方法",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 251,
+   "heading_chars": 255
+  },
+  {
+   "id": "img-ch2-3-120-无失真传输系统",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 156,
+   "heading_chars": 242
+  },
+  {
+   "id": "img-ch2-3-82-10-时域积分特性",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 231,
+   "heading_chars": 235
+  },
+  {
+   "id": "误比特率",
+   "file": "教材/01_第1章_绪论.md",
+   "start_heading": false,
+   "raw_chars": 122,
+   "heading_chars": 219
+  },
+  {
+   "id": "img-ch2-3-131-传连续时间LTI系统的频域分析应用",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 208,
+   "heading_chars": 209
+  },
+  {
+   "id": "img-ch2-3-119-无失真传输系统的频域特性",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1886,
+   "heading_chars": 207
+  },
+  {
+   "id": "img-ch2-3-61-1-线性特性",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 387,
+   "heading_chars": 198
+  },
+  {
+   "id": "img-ch2-3-117-连续时间LTI系统的频域分析",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 157,
+   "heading_chars": 158
+  },
+  {
+   "id": "img-ch2-3-93-目录",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 90,
+   "heading_chars": 147
+  },
+  {
+   "id": "img-ch2-3-121-目录",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 135,
+   "heading_chars": 136
+  },
+  {
+   "id": "img-ch2-3-132-连续时间LTI系统的频域分析应用",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 6485,
+   "heading_chars": 133
+  },
+  {
+   "id": "img-ch2-3-114-目录",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 119,
+   "heading_chars": 120
+  },
+  {
+   "id": "img-ch2-3-135-连续时间信号的复频域表示",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 92,
+   "heading_chars": 93
+  },
+  {
+   "id": "img-ch2-3-41-目录",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 56,
+   "heading_chars": 57
+  },
+  {
+   "id": "img-ch2-3-151-离散时间信号的复频域表示",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 56,
+   "heading_chars": 57
+  },
+  {
+   "id": "img-ch2-3-02-信号的频域分析",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 54,
+   "heading_chars": 55
+  },
+  {
+   "id": "img-ch2-3-46-目录",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 35,
+   "heading_chars": 55
+  },
+  {
+   "id": "img-ch2-3-05-目录",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 53,
+   "heading_chars": 54
+  },
+  {
+   "id": "img-ch2-2-03-普通信号",
+   "file": "img/ch02-2_信号与系统的时域分析.md",
+   "start_heading": true,
+   "raw_chars": 37,
+   "heading_chars": 38
+  },
+  {
+   "id": "img-ch2-2-04-奇异信号",
+   "file": "img/ch02-2_信号与系统的时域分析.md",
+   "start_heading": true,
+   "raw_chars": 37,
+   "heading_chars": 38
+  },
+  {
+   "id": "img-ch2-3-63-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 2887,
+   "heading_chars": 20
+  },
+  {
+   "id": "img-ch2-3-67-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 738,
+   "heading_chars": 20
+  },
+  {
+   "id": "img-ch2-3-70-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1233,
+   "heading_chars": 20
+  },
+  {
+   "id": "img-ch2-3-79-连续时间Fourier变换的性质",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 1953,
+   "heading_chars": 20
+  },
+  {
+   "id": "img-ch2-3-91-为什么进行系统的频域分析",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 711,
+   "heading_chars": 18
+  },
+  {
+   "id": "img-ch2-4-03-确定",
+   "file": "img/ch02-4_随机信号分析.md",
+   "start_heading": true,
+   "raw_chars": 1335,
+   "heading_chars": 15
+  },
+  {
+   "id": "img-ch2-3-116-无失真传输系统",
+   "file": "img/ch02-3_信号的频域分析.md",
+   "start_heading": true,
+   "raw_chars": 340,
+   "heading_chars": 11
+  }
+ ],
+ "note": "本文件是 Q1-research.md §13 修订口径的第一方复算；与复核员 Q1-verify.md 的独立数字并列时，两者都对同一 frozen 快照，但引擎不同（本脚本复用 q1_research_probe 的定位器；复核员用产品 range.locator + heading_proposals）。"
+}
