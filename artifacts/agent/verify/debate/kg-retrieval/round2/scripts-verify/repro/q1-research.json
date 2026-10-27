@@ -89,7 +89,14 @@
    "end_repair_pct": 20.7,
    "end_inverted": 0,
    "end_missing": 5,
-   "start_heading_pct": 93.3
+   "start_heading_pct": 93.3,
+   "end_reasons": {
+    "end_missing": 5,
+    "end_ambiguous_multi": 54,
+    "end_over_boundary": 16,
+    "end_inverted": 0,
+    "end_repair_total": 74
+   }
   },
   "textbook": {
    "n": 71,
@@ -109,7 +116,14 @@
    "end_repair_pct": 23.9,
    "end_inverted": 0,
    "end_missing": 1,
-   "start_heading_pct": 66.2
+   "start_heading_pct": 66.2,
+   "end_reasons": {
+    "end_missing": 1,
+    "end_ambiguous_multi": 16,
+    "end_over_boundary": 0,
+    "end_inverted": 0,
+    "end_repair_total": 17
+   }
   },
   "slides": {
    "n": 285,
@@ -129,7 +143,14 @@
    "end_repair_pct": 20.0,
    "end_inverted": 0,
    "end_missing": 4,
-   "start_heading_pct": 100.0
+   "start_heading_pct": 100.0,
+   "end_reasons": {
+    "end_missing": 4,
+    "end_ambiguous_multi": 38,
+    "end_over_boundary": 16,
+    "end_inverted": 0,
+    "end_repair_total": 57
+   }
   },
   "notes": {
    "n": 1,
@@ -149,8 +170,17 @@
    "end_repair_pct": 0.0,
    "end_inverted": 0,
    "end_missing": 0,
-   "start_heading_pct": 100.0
+   "start_heading_pct": 100.0,
+   "end_reasons": {
+    "end_missing": 0,
+    "end_ambiguous_multi": 0,
+    "end_over_boundary": 0,
+    "end_inverted": 0,
+    "end_repair_total": 0
+   }
   },
+  "stored_range_ok": 352,
+  "stored_range_ok_pct": 98.6,
   "fail_section_ids": [
    "比特率"
   ],
@@ -243,7 +273,94 @@
    },
    "gt1200_all_pct": 22.7,
    "gt1200_textbook_pct": 60.6,
-   "term": "只修 end_repair 的 KP（坏/歧义/缺/超边界），其余 end 不动"
+   "total_chars_before": 461578,
+   "total_chars_after": 504097,
+   "term": "只修 end_repair 的 KP（坏/歧义/缺/超边界），其余 end 不动",
+   "repaired_heading": 68,
+   "repaired_nonheading": 6,
+   "repaired_size_dist": {
+    "n": 74,
+    "p50": 479.5,
+    "p90": 5689.5,
+    "max": 18335,
+    "mean": 2025.7,
+    "min": 11
+   },
+   "repaired_gt3000": 13,
+   "repaired_nonheading_size_max": 16056,
+   "repaired_nonheading_ids": [
+    {
+     "id": "信噪比",
+     "file": "教材/01_第1章_绪论.md",
+     "start_line": 217,
+     "size_after": 1427,
+     "size_before": 269
+    },
+    {
+     "id": "误码率",
+     "file": "教材/01_第1章_绪论.md",
+     "start_line": 235,
+     "size_after": 341,
+     "size_before": 120
+    },
+    {
+     "id": "误比特率",
+     "file": "教材/01_第1章_绪论.md",
+     "start_line": 242,
+     "size_after": 219,
+     "size_before": 122
+    },
+    {
+     "id": "ch2-10-white-noise",
+     "file": "教材/02_第2章_信号分析基础.md",
+     "start_line": 1283,
+     "size_after": 16056,
+     "size_before": 667
+    },
+    {
+     "id": "ch2-10-narrowband-random-process",
+     "file": "教材/02_第2章_信号分析基础.md",
+     "start_line": 1298,
+     "size_after": 15387,
+     "size_before": 1061
+    },
+    {
+     "id": "ch2-10-cosine-plus-narrowband-gaussian",
+     "file": "教材/02_第2章_信号分析基础.md",
+     "start_line": 1429,
+     "size_after": 9511,
+     "size_before": 9374
+    }
+   ]
+  },
+  "A1b_hybrid_repair": {
+   "rule": "end_repair 的 KP：start 是标题行→下一同级标题；否则→下一个任意级标题前",
+   "size_all": {
+    "n": 357,
+    "p50": 507.0,
+    "p90": 3031.6,
+    "max": 18335,
+    "mean": 1412.04,
+    "min": 11
+   },
+   "size_textbook": {
+    "n": 71,
+    "p50": 2251.0,
+    "p90": 10588.0,
+    "max": 18335,
+    "mean": 4248.49,
+    "min": 51
+   },
+   "gt1200_all_pct": 22.7,
+   "gt1200_textbook_pct": 60.6,
+   "repaired_size_dist": {
+    "n": 74,
+    "p50": 479.5,
+    "p90": 5689.5,
+    "max": 18335,
+    "mean": 2025.7,
+    "min": 11
+   }
   },
   "A2_end_to_heading": {
    "kps_changed": 336,
@@ -638,6 +755,36 @@
     "span_lines": 289
    }
   ],
+  "scope_passing_chapters_section_only": {
+   "slices": 291,
+   "slice_chars_total": 252263,
+   "orphan_any": 0,
+   "orphan_any_pct": 0.0,
+   "orphan_lt50": 0,
+   "orphan_lt50_pct": 0.0,
+   "slices_with_2plus_kp": 19,
+   "slices_with_2plus_kp_pct": 6.5,
+   "slices_per_kp": {
+    "dist": {
+     "n": 51,
+     "p50": 6.0,
+     "p90": 16.0,
+     "max": 34,
+     "mean": 7.24,
+     "min": 1
+    },
+    "n_kps_in_scope": 51,
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 41,
+    "kps_ge2_slices_pct": 80.4
+   },
+   "files": [
+    "img/平滑系统滤除信号证明.md",
+    "notes/非均匀量化噪声推导-附录.md",
+    "教材/02_第2章_信号分析基础.md",
+    "教材/03_第3章_模拟信号的数字编码.md"
+   ]
+  },
   "per_file_kp_files": {
    "img/ch02-2_信号与系统的时域分析.md": {
     "slices": 142,
@@ -695,6 +842,50 @@
    "教材/02_第2章_信号分析基础.md": 21,
    "教材/03_第3章_模拟信号的数字编码.md": 28,
    "教材/08_第8章_差错控制编码.md": 1
+  },
+  "sensitivity": {
+   "budget800_min0": {
+    "core_plus_slices": 451,
+    "core_plus_chars_p50": 653.0,
+    "core_plus_chars_max": 1071,
+    "all_kp_files_slices": 919,
+    "all_kp_files_slices_per_kp_p90": 6.0
+   },
+   "budget800_min200": {
+    "core_plus_slices": 450,
+    "core_plus_chars_p50": 653.0,
+    "core_plus_chars_max": 1071,
+    "all_kp_files_slices": 917,
+    "all_kp_files_slices_per_kp_p90": 6.0
+   },
+   "budget1200_min0": {
+    "core_plus_slices": 301,
+    "core_plus_chars_p50": 1006.0,
+    "core_plus_chars_max": 1200,
+    "all_kp_files_slices": 688,
+    "all_kp_files_slices_per_kp_p90": 5.0
+   },
+   "budget1200_min200": {
+    "core_plus_slices": 301,
+    "core_plus_chars_p50": 1006.0,
+    "core_plus_chars_max": 1200,
+    "all_kp_files_slices": 688,
+    "all_kp_files_slices_per_kp_p90": 5.0
+   },
+   "budget2000_min0": {
+    "core_plus_slices": 201,
+    "core_plus_chars_p50": 1696.0,
+    "core_plus_chars_max": 2000,
+    "all_kp_files_slices": 551,
+    "all_kp_files_slices_per_kp_p90": 4.0
+   },
+   "budget2000_min200": {
+    "core_plus_slices": 201,
+    "core_plus_chars_p50": 1696.0,
+    "core_plus_chars_max": 2000,
+    "all_kp_files_slices": 551,
+    "all_kp_files_slices_per_kp_p90": 4.0
+   }
   }
  },
  "P6_userdata": {
