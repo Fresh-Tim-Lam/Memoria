@@ -227,6 +227,43 @@ hash 驱动增量：hash 变才 delete+重加，未变跳过  【C】LlamaIndex 
 
 可选 `note`（人读）：可空、不阻塞落盘、不参与机器判据；落盘率与 description 分开计。
 
+### 7.2 可判性最小可行近似（C 源扩项：agent memory 取证）
+
+```text
+开源与本机都没有"可判"字段（E1-memory 结论 B）。最接近且【可落地】的是 DSH 内建长记忆的做法：
+  kind      ∈ {constraint, fact, experience}   —— constraint 必须来自用户；fact/experience 可来自工具
+  source    = 来源标识（用户 / 工具名 / 文档路径）
+  sourceVersion = 来源版本（文件 hash / 会话 id / 工具版本）
+  注入时附声明："summary 未经语义核验"
+出处：DSH `dsh-super-code/lib/long-memory.js` L8-28, L148-165（MIT）
+⇒ 本设计采纳：description 条目增加 kind / source / source_version 三字段，
+   并在注入时带"未核验"声明 —— 这是"可判性"的最小可行近似，【不是】LLM 摘要
+```
+
+### 7.3 时间维与软失效（C 源：Graphiti 双时态）
+
+```text
+问题：索引条目会随内容演化而"过期"，但直接删会丢掉"曾经正确"的历史
+成熟做法（Graphiti，Apache-2.0，nodes.py L263-285 + edge_operations L424-450）：
+  新信息【不删除】旧事实，只标失效：valid_at / invalid_at / expired_at
+⇒ 本设计采纳（不需要图数据库，现有 sidecar/manifest 加字段即可）：
+  valid_from / valid_to / superseded_by
+  检索时按时间过滤；被 supersede 的条目不注入，但保留可追溯
+代价：检索多一次时间过滤；写入要带时间戳
+⚠️ 与 §4.3「同事务重算」叠加：写入时既要重算 range，也要写时间字段 —— 同一事务内完成
+```
+
+### 7.4 遗忘与合并（C 源，供 §9 参考）
+
+```text
+主流是【软失效/归档】而非真删（mcp-memory-service：decay.py L108-158 指数衰减只用于排序；
+forgetting.py L48-153 遗忘动作 = archive/compress/delete/skip，默认归档不删；
+contradictions.py L24-28 相似度 [0.4,0.75] 判新旧矛盾 → supersede）
+⇒ 本设计不采用"到期硬删"；索引条目的淘汰走 archive（可追溯），阈值须按本仓校准
+❌ 不搬：Mem0 用 LLM 判 ADD/UPDATE/DELETE 当唯一冲突机制（正确性全押 LLM、无来源/版本）
+❌ 不搬：mcp-memory 用 content_hash 当身份主键（与 LightRAG 同病）
+```
+
 ---
 
 ## 8. 验收
