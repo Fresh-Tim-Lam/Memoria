@@ -170,6 +170,7 @@
 5. **LangChain 与 RAGFlow 的代码未取到**（`raw.githubusercontent.com` 多次超时/404，RAGFlow 走 jsdelivr 也失败）。因此本文**不对** `MultiVectorRetriever`/`ParentDocumentRetriever`/RAGFlow 的 chunk `keywords/questions` 字段作任何代码结论——若后续需要，应补 `pip download` 或本地 clone。
 6. **"抽样人审比例"未找到公开数据**：AOCI 有删除审批阈值（25 条/25%），但**没有**"随机抽 N% 复核"的公开约定；XERJ 有 per-run 质量计数但没有抽样协议。
 7. **"description 真的能提升答对率"没有外部实验**：所有外部证据都在**检索层**（recall/nDCG/胜率），没有"给 agent 一句 description 就能少读原文且不降准确率"的直接实验。⇒ 这是 R8 必须自测的核心假设。
+8. **按 Lead 输入，本文不围绕"缓存命中率"给建议**：Lead 实测命中率 94.17%（我未复测该数），因此本文的所有省 token 建议都锚在 **B4 总账单（prompt+completion+total+加权成本）**，不提"提高命中率"。
 
 ---
 
