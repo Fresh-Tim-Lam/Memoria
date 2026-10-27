@@ -1,0 +1,92 @@
+{
+ "schema": "gue-baseline/v1",
+ "generated_at": "2026-10-27T08:19:57+00:00",
+ "measurement": {
+  "corpus": "数字通信原理",
+  "corpus_identity": "frozen copy of round2/frozen/数字通信原理 (37 files, MANIFEST sha256 a4beaedc5f852816129ebc8399072a17b6b07e97bd22ea848246ae90a3b75466)",
+  "source": "memoria.graph.collector.collect_graph_data() on temp copy",
+  "build_state": "no .memoria/build (pre_build)"
+ },
+ "counts": {
+  "nodes": 357,
+  "edges": 62,
+  "md_files": 26,
+  "sidecars": 11,
+  "covered_nodes": 79,
+  "isolated_nodes": 278,
+  "covered_pct": 22.1,
+  "components": 296,
+  "largest_component": 25,
+  "avg_degree": 0.347,
+  "edge_node_ratio": 0.174,
+  "range_ok_nodes": 352,
+  "range_ok_pct": 98.6
+ },
+ "edge_types": {
+  "contain": 33,
+  "reference": 8,
+  "extend": 21
+ },
+ "edge_origins": {
+  "range": 33,
+  "link": 3,
+  "sidecar_edge": 26
+ },
+ "origin_x_type": {
+  "range|contain": 33,
+  "link|reference": 3,
+  "sidecar_edge|extend": 21,
+  "sidecar_edge|reference": 5
+ },
+ "derived": {
+  "True": 36,
+  "False": 26
+ },
+ "relevance": {
+  "0.9": 33,
+  "0.7": 8,
+  "0.6": 21
+ },
+ "edge_field_absence": {
+  "fact": 0,
+  "valid_at": 0,
+  "invalid_at": 0,
+  "confidence": 0,
+  "provenance": 0,
+  "instances": 0
+ },
+ "node_fields": [
+  "description",
+  "end_line",
+  "file",
+  "id",
+  "kp_id",
+  "label",
+  "name",
+  "range_ok",
+  "start_line"
+ ],
+ "node_description_nonempty": 0,
+ "degree_hist": {
+  "1": 56,
+  "2": 13,
+  "4": 3,
+  "6": 1,
+  "7": 1,
+  "5": 1,
+  "3": 4
+ },
+ "component_sizes_top10": [
+  25,
+  9,
+  8,
+  7,
+  3,
+  3,
+  2,
+  2,
+  2,
+  2
+ ],
+ "multi_target_edges": 0
+}

@@ -124,3 +124,22 @@ todo-owner 只在 claim 层面报了 owner 冲突（task-191 被他人占用）�
 ② 本轮已成立专职小组 agent-index-researcher + agent-index-verifier（只服务该板块，会议结束解散）
 ③ 已交付的六份提案/六份异议一律【作输入参考】，不算研讨会的正式产出
 ```
+### 图谱可用性评价（GUE）板块：证据发现台账（2026-10-27 由研讨会转登）
+
+> 来源：`artifacts/agent/verify/debate/graph-utility/ideas-ledger.md`
+> 转登理由：研讨成员写域不含 `docs/todo/**`，由 Lead 转登人需求台账
+
+- **GUE-IDEA-001 文档缺陷**：`src/memoria/services/graph/collector.py:44-49` docstring 写"不读 sidecar edges[]"，
+  但代码经 `edge_derivation.py:643-676` 实际读取。⇒ 以代码为准，docstring 待修（未改）。
+- **GUE-IDEA-002 build 会回写源数据**：同一冻结副本 `kb_build` 前 404 边 → build 后 454 边。
+  ⇒ 任何图谱测量必须记录 build 状态（12 字段清单见 G2 协议 §4），否则跨 build 的数字不可比。
+- **GUE-IDEA-003 语料绑定误当普适**：`kg-ontology-v0.md` 记载的"100% reference、relevance 默认 0.7"
+  来自 `docs/example` 语料，**不可移植**到真实教材库（本库实有 21 条 extend）。
+- **GUE-IDEA-004 退化边**：62 条边中 8 条退化（7 条同名自指 + 1 条 OCR 错名），另有 1 条疑似并列错包含、
+  1 条疑似松引用 ⇒ L2 基线必须先清洗；这 8 条同时可作 known-bad 判别力夹具。
+- **GUE-IDEA-005 extend 语义混合**：21 条 extend 混了"顺序 / 子题展开 / 平行变体"至少 3 种用法
+  ⇒ 若人判"extend 仅为顺序"占比 >50%，则 extend 无独立语义价值（已预注册 falsifier）。
+- **GUE-IDEA-006 图基本是空的**：357 节点仅 79（22.1%）被边覆盖，278 孤立，296 连通块，最大块 25 节点。
+  ⇒ "图谱是否只是装饰"的当前答案：对 agent 贡献按构造为 0（agent 不读边）；对人也缺连通结构。
+- **GUE-IDEA-007 agent 代判不可等同人判**：若一致性系数由 agent 判定得出，只能作内部参考，
+  不得对外声称"人判"或"α≥0.80"。
