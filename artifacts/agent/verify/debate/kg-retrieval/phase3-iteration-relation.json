@@ -1,0 +1,288 @@
+{
+  "counts": {
+    "assistant/message": 116,
+    "loop/end": 21,
+    "step/start": 116,
+    "tool/call": 135,
+    "tool/result": 135,
+    "user/message": 21
+  },
+  "per_iteration_tool_calls": {
+    "distribution": {
+      "0": 21,
+      "1": 60,
+      "2": 31,
+      "3": 3,
+      "4": 1
+    },
+    "iterations_with_0_calls": 21,
+    "iterations_with_multi_calls": 35,
+    "max_calls_in_one_iteration": 4,
+    "total_iterations": 116
+  },
+  "relation": {
+    "assistant_messages_equals_step_starts": true,
+    "assistant_messages_equals_sum_loop_iterations": true,
+    "calls_per_iteration": 1.164,
+    "iterations_per_turn": 5.524,
+    "loop_iters_equals_assistant_msgs_per_turn": [
+      {
+        "assistant_msgs": 4,
+        "calls": 4,
+        "loop_iters": 4,
+        "turn": 1
+      },
+      {
+        "assistant_msgs": 4,
+        "calls": 4,
+        "loop_iters": 4,
+        "turn": 2
+      },
+      {
+        "assistant_msgs": 2,
+        "calls": 2,
+        "loop_iters": 2,
+        "turn": 3
+      },
+      {
+        "assistant_msgs": 8,
+        "calls": 10,
+        "loop_iters": 8,
+        "turn": 4
+      },
+      {
+        "assistant_msgs": 4,
+        "calls": 5,
+        "loop_iters": 4,
+        "turn": 5
+      },
+      {
+        "assistant_msgs": 9,
+        "calls": 11,
+        "loop_iters": 9,
+        "turn": 6
+      },
+      {
+        "assistant_msgs": 13,
+        "calls": 12,
+        "loop_iters": 13,
+        "turn": 7
+      },
+      {
+        "assistant_msgs": 6,
+        "calls": 9,
+        "loop_iters": 6,
+        "turn": 8
+      },
+      {
+        "assistant_msgs": 6,
+        "calls": 6,
+        "loop_iters": 6,
+        "turn": 9
+      },
+      {
+        "assistant_msgs": 2,
+        "calls": 1,
+        "loop_iters": 2,
+        "turn": 10
+      },
+      {
+        "assistant_msgs": 2,
+        "calls": 1,
+        "loop_iters": 2,
+        "turn": 11
+      },
+      {
+        "assistant_msgs": 1,
+        "calls": 0,
+        "loop_iters": 1,
+        "turn": 12
+      },
+      {
+        "assistant_msgs": 5,
+        "calls": 5,
+        "loop_iters": 5,
+        "turn": 13
+      },
+      {
+        "assistant_msgs": 5,
+        "calls": 10,
+        "loop_iters": 5,
+        "turn": 14
+      },
+      {
+        "assistant_msgs": 3,
+        "calls": 2,
+        "loop_iters": 3,
+        "turn": 15
+      },
+      {
+        "assistant_msgs": 4,
+        "calls": 5,
+        "loop_iters": 4,
+        "turn": 16
+      },
+      {
+        "assistant_msgs": 8,
+        "calls": 12,
+        "loop_iters": 8,
+        "turn": 17
+      },
+      {
+        "assistant_msgs": 4,
+        "calls": 3,
+        "loop_iters": 4,
+        "turn": 18
+      },
+      {
+        "assistant_msgs": 3,
+        "calls": 3,
+        "loop_iters": 3,
+        "turn": 19
+      },
+      {
+        "assistant_msgs": 10,
+        "calls": 11,
+        "loop_iters": 10,
+        "turn": 20
+      },
+      {
+        "assistant_msgs": 13,
+        "calls": 19,
+        "loop_iters": 13,
+        "turn": 21
+      }
+    ],
+    "sum_loop_iterations": 116,
+    "tool_calls_equal_results": true
+  },
+  "snapshot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\debate\\kg-retrieval\\phase3-session-snapshot.jsonl",
+  "turn_table": [
+    {
+      "assistant_msgs": 4,
+      "loop_iterations": 4,
+      "tool_calls": 4,
+      "turn": 1
+    },
+    {
+      "assistant_msgs": 4,
+      "loop_iterations": 4,
+      "tool_calls": 4,
+      "turn": 2
+    },
+    {
+      "assistant_msgs": 2,
+      "loop_iterations": 2,
+      "tool_calls": 2,
+      "turn": 3
+    },
+    {
+      "assistant_msgs": 8,
+      "loop_iterations": 8,
+      "tool_calls": 10,
+      "turn": 4
+    },
+    {
+      "assistant_msgs": 4,
+      "loop_iterations": 4,
+      "tool_calls": 5,
+      "turn": 5
+    },
+    {
+      "assistant_msgs": 9,
+      "loop_iterations": 9,
+      "tool_calls": 11,
+      "turn": 6
+    },
+    {
+      "assistant_msgs": 13,
+      "loop_iterations": 13,
+      "tool_calls": 12,
+      "turn": 7
+    },
+    {
+      "assistant_msgs": 6,
+      "loop_iterations": 6,
+      "tool_calls": 9,
+      "turn": 8
+    },
+    {
+      "assistant_msgs": 6,
+      "loop_iterations": 6,
+      "tool_calls": 6,
+      "turn": 9
+    },
+    {
+      "assistant_msgs": 2,
+      "loop_iterations": 2,
+      "tool_calls": 1,
+      "turn": 10
+    },
+    {
+      "assistant_msgs": 2,
+      "loop_iterations": 2,
+      "tool_calls": 1,
+      "turn": 11
+    },
+    {
+      "assistant_msgs": 1,
+      "loop_iterations": 1,
+      "tool_calls": 0,
+      "turn": 12
+    },
+    {
+      "assistant_msgs": 5,
+      "loop_iterations": 5,
+      "tool_calls": 5,
+      "turn": 13
+    },
+    {
+      "assistant_msgs": 5,
+      "loop_iterations": 5,
+      "tool_calls": 10,
+      "turn": 14
+    },
+    {
+      "assistant_msgs": 3,
+      "loop_iterations": 3,
+      "tool_calls": 2,
+      "turn": 15
+    },
+    {
+      "assistant_msgs": 4,
+      "loop_iterations": 4,
+      "tool_calls": 5,
+      "turn": 16
+    },
+    {
+      "assistant_msgs": 8,
+      "loop_iterations": 8,
+      "tool_calls": 12,
+      "turn": 17
+    },
+    {
+      "assistant_msgs": 4,
+      "loop_iterations": 4,
+      "tool_calls": 3,
+      "turn": 18
+    },
+    {
+      "assistant_msgs": 3,
+      "loop_iterations": 3,
+      "tool_calls": 3,
+      "turn": 19
+    },
+    {
+      "assistant_msgs": 10,
+      "loop_iterations": 10,
+      "tool_calls": 11,
+      "turn": 20
+    },
+    {
+      "assistant_msgs": 13,
+      "loop_iterations": 13,
+      "tool_calls": 19,
+      "turn": 21
+    }
+  ]
+}

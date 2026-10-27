@@ -1,0 +1,1161 @@
+{
+  "events": 228,
+  "events_by_date": {
+    "2026-10-10": 6,
+    "2026-10-11": 189,
+    "2026-10-12": 5,
+    "2026-10-13": 5,
+    "2026-10-18": 3,
+    "2026-10-19": 8,
+    "2026-10-20": 1,
+    "2026-10-22": 3,
+    "2026-10-23": 6,
+    "2026-10-27": 2
+  },
+  "ledger": "D:\\AAA_Jupyter\\Memoria\\.aoci\\ledger.jsonl",
+  "ops": {
+    "auto_finalize": {
+      "duration": {
+        "max_s": 187.4,
+        "mean_s": 105.0,
+        "median_s": 107.4,
+        "n": 35,
+        "sum_s": 3674.9
+      },
+      "n": 35,
+      "results": {
+        "ok": 29,
+        "repair_required": 6
+      },
+      "source": {
+        "agent": 35
+      },
+      "tool_calls": [
+        1
+      ]
+    },
+    "cognition_check": {
+      "duration": {
+        "max_s": 318.6,
+        "mean_s": 101.2,
+        "median_s": 82.7,
+        "n": 8,
+        "sum_s": 809.2
+      },
+      "n": 8,
+      "results": {
+        "ok": 8
+      },
+      "source": {
+        "agent": 8
+      },
+      "tool_calls": [
+        1
+      ]
+    },
+    "header_show": {
+      "duration": {
+        "max_s": 0.0,
+        "mean_s": 0.0,
+        "median_s": 0.0,
+        "n": 2,
+        "sum_s": 0.0
+      },
+      "n": 2,
+      "results": {
+        "ok": 2
+      },
+      "source": {
+        "agent": 2
+      },
+      "tool_calls": []
+    },
+    "maintain": {
+      "duration": {
+        "max_s": 81.6,
+        "mean_s": 48.3,
+        "median_s": 48.1,
+        "n": 34,
+        "sum_s": 1641.5
+      },
+      "n": 34,
+      "results": {
+        "error": 2,
+        "repair_required": 32
+      },
+      "source": {
+        "agent": 34
+      },
+      "tool_calls": [
+        1
+      ]
+    },
+    "managed_scope_change_apply": {
+      "duration": {
+        "max_s": 0.0,
+        "mean_s": 0.0,
+        "median_s": 0.0,
+        "n": 1,
+        "sum_s": 0.0
+      },
+      "n": 1,
+      "results": {
+        "ok": 1
+      },
+      "source": {
+        "human": 1
+      },
+      "tool_calls": []
+    },
+    "overview": {
+      "duration": {
+        "max_s": 79.2,
+        "mean_s": 65.5,
+        "median_s": 72.5,
+        "n": 13,
+        "sum_s": 851.3
+      },
+      "n": 13,
+      "results": {
+        "ok": 13
+      },
+      "source": {
+        "agent": 13
+      },
+      "tool_calls": [
+        1
+      ]
+    },
+    "remove_entry": {
+      "duration": {
+        "max_s": 0.0,
+        "mean_s": 0.0,
+        "median_s": 0.0,
+        "n": 91,
+        "sum_s": 0.0
+      },
+      "n": 91,
+      "results": {
+        "ok": 91
+      },
+      "source": {
+        "agent": 91
+      },
+      "tool_calls": []
+    },
+    "rules": {
+      "duration": {
+        "max_s": 6.0,
+        "mean_s": 0.8,
+        "median_s": 0.0,
+        "n": 8,
+        "sum_s": 6.2
+      },
+      "n": 8,
+      "results": {
+        "ok": 8
+      },
+      "source": {
+        "agent": 8
+      },
+      "tool_calls": []
+    },
+    "scan": {
+      "duration": {
+        "max_s": 24.2,
+        "mean_s": 24.2,
+        "median_s": 24.2,
+        "n": 1,
+        "sum_s": 24.2
+      },
+      "n": 1,
+      "results": {
+        "ok": 1
+      },
+      "source": {
+        "human": 1
+      },
+      "tool_calls": []
+    },
+    "update_entries_batch": {
+      "duration": {
+        "max_s": 145.4,
+        "mean_s": 86.7,
+        "median_s": 95.4,
+        "n": 32,
+        "sum_s": 2775.6
+      },
+      "n": 32,
+      "results": {
+        "error": 4,
+        "ok": 26,
+        "rejected": 2
+      },
+      "source": {
+        "agent": 32
+      },
+      "tool_calls": []
+    },
+    "update_entries_batch_recover": {
+      "duration": {
+        "max_s": 89.5,
+        "mean_s": 89.0,
+        "median_s": 89.0,
+        "n": 3,
+        "sum_s": 267.1
+      },
+      "n": 3,
+      "results": {
+        "ok": 3
+      },
+      "source": {
+        "agent": 3
+      },
+      "tool_calls": []
+    }
+  },
+  "remove_entry": {
+    "count": 91,
+    "dates": {
+      "2026-10-11": 91
+    },
+    "paths_count_sum": 0,
+    "results": {
+      "ok": 91
+    }
+  },
+  "repair_required": {
+    "by_op": {
+      "auto_finalize": 6,
+      "maintain": 32
+    },
+    "converged_within_30m": 31,
+    "convergence": [
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 46.1,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T02:04:34.2188949Z"
+        },
+        "paths_count": 28,
+        "ts": "2026-10-11T01:59:38.7490238Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 42.4,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T02:10:08.4371915Z"
+        },
+        "paths_count": 23,
+        "ts": "2026-10-11T02:07:09.7928184Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 42.5,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T02:14:58.0317772Z"
+        },
+        "paths_count": 24,
+        "ts": "2026-10-11T02:11:36.8521045Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 79.6,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T02:21:49.6555058Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T02:17:25.3118904Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 61.8,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T11:30:10.3397268Z"
+        },
+        "paths_count": 29,
+        "ts": "2026-10-11T11:26:12.9575869Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 58.9,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T11:34:27.4341447Z"
+        },
+        "paths_count": 28,
+        "ts": "2026-10-11T11:31:39.7986784Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 68.8,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "rejected",
+          "ts": "2026-10-11T11:42:25.9347615Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T11:36:13.271976Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 30.4,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T11:48:39.2501132Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T11:46:38.2779241Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 35.8,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T11:52:07.3777943Z"
+        },
+        "paths_count": 29,
+        "ts": "2026-10-11T11:49:45.0612237Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 48.0,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T11:55:36.0552427Z"
+        },
+        "paths_count": 28,
+        "ts": "2026-10-11T11:53:24.5505464Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 31.7,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T11:58:17.5755211Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T11:56:31.2050996Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 52.6,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:01:47.1857983Z"
+        },
+        "paths_count": 24,
+        "ts": "2026-10-11T11:59:32.7047646Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 48.3,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:05:22.8511891Z"
+        },
+        "paths_count": 24,
+        "ts": "2026-10-11T12:03:06.4754654Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 51.4,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:08:55.5222439Z"
+        },
+        "paths_count": 22,
+        "ts": "2026-10-11T12:06:44.3771496Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 50.9,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "error",
+          "ts": "2026-10-11T12:11:51.5728252Z"
+        },
+        "paths_count": 29,
+        "ts": "2026-10-11T12:10:16.3957051Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 49.8,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:18:29.2185257Z"
+        },
+        "paths_count": 28,
+        "ts": "2026-10-11T12:15:48.7039897Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 53.4,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:22:14.1941496Z"
+        },
+        "paths_count": 27,
+        "ts": "2026-10-11T12:19:52.585647Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 52.0,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:25:52.2599306Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T12:23:36.2221391Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 53.5,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:29:34.4720237Z"
+        },
+        "paths_count": 27,
+        "ts": "2026-10-11T12:27:15.1360056Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 52.4,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "rejected",
+          "ts": "2026-10-11T12:31:48.472773Z"
+        },
+        "paths_count": 27,
+        "ts": "2026-10-11T12:30:54.7292183Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 51.6,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:35:20.9197563Z"
+        },
+        "paths_count": 27,
+        "ts": "2026-10-11T12:32:46.5108528Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 53.3,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T12:39:18.5125761Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T12:36:43.5769924Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 50.9,
+        "next_write_within_30m": null,
+        "paths_count": 26,
+        "ts": "2026-10-11T12:40:42.7745971Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 45.1,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T13:26:40.886813Z"
+        },
+        "paths_count": 26,
+        "ts": "2026-10-11T13:24:01.1865918Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 35.1,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "error",
+          "ts": "2026-10-11T13:29:03.9233243Z"
+        },
+        "paths_count": 3,
+        "ts": "2026-10-11T13:27:41.5579164Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 44.9,
+        "next_write_within_30m": {
+          "op": "update_entries_batch_recover",
+          "result": "ok",
+          "ts": "2026-10-11T13:35:55.6719808Z"
+        },
+        "paths_count": 1,
+        "ts": "2026-10-11T13:33:40.918399Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 44.4,
+        "next_write_within_30m": {
+          "op": "update_entries_batch_recover",
+          "result": "ok",
+          "ts": "2026-10-11T13:38:53.1303748Z"
+        },
+        "paths_count": 4,
+        "ts": "2026-10-11T13:37:05.679744Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 42.6,
+        "next_write_within_30m": {
+          "op": "update_entries_batch_recover",
+          "result": "ok",
+          "ts": "2026-10-11T13:41:36.079053Z"
+        },
+        "paths_count": 1,
+        "ts": "2026-10-11T13:39:59.1349667Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 45.2,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T13:44:27.3099489Z"
+        },
+        "paths_count": 1,
+        "ts": "2026-10-11T13:42:46.6047186Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 39.5,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "ok",
+          "ts": "2026-10-11T15:54:26.6376681Z"
+        },
+        "paths_count": 7,
+        "ts": "2026-10-11T15:48:30.1541075Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 81.6,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "error",
+          "ts": "2026-10-12T06:31:10.5288873Z"
+        },
+        "paths_count": 17,
+        "ts": "2026-10-12T06:25:09.3447247Z"
+      },
+      {
+        "aoci_tool_calls": 1,
+        "duration_s": 38.3,
+        "next_write_within_30m": {
+          "op": "update_entries_batch",
+          "result": "error",
+          "ts": "2026-10-13T11:50:05.8289456Z"
+        },
+        "paths_count": 9,
+        "ts": "2026-10-13T11:46:08.6936707Z"
+      }
+    ],
+    "convergence_30m_results": {
+      "None": 1,
+      "error": 4,
+      "ok": 25,
+      "rejected": 2
+    },
+    "count": 38,
+    "eventual_success": {
+      "any_time": 38,
+      "details": [
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T02:04:34.2188949Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T01:59:38.7490238Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T02:10:08.4371915Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T02:07:09.7928184Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T02:14:58.0317772Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T02:11:36.8521045Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T02:21:49.6555058Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T02:17:25.3118904Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:30:10.3397268Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:26:12.9575869Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:34:27.4341447Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:31:39.7986784Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:48:39.2501132Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:36:13.271976Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:48:39.2501132Z",
+          "ok_within_2h": true,
+          "repair_op": "auto_finalize",
+          "repair_ts": "2026-10-11T11:42:25.9373656Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:48:39.2501132Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:46:38.2779241Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:52:07.3777943Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:49:45.0612237Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:55:36.0552427Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:53:24.5505464Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T11:58:17.5755211Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:56:31.2050996Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:01:47.1857983Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T11:59:32.7047646Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:05:22.8511891Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:03:06.4754654Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:08:55.5222439Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:06:44.3771496Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:14:10.1115958Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:10:16.3957051Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:14:10.1115958Z",
+          "ok_within_2h": true,
+          "repair_op": "auto_finalize",
+          "repair_ts": "2026-10-11T12:11:51.5759216Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:18:29.2185257Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:15:48.7039897Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:22:14.1941496Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:19:52.585647Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:25:52.2599306Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:23:36.2221391Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:29:34.4720237Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:27:15.1360056Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:35:20.9197563Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:30:54.7292183Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:35:20.9197563Z",
+          "ok_within_2h": true,
+          "repair_op": "auto_finalize",
+          "repair_ts": "2026-10-11T12:31:48.4801508Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:35:20.9197563Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:32:46.5108528Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T12:39:18.5125761Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:36:43.5769924Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T13:26:40.886813Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T12:40:42.7745971Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T13:26:40.886813Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T13:24:01.1865918Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T13:30:31.9324504Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T13:27:41.5579164Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T13:30:31.9324504Z",
+          "ok_within_2h": true,
+          "repair_op": "auto_finalize",
+          "repair_ts": "2026-10-11T13:29:03.9265075Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch_recover",
+          "ok_ts": "2026-10-11T13:35:55.6719808Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T13:33:40.918399Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch_recover",
+          "ok_ts": "2026-10-11T13:38:53.1303748Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T13:37:05.679744Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch_recover",
+          "ok_ts": "2026-10-11T13:41:36.079053Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T13:39:59.1349667Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T13:44:27.3099489Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T13:42:46.6047186Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-11T15:54:26.6376681Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-11T15:48:30.1541075Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-12T06:35:09.3697459Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-12T06:25:09.3447247Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-12T06:35:09.3697459Z",
+          "ok_within_2h": true,
+          "repair_op": "auto_finalize",
+          "repair_ts": "2026-10-12T06:31:10.53307Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-13T11:52:02.573827Z",
+          "ok_within_2h": true,
+          "repair_op": "maintain",
+          "repair_ts": "2026-10-13T11:46:08.6936707Z"
+        },
+        {
+          "ok_any_time": true,
+          "ok_op": "update_entries_batch",
+          "ok_ts": "2026-10-13T11:52:02.573827Z",
+          "ok_within_2h": true,
+          "repair_op": "auto_finalize",
+          "repair_ts": "2026-10-13T11:50:05.8333078Z"
+        }
+      ],
+      "within_2h": 38
+    },
+    "maintain_repair": 32,
+    "maintain_total": 34,
+    "samples": [
+      {
+        "duration_s": 46.1,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 76.1,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T02:04:34.2188949Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 99.7,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T02:04:57.8058424Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T01:59:38.7490238Z"
+      },
+      {
+        "duration_s": 42.4,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 76.5,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T02:10:08.4371915Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 101.4,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T02:10:33.2736215Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T02:07:09.7928184Z"
+      },
+      {
+        "duration_s": 42.5,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 99.2,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T02:14:58.0317772Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 148.1,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T02:15:46.9027336Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T02:11:36.8521045Z"
+      },
+      {
+        "duration_s": 79.6,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 145.4,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T02:21:49.6555058Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 187.4,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T02:22:31.6725427Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T02:17:25.3118904Z"
+      },
+      {
+        "duration_s": 61.8,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 141.1,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:30:10.3397268Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 163.3,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T11:30:32.5545239Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:26:12.9575869Z"
+      },
+      {
+        "duration_s": 58.9,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 121.0,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:34:27.4341447Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 146.8,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T11:34:53.168758Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:31:39.7986784Z"
+      },
+      {
+        "duration_s": 68.8,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 0.0,
+            "op": "update_entries_batch",
+            "result": "rejected",
+            "ts": "2026-10-11T11:42:25.9347615Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 0.0,
+            "op": "auto_finalize",
+            "result": "repair_required",
+            "ts": "2026-10-11T11:42:25.9373656Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:36:13.271976Z"
+      },
+      {
+        "duration_s": 0.0,
+        "next": [
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 30.4,
+            "op": "maintain",
+            "result": "repair_required",
+            "ts": "2026-10-11T11:46:38.2779241Z"
+          },
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 69.3,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:48:39.2501132Z"
+          }
+        ],
+        "op": "auto_finalize",
+        "ts": "2026-10-11T11:42:25.9373656Z"
+      },
+      {
+        "duration_s": 30.4,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 69.3,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:48:39.2501132Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 84.9,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T11:48:54.868585Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:46:38.2779241Z"
+      },
+      {
+        "duration_s": 35.8,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 85.1,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:52:07.3777943Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 103.9,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T11:52:26.23143Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:49:45.0612237Z"
+      },
+      {
+        "duration_s": 48.0,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 92.0,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:55:36.0552427Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 107.4,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T11:55:51.4280069Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:53:24.5505464Z"
+      },
+      {
+        "duration_s": 31.7,
+        "next": [
+          {
+            "aoci_tool_calls": null,
+            "duration_s": 69.8,
+            "op": "update_entries_batch",
+            "result": "ok",
+            "ts": "2026-10-11T11:58:17.5755211Z"
+          },
+          {
+            "aoci_tool_calls": 1,
+            "duration_s": 85.8,
+            "op": "auto_finalize",
+            "result": "ok",
+            "ts": "2026-10-11T11:58:33.5882044Z"
+          }
+        ],
+        "op": "maintain",
+        "ts": "2026-10-11T11:56:31.2050996Z"
+      }
+    ]
+  },
+  "time_range": [
+    "2026-10-10T17:18:50.0948344Z",
+    "2026-10-27T03:42:00.362586Z"
+  ]
+}
