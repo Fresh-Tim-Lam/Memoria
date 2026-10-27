@@ -8,7 +8,7 @@
 
 [![Version](https://img.shields.io/badge/Version-0.4.9-8A2BE2)](src/memoria/__version__.py)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11%20x64-blue)](https://github.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-blue)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-1600%2B%20passing-brightgreen)](https://github.com/)
 [![English](https://img.shields.io/badge/README-English-green)](README.md)
 
@@ -251,4 +251,6 @@ Memoria 的文档体系为人机协作设计：每个一级目录都有 README�
 
 ## License
 
-[MIT](LICENSE) © 2026 FreshTim
+[AGPL-3.0-only](LICENSE) © 2026 FreshTim
+
+**本版本原始发布时为 MIT；许可已回填为 AGPL-3.0。v0.4.10 及更早版本的既有授权不受影响（MIT 不可撤回）。**
