@@ -1,0 +1,343 @@
+{
+ "schema": "gue-g3-inbound/v2",
+ "corpus": "数字通信原理 frozen (26 md / 11 sidecar)",
+ "identity": {
+  "kps": 357,
+  "graph_nodes": 357,
+  "files_with_kp": 9
+ },
+ "edges_62": {
+  "all_62": {
+   "label": "all_62",
+   "edges": 62,
+   "targets_covered": 56,
+   "targets_indeg_ge2": 4,
+   "indeg_hist": {
+    "1": 52,
+    "2": 3,
+    "4": 1
+   },
+   "top_indeg": [
+    [
+     "ch2-10-cosine-plus-narrowband-gaussian",
+     4
+    ],
+    [
+     "ideal-sampling",
+     2
+    ],
+    [
+     "scalar-quantization",
+     2
+    ],
+    [
+     "dm-pcm-error-comparison",
+     2
+    ],
+    [
+     "img-ch2-3-60-1-线性特性",
+     1
+    ],
+    [
+     "img-ch2-3-62-2-对称特性",
+     1
+    ],
+    [
+     "img-ch2-3-64-3-互易对称特性",
+     1
+    ],
+    [
+     "img-ch2-3-66-4-展缩特性",
+     1
+    ]
+   ],
+   "pct_of_all_nodes_ge2": 1.12,
+   "pct_of_covered_nodes_ge2": 7.1
+  },
+  "exclude_degenerate_contain": {
+   "label": "exclude_degenerate_contain",
+   "edges": 54,
+   "targets_covered": 48,
+   "targets_indeg_ge2": 4,
+   "indeg_hist": {
+    "1": 44,
+    "2": 3,
+    "4": 1
+   },
+   "top_indeg": [
+    [
+     "ch2-10-cosine-plus-narrowband-gaussian",
+     4
+    ],
+    [
+     "ideal-sampling",
+     2
+    ],
+    [
+     "scalar-quantization",
+     2
+    ],
+    [
+     "dm-pcm-error-comparison",
+     2
+    ],
+    [
+     "img-ch2-3-62-2-对称特性",
+     1
+    ],
+    [
+     "img-ch2-3-66-4-展缩特性",
+     1
+    ],
+    [
+     "img-ch2-3-69-5-时移特性",
+     1
+    ],
+    [
+     "img-ch2-3-78-9-时域微分特性",
+     1
+    ]
+   ],
+   "pct_of_all_nodes_ge2": 1.12,
+   "pct_of_covered_nodes_ge2": 8.3
+  },
+  "only_authored_extend_reference": {
+   "label": "authored_edges(26)",
+   "edges": 29,
+   "targets_covered": 24,
+   "targets_indeg_ge2": 4,
+   "indeg_hist": {
+    "1": 20,
+    "2": 3,
+    "3": 1
+   },
+   "top_indeg": [
+    [
+     "ch2-10-cosine-plus-narrowband-gaussian",
+     3
+    ],
+    [
+     "ideal-sampling",
+     2
+    ],
+    [
+     "scalar-quantization",
+     2
+    ],
+    [
+     "dm-pcm-error-comparison",
+     2
+    ],
+    [
+     "sampling-theorem",
+     1
+    ],
+    [
+     "quantization-overview",
+     1
+    ],
+    [
+     "aliasing",
+     1
+    ],
+    [
+     "bandpass-sampling",
+     1
+    ]
+   ],
+   "pct_of_all_nodes_ge2": 1.12,
+   "pct_of_covered_nodes_ge2": 16.7
+  },
+  "only_extend": {
+   "label": "only_extend",
+   "edges": 21,
+   "targets_covered": 21,
+   "targets_indeg_ge2": 0,
+   "indeg_hist": {
+    "1": 21
+   },
+   "top_indeg": [
+    [
+     "sampling-theorem",
+     1
+    ],
+    [
+     "quantization-overview",
+     1
+    ],
+    [
+     "ideal-sampling",
+     1
+    ],
+    [
+     "aliasing",
+     1
+    ],
+    [
+     "bandpass-sampling",
+     1
+    ],
+    [
+     "scalar-quantization",
+     1
+    ],
+    [
+     "uniform-quantization",
+     1
+    ],
+    [
+     "nonuniform-quantization",
+     1
+    ]
+   ],
+   "pct_of_all_nodes_ge2": 0.0,
+   "pct_of_covered_nodes_ge2": 0.0
+  },
+  "only_contain": {
+   "label": "only_contain",
+   "edges": 33,
+   "targets_covered": 33,
+   "targets_indeg_ge2": 0,
+   "indeg_hist": {
+    "1": 33
+   },
+   "top_indeg": [
+    [
+     "img-ch2-3-60-1-线性特性",
+     1
+    ],
+    [
+     "img-ch2-3-62-2-对称特性",
+     1
+    ],
+    [
+     "img-ch2-3-64-3-互易对称特性",
+     1
+    ],
+    [
+     "img-ch2-3-66-4-展缩特性",
+     1
+    ],
+    [
+     "img-ch2-3-69-5-时移特性",
+     1
+    ],
+    [
+     "img-ch2-3-78-9-时域微分特性",
+     1
+    ],
+    [
+     "img-ch2-3-85-连续时间Fourier变换的性质",
+     1
+    ],
+    [
+     "img-ch2-3-86-12-Parseval定理",
+     1
+    ]
+   ],
+   "pct_of_all_nodes_ge2": 0.0,
+   "pct_of_covered_nodes_ge2": 0.0
+  },
+  "degenerate_count": 8
+ },
+ "links": {
+  "link_entries": 3,
+  "targets": 3,
+  "instances": 5,
+  "targets_ge2": 0,
+  "multi_targets": {},
+  "orphan_targets": [
+   "通带抽样定理"
+  ]
+ },
+ "derived_similarity_if_materialized": {
+  "all_62": {
+   "label": "all_62",
+   "bibliographic_coupling_by_target": {
+    "label": "sources sharing a target",
+    "pairs": 9,
+    "potential_pairs": 9,
+    "groups_with_ge2": 4
+   },
+   "co_citation_by_source": {
+    "label": "targets sharing a source",
+    "pairs": 57,
+    "potential_pairs": 57,
+    "groups_with_ge2": 10
+   }
+  },
+  "exclude_degenerate_contain": {
+   "label": "exclude_degenerate_contain",
+   "bibliographic_coupling_by_target": {
+    "label": "sources sharing a target",
+    "pairs": 9,
+    "potential_pairs": 9,
+    "groups_with_ge2": 4
+   },
+   "co_citation_by_source": {
+    "label": "targets sharing a source",
+    "pairs": 55,
+    "potential_pairs": 55,
+    "groups_with_ge2": 8
+   }
+  },
+  "authored_only": {
+   "label": "authored_only(26+3)",
+   "bibliographic_coupling_by_target": {
+    "label": "sources sharing a target",
+    "pairs": 6,
+    "potential_pairs": 6,
+    "groups_with_ge2": 4
+   },
+   "co_citation_by_source": {
+    "label": "targets sharing a source",
+    "pairs": 9,
+    "potential_pairs": 9,
+    "groups_with_ge2": 5
+   }
+  }
+ },
+ "identity_collisions": {
+  "groups": 36,
+  "kps_in_collision_groups": 114,
+  "pct_kps": 31.9,
+  "top_groups": [
+   [
+    "连续时间Fourier变换的性质",
+    12
+   ],
+   [
+    "目录",
+    11
+   ],
+   [
+    "连续时间Fourier级数的性质",
+    5
+   ],
+   [
+    "线性相位理想低通滤波器",
+    5
+   ],
+   [
+    "单位冲激信号",
+    4
+   ],
+   [
+    "连续时间LTI系统分析举例",
+    4
+   ],
+   [
+    "对称特性",
+    4
+   ],
+   [
+    "常见连续时间信号的频谱",
+    4
+   ]
+  ]
+ },
+ "placement": {
+  "multi_file_identities": 0,
+  "note": "现有模型一个 KP 只属于 1 个文件/区间；跨视图多重归属(transclusion)机制不存在 ⇒ A 类现状=0"
+ }
+}

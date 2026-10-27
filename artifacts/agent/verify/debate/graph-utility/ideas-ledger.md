@@ -15,6 +15,8 @@
 | **GUE-IDEA-005** | 语义混合（研究问题） | `extend` 21 条至少混了 3 种用法：章节先后 / 子题展开 / 平行变体；没有谓词定义，无法区分 | `G2-edge-inventory` 全量清单；`G2-L2-protocol.md §1` | "extend 是一种语义关系"可能不成立；若人判 D 占比 >50% ⇒ 应降级为顺序/结构边或拆新类型（须走 `kg-ontology-v0.md:161-169` 三闸） | **待 G2 人判**：预注册 falsifier；结果出来再裁 |
 | **GUE-IDEA-006** | 测量口径 | G1 发现「357 节点 / 62 边中仅 79 节点(22.1%)被边覆盖、278 孤立、296 连通块、最大块 25」——图极稀疏，L3 在现图不可测 | `G1-framework.md §3`；`G1-baseline.json` | "链路语义"研究必须等图扩充或独立生成候选路径；不能拿现图当"链路样本" | **已由 G1 采用**：L3 列"完全没测法"；等 G4/G5 |
 | **GUE-IDEA-007** | 方法 | LLM/agent 判官不可直接当人判（Lead/G1 已定） | `G1-framework.md §5.7 M3`；本协议 §2.1-C | 若用 agent 代判，α 只作内部参考 | **已由 G2 采用**：判定者表显式标注；人判优先 |
+| **GUE-IDEA-008** | 数据缺陷（inbound 悬空） | 本库 3 条 `links[]` 中有 **1 个 target 不存在对应 identity**（`通带抽样定理`）⇒ "被引用"目标悬空 | `G3-inbound-baseline.json.links.orphan_targets`；`scripts/G3-multiplicity.py` | G3 呈现规则要求：inbound 目标不存在时显示"悬空引用 + 来源区间"，**不得静默丢**；否则"谁引用了我"会漏 | **待 G3/G5 采用**：报告 §6-C5 已列检查项；数据侧修不修由产品决定（不在本研究员写域） |
+| **GUE-IDEA-009** | 语义风险 | 若把 co-citation / bibliographic coupling 物化成边：62 条边会立即多出 **57 条伪边**（≈92% 当前边数），且随图增长是 C(k,2) 级增长 | `G3-inbound-baseline.json.derived_similarity_if_materialized`；`G3-multiplicity.md §4.4` | 图爆炸 + 把"派生相似度"误当"断言关系" | **已由 G3 采用**：规则③④：永不物化，查询时算并标 `derived-similarity, not assertion` |
 
 ## 备注
 
