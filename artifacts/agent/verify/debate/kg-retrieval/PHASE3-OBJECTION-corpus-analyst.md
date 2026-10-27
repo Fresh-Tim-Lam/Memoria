@@ -3,7 +3,8 @@
 > **协议**：`artifacts/agent/verify/debate/PROTOCOL.md`。Phase 1 独立性已解除。
 > **读入集**：`PHASE2-MERGE.md` 全文；`PHASE3-OBJECTION-arch-contract.md`、`PHASE3-OBJECTION-todo-owner.md`、`PHASE3-OBJECTION-metrics-baseline.md` 全文；`PROPOSAL-external-research.md`（E02/L17/L28/L141 段）、`PROPOSAL-metrics-baseline.md`（M1–M11/阈值段）相关段。
 > **纪律**：只读 `D:\AAA_Courses`；不 commit；写域仅本目录。
-> **证据身份**（sha256 前 16 位，全量在 §7）：`data/phase3-objections.json` `a2dfc3471ac5e510`｜`data/phase3-coldstart.json` `1f04311b565b1172`｜`data/r13-counterfactual.json` `b3285532e200d34b`｜`scripts/11_phase3_objections.py`｜`scripts/11b_phase3_coldstart.py`。
+> **证据身份**（sha256 前 16 位，全量在 §7）：`data/phase3-objections.json` `55a2ea0ac9633fdc`｜`data/phase3-coldstart.json` `a227e679fd00a0a8`｜`data/r13-counterfactual.json` `b3285532e200d34b`｜`scripts/11_phase3_objections.py`｜`scripts/11b_phase3_coldstart.py`。
+> **快照**：`data/corpus-snapshot.json` **2026-10-27T14:09:46**（26 md / 11 sidecar；重算时语料又变：`教材/03` 再编辑、3 个 notes 被删——本会话第 3 次现场漂移）。
 > **格式**：编号 ｜ 攻/守 ｜ 对象 ｜ 回应 ｜ 证据 ｜ 建议改成什么 ｜ 撤回条件。
 
 ---
@@ -14,7 +15,7 @@
 |---|---|---|---|---|
 | **D-1** | 守 | arch-contract **O2-C** 冷启动死结 | ⚠️ **部分成立 → 撤回 R13-B 原表述，换可执行方案** | 「全 0 → 书序建深」确实是死结；但解法不是书序，是「section 骨架 + grep 首问定位 + lazy 深化」，实测冷启动可定位章节（hit@3 50–70%） |
 | **D-2** | 守 | arch-contract **O2-A / O2-B** 块身份矛盾 | ❌ **我错（表述混淆）→ 修正为三层定义** | 同一格混写了「身份(hash)」与「位置(offset)」；块 identity 实测 7.9% 重复，必须 composite anchor |
-| **D-3** | 守 | todo-owner **O-B3** 口径 3.5× | ⚠️ **主要是人群错配，不是方法错配；但接受统一口径并重算** | todo 的 526 ≈ 我的「全部 KP」528.5；我的 1,822 是「教材 KP」。同时按你的 falsifier 重算：教材标题级 >1200 字 = **69%**（触发），全库 = 24.6%（未触发） |
+| **D-3** | 守 | todo-owner **O-B3** 口径 3.5× | ⚠️ **主要是人群错配，不是方法错配；但接受统一口径并重算** | todo 的 526 ≈ 我的「全部 KP」530.5；我的 1,822 是「教材 KP」。同时按你的 falsifier 重算：教材标题级 >1200 字 = **69%**（触发），全库 = 24.6%（未触发） |
 | **A-1** | 攻 | 外部研究「GraphRAG 610k/query ⇒ 不搬」 | ⚠️ **结论对，证据不可比 → 改理由** | 610k 来自 Legal（94 文档/5.08M）子集，与「教材同域」是不同子集；我们的问题单书单章集中（97.5%），全局检索的机制前提不存在 |
 | **A-2** | 攻（实为**自攻**） | M1≥70% / M3≥85% 门禁 | ❌ **归属订正 + 我撤回这两个门禁** | M1=答对率/M3=峰值 prompt 是 metrics-baseline 的定义；≥70%/≥85% **是我 R9 的**。n=13/20 下 Wilson 下界分别只有 49.7%/—，无法证明阈值；要证需 n≥158/230 |
 
@@ -22,7 +23,7 @@
 1. **撤回** R13-B「冷启动 = 从第 1 章按书序建深」的表述与策略（`R13-COUNTERFACTUAL.md` §4.2 原文）。
 2. **修正** 「块级 hash = 内容寻址 ⇒ 稳定」的表述：补三层定义（§2）。
 3. **撤回** R9 的 M1「≥70%」与 M3「≥85% 且 C=0」作为**门禁**；降级为 smoke，门禁改用确定性指标（§5）。
-4. **修正** Phase 1/PHASE2 引用中「KP p50 1,822 字」未标人群的问题：一律写「教材 KP（全部 KP 为 528.5）」（§3）。
+4. **修正** Phase 1/PHASE2 引用中「KP p50 1,822 字」未标人群的问题：一律写「教材 KP（全部 KP 为 530.5）」（§3）。
 5. **修正** 「现有 KP 是标题切分 ⇒ 粒度不可用」的表述范围：对**教材正文**成立（heading 口径 >1200 字 69%），对**全库**不成立（24.6%）；接受 todo-owner 的「覆盖问题 ≠ 单元问题」拆分。
 
 ---
@@ -42,7 +43,7 @@
 | 章标题（14 条） | 63 tok | **10% / 25%** | **8.3% / —** |
 | **section 标题（373 条骨架）** | **2,227 tok** | **55% / 70%** | **37.6% / 50.3%** |
 | 无索引 grep（现有能力） | 0 tok | 55% / 70% | 31.2% / **52.9%** |
-| （对照）13 条人工标注 × section 标题 vs ideal KP 范围 | — | hit@3 **76.9%** | — |
+| （对照）13 条人工标注 × section 标题 vs ideal KP 范围 | — | hit@3 **69.2%** | — |
 
 - 跨库标注 = 从会话里取「问题 → 同一轮 `read_document` 的章（多数≥60% 才标注）」，n=157（数字通信 16 / 现代操作系统 27 / 网路 66 / 软件工程 48；图形学无使用）。
 - **结论（判断）**：冷启动**不是 0%**——section 骨架 + grep 能把问题定位到正确章的概率约 **50–70%（hit@3）**；章标题只有 8–10%（**所以 Lead 建议的"章级标签建全 2,935 tok"要修正为"section 标题骨架"，章标题 63 tok 不够**）。剩下 30–50% 定位失败的，走 C3 兜底。
@@ -96,12 +97,14 @@ line/range = 派生引用（显示给人看）                                # 
 
 | 口径 | 全部 KP（n≈357）p50 | 教材 KP（n≈71）p50 | slides（n≈285）p50 |
 |---|---|---|---|
-| A `end.line_hint`（todo-owner） | **528.5** | 1,714 | 461 |
+| A `end.line_hint`（todo-owner） | **530.5** | 1,714 | 461 |
 | B 已解析 snippet（我 Phase 1） | 535.0 | **1,822.5** | 472 |
 | C **下一同级标题**（不依赖 end 锚点） | **581.0** | **2,985** | 452 |
 | D hybrid（todo-owner 提议：hint 合法取 hint，否则下一同级标题） | 473.5 | 1,714 | 420.5 |
 
-- **todo-owner 的 526 ≈ 我的「全部 KP」528.5（差 0.5%）**；
+> 数字基于 **2026-10-27T14:09:46 快照**（重算时语料又变：`教材/03` 再次被编辑、3 个 notes 被删，快照见 §7）。与 12:05 快照相比 D1 的 p50 变化 <1%，结论不变。
+
+- **todo-owner 的 526 ≈ 我的「全部 KP」530.5（差 0.9%）**；
 - **我的 1,822 是「教材 KP」**（Phase 1 表里标注了人群：`PROPOSAL-corpus-analysis.md` 表格列名「教材 KP 71」）；
 - ⇒ **3.5× 是 526（全部）÷ 1,822（教材）的人群错配**，不是方法差。我接受「引用时必须带人群」的责任（我原表标了，但摘要/转述没强调）。
 - 口径 C（不依赖 end 锚点）反而**更大**（教材 2,985）：因为「下一同级标题」把没有子标题的大节整段算进去——这证明「KP 太大」不是 end 锚点伪影，而是**教材章节的标题级边界本来就粗**。
@@ -110,8 +113,8 @@ line/range = 派生引用（显示给人看）                                # 
 
 | 人群 | 口径 C 下 >1,200 字占比 | >3,000 字 | falsifier |
 |---|---|---|---|
-| 全部 KP | **24.6%** | 10.9% | 未触发（可保留「标题边界可用」） |
-| **教材 KP** | **69.0%** | 47.9% | **触发**（若对象是教材正文） |
+| 全部 KP | **24.6%** | 11.2% | 未触发（可保留「标题边界可用」） |
+| **教材 KP** | **69.0%** | 49.3% | **触发**（若对象是教材正文） |
 
 ⇒ **判断**：「标题边界可用」对幻灯片成立、对**教材正文**不成立。因此 O-B1 的修正提案（修 end 边界 + 预算切片 + 保留 KP 身份）**对教材仍必要**；但我原表述「KP 都太大」过宽，接受修正为「教材标题级 >1,200 字 69%；全库 24.6%」。
 
@@ -196,11 +199,11 @@ $d='D:\AAA_Jupyter\Memoria\artifacts\agent\verify\debate\kg-retrieval\data'
 
 | 证据 | 路径 | sha256 前 16 |
 |---|---|---|
-| 异议原始数据 | `data/phase3-objections.json` | `a2dfc3471ac5e510` |
-| 冷启动/外部数据 | `data/phase3-coldstart.json` | `1f04311b565b1172` |
+| 异议原始数据 | `data/phase3-objections.json` | `55a2ea0ac9633fdc` |
+| 冷启动/外部数据 | `data/phase3-coldstart.json` | `a227e679fd00a0a8` |
 | 反事实数据 | `data/r13-counterfactual.json` | `b3285532e200d34b` |
 | 真实使用分布 | `data/real-usage.json` | `e13ea1404c3c4b84` |
-| 语料快照 | `data/corpus-snapshot.json` | 12:05:26 冻结 |
+| 语料快照 | `data/corpus-snapshot.json` | `f3de2714fd81679f` · **14:09:46**（重算用；期间语料又变：`教材/03` 再编辑、3 个 notes 被删——**第 3 次**现场漂移） |
 | 本文件 | `PHASE3-OBJECTION-corpus-analyst.md` | `1e42e711ed6f2536` |
 
 ## 8. 我不确定的点
