@@ -1,0 +1,567 @@
+schema_version: 1
+file: 教材/03_第3章_模拟信号的数字编码.md
+knowledge_points:
+- id: ch3-intro
+  name: 引言
+  range:
+    start:
+      snippet: '## 3.1 引言'
+      line_hint: 3
+    end:
+      snippet: 在数字通信系统中，许多需传输的信号都是模拟信号，如音频信号和视频信号等，但这些信号不能在数字通信系统中直接传输。因此，在传输之前需要对其进行数字编码。模拟信号的
+      line_hint: 5
+  tags:
+  - 数字通信
+  - 第3章
+  - 数字化
+  - 抽样
+  - 量化
+  - 编码
+- id: sampling-theorem
+  name: 低通和带通信号抽样定理
+  range:
+    start:
+      snippet: '## 3.2 低通和带通信号抽样定理'
+      line_hint: 7
+    end:
+      snippet: 图 3.2.1 抽样脉冲信号序列与抽样过程
+      line_hint: 24
+  tags:
+  - 抽样定理
+  - 低通
+  - 带通
+  - 第3章
+- id: ideal-sampling
+  name: 低通信号理想抽样
+  range:
+    start:
+      snippet: '## 3.2.1 低通信号理想抽样'
+      line_hint: 26
+    end:
+      snippet: 图 3.2.2 原信号、抽样脉冲信号、理想抽样信号及它们的频谱间的关系
+      line_hint: 53
+  tags:
+  - 抽样
+  - 理想抽样
+  - 冲激串
+  - 频谱延拓
+  - 第3章
+- id: natural-sampling
+  name: 低通信号自然抽样
+  range:
+    start:
+      snippet: '## 3.2.2 低通信号自然抽样'
+      line_hint: 55
+    end:
+      snippet: 图 3.2.3 自然抽样原信号、抽样脉冲信号、抽样信号和它们的频谱间的关系
+      line_hint: 88
+  tags:
+  - 抽样
+  - 自然抽样
+  - 脉冲
+  - 第3章
+- id: aliasing
+  name: 混叠现象与低通抽样定理
+  range:
+    start:
+      snippet: '## 3.2.3 混叠现象与低通抽样定理'
+      line_hint: 90
+    end:
+      snippet: 可见 $x(t)$ 的重建可由抽样值 $x(kT_{\mathrm{S}})$ 对函数 $\mathrm{sinc}\left(\omega_{\mathrm{
+      line_hint: 200
+  tags:
+  - 混叠
+  - 抽样定理
+  - 抗混叠
+  - 重建
+  - sinc
+  - 第3章
+- id: bandpass-sampling
+  name: 带通抽样定理
+  range:
+    start:
+      snippet: '## 3.2.4 带通抽样定理'
+      line_hint: 202
+    end:
+      snippet: <!-- ⚠ 来源待核实：本段为学习笔记，由式（3.2.19）、（3.2.20）自行联立推导整理，非教材原文；数值算例请按教材公式复核。
+        -->
+      line_hint: 333
+  tags:
+  - 带通抽样
+  - 抽样定理
+  - 中频
+  - 第3章
+- id: quantization-overview
+  name: 模拟信号的量化
+  range:
+    start:
+      snippet: '## 3.3 模拟信号的量化'
+      line_hint: 335
+    end:
+      snippet: 要实现具有无限多个元素的信号空间到有限个元素的信号空间的映射，显然在映射后将不再具有一一对应关系，因此[[\h:#FADBD8:#922B21|量化必定会造成信
+      line_hint: 344
+  tags:
+  - 量化
+  - 数据压缩
+  - 失真
+  - 不可逆
+  - 第3章
+- id: scalar-quantization
+  name: 标量量化
+  range:
+    start:
+      snippet: '## 3.3.1 标量量化'
+      line_hint: 346
+    end:
+      snippet: $$
+      line_hint: 406
+  tags:
+  - 量化
+  - 标量量化
+  - 量化误差
+  - 量化噪声
+  - 过载
+  - 第3章
+- id: vector-quantization
+  name: 向量量化
+  range:
+    start:
+      snippet: '## 3.3.2 向量量化'
+      line_hint: 448
+    end:
+      snippet: 前面介绍了标量量化和向量量化的基本概念。后面将主要介绍的均匀量化、非均匀量化和对数量化等，基本上针对的都是标量量化的场景。
+      line_hint: 477
+  tags:
+  - 量化
+  - 向量量化
+  - 矢量
+  - 第3章
+- id: uniform-quantization
+  name: 均匀量化
+  range:
+    start:
+      snippet: '## 3.3.3 均匀量化'
+      line_hint: 479
+    end:
+      snippet: 均匀量化简单且易于实现，但也有不足，其主要缺点是：无论信号幅度的大小如何，[[\h:#FADBD8:#922B21|量化阶距都是一个常数，量化噪声的功率都基本固
+      line_hint: 644
+  tags:
+  - 量化
+  - 均匀量化
+  - 量化阶距
+  - 量化信噪比
+  - 6.02N
+  - 第3章
+- id: nonuniform-quantization
+  name: 非均匀量化
+  range:
+    start:
+      snippet: '## 3.3.4 非均匀量化'
+      line_hint: 646
+    end:
+      snippet: 综上，当满足条件 $M \gg 1$ 时，进行均匀的量化分层，量化电平取量化区间的中点，即可获得近似最佳的量化效果。此时最佳量化退化到均匀量化，这同时也说明，均
+      line_hint: 933
+  tags:
+  - 量化
+  - 非均匀量化
+  - 小信号
+  - 量化信噪比
+  - 第3章
+- id: logarithmic-quantization
+  name: 对数量化
+  range:
+    start:
+      snippet: '## 3.3.5 对数量化'
+      line_hint: 935
+    end:
+      snippet: 所示，由右到左，量化信噪比按照相同的规律变化，呈现锯齿形状；一直到信号最小的量化区间，此时量化间隔已达到最小而不再改变，随着输入信号幅度的持续减小，信噪比开始呈
+      line_hint: 1254
+  tags:
+  - 量化
+  - 对数量化
+  - A律
+  - μ律
+  - 折线
+  - 第3章
+- id: pcm
+  name: 脉冲编码调制
+  range:
+    start:
+      snippet: '## 3.4 脉冲编码调制'
+      line_hint: 1256
+    end:
+      snippet: PCM 编码，本质上是建立信号的量化值与二进制码组的一一对应关系。编码的逆过程称为译码或译码。一般来说，任意可逆的二进制码组都可用于
+        PCM 编码。但通常人们会
+      line_hint: 1260
+  tags:
+  - PCM
+  - 脉冲编码调制
+  - 二进制码组
+  - 编码
+  - 第3章
+- id: pcm-coding-methods
+  name: 常用的PCM编码方式
+  range:
+    start:
+      snippet: '## 3.4.1 常用的PCM编码方式'
+      line_hint: 1262
+    end:
+      snippet: 折叠二进制码（Folded Binary Code，FBC）折叠二进制码的编码特点如表3.4.1的第四列所示。左边的第一位表示数据的符号，用“0”表示负数，“1
+      line_hint: 1290
+  tags:
+  - PCM
+  - 编码方式
+  - 自然二进制码
+  - 格雷码
+  - 折叠码
+  - 第3章
+- id: a-law-mu-law-pcm
+  name: A 律与 $\mu$ 律 PCM 编码
+  range:
+    start:
+      snippet: '## 3.4.2 A 律与 $\mu$ 律 PCM 编码'
+      line_hint: 1292
+    end:
+      snippet: 由此可得编码输出为 $M_{1}M_{2}M_{3}M_{4}M_{5}M_{6}M_{7}M_{8}=0\ 110\ 0111$ 。☐
+      line_hint: 1488
+  tags:
+  - PCM
+  - A律
+  - μ律
+  - 十三折线
+  - 码位
+  - 第3章
+- id: log-linear-pcm
+  name: 对数 PCM 与线性 PCM 间的变换
+  range:
+    start:
+      snippet: '## 3.4.3 对数 PCM 与线性 PCM 间的变换'
+      line_hint: 1490
+    end:
+      snippet: 其中的“WXYZ”如码组1001101001011中的斜体部分所示，但“WXYZ”之后并没有表中紧跟其后的“1”，说明转换后可能产生的最大误差为该段的量化间隔
+      line_hint: 1579
+  tags:
+  - PCM
+  - 对数PCM
+  - 线性PCM
+  - 码组变换
+  - 第3章
+- id: dpcm
+  name: 差分脉冲编码调制（DPCM）
+  range:
+    start:
+      snippet: '## 3.5 差分脉冲编码调制（DPCM）'
+      line_hint: 1581
+    end:
+      snippet: 图 3.5.1 典型的语音信号功率密度谱与相关函数
+      line_hint: 1620
+  tags:
+  - DPCM
+  - 差分编码
+  - 预测
+  - 第3章
+- id: predictive-coding-basics
+  name: 预测编码的基本概念
+  range:
+    start:
+      snippet: '## 3.5.1 预测编码的基本概念'
+      line_hint: 1622
+    end:
+      snippet: 由此可见，DPCM编码的性能主要由预测增益 $G_{p}$ 和量化信噪比 $SNR_{q}$ 决定。通常 $G_{p} \gg 1$
+        ，所以若DPCM的量化信噪
+      line_hint: 1731
+  tags:
+  - DPCM
+  - 预测编码
+  - 预测误差
+  - 预测增益
+  - 第3章
+- id: signal-prediction-methods
+  name: 信号预测的基本方法
+  range:
+    start:
+      snippet: '## 3.5.2 信号预测的基本方法'
+      line_hint: 1733
+    end:
+      snippet: 图 3.5.8 预测增益与预测阶数的关系
+      line_hint: 2083
+  tags:
+  - DPCM
+  - 线性预测
+  - 最优预测
+  - 第3章
+- id: adpcm
+  name: 自适应差分脉冲编码调制
+  range:
+    start:
+      snippet: '## 3.5.3 自适应差分脉冲编码调制'
+      line_hint: 2104
+    end:
+      snippet: 图 3.5.9 ADPCM 编码器和译码器原理图
+      line_hint: 2235
+  tags:
+  - ADPCM
+  - 自适应
+  - 量化阶距
+  - 第3章
+- id: delta-modulation
+  name: 增量调制（ $\Delta \mathbf{M}$ 调制）
+  range:
+    start:
+      snippet: '## 3.6 增量调制（ $\Delta \mathbf{M}$ 调制）'
+      line_hint: 2237
+    end:
+      snippet: PCM 和 DPCM 编码器对每个样点的编码输出是一个码组，或称为一个码字。在接收端对这类码组的译码过程中，除了比特同步，还需要码组同步，否则就会造成码组划分时
+      line_hint: 2239
+  tags:
+  - 增量调制
+  - ΔM
+  - 一位编码
+  - 第3章
+- id: simple-delta-modulation
+  name: 简单增量调制
+  range:
+    start:
+      snippet: '## 3.6.1 简单增量调制'
+      line_hint: 2241
+    end:
+      snippet: 由此可见，抽样频率 $f_{s}$ 每提高一倍，信噪比提高 $20\lg2 \approx 6(\mathrm{dB})$ ；同样，信号频率
+        f 每提高一倍，信
+      line_hint: 2500
+  tags:
+  - 增量调制
+  - ΔM
+  - 过载
+  - 量化噪声
+  - 第3章
+- id: delta-sigma-modulation
+  name: 增量总和调制—— $\Delta-\Sigma$ 调制
+  range:
+    start:
+      snippet: '## 3.6.2 增量总和调制—— $\Delta-\Sigma$ 调制'
+      line_hint: 2502
+    end:
+      snippet: 显然，提高抽样频率 $f_{s}$ ，降低低通滤波器的截止频率 $f_{H}$ ，都有利于量化信噪比的提高。
+      line_hint: 2627
+  tags:
+  - 增量调制
+  - Δ-Σ调制
+  - 总和调制
+  - 第3章
+- id: digital-companded-adm
+  name: 数字压扩自适应增量调制
+  range:
+    start:
+      snippet: '## 3.6.3 数字压扩自适应增量调制'
+      line_hint: 2629
+    end:
+      snippet: 另外，在图 3.6.10 中，虽然简单 $\Delta M$ 和 $\Delta-\Sigma M$ 的性能都会随着输入信号幅度的减小而下降，但
+        $\Delta
+      line_hint: 2666
+  tags:
+  - 增量调制
+  - 数字压扩
+  - 自适应
+  - 第3章
+- id: dm-error-performance
+  name: 增量调制编码的误码性能分析
+  range:
+    start:
+      snippet: '## 3.7.1 增量调制编码的误码性能分析'
+      line_hint: 2670
+    end:
+      snippet: $$
+      line_hint: 2740
+  tags:
+  - 误码性能
+  - 增量调制
+  - 第3章
+- id: linear-pcm-error-performance
+  name: 线性 PCM 编码的误码性能分析
+  range:
+    start:
+      snippet: '## 3.7.2 线性 PCM 编码的误码性能分析'
+      line_hint: 2790
+    end:
+      snippet: $$
+      line_hint: 2796
+  tags:
+  - 误码性能
+  - PCM
+  - 码组误码
+  - 第3章
+- id: dm-pcm-error-comparison
+  name: 两种编码的抗误码性能比较
+  range:
+    start:
+      snippet: '## 3.7.3 两种编码的抗误码性能比较'
+      line_hint: 2834
+    end:
+      snippet: 综上，对比线性 PCM 编码，采用 $\Delta M$ 编码时，虽然其量化噪声的性能略低于线性 PCM 编码，但误码对系统劣化的影响将大大降低，从这个意义上说
+      line_hint: 2884
+  tags:
+  - 误码性能
+  - 增量调制
+  - PCM
+  - 比较
+  - 第3章
+- id: ch3-summary
+  name: 本章小结
+  range:
+    start:
+      snippet: '## 3.8 本章小结'
+      line_hint: 2886
+    end:
+      snippet: 本章介绍了模拟信号的数字编码的基本原理和方法。3.2节首先回顾了低通抽样定理，并在此基础上讨论了带通抽样定理。低通抽样定理具有一般性，它告诉我们，只要抽样频谱大
+      line_hint: 2888
+  tags:
+  - 第3章
+  - 小结
+  - 复习
+links:
+- anchor_text: 不是唯一的
+  occurrence: 0
+  targets:
+  - 通带抽样定理
+  edge_type: reference
+  target_edges:
+    通带抽样定理:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 219
+    wrapped: true
+  pool:
+  - 通带抽样定理
+  excluded: []
+edges:
+- type: extend
+  source_id: ch3-intro
+  targets:
+  - sampling-theorem
+  relevance: 0.6
+- type: extend
+  source_id: ch3-intro
+  targets:
+  - quantization-overview
+  relevance: 0.6
+- type: extend
+  source_id: sampling-theorem
+  targets:
+  - ideal-sampling
+  relevance: 0.6
+- type: extend
+  source_id: ideal-sampling
+  targets:
+  - aliasing
+  relevance: 0.6
+- type: reference
+  source_id: natural-sampling
+  targets:
+  - ideal-sampling
+  relevance: 0.7
+- type: extend
+  source_id: aliasing
+  targets:
+  - bandpass-sampling
+  relevance: 0.6
+- type: extend
+  source_id: quantization-overview
+  targets:
+  - scalar-quantization
+  relevance: 0.6
+- type: extend
+  source_id: scalar-quantization
+  targets:
+  - uniform-quantization
+  relevance: 0.6
+- type: extend
+  source_id: uniform-quantization
+  targets:
+  - nonuniform-quantization
+  relevance: 0.6
+- type: extend
+  source_id: nonuniform-quantization
+  targets:
+  - logarithmic-quantization
+  relevance: 0.6
+- type: reference
+  source_id: vector-quantization
+  targets:
+  - scalar-quantization
+  relevance: 0.7
+- type: extend
+  source_id: quantization-overview
+  targets:
+  - pcm
+  relevance: 0.6
+- type: extend
+  source_id: pcm
+  targets:
+  - pcm-coding-methods
+  relevance: 0.6
+- type: extend
+  source_id: pcm-coding-methods
+  targets:
+  - a-law-mu-law-pcm
+  relevance: 0.6
+- type: extend
+  source_id: a-law-mu-law-pcm
+  targets:
+  - log-linear-pcm
+  relevance: 0.6
+- type: extend
+  source_id: pcm
+  targets:
+  - dpcm
+  relevance: 0.6
+- type: extend
+  source_id: dpcm
+  targets:
+  - adpcm
+  relevance: 0.6
+- type: extend
+  source_id: dpcm
+  targets:
+  - delta-modulation
+  relevance: 0.6
+- type: extend
+  source_id: delta-modulation
+  targets:
+  - delta-sigma-modulation
+  relevance: 0.6
+- type: extend
+  source_id: simple-delta-modulation
+  targets:
+  - digital-companded-adm
+  relevance: 0.6
+- type: reference
+  source_id: dpcm
+  targets:
+  - predictive-coding-basics
+  relevance: 0.7
+- type: extend
+  source_id: predictive-coding-basics
+  targets:
+  - signal-prediction-methods
+  relevance: 0.6
+- type: extend
+  source_id: delta-modulation
+  targets:
+  - dm-error-performance
+  relevance: 0.6
+- type: extend
+  source_id: pcm
+  targets:
+  - linear-pcm-error-performance
+  relevance: 0.6
+- type: reference
+  source_id: dm-error-performance
+  targets:
+  - dm-pcm-error-comparison
+  relevance: 0.7
+- type: reference
+  source_id: linear-pcm-error-performance
+  targets:
+  - dm-pcm-error-comparison
+  relevance: 0.7

@@ -1,0 +1,291 @@
+schema_version: 1
+file: 教材/02_第2章_信号分析基础.md
+knowledge_points:
+- id: ch2-1-introduction
+  name: 2.1 引言
+  range:
+    start:
+      snippet: '## 2.1 引言'
+      line_hint: 3
+    end:
+      snippet: 在通信系统中，涉及的信号包括确定信号与随机信号两大类。确定信号是指描述信号的时间函数 $x(t)$ 是完全确定的，给定时刻 $t$ ，即可确定信号在该时刻的各有
+      line_hint: 5
+  tags:
+  - 教材
+  - 第2章
+  - 信号分析基础
+- id: ch2-2-deterministic-signal-review
+  name: 2.2 确定信号分析方法回顾
+  range:
+    start:
+      snippet: '## 2.2 确定信号分析方法回顾'
+      line_hint: 7
+    end:
+      snippet: 上述这些性质均可根据定义直接证明。
+      line_hint: 255
+  tags:
+  - 教材
+  - 第2章
+  - 确定信号
+  - 傅里叶变换
+- id: ch2-3-signal-vector-representation
+  name: 2.3 信号的向量表示
+  range:
+    start:
+      snippet: '## 2.3 信号的向量表示'
+      line_hint: 257
+    end:
+      snippet: 读者容易直接根据信号图形验证上述结果的正确性。□
+      line_hint: 414
+  tags:
+  - 教材
+  - 第2章
+  - 信号向量
+- id: ch2-4-hilbert-transform
+  name: 2.4 希尔伯特变换及应用
+  range:
+    start:
+      snippet: '## 2.4 希尔伯特变换及应用'
+      line_hint: 416
+    end:
+      snippet: y (t) = \mathrm{Re} \Big [ y _ {\mathrm{L}} (t) \mathrm{e} ^ {\mathrm{j}
+        \omega_
+      line_hint: 808
+  tags:
+  - 教材
+  - 第2章
+  - 希尔伯特变换
+  - 解析信号
+- id: ch2-5-random-signal-basics
+  name: 2.5 随机信号的基本概念和特点
+  range:
+    start:
+      snippet: '## 2.5 随机信号的基本概念和特点'
+      line_hint: 811
+    end:
+      snippet: 一般地，只要知道随机过程的分布函数或概率密度函数，随机过程的统计特性就可完全确定。但在一个实际系统中，要确定一个随机过程的分布函数或概率密度函数通常是很困难的，
+      line_hint: 916
+  tags:
+  - 教材
+  - 第2章
+  - 随机过程
+- id: ch2-6-random-process-statistics
+  name: 2.6 随机过程的主要统计特性
+  range:
+    start:
+      snippet: '## 2.6 随机过程的主要统计特性'
+      line_hint: 918
+    end:
+      snippet: 更多的有关复随机过程的知识，可参考有关概率论或随机过程的专著。以后若未特别声明，均假定讨论的是实随机过程。
+      line_hint: 1010
+  tags:
+  - 教材
+  - 第2章
+  - 数字特征
+  - 相关函数
+- id: ch2-7-random-variable-function
+  name: 2.7 随机变量函数的分布及数字特征
+  range:
+    start:
+      snippet: '## 2.7 随机变量函数的分布及数字特征'
+      line_hint: 1012
+    end:
+      snippet: E \left\{\left[ Y (t) - m _ {Y} (t) \right] ^ {2} \right\} = E \left\{\left[
+        Y (
+      line_hint: 1061
+  tags:
+  - 教材
+  - 第2章
+  - 随机变量函数
+- id: ch2-8-stationary-random-signal
+  name: 2.8 平稳随机信号
+  range:
+    start:
+      snippet: '## 2.8 平稳随机信号'
+      line_hint: 1064
+    end:
+      snippet: 显然，上述时间平均等于其相应的统计平均，所以随机过程 $Y(t)$ 还是具有各态历经性的平稳过程。☐
+      line_hint: 1157
+  tags:
+  - 教材
+  - 第2章
+  - 平稳随机过程
+  - 各态历经性
+- id: ch2-9-power-spectral-density
+  name: 2.9 信号功率谱密度
+  range:
+    start:
+      snippet: '## 2.9 信号功率谱密度'
+      line_hint: 1159
+    end:
+      snippet: 图 2.9.2 相关函数与功率密度谱
+      line_hint: 1251
+  tags:
+  - 教材
+  - 第2章
+  - 功率谱密度
+  - 相关函数
+- id: ch2-10-common-random-processes
+  name: 2.10 通信系统中几种常用的随机过程
+  range:
+    start:
+      snippet: '## 2.10 通信系统中几种常用的随机过程'
+      line_hint: 1253
+    end:
+      snippet: 图 2.10.6 余弦信号加窄带高斯随机信号相位的分布特性
+      line_hint: 1589
+  tags:
+  - 教材
+  - 第2章
+  - 随机过程
+- id: ch2-10-gaussian-random-process
+  name: 高斯随机过程
+  range:
+    start:
+      snippet: 高斯随机过程：若在任意 n 个时刻 $t_{1}, t_{2}, \cdots, t_{n}$ ，由随机过程 $X(t)$ 所形成的
+        n 维随机变量 $X =
+      line_hint: 1255
+    end:
+      snippet: 义平稳和严格平稳是等价的。
+      line_hint: 1281
+  tags:
+  - 教材
+  - 第2章
+  - 高斯随机过程
+- id: ch2-10-white-noise
+  name: 白噪声
+  range:
+    start:
+      snippet: 白噪声 白噪声 $n(t)$ 是指其均值为零且在整个频谱域内功率密度谱是一常数的随机信号。白噪声的功率密度谱和自相关函数可分别表示为
+      line_hint: 1283
+    end:
+      snippet: 图 2.10.1 白噪声的功率密度谱与自相关函数
+      line_hint: 1296
+  tags:
+  - 教材
+  - 第2章
+  - 白噪声
+  - 噪声
+- id: ch2-10-narrowband-random-process
+  name: 窄带随机过程
+  range:
+    start:
+      snippet: 窄带随机过程 如图 2.10.2 所示，若随机信号频带宽度 $\Delta f$ 远小于其中心频率 $f_{c}$ ，则称其为窄带随机过程。窄带随机过程通常用下
+      line_hint: 1298
+    end:
+      snippet: 图 2.10.3 窄带随机信号的时域波形图
+      line_hint: 1347
+  tags:
+  - 教材
+  - 第2章
+  - 窄带随机过程
+- id: ch2-10-narrowband-gaussian-process
+  name: 窄带高斯随机过程
+  range:
+    start:
+      snippet: 窄带高斯随机过程 窄带高斯随机过程可视为高斯信号通过某种线性带通滤波器后产生的信号。在通信系统中，最典型的窄带高斯随机信号是高斯白噪声经过带通滤波器后输出的信号
+      line_hint: 1349
+    end:
+      snippet: 因此在任意时刻，包络 $a_{n}(t)$ 和相位 $\phi_n(t)$ 都是统计独立的。窄带高斯信号描述了无线通信中一个窄带信号经过多个不可分辨的多径反射（
+      line_hint: 1427
+  tags:
+  - 教材
+  - 第2章
+  - 窄带高斯
+  - 瑞利分布
+- id: ch2-10-cosine-plus-narrowband-gaussian
+  name: 余弦信号加窄带高斯随机信号
+  range:
+    start:
+      snippet: 余弦信号加窄带高斯随机信号 通信系统的主要信号调制方法不外乎调幅、调相、调频和相幅同时调制几种，这些信号在一个符号周期内，信号的调制幅度和相位通常固定不变，可以
+      line_hint: 1429
+    end:
+      snippet: 图 2.10.6 余弦信号加窄带高斯随机信号相位的分布特性
+      line_hint: 1589
+  tags:
+  - 教材
+  - 第2章
+  - 莱斯分布
+  - 信噪比
+- id: ch2-11-stationary-process-lti-system
+  name: 2.11 平稳随机过程与时不变线性系统
+  range:
+    start:
+      snippet: '## 2.11 平稳随机过程与时不变线性系统'
+      line_hint: 1594
+    end:
+      snippet: 信号经过非线性系统后，通常有新的频率成分产生，此时信号一定是有失真的。
+      line_hint: 1792
+  tags:
+  - 教材
+  - 第2章
+  - 线性系统
+  - 无失真传输
+- id: ch2-12-cyclostationary-random-process
+  name: 2.12 循环平稳随机过程
+  range:
+    start:
+      snippet: '## 2.12 循环平稳随机过程'
+      line_hint: 1794
+    end:
+      snippet: 显然，此时功率密度谱中包含离散频谱分量。□
+      line_hint: 1989
+  tags:
+  - 教材
+  - 第2章
+  - 循环平稳
+- id: ch2-13-matched-filter
+  name: 2.13 匹配滤波器
+  range:
+    start:
+      snippet: '## 2.13 匹配滤波器'
+      line_hint: 1991
+    end:
+      snippet: 图 2.13.7 匹配滤波器的相关器实现方法
+      line_hint: 2275
+  tags:
+  - 教材
+  - 第2章
+  - 匹配滤波器
+  - 最佳接收
+- id: ch2-14-signal-bandwidth
+  name: 2.14 信号的带宽
+  range:
+    start:
+      snippet: '## 2.14 信号的带宽'
+      line_hint: 2277
+    end:
+      snippet: 由上面的例子容易看到，各种不同定义的信号带宽的求解并没有一个一般的方法，通常只能根据信号的频谱特性按定义逐个计算。
+      line_hint: 2521
+  tags:
+  - 教材
+  - 第2章
+  - 信号带宽
+- id: ch2-15-special-functions
+  name: 2.15 常用的几种特殊函数
+  range:
+    start:
+      snippet: '## 2.15 常用的几种特殊函数'
+      line_hint: 2523
+    end:
+      snippet: Q (x) = \frac {1}{2} \operatorname{erfc} (x / \sqrt {2}) = 1 - \Phi
+        (x) \tag {2.
+      line_hint: 2558
+  tags:
+  - 教材
+  - 第2章
+  - 特殊函数
+  - Q函数
+- id: ch2-16-chapter-summary
+  name: 2.16 本章小结
+  range:
+    start:
+      snippet: '## 2.16 本章小结'
+      line_hint: 2561
+    end:
+      snippet: 本章回顾了确定信号的基本分析方法，讨论了信号的向量表示和希尔伯特变换等新概念，详细介绍了本课程中将用到的最基本的随机信号与噪声的概念，讨论了随机过程的数字特征，
+      line_hint: 2563
+  tags:
+  - 教材
+  - 第2章
+  - 小结

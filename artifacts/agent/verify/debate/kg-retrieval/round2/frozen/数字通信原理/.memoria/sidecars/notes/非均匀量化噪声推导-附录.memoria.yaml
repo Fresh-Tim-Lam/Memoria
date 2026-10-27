@@ -1,0 +1,18 @@
+schema_version: 1
+file: notes/非均匀量化噪声推导-附录.md
+knowledge_points:
+- id: nonuniform-quantization-noise-derivation
+  name: 非均匀量化噪声推导（附录）
+  range:
+    start:
+      snippet: '## 非均匀量化噪声推导（附录）'
+      line_hint: 1
+    end:
+      snippet: 2. **噪声被重新分配而非减少**：总功率 $\sigma_q^2=\int\Delta_k^2p_X\,\mathrm dx/12$
+        通常变大，变小的是**
+      line_hint: 469
+  tags:
+  - 量化
+  - 非均匀量化
+  - 量化噪声
+  - 推导附录

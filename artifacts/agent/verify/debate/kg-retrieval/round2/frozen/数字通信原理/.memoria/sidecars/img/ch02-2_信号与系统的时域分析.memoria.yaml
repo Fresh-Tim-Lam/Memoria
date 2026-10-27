@@ -1,0 +1,732 @@
+schema_version: 1
+file: img/ch02-2_信号与系统的时域分析.md
+knowledge_points:
+- id: img-ch2-2-01-第2章信号处理基础
+  name: 第2章信号处理基础
+  range:
+    start:
+      snippet: '## 第2章信号处理基础'
+      line_hint: 8
+    end:
+      snippet: '### 2.2 信号与系统的时域分析'
+      line_hint: 10
+- id: img-ch2-2-02-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 12
+    end:
+      snippet: 参考教程：陈后金等，信号与系统（第4版），高等教育出版社，2025年7月
+      line_hint: 24
+- id: img-ch2-2-03-普通信号
+  name: 普通信号
+  range:
+    start:
+      snippet: '## 普通信号'
+      line_hint: 28
+    end:
+      snippet: '- 抽样信号'
+      line_hint: 33
+- id: img-ch2-2-04-奇异信号
+  name: 奇异信号
+  range:
+    start:
+      snippet: '## 奇异信号'
+      line_hint: 35
+    end:
+      snippet: '- 冲激偶信号'
+      line_hint: 40
+- id: img-ch2-2-05-连续时间基本信号
+  name: 连续时间基本信号
+  range:
+    start:
+      snippet: '## 连续时间基本信号'
+      line_hint: 42
+    end:
+      snippet: 信号的导数具有不连续点
+      line_hint: 60
+- id: img-ch2-2-06-1-直流信号
+  name: 1. 直流信号
+  range:
+    start:
+      snippet: '## 1. 直流信号'
+      line_hint: 71
+    end:
+      snippet: 信号源
+      line_hint: 85
+- id: img-ch2-2-07-2-正弦信号
+  name: 2. 正弦信号
+  range:
+    start:
+      snippet: '## 2. 正弦信号'
+      line_hint: 87
+    end:
+      snippet: 频率越高振荡越快音调越高
+      line_hint: 119
+- id: img-ch2-2-08-3-指数类信号
+  name: 3. 指数类信号
+  range:
+    start:
+      snippet: '## 3. 指数类信号'
+      line_hint: 121
+    end:
+      snippet: Euler公式建立了正、余弦信号与虚指数信号的关系。
+      line_hint: 169
+- id: img-ch2-2-09-莱昂哈德-欧拉-Leonhard-Euler
+  name: 莱昂哈德.欧拉(Leonhard, Euler)
+  range:
+    start:
+      snippet: '## 莱昂哈德.欧拉(Leonhard, Euler)'
+      line_hint: 171
+    end:
+      snippet: 在众多数学的分支中，经常见到以欧拉命名的重要公式和定理，例如数论中的欧拉函数、欧拉公式、流体力学中的欧拉方程等。最著名的是欧拉首次使用“函数”概念来描述包含各种参数的表达式，记为 f(x)。
+      line_hint: 181
+- id: img-ch2-2-10-3-指数类信号
+  name: 3. 指数类信号
+  range:
+    start:
+      snippet: '## 3. 指数类信号'
+      line_hint: 183
+    end:
+      snippet: 当 $\sigma = 0$ 且 $\omega _ { 0 } = 0$ 时，直流信号
+      line_hint: 213
+- id: img-ch2-2-11-4-抽样信号
+  name: 4. 抽样信号
+  range:
+    start:
+      snippet: '## 4. 抽样信号'
+      line_hint: 217
+    end:
+      snippet: 其具有特殊的数学性质，如 $S a ( 0 ) = 1 , \ S a ( k \pi ) = 0 , k = \pm 1 , \pm 2 , . . .$ $\begin{array} { r } { \int _ { - \infty } ^ { \infty } S a ( t ) d t = \pi } \end{array}$ ，这些性质在信号处理和数学计算中有一定的应用。
+      line_hint: 267
+- id: img-ch2-2-12-1-单位阶跃信号
+  name: 1. 单位阶跃信号
+  range:
+    start:
+      snippet: '## 1. 单位阶跃信号'
+      line_hint: 278
+    end:
+      snippet: 作用：(2) 利用阶跃信号的单边性表示信号的时间范围
+      line_hint: 308
+- id: img-ch2-2-13-2-单位冲激信号
+  name: 2. 单位冲激信号
+  range:
+    start:
+      snippet: '## 2. 单位冲激信号'
+      line_hint: 312
+    end:
+      snippet: 特点：作用时间极短，而幅值极大。
+      line_hint: 326
+- id: img-ch2-2-14-狄拉克-Dirac-定义
+  name: 狄拉克(Dirac)定义
+  range:
+    start:
+      snippet: '## 狄拉克(Dirac)定义'
+      line_hint: 328
+    end:
+      snippet: 冲激信号具有强度，其强度就是冲激信号对t的定积分值。在图中用括号注明，以区分信号的幅值。
+      line_hint: 340
+- id: img-ch2-2-15-狄拉克-Dirac-定义
+  name: 狄拉克(Dirac)定义
+  range:
+    start:
+      snippet: '## 狄拉克(Dirac)定义'
+      line_hint: 344
+    end:
+      snippet: 求解连续时间线性非时变系统的零状态响应，需要先知道系统的冲激响应，因为零状态响应等于输入信号和系统冲激响应的卷积。
+      line_hint: 370
+- id: img-ch2-2-16-狄拉克-Dirac-定义
+  name: 狄拉克(Dirac)定义
+  range:
+    start:
+      snippet: '## 狄拉克(Dirac)定义'
+      line_hint: 374
+    end:
+      snippet: \int_ {- \infty} ^ {\infty} \delta (t - t _ {0}) \mathrm{d} t = \int_ {t _ {0} - \varDelta} ^ {t _ {0} + \varDelta} \delta (t - t _ {0}) \mathrm{d} t = 1
+      line_hint: 383
+- id: img-ch2-2-17-狄拉克-Paul-Adrie-Maurice-Dirac
+  name: 狄拉克（Paul Adrie Maurice Dirac）
+  range:
+    start:
+      snippet: '## 狄拉克（Paul Adrie Maurice Dirac）'
+      line_hint: 386
+    end:
+      snippet: 1928年他把相对论引进了量子力学，建立了相对论形式的薛定谔方程，即是著名的狄拉克方程。狄拉克由此做出了存在正电子的预言，1933年获诺贝尔奖。他主要著作有《量子力学原理》。此外，他和费米各自独立发现了费米-狄拉克统计法，发表过大量有关宇宙学方面的论文，提出可能存在磁单极的预言。
+      line_hint: 396
+- id: img-ch2-2-18-极限模型
+  name: 极限模型
+  range:
+    start:
+      snippet: '## 极限模型'
+      line_hint: 400
+    end:
+      snippet: \delta (t) = \lim _ {\Delta \to 0} f _ {\Delta} (t) = \lim _ {\Delta \to 0} g _ {\Delta} (t)
+      line_hint: 405
+- id: img-ch2-2-19-2-单位冲激信号
+  name: 2. 单位冲激信号
+  range:
+    start:
+      snippet: '## 2. 单位冲激信号'
+      line_hint: 408
+    end:
+      snippet: 仍是冲激信号，强度值发生改变
+      line_hint: 428
+- id: img-ch2-2-20-性质2-抽样特性
+  name: 性质2：抽样特性
+  range:
+    start:
+      snippet: '## 性质2：抽样特性'
+      line_hint: 430
+    end:
+      snippet: \begin{array}{l} \text {证明:} \int_ {- \infty} ^ {\infty} x (t) \delta \left(t - t _ {0}\right) \mathrm{d} t \\ = \int_ {- \infty} ^ {\infty} x \left(t _ {0}\right) \delta \left(t - t _ {0}\right) \mathrm{d} t = x \left(t _ {0}\right) \int_ {- \infty} ^ {\infty} \delta \left(t - t _ {0}\right) \mathrm{d} t = x \left(t _ {0}\right) \end{array}
+      line_hint: 437
+- id: img-ch2-2-21-性质3-展缩特性
+  name: 性质3：展缩特性
+  range:
+    start:
+      snippet: '## 性质3：展缩特性'
+      line_hint: 442
+    end:
+      snippet: \xrightarrow [ a <   0 ]{u = a t} \int_ {\infty} ^ {- \infty} \varphi (u / a) \delta (u) \mathrm{d} t / a = - \frac {1}{a} \varphi (0)
+      line_hint: 469
+- id: img-ch2-2-22-2-单位冲激信号
+  name: 2. 单位冲激信号
+  range:
+    start:
+      snippet: '## 2. 单位冲激信号'
+      line_hint: 472
+    end:
+      snippet: 当引入冲激信号这个概念之后，这一类间断点是存在导数的，其导数等于该点的跳跃值，且这个导数是一个冲激信号。
+      line_hint: 508
+- id: img-ch2-2-23-例-计算下列各式
+  name: '[例] 计算下列各式'
+  range:
+    start:
+      snippet: '## [例] 计算下列各式'
+      line_hint: 510
+    end:
+      snippet: '- (6) e−4t . δ(2 + 2t) = e−4t 1δ( +1) =−e −4 ×(−1)δ(t +1) = ^{1 4}   e δ( 1) t    2 2'
+      line_hint: 517
+- id: img-ch2-2-24-2-单位冲激信号
+  name: 2. 单位冲激信号
+  range:
+    start:
+      snippet: '## 2. 单位冲激信号'
+      line_hint: 519
+    end:
+      snippet: 2. 对于(at+b)形式的冲激信号，要先利用冲激信号的展缩特性将其化为 $8 ( t { + } b / a ) / | a$ |形式后，方可利用冲激信号的抽样特性与筛选特性。
+      line_hint: 523
+- id: img-ch2-2-25-3-单位斜坡信号
+  name: 3. 单位斜坡信号
+  range:
+    start:
+      snippet: '## 3. 单位斜坡信号'
+      line_hint: 525
+    end:
+      snippet: r (t) = \left\{ \begin{array}{l l} t & t \geq 0 \\ 0 & t <   0 \end{array} \right. \Leftrightarrow r (t) = t \cdot \mathrm{u} (t)
+      line_hint: 528
+- id: img-ch2-2-26-斜坡信号与阶跃信号之间的关系
+  name: 斜坡信号与阶跃信号之间的关系
+  range:
+    start:
+      snippet: '## 斜坡信号与阶跃信号之间的关系'
+      line_hint: 533
+    end:
+      snippet: \int_ {- \infty} ^ {t} \mathrm{u} (\tau) \cdot \mathrm{d} \tau = r (t)
+      line_hint: 540
+- id: img-ch2-2-27-表示任意的三角脉冲信号
+  name: 表示任意的三角脉冲信号
+  range:
+    start:
+      snippet: '## 表示任意的三角脉冲信号'
+      line_hint: 547
+    end:
+      snippet: x (t) = r (t + 1) - 2 r (t) + r (t - 1)
+      line_hint: 552
+- id: img-ch2-2-28-定义
+  name: 定义：
+  range:
+    start:
+      snippet: '## 定义：'
+      line_hint: 557
+    end:
+      snippet: 冲激偶信号的图形表示
+      line_hint: 565
+- id: img-ch2-2-29-4-单位冲激偶信号
+  name: 4. 单位冲激偶信号
+  range:
+    start:
+      snippet: '## 4. 单位冲激偶信号'
+      line_hint: 567
+    end:
+      snippet: (展缩特性)
+      line_hint: 591
+- id: img-ch2-2-30-四种奇异信号之间的关系
+  name: 四种奇异信号之间的关系
+  range:
+    start:
+      snippet: '## 四种奇异信号之间的关系'
+      line_hint: 593
+    end:
+      snippet: \delta^ {\prime} (t) \xrightarrow [ \int_ {- \infty} ^ {t} () \mathrm{d} \tau ]{} \delta (t) \xrightarrow [ \int_ {- \infty} ^ {t} () \mathrm{d} \tau ]{} \mathrm{u} (t) \xrightarrow [ \int_ {- \infty} ^ {t} () \mathrm{d} \tau ]{} r (t)
+      line_hint: 606
+- id: img-ch2-2-31-系统的时域分析
+  name: 系统的时域分析
+  range:
+    start:
+      snippet: '## 系统的时域分析'
+      line_hint: 621
+    end:
+      snippet: 揭示信号与系统在时域相互作用的机理，如连续系统输出的零状态响应等于输入信号和系统冲激响应的卷积：离散系统输出的零状态响应等于输入信号和系统单位脉冲响应的卷积和。
+      line_hint: 643
+- id: img-ch2-2-32-线性非时变系统的时域描述
+  name: 线性非时变系统的时域描述
+  range:
+    start:
+      snippet: '## 线性非时变系统的时域描述'
+      line_hint: 645
+    end:
+      snippet: 时域描述：建立系统输出与输入之间的约束关系
+      line_hint: 651
+- id: img-ch2-2-33-1-连续LTI系统的时域描述
+  name: 1. 连续LTI系统的时域描述
+  range:
+    start:
+      snippet: '## 1. 连续LTI系统的时域描述'
+      line_hint: 653
+    end:
+      snippet: y _ {3} (t) = ?
+      line_hint: 740
+- id: img-ch2-2-34-2-离散LTI系统的时域描述
+  name: 2. 离散LTI系统的时域描述
+  range:
+    start:
+      snippet: '## 2. 离散LTI系统的时域描述'
+      line_hint: 743
+    end:
+      snippet: y _ {2} [ k ] = \nabla y _ {1} [ k ] = y _ {1} [ k ] - y _ {1} [ k - 1 ] = \{1, 1, 1, - 1, - 1, - 1; k = 1, 2, 3, 4, 5, 6 \}
+      line_hint: 800
+- id: img-ch2-2-35-利用M点的滑动平均系统滤除信号噪声
+  name: 利用M点的滑动平均系统滤除信号噪声。
+  range:
+    start:
+      snippet: '## 利用M点的滑动平均系统滤除信号噪声。'
+      line_hint: 803
+    end:
+      snippet: </div>
+      line_hint: 837
+- id: img-ch2-2-36-连续LTI系统响应的时域分析
+  name: 连续LTI系统响应的时域分析
+  range:
+    start:
+      snippet: '## 连续LTI系统响应的时域分析'
+      line_hint: 851
+    end:
+      snippet: 有助于探究系统的特性，像稳定性、因果性等。例如，通过分析零输入响应、零状态响应等情况，可以判断系统是否稳定等特性。
+      line_hint: 871
+- id: img-ch2-2-37-1-基于求解线性常系数微分方程的方法
+  name: 1. 基于求解线性常系数微分方程的方法
+  range:
+    start:
+      snippet: '## 1. 基于求解线性常系数微分方程的方法'
+      line_hint: 873
+    end:
+      snippet: A=5/2，B= －11/6 A=5/2，B=-11/6
+      line_hint: 948
+- id: img-ch2-2-38-基于求解常系数微分方程的方法不足之处
+  name: 基于求解常系数微分方程的方法不足之处
+  range:
+    start:
+      snippet: '## 基于求解常系数微分方程的方法不足之处'
+      line_hint: 950
+    end:
+      snippet: '- 难以体现信号与LTI系统的内在作用机理'
+      line_hint: 955
+- id: img-ch2-2-39-2-基于零输入响应与零状态响应的方法
+  name: 2. 基于零输入响应与零状态响应的方法
+  range:
+    start:
+      snippet: '## 2. 基于零输入响应与零状态响应的方法'
+      line_hint: 957
+    end:
+      snippet: 完全响应 = 零输入响应y(t) $y _ { \mathrm { z i } } ( t )$ + 零状态响应 $y _ { \mathrm { z s } } ( t )$
+      line_hint: 963
+- id: img-ch2-2-40-零输入响应
+  name: 零输入响应
+  range:
+    start:
+      snippet: '## 零输入响应'
+      line_hint: 965
+    end:
+      snippet: 电容电压示意图
+      line_hint: 977
+- id: img-ch2-2-41-零输入响应
+  name: 零输入响应
+  range:
+    start:
+      snippet: '## 零输入响应'
+      line_hint: 981
+    end:
+      snippet: 上式为齐次方程，因此零输入响应具有齐次解的形式
+      line_hint: 1001
+- id: img-ch2-2-42-零状态响应
+  name: 零状态响应
+  range:
+    start:
+      snippet: '## 零状态响应'
+      line_hint: 1005
+    end:
+      snippet: 电容充电系统
+      line_hint: 1013
+- id: img-ch2-2-43-零状态响应分析方法
+  name: 零状态响应分析方法
+  range:
+    start:
+      snippet: '## 零状态响应分析方法'
+      line_hint: 1021
+    end:
+      snippet: '- (3) 利用LTI系统的特性，即可得系统的零状态响应 $y _ { \mathrm { z s } }$ (t)'
+      line_hint: 1025
+- id: img-ch2-2-44-2-基于零输入响应与零状态响应的方法
+  name: 2. 基于零输入响应与零状态响应的方法
+  range:
+    start:
+      snippet: '## 2. 基于零输入响应与零状态响应的方法'
+      line_hint: 1027
+    end:
+      snippet: '- ※ 连续LTI系统的零状态响应y_{zs}(t)'
+      line_hint: 1049
+- id: img-ch2-2-45-连续LTI系统的零输入响应
+  name: 连续LTI系统的零输入响应
+  range:
+    start:
+      snippet: '## 连续LTI系统的零输入响应'
+      line_hint: 1051
+    end:
+      snippet: '数学模型:'
+      line_hint: 1055
+- id: img-ch2-2-46-求解过程
+  name: 求解过程
+  range:
+    start:
+      snippet: '## 求解过程'
+      line_hint: 1061
+    end:
+      snippet: '- 3. 代入系统的初始状态，解出待定系数'
+      line_hint: 1065
+- id: img-ch2-2-47-零输入响应-gamma-_-mathrm-z-i-t-的形式
+  name: 零输入响应 $\gamma _ { \mathrm { z i } } ( t )$ 的形式
+  range:
+    start:
+      snippet: '## 零输入响应 $\gamma _ { \mathrm { z i } } ( t )$ 的形式'
+      line_hint: 1069
+    end:
+      snippet: y _ {\mathrm{zi}} (t) = \mathrm{e} ^ {\sigma_ {i} t} (K _ {1} \cos \omega_ {i} t + K _ {2} \sin \omega_ {i} t)
+      line_hint: 1086
+- id: img-ch2-2-48-例-已知描述某连续LTI系统的微分方程为
+  name: 【例】已知描述某连续LTI系统的微分方程为
+  range:
+    start:
+      snippet: '## 【例】已知描述某连续LTI系统的微分方程为'
+      line_hint: 1089
+    end:
+      snippet: y _ {\mathrm{zi}} (t) = 3 \mathrm{e} ^ {- 2 t} - 2 \mathrm{e} ^ {- 4 t}, \quad t \geq 0 ^ {-}
+      line_hint: 1126
+- id: img-ch2-2-49-例-已知描述某连续LTI系统的微分方程为
+  name: '【例】已知描述某连续LTI系统的微分方程为:'
+  range:
+    start:
+      snippet: '## 【例】已知描述某连续LTI系统的微分方程为:'
+      line_hint: 1129
+    end:
+      snippet: y _ {\mathrm{zi}} (t) = \mathrm{e} ^ {- t} (\cos 2 t + 2 \sin 2 t), t \geq 0 ^ {-}
+      line_hint: 1188
+- id: img-ch2-2-50-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 1193
+    end:
+      snippet: '- ü※ 连续LTI系统零状态响应 $\gamma _ { \mathrm { z s } } ( t )$'
+      line_hint: 1197
+- id: img-ch2-2-51-连续LTI系统的冲激响应
+  name: 连续LTI系统的冲激响应
+  range:
+    start:
+      snippet: '## 连续LTI系统的冲激响应'
+      line_hint: 1199
+    end:
+      snippet: 这种方法称为冲激平衡法
+      line_hint: 1267
+- id: img-ch2-2-52-例-描述某连续LTI系统的微分方程为
+  name: 【例】描述某连续LTI系统的微分方程为
+  range:
+    start:
+      snippet: '## 【例】描述某连续LTI系统的微分方程为'
+      line_hint: 1269
+    end:
+      snippet: 可见冲激响应的形式要根据微分方程的情况设定
+      line_hint: 1321
+- id: img-ch2-2-53-连续LTI系统的冲激响应
+  name: 连续LTI系统的冲激响应
+  range:
+    start:
+      snippet: '## 连续LTI系统的冲激响应'
+      line_hint: 1323
+    end:
+      snippet: 由微分方程的特征根确定 ${ \bf \boldsymbol u } ( t )$ 前的指数形式（假设为不等实根）。由微分方程(t)的最高阶导数与 $h ( t )$ 的最高阶导数确定 $\delta ^ { \ ( j ) } ( t )$ 项。
+      line_hint: 1357
+- id: img-ch2-2-54-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 1361
+    end:
+      snippet: '- ü连续LTI系统零状态响应 $\nu _ { \mathrm { z s } } ( t )$'
+      line_hint: 1365
+- id: img-ch2-2-55-连续LTI系统的零状态响应
+  name: 连续LTI系统的零状态响应
+  range:
+    start:
+      snippet: '## 连续LTI系统的零状态响应'
+      line_hint: 1367
+    end:
+      snippet: 由此可见，连续LTI系统的零状态响应是输入信号与系统冲激响应的卷积积分，此揭示了信号与LTI系统在时域的内在作用机理。
+      line_hint: 1375
+- id: img-ch2-2-56-解析方法
+  name: 解析方法：
+  range:
+    start:
+      snippet: '## 解析方法：'
+      line_hint: 1379
+    end:
+      snippet: 由此可得 $x ( t ) ^ { * } h ( t ) = ( 1 - \mathrm { e } ^ { - t } ) \mathsf { u } ( t )$
+      line_hint: 1401
+- id: img-ch2-2-57-例-计算-x-t-h-t-x-t-2-bf-e-2-t-bf-u-t-h
+  name: 【例】计算 $x ( t ) ^ { * } h ( t ) , x ( t ) = 2 { \bf e } ^ { - 2 t } { \bf u } ( t ) , h ( t ) = 3 { \bf e } ^ { - t } { \bf u } ( t )$
+  range:
+    start:
+      snippet: '## 【例】计算 $x ( t ) ^ { * } h ( t ) , x ( t ) = 2 { \bf e } ^ { - 2 t } { \bf u } ( t ) , h ( t ) = 3 { \bf e } ^ { - t } { \bf u } ( t )$'
+      line_hint: 1403
+    end:
+      snippet: \mathrm{e} ^ {\alpha t} \mathrm{u} (t) * \mathrm{e} ^ {\beta t} \mathrm{u} (t) = \left\{ \begin{array}{l l} \frac {1}{\beta - \alpha} (\mathrm{e} ^ {\beta t} - \mathrm{e} ^ {\alpha t}) \mathrm{u} (t), & \alpha \neq \beta \\ t \mathrm{e} ^ {\alpha t} \mathrm{u} (t), & \alpha = \beta \end{array} \right.
+      line_hint: 1412
+- id: img-ch2-2-58-信号卷积积分的计算
+  name: 信号卷积积分的计算
+  range:
+    start:
+      snippet: '## 信号卷积积分的计算'
+      line_hint: 1415
+    end:
+      snippet: h (\tau) \xrightarrow {\text {翻转}} h (- \tau) \xrightarrow {\text {平移} t} h (- (\tau - t)) = h (t - \tau)
+      line_hint: 1427
+- id: img-ch2-2-59-例-计算-y-t-x-t-h-t
+  name: 【例】计算 $y ( t ) = x ( t ) ^ { * } h ( t )$ 。
+  range:
+    start:
+      snippet: '## 【例】计算 $y ( t ) = x ( t ) ^ { * } h ( t )$ 。'
+      line_hint: 1430
+    end:
+      snippet: 两个信号的卷积，卷积结果仍为一个信号。该信号的起点等于那两个信号起点之和，终点等于那两个信号的终点之和。
+      line_hint: 1532
+- id: img-ch2-2-60-信号卷积积分的性质
+  name: 信号卷积积分的性质
+  range:
+    start:
+      snippet: '## 信号卷积积分的性质'
+      line_hint: 1534
+    end:
+      snippet: '- (3) 结合律： $[ x _ { 1 } ( t ) ^ { * } x _ { 2 } ( t ) \mid ^ { * } x _ { 3 } ( t ) = x _ { 1 } ( t ) ^ { * } [ \ x _ { 2 } ( t ) ^ { * } \ x _ { 3 } ( t ) \ ]$'
+      line_hint: 1538
+- id: img-ch2-2-61-平移特性
+  name: ※平移特性：
+  range:
+    start:
+      snippet: '## ※平移特性：'
+      line_hint: 1540
+    end:
+      snippet: \left\{ \begin{array}{l} x (t) * \delta (t) = x (t) \\ x (t) * \delta (t - t _ {0}) = x (t - t _ {0}) \\ x (t - t _ {1}) * \delta (t - t _ {2}) = x (t - t _ {1} - t _ {2}) \end{array} \right.
+      line_hint: 1551
+- id: img-ch2-2-62-信号卷积积分的性质
+  name: 信号卷积积分的性质
+  range:
+    start:
+      snippet: '## 信号卷积积分的性质'
+      line_hint: 1554
+    end:
+      snippet: x (t) * \delta (t) = x (t) \longrightarrow x (t) * \mathrm{u} (t) = \int_ {\infty} ^ {t} x (\tau) \mathrm{d} \tau = x ^ {(- 1)} (t)
+      line_hint: 1571
+- id: img-ch2-2-63-例-计算信号x_-1-t-与-x_-2-t-当T-2和T-1时的卷积
+  name: 【例】计算信号x_{1}(t)与 x_{2}(t)当T=2和T=1时的卷积。
+  range:
+    start:
+      snippet: '## 【例】计算信号x_{1}(t)与 x_{2}(t)当T=2和T=1时的卷积。'
+      line_hint: 1574
+    end:
+      snippet: 利用卷积分配律将各个卷积结果相加即可。
+      line_hint: 1590
+- id: img-ch2-2-64-例-计算信号-x-_-1-t-与-widetilde-x-_-2-t-当
+  name: 【例】计算信号 $x _ { 1 } ( t )$ 与 $\widetilde { x } _ { 2 } ( t )$ 当T=2和T=1时的卷积。
+  range:
+    start:
+      snippet: '## 【例】计算信号 $x _ { 1 } ( t )$ 与 $\widetilde { x } _ { 2 } ( t )$ 当T=2和T=1时的卷积。'
+      line_hint: 1592
+    end:
+      snippet: \begin{array}{l} = \mathrm{u} (t) ^ {*} \mathrm{u} (t) - \mathrm{u} (t - 1) ^ {*} \mathrm{u} (t) - \mathrm{u} (t) ^ {*} \mathrm{u} (t - 2) + \mathrm{u} (t - 1) ^ {*} \mathrm{u} (t - 2) \\ = r (t) - r (t - 1) - r (t - 2) + r (t - 3) \\ \end{array}
+      line_hint: 1643
+- id: img-ch2-2-65-例-利用信号卷积的等效特性-计算-gamma-t-x-t-h-t-O
+  name: 【例】利用信号卷积的等效特性，计算 $\gamma ( t ) = x ( t ) ^ { * } h ( t )$ O
+  range:
+    start:
+      snippet: '## 【例】利用信号卷积的等效特性，计算 $\gamma ( t ) = x ( t ) ^ { * } h ( t )$ O'
+      line_hint: 1646
+    end:
+      snippet: y (t) = \int_ {- \infty} ^ {t} [ h (t) - h (t - 1) ] \mathrm{d} t
+      line_hint: 1661
+- id: img-ch2-2-66-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 1680
+    end:
+      snippet: '- ü冲激响应与LTI系统稳定性'
+      line_hint: 1685
+- id: img-ch2-2-67-冲激响应表示的连续系统特性
+  name: 冲激响应表示的连续系统特性
+  range:
+    start:
+      snippet: '## 冲激响应表示的连续系统特性'
+      line_hint: 1687
+    end:
+      snippet: 系统不同则其冲激响应h(t)也不同，h(t)反映了连续LTI系统的时域特性。
+      line_hint: 1691
+- id: img-ch2-2-68-几个常见系统的冲激响应
+  name: 几个常见系统的冲激响应
+  range:
+    start:
+      snippet: '## 几个常见系统的冲激响应'
+      line_hint: 1693
+    end:
+      snippet: 理想微分器： $y ( t ) = \frac { \mathrm { d } x ( t ) } { \mathrm { d } t } \qquad \longrightarrow h ( t ) = \delta ^ { \prime } ( t )$
+      line_hint: 1701
+- id: img-ch2-2-69-1-级联连续系统的冲激响应
+  name: 1. 级联连续系统的冲激响应
+  range:
+    start:
+      snippet: '## 1. 级联连续系统的冲激响应'
+      line_hint: 1703
+    end:
+      snippet: 结合律： $[ x _ { 1 } ( t ) ^ { * } x _ { 2 } ( t ) \mathrm { ~ } ] ^ { * } x _ { 3 } ( t ) = x _ { 1 } ( t ) ^ { * } [ \mathrm { ~ } x _ { 2 } ( t ) ^ { * } \mathrm { ~ } x _ { 3 } ( t ) \mathrm { ~ } ]$
+      line_hint: 1719
+- id: img-ch2-2-70-2-并联连续系统的冲激响应
+  name: 2. 并联连续系统的冲激响应
+  range:
+    start:
+      snippet: '## 2. 并联连续系统的冲激响应'
+      line_hint: 1721
+    end:
+      snippet: \begin{array}{l} = \delta (t - 1) * \mathrm{e} ^ {- 3 t} \mathrm{u} (t) + \mathrm{u} (t) + \quad t) \\ = \mathrm{e} ^ {- 3 (t - 1)} \mathrm{u} (t - 1) + \mathrm{u} (t) + \delta (t) \\ \end{array}
+      line_hint: 1768
+- id: img-ch2-2-71-3-冲激响应与LTI系统因果性
+  name: 3. 冲激响应与LTI系统因果性
+  range:
+    start:
+      snippet: '## 3. 冲激响应与LTI系统因果性'
+      line_hint: 1771
+    end:
+      snippet: h (t) = 0, \quad t <   0
+      line_hint: 1782
+- id: img-ch2-2-72-4-冲激响应与LTI系统稳定性
+  name: 4. 冲激响应与LTI系统稳定性
+  range:
+    start:
+      snippet: '## 4. 冲激响应与LTI系统稳定性'
+      line_hint: 1785
+    end:
+      snippet: \int_ {- \infty} ^ {\infty} \left| h (\tau) \right| \mathrm{d} \tau = S <   + \infty
+      line_hint: 1796
+- id: img-ch2-2-73-例-已知某连续LTI系统的冲激响应为-h-t-mathbf-e-a-t
+  name: '[例] 已知某连续LTI系统的冲激响应为 $h ( t ) = \mathbf { e } ^ { a t } \mathbf { u } ( t )$ 试判断该系统是否为因果、稳定的系统。'
+  range:
+    start:
+      snippet: '## [例] 已知某连续LTI系统的冲激响应为 $h ( t ) = \mathbf { e } ^ { a t } \mathbf { u } ( t )$ 试判断该系统是否为因果、稳定的系统。'
+      line_hint: 1799
+    end:
+      snippet: '- 当 $a { \ge } 0$ 时， $\int _ { - \infty } ^ { \infty } \mathbf { \epsilon } \big | h ( \tau ) \big | \mathrm { d } \tau \to \infty$ 系统不稳定。'
+      line_hint: 1808
+- id: img-ch2-2-74-小结
+  name: 小结
+  range:
+    start:
+      snippet: '## 小结'
+      line_hint: 1812
+    end:
+      snippet: '- ※ 揭示了信号与LTI系统的作用机理—x(t)h(t)'
+      line_hint: 1816
+- id: img-ch2-2-75-连续时间LTI系统分析举例
+  name: 连续时间LTI系统分析举例
+  range:
+    start:
+      snippet: '## 连续时间LTI系统分析举例'
+      line_hint: 1818
+    end:
+      snippet: = \frac {1}{2} \mathrm{e} ^ {- 1 0} (\mathrm{e} ^ {- 2 (t - 3)} - \mathrm{e} ^ {- 4 (t - 3)}) \mathrm{u} (t - 3)
+      line_hint: 1865
+- id: img-ch2-2-76-例-描述某因果的连续LTI系统的微分方程为
+  name: 【例】描述某因果的连续LTI系统的微分方程为
+  range:
+    start:
+      snippet: '## 【例】描述某因果的连续LTI系统的微分方程为'
+      line_hint: 1868
+    end:
+      snippet: '- （5) 判断系统是否稳定。'
+      line_hint: 1880
+- id: img-ch2-2-77-连续时间LTI系统分析举例
+  name: 连续时间LTI系统分析举例
+  range:
+    start:
+      snippet: '## 连续时间LTI系统分析举例'
+      line_hint: 1882
+    end:
+      snippet: $y _ { \mathrm { z i } } ( t ) , y _ { \mathrm { z s } } ( t )$ 和y(t)的波形如右图所示。
+      line_hint: 1956
+- id: img-ch2-2-78-例-描述某因果的连续LTI系统的微分方程为
+  name: 【例】描述某因果的连续LTI系统的微分方程为
+  range:
+    start:
+      snippet: '## 【例】描述某因果的连续LTI系统的微分方程为'
+      line_hint: 1960
+    end:
+      snippet: '- n 瞬态响应 $y _ { \mathrm { t } } ( t )$ 和稳态响应 ${ \dot { y } } _ { \mathrm { s } } ( t )$ $y ( t ) = y _ { \mathrm { t } } ( t ) + y _ { \mathrm { s } } ( t )$'
+      line_hint: 1977
+- id: img-ch2-2-79-连续时间LTI系统分析举例
+  name: 连续时间LTI系统分析举例
+  range:
+    start:
+      snippet: '## 连续时间LTI系统分析举例'
+      line_hint: 1979
+    end:
+      snippet: 稳态响应 $ { \gamma } _ { \mathrm { s } } ( t )$ ：随时间增长不趋于0的分量
+      line_hint: 1987
+- id: img-ch2-2-80-例-描述某因果的连续LTI系统的微分方程为
+  name: 【例】描述某因果的连续LTI系统的微分方程为
+  range:
+    start:
+      snippet: '## 【例】描述某因果的连续LTI系统的微分方程为'
+      line_hint: 1989
+    end:
+      snippet: \left\{ \begin{array}{l} y _ {\text {固有}} (t) = \frac {1 7}{3} \mathrm{e} ^ {- 3 t} - \frac {1 9}{4} \mathrm{e} ^ {- 4 t}, \quad t > 0 \\ y _ {\text {强迫}} (t) = \frac {1}{1 2}, \quad t > 0 \end{array} \quad \left\{ \begin{array}{l} y _ {\text {暂态}} (t) = \frac {1 7}{3} \mathrm{e} ^ {- 3 t} - \frac {1 9}{4} \mathrm{e} ^ {- 4 t}, \quad t > 0 \\ y _ {\text {稳态}} (t) = \frac {1}{1 2}, \quad t > 0 \end{array} \right. \right.
+      line_hint: 2004
+- id: img-ch2-2-81-连续时间LTI系统分析举例
+  name: 连续时间LTI系统分析举例
+  range:
+    start:
+      snippet: '## 连续时间LTI系统分析举例'
+      line_hint: 2007
+    end:
+      snippet: = \left(\frac {1}{2 4} - \frac {1}{6} \mathrm{e} ^ {- 3 (t - 1)} + \frac {1}{8} \mathrm{e} ^ {- 4 (t - 1)}\right) \mathrm{u} (t - 1) + 6 \mathrm{e} ^ {- 3 t} - 5 \mathrm{e} ^ {- 4 t}, \quad t > 0
+      line_hint: 2056

@@ -1,0 +1,137 @@
+{
+  "M2_collision": {
+    "collision_groups": 32,
+    "collision_kp_total": 102,
+    "risk_ratio": 0.2857,
+    "top": [
+      {
+        "count": 12,
+        "file": "img/ch02-3_信号的频域分析.md",
+        "name": "连续时间Fourier变换的性质"
+      },
+      {
+        "count": 7,
+        "file": "img/ch02-3_信号的频域分析.md",
+        "name": "目录"
+      },
+      {
+        "count": 5,
+        "file": "img/ch02-3_信号的频域分析.md",
+        "name": "连续时间Fourier级数的性质"
+      },
+      {
+        "count": 5,
+        "file": "img/ch02-3_信号的频域分析.md",
+        "name": "※线性相位理想低通滤波器"
+      },
+      {
+        "count": 4,
+        "file": "img/ch02-2_信号与系统的时域分析.md",
+        "name": "目录"
+      }
+    ]
+  },
+  "M4_anchor_health": {
+    "ambiguous_end": 37,
+    "ambiguous_end_ratio": 0.1036,
+    "ambiguous_start": 85,
+    "ambiguous_start_ratio": 0.2381,
+    "dup_snippet_groups": 33,
+    "dup_snippet_ratio": 0.2969,
+    "end_candidates_empty": 1,
+    "fresh_ratio": 0.986,
+    "inverted": 0,
+    "kp_in_dup_snippet": 106,
+    "no_end_snippet": 4,
+    "no_snippet": 0,
+    "range_ok_false": 5,
+    "range_ok_none": 0,
+    "span_zero": 1
+  },
+  "anchor_verified_upper_bound": {
+    "count": 204,
+    "note": "这是上界：range_ok=True 且 snippet 全局唯一。真实 anchor_verified 还要判 end 边界可靠性（需下一级标题信息）",
+    "ratio": 0.5714
+  },
+  "artifact_sha256": "8231d0903f6d3daf1d5ecabf93a3e2d9a49b394b90d37ac4b892b37d02fb254d",
+  "corpus_md_now": 26,
+  "data_integrity": {
+    "FSRS_cards": {
+      "cards_file_exists": false,
+      "progress_file_exists": false
+    },
+    "graph_nodes": {
+      "kp_id_resolvable": 357,
+      "nodes": 357,
+      "nodes_with_kp_id": 357,
+      "orphan_rate": 0.0
+    },
+    "links": {
+      "link_instances": 5,
+      "links": 3,
+      "sidecar_dir_exists": true,
+      "sidecars": 11,
+      "source_id_resolvable": 1,
+      "source_id_total": 1,
+      "source_orphan_rate": 0.0,
+      "target_orphan_rate": 0.3333,
+      "targets_resolvable": 2,
+      "targets_total": 3,
+      "unresolved_sample": [
+        {
+          "file": "03_第3章_模拟信号的数字编码.memoria.yaml",
+          "target": "通带抽样定理"
+        }
+      ]
+    }
+  },
+  "head": "320c6f0af8dcab46ac6c6a2c126926ddd6208fd5",
+  "inventory": {
+    "doc_errors": [],
+    "docs": 26,
+    "docs_ok": 26,
+    "elapsed_ms": 1639.6,
+    "kp_total": 357
+  },
+  "kb": "D:\\AAA_Courses\\数字通信原理",
+  "measured_at": "2026-10-27T14:42:12.815000+08:00",
+  "samples": {
+    "inverted": [],
+    "range_ok_false": [
+      {
+        "file": "img/ch02-4_随机信号分析.md",
+        "id": "img-ch2-4-13-随机过程的统计值"
+      },
+      {
+        "file": "img/ch02-4_随机信号分析.md",
+        "id": "img-ch2-4-17-n-随机变量函数的统计值-数字特征"
+      },
+      {
+        "file": "img/ch02-4_随机信号分析.md",
+        "id": "img-ch2-4-29-4-窄带高斯随机过程"
+      },
+      {
+        "file": "img/ch02-4_随机信号分析.md",
+        "id": "img-ch2-4-36-n-平稳随机过程与线性时不变系统"
+      },
+      {
+        "file": "教材/01_第1章_绪论.md",
+        "id": "数字通信的特点"
+      }
+    ],
+    "span_zero": [
+      {
+        "file": "教材/08_第8章_差错控制编码.md",
+        "id": "test",
+        "line": 4163
+      }
+    ]
+  },
+  "schema": "q1-degradation-probe/v1",
+  "snapshot": {
+    "md_in_snapshot": 26,
+    "sidecar_in_snapshot": 11,
+    "taken_at": "2026-10-27T14:09:46"
+  },
+  "total_elapsed_s": 2.47
+}

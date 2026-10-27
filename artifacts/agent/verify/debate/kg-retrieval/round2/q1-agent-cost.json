@@ -1,0 +1,155 @@
+{
+  "assumptions": {
+    "desc": "每片 description ≤80 汉字 ≈ 34 tok output",
+    "price": "deepseek-flash 高峰 hit0.04/miss2.0/out8.0；空闲 0.02/1.0/4.0（元/M）",
+    "slice_rule": "section 边界；section > 3000 tok 时 ceil(span/3000) 拆分（数量级估算，未按块边界精确切）"
+  },
+  "chapters": [
+    {
+      "chars": 20480,
+      "file": "教材/00_前言与目录.md",
+      "sections": 70,
+      "slices_est": 71,
+      "tokens": 8677.0
+    },
+    {
+      "chars": 13854,
+      "file": "教材/01_第1章_绪论.md",
+      "sections": 9,
+      "slices_est": 9,
+      "tokens": 5870.0
+    },
+    {
+      "chars": 117804,
+      "file": "教材/02_第2章_信号分析基础.md",
+      "sections": 19,
+      "slices_est": 28,
+      "tokens": 49914.0
+    },
+    {
+      "chars": 130188,
+      "file": "教材/03_第3章_模拟信号的数字编码.md",
+      "sections": 32,
+      "slices_est": 39,
+      "tokens": 55161.0
+    },
+    {
+      "chars": 181424,
+      "file": "教材/04_第4章_信息论基础.md",
+      "sections": 37,
+      "slices_est": 49,
+      "tokens": 76869.0
+    },
+    {
+      "chars": 96972,
+      "file": "教材/05_第5章_数字基带传输系统.md",
+      "sections": 25,
+      "slices_est": 32,
+      "tokens": 41087.0
+    },
+    {
+      "chars": 255941,
+      "file": "教材/06_第6章_数字载波调制传输系统.md",
+      "sections": 31,
+      "slices_est": 58,
+      "tokens": 108442.0
+    },
+    {
+      "chars": 101833,
+      "file": "教材/07_第7章_传输信道.md",
+      "sections": 26,
+      "slices_est": 33,
+      "tokens": 43147.0
+    },
+    {
+      "chars": 284714,
+      "file": "教材/08_第8章_差错控制编码.md",
+      "sections": 42,
+      "slices_est": 68,
+      "tokens": 120633.0
+    },
+    {
+      "chars": 78379,
+      "file": "教材/09_第9章_同步原理与技术.md",
+      "sections": 21,
+      "slices_est": 25,
+      "tokens": 33209.0
+    },
+    {
+      "chars": 55171,
+      "file": "教材/10_第10章_扩展频谱通信技术.md",
+      "sections": 23,
+      "slices_est": 24,
+      "tokens": 23376.0
+    },
+    {
+      "chars": 30999,
+      "file": "教材/11_第11章_信道复用与多址技术.md",
+      "sections": 11,
+      "slices_est": 12,
+      "tokens": 13134.0
+    },
+    {
+      "chars": 60128,
+      "file": "教材/12_第12章_空时无线通信技术概述.md",
+      "sections": 27,
+      "slices_est": 28,
+      "tokens": 25476.0
+    },
+    {
+      "chars": 4071,
+      "file": "教材/13_附录_缩写索引表.md",
+      "sections": 1,
+      "slices_est": 1,
+      "tokens": 1725.0
+    }
+  ],
+  "drift_vs_snapshot": {
+    "files": [],
+    "n": 0
+  },
+  "index_artifact_tokens": {
+    "current_kp_names_only": 2074.0,
+    "per_slice_entry_compact": 6.0,
+    "per_slice_entry_with_desc": 48.0,
+    "slices_no_desc": 2862,
+    "slices_with_desc": 22896
+  },
+  "kb": "D:\\AAA_Courses\\数字通信原理",
+  "llm_description_cost_yuan": {
+    "note": "input=重切后正文 token 合计（608k 级）；output=每片 description ≤80 字×0.4237；overhead 为经验估计",
+    "per_chapter_batch": {
+      "idle": 0.6737,
+      "peak": 1.3474
+    },
+    "per_slice_calls": {
+      "idle": 0.7431,
+      "peak": 1.4863
+    }
+  },
+  "option1_read_kp_delta": {
+    "gt4000tok_after_pct": 49.3,
+    "heading_p50_chars": 2985.0,
+    "heading_p50_tokens": 1265.0,
+    "heading_p90_chars": 12593.0,
+    "heading_p90_tokens": 5336.0,
+    "hint_p50_chars": 1714.0,
+    "hint_p50_tokens": 726.0,
+    "hint_p90_chars": 9374.0,
+    "hint_p90_tokens": 3972.0,
+    "n": 71,
+    "p50_delta_pct": 74.2,
+    "p90_delta_pct": 34.3,
+    "role": "教材"
+  },
+  "snapshot_taken_at": "2026-10-27T14:09:46",
+  "token_per_char": 0.4237,
+  "totals": {
+    "chapters": 14,
+    "chars": 1431958,
+    "sections": 374,
+    "slices_est": 477,
+    "slices_per_chapter_p50": 30.0,
+    "tokens": 606720
+  }
+}

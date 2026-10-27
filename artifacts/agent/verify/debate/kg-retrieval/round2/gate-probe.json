@@ -1,0 +1,53 @@
+{
+  "M12": {
+    "baseline_available": "phase3-session-snapshot.jsonl（21 轮，hit=94.72%）",
+    "can_run_offline": false,
+    "missing": "索引上线后的会话数据",
+    "needs": "两次真实 LLM 会话（索引前/后），每次 ≥5 轮"
+  },
+  "M2_collision": {
+    "collision_groups": 0,
+    "collision_kp_total": 0,
+    "elapsed_ms": 778.2,
+    "risk_ratio": null,
+    "top": [],
+    "total_kp": 0
+  },
+  "M4_kp_health": {
+    "docs_parsed": 0,
+    "elapsed_ms": 788.5,
+    "inverted": 0,
+    "per_doc_kp_total": 0,
+    "range_ok_false": 0,
+    "snippet_missing": 0,
+    "span_zero": 0,
+    "total_kp": 0
+  },
+  "M4_validate_kb": {
+    "affected_kp_count": 5,
+    "affected_kp_sample": [
+      "img-ch2-4-13-随机过程的统计值",
+      "img-ch2-4-17-n-随机变量函数的统计值-数字特征",
+      "img-ch2-4-29-4-窄带高斯随机过程",
+      "img-ch2-4-36-n-平稳随机过程与线性时不变系统",
+      "数字通信的特点"
+    ],
+    "codes": {
+      "kp_range_missing_snippet": 4,
+      "kp_range_relocate_failed": 1
+    },
+    "docs_checked": 29,
+    "elapsed_ms": 1050.7,
+    "errors": 4,
+    "warnings": 61
+  },
+  "M5_snapshot_diff": {
+    "diff_count": 0,
+    "diff_sample": [],
+    "md_in_snapshot": 26,
+    "md_now": 57,
+    "snapshot_at": "2026-10-27T14:09:46"
+  },
+  "kb": "D:\\AAA_Jupyter\\Memoria\\artifacts\\baseline-kb\\数字通信原理",
+  "snapshot": "D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\debate\\kg-retrieval\\data\\corpus-snapshot.json"
+}

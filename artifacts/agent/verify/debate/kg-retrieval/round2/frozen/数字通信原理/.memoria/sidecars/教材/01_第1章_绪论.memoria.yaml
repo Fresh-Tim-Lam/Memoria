@@ -1,0 +1,196 @@
+schema_version: 1
+file: 教材/01_第1章_绪论.md
+knowledge_points:
+- id: 数字通信系统的基本组成
+  name: 数字通信系统的基本组成
+  range:
+    start:
+      snippet: '## 1.2 数字通信系统的基本组成'
+      line_hint: 57
+    end:
+      snippet: 图 1.2.1 所示是一个最基本的数字通信系统框图。对于一个实际的系统，还可能包括信息的加密/解密、数据序列的复接/分接、信号的扩频/解扩等功能，部分内容将在后
+      line_hint: 108
+- id: 信道编码器
+  name: 信道编码器
+  range:
+    start:
+      snippet: 信道编码器：
+      line_hint: 88
+    end:
+      snippet: 信道编码器可以是一个根据信道传输状况加入的选项，对于具有非理想特性、有较大噪声或存在其他干扰影响的信道，可以通过信道编码器，对待传输的数据进行某种编码处理，加入
+      line_hint: 89
+- id: 数字调制器
+  name: 数字调制器
+  range:
+    start:
+      snippet: 数字调制器：
+      line_hint: 91
+    end:
+      snippet: 数字调制器的主要功能是将数字序列变换成某种信号形式，以适合在特定的信道中传输。对于基带传输系统，数字序列被映射成某种基带波形信号；对于通带传输系统，数字序列被映
+      line_hint: 92
+- id: 信道
+  name: 信道
+  range:
+    start:
+      snippet: 信道：
+      line_hint: 94
+    end:
+      snippet: 信道是传送信号的物理媒质。有线信道可以是铜缆、光纤等；无线信道可以是大气、水或太空的自由空间等。信号的强度一般会因传输距离增大时能量的扩散而衰减，也会因为信号经
+      line_hint: 95
+- id: 数字解调器
+  name: 数字解调器
+  range:
+    start:
+      snippet: 数字解调器：
+      line_hint: 99
+    end:
+      snippet: 数字解调器将不同的信号波形恢复成相应的数字序列。在此过程中一般还会包含对噪声的抑制处理。
+      line_hint: 100
+- id: 信道译码器
+  name: 信道译码器
+  range:
+    start:
+      snippet: 信道译码器：
+      line_hint: 102
+    end:
+      snippet: 信道译码器利用编码时加入的与数据关联的附加信息，可以检查在传输过程中是否发生误码，并可在译码过程中纠正一定范围内的错误。
+      line_hint: 103
+- id: 信源译码器
+  name: 信源译码器
+  range:
+    start:
+      snippet: 信源译码器：
+      line_hint: 105
+    end:
+      snippet: 信源译码器负责恢复出编码前的原始信号，其过程通常包括解压缩和数字到模拟信号的转换等操作，重现原来的声音或图像信号。
+      line_hint: 106
+- id: 数字通信的特点
+  name: 数字通信的特点
+  range:
+    start:
+      snippet: '## 1.3 数字通信的特点'
+      line_hint: 110
+    end:
+      snippet: 数字通信也有缺点。相对于模拟通信系统，数字通信需要较为复杂的符号同步技术，一旦发生失步，数字通信系统即使接收了信号，也无法正确地恢复出原来的消息。另外，当噪声、
+      line_hint: 208
+- id: 抗噪声和抗干扰能力强
+  name: 抗噪声和抗干扰能力强
+  range:
+    start:
+      snippet: （1）**抗噪声和抗干扰能力强**
+      line_hint: 117
+    end:
+      snippet: 数字信号最大的特点是它只有有限种状态，如有限种不同的信号幅度，有限种不同的信号相位，有限种不同的信号频率，或有限种上述信号参量的组合。噪声和干扰对信号的影响只要
+      line_hint: 118
+- id: 便于提高消息传输效率
+  name: 便于提高消息传输效率
+  range:
+    start:
+      snippet: （2）**便于提高消息传输效率**
+      line_hint: 140
+    end:
+      snippet: '![图 1.3.5 信号通过复接实现时分复用](.memoria/images/c485d42bdabcb6944ddc4dfa1e70fca15d9b330d'
+      line_hint: 143
+- id: 便于对信息进行加密处理
+  name: 便于对信息进行加密处理
+  range:
+    start:
+      snippet: (4) **便于对信息进行加密处理**
+      line_hint: 165
+    end:
+      snippet: 中排序最靠前，所以按字母顺序首先输出该列“tmcnn”，密钥中的字母“C”在字母表中排第二，所以输出的第二列为“DamaI”，以此类推，生成密文“tmcnnDa
+      line_hint: 168
+- id: 便于采用大规模集成电路实现
+  name: 便于采用大规模集成电路实现
+  range:
+    start:
+      snippet: (5) **便于采用大规模集成电路实现**
+      line_hint: 170
+    end:
+      snippet: 数字集成电路具有集成度高、一致性好和易于实现等特点, 这是数字通信系统得以广泛应用的关键之一。随着微电子、嵌入式系统、信号处理和软件无线电等技术的发展,
+        各种通
+      line_hint: 171
+- id: 数字通信缺点
+  name: 数字通信缺点
+  range:
+    start:
+      snippet: 数字通信也有缺点。
+      line_hint: 173
+    end:
+      snippet: 随着数字信号处理技术的提高，数字通信系统的上述不足正在不断地得到改善。从目前的发展来看，在模拟通信系统最后的主要应用领域——语音和电视的地面和有线广播，也正在被
+      line_hint: 176
+- id: 数字通信系统的基本性能指标及其度量参数
+  name: 数字通信系统的基本性能指标及其度量参数
+  range:
+    start:
+      snippet: '## 1.4 数字通信系统的基本性能指标及其度量参数'
+      line_hint: 178
+    end:
+      snippet: 误比特率是数字通信系统的重要指标之一。误比特率 $P_{\mathrm{b}}$ 与误码率 $P_{\mathrm{s}}$ 之间有一定的关系，视不同的系统而异
+      line_hint: 249
+- id: 比特率
+  name: 比特率
+  range:
+    start:
+      snippet: 比特率 $R_{\mathrm{b}}$
+      line_hint: 182
+    end:
+      snippet: 比特率是指在单位时间内传输的二进制数据（“0”或“1”）的位数，单位是比特每秒，通常可记为比特/秒、bit/s、b/s或bps（bits
+        per second）
+      line_hint: 183
+- id: 带宽
+  name: 带宽
+  range:
+    start:
+      snippet: 带宽 $W$
+      line_hint: 198
+    end:
+      snippet: 信号带宽一般是指该信号所占据的频带宽度，单位为赫兹。由于实际信号都是时间有限的，理论上其所具有的频谱宽度延伸到无限大，但在分析实际问题时往往可根据信号的特点，将
+      line_hint: 199
+- id: 带宽利用率
+  name: 带宽利用率
+  range:
+    start:
+      snippet: 带宽利用率 $\eta$
+      line_hint: 201
+    end:
+      snippet: $\eta_{B}$ 也称[[\c:yellow|符号带宽利用率]]，单位为 Baud/Hz。
+      line_hint: 215
+- id: 信噪比
+  name: 信噪比
+  range:
+    start:
+      snippet: 信噪比 $SNR$
+      line_hint: 217
+    end:
+      snippet: $$
+      line_hint: 229
+- id: 比特能量与噪声密度比
+  name: 比特能量与噪声密度比
+  range:
+    start:
+      snippet: '**比特能量 $E_{\mathrm{b}}$ 与噪声功率谱密度 $N_{0}$ 的比** **$(E_{\mathrm{b}} /
+        N_{0})$**'
+      line_hint: 231
+    end:
+      snippet: 为了更有效地比较不同数字通信系统的性能，引入**比特能量 $E_{\mathrm{b}}$ 与噪声功率谱密度 $N_{0}$ 的比**这一指标，即
+        $E_{\m
+      line_hint: 233
+- id: 误码率
+  name: 误码率
+  range:
+    start:
+      snippet: 误码率 $P_{s}$
+      line_hint: 235
+    end:
+      snippet: $$
+      line_hint: 240
+- id: 误比特率
+  name: 误比特率
+  range:
+    start:
+      snippet: 误比特率 $P_{b}$
+      line_hint: 242
+    end:
+      snippet: $$
+      line_hint: 247

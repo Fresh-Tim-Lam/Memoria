@@ -1,0 +1,1557 @@
+schema_version: 1
+file: img/ch02-3_信号的频域分析.md
+knowledge_points:
+- id: img-ch2-3-01-第2章信号处理基础
+  name: 第2章信号处理基础
+  range:
+    start:
+      snippet: '## 第2章信号处理基础'
+      line_hint: 8
+    end:
+      snippet: '### 2.3 信号与系统的频域分析'
+      line_hint: 10
+- id: img-ch2-3-02-信号的频域分析
+  name: 信号的频域分析
+  range:
+    start:
+      snippet: '## 信号的频域分析'
+      line_hint: 12
+    end:
+      snippet: '- 连续非周期信号的频域分析'
+      line_hint: 16
+- id: img-ch2-3-03-系统的频域分析
+  name: 系统的频域分析
+  range:
+    start:
+      snippet: '## 系统的频域分析'
+      line_hint: 18
+    end:
+      snippet: 参考教程：陈后金等，信号与系统（第4版），高等教育出版社，2025年7月
+      line_hint: 22
+- id: img-ch2-3-04-为何引入信号的频域分析
+  name: 为何引入信号的频域分析
+  range:
+    start:
+      snippet: '## 为何引入信号的频域分析'
+      line_hint: 24
+    end:
+      snippet: 信号时域分析与处理存在局限性
+      line_hint: 92
+- id: img-ch2-3-05-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 106
+    end:
+      snippet: '- 连续时间Fourier级数的性质'
+      line_hint: 110
+- id: img-ch2-3-06-连续周期信号的频域表示
+  name: 连续周期信号的频域表示
+  range:
+    start:
+      snippet: '## 连续周期信号的频域表示'
+      line_hint: 112
+    end:
+      snippet: '![](.memoria/images/ce2cdcb933b56e21bbb69cf65f8e1c9a877f504f36d3394a3c2657dd07e3cb8c.jpg)'
+      line_hint: 114
+- id: img-ch2-3-07-一系列不同频率的正弦波的加权线性叠加
+  name: 一系列不同频率的正弦波的加权线性叠加
+  range:
+    start:
+      snippet: '## 一系列不同频率的正弦波的加权线性叠加'
+      line_hint: 118
+    end:
+      snippet: '![](.memoria/images/8c5c5ca5bc49600b3d41d236b0c4bac65cd6a72fb96053afdb77a7b4b2831af8.jpg)'
+      line_hint: 120
+- id: img-ch2-3-08-连续周期信号的频域表示
+  name: 连续周期信号的频域表示
+  range:
+    start:
+      snippet: '## 连续周期信号的频域表示'
+      line_hint: 122
+    end:
+      snippet: C _ {n} = \frac {1}{T _ {0}} \int_ {0} ^ {T _ {0}} \tilde {x} (t) \mathrm{e}
+        ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t = \frac {1}{T _ {0}} \int_ {<   T
+        _ {0} >} \tilde {x} (t) \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d}
+        t
+      line_hint: 192
+- id: img-ch2-3-09-指数形式Fourier级数
+  name: 指数形式Fourier级数
+  range:
+    start:
+      snippet: '## 指数形式Fourier级数'
+      line_hint: 195
+    end:
+      snippet: C _ {n} = \frac {1}{T _ {0}} \int_ {0} ^ {T _ {0}} \tilde {x} (t) \mathrm{e}
+        ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t = \frac {1}{T _ {0}} \int_ {t
+        _ {0}} ^ {t _ {0} + T _ {0}} \tilde {x} (t) \mathrm{e} ^ {- \mathrm{j} n \omega_
+        {0} t} \mathrm{d} t
+      line_hint: 202
+- id: img-ch2-3-10-三角形式Fourier级数
+  name: 三角形式Fourier级数
+  range:
+    start:
+      snippet: '## 三角形式Fourier级数'
+      line_hint: 207
+    end:
+      snippet: C _ {- n} = \frac {a _ {n} + \mathrm{j} b _ {n}}{2}
+      line_hint: 224
+- id: img-ch2-3-11-三角形式Fourier级数
+  name: 三角形式Fourier级数
+  range:
+    start:
+      snippet: '## 三角形式Fourier级数'
+      line_hint: 229
+    end:
+      snippet: b _ {n} = \frac {2}{T _ {0}} \int_ {t _ {1}} ^ {t _ {1} + T _ {0}}
+        \tilde {x} (t) \sin (n \omega_ {0} t) \mathrm{d} t \quad (n = 1, 2 \dots)
+      line_hint: 242
+- id: img-ch2-3-12-三角形式Fourier级数
+  name: 三角形式Fourier级数
+  range:
+    start:
+      snippet: '## 三角形式Fourier级数'
+      line_hint: 255
+    end:
+      snippet: b^{2}_{n n}A  a其中 ^{2} b arctan_{n}  nn _{n}a
+      line_hint: 265
+- id: img-ch2-3-13-周期信号可以表示为正弦类信号x-t
+  name: 周期信号可以表示为正弦类信号x(t)
+  range:
+    start:
+      snippet: '## 周期信号可以表示为正弦类信号x(t)'
+      line_hint: 269
+    end:
+      snippet: \left\{ \begin{array}{l} A _ {n} = \sqrt {a _ {n} ^ {2} + b _ {n} ^
+        {2}} \\ \varphi_ {n} = \arctan \left(b _ {n} / a _ {n}\right) \end{array}
+        \right.
+      line_hint: 294
+- id: img-ch2-3-14-连续周期信号的频谱概念
+  name: 连续周期信号的频谱概念
+  range:
+    start:
+      snippet: '## 连续周期信号的频谱概念'
+      line_hint: 305
+    end:
+      snippet: 周期矩形信号的频谱
+      line_hint: 479
+- id: img-ch2-3-15-连续周期信号的频谱特性
+  name: 连续周期信号的频谱特性
+  range:
+    start:
+      snippet: '## 连续周期信号的频谱特性'
+      line_hint: 481
+    end:
+      snippet: 衰减特性：对于幅值有限的周期信号，其幅度频谱| $C _ { n }$ 随谐波 ${ \pmb n } \omega _ { \mathbf
+        0 }$ 增大逐渐衰减，并最终趋于零。
+      line_hint: 487
+- id: img-ch2-3-16-u-有效带宽
+  name: u 有效带宽
+  range:
+    start:
+      snippet: '## u 有效带宽'
+      line_hint: 491
+    end:
+      snippet: 信号的有效带宽 $\omega _ { B } .$ 和时域持续时间成反比
+      line_hint: 499
+- id: img-ch2-3-17-吉布斯-Gibbs-现象
+  name: 吉布斯(Gibbs)现象
+  range:
+    start:
+      snippet: '## 吉布斯(Gibbs)现象'
+      line_hint: 501
+    end:
+      snippet: 当周期信号有间断点时，利用有限项合成在间断点处出现振荡现象，且最大波纹大约为幅度跳变值的9%，这个现象称为吉伯斯现象。
+      line_hint: 527
+- id: img-ch2-3-18-吉布斯-Josiah-Gibbs-1839-1903
+  name: 吉布斯 (Josiah Gibbs, 1839-1903)
+  range:
+    start:
+      snippet: '## 吉布斯 (Josiah Gibbs, 1839-1903)'
+      line_hint: 529
+    end:
+      snippet: 在不连续点附近部分 $x _ { N } ( t )$ 呈现出起伏，起伏的峰值大小似乎不随N增大而下降!他开始怀疑仪器是否有不完善的地方，于是将该问题写了一封信给吉布斯，吉布斯检查了该结果，证明其正确，并于1899年发表了他的看法，即我们所说的吉布斯现象。
+      line_hint: 537
+- id: img-ch2-3-19-吉布斯-Gibbs-现象
+  name: 吉布斯(Gibbs)现象
+  range:
+    start:
+      snippet: '## 吉布斯(Gibbs)现象'
+      line_hint: 539
+    end:
+      snippet: x _ {N} (t) = \sum_ {n = - N} ^ {N} C _ {n} \mathrm{e} ^ {\mathrm{j}
+        n \omega_ {0} t}
+      line_hint: 546
+- id: img-ch2-3-20-没有间断点的连续时间信号不会出现Gibbs现象
+  name: 没有间断点的连续时间信号不会出现Gibbs现象
+  range:
+    start:
+      snippet: '## 没有间断点的连续时间信号不会出现Gibbs现象'
+      line_hint: 551
+    end:
+      snippet: '![](.memoria/images/b6ebba8772018889183dd84fb9dcfa61b61f9a1d6ac49b5bec94f6e4c3f6fc52.jpg)'
+      line_hint: 561
+- id: img-ch2-3-21-单选题
+  name: 单选题
+  range:
+    start:
+      snippet: '## 单选题'
+      line_hint: 563
+    end:
+      snippet: D 以上都不对
+      line_hint: 571
+- id: img-ch2-3-22-线性特性
+  name: 线性特性
+  range:
+    start:
+      snippet: '## 线性特性'
+      line_hint: 583
+    end:
+      snippet: \begin{array}{l} = \frac {1}{T _ {0}} \int_ {<   T _ {0} >} a \cdot
+        \tilde {x} (t) \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t +
+        \frac {1}{T _ {0}} \int_ {<   T _ {0} >} b \cdot \tilde {g} (t) \mathrm{e}
+        ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t \\ = a \cdot C _ {n} + b \cdot
+        D _ {n} \\ \end{array}
+      line_hint: 592
+- id: img-ch2-3-23-u-对称特性
+  name: u 对称特性
+  range:
+    start:
+      snippet: '## u 对称特性'
+      line_hint: 597
+    end:
+      snippet: C _ {- n} ^ {*} = \frac {1}{T _ {0}} \int_ {<   T _ {0} >} \tilde {x}
+        ^ {*} (t) \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t \quad \Longrightarrow
+        \quad \tilde {x} ^ {*} (t) \rightarrow C _ {- n} ^ {*}
+      line_hint: 614
+- id: img-ch2-3-24-对称特性
+  name: 对称特性
+  range:
+    start:
+      snippet: '## 对称特性'
+      line_hint: 619
+    end:
+      snippet: C _ {n} ^ {*} = \frac {1}{T _ {0}} \int_ {<   T _ {0} >} \tilde {x}
+        ^ {*} (- t) \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t \quad
+        \Longrightarrow \quad \tilde {x} ^ {*} (- t) \rightarrow C _ {n} ^ {*}
+      line_hint: 638
+- id: img-ch2-3-25-对称特性
+  name: 对称特性
+  range:
+    start:
+      snippet: '## 对称特性'
+      line_hint: 643
+    end:
+      snippet: 幅度谱为偶对称，相位谱为奇对称。
+      line_hint: 655
+- id: img-ch2-3-26-连续时间Fourier级数的性质
+  name: 连续时间Fourier级数的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier级数的性质'
+      line_hint: 657
+    end:
+      snippet: 实信号
+      line_hint: 661
+- id: img-ch2-3-27-对称特性
+  name: 对称特性
+  range:
+    start:
+      snippet: '## 对称特性'
+      line_hint: 679
+    end:
+      snippet: '> 实偶信号'
+      line_hint: 691
+- id: img-ch2-3-28-连续时间Fourier级数的性质
+  name: 连续时间Fourier级数的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier级数的性质'
+      line_hint: 693
+    end:
+      snippet: C _ {n} = \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} \frac {1}{2}} C
+        _ {n 1} = \frac {1}{2} \mathrm{e} ^ {- \mathrm{j} \frac {n \pi}{2}} \mathrm{Sa}
+        (\frac {n \pi}{2})
+      line_hint: 736
+- id: img-ch2-3-29-u-频移特性
+  name: u 频移特性
+  range:
+    start:
+      snippet: '## u 频移特性'
+      line_hint: 739
+    end:
+      snippet: \frac {1}{T _ {0}} \int_ {<   T _ {0} >} \tilde {x} (t) \mathrm{e}
+        ^ {\mathrm{j} M \omega_ {0} t} \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t}
+        \mathrm{d} t = \frac {1}{T _ {0}} \int_ {<   T _ {0} >} \tilde {x} (t) \mathrm{e}
+        ^ {- \mathrm{j} (n - M) \omega_ {0} t} \mathrm{d} t = C _ {n - M}
+      line_hint: 750
+- id: img-ch2-3-30-连续时间Fourier级数的性质
+  name: 连续时间Fourier级数的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier级数的性质'
+      line_hint: 753
+    end:
+      snippet: = \int_ {0} ^ {T _ {0}} \tilde {x} (\tau) D _ {n} \mathrm{e} ^ {- \mathrm{j}
+        n \omega_ {0} \tau} \mathrm{d} \tau = T _ {0} D _ {n} \frac {1}{T _ {0}} \int_
+        {0} ^ {T _ {0}} \tilde {x} (\tau) \mathrm{e} ^ {- \mathrm{j} n \omega_ {0}
+        \tau} \mathrm{d} \tau = T _ {0} C _ {n} \cdot D _ {n}
+      line_hint: 790
+- id: img-ch2-3-31-u-微分特性
+  name: u 微分特性
+  range:
+    start:
+      snippet: '## u 微分特性'
+      line_hint: 793
+    end:
+      snippet: 因此有 $\tilde { x } ^ { \prime } ( t )  \mathrm { j } n \omega _ { \scriptscriptstyle
+        0 } C _ { n }$
+      line_hint: 807
+- id: img-ch2-3-32-u-Parseval功率守恒定理
+  name: u Parseval功率守恒定理
+  range:
+    start:
+      snippet: '## u Parseval功率守恒定理'
+      line_hint: 811
+    end:
+      snippet: 周期信号的功率等于信号所包含的直流、基波以及各次谐波的功率之和
+      line_hint: 817
+- id: img-ch2-3-33-周期信号的功率频谱
+  name: 周期信号的功率频谱：
+  range:
+    start:
+      snippet: '## 周期信号的功率频谱：'
+      line_hint: 819
+    end:
+      snippet: $| C _ { n } | ^ { 2 }$ 随 $n \omega _ { 0 }$ 分布称为周期信号的功率谱，功率谱 $| C
+        _ { n } | ^ { 2 }$ 与周期信号不是一一对应的关系。
+      line_hint: 821
+- id: img-ch2-3-34-连续时间Fourier级数的性质
+  name: 连续时间Fourier级数的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier级数的性质'
+      line_hint: 823
+    end:
+      snippet: 周期矩形信号在有效带宽内各谐波分量的功率之和，占信号总功率的90%
+      line_hint: 889
+- id: img-ch2-3-35-内容回顾
+  name: 内容回顾
+  range:
+    start:
+      snippet: '## 内容回顾'
+      line_hint: 891
+    end:
+      snippet: 在信号传输和处理中，若丢失有效带宽以外的谐波成分，根据功率谱能知道对信号功率的影响程度。
+      line_hint: 921
+- id: img-ch2-3-36-连续时间Fourier级数的性质
+  name: 连续时间Fourier级数的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier级数的性质'
+      line_hint: 923
+    end:
+      snippet: \tilde {x} (t) \circledast \tilde {g} (t) \longrightarrow T _ {0} C
+        _ {n} \cdot D _ {n}
+      line_hint: 949
+- id: img-ch2-3-37-信号时域分析的局限性
+  name: 信号时域分析的局限性
+  range:
+    start:
+      snippet: '## 信号时域分析的局限性'
+      line_hint: 958
+    end:
+      snippet: 数字键‘1’和‘2’时域波形
+      line_hint: 970
+- id: img-ch2-3-38-连续周期信号频域分析的应用
+  name: 连续周期信号频域分析的应用
+  range:
+    start:
+      snippet: '## 连续周期信号频域分析的应用'
+      line_hint: 978
+    end:
+      snippet: '> 识别数字键'
+      line_hint: 992
+- id: img-ch2-3-39-连续周期信号频域分析的总结
+  name: 连续周期信号频域分析的总结
+  range:
+    start:
+      snippet: '## 连续周期信号频域分析的总结'
+      line_hint: 994
+    end:
+      snippet: '- ※ 吉伯斯现象：若周期信号有间断点，利用有限项合成时，在间断点处出现振荡现象。'
+      line_hint: 1004
+- id: img-ch2-3-40-信号正交表示与Fourier级数
+  name: 信号正交表示与Fourier级数
+  range:
+    start:
+      snippet: '## 信号正交表示与Fourier级数'
+      line_hint: 1006
+    end:
+      snippet: C _ {n} = \frac {\int_ {t _ {1}} ^ {t _ {2}} x (t) f _ {n} ^ {*} (t)
+        \mathrm{d} t}{\int_ {t _ {1}} ^ {t _ {2}} f _ {n} (t) f _ {n} ^ {*} (t) \mathrm{d}
+        t} = \frac {\int_ {t _ {1}} ^ {t _ {1} + T _ {0}} x (t) \mathrm{e} ^ {- \mathrm{j}
+        n \omega_ {0} t} \mathrm{d} t}{\int_ {t _ {1}} ^ {t _ {1} + T _ {0}} \mathrm{e}
+        ^ {\mathrm{j} n \omega_ {0} t} \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t}
+        \mathrm{d} t} = \frac {1}{T _ {0}} \int_ {t _ {1}} ^ {t _ {1} + T _ {0}} x
+        (t) \mathrm{e} ^ {- \mathrm{j} n \omega_ {0} t} \mathrm{d} t
+      line_hint: 1061
+- id: img-ch2-3-41-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 1076
+    end:
+      snippet: '- 连续时间Fourier变换的性质'
+      line_hint: 1080
+- id: img-ch2-3-42-连续非周期信号的频域表示
+  name: 连续非周期信号的频域表示
+  range:
+    start:
+      snippet: '## 连续非周期信号的频域表示'
+      line_hint: 1082
+    end:
+      snippet: x (t) \xleftarrow {\mathcal {F}} X (\mathrm{j} \omega)
+      line_hint: 1121
+- id: img-ch2-3-43-连续非周期信号的Fourier变换
+  name: 连续非周期信号的Fourier变换
+  range:
+    start:
+      snippet: '## 连续非周期信号的Fourier变换'
+      line_hint: 1124
+    end:
+      snippet: 非周期矩形信号的频谱图
+      line_hint: 1193
+- id: img-ch2-3-44-连续非周期信号的频谱特性
+  name: 连续非周期信号的频谱特性
+  range:
+    start:
+      snippet: '## 连续非周期信号的频谱特性'
+      line_hint: 1195
+    end:
+      snippet: '- u 信号在时域持续时间有限，在频域其频谱延续至无限'
+      line_hint: 1198
+- id: img-ch2-3-45-u-信号的有效带宽
+  name: u 信号的有效带宽
+  range:
+    start:
+      snippet: '## u 信号的有效带宽'
+      line_hint: 1202
+    end:
+      snippet: \omega_{\mathrm{B}} = 2\pi /\tau
+      line_hint: 1209
+- id: img-ch2-3-46-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 1214
+    end:
+      snippet: '- 常见连续时间信号的频谱'
+      line_hint: 1217
+- id: img-ch2-3-47-连续非周期信号的频域分析
+  name: 连续非周期信号的频域分析
+  range:
+    start:
+      snippet: '## 连续非周期信号的频域分析'
+      line_hint: 1220
+    end:
+      snippet: 是构建完整信号分析体系的基石。以常见信号频谱为基础，可拓展到复杂信号频谱分析、系统频域分析等多方面内容。
+      line_hint: 1250
+- id: img-ch2-3-48-常见连续时间信号的频谱
+  name: 常见连续时间信号的频谱
+  range:
+    start:
+      snippet: '## 常见连续时间信号的频谱'
+      line_hint: 1252
+    end:
+      snippet: A \cdot p _ {\tau} (t) \longrightarrow A \tau \cdot \mathrm{Sa} (\frac
+        {\omega \tau}{2})
+      line_hint: 1261
+- id: img-ch2-3-49-常见连续时间信号
+  name: 常见连续时间信号
+  range:
+    start:
+      snippet: '## 常见连续时间信号'
+      line_hint: 1264
+    end:
+      snippet: 周期冲激串信号
+      line_hint: 1282
+- id: img-ch2-3-50-1-单位冲激信号d-t
+  name: 1. 单位冲激信号d(t)
+  range:
+    start:
+      snippet: '## 1. 单位冲激信号d(t)'
+      line_hint: 1286
+    end:
+      snippet: \mathcal {F} [ \delta (t) ] = 1
+      line_hint: 1301
+- id: img-ch2-3-51-常见连续时间信号的频谱
+  name: 常见连续时间信号的频谱
+  range:
+    start:
+      snippet: '## 常见连续时间信号的频谱'
+      line_hint: 1308
+    end:
+      snippet: \mathcal {F} [ 1 ] = 2 \pi \delta (\omega)
+      line_hint: 1333
+- id: img-ch2-3-52-3-符号函数信号sgn-t
+  name: 3. 符号函数信号sgn(t)
+  range:
+    start:
+      snippet: '## 3. 符号函数信号sgn(t)'
+      line_hint: 1336
+    end:
+      snippet: \mathcal {F} [ \mathrm{sgn} (t) ] = \frac {2}{\mathrm{j} \omega}
+      line_hint: 1359
+- id: img-ch2-3-53-4-单位阶跃信号u-t
+  name: 4. 单位阶跃信号u(t)
+  range:
+    start:
+      snippet: '## 4. 单位阶跃信号u(t)'
+      line_hint: 1366
+    end:
+      snippet: \mathcal {F} [ \mathrm{u} (t) ] = \pi \delta (\omega) + \frac {1}{\mathrm{j}
+        \omega}
+      line_hint: 1375
+- id: img-ch2-3-54-常见连续时间信号的频谱
+  name: 常见连续时间信号的频谱
+  range:
+    start:
+      snippet: '## 常见连续时间信号的频谱'
+      line_hint: 1382
+    end:
+      snippet: \mathcal {F} [ \mathrm{e} ^ {\mathrm{j} \omega_ {0} t} ] = 2 \pi \delta
+        (\omega - \omega_ {0})
+      line_hint: 1417
+- id: img-ch2-3-55-7-余弦信号-cos-omega-_-0-t
+  name: 7. 余弦信号 $\cos ( \omega _ { 0 } t )$
+  range:
+    start:
+      snippet: '## 7. 余弦信号 $\cos ( \omega _ { 0 } t )$'
+      line_hint: 1422
+    end:
+      snippet: \mathcal {F} [ \sin \omega_ {0} t ] = \mathrm{j} \pi [ \delta (\omega
+        + \omega_ {0}) - \delta (\omega - \omega_ {0}) ]
+      line_hint: 1437
+- id: img-ch2-3-56-8-一般周期信号
+  name: 8. 一般周期信号
+  range:
+    start:
+      snippet: '## 8. 一般周期信号'
+      line_hint: 1444
+    end:
+      snippet: \mathcal {F} [ \tilde {x} (t) ] = 2 \pi \sum_ {n = - \infty} ^ {+ \infty}
+        C _ {n} \delta (\omega - n \omega_ {0})
+      line_hint: 1455
+- id: img-ch2-3-57-9-周期冲激串-delta-_-T-t
+  name: 9. 周期冲激串 $\delta _ { T } ( t )$
+  range:
+    start:
+      snippet: '## 9. 周期冲激串 $\delta _ { T } ( t )$'
+      line_hint: 1460
+    end:
+      snippet: \mathcal {F} [ \delta_ {T} (t) ] = \omega_ {0} \sum_ {n = - \infty}
+        ^ {+ \infty} \delta (\omega - n \omega_ {0})
+      line_hint: 1475
+- id: img-ch2-3-58-常见连续时间信号的频谱
+  name: 常见连续时间信号的频谱
+  range:
+    start:
+      snippet: '## 常见连续时间信号的频谱'
+      line_hint: 1492
+    end:
+      snippet: X (\mathrm{j} \omega) = 2 \pi \sum_ {n = - \infty} ^ {+ \infty} C _
+        {n} \delta (\omega - n \omega_ {0})
+      line_hint: 1531
+- id: img-ch2-3-59-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1542
+    end:
+      snippet: 可以更清楚地了解信号的特性。如通过性质能更直观地分析信号通过系统的响应、信号的传输特性以及能量守恒等情况。
+      line_hint: 1577
+- id: img-ch2-3-60-1-线性特性
+  name: 1. 线性特性
+  range:
+    start:
+      snippet: '## 1. 线性特性'
+      line_hint: 1579
+    end:
+      snippet: 其中a，b均为常数
+      line_hint: 1585
+- id: img-ch2-3-61-1-线性特性
+  name: 1. 线性特性
+  range:
+    start:
+      snippet: '## 1. 线性特性'
+      line_hint: 1579
+    end:
+      snippet: \mathrm{u} (t) = \frac {1}{2} + \frac {1}{2} \mathrm{sgn} (t)
+      line_hint: 1594
+- id: img-ch2-3-63-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1613
+    end:
+      snippet: 当x(t)为实偶对称信号时，其频谱函数 $X ( \mathrm { j } \omega )$ 也为实偶对称函数。
+      line_hint: 1675
+- id: img-ch2-3-62-2-对称特性
+  name: 2. 对称特性
+  range:
+    start:
+      snippet: '## 2. 对称特性'
+      line_hint: 1615
+    end:
+      snippet: \begin{array}{l} \mathscr {F} [ x ^ {*} (- t) ] = \int_ {- \infty}
+        ^ {\infty} x ^ {*} (- t) \mathrm{e} ^ {- \mathrm{j} \omega t} \mathrm{d} t
+        = - \int_ {\infty} ^ {- \infty} x ^ {*} (t) \mathrm{e} ^ {\mathrm{j} \omega
+        t} \mathrm{d} t \\ = \int_ {- \infty} ^ {\infty} x ^ {*} (t) \mathrm{e} ^
+        {\mathrm{j} \omega t} \mathrm{d} t = \left[ \int_ {- \infty} ^ {\infty} x
+        (t) \mathrm{e} ^ {- \mathrm{j} \omega t} \mathrm{d} t \right] ^ {*} = X ^
+        {*} (\mathrm{j} \omega) \\ \end{array}
+      line_hint: 1624
+- id: img-ch2-3-64-3-互易对称特性
+  name: 3. 互易对称特性
+  range:
+    start:
+      snippet: '## 3. 互易对称特性'
+      line_hint: 1677
+    end:
+      snippet: X (\mathrm{j} t) \xleftarrow {\mathscr {F}} 2 \pi \cdot x (- \omega)
+      line_hint: 1680
+- id: img-ch2-3-65-3-互易对称特性
+  name: 3. 互易对称特性
+  range:
+    start:
+      snippet: '## 3. 互易对称特性'
+      line_hint: 1677
+    end:
+      snippet: '![](.memoria/images/830f3f57174d8d9ac9692232d3131bbb25815fcd572bb530332b38b6adc541fd.jpg)'
+      line_hint: 1697
+- id: img-ch2-3-67-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1699
+    end:
+      snippet: x (a t) \xleftarrow {\mathscr {F}} \frac {1}{| a |} X (\mathrm{j} \frac
+        {\omega}{a}) \quad a \neq 0
+      line_hint: 1720
+- id: img-ch2-3-66-4-展缩特性
+  name: 4. 展缩特性
+  range:
+    start:
+      snippet: '## 4. 展缩特性'
+      line_hint: 1701
+    end:
+      snippet: \xrightarrow {u = a t} = \frac {1}{| a |} \int_ {- \infty} ^ {\infty}
+        x (u) \mathrm{e} ^ {- \mathrm{j} \omega (\frac {u}{a})} \mathrm{d} u = \frac
+        {1}{| a |} X (\mathrm{j} \frac {\omega}{a})
+      line_hint: 1712
+- id: img-ch2-3-68-单选题
+  name: 单选题
+  range:
+    start:
+      snippet: '## 单选题'
+      line_hint: 1727
+    end:
+      snippet: '已知 $x ( t ) \longleftrightarrow X ( \mathrm { j } \omega )$ ，该信号的最高角频率是
+        $: \omega _ { \mathrm { m } } \mathrm { \Delta } \mathrm { r a d / s }$ 求信号
+        $x _ { 1 } ( t ) = x ( \frac { t } { 2 } ) - x ( 2 t )$ 的最高角频率是（） $\mathrm
+        { r a d } / \mathrm { s }$ O'
+      line_hint: 1729
+- id: img-ch2-3-70-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1733
+    end:
+      snippet: X (\mathrm{j} \omega) = A \tau \cdot \mathrm{Sa} (\frac {\omega \tau}{2})
+        \cdot \mathrm{e} ^ {- \mathrm{j} 0. 5 \omega} = A \cdot \mathrm{Sa} (\frac
+        {\omega}{2}) \cdot \mathrm{e} ^ {- \mathrm{j} 0. 5 \omega}
+      line_hint: 1770
+- id: img-ch2-3-69-5-时移特性
+  name: 5. 时移特性
+  range:
+    start:
+      snippet: '## 5. 时移特性'
+      line_hint: 1735
+    end:
+      snippet: \xrightarrow {u = t - t _ {0}} = \int_ {- \infty} ^ {\infty} x (u)
+        \mathrm{e} ^ {- \mathrm{j} \omega (t _ {0} + u)} \mathrm{d} u = X (\mathrm{j}
+        \omega) \mathrm{e} ^ {- \mathrm{j} \omega t _ {0}}
+      line_hint: 1750
+- id: img-ch2-3-71-6-频移特性-调制定理
+  name: 6. 频移特性(调制定理)
+  range:
+    start:
+      snippet: '## 6. 频移特性(调制定理)'
+      line_hint: 1773
+    end:
+      snippet: 【证明】F{x(t)ejov} =∫x(t)ejave−jotdt =∫x(t)e−j(ω−a)tdt=X[j(ω−ω)]
+      line_hint: 1781
+- id: img-ch2-3-72-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1783
+    end:
+      snippet: '解:'
+      line_hint: 1787
+- id: img-ch2-3-73-7-卷积特性
+  name: 7. 卷积特性
+  range:
+    start:
+      snippet: '## 7. 卷积特性'
+      line_hint: 1820
+    end:
+      snippet: 信号在时域中的卷积，对应频谱函数在频域中的乘积。
+      line_hint: 1826
+- id: img-ch2-3-74-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1828
+    end:
+      snippet: X (\mathrm{j} \omega) = 4 \mathrm{Sa} ^ {2} (\omega)
+      line_hint: 1855
+- id: img-ch2-3-75-8-频域卷积特性
+  name: 8. 频域卷积特性
+  range:
+    start:
+      snippet: '## 8. 频域卷积特性'
+      line_hint: 1860
+    end:
+      snippet: 信号在时域中的乘积，对应频谱函数在频域中的卷积。
+      line_hint: 1866
+- id: img-ch2-3-76-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1868
+    end:
+      snippet: x (t) = \frac {2}{\pi} \mathrm{Sa} ^ {2} (t)
+      line_hint: 1895
+- id: img-ch2-3-77-9-时域微分特性
+  name: 9. 时域微分特性
+  range:
+    start:
+      snippet: '## 9. 时域微分特性'
+      line_hint: 1900
+    end:
+      snippet: \frac {\mathrm{d} x (t)}{\mathrm{d} t} \xleftarrow {\mathscr {F}} (\mathrm{j}
+        \omega) \cdot X (\mathrm{j} \omega)
+      line_hint: 1929
+- id: img-ch2-3-79-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 1932
+    end:
+      snippet: 信号的时域微分，丢失了信号中的直流分量。
+      line_hint: 2000
+- id: img-ch2-3-78-9-时域微分特性
+  name: 9. 时域微分特性
+  range:
+    start:
+      snippet: '## 9. 时域微分特性'
+      line_hint: 1934
+    end:
+      snippet: 则 ( )^{n}x td (jω)n · X(jω) ^{n}td
+      line_hint: 1944
+- id: img-ch2-3-80-10-时域积分特性
+  name: 10. 时域积分特性
+  range:
+    start:
+      snippet: '## 10. 时域积分特性'
+      line_hint: 2002
+    end:
+      snippet: \mathcal {F} \left\{\int_ {- \infty} ^ {t} x (\tau) \mathrm{d} \tau
+        \right\} = X (\mathrm{j} \omega) \cdot [ \pi \delta (\omega) + \frac {1}{\mathrm{j}
+        \omega} ] = \frac {1}{\mathrm{j} \omega} X (\mathrm{j} \omega) + \pi X (0)
+        \delta (\omega)
+      line_hint: 2011
+- id: img-ch2-3-81-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 2014
+    end:
+      snippet: Y (\mathrm{j} \omega) = \frac {1}{\mathrm{j} \omega} \mathrm{Sa} (0.
+        5 \omega) \mathrm{e} ^ {- \mathrm{j} 0. 5 \omega} + 3 \pi \delta (\omega)
+      line_hint: 2061
+- id: img-ch2-3-82-10-时域积分特性
+  name: 10. 时域积分特性
+  range:
+    start:
+      snippet: '## 10. 时域积分特性'
+      line_hint: 2090
+    end:
+      snippet: X (\mathrm{j} \omega) = \pi [ x (+ \infty) + x (- \infty) ] \delta
+        (\omega) + \frac {X _ {1} (\mathrm{j} \omega)}{\mathrm{j} \omega}
+      line_hint: 2099
+- id: img-ch2-3-83-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 2102
+    end:
+      snippet: 注意： $\int _ { - \infty } ^ { t } x ^ { \prime } ( \tau ) \mathrm {
+        d } \tau = x ( t ) - x ( - \infty )$
+      line_hint: 2174
+- id: img-ch2-3-84-11-频域微分特性
+  name: 11. 频域微分特性
+  range:
+    start:
+      snippet: '## 11. 频域微分特性'
+      line_hint: 2180
+    end:
+      snippet: \frac {\mathrm{d} X (\mathrm{j} \omega)}{\mathrm{d} \omega} = \int_
+        {- \infty} ^ {\infty} (- \mathrm{j} t) x (t) \mathrm{e} ^ {- \mathrm{j} \omega
+        t} \mathrm{d} t \quad \Longrightarrow \quad t \cdot x (t) \xleftarrow {\mathscr
+        {F}} \mathrm{j} \frac {\mathrm{d} X (\mathrm{j} \omega)}{\mathrm{d} \omega}
+      line_hint: 2189
+- id: img-ch2-3-85-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 2192
+    end:
+      snippet: 因此 $t \mathrm { e } ^ { - \alpha t } \mathrm { u } ( t ) \longleftrightarrow
+        \mathrm { j } \frac { \mathrm { d } } { \mathrm { d } \omega } ( \frac { 1
+        } { \alpha + \mathrm { j } \omega } ) = \frac { 1 } { \left( \alpha + \mathrm
+        { j } \omega \right) ^ { 2 } }$
+      line_hint: 2202
+- id: img-ch2-3-87-连续时间Fourier变换的性质
+  name: 连续时间Fourier变换的性质
+  range:
+    start:
+      snippet: '## 连续时间Fourier变换的性质'
+      line_hint: 2192
+    end:
+      snippet: \int_ {- \infty} ^ {\infty} \left(\frac {\sin 2 t}{2 t}\right) ^ {2}
+        \mathrm{d} t = ?
+      line_hint: 2305
+- id: img-ch2-3-86-12-Parseval定理
+  name: 12. Parseval定理
+  range:
+    start:
+      snippet: '## 12. Parseval定理'
+      line_hint: 2204
+    end:
+      snippet: $G ( \mathrm { j } \omega ) = \frac { 1 } { 2 \pi } | X ( \mathrm {
+        j } \omega ) | ^ { 2 }$ 称为信号 $x ( t )$ 的能量谱
+      line_hint: 2212
+- id: img-ch2-3-88-信号频域分析举例
+  name: 信号频域分析举例
+  range:
+    start:
+      snippet: '## 信号频域分析举例'
+      line_hint: 2308
+    end:
+      snippet: 男高音信号时域波形
+      line_hint: 2450
+- id: img-ch2-3-89-信号频域分析应用
+  name: 信号频域分析应用
+  range:
+    start:
+      snippet: '## 信号频域分析应用'
+      line_hint: 2456
+    end:
+      snippet: 滤波后信号的频谱
+      line_hint: 2512
+- id: img-ch2-3-90-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 2530
+    end:
+      snippet: 为什么不同系统处理的效果会不一样？
+      line_hint: 2553
+- id: img-ch2-3-91-为什么进行系统的频域分析
+  name: 为什么进行系统的频域分析？
+  range:
+    start:
+      snippet: '## 为什么进行系统的频域分析？'
+      line_hint: 2539
+    end:
+      snippet: 处理结果的时域解释——难
+      line_hint: 2573
+- id: img-ch2-3-92-信号传输
+  name: 信号传输
+  range:
+    start:
+      snippet: '## 信号传输'
+      line_hint: 2577
+    end:
+      snippet: y (t) = x (t) * h (t)
+      line_hint: 2582
+- id: img-ch2-3-93-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 2589
+    end:
+      snippet: '- 连续LTI系统的频率响应计算'
+      line_hint: 2596
+- id: img-ch2-3-94-连续时间LTI系统的频率响应
+  name: 连续时间LTI系统的频率响应
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频率响应'
+      line_hint: 2603
+    end:
+      snippet: $H ( \mathbf { j } \omega )$ 反映了系统对不同频率信号的传输特性
+      line_hint: 2627
+- id: img-ch2-3-95-幅度响应与相位响应
+  name: 幅度响应与相位响应
+  range:
+    start:
+      snippet: '## 幅度响应与相位响应'
+      line_hint: 2629
+    end:
+      snippet: 相位响应 $\varphi ( \omega )$ 是w的奇函数。
+      line_hint: 2637
+- id: img-ch2-3-96-连续时间LTI系统的频域响应
+  name: 连续时间LTI系统的频域响应
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频域响应'
+      line_hint: 2639
+    end:
+      snippet: 响应的相位改变由 $\varphi ( \omega _ { 0 } )$ 确定。
+      line_hint: 2671
+- id: img-ch2-3-97-连续时间LTI系统的频率响应
+  name: 连续时间LTI系统的频率响应
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频率响应'
+      line_hint: 2673
+    end:
+      snippet: H (\mathrm{j} \omega) = \frac {Y _ {\mathrm{zs}} (\mathrm{j} \omega)}{X
+        (\mathrm{j} \omega)}
+      line_hint: 2690
+- id: img-ch2-3-98-连续时间LTI系统的频域描述
+  name: 连续时间LTI系统的频域描述
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频域描述'
+      line_hint: 2707
+    end:
+      snippet: 虽然连续时间LTI系统的频率响应H(jw)，可通过系统的输入与输出的频谱函数来求解，但H(jw)与系统的输入和输出无关。
+      line_hint: 2783
+- id: img-ch2-3-99-连续LTI系统的频率响应计算
+  name: 连续LTI系统的频率响应计算
+  range:
+    start:
+      snippet: '## 连续LTI系统的频率响应计算'
+      line_hint: 2799
+    end:
+      snippet: 对于稳定的连续LTI系统，其冲激响应一定存在Fourier变换
+      line_hint: 2816
+- id: img-ch2-3-100-连续LTI系统频率响应的计算
+  name: 连续LTI系统频率响应的计算
+  range:
+    start:
+      snippet: '## 连续LTI系统频率响应的计算'
+      line_hint: 2818
+    end:
+      snippet: \begin{array}{l} H (\mathrm{j} \omega) = \mathcal {F} [ h (t) ] \\
+        = \frac {3}{\mathrm{j} \omega + 2} + \frac {2}{\mathrm{j} \omega + 4} = \frac
+        {5 (\mathrm{j} \omega) + 1 6}{(\mathrm{j} \omega) ^ {2} + 6 (\mathrm{j} \omega)
+        + 8} \\ \end{array}
+      line_hint: 2831
+- id: img-ch2-3-101-根据描述连续LTI系统的微分方程-计算系统的频率响应
+  name: ※ 根据描述连续LTI系统的微分方程，计算系统的频率响应
+  range:
+    start:
+      snippet: '## ※ 根据描述连续LTI系统的微分方程，计算系统的频率响应'
+      line_hint: 2836
+    end:
+      snippet: H (\mathrm{j} \omega) = \frac {Y _ {\mathrm{zs}} (\mathrm{j} \omega)}{X
+        (\mathrm{j} \omega)} = \frac {b _ {2} (\mathrm{j} \omega) ^ {2} + b _ {1}
+        (\mathrm{j} \omega) + b _ {0}}{(\mathrm{j} \omega) ^ {3} + a _ {2} (\mathrm{j}
+        \omega) ^ {2} + a _ {1} (\mathrm{j} \omega) + a _ {0}}
+      line_hint: 2851
+- id: img-ch2-3-102-连续LTI系统频率响应的计算方法
+  name: 连续LTI系统频率响应的计算方法
+  range:
+    start:
+      snippet: '## 连续LTI系统频率响应的计算方法'
+      line_hint: 2854
+    end:
+      snippet: 由幅度响应可见，此为一个中心频率为 $f _ { 0 } \mathrm { H z } ,$ 3dB带宽为$f _ { \mathrm
+        { w } }$ Hz的带阻滤波器。
+      line_hint: 2872
+- id: img-ch2-3-103-连续LTI系统的频率响应计算
+  name: 连续LTI系统的频率响应计算
+  range:
+    start:
+      snippet: '## 连续LTI系统的频率响应计算'
+      line_hint: 2874
+    end:
+      snippet: ※ 根据电路的频域等效模型，计算系统频率响应
+      line_hint: 2906
+- id: img-ch2-3-104-电感的频域模型
+  name: 电感的频域模型
+  range:
+    start:
+      snippet: '## 电感的频域模型'
+      line_hint: 2926
+    end:
+      snippet: \frac {V _ {\mathrm{L}} (\mathrm{j} \omega)}{I _ {\mathrm{L}} (\mathrm{j}
+        \omega)} = \mathrm{j} \omega L
+      line_hint: 2939
+- id: img-ch2-3-105-连续LTI系统的频率响应计算
+  name: 连续LTI系统的频率响应计算
+  range:
+    start:
+      snippet: '## 连续LTI系统的频率响应计算'
+      line_hint: 2942
+    end:
+      snippet: h (t) = \frac {1}{R C} \mathrm{e} ^ {- (1 / R C) t} \mathrm{u} (t)
+      line_hint: 2965
+- id: img-ch2-3-106-RC电路系统的幅度响应和冲激响应
+  name: RC电路系统的幅度响应和冲激响应
+  range:
+    start:
+      snippet: '## RC电路系统的幅度响应和冲激响应'
+      line_hint: 2968
+    end:
+      snippet: 由于 $| H ( \mathrm { j } ( 1 / R C ) ) | { \approx } 0 . 7$ ，所以把 $\omega
+        _ { \mathrm { c } } { = } 1 / R C$ 称为该系统的3dB截频。
+      line_hint: 2976
+- id: img-ch2-3-107-连续时间LTI系统的频率响应
+  name: 连续时间LTI系统的频率响应
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频率响应'
+      line_hint: 2978
+    end:
+      snippet: H (\mathrm{j} \omega) = | H (\mathrm{j} \omega) | \mathrm{e} ^ {\mathrm{j}
+        \varphi (\omega)}
+      line_hint: 2991
+- id: img-ch2-3-108-非周期信号通过连续LTI系统的零状态响应
+  name: ※ 非周期信号通过连续LTI系统的零状态响应
+  range:
+    start:
+      snippet: '## ※ 非周期信号通过连续LTI系统的零状态响应'
+      line_hint: 3007
+    end:
+      snippet: Y _ {\mathrm{zs}} (\mathrm{j} \omega) = H (\mathrm{j} \omega) X (\mathrm{j}
+        \omega)
+      line_hint: 3016
+- id: img-ch2-3-109-例-已知描述某稳定的连续LTI系统的微分方程为
+  name: 【例】已知描述某稳定的连续LTI系统的微分方程为
+  range:
+    start:
+      snippet: '## 【例】已知描述某稳定的连续LTI系统的微分方程为'
+      line_hint: 3019
+    end:
+      snippet: 所以不能用频域法求解系统的零状态响应。
+      line_hint: 3089
+- id: img-ch2-3-110-连续系统响应的频域分析方法
+  name: 连续系统响应的频域分析方法
+  range:
+    start:
+      snippet: '## 连续系统响应的频域分析方法'
+      line_hint: 3091
+    end:
+      snippet: 滤波后音乐信号频谱
+      line_hint: 3132
+- id: img-ch2-3-111-周期信号通过LTI系统的零状态响应
+  name: ※ 周期信号通过LTI系统的零状态响应
+  range:
+    start:
+      snippet: '## ※ 周期信号通过LTI系统的零状态响应'
+      line_hint: 3134
+    end:
+      snippet: = \sum_ {n = - \infty} ^ {\infty} \mathrm{Sa} (0. 5 \pi n) \mathrm{e}
+        ^ {\mathrm{j} n \pi t / 2} / (1 + \mathrm{j} 0. 5 n \pi R C)
+      line_hint: 3151
+- id: img-ch2-3-112-例-试求如图所示周期为4的矩形波通过系统的响应
+  name: 【例】试求如图所示周期为4的矩形波通过系统的响应。
+  range:
+    start:
+      snippet: '## 【例】试求如图所示周期为4的矩形波通过系统的响应。'
+      line_hint: 3154
+    end:
+      snippet: RC=4 秒时，系统的输出响应
+      line_hint: 3166
+- id: img-ch2-3-113-连续系统响应的频域分析方法
+  name: 连续系统响应的频域分析方法
+  range:
+    start:
+      snippet: '## 连续系统响应的频域分析方法'
+      line_hint: 3168
+    end:
+      snippet: y _ {\mathrm{zs}} (t) = \mathcal {F} ^ {- 1} [ Y _ {\mathrm{zs}} (\mathrm{j}
+        \omega) ]
+      line_hint: 3176
+- id: img-ch2-3-114-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 3181
+    end:
+      snippet: 理想模拟滤波器
+      line_hint: 3192
+- id: img-ch2-3-116-无失真传输系统
+  name: 无失真传输系统
+  range:
+    start:
+      snippet: '## 无失真传输系统'
+      line_hint: 3194
+    end:
+      snippet: 无失真传输系统的冲激响应
+      line_hint: 3216
+- id: img-ch2-3-115-无失真传输系统的基本概念
+  name: ※无失真传输系统的基本概念
+  range:
+    start:
+      snippet: '## ※无失真传输系统的基本概念'
+      line_hint: 3196
+    end:
+      snippet: K为正常数， $t _ { \mathrm { d } }$ 是输入信号通过系统后的延迟时间。
+      line_hint: 3204
+- id: img-ch2-3-117-连续时间LTI系统的频域分析
+  name: 连续时间LTI系统的频域分析
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频域分析'
+      line_hint: 3218
+    end:
+      snippet: 连续时间LTI系统的频域分析应用
+      line_hint: 3233
+- id: img-ch2-3-118-无失真传输系统的频域特性
+  name: ※无失真传输系统的频域特性
+  range:
+    start:
+      snippet: '## ※无失真传输系统的频域特性'
+      line_hint: 3237
+    end:
+      snippet: 无失真传输系统的频率响应
+      line_hint: 3245
+- id: img-ch2-3-119-无失真传输系统的频域特性
+  name: ※无失真传输系统的频域特性
+  range:
+    start:
+      snippet: '## ※无失真传输系统的频域特性'
+      line_hint: 3237
+    end:
+      snippet: 由于系统的非线性相位，输出信号相对于输入信号产生了失真。
+      line_hint: 3295
+- id: img-ch2-3-120-无失真传输系统
+  name: 无失真传输系统
+  range:
+    start:
+      snippet: '## 无失真传输系统'
+      line_hint: 3297
+    end:
+      snippet: ※无失真传输系统的频域特性
+      line_hint: 3311
+- id: img-ch2-3-121-目录
+  name: 目录
+  range:
+    start:
+      snippet: '## 目录'
+      line_hint: 3319
+    end:
+      snippet: '- 理想低通滤波器的阶跃响应'
+      line_hint: 3330
+- id: img-ch2-3-122-理想模拟滤波器的频率特性
+  name: 理想模拟滤波器的频率特性
+  range:
+    start:
+      snippet: '## 理想模拟滤波器的频率特性'
+      line_hint: 3332
+    end:
+      snippet: H _ {\mathrm{BS}} (\mathrm{j} \omega) = 1 - [ H _ {\mathrm{LP2}} (\mathrm{j}
+        \omega) - H _ {\mathrm{LP1}} (\mathrm{j} \omega) ]
+      line_hint: 3353
+- id: img-ch2-3-123-理想低通滤波器的频率响应
+  name: 理想低通滤波器的频率响应
+  range:
+    start:
+      snippet: '## 理想低通滤波器的频率响应'
+      line_hint: 3371
+    end:
+      snippet: 幅度响应 $H ( \mathrm { j } \omega )$ |在通带恒为1，相位响应为 $0$ 。
+      line_hint: 3379
+- id: img-ch2-3-124-线性相位理想低通滤波器
+  name: ※线性相位理想低通滤波器
+  range:
+    start:
+      snippet: '## ※线性相位理想低通滤波器'
+      line_hint: 3381
+    end:
+      snippet: H (\mathrm{j} \omega) = \left\{ \begin{array}{l l} \mathrm{e} ^ {-
+        \mathrm{j} \omega t _ {\mathrm{d}}} & \left| \omega \right| <   \omega_ {\mathrm{c}}
+        \\ 0 & \left| \omega \right| > \omega_ {\mathrm{c}} \end{array} \right.
+      line_hint: 3390
+- id: img-ch2-3-125-线性相位理想低通滤波器
+  name: ※线性相位理想低通滤波器
+  range:
+    start:
+      snippet: '## ※线性相位理想低通滤波器'
+      line_hint: 3410
+    end:
+      snippet: h (t) = \frac {1}{2 \pi} \int_ {- \infty} ^ {\infty} H (\mathrm{j}
+        \omega) \mathrm{e} ^ {\mathrm{j} \omega t} \mathrm{d} t = \frac {1}{2 \pi}
+        \int_ {- \omega_ {\mathrm{c}}} ^ {\omega_ {\mathrm{c}}} \mathrm{e} ^ {- \mathrm{j}
+        \omega t _ {\mathrm{d}}} \mathrm{e} ^ {\mathrm{j} \omega t} \mathrm{d} t =
+        \frac {\omega_ {\mathrm{c}}}{\pi} \mathrm{Sa} [ \omega_ {\mathrm{c}} (t -
+        t _ {\mathrm{d}}) ]
+      line_hint: 3413
+- id: img-ch2-3-126-线性相位理想低通滤波器
+  name: ※线性相位理想低通滤波器
+  range:
+    start:
+      snippet: '## ※线性相位理想低通滤波器'
+      line_hint: 3410
+    end:
+      snippet: '- n h(t)主峰出现时刻 $t = t _ { \mathrm { d } }$'
+      line_hint: 3429
+- id: img-ch2-3-127-线性相位理想低通滤波器
+  name: ※线性相位理想低通滤波器
+  range:
+    start:
+      snippet: '## ※线性相位理想低通滤波器'
+      line_hint: 3452
+    end:
+      snippet: g (t) = \frac {1}{2} + \frac {1}{\pi} \int_ {0} ^ {\omega_ {\mathrm{c}}
+        (t - t _ {\mathrm{d}})} \mathrm{Sa} (\lambda) \mathrm{d} \lambda
+      line_hint: 3461
+- id: img-ch2-3-128-线性相位理想低通滤波器
+  name: ※线性相位理想低通滤波器
+  range:
+    start:
+      snippet: '## ※线性相位理想低通滤波器'
+      line_hint: 3452
+    end:
+      snippet: n 阶跃响 $\dot { \mathbb { N } } g ( t )$ 的上升时间 $t _ { \mathrm { r } }$
+        与理想低通截频 $\omega _ { \mathrm { c } }$ 成反比。$\omega _ { \mathrm { c } }$ 越大，上升时间就越短，当
+        $\omega _ { \mathrm { c } }  \infty$ 时， $t _ { \mathrm { r } }  0$ O
+      line_hint: 3470
+- id: img-ch2-3-129-理想模拟滤波器
+  name: 理想模拟滤波器
+  range:
+    start:
+      snippet: '## 理想模拟滤波器'
+      line_hint: 3472
+    end:
+      snippet: 带通
+      line_hint: 3487
+- id: img-ch2-3-130-连续时间LTI系统的频域分析应用
+  name: 连续时间LTI系统的频域分析应用
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频域分析应用'
+      line_hint: 3518
+    end:
+      snippet: 系统的频域特性H(jw)对滤波结果的影响
+      line_hint: 3522
+- id: img-ch2-3-132-连续时间LTI系统的频域分析应用
+  name: 连续时间LTI系统的频域分析应用
+  range:
+    start:
+      snippet: '## 连续时间LTI系统的频域分析应用'
+      line_hint: 3518
+    end:
+      snippet: 系统输出 $y _ { 3 } ( t ) = 0 . 4 + \frac { 4 \sqrt { 2 } } { \pi } \cos
+        [ 1 . 2 5 \pi ( t - 2 ) ]$
+      line_hint: 3698
+- id: img-ch2-3-131-传连续时间LTI系统的频域分析应用
+  name: 传连续时间LTI系统的频域分析应用
+  range:
+    start:
+      snippet: '## 传连续时间LTI系统的频域分析应用'
+      line_hint: 3524
+    end:
+      snippet: 信号传输
+      line_hint: 3530
+- id: img-ch2-3-133-连续系统响应的频域分析方法
+  name: 连续系统响应的频域分析方法
+  range:
+    start:
+      snippet: '## 连续系统响应的频域分析方法'
+      line_hint: 3700
+    end:
+      snippet: 解决方法：采用拉普拉斯变换
+      line_hint: 3711
+- id: img-ch2-3-134-补充1-连续时间信号与系统的复频域分析-拉普拉斯变换
+  name: 补充1：连续时间信号与系统的复频域分析(拉普拉斯变换)
+  range:
+    start:
+      snippet: '## 补充1：连续时间信号与系统的复频域分析(拉普拉斯变换)'
+      line_hint: 3713
+    end:
+      snippet: 复频域是整个复平面 $s = \sigma + j \omega$ ，控制信号的增长/衰减，定义域是复数    平面。这个分析空间就叫复频域。
+      line_hint: 3719
+- id: img-ch2-3-135-连续时间信号的复频域表示
+  name: 连续时间信号的复频域表示
+  range:
+    start:
+      snippet: '## 连续时间信号的复频域表示'
+      line_hint: 3723
+    end:
+      snippet: '- 双边Laplace变换及反变换'
+      line_hint: 3729
+- id: img-ch2-3-136-为何进行信号与系统的复频域分析
+  name: 为何进行信号与系统的复频域分析
+  range:
+    start:
+      snippet: '## 为何进行信号与系统的复频域分析'
+      line_hint: 3731
+    end:
+      snippet: '![](.memoria/images/b86e8fa30df67889f61941ebd9dcfe8e10ba86e9beed75cea65790f4e7baa7bd.jpg)'
+      line_hint: 3733
+- id: img-ch2-3-137-如何有效描述连续时间LTI系统
+  name: ※ 如何有效描述连续时间LTI系统？
+  range:
+    start:
+      snippet: '## ※ 如何有效描述连续时间LTI系统？'
+      line_hint: 3737
+    end:
+      snippet: Why？用系统频率响应H(jw) 分析 LTI 系统时，默认激励从t = - ∞ 一直存在，计算结果只给出稳态响应，无法体现暂态过渡过程。
+      line_hint: 3755
+- id: img-ch2-3-138-如何有效分析连续时间LTI系统
+  name: ※ 如何有效分析连续时间LTI系统？
+  range:
+    start:
+      snippet: '## ※ 如何有效分析连续时间LTI系统？'
+      line_hint: 3759
+    end:
+      snippet: 连续LTI系统的复频域(s域)分析将有效解决上述问题。
+      line_hint: 3775
+- id: img-ch2-3-139-为何进行信号与系统的复频域分析
+  name: 为何进行信号与系统的复频域分析
+  range:
+    start:
+      snippet: '## 为何进行信号与系统的复频域分析'
+      line_hint: 3777
+    end:
+      snippet: 分析系统特性（因果性，稳定性等）
+      line_hint: 3803
+- id: img-ch2-3-140-从Fourier变换到Laplace变换
+  name: 从Fourier变换到Laplace变换
+  range:
+    start:
+      snippet: '## 从Fourier变换到Laplace变换'
+      line_hint: 3815
+    end:
+      snippet: x (t) = \frac {1}{2 \pi \mathrm{j}} \int_ {\sigma - \mathrm{j} \infty}
+        ^ {\sigma + \mathrm{j} \infty} X (s) \mathrm{e} ^ {s t} \mathrm{d} s
+      line_hint: 3852
+- id: img-ch2-3-141-1-连续时间信号Laplace变换
+  name: 1. 连续时间信号Laplace变换
+  range:
+    start:
+      snippet: '## 1. 连续时间信号Laplace变换'
+      line_hint: 3855
+    end:
+      snippet: X (s) = \mathcal {L} [ x (t) ] \qquad \quad x (t) = \mathcal {L} ^
+        {- 1} [ X (s) ]
+      line_hint: 3882
+- id: img-ch2-3-142-拉普拉斯-Laplace-Pierre-Simon-1749-1827
+  name: 拉普拉斯（Laplace,Pierre-Simon,1749-1827）
+  range:
+    start:
+      snippet: '## 拉普拉斯（Laplace,Pierre-Simon,1749-1827）'
+      line_hint: 3885
+    end:
+      snippet: 主要成就：在《天体力学》中阐述了天体运行、地球形状、行星摄动、月离理论和三体问题等，引入著名的拉普拉斯方程。在《概率的分析理论》中，总结了当时整个概率论的研究，论述了概率在选举、审判调查、气象等方面的应用。
+      line_hint: 3891
+- id: img-ch2-3-143-2-单边Laplace变换的定义
+  name: 2. 单边Laplace变换的定义
+  range:
+    start:
+      snippet: '## 2. 单边Laplace变换的定义'
+      line_hint: 3903
+    end:
+      snippet: X (s) = \int_ {0 ^ {-}} ^ {\infty} x (t) \mathrm{e} ^ {- s t} \mathrm{d}
+        t \quad s = \sigma + \mathrm{j} \omega
+      line_hint: 3908
+- id: img-ch2-3-144-3-单边Laplace变换的收敛域
+  name: 3. 单边Laplace变换的收敛域
+  range:
+    start:
+      snippet: '## 3. 单边Laplace变换的收敛域'
+      line_hint: 3925
+    end:
+      snippet: ☼ 收敛域(ROC)可使用s复平面进行可视化表示
+      line_hint: 3959
+- id: img-ch2-3-145-例-试求解信号-mathrm-e-2-t-mathrm-u-t-的单边拉
+  name: 【例】试求解信号 $\mathrm { e } ^ { 2 t } \mathrm { u } ( t )$ 的单边拉氏变换及其收敛域。
+  range:
+    start:
+      snippet: '## 【例】试求解信号 $\mathrm { e } ^ { 2 t } \mathrm { u } ( t )$ 的单边拉氏变换及其收敛域。'
+      line_hint: 3961
+    end:
+      snippet: 收敛域为 $\operatorname { R e } ( s ) > 2$
+      line_hint: 3973
+- id: img-ch2-3-146-例-试求解信号-mathbf-e-2-t-mathbf-u-t-的单边拉
+  name: 【例】试求解信号 $\mathbf { e } ^ { - 2 t } \mathbf { u } ( t )$ 的单边拉氏变换及其收敛域。
+  range:
+    start:
+      snippet: '## 【例】试求解信号 $\mathbf { e } ^ { - 2 t } \mathbf { u } ( t )$ 的单边拉氏变换及其收敛域。'
+      line_hint: 3977
+    end:
+      snippet: 收敛域为 $\operatorname { R e } ( s ) > - 2$
+      line_hint: 3989
+- id: img-ch2-3-147-例-试求解信号-mathrm-u-t-mathrm-u-t-tau-的单
+  name: 【例】试求解信号 $\mathrm { u } ( t ) - \mathrm { u } ( t - \tau )$ 的单边拉氏变换及其收敛域。
+  range:
+    start:
+      snippet: '## 【例】试求解信号 $\mathrm { u } ( t ) - \mathrm { u } ( t - \tau )$ 的单边拉氏变换及其收敛域。'
+      line_hint: 3993
+    end:
+      snippet: \mathrm{Re} (s) > - \infty
+      line_hint: 4008
+- id: img-ch2-3-148-连续时间信号的复频域表示
+  name: 连续时间信号的复频域表示
+  range:
+    start:
+      snippet: '## 连续时间信号的复频域表示'
+      line_hint: 4015
+    end:
+      snippet: \mathrm{Re} \{s \} > \sigma_ {0}
+      line_hint: 4032
+- id: img-ch2-3-149-双边Laplace变换及反变换
+  name: 双边Laplace变换及反变换
+  range:
+    start:
+      snippet: '## 双边Laplace变换及反变换'
+      line_hint: 4045
+    end:
+      snippet: 需要引入信号的双边Laplace变换。
+      line_hint: 4059
+- id: img-ch2-3-150-双边Laplace变换的定义
+  name: 双边Laplace变换的定义
+  range:
+    start:
+      snippet: '## 双边Laplace变换的定义'
+      line_hint: 4061
+    end:
+      snippet: n 上式成立的σ的取值范围称为Laplace变换的收敛域(ROC)
+      line_hint: 4085
+- id: img-ch2-3-151-离散时间信号的复频域表示
+  name: 离散时间信号的复频域表示
+  range:
+    start:
+      snippet: '## 离散时间信号的复频域表示'
+      line_hint: 4091
+    end:
+      snippet: '- 单边z变换的收敛域'
+      line_hint: 4096
+- id: img-ch2-3-152-为何进行信号与系统的复频域分析
+  name: 为何进行信号与系统的复频域分析
+  range:
+    start:
+      snippet: '## 为何进行信号与系统的复频域分析'
+      line_hint: 4098
+    end:
+      snippet: '![](.memoria/images/064a1a431d27b3dd10572838ab33283c79267063206b0588d2652a4acafac5bf.jpg)'
+      line_hint: 4100
+- id: img-ch2-3-153-为何进行离散信号与系统的z域分析
+  name: 为何进行离散信号与系统的z域分析
+  range:
+    start:
+      snippet: '## 为何进行离散信号与系统的z域分析'
+      line_hint: 4102
+    end:
+      snippet: 由系统的频率响应H(ejΩ)描述但只适用于稳定系统.
+      line_hint: 4112
+- id: img-ch2-3-154-如何有效分析离散时间LTI系统
+  name: ※ 如何有效分析离散时间LTI系统？
+  range:
+    start:
+      snippet: '## ※ 如何有效分析离散时间LTI系统？'
+      line_hint: 4114
+    end:
+      snippet: 离散LTI系统的复频域(z域)分析将有效解决上述问题。
+      line_hint: 4130
+- id: img-ch2-3-155-为何进行信号与系统的复频域分析
+  name: 为何进行信号与系统的复频域分析
+  range:
+    start:
+      snippet: '## 为何进行信号与系统的复频域分析'
+      line_hint: 4132
+    end:
+      snippet: 本质：z变换通过复频域建模，将离散时间系统的时域动态、频域特性与稳定性统一于数学框架内，成为连接理论与工程的核心桥梁。
+      line_hint: 4143
+- id: img-ch2-3-156-由离散时间Fourier变换到z变换
+  name: 由离散时间Fourier变换到z变换
+  range:
+    start:
+      snippet: '## 由离散时间Fourier变换到z变换'
+      line_hint: 4154
+    end:
+      snippet: x [ k ] = \frac {1}{2 \pi \mathrm{j}} \oint_ {c} X (z) z ^ {k - 1}
+        \mathrm{d} z
+      line_hint: 4185
+- id: img-ch2-3-157-1-离散时间信号z变换
+  name: 1. 离散时间信号z变换
+  range:
+    start:
+      snippet: '## 1. 离散时间信号z变换'
+      line_hint: 4188
+    end:
+      snippet: X (z) = \mathscr {K} \{x [ k ] \} \quad x [ k ] = \mathscr {K} ^ {-
+        1} \{X (z) \}
+      line_hint: 4211
+- id: img-ch2-3-158-2-单边z变换的定义
+  name: 2. 单边z变换的定义
+  range:
+    start:
+      snippet: '## 2. 单边z变换的定义'
+      line_hint: 4223
+    end:
+      snippet: c为X(z) 的收敛域中一闭合曲线
+      line_hint: 4235
+- id: img-ch2-3-159-3-单边z变换的收敛域
+  name: 3. 单边z变换的收敛域
+  range:
+    start:
+      snippet: '## 3. 单边z变换的收敛域'
+      line_hint: 4246
+    end:
+      snippet: 此级数为有限项等比级数，当满足 $z { \big | } { > } 0$ 时，级数收敛。
+      line_hint: 4270
+- id: img-ch2-3-160-例-求序列-x-k-2-k-mathrm-u-k-的单边z变换及其收敛域
+  name: 【例】求序列 $x [ k ] = ( - 2 ) ^ { k } \mathrm { u } [ k ]$ 的单边z变换及其收敛域
+  range:
+    start:
+      snippet: '## 【例】求序列 $x [ k ] = ( - 2 ) ^ { k } \mathrm { u } [ k ]$ 的单边z变换及其收敛域'
+      line_hint: 4272
+    end:
+      snippet: '| z | > 2'
+      line_hint: 4283
+- id: img-ch2-3-161-三个变换的总结
+  name: 三个变换的总结
+  range:
+    start:
+      snippet: '## 三个变换的总结'
+      line_hint: 4288
+    end:
+      snippet: '| Z域 | Z变换 | z | 离散系统复平面分析 | DSP、单片机、数字控制 |'
+      line_hint: 4295

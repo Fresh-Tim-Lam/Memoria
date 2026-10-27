@@ -1,0 +1,389 @@
+{
+ "snapshot": {
+  "manifest": "round2/frozen/MANIFEST.json",
+  "frozen_at": "2026-10-27T14:09:46+08:00 (matches data/corpus-snapshot.json)",
+  "md": 26,
+  "sidecars": 11,
+  "sha_mismatch": [],
+  "live_drift": {
+   "root": "D:\\AAA_Courses\\数字通信原理",
+   "checked": 37,
+   "missing": 0,
+   "mismatch": 0,
+   "mismatch_paths": []
+  }
+ },
+ "P1_kp_inventory": {
+  "kps": 357,
+  "textbook": 71,
+  "slides": 285,
+  "notes": 1,
+  "start_is_heading_pct_all": 93.3,
+  "start_is_heading_pct_textbook": 66.2,
+  "size_hint_all": {
+   "n": 357,
+   "p50": 522.0,
+   "p90": 2899.4,
+   "max": 18198,
+   "gt1200": 84,
+   "gt1200_pct": 23.5,
+   "gt3000_pct": 9.2
+  },
+  "size_resolved_all": {
+   "n": 357,
+   "p50": 484.0,
+   "p90": 2756.4,
+   "max": 18198,
+   "gt1200": 77,
+   "gt1200_pct": 21.6,
+   "gt3000_pct": 9.0
+  },
+  "size_heading_all": {
+   "n": 357,
+   "p50": 581.0,
+   "p90": 3359.8,
+   "max": 18335,
+   "gt1200": 88,
+   "gt1200_pct": 24.6,
+   "gt3000_pct": 11.2
+  },
+  "size_resolved_textbook": {
+   "n": 71,
+   "p50": 1714.0,
+   "p90": 9374.0,
+   "max": 18198,
+   "gt1200": 39,
+   "gt1200_pct": 54.9,
+   "gt3000_pct": 38.0
+  },
+  "size_heading_textbook": {
+   "n": 71,
+   "p50": 2985.0,
+   "p90": 12593.0,
+   "max": 18335,
+   "gt1200": 49,
+   "gt1200_pct": 69.0,
+   "gt3000_pct": 49.3
+  },
+  "kp_span_overlap_pairs": 92,
+  "kp_span_nested_pairs": 92,
+  "kps_in_overlapping_spans": 53,
+  "kps_in_overlapping_spans_pct": 14.8
+ },
+ "P2_anchor_verified": {
+  "all": {
+   "n": 357,
+   "range_ok": 357,
+   "range_ok_pct": 100.0,
+   "strict": 226,
+   "strict_pct": 63.3,
+   "section": 356,
+   "section_pct": 99.7,
+   "context": 357,
+   "context_pct": 100.0,
+   "lenient_hint": 357,
+   "lenient_hint_pct": 100.0,
+   "start_multi": 131,
+   "start_multi_pct": 36.7,
+   "end_repair": 74,
+   "end_repair_pct": 20.7,
+   "end_inverted": 0,
+   "end_missing": 5,
+   "start_heading_pct": 93.3
+  },
+  "textbook": {
+   "n": 71,
+   "range_ok": 71,
+   "range_ok_pct": 100.0,
+   "strict": 70,
+   "strict_pct": 98.6,
+   "section": 70,
+   "section_pct": 98.6,
+   "context": 71,
+   "context_pct": 100.0,
+   "lenient_hint": 71,
+   "lenient_hint_pct": 100.0,
+   "start_multi": 1,
+   "start_multi_pct": 1.4,
+   "end_repair": 17,
+   "end_repair_pct": 23.9,
+   "end_inverted": 0,
+   "end_missing": 1,
+   "start_heading_pct": 66.2
+  },
+  "slides": {
+   "n": 285,
+   "range_ok": 285,
+   "range_ok_pct": 100.0,
+   "strict": 155,
+   "strict_pct": 54.4,
+   "section": 285,
+   "section_pct": 100.0,
+   "context": 285,
+   "context_pct": 100.0,
+   "lenient_hint": 285,
+   "lenient_hint_pct": 100.0,
+   "start_multi": 130,
+   "start_multi_pct": 45.6,
+   "end_repair": 57,
+   "end_repair_pct": 20.0,
+   "end_inverted": 0,
+   "end_missing": 4,
+   "start_heading_pct": 100.0
+  },
+  "notes": {
+   "n": 1,
+   "range_ok": 1,
+   "range_ok_pct": 100.0,
+   "strict": 1,
+   "strict_pct": 100.0,
+   "section": 1,
+   "section_pct": 100.0,
+   "context": 1,
+   "context_pct": 100.0,
+   "lenient_hint": 1,
+   "lenient_hint_pct": 100.0,
+   "start_multi": 0,
+   "start_multi_pct": 0.0,
+   "end_repair": 0,
+   "end_repair_pct": 0.0,
+   "end_inverted": 0,
+   "end_missing": 0,
+   "start_heading_pct": 100.0
+  }
+ },
+ "P3_option_A": {
+  "A1_minimal_repair": {
+   "kps_changed": 74,
+   "kps_changed_pct": 20.7,
+   "changed_ids_sample": [
+    "img-ch2-2-03-普通信号",
+    "img-ch2-2-04-奇异信号",
+    "img-ch2-2-40-零输入响应",
+    "img-ch2-2-57-例-计算-x-t-h-t-x-t-2-bf-e-2-t-bf-u-t-h",
+    "img-ch2-3-02-信号的频域分析",
+    "img-ch2-3-05-目录",
+    "img-ch2-3-10-三角形式Fourier级数",
+    "img-ch2-3-14-连续周期信号的频谱概念",
+    "img-ch2-3-17-吉布斯-Gibbs-现象",
+    "img-ch2-3-19-吉布斯-Gibbs-现象",
+    "img-ch2-3-26-连续时间Fourier级数的性质",
+    "img-ch2-3-41-目录",
+    "img-ch2-3-46-目录",
+    "img-ch2-3-51-常见连续时间信号的频谱",
+    "img-ch2-3-52-3-符号函数信号sgn-t",
+    "img-ch2-3-53-4-单位阶跃信号u-t",
+    "img-ch2-3-54-常见连续时间信号的频谱",
+    "img-ch2-3-61-1-线性特性",
+    "img-ch2-3-63-连续时间Fourier变换的性质",
+    "img-ch2-3-65-3-互易对称特性"
+   ],
+   "size_all": {
+    "n": 357,
+    "p50": 507.0,
+    "p90": 3031.6,
+    "max": 18335,
+    "mean": 1412.04,
+    "min": 11
+   },
+   "size_textbook": {
+    "n": 71,
+    "p50": 2251.0,
+    "p90": 10588.0,
+    "max": 18335,
+    "mean": 4248.49,
+    "min": 51
+   },
+   "gt1200_all_pct": 22.7,
+   "gt1200_textbook_pct": 60.6,
+   "term": "只修 end_repair 的 KP（坏/歧义/缺/超边界），其余 end 不动"
+  },
+  "A2_end_to_heading": {
+   "kps_changed": 336,
+   "kps_changed_pct": 94.1,
+   "size_all": {
+    "n": 357,
+    "p50": 581.0,
+    "p90": 3359.8,
+    "max": 18335,
+    "mean": 1556.86,
+    "min": 11
+   },
+   "size_textbook": {
+    "n": 71,
+    "p50": 2985.0,
+    "p90": 12593.0,
+    "max": 18335,
+    "mean": 4893.58,
+    "min": 219
+   },
+   "gt1200_all_pct": 24.6,
+   "gt1200_textbook_pct": 69.0,
+   "gt3000_textbook_pct": 49.3,
+   "total_chars_before": 461578,
+   "total_chars_after": 555798,
+   "term": "所有 end 都改为「下一同级标题前」的语义边界"
+  }
+ },
+ "P4_option_B": {
+  "B1_per_kp_budget": {
+   "new_kp_count_naive": 720,
+   "new_kp_count_unique_ranges": 639,
+   "kp_count_change_naive": 363,
+   "fanout_dist": {
+    "n": 357,
+    "p50": 1.0,
+    "p90": 4.0,
+    "max": 19,
+    "mean": 2.02,
+    "min": 1
+   },
+   "old_kps_ge2_new": 88,
+   "old_kps_ge2_new_pct": 24.6,
+   "nested_overlap_pairs": 92,
+   "note": "按每个 KP 的语义 span 独立重切；嵌套 KP 会重复切同一段正文，需先裁决「嵌套 KP 是否合并」"
+  },
+  "B2_section_rewrite": {
+   "new_kp_count": 1166,
+   "kp_count_change": 809,
+   "fanout_dist": {
+    "n": 357,
+    "p50": 1.0,
+    "p90": 5.0,
+    "max": 34,
+    "mean": 2.27,
+    "min": 1
+   },
+   "new_units_without_old_kp": 483,
+   "new_units_claimed_by_2plus_old_kp": 42,
+   "new_units_claimed_by_2plus_old_kp_pct": 3.6,
+   "old_kps_with_zero_new": 0
+  }
+ },
+ "P5_option_C": {
+  "rule": "leaf section（每级标题切段）→ 段落原子 200–1200 字打包；预算 1200 字；不切 $$/``` 块",
+  "scope_kp_files": {
+   "slices": 1166,
+   "slice_chars_total": 774575,
+   "orphan_any": 483,
+   "orphan_any_pct": 41.4,
+   "orphan_lt50": 483,
+   "orphan_lt50_pct": 41.4,
+   "slices_with_2plus_kp": 42,
+   "slices_with_2plus_kp_pct": 3.6,
+   "slices_per_kp": {
+    "dist": {
+     "n": 357,
+     "p50": 1.0,
+     "p90": 5.0,
+     "max": 34,
+     "mean": 2.27,
+     "min": 1
+    },
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 111,
+    "kps_ge2_slices_pct": 31.1
+   },
+   "files": 9
+  },
+  "scope_all_26": {
+   "slices": 2422,
+   "slice_chars_total": 1740522,
+   "orphan_any": 1739,
+   "orphan_any_pct": 71.8,
+   "orphan_lt50": 1739,
+   "orphan_lt50_pct": 71.8,
+   "slices_with_2plus_kp": 42,
+   "slices_with_2plus_kp_pct": 1.7
+  },
+  "scope_kp_union_only": {
+   "slices": 475,
+   "slice_chars_total": 454779,
+   "orphan_any": 0,
+   "orphan_any_pct": 0.0,
+   "orphan_lt50": 0,
+   "orphan_lt50_pct": 0.0,
+   "slices_with_2plus_kp": 193,
+   "slices_with_2plus_kp_pct": 40.6,
+   "slices_per_kp": {
+    "dist": {
+     "n": 357,
+     "p50": 1.0,
+     "p90": 4.0,
+     "max": 20,
+     "mean": 2.28,
+     "min": 1
+    },
+    "kps_zero_slice": 0,
+    "kps_ge2_slices": 146,
+    "kps_ge2_slices_pct": 40.9
+   }
+  },
+  "per_file_kp_files": {
+   "img/ch02-2_信号与系统的时域分析.md": {
+    "slices": 142,
+    "orphan": 25,
+    "orphan_pct": 17.6
+   },
+   "img/ch02-3_信号的频域分析.md": {
+    "slices": 320,
+    "orphan": 106,
+    "orphan_pct": 33.1
+   },
+   "img/ch02-4_随机信号分析.md": {
+    "slices": 64,
+    "orphan": 19,
+    "orphan_pct": 29.7
+   },
+   "img/平滑系统滤除信号证明.md": {
+    "slices": 6,
+    "orphan": 0,
+    "orphan_pct": 0.0
+   },
+   "notes/非均匀量化噪声推导-附录.md": {
+    "slices": 34,
+    "orphan": 0,
+    "orphan_pct": 0.0
+   },
+   "教材/01_第1章_绪论.md": {
+    "slices": 19,
+    "orphan": 9,
+    "orphan_pct": 47.4
+   },
+   "教材/02_第2章_信号分析基础.md": {
+    "slices": 123,
+    "orphan": 7,
+    "orphan_pct": 5.7
+   },
+   "教材/03_第3章_模拟信号的数字编码.md": {
+    "slices": 141,
+    "orphan": 6,
+    "orphan_pct": 4.3
+   },
+   "教材/08_第8章_差错控制编码.md": {
+    "slices": 317,
+    "orphan": 311,
+    "orphan_pct": 98.1
+   }
+  }
+ },
+ "P6_userdata": {
+  "kp_ids": 357,
+  "links": 0,
+  "link_targets": 0,
+  "link_target_orphans": 0,
+  "edge_edges": 0,
+  "edge_targets": 0,
+  "edge_target_orphans": 0,
+  "cards_json": "absent (frozen snapshot 不含 .memoria/agent；live 库 review 目录为空)",
+  "orphan_link_target_ids": []
+ },
+ "P7_description_volume": {
+  "scope_kp_files_slices": 1166,
+  "slice_chars_total": 774575,
+  "est_input_tokens_if_one_call_per_slice": 677987,
+  "est_output_chars_if_80_per_slice": 93280,
+  "est_llm_calls_one_per_slice": 1166,
+  "note": "description 生成必须改写不能截原文（R5）；token 按 0.4237 tok/字；prompt 开销按 300 tok/次粗估，仅量级参考"
+ }
+}

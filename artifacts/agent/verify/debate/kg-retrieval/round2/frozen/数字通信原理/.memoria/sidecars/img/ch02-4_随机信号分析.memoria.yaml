@@ -1,0 +1,428 @@
+schema_version: 1
+file: img/ch02-4_随机信号分析.md
+knowledge_points:
+- id: img-ch2-4-01-第2章信号分析基础-随机信号分析
+  name: 第2章信号分析基础：随机信号分析
+  range:
+    start:
+      snippet: '## 第2章信号分析基础：随机信号分析'
+      line_hint: 6
+    end:
+      snippet: 本章内容：冯穗力等，数字通信原理，电子工业出版社
+      line_hint: 23
+- id: img-ch2-4-02-数字通信系统中的信号类别
+  name: 数字通信系统中的信号类别
+  range:
+    start:
+      snippet: '## 数字通信系统中的信号类别'
+      line_hint: 25
+    end:
+      snippet: '- (3) 其他随机信号，如干扰等。'
+      line_hint: 39
+- id: img-ch2-4-03-确定
+  name: 确定
+  range:
+    start:
+      snippet: '## 确定'
+      line_hint: 41
+    end:
+      snippet: 能量谱密度反映信号能量沿频谱的分布。
+      line_hint: 104
+- id: img-ch2-4-04-n-功率信号-实信号若满足条件
+  name: n 功率信号：实信号若满足条件
+  range:
+    start:
+      snippet: '## n 功率信号：实信号若满足条件'
+      line_hint: 106
+    end:
+      snippet: \big | R \big (\tau \big) \big | \leq R \big (0 \big)
+      line_hint: 180
+- id: img-ch2-4-05-n-相关函数与信号的能量-功率密度谱间的关系
+  name: n 相关函数与信号的能量/功率密度谱间的关系：
+  range:
+    start:
+      snippet: '## n 相关函数与信号的能量/功率密度谱间的关系：'
+      line_hint: 183
+    end:
+      snippet: R (0) = \frac {1}{2 \pi} \int_ {- \infty} ^ {\infty} P (\omega) d \omega
+        = P
+      line_hint: 203
+- id: img-ch2-4-06-n-M进制通信系统信号序列
+  name: n M进制通信系统信号序列：
+  range:
+    start:
+      snippet: '## n M进制通信系统信号序列：'
+      line_hint: 206
+    end:
+      snippet: 对信号检测时，信号的相关运算通常在一个符号周期内进行。
+      line_hint: 217
+- id: img-ch2-4-07-1-两个正交的脉冲信号
+  name: (1) 两个正交的脉冲信号
+  range:
+    start:
+      snippet: '## (1) 两个正交的脉冲信号'
+      line_hint: 221
+    end:
+      snippet: \int_ {0} ^ {T _ {S}} f _ {i} (t) f _ {j} (t) d t = \left\{ \begin{array}{c
+        c} \frac {1}{2} A ^ {2} T _ {S} & i = j \\ 0 & i \neq j \end{array} \right.
+      line_hint: 238
+- id: img-ch2-4-08-2-两个正交的已调信号
+  name: (2) 两个正交的已调信号
+  range:
+    start:
+      snippet: '## (2) 两个正交的已调信号'
+      line_hint: 232
+    end:
+      snippet: '![](.memoria/images/8c7e9bdf96104524892b8a6778d050d38023412223baf6220a99df6fb8d9c258.jpg)'
+      line_hint: 235
+- id: img-ch2-4-09-n-卷积运算
+  name: n 卷积运算
+  range:
+    start:
+      snippet: '## n 卷积运算'
+      line_hint: 241
+    end:
+      snippet: s _ {o} (t) = h (t) ^ {*} s (t) = \int_ {- \infty} ^ {\infty} h (\tau)
+        s (t - \tau) d \tau
+      line_hint: 265
+- id: img-ch2-4-10-第2章信号分析基础
+  name: 2.5 随机信号的基本概念和特点
+  range:
+    start:
+      snippet: '## 2.5 随机信号的基本概念和特点'
+      line_hint: 268
+    end:
+      snippet: 图 2-5-1 随机过程X(t) 与随机变量X(t)
+      line_hint: 301
+- id: img-ch2-4-11-n-随机过程的统计特性
+  name: n 随机过程的统计特性
+  range:
+    start:
+      snippet: '## n 随机过程的统计特性'
+      line_hint: 305
+    end:
+      snippet: （更多随机过程的联合分布可以类推）
+      line_hint: 348
+- id: img-ch2-4-12-两个随机过程独立的充要条件
+  name: 两个随机过程独立的充要条件
+  range:
+    start:
+      snippet: '## 两个随机过程独立的充要条件'
+      line_hint: 350
+    end:
+      snippet: \begin{array}{l} p \big (x _ {1}, x _ {2}, \dots , x _ {n}, t _ {1},
+        t _ {2}, \dots , t _ {n}; y _ {1}, y _ {2}, \dots , y _ {m}, t _ {1} ^ {\prime},
+        t _ {2} ^ {\prime}, \dots , t _ {m} ^ {\prime} \big) \\ = p \big (x _ {1},
+        x _ {2}, \dots , x _ {n}, t _ {1}, t _ {2}, \dots , t _ {n} \big) p \big (y
+        _ {1}, y _ {2}, \dots , y _ {m}, t _ {1} ^ {\prime}, t _ {2} ^ {\prime}, \dots
+        , t _ {m} ^ {\prime} \big) \\ \end{array}
+      line_hint: 362
+- id: img-ch2-4-14-随机过程的统计值-续
+  name: 随机过程的统计值(续)
+  range:
+    start:
+      snippet: '## 随机过程的统计值(续)'
+      line_hint: 391
+    end:
+      snippet: \begin{array}{l} \Gamma_ {X Y} \left(t _ {1}, t _ {2}\right) = \operatorname{cov}
+        \left[ X \left(t _ {1}\right), Y \left(t _ {2}\right) \right] \\ = E \left\{\left[
+        X \left(t _ {1}\right) - m _ {X} \left(t _ {1}\right) \right] \left[ Y \left(t
+        _ {2}\right) - m _ {Y} \left(t _ {2}\right) \right] \right\} \\ = \int_ {-
+        \infty} ^ {+ \infty} \left[ x - m _ {X} \left(t _ {1}\right) \right] \left[
+        y - m _ {Y} \left(t _ {2}\right) \right] f _ {X Y} \left(t _ {1}, t _ {2};
+        x, y\right) d x d y \\ \end{array}
+      line_hint: 409
+- id: img-ch2-4-13-随机过程的统计值
+  name: 随机过程的统计值
+  range:
+    start:
+      snippet: '## 随机过程的统计值'
+      line_hint: 395
+    end:
+      snippet: ''
+      line_hint: 411
+- id: img-ch2-4-15-随机变量函数的分布及数字特征
+  name: 随机变量函数的分布及数字特征
+  range:
+    start:
+      snippet: '## 随机变量函数的分布及数字特征'
+      line_hint: 414
+    end:
+      snippet: p _ {Y} (y) = p _ {X} \left[ f _ {1} ^ {- 1} (y) \right] \left| \left[
+        f _ {1} ^ {- 1} (y) \right] ^ {\prime} \right| + p _ {X} \left[ f _ {2} ^
+        {- 1} (y) \right] \left| \left[ f _ {2} ^ {- 1} (y) \right] ^ {\prime} \right|
+        + \dots
+      line_hint: 446
+- id: img-ch2-4-16-n-随机变量函数的分布
+  name: n 随机变量函数的分布
+  range:
+    start:
+      snippet: '## n 随机变量函数的分布'
+      line_hint: 449
+    end:
+      snippet: \begin{array}{l} F _ {Y} (y) = P (Y <   y) = P \left[ f \left(X _ {1},
+        X _ {2}, \dots , X _ {n}\right) <   y \right] \\ = \int \dots \int_ {f (x
+        _ {1}, x _ {2}, \dots , x _ {n}) <   y} p (x _ {1}, x _ {2}, \dots , x _ {n})
+        d x _ {1} d x _ {2} \dots d x _ {n} \\ \end{array}
+      line_hint: 465
+- id: img-ch2-4-18-n-随机变量函数的统计值-数字特征-续
+  name: n 随机变量函数的统计值(数字特征)(续)
+  range:
+    start:
+      snippet: '## n 随机变量函数的统计值(数字特征)(续)'
+      line_hint: 480
+    end:
+      snippet: \begin{array}{l} E \left\{\left[ Y (t) - m _ {Y} (t) \right] ^ {2}
+        \right\} = E \left\{\left[ Y (t) \right] ^ {2} \right\} - m _ {Y} ^ {2} (t)
+        \\ = E \left\{\left[ Y (t) \right] ^ {2} \right\} = \int_ {- \pi} ^ {\pi}
+        \left[ A \cos \left(\omega_ {c} t + x\right) \right] ^ {2} \frac {1}{2 \pi}
+        d x = \frac {A ^ {2}}{2} \\ \end{array}
+      line_hint: 498
+- id: img-ch2-4-19-1-严-狭义-平稳随机过程
+  name: (1)严（狭义）平稳随机过程：
+  range:
+    start:
+      snippet: '## (1)严（狭义）平稳随机过程：'
+      line_hint: 505
+    end:
+      snippet: 严平稳随机过程的统计特性不随时间的平移而改变。
+      line_hint: 516
+- id: img-ch2-4-17-n-随机变量函数的统计值-数字特征
+  name: n 随机变量函数的统计值(数字特征)
+  range:
+    start:
+      snippet: '## n 随机变量函数的统计值(数字特征)'
+      line_hint: 511
+    end:
+      snippet: ''
+      line_hint: 500
+- id: img-ch2-4-20-2-宽-广义-平稳随机过程
+  name: 2)宽（广义）平稳随机过程：
+  range:
+    start:
+      snippet: '## 2)宽（广义）平稳随机过程：'
+      line_hint: 520
+    end:
+      snippet: （注：宽平稳随机过程只涉及了其一阶、二阶的统计特性）
+      line_hint: 537
+- id: img-ch2-4-21-平稳随机过程-续
+  name: 平稳随机过程（续）
+  range:
+    start:
+      snippet: '## 平稳随机过程（续）'
+      line_hint: 539
+    end:
+      snippet: 非平稳随机过程
+      line_hint: 548
+- id: img-ch2-4-22-宽-广义-平稳随机过程
+  name: 宽（广义）平稳随机过程：
+  range:
+    start:
+      snippet: '## 宽（广义）平稳随机过程：'
+      line_hint: 550
+    end:
+      snippet: ：负载为 1 欧姆电阻。
+      line_hint: 560
+- id: img-ch2-4-23-实平稳随机过程相关函数与自协方差函数的性质
+  name: 实平稳随机过程相关函数与自协方差函数的性质
+  range:
+    start:
+      snippet: '## 实平稳随机过程相关函数与自协方差函数的性质'
+      line_hint: 562
+    end:
+      snippet: 所以该随机过程是广义平稳的。
+      line_hint: 625
+- id: img-ch2-4-24-例-续
+  name: 例 (续)
+  range:
+    start:
+      snippet: '## 例 (续)'
+      line_hint: 627
+    end:
+      snippet: 比较前面的结果，可见该随机过程具有各态历经性。
+      line_hint: 636
+- id: img-ch2-4-25-平稳随机信号的功率密度谱
+  name: 2.9 平稳随机信号的功率密度谱
+  range:
+    start:
+      snippet: '## 2.9 平稳随机信号的功率密度谱'
+      line_hint: 638
+    end:
+      snippet: 信号变化剧烈，频带相对较宽信号变化平缓，频带相对较窄
+      line_hint: 661
+- id: img-ch2-4-26-1-高斯随机过程-其概率密度函数
+  name: (1)高斯随机过程，其概率密度函数
+  range:
+    start:
+      snippet: '## (1)高斯随机过程，其概率密度函数'
+      line_hint: 667
+    end:
+      snippet: 由此对于高斯随机过程，其广义平稳和严格平稳是等价的。
+      line_hint: 686
+- id: img-ch2-4-27-2-白噪声
+  name: (2) 白噪声
+  range:
+    start:
+      snippet: '## (2) 白噪声'
+      line_hint: 690
+    end:
+      snippet: 高斯白噪声:噪声的功率密度谱为常数，幅度取值服从高斯分布。
+      line_hint: 701
+- id: img-ch2-4-28-3-窄带随机过程
+  name: (3) 窄带随机过程
+  range:
+    start:
+      snippet: '## (3) 窄带随机过程'
+      line_hint: 705
+    end:
+      snippet: $a _ { C } ( t )$ 和 $a _ { S } ( t )$ 相对载波 $f _ { c }$ 来说是低频信号。
+      line_hint: 722
+- id: img-ch2-4-30-4-窄带高斯随机过程-续
+  name: (4) 窄带高斯随机过程(续)
+  range:
+    start:
+      snippet: '## (4) 窄带高斯随机过程(续)'
+      line_hint: 740
+    end:
+      snippet: 窄带高斯过程描述了窄带信号经过多个不可分辨的多径反射(散射)后到达接收端的信号特性。
+      line_hint: 773
+- id: img-ch2-4-31-5-正弦-余弦-信号加窄带高斯随机过程
+  name: (5) 正弦(余弦)信号加窄带高斯随机过程
+  range:
+    start:
+      snippet: '## (5) 正弦(余弦)信号加窄带高斯随机过程'
+      line_hint: 777
+    end:
+      snippet: 称为零阶修正的贝塞尔函数，该函数的取值可通过查找贝塞尔函数表得到。
+      line_hint: 828
+- id: img-ch2-4-29-4-窄带高斯随机过程
+  name: (4) 窄带高斯随机过程
+  range:
+    start:
+      snippet: '## (4) 窄带高斯随机过程'
+      line_hint: 806
+    end:
+      snippet: ''
+      line_hint: 774
+- id: img-ch2-4-32-5-正弦-余弦-信号加窄带高斯随机过程-续
+  name: (5) 正弦(余弦)信号加窄带高斯随机过程(续)
+  range:
+    start:
+      snippet: '## (5) 正弦(余弦)信号加窄带高斯随机过程(续)'
+      line_hint: 830
+    end:
+      snippet: 该特别强的信号通常是信号中直达的视距信号。
+      line_hint: 871
+- id: img-ch2-4-33-瑞利分布与莱斯分布的比较
+  name: 瑞利分布与莱斯分布的比较
+  range:
+    start:
+      snippet: '## 瑞利分布与莱斯分布的比较'
+      line_hint: 873
+    end:
+      snippet: 莱斯分布：σ=1，A＝4
+      line_hint: 878
+- id: img-ch2-4-34-平稳随机过程与线性时不变系统
+  name: 2.11 平稳随机过程与线性时不变系统
+  range:
+    start:
+      snippet: '## 2.11 平稳随机过程与线性时不变系统'
+      line_hint: 882
+    end:
+      snippet: h (t, \tau) = h (t - \tau)
+      line_hint: 888
+- id: img-ch2-4-35-n-随机过程与线性时不变系统
+  name: n 随机过程与线性时不变系统
+  range:
+    start:
+      snippet: '## n 随机过程与线性时不变系统'
+      line_hint: 893
+    end:
+      snippet: R _ {Y} \big (t _ {1}, t _ {2} \big) = \int_ {- \infty} ^ {\infty}
+        \int_ {- \infty} ^ {\infty} h \big (u _ {1} \big) h \big (u _ {2} \big) R
+        _ {X} \big (t _ {1} - u _ {1}, t _ {2} - u _ {2} \big) d u _ {1} d u _ {2}
+      line_hint: 939
+- id: img-ch2-4-37-n-平稳随机过程与线性时不变系统-续
+  name: n 平稳随机过程与线性时不变系统(续)
+  range:
+    start:
+      snippet: '## n 平稳随机过程与线性时不变系统(续)'
+      line_hint: 944
+    end:
+      snippet: 受线性系统频率选择特性的影响，一般不再具备白噪声的特性。
+      line_hint: 959
+- id: img-ch2-4-38-n-信号经过线性系统后输出不失真的条件
+  name: n 信号经过线性系统后输出不失真的条件
+  range:
+    start:
+      snippet: '## n 信号经过线性系统后输出不失真的条件'
+      line_hint: 961
+    end:
+      snippet: 不同的相移与频率的成分呈线性关系
+      line_hint: 1010
+- id: img-ch2-4-39-n-信号经过线性系统后的群时延特性
+  name: n 信号经过线性系统后的群时延特性
+  range:
+    start:
+      snippet: '## n 信号经过线性系统后的群时延特性'
+      line_hint: 1014
+    end:
+      snippet: 同样频率成分、不同相位的信号组合获得的波形显著不同。
+      line_hint: 1047
+- id: img-ch2-4-36-n-平稳随机过程与线性时不变系统
+  name: n 平稳随机过程与线性时不变系统
+  range:
+    start:
+      snippet: '## n 平稳随机过程与线性时不变系统'
+      line_hint: 1016
+    end:
+      snippet: ''
+      line_hint: 960
+- id: img-ch2-4-40-示例2
+  name: 示例2
+  range:
+    start:
+      snippet: '## 示例2'
+      line_hint: 1049
+    end:
+      snippet: (d) 发生畸变信号的分解
+      line_hint: 1066
+- id: img-ch2-4-41-示例3
+  name: 示例3
+  range:
+    start:
+      snippet: '## 示例3'
+      line_hint: 1068
+    end:
+      snippet: (f) 发生畸变信号的分解
+      line_hint: 1085
+- id: img-ch2-4-42-n-高斯随机信号经过线性系统后的统计特性
+  name: n 高斯随机信号经过线性系统后的统计特性
+  range:
+    start:
+      snippet: '## n 高斯随机信号经过线性系统后的统计特性'
+      line_hint: 1087
+    end:
+      snippet: 注意：高斯随机信号经线性系统后一般均值和方差会发生变化。
+      line_hint: 1104
+links:
+- anchor_text: 2.10 余弦信号加窄带高斯随机信号
+  occurrence: 0
+  targets:
+  - ch2-10-cosine-plus-narrowband-gaussian
+  edge_type: reference
+  target_edges:
+    ch2-10-cosine-plus-narrowband-gaussian:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - ch2-10-cosine-plus-narrowband-gaussian
+  source_id: img-ch2-4-39-n-信号经过线性系统后的群时延特性
+  instances:
+  - line: 778
+    wrapped: true
+  - line: 831
+    wrapped: true
+  - line: 874
+    wrapped: true
+  excluded: []
