@@ -218,6 +218,11 @@ def build_entry(args: argparse.Namespace) -> dict:
         "report": args.report,
         "evidence": args.evidence,
         "source": args.source,
+        # B+ bindings: only write when explicitly supplied; old readers ignore unknown keys.
+        "message_id": getattr(args, "message_id", None),
+        "task_id": getattr(args, "task_id", None),
+        "protocol_id": getattr(args, "protocol_id", None),
+        "payload_kind": getattr(args, "payload_kind", None),
     }
     entry.update({key: value for key, value in optional.items() if value is not None})
     # task-107 / L9：mode 与 modeExplicit（spawn 必填；其它 phase 可选）
@@ -251,6 +256,12 @@ def validate_entry(entry: dict) -> list[str]:
     """
     problems: list[str] = []
     phase = entry.get("phase")
+    # B+ binding validation (append-only fields; absent on all historical rows).
+    for field in ("message_id", "task_id", "protocol_id"):
+        if field in entry and (not isinstance(entry[field], str) or not entry[field].strip()):
+            problems.append(f"{field} 必须是非空字符串（B+ 绑定字段；不给则可省）")
+    if "payload_kind" in entry and entry["payload_kind"] not in ("directive", "info", "result"):
+        problems.append("payload_kind 必须是 directive|info|result（B+ 推断载荷类型）")
     if entry.get("phase") == "done":
         has_report = bool(entry.get("report"))
         has_reason = bool(entry.get("no_report_reason"))
@@ -338,7 +349,28 @@ def selftest() -> int:
                      "--no-report-reason", "纯会话操作，无磁盘产物", "--log", str(guard_path)])
         expect("done-with-explicit-reason-must-pass", code == 0)
 
-        # 红 6：corrects 只允许 backfill，且必须带 line/new
+        # B+ 绑定：合法字段可写；非法/空值必须被拒（旧行/旧命令不带字段仍可读）。
+        bind_path = Path(tmp) / "bindings.jsonl"
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "message",
+                     "--message-id", "msg-1", "--task-id", "task-1", "--protocol-id", "tool.peerMessage.hops",
+                     "--payload-kind", "info", "--log", str(bind_path)])
+        expect("bplus-valid-bindings-must-pass", code == 0)
+        bind_rows = [json.loads(line) for line in bind_path.read_text(encoding="utf-8").splitlines() if line.strip()]
+        expect("bplus-fields-written", bind_rows[0].get("message_id") == "msg-1"
+               and bind_rows[0].get("task_id") == "task-1"
+               and bind_rows[0].get("protocol_id") == "tool.peerMessage.hops"
+               and bind_rows[0].get("payload_kind") == "info")
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "message",
+                     "--message-id", "", "--log", str(bind_path)])
+        expect("bplus-empty-message-id-must-be-rejected", code == 2)
+        code = main(["append", "--actor", "lead", "--target", "x", "--phase", "message",
+                     "--protocol-id", "", "--log", str(bind_path)])
+        expect("bplus-empty-protocol-id-must-be-rejected", code == 2)
+        bad_kind = validate_entry({"ts": now_iso(), "actor": "lead", "phase": "message",
+                                   "target": "x", "payload_kind": "bogus"})
+        expect("bplus-invalid-payload-kind-must-be-rejected", bool(bad_kind))
+
+    # 红 6：corrects 只允许 backfill，且必须带 line/new
         code = main(["append", "--actor", "lead", "--target", "x", "--phase", "done",
                      "--report", "team/dispatch-log.jsonl",
                      "--corrects-line", "3", "--corrects-new", "team/x.json",
@@ -440,6 +472,12 @@ def main(argv: list[str] | None = None) -> int:
     append_parser.add_argument("--report", help="产出物路径（报告/提交）")
     append_parser.add_argument("--evidence", help="额外证据路径")
     append_parser.add_argument("--source", help="来源标记（如 backfill:team-board-snapshot.json）")
+    # B+ bindings (v9, append-only; optional so all historical commands still work).
+    append_parser.add_argument("--message-id", help="B+ 绑定：消息 id（message/peer-message 行）")
+    append_parser.add_argument("--task-id", help="B+ 绑定：任务 id（task 行）")
+    append_parser.add_argument("--protocol-id", help="B+ 绑定：注册表协议 id（protocol/message 行）")
+    append_parser.add_argument("--payload-kind", choices=("directive", "info", "result"),
+                               help="B+ 推断载荷类型（无模型声明；v9 由工具/phase 推断）")
     append_parser.add_argument("--ts", help="显式时间戳（回填历史用；缺省取当前时间）")
     append_parser.add_argument("--mode", choices=VALID_MODES,
                                help="spawn 模式决策（L9，必填；路由表见 lead-dispatch-rules §1.3b）")
