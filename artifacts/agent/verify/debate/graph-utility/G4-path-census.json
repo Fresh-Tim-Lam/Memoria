@@ -1,0 +1,1110 @@
+{
+ "schema": "gue-g4-path-census/v3",
+ "supersedes": "gue-g4-path-census/v2",
+ "generated_at": "2026-10-28T01:52:39.939184+00:00",
+ "canonicalization": "g4-canon-json-v1: obj=json.load(文本); del obj['generated_at']; s=json.dumps(obj,ensure_ascii=False,sort_keys=True,separators=(',',':')); sha256(s.encode('utf-8')).hexdigest()",
+ "inputs": {
+  "edge_inventory": "G2-edge-inventory-raw.json",
+  "baseline": "G1-baseline.json (counts.nodes=357)",
+  "corpus": "数字通信原理 frozen (MANIFEST a4beaedc…)",
+  "corpus_identity_note": "引用身份 = MANIFEST 冻结快照 + taken_at；不使用实时 HEAD（已漂移）",
+  "build_state": "pre_build (collect_graph_data on temp copy)",
+  "hop_definition": "有向简单路径，节点不重复、边不重复"
+ },
+ "graph": {
+  "nodes_with_edges": 79,
+  "nodes_with_edges_clean": 65,
+  "edges_raw": 62,
+  "edges_clean": 54,
+  "degenerate_edges": 8,
+  "weak_components_raw": 18,
+  "weak_components_clean": 12,
+  "component_sizes_raw_top10": [
+   25,
+   9,
+   8,
+   7,
+   3,
+   3,
+   2,
+   2,
+   2,
+   2
+  ],
+  "component_sizes_clean_top10": [
+   25,
+   9,
+   8,
+   7,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2
+  ],
+  "largest_component_nodes": 25,
+  "largest_component_edges": 25,
+  "outdeg_hist_clean": {
+   "0": 33,
+   "1": 24,
+   "2": 3,
+   "3": 2,
+   "5": 1,
+   "6": 1,
+   "7": 1
+  },
+  "indeg_zero_nodes_clean": 17
+ },
+ "node_file_coverage": {
+  "note": "357 帧同文件规则的分母必须配【全部 357 个 KP 的 file 归属】；复核曾指出 v2 用边端点映射当 357 帧分子=混帧错误。",
+  "source": ".memoria/sidecars/**/*.memoria.yaml（只读）",
+  "available": true,
+  "sidecars": 11,
+  "nodes": 357,
+  "files_with_nodes": 9,
+  "per_file_counts": {
+   "img/ch02-2_信号与系统的时域分析.md": 81,
+   "img/ch02-3_信号的频域分析.md": 161,
+   "img/ch02-4_随机信号分析.md": 42,
+   "img/平滑系统滤除信号证明.md": 1,
+   "notes/非均匀量化噪声推导-附录.md": 1,
+   "教材/01_第1章_绪论.md": 21,
+   "教材/02_第2章_信号分析基础.md": 21,
+   "教材/03_第3章_模拟信号的数字编码.md": 28,
+   "教材/08_第8章_差错控制编码.md": 1
+  },
+  "all_nodes_have_file": true
+ },
+ "paths_raw_2hop": {
+  "hops": 2,
+  "path_count": 23,
+  "type_sequences": {
+   "extend→extend": 17,
+   "extend→reference": 3,
+   "reference→extend": 3
+  },
+  "all_edges_same_file": 23,
+  "cross_file": 0,
+  "with_reference_hop": 6,
+  "with_authored_edge": 23,
+  "all_in_largest_component": true
+ },
+ "paths_clean_2hop": {
+  "hops": 2,
+  "path_count": 23,
+  "type_sequences": {
+   "extend→extend": 17,
+   "extend→reference": 3,
+   "reference→extend": 3
+  },
+  "all_edges_same_file": 23,
+  "cross_file": 0,
+  "with_reference_hop": 6,
+  "with_authored_edge": 23,
+  "all_in_largest_component": true
+ },
+ "paths_clean_3hop": {
+  "hops": 3,
+  "path_count": 20,
+  "type_sequences": {
+   "extend→extend→extend": 14,
+   "extend→extend→reference": 3,
+   "extend→reference→extend": 1,
+   "reference→extend→extend": 2
+  },
+  "all_edges_same_file": 20,
+  "cross_file": 0,
+  "with_reference_hop": 6,
+  "with_authored_edge": 20,
+  "all_in_largest_component": true
+ },
+ "paths_largest_component_2hop": {
+  "hops": 2,
+  "path_count": 23,
+  "type_sequences": {
+   "extend→extend": 17,
+   "extend→reference": 3,
+   "reference→extend": 3
+  },
+  "all_edges_same_file": 23,
+  "cross_file": 0,
+  "with_reference_hop": 6,
+  "with_authored_edge": 23,
+  "all_in_largest_component": true
+ },
+ "paths_largest_component_3hop": {
+  "hops": 3,
+  "path_count": 20,
+  "type_sequences": {
+   "extend→extend→extend": 14,
+   "extend→extend→reference": 3,
+   "extend→reference→extend": 1,
+   "reference→extend→extend": 2
+  },
+  "all_edges_same_file": 20,
+  "cross_file": 0,
+  "with_reference_hop": 6,
+  "with_authored_edge": 20,
+  "all_in_largest_component": true
+ },
+ "paths_total_clean": {
+  "k2": 23,
+  "k3": 20,
+  "total": 43,
+  "with_reference_hop": 12
+ },
+ "contain_participation": {
+  "contain_edges_raw": 33,
+  "contain_edges_clean": 25,
+  "contain_edges_in_any_2or3hop_path": 0,
+  "contain_edges_isolated_in_clean_graph": 25,
+  "contain_edges_isolated_in_raw_graph": 33,
+  "definition": "isolated = 该边 source 的入度为 0 且 target 的出度为 0（该帧图内）",
+  "note": "contain 边不参与任何 ≥2 边路径 ⇒ '祖先链冗余'这一失效模式在当前 k≥2 池中不可出现（不是不存在，是没有材料）"
+ },
+ "candidate_sample_2hop_authored": {
+  "selection_rule": "全量枚举（非抽样、非随机）：clean 图全部 23 条 2 跳简单路径；按节点序列字典序排列",
+  "selection_bias": "无抽样偏差；但这 23 条本身是当前图的全部材料（同文件/同类型族），不代表任何总体",
+  "count": 23,
+  "items": [
+   {
+    "nodes": [
+     {
+      "id": "ch3-intro",
+      "name": "引言"
+     },
+     {
+      "id": "quantization-overview",
+      "name": "模拟信号的量化"
+     },
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     }
+    ],
+    "hops": [
+     {
+      "src": "ch3-intro",
+      "tgt": "quantization-overview",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "quantization-overview",
+      "tgt": "pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "ch3-intro",
+      "name": "引言"
+     },
+     {
+      "id": "quantization-overview",
+      "name": "模拟信号的量化"
+     },
+     {
+      "id": "scalar-quantization",
+      "name": "标量量化"
+     }
+    ],
+    "hops": [
+     {
+      "src": "ch3-intro",
+      "tgt": "quantization-overview",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "quantization-overview",
+      "tgt": "scalar-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "ch3-intro",
+      "name": "引言"
+     },
+     {
+      "id": "sampling-theorem",
+      "name": "低通和带通信号抽样定理"
+     },
+     {
+      "id": "ideal-sampling",
+      "name": "低通信号理想抽样"
+     }
+    ],
+    "hops": [
+     {
+      "src": "ch3-intro",
+      "tgt": "sampling-theorem",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "sampling-theorem",
+      "tgt": "ideal-sampling",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "delta-modulation",
+      "name": "增量调制（ $\\Delta \\mathbf{M}$ 调制）"
+     },
+     {
+      "id": "dm-error-performance",
+      "name": "增量调制编码的误码性能分析"
+     },
+     {
+      "id": "dm-pcm-error-comparison",
+      "name": "两种编码的抗误码性能比较"
+     }
+    ],
+    "hops": [
+     {
+      "src": "delta-modulation",
+      "tgt": "dm-error-performance",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "dm-error-performance",
+      "tgt": "dm-pcm-error-comparison",
+      "type": "reference",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     },
+     {
+      "id": "delta-modulation",
+      "name": "增量调制（ $\\Delta \\mathbf{M}$ 调制）"
+     },
+     {
+      "id": "delta-sigma-modulation",
+      "name": "增量总和调制—— $\\Delta-\\Sigma$ 调制"
+     }
+    ],
+    "hops": [
+     {
+      "src": "dpcm",
+      "tgt": "delta-modulation",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "delta-modulation",
+      "tgt": "delta-sigma-modulation",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     },
+     {
+      "id": "delta-modulation",
+      "name": "增量调制（ $\\Delta \\mathbf{M}$ 调制）"
+     },
+     {
+      "id": "dm-error-performance",
+      "name": "增量调制编码的误码性能分析"
+     }
+    ],
+    "hops": [
+     {
+      "src": "dpcm",
+      "tgt": "delta-modulation",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "delta-modulation",
+      "tgt": "dm-error-performance",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     },
+     {
+      "id": "predictive-coding-basics",
+      "name": "预测编码的基本概念"
+     },
+     {
+      "id": "signal-prediction-methods",
+      "name": "信号预测的基本方法"
+     }
+    ],
+    "hops": [
+     {
+      "src": "dpcm",
+      "tgt": "predictive-coding-basics",
+      "type": "reference",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "predictive-coding-basics",
+      "tgt": "signal-prediction-methods",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "ideal-sampling",
+      "name": "低通信号理想抽样"
+     },
+     {
+      "id": "aliasing",
+      "name": "混叠现象与低通抽样定理"
+     },
+     {
+      "id": "bandpass-sampling",
+      "name": "带通抽样定理"
+     }
+    ],
+    "hops": [
+     {
+      "src": "ideal-sampling",
+      "tgt": "aliasing",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "aliasing",
+      "tgt": "bandpass-sampling",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "natural-sampling",
+      "name": "低通信号自然抽样"
+     },
+     {
+      "id": "ideal-sampling",
+      "name": "低通信号理想抽样"
+     },
+     {
+      "id": "aliasing",
+      "name": "混叠现象与低通抽样定理"
+     }
+    ],
+    "hops": [
+     {
+      "src": "natural-sampling",
+      "tgt": "ideal-sampling",
+      "type": "reference",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "ideal-sampling",
+      "tgt": "aliasing",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     },
+     {
+      "id": "adpcm",
+      "name": "自适应差分脉冲编码调制"
+     }
+    ],
+    "hops": [
+     {
+      "src": "pcm",
+      "tgt": "dpcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "dpcm",
+      "tgt": "adpcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     },
+     {
+      "id": "delta-modulation",
+      "name": "增量调制（ $\\Delta \\mathbf{M}$ 调制）"
+     }
+    ],
+    "hops": [
+     {
+      "src": "pcm",
+      "tgt": "dpcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "dpcm",
+      "tgt": "delta-modulation",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     },
+     {
+      "id": "predictive-coding-basics",
+      "name": "预测编码的基本概念"
+     }
+    ],
+    "hops": [
+     {
+      "src": "pcm",
+      "tgt": "dpcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "dpcm",
+      "tgt": "predictive-coding-basics",
+      "type": "reference",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "linear-pcm-error-performance",
+      "name": "线性 PCM 编码的误码性能分析"
+     },
+     {
+      "id": "dm-pcm-error-comparison",
+      "name": "两种编码的抗误码性能比较"
+     }
+    ],
+    "hops": [
+     {
+      "src": "pcm",
+      "tgt": "linear-pcm-error-performance",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "linear-pcm-error-performance",
+      "tgt": "dm-pcm-error-comparison",
+      "type": "reference",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "pcm-coding-methods",
+      "name": "常用的PCM编码方式"
+     },
+     {
+      "id": "a-law-mu-law-pcm",
+      "name": "A 律与 $\\mu$ 律 PCM 编码"
+     }
+    ],
+    "hops": [
+     {
+      "src": "pcm",
+      "tgt": "pcm-coding-methods",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "pcm-coding-methods",
+      "tgt": "a-law-mu-law-pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "pcm-coding-methods",
+      "name": "常用的PCM编码方式"
+     },
+     {
+      "id": "a-law-mu-law-pcm",
+      "name": "A 律与 $\\mu$ 律 PCM 编码"
+     },
+     {
+      "id": "log-linear-pcm",
+      "name": "对数 PCM 与线性 PCM 间的变换"
+     }
+    ],
+    "hops": [
+     {
+      "src": "pcm-coding-methods",
+      "tgt": "a-law-mu-law-pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "a-law-mu-law-pcm",
+      "tgt": "log-linear-pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "quantization-overview",
+      "name": "模拟信号的量化"
+     },
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "dpcm",
+      "name": "差分脉冲编码调制（DPCM）"
+     }
+    ],
+    "hops": [
+     {
+      "src": "quantization-overview",
+      "tgt": "pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "pcm",
+      "tgt": "dpcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "quantization-overview",
+      "name": "模拟信号的量化"
+     },
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "linear-pcm-error-performance",
+      "name": "线性 PCM 编码的误码性能分析"
+     }
+    ],
+    "hops": [
+     {
+      "src": "quantization-overview",
+      "tgt": "pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "pcm",
+      "tgt": "linear-pcm-error-performance",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "quantization-overview",
+      "name": "模拟信号的量化"
+     },
+     {
+      "id": "pcm",
+      "name": "脉冲编码调制"
+     },
+     {
+      "id": "pcm-coding-methods",
+      "name": "常用的PCM编码方式"
+     }
+    ],
+    "hops": [
+     {
+      "src": "quantization-overview",
+      "tgt": "pcm",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "pcm",
+      "tgt": "pcm-coding-methods",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "quantization-overview",
+      "name": "模拟信号的量化"
+     },
+     {
+      "id": "scalar-quantization",
+      "name": "标量量化"
+     },
+     {
+      "id": "uniform-quantization",
+      "name": "均匀量化"
+     }
+    ],
+    "hops": [
+     {
+      "src": "quantization-overview",
+      "tgt": "scalar-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "scalar-quantization",
+      "tgt": "uniform-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "sampling-theorem",
+      "name": "低通和带通信号抽样定理"
+     },
+     {
+      "id": "ideal-sampling",
+      "name": "低通信号理想抽样"
+     },
+     {
+      "id": "aliasing",
+      "name": "混叠现象与低通抽样定理"
+     }
+    ],
+    "hops": [
+     {
+      "src": "sampling-theorem",
+      "tgt": "ideal-sampling",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "ideal-sampling",
+      "tgt": "aliasing",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "scalar-quantization",
+      "name": "标量量化"
+     },
+     {
+      "id": "uniform-quantization",
+      "name": "均匀量化"
+     },
+     {
+      "id": "nonuniform-quantization",
+      "name": "非均匀量化"
+     }
+    ],
+    "hops": [
+     {
+      "src": "scalar-quantization",
+      "tgt": "uniform-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "uniform-quantization",
+      "tgt": "nonuniform-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "uniform-quantization",
+      "name": "均匀量化"
+     },
+     {
+      "id": "nonuniform-quantization",
+      "name": "非均匀量化"
+     },
+     {
+      "id": "logarithmic-quantization",
+      "name": "对数量化"
+     }
+    ],
+    "hops": [
+     {
+      "src": "uniform-quantization",
+      "tgt": "nonuniform-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "nonuniform-quantization",
+      "tgt": "logarithmic-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   },
+   {
+    "nodes": [
+     {
+      "id": "vector-quantization",
+      "name": "向量量化"
+     },
+     {
+      "id": "scalar-quantization",
+      "name": "标量量化"
+     },
+     {
+      "id": "uniform-quantization",
+      "name": "均匀量化"
+     }
+    ],
+    "hops": [
+     {
+      "src": "vector-quantization",
+      "tgt": "scalar-quantization",
+      "type": "reference",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     },
+     {
+      "src": "scalar-quantization",
+      "tgt": "uniform-quantization",
+      "type": "extend",
+      "origin": "sidecar_edge",
+      "file": "教材/03_第3章_模拟信号的数字编码.md"
+     }
+    ]
+   }
+  ]
+ },
+ "chain_shape": {
+  "extend_subgraph_edges": 21,
+  "extend_longest_path_edges": 5,
+  "extend_longest_path_len_nodes": 6,
+  "extend_longest_paths_count": 4,
+  "extend_longest_paths": [
+   [
+    "ch3-intro",
+    "quantization-overview",
+    "pcm",
+    "dpcm",
+    "delta-modulation",
+    "delta-sigma-modulation"
+   ],
+   [
+    "ch3-intro",
+    "quantization-overview",
+    "pcm",
+    "dpcm",
+    "delta-modulation",
+    "dm-error-performance"
+   ],
+   [
+    "ch3-intro",
+    "quantization-overview",
+    "pcm",
+    "pcm-coding-methods",
+    "a-law-mu-law-pcm",
+    "log-linear-pcm"
+   ],
+   [
+    "ch3-intro",
+    "quantization-overview",
+    "scalar-quantization",
+    "uniform-quantization",
+    "nonuniform-quantization",
+    "logarithmic-quantization"
+   ]
+  ],
+  "extend_longest_path_note": "最长 extend 链不唯一（复核员另找到同长路径）；引用时须说明'其中一条'",
+  "distinct_2hop_node_sequences": 23,
+  "nodes_used_by_2hop_paths": 25,
+  "pairwise_2hop_shared_node_hist": {
+   "0": 171,
+   "1": 52,
+   "2": 30
+  },
+  "note": "若 pairwise 共享 ≥2 节点的比例高 ⇒ 候选链路高度重叠（同一条长链的滑窗），等价独立样本量远小于条目数。"
+ },
+ "trivial_separation_frames": {
+  "note": "帧 = universe 分母 + 边集 + 节点子集。357 帧分母=全部 357 KP（357/357 有 file，来自 11 sidecar）；79/65 帧分母=被边覆盖节点。复核员报的 0.634% / 0.097% = all_357_over_raw_graph 帧；clean 帧为 0.618% / 0.0905%。引用必须带帧名。",
+  "frames": {
+   "all_357_over_raw_graph": {
+    "universe_nodes": 357,
+    "covered_nodes": 79,
+    "edges": 62,
+    "weak_components_including_isolated": 296,
+    "ordered_pairs": 127092,
+    "adjacent_ordered_pairs": 62,
+    "p_adjacent": 0.000488,
+    "same_component_ordered_pairs": 806,
+    "p_same_component": 0.006342,
+    "directed_reachable_ordered_pairs": 123,
+    "p_directed_reachable": 0.000968,
+    "frame_scenario": "全库 357 节点随机负例",
+    "same_file_ordered_pairs": 35558,
+    "p_same_file": 0.279782,
+    "same_file_covered_nodes_in_frame": 357,
+    "same_file_files_in_frame": 9,
+    "same_file_rule_TPR_on_candidate_chains": 1.0,
+    "same_file_rule_BA_bound": 0.860109,
+    "same_file_rule_3node_p": 0.104444,
+    "same_file_rule_3node_BA": 0.947778,
+    "same_component_rule_BA_bound": 0.996829
+   },
+   "all_357_over_clean_graph": {
+    "universe_nodes": 357,
+    "covered_nodes": 65,
+    "edges": 54,
+    "weak_components_including_isolated": 304,
+    "ordered_pairs": 127092,
+    "adjacent_ordered_pairs": 54,
+    "p_adjacent": 0.000425,
+    "same_component_ordered_pairs": 786,
+    "p_same_component": 0.006184,
+    "directed_reachable_ordered_pairs": 115,
+    "p_directed_reachable": 0.000905,
+    "frame_scenario": "全库 357 节点随机负例",
+    "same_file_ordered_pairs": 35558,
+    "p_same_file": 0.279782,
+    "same_file_covered_nodes_in_frame": 357,
+    "same_file_files_in_frame": 9,
+    "same_file_rule_TPR_on_candidate_chains": 1.0,
+    "same_file_rule_BA_bound": 0.860109,
+    "same_file_rule_3node_p": 0.104444,
+    "same_file_rule_3node_BA": 0.947778,
+    "same_component_rule_BA_bound": 0.996908
+   },
+   "raw_79_62": {
+    "universe_nodes": 79,
+    "covered_nodes": 79,
+    "edges": 62,
+    "weak_components_including_isolated": 18,
+    "ordered_pairs": 6162,
+    "adjacent_ordered_pairs": 62,
+    "p_adjacent": 0.010062,
+    "same_component_ordered_pairs": 806,
+    "p_same_component": 0.130802,
+    "directed_reachable_ordered_pairs": 123,
+    "p_directed_reachable": 0.019961,
+    "frame_scenario": "仅被边覆盖节点随机负例",
+    "same_file_ordered_pairs": 1612,
+    "p_same_file": 0.261603,
+    "same_file_covered_nodes_in_frame": 79,
+    "same_file_files_in_frame": 5,
+    "same_file_rule_TPR_on_candidate_chains": 1.0,
+    "same_file_rule_BA_bound": 0.869198,
+    "same_file_rule_3node_p": 0.076,
+    "same_file_rule_3node_BA": 0.962,
+    "same_component_rule_BA_bound": 0.934599
+   },
+   "clean_65_54": {
+    "universe_nodes": 65,
+    "covered_nodes": 65,
+    "edges": 54,
+    "weak_components_including_isolated": 12,
+    "ordered_pairs": 4160,
+    "adjacent_ordered_pairs": 54,
+    "p_adjacent": 0.012981,
+    "same_component_ordered_pairs": 786,
+    "p_same_component": 0.188942,
+    "directed_reachable_ordered_pairs": 115,
+    "p_directed_reachable": 0.027644,
+    "frame_scenario": "仅被边覆盖节点随机负例",
+    "same_file_ordered_pairs": 1094,
+    "p_same_file": 0.262981,
+    "same_file_covered_nodes_in_frame": 65,
+    "same_file_files_in_frame": 5,
+    "same_file_rule_TPR_on_candidate_chains": 1.0,
+    "same_file_rule_BA_bound": 0.86851,
+    "same_file_rule_3node_p": 0.083104,
+    "same_file_rule_3node_BA": 0.958448,
+    "same_component_rule_BA_bound": 0.905529
+   }
+  },
+  "same_file_rule": {
+   "definition": "item 的（前）两个节点同文件 ⇒ 判正；否则判负。正例 = 23 条 2 跳链（全部同文件）",
+   "BA_by_frame": {
+    "all_357_over_raw_graph": 0.860109,
+    "all_357_over_clean_graph": 0.860109,
+    "raw_79_62": 0.869198,
+    "clean_65_54": 0.86851
+   },
+   "verifier_reported_pair_level": 0.8706,
+   "our_raw_frame": 0.869198,
+   "our_clean_frame": 0.86851,
+   "our_357_frames": {
+    "raw": 0.860109,
+    "clean": 0.860109
+   },
+   "verifier_corrected_357_value": {
+    "same_file_ordered_pairs": 35558,
+    "p": 0.279782,
+    "BA": 0.860109
+   },
+   "conclusion": "四帧 BA 均 ≥ 0.860 > G1 的 0.80 合格线 ⇒ 随机负例不可用；matched 设计必需"
+  },
+  "same_component_rule": {
+   "definition": "item 的节点同弱连通分量 ⇒ 判正。正例 23 条全在最大块",
+   "BA_by_frame": {
+    "all_357_over_raw_graph": 0.996829,
+    "all_357_over_clean_graph": 0.996908,
+    "raw_79_62": 0.934599,
+    "clean_65_54": 0.905529
+   }
+  },
+  "three_node_rule": {
+   "definition": "item 的全部 3 个节点同文件 ⇒ 判正（2 跳链的完整形态）",
+   "BA_by_frame": {
+    "all_357_over_raw_graph": 0.947778,
+    "all_357_over_clean_graph": 0.947778,
+    "raw_79_62": 0.962,
+    "clean_65_54": 0.958448
+   },
+   "note": "按链的完整节点数判规则更强（BA 更高）⇒ 负例必须 matched 到同章，且呈现不得给文件标签"
+  }
+ },
+ "negative_feasibility": {
+  "N1_reverse_direction": 23,
+  "N2_neighbor_swap_feasible_paths": 10,
+  "N2_nodes_with_outdeg_ge2": 8,
+  "N3_composition_invalid_paths": 6,
+  "N5_predicate_relabel_2hop_paths": 23,
+  "N4_true_but_vacuous_note": "当前 k=2 无纯 contain 链（contain 不参与任何 ≥2 边路径）；D 链需 L2 判定 ⇒ 该档当前为空"
+ },
+ "honesty": [
+  "本普查只数『结构上可枚举的路径』，不判断路径语义（那是 G4 人判协议的事）。",
+  "类型序列用原始枚举 contain/extend/reference；G2 的 P1–P5/D 谓词尚未人判 ⇒ 组合表只能给候选，不能当结论。",
+  "43 条路径全部在同一个 25 节点块、同一文件；距『代表性样本』差得远，只能 pilot。",
+  "正则化（去 generated_at）哈希 recipe 见 canonicalization 字段；v1 未记录 recipe。"
+ ]
+}

@@ -1,0 +1,449 @@
+{
+ "schema": "gue-g4-verify-prep/v1",
+ "generated_at": "2026-10-28T01:36:26+00:00",
+ "measurement": {
+  "corpus": "数字通信原理",
+  "manifest_sha256": "a4beaedc5f852816129ebc8399072a17b6b07e97bd22ea848246ae90a3b75466",
+  "measurement_source": "memoria.graph.collector.collect_graph_data() on independent temp copy",
+  "build_state": "no .memoria/build (pre_build)",
+  "node_count_sidecar_kps": 357
+ },
+ "baseline": {
+  "nodes": 357,
+  "edges": 62,
+  "edge_types": {
+   "contain": 33,
+   "reference": 8,
+   "extend": 21
+  },
+  "edge_origins": {
+   "range": 33,
+   "link": 3,
+   "sidecar_edge": 26
+  },
+  "relevance": {
+   "0.9": 33,
+   "0.7": 8,
+   "0.6": 21
+  },
+  "derived": {
+   "True": 36,
+   "False": 26
+  },
+  "covered_nodes": 79,
+  "isolated_nodes": 278,
+  "covered_pct": 22.13,
+  "isolated_pct": 77.87,
+  "components": 296,
+  "largest_component": 25,
+  "component_sizes_top10": [
+   25,
+   9,
+   8,
+   7,
+   3,
+   3,
+   2,
+   2,
+   2,
+   2
+  ],
+  "avg_degree": 0.3473,
+  "edge_node_ratio": 0.1737,
+  "degree_hist": {
+   "1": 56,
+   "2": 13,
+   "3": 4,
+   "4": 3,
+   "5": 1,
+   "6": 1,
+   "7": 1
+  },
+  "max_degree": 7,
+  "range_ok_nodes": 352,
+  "range_ok_pct": 98.6,
+  "description_nonempty": 0,
+  "edge_field_absence": {
+   "fact": 0,
+   "valid_at": 0,
+   "invalid_at": 0,
+   "confidence": 0,
+   "provenance": 0,
+   "instances": 0
+  },
+  "multi_target_edges": 0,
+  "edges_with_missing_endpoint": 0,
+  "cycles_detected_union_find": 1,
+  "node_fields": [
+   "description",
+   "end_line",
+   "file",
+   "id",
+   "kp_id",
+   "label",
+   "name",
+   "range_ok",
+   "start_line"
+  ]
+ },
+ "degenerate_contain": {
+  "count": 8,
+  "same_name": 7,
+  "ocr_prefix": 1,
+  "items": [
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "1. 线性特性",
+    "tgt_name": "1. 线性特性"
+   },
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "3. 互易对称特性",
+    "tgt_name": "3. 互易对称特性"
+   },
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "连续时间Fourier变换的性质",
+    "tgt_name": "连续时间Fourier变换的性质"
+   },
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "※无失真传输系统的频域特性",
+    "tgt_name": "※无失真传输系统的频域特性"
+   },
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "※线性相位理想低通滤波器",
+    "tgt_name": "※线性相位理想低通滤波器"
+   },
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "※线性相位理想低通滤波器",
+    "tgt_name": "※线性相位理想低通滤波器"
+   },
+   {
+    "kind": "same_name",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "连续时间LTI系统的频域分析应用",
+    "tgt_name": "连续时间LTI系统的频域分析应用"
+   },
+   {
+    "kind": "ocr_prefix",
+    "type": "contain",
+    "origin": "range",
+    "src_name": "连续时间LTI系统的频域分析应用",
+    "tgt_name": "传连续时间LTI系统的频域分析应用"
+   }
+  ]
+ },
+ "inbound": {
+  "all_62": {
+   "edges": 62,
+   "targets_covered": 56,
+   "indeg_hist": {
+    "1": 52,
+    "2": 3,
+    "4": 1
+   },
+   "indeg_ge2": 4,
+   "indeg_ge2_nodes": [
+    "ch2-10-cosine-plus-narrowband-gaussian",
+    "dm-pcm-error-comparison",
+    "ideal-sampling",
+    "scalar-quantization"
+   ],
+   "distinct_source_ge2": 4
+  },
+  "exclude_degenerate": {
+   "edges": 54,
+   "targets_covered": 48,
+   "indeg_hist": {
+    "1": 44,
+    "2": 3,
+    "4": 1
+   },
+   "indeg_ge2": 4,
+   "indeg_ge2_nodes": [
+    "ch2-10-cosine-plus-narrowband-gaussian",
+    "dm-pcm-error-comparison",
+    "ideal-sampling",
+    "scalar-quantization"
+   ],
+   "distinct_source_ge2": 4
+  },
+  "authored_only": {
+   "edges": 29,
+   "targets_covered": 24,
+   "indeg_hist": {
+    "1": 20,
+    "2": 3,
+    "3": 1
+   },
+   "indeg_ge2": 4,
+   "indeg_ge2_nodes": [
+    "ch2-10-cosine-plus-narrowband-gaussian",
+    "dm-pcm-error-comparison",
+    "ideal-sampling",
+    "scalar-quantization"
+   ],
+   "distinct_source_ge2": 4
+  },
+  "extend_only": {
+   "edges": 21,
+   "targets_covered": 21,
+   "indeg_hist": {
+    "1": 21
+   },
+   "indeg_ge2": 0,
+   "indeg_ge2_nodes": [],
+   "distinct_source_ge2": 0
+  },
+  "contain_only": {
+   "edges": 33,
+   "targets_covered": 33,
+   "indeg_hist": {
+    "1": 33
+   },
+   "indeg_ge2": 0,
+   "indeg_ge2_nodes": [],
+   "distinct_source_ge2": 0
+  },
+  "reference_only": {
+   "edges": 8,
+   "targets_covered": 5,
+   "indeg_hist": {
+    "1": 3,
+    "2": 1,
+    "3": 1
+   },
+   "indeg_ge2": 2,
+   "indeg_ge2_nodes": [
+    "ch2-10-cosine-plus-narrowband-gaussian",
+    "dm-pcm-error-comparison"
+   ],
+   "distinct_source_ge2": 2
+  }
+ },
+ "derived_if_materialized": {
+  "all_62": {
+   "co_citation_pairs": 57,
+   "co_citation_top": [
+    [
+     "数字通信系统的基本性能指标及其度量参数",
+     7
+    ],
+    [
+     "数字通信系统的基本组成",
+     6
+    ],
+    [
+     "ch2-10-common-random-processes",
+     5
+    ],
+    [
+     "pcm",
+     3
+    ],
+    [
+     "dpcm",
+     3
+    ]
+   ],
+   "bibliographic_coupling_pairs": 9,
+   "bib_coupling_top": [
+    [
+     "ch2-10-cosine-plus-narrowband-gaussian",
+     4
+    ],
+    [
+     "ideal-sampling",
+     2
+    ],
+    [
+     "scalar-quantization",
+     2
+    ],
+    [
+     "dm-pcm-error-comparison",
+     2
+    ]
+   ]
+  },
+  "exclude_degenerate": {
+   "co_citation_pairs": 55,
+   "co_citation_top": [
+    [
+     "数字通信系统的基本性能指标及其度量参数",
+     7
+    ],
+    [
+     "数字通信系统的基本组成",
+     6
+    ],
+    [
+     "ch2-10-common-random-processes",
+     5
+    ],
+    [
+     "pcm",
+     3
+    ],
+    [
+     "dpcm",
+     3
+    ]
+   ],
+   "bibliographic_coupling_pairs": 9,
+   "bib_coupling_top": [
+    [
+     "ch2-10-cosine-plus-narrowband-gaussian",
+     4
+    ],
+    [
+     "ideal-sampling",
+     2
+    ],
+    [
+     "scalar-quantization",
+     2
+    ],
+    [
+     "dm-pcm-error-comparison",
+     2
+    ]
+   ]
+  },
+  "authored_only": {
+   "co_citation_pairs": 9,
+   "co_citation_top": [
+    [
+     "pcm",
+     3
+    ],
+    [
+     "dpcm",
+     3
+    ],
+    [
+     "ch3-intro",
+     2
+    ],
+    [
+     "quantization-overview",
+     2
+    ],
+    [
+     "delta-modulation",
+     2
+    ]
+   ],
+   "bibliographic_coupling_pairs": 6,
+   "bib_coupling_top": [
+    [
+     "ch2-10-cosine-plus-narrowband-gaussian",
+     3
+    ],
+    [
+     "ideal-sampling",
+     2
+    ],
+    [
+     "scalar-quantization",
+     2
+    ],
+    [
+     "dm-pcm-error-comparison",
+     2
+    ]
+   ]
+  }
+ },
+ "path_space": {
+  "note": "简单有向路径（节点不重复）；长度 k = 经过 k 条边 / k+1 个节点",
+  "len2_total_graph": 23,
+  "len3_total_graph": 20,
+  "len2_largest_component": 23,
+  "len3_largest_component": 20,
+  "largest_component_size": 25,
+  "longest_simple_path_edges_largest": 6,
+  "len2_type_composition": {
+   "extend→extend": 17,
+   "reference→extend": 3,
+   "extend→reference": 3
+  },
+  "len3_type_composition": {
+   "extend→extend→extend": 14,
+   "extend→extend→reference": 3,
+   "reference→extend→extend": 2,
+   "extend→reference→extend": 1
+  },
+  "components_ge2_nodes": 18,
+  "components_ge3_nodes": 6,
+  "same_component_ordered_pairs": 806,
+  "total_ordered_pairs": 127092,
+  "random_pair_same_component_pct": 0.634,
+  "directed_reachable_ordered_pairs": 123,
+  "random_pair_directed_reachable_pct": 0.097,
+  "extend_edges": 21,
+  "extend_same_file_pairs": 21,
+  "extend_target_after_source_in_file": 21
+ },
+ "sidecar": {
+  "sidecar_edges_total": 26,
+  "sidecar_edges_by_type": {
+   "extend": 21,
+   "reference": 5
+  },
+  "links_entries": 3,
+  "links_instances": 5,
+  "links_targets": 3,
+  "links_targets_ge2": 0,
+  "links_orphan_targets": [
+   "通带抽样定理"
+  ],
+  "kps_total": 357,
+  "kps_with_id": 357
+ },
+ "identity": {
+  "name_collision_groups": 36,
+  "kps_in_collision_groups": 114,
+  "pct_kps": 31.93,
+  "top_collision_groups": [
+   [
+    "连续时间Fourier变换的性质",
+    12
+   ],
+   [
+    "目录",
+    11
+   ],
+   [
+    "连续时间Fourier级数的性质",
+    5
+   ],
+   [
+    "线性相位理想低通滤波器",
+    5
+   ],
+   [
+    "单位冲激信号",
+    4
+   ]
+  ],
+  "multi_file_identities": 0,
+  "distinct_kp_ids": 357
+ }
+}

@@ -1,0 +1,158 @@
+{
+ "schema": "gue-g4-census-crosscheck/v1",
+ "inputs": {
+  "inventory": "G2-edge-inventory-raw.json",
+  "census": "G4-path-census.json",
+  "degenerate_edges_detected": 8
+ },
+ "graph": {
+  "edges_raw": 62,
+  "edges_clean": 54,
+  "nodes_with_edges_raw": 79,
+  "nodes_with_edges_clean": 65,
+  "weak_components_raw": 18,
+  "weak_components_clean": 12,
+  "component_sizes_clean_top10": [
+   25,
+   9,
+   8,
+   7,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2
+  ],
+  "census_weak_components_clean": 12,
+  "census_component_sizes_clean_top10": [
+   25,
+   9,
+   8,
+   7,
+   2,
+   2,
+   2,
+   2,
+   2,
+   2
+  ]
+ },
+ "paths_raw_2hop": {
+  "path_count": 23,
+  "type_sequences": {
+   "extend→extend": 17,
+   "extend→reference": 3,
+   "reference→extend": 3
+  },
+  "census_path_count": 23,
+  "same_file_all": true,
+  "nodes_used": 25
+ },
+ "paths_clean_2hop": {
+  "path_count": 23,
+  "type_sequences": {
+   "extend→extend": 17,
+   "extend→reference": 3,
+   "reference→extend": 3
+  },
+  "census_path_count": 23,
+  "same_file_all": true,
+  "nodes_used": 25
+ },
+ "candidate_sample": {
+  "census_listed": 15,
+  "actual_paths": 23,
+  "listed_equals_actual_set": false,
+  "listed_missing_from_actual": [],
+  "actual_missing_from_listed": [
+   [
+    "quantization-overview",
+    "pcm",
+    "dpcm"
+   ],
+   [
+    "quantization-overview",
+    "pcm",
+    "linear-pcm-error-performance"
+   ],
+   [
+    "quantization-overview",
+    "pcm",
+    "pcm-coding-methods"
+   ],
+   [
+    "quantization-overview",
+    "scalar-quantization",
+    "uniform-quantization"
+   ],
+   [
+    "sampling-theorem",
+    "ideal-sampling",
+    "aliasing"
+   ],
+   [
+    "scalar-quantization",
+    "uniform-quantization",
+    "nonuniform-quantization"
+   ],
+   [
+    "uniform-quantization",
+    "nonuniform-quantization",
+    "logarithmic-quantization"
+   ],
+   [
+    "vector-quantization",
+    "scalar-quantization",
+    "uniform-quantization"
+   ]
+  ]
+ },
+ "paths_raw_3hop": {
+  "path_count": 20,
+  "type_sequences": {
+   "extend→extend→extend": 14,
+   "extend→extend→reference": 3,
+   "reference→extend→extend": 2,
+   "extend→reference→extend": 1
+  },
+  "census_path_count": null,
+  "same_file_all": true,
+  "nodes_used": 25
+ },
+ "paths_clean_3hop": {
+  "path_count": 20,
+  "type_sequences": {
+   "extend→extend→extend": 14,
+   "extend→extend→reference": 3,
+   "reference→extend→extend": 2,
+   "extend→reference→extend": 1
+  },
+  "census_path_count": 20,
+  "same_file_all": true,
+  "nodes_used": 25
+ },
+ "trivial_separation": {
+  "covered_nodes_clean": 65,
+  "ordered_pairs": 4160,
+  "adjacent_ordered_pairs": 54,
+  "p_adjacent": 0.012981,
+  "same_file_ordered_pairs": 1094,
+  "p_same_file": 0.262981,
+  "two_hop_reachable_ordered_pairs": 23,
+  "p_two_hop_reachable": 0.005529,
+  "census_trivial_separation": {
+   "note": "若判据者能看到章节/文件，'同文件/同章'这类规则即可分类 ⇒ 负例过易。以下给可计算下界。",
+   "covered_nodes": 65,
+   "ordered_node_pairs": 4160,
+   "adjacent_ordered_pairs": 54,
+   "p_adjacent_given_random_pair": 0.012981,
+   "same_file_ordered_pairs": 1094,
+   "p_same_file_given_random_pair": 0.262981,
+   "two_hop_reachable_ordered_pairs": 23,
+   "p_two_hop_reachable_given_random_pair": 0.005529
+  },
+  "same_file_rule_balanced_accuracy_upper_bound": 0.8706,
+  "note": "BA 下界口径：正例=2-hop 路径（23），负例=其余 ordered pairs；规则=两端同文件即判正。若负例不按同文件匹配，该条平凡规则即可接近此 BA ⇒ 区分度虚高。"
+ }
+}
