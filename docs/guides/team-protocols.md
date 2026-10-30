@@ -170,3 +170,48 @@ python scripts/agent/team_audit.py --json
 
 > 注：dq5/tooling（`team_audit.py` sha 与 freeze 不一致）属 R-R6 裁决的预期 WARN，不阻断裁决。
 
+## 附录 E：跨仓 `report` 记录约定（2026-10-30，task-246 跟进）
+
+> **背景**：dispatch-log 的 `report` 默认按 **Memoria 工作区**解析，但近期部分工作在 **DSH 仓**（`D:\deepseek-harness`）
+> 产出证据。task-246 的 8 条 S2 正是「产物在 DSH 仓、日志记的是 Memoria 相对路径」⇒ 每次跨仓交付都会再生 S2
+> （silent_failure「声称 ≠ 存在」），直到把记录约定与机检一起补上。
+> **裁定**（Lead，2026-10-30）：**不复制** DSH 产物回 Memoria（避免跨仓重复资产与漂移）；维持
+> `team/steward/task-246-s2-cleanup.md`（逐条路径 + sha256）这种可审计方式。
+
+### E.1 记录约定（**立即生效**，人/Agent 写 dispatch-log 时遵守）
+
+1. **证据在 DSH 仓时，`report` 写 `dsh:<repo-relative-path>`**（正斜杠、相对 DSH 仓根），例如：
+   `dsh:artifacts/agent/panel-ui/browser-check/236-tier-a.png`
+2. **不写 `D:\deepseek-harness\...` 绝对路径**（不可跨平台/跨机器复算）；确需绝对路径时只作 fallback，
+   且必须在 `desc` 里注明"绝对路径、非可移植"。
+3. **跨仓意图要可读**：`desc` 里写 `cross-repo`/`跨仓`（dispatch-log 目前没有独立 `history`/`repo` 字段，
+   `dsh:` 前缀本身即机器可读标记；未来若加显式字段再升级）。
+4. **`corrects.new` 同样适用**：更正协议的目标若在 DSH 仓，也写 `dsh:` 形式（而不是指向一个空壳本地文件）——
+   *但在 s2_cross_repo 机检上线前*，仍建议按 task-246 的做法指向**本地清单文件**（如
+   `team/steward/task-246-s2-cleanup.md`），因为当前 S2 只认 Memoria 路径。
+5. **跨仓产物必须在本地留下可审计痕迹**：至少一条 `team/steward/**` 清单或 `artifacts/agent/verify/todo/**`
+   结论文件，记录 `dsh:` 路径 + sha256 + 生成时间（示例：task-246 清单）。
+
+### E.2 过渡期依赖（**重要，不要误读**）
+
+**当前 `team_audit.py::silent_failure S2` 尚未识别 `dsh:` 前缀**：照 E.1 直接写 `dsh:` 的 done 行仍会被判 FAIL。
+过渡做法（二选一）：
+- (a) 继续用「本地清单 + `phase=backfill`/`corrects`」把旧/新跨仓行指向清单（task-246 模式）；或
+- (b) 等 `s2_cross_repo` 机检（提案，见 `team/steward/findings.jsonl` SF-20261030-060）落地后再改用 `dsh:`。
+
+### E.3 拟议中的机检（`s2_cross_repo`，尚未实现）
+
+| 项 | 设计 |
+|---|---|
+| 触发 | `silent_failure` 的 S2 分支：`report` 在 Memoria 不存在时，再尝试跨仓解析 |
+| 解析 | `dsh:<rel>` ⇒ `$DSH_ROOT/<rel>`（`DSH_ROOT` 取环境变量 `DSH_TEAM_CROSS_REPO_ROOT`，默认 `D:\deepseek-harness`）；也接受绝对路径（fallback，建议 WARN 记录不可移植） |
+| 判定 | 跨仓对应物存在 ⇒ **PASS** 并记 INFO `cross-repo`（可见，不静默）；两者都不存在 ⇒ **FAIL** |
+| 覆盖 | `corrects.new` 同样按此解析（否则更正无法跨仓） |
+| 成本 | 改 `team_audit.py`（约 30–60 行 + 3 条 selftest fixture）+ 文档；因该文件属 `STEWARD_STANDARDS`/freeze(tooling)，落地需 steward 重签 rN 并更新 freeze 记录（约 1–1.5h 总工作量） |
+
+### E.4 为什么不做「复制产物回 Memoria」
+
+- DSH 产物（PNG/JSON/TS）会变成跨仓重复资产，需两处同步；一旦 DSH 侧更新就会漂移；
+- `artifacts/**` 是本地可再生证据区，复制后仍不进 git，跨机器仍不可复算；
+- 「路径 + sha256 + 生成时间」的清单（task-246 模式）更可审计，且不引入资产同步债。
+
