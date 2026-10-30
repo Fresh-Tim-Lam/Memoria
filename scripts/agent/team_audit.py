@@ -110,6 +110,10 @@ DEFAULT_AGENTS_MD = "AGENTS.md"
 ROLE_EVIDENCE_DAYS = 14
 # silent_failure：done 记录与其 report 产物 mtime 的允许偏差（文件系统秒级 + 写入延迟）
 DONE_REPORT_SKEW_SECONDS = 120
+# task-251（附录 E）：跨仓 report 解析。dsh:<repo-relative> → $DSH_TEAM_CROSS_REPO_ROOT/<rel>；
+# 绝对路径仅 fallback（不可移植，会让 INFO 计数可见，不静默通过）。
+CROSS_REPO_DSH_ROOT_ENV = "DSH_TEAM_CROSS_REPO_ROOT"
+DEFAULT_CROSS_REPO_DSH_ROOT = r"D:\deepseek-harness"
 # silent_failure：spawn 超过该小时数仍无 done/retire 配对 ⇒ 派发未闭环
 DISPATCH_ORPHAN_GRACE_HOURS = 6
 # silent_failure：spawn→done 短于该秒数 ⇒ 闭环时间不可信（补记/伪造信号）
@@ -1092,6 +1096,29 @@ def _dispatch_worker(row: dict) -> str:
     return target
 
 
+def _cross_repo_target(report: str) -> tuple[Path | None, str]:
+    """把跨仓 report 解析成候选路径（task-251 / 附录 E）。
+
+    解析优先级：`dsh:<repo-relative>` → `$DSH_TEAM_CROSS_REPO_ROOT/<rel>`（默认 D:\\deepseek-harness）；
+    绝对路径仅作 fallback（不可移植，调用方必须计数可见）。
+    返回 `(candidate, kind)`，kind ∈ {"dsh", "absolute", ""}；非跨仓形式返回 (None, "")。
+    """
+    text = str(report or "").strip()
+    if not text:
+        return None, ""
+    lowered = text.lower()
+    if lowered.startswith("dsh:") or lowered.startswith("dsh\\"):
+        rel = text[4:].lstrip("/\\")
+        if not rel:
+            return None, "dsh"
+        root = os.environ.get(CROSS_REPO_DSH_ROOT_ENV) or DEFAULT_CROSS_REPO_DSH_ROOT
+        return Path(root).expanduser() / rel.replace("\\", "/"), "dsh"
+    candidate = Path(text).expanduser()
+    if candidate.is_absolute():
+        return candidate, "absolute"
+    return None, ""
+
+
 def check_silent_failure(ctx: AuditContext) -> None:
     """「该做的没做，且不报错」的机检投影。
 
@@ -1119,6 +1146,8 @@ def check_silent_failure(ctx: AuditContext) -> None:
     now = datetime.now(timezone.utc)
     problems = 0
     exempt = 0  # S1-exempt：显式 no_report_reason 豁免计数（可见但不阻断）
+    cross_repo_passes = 0  # task-251：经 dsh:/绝对路径解析存在的跨仓产物数（INFO 可见）
+    cross_repo_abs = 0     # 其中用绝对路径 fallback 的数量（不可移植信号）
 
     # ---- 更正协议：append-only 日志的「更正靠新增记录」（AGENTS.md §3 铁律 ④） ----
     # backfill 记录若带 corrects{line,field,new}，则第 line 行的该字段以 new 为准。
@@ -1143,6 +1172,18 @@ def check_silent_failure(ctx: AuditContext) -> None:
             if new_report and (ctx.repo / new_report.replace("\\", "/")).exists():
                 corrected_ok += 1
                 continue  # 已按声明更正，且更正后的产物真实存在
+            # task-251：corrects.new 也支持跨仓解析（否则跨仓更正永远假红）
+            cross_target, cross_kind = _cross_repo_target(new_report)
+            if cross_target is not None and cross_target.exists():
+                corrected_ok += 1
+                cross_repo_passes += 1
+                if cross_kind == "absolute":
+                    cross_repo_abs += 1
+                ctx.add(check, INFO,
+                        f"跨仓更正可验证（cross-repo）：第 {row['_line']} 行 corrects.new={new_report!r}"
+                        f" 经 {cross_kind} 解析存在；注意这不是 Memoria 本地验证（明细见附录 E/清单）",
+                        f"{where} cross_repo={cross_kind}")
+                continue
             problems += 1
             ctx.add(check, FAIL,
                     f"第 {row['_line']} 行声明更正为 {new_report!r}，但该产物仍不存在"
@@ -1169,10 +1210,23 @@ def check_silent_failure(ctx: AuditContext) -> None:
             continue
         target = ctx.repo / str(report).replace("\\", "/")
         if not target.exists():
+            # task-251：Memoria 不存在时，再按附录 E 尝试跨仓解析（dsh: 优先，绝对路径 fallback）。
+            # 跨仓存在 ⇒ PASS 但必须 INFO 可见（cross-repo ≠ Memoria 已验证），绝不静默通过。
+            cross_target, cross_kind = _cross_repo_target(str(report))
+            if cross_target is not None and cross_target.exists():
+                cross_repo_passes += 1
+                if cross_kind == "absolute":
+                    cross_repo_abs += 1
+                ctx.add(check, INFO,
+                        f"跨仓产物可验证（cross-repo）：{report} 经 {cross_kind} 解析存在；"
+                        f"注意这不是 Memoria 本地验证（记录约定见附录 E）",
+                        f"{where} report={report} cross_repo={cross_kind}")
+                continue
             problems += 1
             ctx.add(check, FAIL,
                     f"done 记录引用的产物不存在（S2：声称 ≠ 存在）：{report}"
-                    f"（如系路径迁移/改名，按更正协议追加一条带 corrects 的 backfill 记录）",
+                    f"（Memoria 与跨仓解析均不存在；如系路径迁移/改名，按更正协议追加一条带 corrects 的 backfill 记录，"
+                    f"跨仓路径用 dsh:<repo-relative> 形式）",
                     f"{where} report={report}")
             continue
         born = _born_utc(target)
@@ -1263,6 +1317,14 @@ def check_silent_failure(ctx: AuditContext) -> None:
                 f"dispatch-log {len(rows)} 条：done 记录均绑定到当时已存在的产物"
                 f"（其中 {corrected_ok} 条按更正协议指向新路径）、spawn 均已闭环、行序单调",
                 f"{ctx.rel(path)}")
+    # task-251：跨仓解析通过数必须可见（不能把"跨仓存在"静默等同"Memoria 已验证"）。
+    if cross_repo_passes:
+        abs_note = (f"，其中 {cross_repo_abs} 条用绝对路径 fallback（不可移植，仅作降级）"
+                    if cross_repo_abs else "")
+        ctx.add(check, INFO,
+                f"cross_repo_passes={cross_repo_passes}：{cross_repo_passes} 条 done/更正产物经跨仓解析存在"
+                f"（dsh: 优先{abs_note}）；跨仓存在 ≠ Memoria 已验证，明细见附录 E/清单",
+                f"{ctx.rel(path)} cross_repo_passes={cross_repo_passes}")
 
 
 # ---------------------------------------------------------------------------
@@ -4149,6 +4211,56 @@ def selftest() -> int:
 
         expect(_dq_red("dq6-red", post=_dq6_post), "deliberation_quality", FAIL, "dq6")
 
+        # task-251：s2_cross_repo 三条 fixture（a 先证红再证绿 / b 两者皆无 FAIL / c 本地回归）
+        def _s2_repo(name, report):
+            root = tmp / name
+            _write(root / "team/dispatch-log.jsonl", json.dumps({
+                "ts": "2099-01-01T00:00:00+08:00", "actor": "lead", "phase": "done",
+                "target": "x", "report": report}, ensure_ascii=False) + "\n")
+            return root
+
+        cross_a_root = _s2_repo("s2-cross-a", "dsh:artifacts/cross/a.md")
+        cross_a_dsh = tmp / "dsh-a"
+        _write(cross_a_dsh / "artifacts/cross/a.md", "# cross artifact\n")
+        old_cross_env = os.environ.get(CROSS_REPO_DSH_ROOT_ENV)
+        try:
+            # a 先证红：把跨仓根指到空目录（等价于解析关闭）⇒ 该 dsh: 行必须 FAIL
+            os.environ[CROSS_REPO_DSH_ROOT_ENV] = str(tmp / "dsh-empty")
+            off_findings = _isolated(check_silent_failure, _ctx(cross_a_root))
+            if not any(f.check == "silent_failure" and f.severity == FAIL and "S2" in f.message
+                       for f in off_findings):
+                failures.append("s2_cross_repo a：跨仓解析关闭时 dsh: 行必须 FAIL（先证红失败）")
+            # a 再证绿：指向真实 DSH 根 ⇒ PASS 且 INFO cross_repo_passes=1
+            os.environ[CROSS_REPO_DSH_ROOT_ENV] = str(cross_a_dsh)
+            on_findings = _isolated(check_silent_failure, _ctx(cross_a_root))
+            if any(f.check == "silent_failure" and f.severity == FAIL for f in on_findings):
+                failures.append("s2_cross_repo a：跨仓存在时不应 FAIL")
+            if not any(f.check == "silent_failure" and f.severity == INFO
+                       and "cross_repo_passes=1" in f.message for f in on_findings):
+                failures.append("s2_cross_repo a：缺少可见 INFO cross_repo_passes=1")
+
+            # b：dsh: 与本地都不存在 ⇒ 仍必须 FAIL
+            cross_b_root = _s2_repo("s2-cross-b", "dsh:artifacts/cross/missing.md")
+            os.environ[CROSS_REPO_DSH_ROOT_ENV] = str(cross_a_dsh)  # 根存在但文件不存在
+            b_findings = _isolated(check_silent_failure, _ctx(cross_b_root))
+            if not any(f.check == "silent_failure" and f.severity == FAIL and "S2" in f.message
+                       for f in b_findings):
+                failures.append("s2_cross_repo b：dsh: 与本地都不存在时必须 FAIL")
+
+            # c：本地路径行为与今日一致（存在 ⇒ 无 FAIL；且不产生 cross-repo INFO 计数）
+            cross_c_root = _s2_repo("s2-cross-c", "team/local-report.md")
+            _write(cross_c_root / "team/local-report.md", "# local\n")
+            c_findings = _isolated(check_silent_failure, _ctx(cross_c_root))
+            if any(f.check == "silent_failure" and f.severity == FAIL for f in c_findings):
+                failures.append("s2_cross_repo c：本地路径存在时不应 FAIL（回归）")
+            if any(f.check == "silent_failure" and "cross_repo_passes" in f.message for f in c_findings):
+                failures.append("s2_cross_repo c：本地路径不应产生 cross-repo 计数")
+        finally:
+            if old_cross_env is None:
+                os.environ.pop(CROSS_REPO_DSH_ROOT_ENV, None)
+            else:
+                os.environ[CROSS_REPO_DSH_ROOT_ENV] = old_cross_env
+
         if failures:
             print("SELFTEST FAIL")
             for msg in failures:
@@ -4166,7 +4278,9 @@ def selftest() -> int:
               "dq7-dq10 宽限 WARN 已注册；"
               "task-110 收据 sha 口径 = LF 归一化内容 sha（LF/CRLF 版本等价性 + 旧「原始 CRLF 字节 sha」必红 fixture 通过）；"
               "SF-052 l1_task_before_spawn：缺 task / task 不存在 / 先 spawn 后建 task 三种红 fixture 必红，"
-              "创建早于 spawn 的绿 fixture 不误报，且已注册进 run_checks。")
+              "创建早于 spawn 的绿 fixture 不误报，且已注册进 run_checks；"
+              "task-251 s2_cross_repo：dsh: 解析关闭时必红/恢复后必绿（先证红）、两者皆无必 FAIL、"
+              "本地路径回归不误报，INFO cross_repo_passes 可见。")
         return 0
     finally:
         shutil.rmtree(tmp, ignore_errors=True)

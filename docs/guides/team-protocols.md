@@ -199,15 +199,18 @@ python scripts/agent/team_audit.py --json
 - (a) 继续用「本地清单 + `phase=backfill`/`corrects`」把旧/新跨仓行指向清单（task-246 模式）；或
 - (b) 等 `s2_cross_repo` 机检（提案，见 `team/steward/findings.jsonl` SF-20261030-060）落地后再改用 `dsh:`。
 
-### E.3 拟议中的机检（`s2_cross_repo`，尚未实现）
+### E.3 已实现的机检（`s2_cross_repo`，task-251 / 2026-10-30）
 
-| 项 | 设计 |
+| 项 | 实现（已落地） |
 |---|---|
-| 触发 | `silent_failure` 的 S2 分支：`report` 在 Memoria 不存在时，再尝试跨仓解析 |
-| 解析 | `dsh:<rel>` ⇒ `$DSH_ROOT/<rel>`（`DSH_ROOT` 取环境变量 `DSH_TEAM_CROSS_REPO_ROOT`，默认 `D:\deepseek-harness`）；也接受绝对路径（fallback，建议 WARN 记录不可移植） |
+| 触发 | `silent_failure` 的 S2 分支：`report` 在 Memoria 不存在时，再尝试跨仓解析（`corrects.new` 同样适用） |
+| 解析顺序 | ① Memoria 相对路径（原行为，最优先）；② `dsh:<rel>` ⇒ `$env:DSH_TEAM_CROSS_REPO_ROOT/<rel>`（默认 `D:\deepseek-harness`）；③ 绝对路径 fallback（仅降级，计数可见） |
 | 判定 | 跨仓对应物存在 ⇒ **PASS** 并记 INFO `cross-repo`（可见，不静默）；两者都不存在 ⇒ **FAIL** |
 | 覆盖 | `corrects.new` 同样按此解析（否则更正无法跨仓） |
-| 成本 | 改 `team_audit.py`（约 30–60 行 + 3 条 selftest fixture）+ 文档；因该文件属 `STEWARD_STANDARDS`/freeze(tooling)，落地需 steward 重签 rN 并更新 freeze 记录（约 1–1.5h 总工作量） |
+| 输出 | 跨仓存在 ⇒ PASS 并输出 INFO（`cross_repo=<dsh|absolute>` + 汇总 `cross_repo_passes=N`）；两者皆无 ⇒ FAIL；**绝不静默通过**（INFO 计数可见） |
+| 成本（实际） | 已实现：`team_audit.py` 新增 `_cross_repo_target()` + S2/corrects 接入 + 3 条 selftest fixture（先证红/白/本地回归）+ 文档；r11 重签与 freeze tooling sha 更新同批完成 |
+
+**实现位置**：`scripts/agent/team_audit.py::_cross_repo_target` / `check_silent_failure`；selftest：`--selftest`（task-251 三条 fixture：dsh 解析关闭必红、恢复后必绿；两者皆无必 FAIL；本地回归不误报）。
 
 ### E.4 为什么不做「复制产物回 Memoria」
 

@@ -34,7 +34,7 @@
     },
     {
       "path": "scripts/agent/team_audit.py",
-      "sha256_lf": "beec3c714c8440ee9b476dd6c06159a80a35d01965e94eb4215f5bf17f13eb41",
+      "sha256_lf": "8bb64e31649f7078454bf139ff2e616bc801e6b6e403ac4ae41f10dc70ccd575",
       "role": "机检实现"
     }
   ],
@@ -52,7 +52,7 @@
   ],
   "proposals_pinned": "PINNED-PROPOSALS.json",
   "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。 2026-10-25 补 standards（修 steward F-1，sha 由 Lead 独立复算 5/5 MATCH）。",
-  "standards_frozen_at": "2026-10-30T11:03:25.073973+08:00",
+  "standards_frozen_at": "2026-10-30T11:21:35.808174+08:00",
   "standards_updated": [
     {
       "at": "2026-10-26T08:43:23.585821+08:00",
@@ -147,6 +147,23 @@
       ],
       "rule_ref": "docs/guides/lead-dispatch-rules.md §V-frontend-1/§V-frontend-2",
       "note": "工作区未提交（Lead 的改动）；提交字节不变时 r10 有效；若提交前再改则需 r11。freeze_refreeze --apply 仍待 L12（Exit 4），本次为人工按既有流程追加。"
+    },
+    {
+      "at": "2026-10-30T11:21:35.808174+08:00",
+      "by": "steward",
+      "reason": "task-251 s2_cross_repo 机检实现（silent_failure 支持 dsh:/绝对路径跨仓解析 + INFO 计数；含 3 条 selftest fixture）",
+      "commit": null,
+      "changed": [
+        {
+          "path": "scripts/agent/team_audit.py",
+          "from": "beec3c714c8440ee9b476dd6c06159a80a35d01965e94eb4215f5bf17f13eb41",
+          "to": "8bb64e31649f7078454bf139ff2e616bc801e6b6e403ac4ae41f10dc70ccd575",
+          "role": "机检实现",
+          "tooling": true
+        }
+      ],
+      "rule_ref": "docs/guides/team-protocols.md 附录 E.3 + scripts/agent/team_audit.py",
+      "note": "tooling 项（dq5 只 WARN）；与 steward r11 同批重签，顺带消 dq5 tooling WARN。工作区尚未提交，提交字节不变则 r11 有效。"
     }
   ]
 }
