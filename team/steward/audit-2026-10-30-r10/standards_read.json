@@ -1,0 +1,137 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-30T11:04:07+08:00",
+  "round": "r10",
+  "tool": "team_audit.py@4874493dfac3",
+  "git_base": "112a70cb",
+  "worktree_dirty_standards": [
+    "docs/guides/lead-dispatch-rules.md"
+  ],
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-30T11:04:07+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部（新增 §V-frontend-1/2；§1.2b/§1.3b/§5.4/§6.5/B-danger-1）",
+      "sha256": "3df918b12349a204acf0c874b9fccd5c96ab416e9bf7a9cf02f68f6aba4e8089",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-30T11:04:07+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部（含 L9.6/L9.7）",
+      "sha256": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-30T11:04:07+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "检查清单（含 SF-052 l1_task_before_spawn）+ --determinism + --sha-explain + deliberation_quality + prompt_drift 接线（NOT_RUN→FAIL）",
+      "sha256": "4874493dfac350a85bb6852f1898fa1e968c110a6d3aac77d455ae8cadb33fee",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-30T11:04:07+08:00"
+    },
+    {
+      "path": "scripts/agent/prompt_drift_check.py",
+      "sections": "C1-C5 接口 + NOT_RUN 语义 + exit 0/1/2/3 + --recheck-deps/--resign",
+      "sha256": "75a2563c40e44728911225826dc5888a4cd048f287e9da54cc325114d4279834",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-30T11:04:07+08:00"
+    }
+  ],
+  "refreeze_record": {
+    "file": "artifacts/agent/verify/debate/freeze-v2.json",
+    "standards_updated_index": 5,
+    "changed": [
+      {
+        "path": "docs/guides/lead-dispatch-rules.md",
+        "from": "61cb2169d2bd540c…",
+        "to": "3df918b12349a204…"
+      }
+    ],
+    "note": "Lead 追加 §V-frontend-1/2（其改动仍在工作区、未提交）；Lead 委托 steward 按既有流程 refreeze（--apply 待 L12，故人工更新并留审计记录）。提交字节不变则 r10 有效；若提交前再改需 r11。"
+  },
+  "prompt_drift_standalone": {
+    "command": "python scripts/agent/prompt_drift_check.py --json",
+    "exit": 0,
+    "summary": {
+      "findings": 6,
+      "FAIL": 0,
+      "NOT_RUN": 0,
+      "WARN": 0,
+      "INFO": 6,
+      "status": "ok",
+      "not_run": []
+    }
+  },
+  "freeze_refreeze_check": {
+    "command": "python scripts/agent/freeze_refreeze.py --check",
+    "exit": 1,
+    "note": "rules 已 MATCH；仅 team_audit.py 的 tooling DRIFT（记录 beec3c71 → 当前 4874493d），dq5 只 WARN。",
+    "output_head": [
+      "freeze 检查：D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\debate\\freeze-v2.json",
+      "sha 口径：team_audit.content_sha256（LF 归一化，与 dq5 共用）",
+      "",
+      "MATCH   AGENTS.md  [Lead 派发不变量 L1-L10]",
+      "MATCH   docs/guides/lead-dispatch-rules.md  [派发细则]",
+      "MATCH   docs/guides/agent-team-lessons.md  [教训台账]",
+      "MATCH   docs/guides/agent-team-org.md  [组织与角色章程]",
+      "DRIFT   scripts/agent/team_audit.py  [机检实现]  ← 记录 @beec3c714c84… 当前 @4874493dfac3… （tooling：dq5 只 WARN）",
+      "",
+      "汇总：5 项；MATCH=4，DRIFT=1（决策标准 0 / tooling 1）"
+    ]
+  },
+  "external_checks": {
+    "note": "两份新机检脚本仍不纳入 STEWARD_STANDARDS（观察期，SF-049 裁定）。",
+    "check_ui_contract": {
+      "exit": 1,
+      "counts": {
+        "new_fail": 20,
+        "new_warn": 3,
+        "baseline_fail": 210,
+        "baseline_warn": 59,
+        "fixed": 2,
+        "by_rule": {
+          "C2.FAIL": 194,
+          "C2.WARN": 7,
+          "C3.FAIL": 21,
+          "C3.WARN": 31,
+          "C4.WARN": 2,
+          "C5.FAIL": 2,
+          "C5.WARN": 3,
+          "C7.FAIL": 13,
+          "C7.WARN": 19
+        }
+      },
+      "json": "artifacts/agent/verify/steward/r10/ui-contract.json"
+    },
+    "test_guard_check": {
+      "exit": 0,
+      "counts": {
+        "total_source_asserts": 451,
+        "over_symbol_count": 6,
+        "long_count": 13
+      },
+      "json": "artifacts/agent/verify/steward/r10/test-guard.json"
+    }
+  },
+  "determinism": {
+    "checked": true,
+    "command": "python scripts/agent/team_audit.py --determinism",
+    "result": "﻿PASS: audit determinism（2 次运行除 generatedAt 外逐字节一致；sha256=db46777e132bf26c…，compared_findings=96）"
+  },
+  "prior_round_validity": {
+    "r9": "r9 对 team_audit.py(4874493d)/prompt_drift(75a2563c)/AGENTS/lessons 仍匹配，但 rules 由 61cb2169→3df918b1 ⇒ r9 按 B3 失效，r10 取代。"
+  },
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（本轮只读 §2.3/§2.6，未逐条复核 §13 台账）",
+    "src/**（产品代码质量/性能不在 steward 审计范围）",
+    "docs/conventions/ui-contract.md 全文（只核接口/基线/退出码）",
+    "session 正文（按设计不读，只作证据引用）"
+  ]
+}

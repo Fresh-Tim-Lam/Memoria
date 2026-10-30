@@ -87,6 +87,7 @@
 - **注册表行为**：`audit`（topic）；机检由 `team_audit.py` 事后执行（不是工具拒绝）。
 - **真实证据**：`task-113` spawn 时间 2026-10-24T16:42:52Z **早于** task 创建 16:52:53Z（约 10 分钟）；另有 Lead 自报 2 次 L1（1 次导致成员干完发现板上无任务）。
 - **通过条件**：spawn 行带 `task`，task 在台账（快照/轨迹/日志非 spawn 行）存在，且创建事件不晚于 spawn。
+- **已知存量（2026-10-30，不回填）**：`team_audit.py::l1_task_before_spawn` 上线后报 **11 条**插件 spawn 缺配对 `task`（检查上线前的历史，样本 `retrieval-researcher`）。**保持 FAIL 不回填/不造假**；是否清洗另开票（见附录 D）。
 
 ### P-07 safety-shared-workspace-destructive-revert — 禁止对共享工作区破坏性回滚
 
@@ -101,7 +102,7 @@
 ### P-08 workflow-frontend-verification — 前端必须真机验证、三次回归停手
 
 - **条款/依据**：`docs/guides/lead-dispatch-rules.md` **§V-frontend-1**（验收只认"dev 实例注入样例后真机看见效果"）+
-  **§V-frontend-2**（同组件连续 3 次验收不通过 ⇒ 停止打补丁，先改架构规范）；事故：2026-10-29 面板改造"单测全绿/构建通过/口头已修"但真机仍坏，
+  **§V-frontend-2**（同组件连续 3 次验收不通过 ⇒ 停止打补丁，先改架构规范）（实际小节标题：`V-frontend-1 前端效果验证（2026-10-29，强制）` / `V-frontend-2 三次回归即停止打补丁（2026-10-29，强制）`）；事故：2026-10-29 面板改造"单测全绿/构建通过/口头已修"但真机仍坏，
   同组件连续 5 轮验收失败。
 - **注册表行为**：`audit`（topic）；仅人工评审（无自动机检），`checks` 标 `kind=review`（V-frontend-1 / V-frontend-2）。
 - **通过条件**：附 dev 注入截图 + DOM 指标 + "示例数据（dev 注入）"横幅；连续 3 次回归的组件必须先有架构规范更新记录。
@@ -112,7 +113,7 @@
 
 | 候选 | 真实依据 | 为什么本轮不注册 |
 |---|---|---|
-| 发版三查（标题格式/双语/造价段/远端 tag） | lead-dispatch-rules §4、L5；真实事故：v0.4.6 本地 tag 从未推送到远端 | 属**低频人工评审**（Lead 亲跑）；注册表只能 `audit`，无法增强强制力；且 `release-manager` 已有常驻职责。留待 registryVersion 2 与 release 检查合并登记。 |
+| 发版三查（标题格式/双语/造价段/远端 tag） | lead-dispatch-rules §4、L5；真实事故：v0.4.6 本地 tag 从未推送到远端 | 属**低频人工评审**（Lead 亲跑）；注册表只能 `audit`，无法增强强制力；且 `release-manager` 已有常驻职责。留待 registryVersion 2 与 release 检查合并登记。**2026-10-30 Lead 裁定：等 `release-manager` 有活跃任务时再评估能否机检；现在不升格。** |
 | L9 spawn 必须显式 `mode` / 禁用默认 pro | AGENTS §0.5 L9；插件 `TEAM_PRO_MODEL_FORBIDDEN` | 插件原生拒绝已存在；但 L9 条款只约束"显式 mode"，未直接规定 pro 禁用（pro 禁用是插件默认），证据锚不齐；不下沉成协议。 |
 | L10 决策留索引（Decision/Why） | AGENTS §0.5 L10；`team/decisions.jsonl` 已有记录 | `enforcement` 只能是人工评审，且"提交内 Decision/Why"无 machine check；放附录。 |
 | 跨域借用（P-A）/ 工作类型 seminar（P-B）/ 组配额（P-G） | 插件 v9 错误码（`TEAM_TASK_DOMAIN_FIT_REQUIRED` 等） | 与 P-04/P-05 同属"组织/派发"组，避免条目膨胀；下一版按组内聚合登记。 |
@@ -155,3 +156,17 @@ python scripts/agent/team_audit.py --json
 | 日期 | 变更 |
 |---|---|
 | 2026-10-30 | 首版 `registryVersion=1`：登记 8 条（P-01..P-08）；其中只有 P-01/P-02 会真正拒绝（插件白名单谓词），其余为 audit/登记 + 审计。 |
+
+## 附录 D：已知存量（FAIL 保持，不回填；清洗另开票）
+
+> 登记时间 2026-10-30。原则：**检查上线前发生的历史问题不回填、不造假**；保持 FAIL 可见，清洗走独立票。
+
+| 来源检查 | 存量 | 处置 |
+|---|---|---|
+| `team_audit::l1_task_before_spawn`（P-06） | **11 条**插件 spawn 缺配对 task（上线前历史；样本 `retrieval-researcher`） | 保持 FAIL；本表留痕；是否清洗另开票（不回填 dispatch-log） |
+| `team_audit::silent_failure S2` | 7 条 done 引用产物不存在（历史路径迁移） | 另开票清理；不塞进协议票 |
+| `team_audit::deliberation_quality dq6` | 1 个 pycache 产物未跟踪 | 另开票清理 |
+| `deliberation_quality dq5` / `steward_self_audit` | 已由 2026-10-30 refreeze（`standards_updated[5]`）+ steward r10 解决 | 已闭环 |
+
+> 注：dq5/tooling（`team_audit.py` sha 与 freeze 不一致）属 R-R6 裁决的预期 WARN，不阻断裁决。
+

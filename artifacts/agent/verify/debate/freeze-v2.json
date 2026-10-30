@@ -19,7 +19,7 @@
     },
     {
       "path": "docs/guides/lead-dispatch-rules.md",
-      "sha256_lf": "61cb2169d2bd540cdf058e1298c495f8f69a8bbd039187ba4f04527d605183cf",
+      "sha256_lf": "3df918b12349a204acf0c874b9fccd5c96ab416e9bf7a9cf02f68f6aba4e8089",
       "role": "派发细则"
     },
     {
@@ -52,7 +52,7 @@
   ],
   "proposals_pinned": "PINNED-PROPOSALS.json",
   "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。 2026-10-25 补 standards（修 steward F-1，sha 由 Lead 独立复算 5/5 MATCH）。",
-  "standards_frozen_at": "2026-10-26T19:08:14.189695+08:00",
+  "standards_frozen_at": "2026-10-30T11:03:25.073973+08:00",
   "standards_updated": [
     {
       "at": "2026-10-26T08:43:23.585821+08:00",
@@ -132,6 +132,21 @@
           "to": "61cb2169d2bd540cdf058e1298c495f8f69a8bbd039187ba4f04527d605183cf"
         }
       ]
+    },
+    {
+      "at": "2026-10-30T11:03:25.073973+08:00",
+      "by": "steward",
+      "reason": "Lead 在 lead-dispatch-rules.md 追加 §V-frontend-1（前端效果验证强制）与 §V-frontend-2（三次回归即停止打补丁）；Lead 委托 steward 按既有流程 refreeze（L12/--apply 未批，故人工更新并留审计记录）",
+      "commit": null,
+      "changed": [
+        {
+          "path": "docs/guides/lead-dispatch-rules.md",
+          "from": "61cb2169d2bd540cdf058e1298c495f8f69a8bbd039187ba4f04527d605183cf",
+          "to": "3df918b12349a204acf0c874b9fccd5c96ab416e9bf7a9cf02f68f6aba4e8089"
+        }
+      ],
+      "rule_ref": "docs/guides/lead-dispatch-rules.md §V-frontend-1/§V-frontend-2",
+      "note": "工作区未提交（Lead 的改动）；提交字节不变时 r10 有效；若提交前再改则需 r11。freeze_refreeze --apply 仍待 L12（Exit 4），本次为人工按既有流程追加。"
     }
   ]
 }
