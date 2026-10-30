@@ -312,6 +312,8 @@ function detectOrthogonalCrossings(routes) {
 - **风险条件**【推】：① 每帧全量路由；② 使用 libavoid 式全局可见性图 + 多轮 topology 优化；③ 无 `maxExpansions`/无界搜索窗；④ 每条边都做全图 A*。任一出现都可能把 30 条边推到 >16ms。
 - **必须实测**：在 `engine` 单测里加 benchmark（3 次运行取最小 p95），记录 `routeAll` 单独耗时【待测】；不要用 dev React 渲染路径计时（GRAPH-ENGINE §7-A5 已要求 headless 纯函数）。
 
+> **目标 vs 现状（必读，2026-10-30 补记）**：本节 **2.5–6ms 是结构性目标/估算（【推】），不是已经达到的实测**。现行实现（2026-10-30，headless）实测 **30 条边 A* 609ms**；原因是**逐边完整 A* + occupancy 线性扫描**，未做通道优先 / routeCache / 增量路由。读本节时不要把"估算"当"现状"；里程碑以 A-r5 实测（`routeAll` p95<8ms、`layout` 总 p95<16ms）与 [FEASIBILITY-REVIEW.md](FEASIBILITY-REVIEW.md) §5.1 L169/L173 为准。
+
 ### 4.2 若实测不达标：替代方案（按优先级）
 
 1. **缓存**：`routeCache` key = 节点坐标 hash + edge 集合 + port 分配；节点未动直接复用（最常见）【推】。
