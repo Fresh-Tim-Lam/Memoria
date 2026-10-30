@@ -1,0 +1,266 @@
+{
+  "schema": "team-protocols/v1",
+  "registryVersion": 1,
+  "updatedAt": "2026-10-30T11:05:00+08:00",
+  "updatedBy": "steward",
+  "protocols": [
+    {
+      "id": "tool.peerMessage.hops",
+      "version": { "major": 1, "minor": 0 },
+      "title": "成员间直发消息的跳数上限",
+      "origin": "plugin",
+      "enforcement": "refuse",
+      "constraints": [
+        {
+          "type": "format",
+          "assert": "integer-range",
+          "params": { "field": "hops", "min": 0, "maxFromConfig": "peerMessageMaxHops" },
+          "description": "peer 直发消息的 hops 不得超过部署配置（默认 4）；超限拒绝"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["message.peer"], "pipeKinds": ["info", "protocol"], "channels": ["peer"] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-01 tool.peerMessage.hops" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "登记既有约束（插件 v9 R-06 examples[0]）：peer 直发 hops 上限（配置 peerMessageMaxHops，默认 4），超限 TEAM_PEER_HOPS_EXCEEDED。证据：DSH 测试 5>4 被拒；dispatch-log 608 条 message。"
+        }
+      ],
+      "checks": [{ "id": "TEAM_PEER_HOPS_EXCEEDED", "kind": "machine" }]
+    },
+    {
+      "id": "evidence-on-complete",
+      "version": { "major": 1, "minor": 0 },
+      "title": "任务收口必须绑定可验证产物",
+      "origin": "plugin",
+      "enforcement": "refuse",
+      "constraints": [
+        {
+          "type": "semantics",
+          "assert": "complete-requires-evidence",
+          "params": { "artifactRequired": true },
+          "description": "complete 必须带 evidence[] 或 no_artifact_reason"
+        },
+        {
+          "type": "format",
+          "field": "evidence",
+          "schema": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "additionalProperties": false,
+              "required": ["path"],
+              "properties": {
+                "path": { "type": "string", "pattern": "^[^/].+" },
+                "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" }
+              }
+            }
+          }
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["task.complete"], "pipeKinds": [], "channels": [] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-02 evidence-on-complete" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "登记 v8 起既有拒绝：task.complete 需 evidence[] 或 no_artifact_reason；依据 AGENTS §0.5 L3（关闭任务必须有 evidence）。证据：插件 TEAM_TASK_EVIDENCE_REQUIRED。"
+        }
+      ],
+      "checks": [{ "id": "TEAM_TASK_EVIDENCE_REQUIRED", "kind": "machine" }]
+    },
+    {
+      "id": "workflow-version-plan-ref",
+      "version": { "major": 1, "minor": 0 },
+      "title": "版本级任务必须先有计划文档",
+      "origin": "plugin",
+      "enforcement": "audit",
+      "constraints": [
+        {
+          "type": "topic",
+          "topics": ["version-planning", "plan-ref"],
+          "description": "版本级任务（subject/description 含 X.Y.Z）的 planRef 必须指向 docs/ 下提到该版本的计划文档；注册表只登记，原生拒绝见 checks"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["task.create"], "pipeKinds": [], "channels": [] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-03 workflow-version-plan-ref" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "登记插件 plan-ref-required（v9）：版本级任务缺 plan_ref ⇒ TEAM_PLAN_REF_REQUIRED；plan_ref 非 docs/ 或未提到版本 ⇒ TEAM_PLAN_REF_MISMATCH。依据 AGENTS §0.5 L8。"
+        }
+      ],
+      "checks": [
+        { "id": "TEAM_PLAN_REF_REQUIRED", "kind": "machine" },
+        { "id": "TEAM_PLAN_REF_MISMATCH", "kind": "machine" }
+      ]
+    },
+    {
+      "id": "org-group-single-domain",
+      "version": { "major": 1, "minor": 0 },
+      "title": "一个工作组只有一个声明域",
+      "origin": "plugin",
+      "enforcement": "audit",
+      "constraints": [
+        {
+          "type": "topic",
+          "topics": ["org-group", "domain"],
+          "description": "组成员必须覆盖该组声明域；把无该域的成员加入组会被原生拒绝（TEAM_GROUP_DOMAIN_MISMATCH），注册表只登记审计"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["group.change"], "pipeKinds": [], "channels": [] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-04 org-group-single-domain" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "登记插件 member-group-membership（v9）：组成员与组声明域不一致 ⇒ TEAM_GROUP_DOMAIN_MISMATCH（roster.ts:752）。"
+        }
+      ],
+      "checks": [{ "id": "TEAM_GROUP_DOMAIN_MISMATCH", "kind": "machine" }]
+    },
+    {
+      "id": "tool.peerMessage.groupIsolation",
+      "version": { "major": 1, "minor": 0 },
+      "title": "跨组点对点消息只经 Lead 转发",
+      "origin": "plugin",
+      "enforcement": "audit",
+      "constraints": [
+        {
+          "type": "topic",
+          "topics": ["peer-channel", "group-isolation"],
+          "description": "不同工作组成员不能直接 send_message；须经 Lead 派发。原生拒绝见 checks，注册表只登记审计"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["message.peer"], "pipeKinds": [], "channels": ["peer"] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-05 tool.peerMessage.groupIsolation" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "登记插件 peer-message-governance（v9）：跨工作组成员不能直接点对点消息 ⇒ TEAM_PEER_GROUP_ONLY（index.ts:929）；Lead 派发不受限。"
+        }
+      ],
+      "checks": [{ "id": "TEAM_PEER_GROUP_ONLY", "kind": "machine" }]
+    },
+    {
+      "id": "dispatch-task-before-spawn",
+      "version": { "major": 1, "minor": 0 },
+      "title": "spawn 前必须先建任务并声明写域",
+      "origin": "convention",
+      "enforcement": "audit",
+      "constraints": [
+        {
+          "type": "topic",
+          "topics": ["dispatch-order"],
+          "description": "spawn 行必须带 task；task 必须已存在（快照/轨迹/日志非 spawn 行），且创建时间不晚于 spawn；机检见 checks"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["roster.spawn"], "pipeKinds": [], "channels": [] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-06 dispatch-task-before-spawn" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "依据 AGENTS §0.5 L1；SF-052 新增 team_audit.py::l1_task_before_spawn。真实证据：task-113 spawn 2026-10-24T16:42:52Z 早于 task 创建 16:52:53Z（约 10 分钟）。"
+        }
+      ],
+      "checks": [
+        { "id": "l1_task_before_spawn", "kind": "machine", "command": "python scripts/agent/team_audit.py --json" }
+      ]
+    },
+    {
+      "id": "safety-shared-workspace-destructive-revert",
+      "version": { "major": 1, "minor": 0 },
+      "title": "禁止对共享工作区做破坏性回滚",
+      "origin": "convention",
+      "enforcement": "audit",
+      "constraints": [
+        {
+          "type": "topic",
+          "topics": ["workspace-safety", "destructive-revert"],
+          "description": "共享主工作区禁止 checkout --/checkout ./restore/reset --hard|--merge/clean -f*/stash drop|clear/apply -R/update-index --assume-unchanged|--skip-worktree/worktree remove --force；当前只能人工评审（条款自述无强制力）"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": [], "pipeKinds": ["protocol"], "channels": ["dispatch"] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-07 safety-shared-workspace-destructive-revert" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "依据 lead-dispatch-rules §B-danger-1（v2.1）；事故：2026-10-26 render-perf 在共享工作区 git checkout -- app.js 约 90 秒，sync-mapper 正编辑同文件，险些丢失未提交改动（核对后未丢）。checkout -- 不写 reflog ⇒ 当前无强制力。"
+        }
+      ],
+      "checks": [{ "id": "B-danger-1", "kind": "review" }]
+    },
+    {
+      "id": "workflow-frontend-verification",
+      "version": { "major": 1, "minor": 0 },
+      "title": "前端改动必须真机验证且三次回归停手",
+      "origin": "convention",
+      "enforcement": "audit",
+      "constraints": [
+        {
+          "type": "topic",
+          "topics": ["frontend-verification", "frontend-regression-cap"],
+          "description": "前端/面板改动验收只认 dev 实例注入样例后的真机证据（截图+DOM 指标+示例横幅）；同组件连续 3 次回归不通过须停止打补丁、先改架构规范。人工评审，见 checks"
+        }
+      ],
+      "scope": { "team": true, "groups": [], "taskWorkKinds": [] },
+      "appliesTo": { "actions": ["task.complete"], "pipeKinds": [], "channels": [] },
+      "owner": { "role": "steward" },
+      "source": { "path": "docs/guides/team-protocols.md", "anchor": "P-08 workflow-frontend-verification" },
+      "status": "active",
+      "createdAt": "2026-10-30T11:00:00+08:00",
+      "history": [
+        {
+          "version": { "major": 1, "minor": 0 },
+          "changedAt": "2026-10-30T11:00:00+08:00",
+          "change": "additive",
+          "note": "依据 lead-dispatch-rules §V-frontend-1/§V-frontend-2；事故：2026-10-29 面板改造单测全绿/构建通过/口头已修但真机仍坏，同组件连续 5 轮验收失败。"
+        }
+      ],
+      "checks": [
+        { "id": "V-frontend-1", "kind": "review" },
+        { "id": "V-frontend-2", "kind": "review" }
+      ]
+    }
+  ]
+}
