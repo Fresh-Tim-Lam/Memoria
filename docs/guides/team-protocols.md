@@ -211,6 +211,8 @@ python scripts/agent/team_audit.py --json
 | 成本（实际） | 已实现：`team_audit.py` 新增 `_cross_repo_target()` + S2/corrects 接入 + 3 条 selftest fixture（先证红/白/本地回归）+ 文档；r11 重签与 freeze tooling sha 更新同批完成 |
 
 **实现位置**：`scripts/agent/team_audit.py::_cross_repo_target` / `check_silent_failure`；selftest：`--selftest`（task-251 三条 fixture：dsh 解析关闭必红、恢复后必绿；两者皆无必 FAIL；本地回归不误报）。
+**相关工具真实路径**：冻结收据的只读检查脚本是 **`scripts/agent/freeze_refreeze.py`**（`--check` 只读；`--apply` 待 L12 批准、当前 exit 4）——**不在** `artifacts/agent/verify/debate/` 下（常被误找）。
+
 
 ### E.4 为什么不做「复制产物回 Memoria」
 
