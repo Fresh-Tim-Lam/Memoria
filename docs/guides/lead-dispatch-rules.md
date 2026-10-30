@@ -334,3 +334,58 @@ steward 抽查该 commit 完整 message：既无 43ms 也无 P0-b
 | ② 删除独占条件 (a) | `git status` 看不到未保存 buffer；`exclusive_paths` 无字段/校验 ⇒ 留着是「看起来有闸」的假保护。共享区独占降级为**派发纪律**，guard 只认独立 worktree |
 | ③ R1 例外未写「谁可执行」 | 写明：仅 Lead 可发起；成员需 Lead 授权 + dispatch-log 留痕；差集结论写回同一记录 |
 | ④ 位置可发现性差 | 已从文件末尾移到 **§1 之后**，并在 §0 加醒目指针 |
+
+### V-frontend-1 前端效果验证（2026-10-29，强制）
+
+> 背景：面板改造经历了「单测全绿 / 构建通过 / 口头已修」，但真机仍是组织树、胶囊悬空、图区塌陷。
+> 结论：**前端改动的验收只认"在 dev 实例里注入样例后，人真的看见效果"**，其余一律不算证据。
+
+```
+V1 任何 Panel / Client-UI 改动，验收必须先做三件事：
+   ① 用 development 模式构建面板包（生产构建会 tree-shake 掉夹具）
+      NODE_ENV=development pnpm --filter @deepseek-ai/dsh-experimental-client-ui-agent-team run bundle
+      产物 lib/client.js 必须含 TEAM_FIXTURE_SAMPLE_MARKER，否则夹具不可能生效
+   ② 起独立 dev 实例（不动现网）：pnpm run start:web -- --no-open，端口 3080
+   ③ 注入样例：?teamFixtures=1 或 #teamFixtures=1 或 localStorage dsh.team.fixtures=1
+      （auth 后 query 会被清掉，优先用 localStorage；深色加 &fixtureTheme=dark）
+
+V2 证据必须落盘且可复核：截图 + DOM 指标（edges / capsules / nodes / pipeStatus / 图区高度）
+   顶部必须出现"示例数据（dev 注入，非真实团队）"横幅，没有横幅 ⇒ 验证无效
+
+V3 推荐一键执行：
+   powershell -ExecutionPolicy Bypass -File D:\deepseek-harness\verify-frontend-visual.ps1
+
+V4 不算验证：只跑单测 / 只跑 typecheck / 只看构建日志 / 用旧截图 / "应该能看到了"
+
+V5 失败判据：sampleBanner=false、edges=0、或图区高度 < 面板 60% ⇒ 视为未通过，直接 reopen
+```
+
+> 落点：DSH 侧同文已写入 `packages/experimental/agent-team/TEAM-USAGE.md`「前端效果验证规范（强制）」。
+> 若要把这条提升为每次会话强制注入，需要在 `AGENTS.md §0.5` 追加 L11（属契约文件，需人确认后改）。
+
+### V-frontend-2 三次回归即停止打补丁（2026-10-29，强制）
+
+> 背景：成员页图区连续 5 轮验收不通过（Fit 无效、胶囊离线、监督者遮挡、节点被裁），
+> 每轮都在同一个组件里改几何代码；人一句话点破："这么简单的事情你们没有人想得到吗"。
+> 真正的错不是某一轮算错，而是**把架构问题当局部 bug 修了五轮**。
+
+```
+W1 同一组件/同一类现象【连续 3 次】验收不通过 ⇒ 立即停止打补丁，
+   先写/更新架构规范（几何、状态、布局、动画由谁算），再改代码。
+   违规继续打补丁的票，Lead 直接 reject。
+
+W2 组件内禁止计算几何：坐标/路径/碰撞/缩放必须来自纯函数引擎（可 headless 断言）。
+   组件只做渲染；几何逻辑出现在 .tsx 里即视为缺陷。
+
+W3 UI 票模板必须包含三行：
+   ① 这类 bug 的"类"是什么（布局/几何/数据/契约/呈现）
+   ② 根因（为什么现在的架构允许它发生）
+   ③ 本票是"修症状"还是"修架构"（若为前者，说明为何不必动架构）
+
+W4 连续 2 轮不通过的组件，第 3 轮起必须换人或加第二评审（不得同一人反复自证）。
+
+W5 人的一句"这么简单的事" 视为架构信号，而不是情绪：
+   先回答"为什么我们没分开几何与渲染"，再谈修法。
+```
+
+> 落点：DSH 侧同文写入 `packages/experimental/agent-team/TEAM-USAGE.md`「前端效果验证规范」末尾。
