@@ -164,8 +164,8 @@ python scripts/agent/team_audit.py --json
 | 来源检查 | 存量 | 处置 |
 |---|---|---|
 | `team_audit::l1_task_before_spawn`（P-06） | **11 条**插件 spawn 缺配对 task（上线前历史；样本 `retrieval-researcher`） | 保持 FAIL；本表留痕；是否清洗另开票（不回填 dispatch-log） |
-| `team_audit::silent_failure S2` | 7 条 done 引用产物不存在（历史路径迁移） | 另开票清理；不塞进协议票 |
-| `team_audit::deliberation_quality dq6` | 1 个 pycache 产物未跟踪 | 另开票清理 |
+| `team_audit::silent_failure S2` | **8 条** done 引用产物不存在（实际为跨仓路径迁移：产物在 DSH 仓） | **已由 task-246（2026-10-30）按更正协议处理**：追加 8 条 `phase=backfill` + `corrects`（append-only，未改旧行），指向 `team/steward/task-246-s2-cleanup.md`（逐条结论 + DSH 实际路径 + sha256）；S2 FAIL → 0 |
+| `team_audit::deliberation_quality dq6` | 1 个 pycache 产物未跟踪 | **已由 task-246 清理**：删除 debate 下 2 个 `__pycache__`（生成缓存，可再生）；dq6 FAIL → 0（注：dq6 是 `rglob` 磁盘扫描 vs `git ls-files`，`.gitignore` 对它无效，故只能删缓存） |
 | `deliberation_quality dq5` / `steward_self_audit` | 已由 2026-10-30 refreeze（`standards_updated[5]`）+ steward r10 解决 | 已闭环 |
 
 > 注：dq5/tooling（`team_audit.py` sha 与 freeze 不一致）属 R-R6 裁决的预期 WARN，不阻断裁决。
