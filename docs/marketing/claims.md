@@ -97,7 +97,7 @@
 |---|---|---|---|---|---|
 | CLM-60 | **1,600+ automated tests** in the pytest suite (point-in-time: **1,624 passed** on 2026-10-26); run `pytest -q tests` for the current count | bounded（≥1,600；数字随时间增长） | 实测 | `python -m pytest -q tests`；产物：`artifacts/agent/verify/marketing/evidence/pytest.txt` | 写"1,600+ tests passing (pytest)"并给命令；**不写精确到个位的固定数字**（每次提交会漂）也不写"覆盖率 100%" |
 | CLM-61 | Documentation-as-contract: conventions/design docs are the single source of truth, with machine gates for releases | implemented | 文档 + 脚本 | `docs/conventions/version.md:230-300`（Release 三条硬规则 + 机检）；`scripts/agent/release_preflight.py` | 只说"有门禁与规范"；不写"零缺陷" |
-| CLM-62 | MIT license | implemented | LICENSE | `LICENSE`（MIT, © 2026 FreshTim） | 写 MIT |
+| CLM-62 | AGPL-3.0-only license from the next release after v0.4.10 (v0.4.10 and earlier remain MIT) | implemented | LICENSE + README | `LICENSE`（AGPL-3.0-only, © 2026 FreshTim）；历史说明见 README §License | 写 "AGPL-3.0-only（v0.4.10 之后的下一个版本起；此前版本为 MIT，不可撤回）"；不写"MIT"作为当前许可 |
 
 ## 8. 与 Obsidian 的关系（对比要克制）
 

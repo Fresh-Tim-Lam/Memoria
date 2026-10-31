@@ -287,6 +287,7 @@ def _stage_release(version: str) -> None:
     meta = {
         "name": "Memoria",
         "version": version,
+        "license": "AGPL-3.0-only",
         "shell": "pywebview",
         "mode": "release",
         "built_at": datetime.now(UTC).isoformat(),
@@ -305,6 +306,11 @@ def _stage_release(version: str) -> None:
         json.dumps(meta, indent=2, ensure_ascii=False) + "\n",
         encoding="utf-8",
     )
+
+    # 许可一致性：发布包内必须带 LICENSE 全文（与仓库根同一份字节）。
+    legal_license = ROOT / "LICENSE"
+    if legal_license.is_file():
+        shutil.copy2(legal_license, RELEASE / "LICENSE")
 
     readme_tpl = TEMPLATES / "README.release.txt"
     if readme_tpl.is_file():

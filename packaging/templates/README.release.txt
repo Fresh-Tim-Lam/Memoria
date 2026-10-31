@@ -15,6 +15,11 @@
 
   config/           程序设置（ui-settings.json）
 
+许可：
+
+  本发布包适用 AGPL-3.0-only（全文见同目录 LICENSE）。
+  v0.4.10 及更早的发布版本（以及此前提交）仍适用 MIT；该授权不可撤回。
+
 系统要求：
 
   Windows 10/11 x64；.NET Framework 4.7.2+ 与 WebView2 运行时
