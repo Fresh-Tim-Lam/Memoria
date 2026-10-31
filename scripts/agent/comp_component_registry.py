@@ -54,8 +54,8 @@ except Exception as exc:  # pragma: no cover - 依赖缺失必须显式失败
                      ensure_ascii=False, indent=2))
     raise SystemExit(2)
 
-DEFAULT_REGISTRY = "docs/design/component-registry.v1.json"
-DEFAULT_DOCS = "docs/design/components-v0.1.md"
+DEFAULT_REGISTRY = "docs/design/component-registry.v2.json"
+DEFAULT_DOCS = "docs/design/components-v0.2.md"
 
 
 class RegistryInvalid(Exception):
@@ -86,15 +86,17 @@ def load_registry(registry: str = DEFAULT_REGISTRY, docs: str = DEFAULT_DOCS) ->
 
 
 def list_components(data: dict) -> list[dict]:
+    """v1/v2 双兼容：reuse 取 reuseDecision（v2）或 reuse（v1）；kind 取 executor.kind 或 implementedBy.kind。"""
     rows = []
     for comp in data.get("components") or []:
         impl = comp.get("implementedBy") or {}
+        executor = comp.get("executor") or {}
         rows.append({
             "id": comp.get("id"),
             "name": comp.get("name"),
             "status": comp.get("status"),
-            "reuse": comp.get("reuse"),
-            "implementedBy.kind": impl.get("kind"),
+            "reuse": comp.get("reuseDecision", comp.get("reuse")),
+            "implementedBy.kind": executor.get("kind", impl.get("kind")),
         })
     return rows
 
@@ -112,10 +114,8 @@ def selftest() -> int:
         failures.append("UTF-8 输出探针失败：管道下 stdout 不是 UTF-8（全角字符会 traceback）")
     with tempfile.TemporaryDirectory(prefix="comp-registry-selftest-") as tmp_s:
         tmp = Path(tmp_s)
-        docs = tmp / "docs/design/components-v0.1.md"
-        docs.parent.mkdir(parents=True, exist_ok=True)
-        docs.write_text("# rules\n", encoding="utf-8")
-        real = json.loads((ROOT / DEFAULT_REGISTRY).read_text(encoding="utf-8"))
+        docs = ROOT / DEFAULT_DOCS
+        real = json.loads((ROOT / DEFAULT_REGISTRY).read_text(encoding="utf-8-sig"))
 
         def fixture(name: str, mutate=None) -> tuple[Path, Path]:
             data = json.loads(json.dumps(real, ensure_ascii=False))
@@ -134,12 +134,15 @@ def selftest() -> int:
         green, _ = fixture("green")
         data = load_registry(str(green), str(docs))
         rows = list_components(data)
-        if len(rows) != 17:
-            failures.append(f"list: 期望 17 行，实际 {len(rows)}")
+        if len(rows) != 20:
+            failures.append(f"list: 期望 20 行（v2），实际 {len(rows)}")
         counts = {s: sum(1 for r in rows if r["status"] == s) for s in ("implemented", "partial", "missing")}
-        # 与 registry summary 的 status 计数交叉核对（acceptance: implemented 4 / partial 9 / missing 4）
-        if counts != {"implemented": 4, "partial": 9, "missing": 4}:
-            failures.append(f"list: status 计数应为 implemented=4/partial=9/missing=4，实际 {counts}")
+        # acceptance（task-264）：v2 status 计数 implemented=4 / partial=14 / missing=2
+        if counts != {"implemented": 4, "partial": 14, "missing": 2}:
+            failures.append(f"list: status 计数应为 implemented=4/partial=14/missing=2，实际 {counts}")
+        reuse_counts = {v: sum(1 for r in rows if r["reuse"] == v) for v in ("reuse", "complete", "new")}
+        if reuse_counts != {"reuse": 4, "complete": 11, "new": 5}:
+            failures.append(f"list: reuse 计数应为 reuse=4/complete=11/new=5，实际 {reuse_counts}")
         task_cls = get_component(data, "comp.task-classifier")
         if not task_cls.get("inputs") or not all(i.get("name") for i in task_cls["inputs"]):
             failures.append("--id comp.task-classifier: inputs[].name 存在空值")
@@ -172,8 +175,9 @@ def selftest() -> int:
         for item in failures:
             print(" -", item)
         return 1
-    print("SELFTEST PASS：--list 17 行 & status 计数(4/9/4) 与 summary 一致；--id 返回全字段且 inputs 非空；"
-          "未知 id 抛 UNKNOWN_COMPONENT（exit 2）；坏 registry 被 TD-01 拒载（不静默加载）；无输入报错。")
+    print("SELFTEST PASS：v2 --list 20 行 & status 计数(4/14/2)/reuse(4/11/5) 与 summary 一致；"
+          "--id comp.task-classifier 返回全字段且 inputs 非空；未知 id 抛 UNKNOWN_COMPONENT（exit 2）；"
+          "坏 registry 被 TD-01 拒载（不静默加载）；无输入报错。")
     return 0
 
 

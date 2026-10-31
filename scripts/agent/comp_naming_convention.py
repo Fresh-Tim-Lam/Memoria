@@ -1,15 +1,18 @@
 #!/usr/bin/env python3
 # -*- coding: utf-8 -*-
-"""组件命名规范校验器（comp.naming-convention，task-260）。
+"""组件命名规范校验器（comp.naming-convention，task-260 → task-264 对齐 registry v0.2）。
 
-规则源：`docs/design/components-v0.1.md §3` 的 R1–R8（设计资产，待人类批准升 conventions）。
-唯一事实源：`docs/design/component-registry.v1.json`；证据副本：registry.evidenceCopy（须 byte-identical）。
+规则源：
+  - v0.2：`docs/design/components-v0.2.md §3`（registry v2 格式与可复用判据）
+  - v0.1：`docs/design/components-v0.1.md §3`（旧 registry v1 向后兼容）
+唯一事实源：`docs/design/component-registry.v2.json`（v2）；v1 仍可显式 `--registry` 传入。
+证据副本：registry.evidenceCopy（须 byte-identical）。
 
 用法：
-    python scripts/agent/comp_naming_convention.py                     # 对默认 registry 校验；exit 0/1/2
-    python scripts/agent/comp_naming_convention.py --json              # 同上（输出契约固定为 JSON）
-    python scripts/agent/comp_naming_convention.py --registry <path> --docs <path>
-    python scripts/agent/comp_naming_convention.py --selftest          # 必红/必绿 fixture 自测
+    python scripts/agent/comp_naming_convention.py                     # 默认校验 v2；exit 0/1/2
+    python scripts/agent/comp_naming_convention.py --registry docs/design/component-registry.v1.json
+    python scripts/agent/comp_naming_convention.py --json              # 输出契约固定 JSON
+    python scripts/agent/comp_naming_convention.py --selftest
 
 输出契约（stdout JSON）：
     {"ok": bool,
@@ -25,8 +28,40 @@ import hashlib
 import json
 import re
 import sys
-import tempfile
 from pathlib import Path
+
+DEFAULT_REGISTRY = "docs/design/component-registry.v2.json"
+DEFAULT_DOCS = "docs/design/components-v0.2.md"
+DEFAULT_SCHEMA = "docs/design/component-registry.schema.json"
+MODE_V2 = "v2"
+MODE_V1 = "v1"
+
+ID_RE = re.compile(r"^comp\.[a-z0-9]+(-[a-z0-9]+)*$")
+SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
+FILENAME_VERSION_RE = re.compile(r"\.v(\d+)\.json$")
+
+ROOT_REQUIRED_V1 = ("schema", "registryId", "version", "updatedAt", "source", "owner",
+                    "status", "namingRule", "sourceOfTruth", "canonicalPath",
+                    "evidenceCopy", "summary", "components")
+ROOT_REQUIRED_V2 = ("$schema", "schema", "registryId", "schemaVersion", "dataVersion",
+                    "updatedAt", "source", "owner", "status", "namingRule", "sourceOfTruth",
+                    "canonicalPath", "evidenceCopy", "roleTemplates", "typeVocabulary",
+                    "acceptGapPolicy", "summary", "gaps", "components")
+COMPONENT_REQUIRED_V1 = ("id", "version", "name", "summary", "inputs", "outputs",
+                         "preconditions", "failureStates", "sideEffects", "idempotent",
+                         "composesWith", "implementedBy", "status", "reuse",
+                         "matchedExisting", "namingBasis")
+# v2 组件必填键（与 docs/design/component-registry.schema.json $defs.component.required 一致）
+COMPONENT_REQUIRED_V2 = ("id", "version", "interfaceVersion", "name", "summary", "callable",
+                         "executor", "sopRef", "reuseDecision", "reuseKind", "evidence",
+                         "inputs", "outputs", "preconditions", "failureStates", "sideEffects",
+                         "idempotent", "composesWith", "matchedExisting", "ownerRole",
+                         "writeScope", "permissions", "lifecycle", "status", "namingBasis")
+SCALAR_KEYS = ("id", "version", "interfaceVersion", "name", "summary", "status", "namingBasis",
+               "reuseDecision", "reuseKind", "ownerRole", "sopRef")
+LIST_KEYS = ("evidence", "inputs", "outputs", "preconditions", "failureStates",
+             "sideEffects", "composesWith", "matchedExisting", "writeScope", "permissions")
+
 
 def _configure_utf8_stdio() -> None:
     """管道/重定向下 stdout 可能是 cp1252 等非 UTF-8 编码：统一转 UTF-8，避免全角字符 traceback。"""
@@ -50,42 +85,22 @@ def _utf8_stdio_probe() -> bool:
 _configure_utf8_stdio()
 
 ROOT = Path(__file__).resolve().parents[2]
-DEFAULT_REGISTRY = "docs/design/component-registry.v1.json"
-DEFAULT_DOCS = "docs/design/components-v0.1.md"
-
-ID_RE = re.compile(r"^comp\.[a-z0-9]+(-[a-z0-9]+)*$")
-CLS_RE = re.compile(r"^cls\.[a-z0-9]+(-[a-z0-9]+)*$")
-META_RE = re.compile(r"^meta\.[a-z0-9]+(-[a-z0-9]+)*$")
-SEMVER_RE = re.compile(r"^\d+\.\d+\.\d+$")
-
-ROOT_REQUIRED = ("schema", "registryId", "version", "updatedAt", "source", "owner",
-                 "status", "namingRule", "sourceOfTruth", "canonicalPath",
-                 "evidenceCopy", "summary", "components")
-COMPONENT_REQUIRED = ("id", "version", "name", "summary", "inputs", "outputs",
-                      "preconditions", "failureStates", "sideEffects", "idempotent",
-                      "composesWith", "implementedBy", "status", "reuse",
-                      "matchedExisting", "namingBasis")
-# R4 的"非空"只约束标量/对象键；数组键（preconditions/composesWith/matchedExisting 等）可空但必须存在。
-COMPONENT_REQUIRED_SCALAR = ("id", "version", "name", "summary", "idempotent",
-                             "implementedBy", "status", "reuse", "namingBasis")
-COMPONENT_REQUIRED_LIST = ("preconditions", "failureStates", "sideEffects",
-                           "composesWith", "matchedExisting")
-INPUT_REQUIRED = ("name", "type")
-IMPLEMENTED_KINDS = {"tool", "doc", "convention", "missing"}
-COMPONENT_STATUS = {"implemented", "partial", "missing"}
-REUSE_VALUES = {"reuse", "complete", "new"}
 
 
 class ValidationError(Exception):
     """输入不可用（无输入/坏 JSON/坏路径）⇒ exit 2，不是 exit 0。"""
 
 
+def _resolve(path_arg: str) -> Path:
+    path = Path(path_arg)
+    return path if path.is_absolute() else ROOT / path
+
+
 def _read_json(path: Path) -> dict:
     if not path.is_file():
         raise ValidationError(f"输入文件不存在：{path}")
     try:
-        text = path.read_text(encoding="utf-8")
-        data = json.loads(text)
+        data = json.loads(path.read_text(encoding="utf-8-sig"))
     except (OSError, UnicodeDecodeError, json.JSONDecodeError) as exc:
         raise ValidationError(f"输入无法解析（{path}）：{exc}")
     if not isinstance(data, dict):
@@ -105,11 +120,35 @@ def _is_nonempty(value) -> bool:
     return value is not None
 
 
-def validate(registry_path: Path, docs_path: Path) -> dict:
-    """执行 R1–R8，返回 contract 字典。输入不可用抛 ValidationError。"""
+def _mode(data: dict) -> str:
+    if data.get("schema") == "component-registry/v2" or data.get("schemaVersion") or data.get("dataVersion"):
+        return MODE_V2
+    return MODE_V1
+
+
+def _load_schema_required(schema_path: Path) -> tuple[list[str], list[str]]:
+    """从 v2 JSON Schema 读取根/组件的 required 键；读不到则退回内置常量。"""
+    try:
+        schema = json.loads(schema_path.read_text(encoding="utf-8-sig"))
+    except (OSError, UnicodeDecodeError, json.JSONDecodeError):
+        return list(ROOT_REQUIRED_V2), list(COMPONENT_REQUIRED_V2)
+    root_required = [k for k in (schema.get("required") or []) if isinstance(k, str)]
+    defs = schema.get("$defs") or schema.get("definitions") or {}
+    component_required = [k for k in ((defs.get("component") or {}).get("required") or [])
+                          if isinstance(k, str)]
+    return (root_required or list(ROOT_REQUIRED_V2),
+            component_required or list(COMPONENT_REQUIRED_V2))
+
+
+def validate(registry_path: Path, docs_path: Path, schema_path: Path | None = None) -> dict:
+    """执行 R1–R8（v1/v2 双模式），返回 contract 字典。输入不可用抛 ValidationError。"""
     if not docs_path.is_file():
         raise ValidationError(f"规则文档不存在：{docs_path}")
     data = _read_json(registry_path)
+    mode = _mode(data)
+    schema_path = schema_path or (ROOT / DEFAULT_SCHEMA)
+    if mode == MODE_V2 and not schema_path.is_file():
+        raise ValidationError(f"v2 registry 需要 schema 文件：{schema_path}")
     violations: list[dict] = []
     counts = {"components": 0, "duplicates": 0, "badIds": 0,
               "badVersions": 0, "copyMismatch": False}
@@ -122,69 +161,91 @@ def validate(registry_path: Path, docs_path: Path) -> dict:
         raise ValidationError("registry.components 不是数组（无输入不得判过）")
     counts["components"] = len(components)
     if not components:
-        # 空输入 ≠ 通过（R4：根必填键 components 非空）
         bad("R4", None, "components 为空：无输入不得判为通过")
 
-    # ---- R1：id 正则；R2：id 唯一；R3：版本 semver ----
+    # ---- R1：id 正则；R2：id 唯一 ----
     seen: dict[str, int] = {}
     for index, comp in enumerate(components):
         if not isinstance(comp, dict):
             bad("R4", None, f"components[{index}] 不是对象")
             continue
         cid = comp.get("id")
-        cid_str = str(cid) if isinstance(cid, str) else str(cid)
         if not isinstance(cid, str) or not ID_RE.match(cid):
             counts["badIds"] += 1
             bad("R1", cid if isinstance(cid, str) else None,
                 f"components[{index}].id={cid!r} 不符合 ^comp\\.[a-z0-9]+(-[a-z0-9]+)*$")
         if isinstance(cid, str):
             seen[cid] = seen.get(cid, 0) + 1
-        version = comp.get("version")
-        if not isinstance(version, str) or not SEMVER_RE.match(version):
-            counts["badVersions"] += 1
-            bad("R3", cid if isinstance(cid, str) else None,
-                f"components[{index}].version={version!r} 不符合 ^\\d+\\.\\d+\\.\\d+$")
-
     for cid, occurrence in sorted(seen.items()):
         if occurrence > 1:
             counts["duplicates"] += occurrence - 1
             bad("R2", cid, f"id 重复 {occurrence} 次（id 必须唯一）")
 
-    root_version = data.get("version")
-    if not isinstance(root_version, str) or not SEMVER_RE.match(root_version):
-        counts["badVersions"] += 1
-        bad("R3", None, f"registry.version={root_version!r} 不符合 ^\\d+\\.\\d+\\.\\d+$")
+    # ---- R3：版本字段存在且与文件名/根声明一致 ----
+    root_versions = {key: data.get(key) for key in ("version", "schemaVersion", "dataVersion")
+                     if data.get(key) is not None}
+    if not root_versions and mode == MODE_V2:
+        bad("R3", None, "根版本声明缺失：v2 需 schemaVersion/dataVersion")
+    if not root_versions and mode == MODE_V1:
+        bad("R3", None, "根版本声明缺失：v1 需 version")
+    for key, value in root_versions.items():
+        if not isinstance(value, str) or not SEMVER_RE.match(value):
+            counts["badVersions"] += 1
+            bad("R3", None, f"根字段 {key}={value!r} 不符合 ^\\d+\\.\\d+\\.\\d+$")
+    filename_match = FILENAME_VERSION_RE.search(registry_path.name)
+    schema_field = str(data.get("schema") or "")
+    schema_major = None
+    if schema_field.startswith("component-registry/v"):
+        try:
+            schema_major = int(schema_field.rsplit("/v", 1)[1])
+        except ValueError:
+            schema_major = None
+    if filename_match:
+        file_major = int(filename_match.group(1))
+        if schema_major is not None and schema_major != file_major:
+            bad("R3", None, f"文件名 v{file_major} 与 schema={schema_field!r} 主版本不一致")
+        schema_version = data.get("schemaVersion")
+        if isinstance(schema_version, str) and SEMVER_RE.match(schema_version):
+            if int(schema_version.split(".")[0]) != file_major:
+                bad("R3", None,
+                    f"schemaVersion={schema_version!r} 主版本与文件名 v{file_major} 不一致")
+    for index, comp in enumerate(components):
+        if not isinstance(comp, dict):
+            continue
+        version = comp.get("version")
+        if not isinstance(version, str) or not SEMVER_RE.match(version):
+            counts["badVersions"] += 1
+            bad("R3", comp.get("id"),
+                f"components[{index}].version={version!r} 不符合 ^\\d+\\.\\d+\\.\\d+$")
 
-    # ---- R4：根/组件必填键非空 ----
-    for key in ROOT_REQUIRED:
+    # ---- R4：必填键非空（v2 从 schema required 读取；v1 用内置清单） ----
+    if mode == MODE_V2:
+        root_required, component_required = _load_schema_required(schema_path)
+    else:
+        root_required, component_required = list(ROOT_REQUIRED_V1), list(COMPONENT_REQUIRED_V1)
+    for key in root_required:
         if not _is_nonempty(data.get(key)):
             bad("R4", None, f"registry 根必填键缺失/为空：{key}")
     for index, comp in enumerate(components):
         if not isinstance(comp, dict):
             continue
-        for key in COMPONENT_REQUIRED:
+        for key in component_required:
             if key not in comp:
                 bad("R4", comp.get("id"), f"components[{index}] 缺必填键：{key}")
                 continue
-            if key in COMPONENT_REQUIRED_SCALAR and not _is_nonempty(comp.get(key)):
+            value = comp.get(key)
+            if key in SCALAR_KEYS and not _is_nonempty(value):
                 bad("R4", comp.get("id"), f"components[{index}] 必填键为空：{key}")
-            elif key in ("inputs", "outputs"):
-                value = comp.get(key)
-                if not isinstance(value, list) or not value:
-                    bad("R4", comp.get("id"), f"components[{index}].{key} 必须是非空数组")
-            elif key in COMPONENT_REQUIRED_LIST and not isinstance(comp.get(key), list):
+            elif key in LIST_KEYS and not isinstance(value, list):
                 bad("R4", comp.get("id"), f"components[{index}].{key} 必须是数组")
-        # inputs[] 元素形状
-        inputs = comp.get("inputs")
-        if isinstance(inputs, list):
-            for j, item in enumerate(inputs):
-                if not isinstance(item, dict):
-                    bad("R4", comp.get("id"), f"components[{index}].inputs[{j}] 不是对象")
-                    continue
-                for key in INPUT_REQUIRED:
-                    if not _is_nonempty(item.get(key)):
+        if mode == MODE_V1:
+            inputs = comp.get("inputs")
+            if isinstance(inputs, list):
+                for j, item in enumerate(inputs):
+                    if not isinstance(item, dict) or not _is_nonempty(item.get("name")) \
+                            or not _is_nonempty(item.get("type")):
                         bad("R4", comp.get("id"),
-                            f"components[{index}].inputs[{j}] 缺必填键或为空：{key}")
+                            f"components[{index}].inputs[{j}] 缺 name/type")
 
     # ---- R5：引用完整性 ----
     ids = {comp.get("id") for comp in components
@@ -193,35 +254,67 @@ def validate(registry_path: Path, docs_path: Path) -> dict:
         if not isinstance(comp, dict):
             continue
         cid = comp.get("id")
-        for ref in comp.get("composesWith") or []:
-            if not isinstance(ref, str) or ref not in ids:
-                bad("R5", cid, f"composesWith 引用不存在：{ref!r}")
-        impl = comp.get("implementedBy")
-        if not isinstance(impl, dict) or not _is_nonempty(impl.get("ref")):
-            bad("R5", cid, "implementedBy.ref 缺失/为空")
-        for j, item in enumerate(comp.get("matchedExisting") or []):
-            if not isinstance(item, dict) or not _is_nonempty(item.get("ref")):
-                bad("R5", cid, f"matchedExisting[{j}].ref 缺失/为空")
+        if mode == MODE_V2:
+            for ref in comp.get("composesWith") or []:
+                target = ref.get("targetId") if isinstance(ref, dict) else ref
+                if not isinstance(target, str) or target not in ids:
+                    bad("R5", cid, f"composesWith.targetId 引用不存在：{target!r}")
+            executor = comp.get("executor") if isinstance(comp.get("executor"), dict) else {}
+            if executor.get("kind") == "tool" and not _is_nonempty(executor.get("entrypoint")):
+                bad("R5", cid, "executor.kind=tool 但 entrypoint 缺失/为空")
+            for j, item in enumerate(comp.get("matchedExisting") or []):
+                ref = item.get("ref") if isinstance(item, dict) else item
+                if not _is_nonempty(ref):
+                    bad("R5", cid, f"matchedExisting[{j}].ref 缺失/为空")
+        else:
+            for ref in comp.get("composesWith") or []:
+                if not isinstance(ref, str) or ref not in ids:
+                    bad("R5", cid, f"composesWith 引用不存在：{ref!r}")
+            impl = comp.get("implementedBy")
+            if not isinstance(impl, dict) or not _is_nonempty(impl.get("ref")):
+                bad("R5", cid, "implementedBy.ref 缺失/为空")
+            for j, item in enumerate(comp.get("matchedExisting") or []):
+                if not isinstance(item, dict) or not _is_nonempty(item.get("ref")):
+                    bad("R5", cid, f"matchedExisting[{j}].ref 缺失/为空")
 
-    # ---- R6：状态一致性 ----
+    # ---- R6：状态/可调用一致性（v2 用 callable+executor；v1 用 status+implementedBy） ----
     for index, comp in enumerate(components):
         if not isinstance(comp, dict):
             continue
         cid = comp.get("id")
-        status = comp.get("status")
-        impl = comp.get("implementedBy") if isinstance(comp.get("implementedBy"), dict) else {}
-        kind = impl.get("kind")
-        if status not in COMPONENT_STATUS:
-            bad("R6", cid, f"status={status!r} 不在 {sorted(COMPONENT_STATUS)}")
-        elif status == "missing" and kind != "missing":
-            bad("R6", cid, f"status=missing 但 implementedBy.kind={kind!r}（应为 missing）")
-        elif status in ("implemented", "partial") and kind not in ("tool", "doc", "convention"):
-            bad("R6", cid, f"status={status} 但 implementedBy.kind={kind!r}（应为 tool/doc/convention）")
-        reuse = comp.get("reuse")
-        if reuse not in REUSE_VALUES:
-            bad("R6", cid, f"reuse={reuse!r} 不在 {sorted(REUSE_VALUES)}")
-        if kind is not None and kind not in IMPLEMENTED_KINDS:
-            bad("R6", cid, f"implementedBy.kind={kind!r} 不在 {sorted(IMPLEMENTED_KINDS)}")
+        if mode == MODE_V2:
+            if comp.get("status") not in ("implemented", "partial", "missing"):
+                bad("R6", cid, f"status={comp.get('status')!r} 非法")
+            if comp.get("reuseDecision") not in ("reuse", "complete", "new"):
+                bad("R6", cid, f"reuseDecision={comp.get('reuseDecision')!r} 非法")
+            callable_flag = comp.get("callable")
+            if not isinstance(callable_flag, bool):
+                bad("R6", cid, f"callable={callable_flag!r} 必须是 bool")
+            executor = comp.get("executor") if isinstance(comp.get("executor"), dict) else {}
+            kind = executor.get("kind")
+            if callable_flag is True:
+                if kind != "tool":
+                    bad("R6", cid, f"callable=true 但 executor.kind={kind!r}（应为 tool）")
+                for field in ("argsSchema", "returnsSchema"):
+                    if not _is_nonempty(comp.get(field)):
+                        bad("R6", cid, f"callable=true 但 {field} 缺失/为空")
+            elif callable_flag is False:
+                if kind not in ("role", "manual"):
+                    bad("R6", cid, f"callable=false 但 executor.kind={kind!r}（应为 role/manual）")
+                if not _is_nonempty(comp.get("sopRef")):
+                    bad("R6", cid, "callable=false 但 sopRef 缺失/为空")
+        else:
+            status = comp.get("status")
+            impl = comp.get("implementedBy") if isinstance(comp.get("implementedBy"), dict) else {}
+            kind = impl.get("kind")
+            if status not in ("implemented", "partial", "missing"):
+                bad("R6", cid, f"status={status!r} 不在 implemented/partial/missing")
+            elif status == "missing" and kind != "missing":
+                bad("R6", cid, f"status=missing 但 implementedBy.kind={kind!r}（应为 missing）")
+            elif status in ("implemented", "partial") and kind not in ("tool", "doc", "convention"):
+                bad("R6", cid, f"status={status} 但 implementedBy.kind={kind!r}（应为 tool/doc/convention）")
+            if comp.get("reuse") not in ("reuse", "complete", "new"):
+                bad("R6", cid, f"reuse={comp.get('reuse')!r} 非法")
 
     # ---- R7：双副本一致（byte-identical） ----
     canonical_rel = data.get("canonicalPath")
@@ -233,9 +326,9 @@ def validate(registry_path: Path, docs_path: Path) -> dict:
         bad("R7", None, "registry.evidenceCopy 缺失/为空，无法核对证据副本")
         counts["copyMismatch"] = True
     if isinstance(copy_rel, str) and copy_rel.strip():
-        canonical = registry_path if not isinstance(canonical_rel, str) or not canonical_rel.strip() \
-            else (ROOT / canonical_rel.replace("\\", "/"))
-        copy_path = ROOT / copy_rel.replace("\\", "/")
+        canonical = (_resolve(canonical_rel) if isinstance(canonical_rel, str) and canonical_rel.strip()
+                     else registry_path)
+        copy_path = _resolve(copy_rel)
         if not canonical.is_file():
             bad("R7", None, f"canonicalPath 不存在：{canonical}")
             counts["copyMismatch"] = True
@@ -252,13 +345,27 @@ def validate(registry_path: Path, docs_path: Path) -> dict:
     if not isinstance(summary, dict):
         bad("R8", None, "registry.summary 缺失/不是对象")
     else:
-        reuse_n = sum(1 for c in components if isinstance(c, dict) and c.get("reuse") == "reuse")
-        complete_n = sum(1 for c in components if isinstance(c, dict) and c.get("reuse") == "complete")
-        new_n = sum(1 for c in components if isinstance(c, dict) and c.get("reuse") == "new")
-        missing_pure_n = sum(1 for c in components if isinstance(c, dict) and c.get("status") == "missing")
-        missing_partial_n = sum(1 for c in components if isinstance(c, dict) and c.get("status") == "partial")
-        expected = {"total": len(components), "reuse": reuse_n, "complete": complete_n,
-                    "new": new_n, "missingPure": missing_pure_n, "missingPartial": missing_partial_n}
+        if mode == MODE_V2:
+            expected = {
+                "total": len(components),
+                "reuse": sum(1 for c in components if isinstance(c, dict) and c.get("reuseDecision") == "reuse"),
+                "complete": sum(1 for c in components if isinstance(c, dict) and c.get("reuseDecision") == "complete"),
+                "new": sum(1 for c in components if isinstance(c, dict) and c.get("reuseDecision") == "new"),
+                "statusImplemented": sum(1 for c in components if isinstance(c, dict) and c.get("status") == "implemented"),
+                "statusPartial": sum(1 for c in components if isinstance(c, dict) and c.get("status") == "partial"),
+                "statusMissing": sum(1 for c in components if isinstance(c, dict) and c.get("status") == "missing"),
+                "callable": sum(1 for c in components if isinstance(c, dict) and c.get("callable") is True),
+                "manual": sum(1 for c in components if isinstance(c, dict) and c.get("callable") is False),
+            }
+        else:
+            expected = {
+                "total": len(components),
+                "reuse": sum(1 for c in components if isinstance(c, dict) and c.get("reuse") == "reuse"),
+                "complete": sum(1 for c in components if isinstance(c, dict) and c.get("reuse") == "complete"),
+                "new": sum(1 for c in components if isinstance(c, dict) and c.get("reuse") == "new"),
+                "missingPure": sum(1 for c in components if isinstance(c, dict) and c.get("status") == "missing"),
+                "missingPartial": sum(1 for c in components if isinstance(c, dict) and c.get("status") == "partial"),
+            }
         for key, expected_value in expected.items():
             actual = summary.get(key)
             if actual != expected_value:
@@ -268,172 +375,135 @@ def validate(registry_path: Path, docs_path: Path) -> dict:
 
 
 # ---------------------------------------------------------------------------
-# selftest：必红/必绿 fixture
+# selftest：v2 主口径 + v1 向后兼容 + R1–R8 必红
 # ---------------------------------------------------------------------------
 def _write(path: Path, content: str) -> None:
     path.parent.mkdir(parents=True, exist_ok=True)
     path.write_text(content, encoding="utf-8")
 
 
-def _base_registry() -> dict:
-    comp = {
-        "id": "comp.test-component", "version": "0.1.0", "name": "测试组件",
-        "summary": "用于 fixture", "inputs": [{"name": "x", "type": "text", "required": True}],
-        "outputs": [{"name": "y", "type": "text"}], "preconditions": ["p"],
-        "failureStates": ["F1"], "sideEffects": ["none"], "idempotent": True,
-        "composesWith": ["comp.other-component"], "implementedBy": {"kind": "tool", "ref": "scripts/x.py"},
-        "status": "implemented", "reuse": "new", "matchedExisting": [],
-        "namingBasis": "components-v0.1 §2.1",
-    }
-    other = {
-        "id": "comp.other-component", "version": "0.1.0", "name": "另一组件",
-        "summary": "用于 fixture", "inputs": [{"name": "x", "type": "text"}],
-        "outputs": [{"name": "y", "type": "text"}], "preconditions": ["p"],
-        "failureStates": ["F1"], "sideEffects": ["none"], "idempotent": True,
-        "composesWith": [], "implementedBy": {"kind": "doc", "ref": "docs/x.md"},
-        "status": "partial", "reuse": "reuse", "matchedExisting": [],
-        "namingBasis": "components-v0.1 §2.1",
-    }
-    return {
-        "schema": "component-registry/v1", "registryId": "fixture", "version": "0.1.0",
-        "updatedAt": "2026-10-31T00:00:00+08:00", "source": "fixture",
-        "owner": "steward", "status": "fixture",
-        "namingRule": {"componentId": "comp.kebab", "note": "fixture", "anchors": ["docs/design/components-v0.1.md"]},
-        "sourceOfTruth": "docs/design/components-v0.1.md",
-        "canonicalPath": "docs/design/component-registry.v1.json",
-        "evidenceCopy": "artifacts/agent/plugin-design/component-registry.v1.json",
-        "summary": {"total": 2, "reuse": 1, "complete": 0, "new": 1,
-                    "missingPure": 0, "missingPartial": 1},
-        "components": [comp, other],
-    }
+def _v2_fixture(tmp: Path, name: str, mutate=None) -> Path:
+    """以真实 v2 registry 为基底造 fixture：canonical/evidence 指向 tmp 的双副本。"""
+    data = json.loads((ROOT / DEFAULT_REGISTRY).read_text(encoding="utf-8-sig"))
+    if mutate:
+        mutate(data)
+    canonical = tmp / f"fixtures/{name}.json"
+    copy = tmp / f"fixtures/{name}.copy.json"
+    data["canonicalPath"] = str(canonical)
+    data["evidenceCopy"] = str(copy)
+    text = json.dumps(data, ensure_ascii=False, indent=2)
+    _write(canonical, text)
+    _write(copy, text)
+    return canonical
 
 
 def selftest() -> int:
     failures: list[str] = []
     if not _utf8_stdio_probe():
         failures.append("UTF-8 输出探针失败：管道下 stdout 不是 UTF-8（全角字符会 traceback）")
-    with tempfile.TemporaryDirectory(prefix="comp-naming-selftest-") as tmp_s:
-        tmp = Path(tmp_s)
-        docs = tmp / "docs/design/components-v0.1.md"
-        _write(docs, "# rules\n")
-        canonical = tmp / "docs/design/component-registry.v1.json"
-        copy = tmp / "artifacts/agent/plugin-design/component-registry.v1.json"
 
-        def write_registry(name: str, mutate) -> Path:
-            data = _base_registry()
-            mutate(data) if mutate else None
-            path = tmp / f"fixtures/{name}.json"
-            copy_path = tmp / f"fixtures/{name}.copy.json"
-            # 双副本：canonical=registy 文件，evidence=独立副本（初始 byte-identical）
-            data["canonicalPath"] = str(path)
-            data["evidenceCopy"] = str(copy_path)
-            payload = json.dumps(data, ensure_ascii=False, indent=2)
-            _write(path, payload)
-            _write(copy_path, payload)
-            return path
+    docs_v2 = ROOT / DEFAULT_DOCS
+    docs_v1 = ROOT / "docs/design/components-v0.1.md"
+
+    # 绿：真实 v2 + v1（向后兼容）
+    v2_result = validate(ROOT / DEFAULT_REGISTRY, docs_v2)
+    if not v2_result["ok"]:
+        failures.append("v2 真实 registry 应 exit 0："
+                        + "; ".join(f"{v['ruleId']}:{v['detail'][:80]}" for v in v2_result["violations"]))
+    v1_result = validate(ROOT / "docs/design/component-registry.v1.json", docs_v1)
+    if not v1_result["ok"]:
+        failures.append("v1 registry 向后兼容应 exit 0："
+                        + "; ".join(f"{v['ruleId']}:{v['detail'][:80]}" for v in v1_result["violations"]))
+
+    with __import__("tempfile").TemporaryDirectory(prefix="comp-naming-selftest-") as tmp_s:
+        tmp = Path(tmp_s)
 
         def expect_rule(name: str, path: Path, rule_id: str) -> None:
-            result = validate(path, docs)
+            result = validate(path, docs_v2, ROOT / DEFAULT_SCHEMA)
             if result["ok"]:
                 failures.append(f"{name}: 应 FAIL，实际 ok=true")
                 return
-            hit = [v for v in result["violations"] if v["ruleId"] == rule_id]
-            if not hit:
-                failures.append(f"{name}: 未命中 {rule_id}，实际 {sorted({v['ruleId'] for v in result['violations']})}")
+            if not any(v["ruleId"] == rule_id for v in result["violations"]):
+                failures.append(f"{name}: 未命中 {rule_id}，实际 "
+                                f"{sorted({v['ruleId'] for v in result['violations']})}")
 
-        # 绿：合法 fixture（双副本指向同一文件 ⇒ R7 通过）
-        green = write_registry("green", None)
-        result = validate(green, docs)
-        if not result["ok"]:
-            failures.append("绿色 fixture 误报："
-                            + "; ".join(f"{v['ruleId']}:{v['detail'][:80]}" for v in result["violations"]))
-
-        # R1 红：大写 id
-        expect_rule("R1-uppercase-id", write_registry("r1", lambda d: d["components"][0].__setitem__("id", "comp.Bad-ID")), "R1")
-        # R2 红：重复 id
+        # R1/R2/R3
+        expect_rule("R1-uppercase-id",
+                    _v2_fixture(tmp, "r1", lambda d: d["components"][0].__setitem__("id", "comp.Bad-ID")),
+                    "R1")
         def _dup(d):
-            d["components"][1]["id"] = "comp.test-component"
-            d["summary"]["total"] = 2
-        expect_rule("R2-duplicate-id", write_registry("r2", _dup), "R2")
-        # R3 红：坏 version
-        expect_rule("R3-bad-version", write_registry("r3", lambda d: d["components"][0].__setitem__("version", "1.0")), "R3")
-        # R4 红：组件缺必填键
-        expect_rule("R4-missing-key", write_registry("r4", lambda d: d["components"][0].pop("namingBasis", None)), "R4")
-        # R4 红：空 components（无输入不得判过）
+            d["components"][1]["id"] = d["components"][0]["id"]
+        expect_rule("R2-duplicate-id", _v2_fixture(tmp, "r2", _dup), "R2")
+        expect_rule("R3-bad-component-version",
+                    _v2_fixture(tmp, "r3", lambda d: d["components"][0].__setitem__("version", "1.0")), "R3")
+        expect_rule("R3-missing-root-version",
+                    _v2_fixture(tmp, "r3b", lambda d: [d.pop("schemaVersion", None), d.pop("dataVersion", None)]),
+                    "R3")
+        # R4：缺必填键 / 空 components
+        expect_rule("R4-missing-key",
+                    _v2_fixture(tmp, "r4", lambda d: d["components"][0].pop("sopRef", None)), "R4")
         def _empty(d):
             d["components"] = []
             d["summary"] = {"total": 0, "reuse": 0, "complete": 0, "new": 0,
-                            "missingPure": 0, "missingPartial": 0}
-        expect_rule("R4-empty-components", write_registry("r4-empty", _empty), "R4")
-        # R5 红：composesWith 引用不存在
+                            "statusImplemented": 0, "statusPartial": 0, "statusMissing": 0,
+                            "callable": 0, "manual": 0}
+        expect_rule("R4-empty-components", _v2_fixture(tmp, "r4-empty", _empty), "R4")
+        # R5：composesWith.targetId 不存在
         def _badref(d):
-            d["components"][0]["composesWith"] = ["comp.not-exist"]
-        expect_rule("R5-bad-ref", write_registry("r5", _badref), "R5")
-        # R6 红：status=missing 但 kind=tool
-        def _badstatus(d):
-            d["components"][0]["status"] = "missing"
-            d["components"][0]["implementedBy"] = {"kind": "tool", "ref": "x"}
-            d["summary"] = {"total": 2, "reuse": 1, "complete": 0, "new": 1,
-                            "missingPure": 1, "missingPartial": 1}
-        expect_rule("R6-status-mismatch", write_registry("r6", _badstatus), "R6")
-        # R7 红：双副本内容不等（改副本文件）
-        r7_path = write_registry("r7", None)
+            d["components"][0]["composesWith"] = [{"targetId": "comp.not-exist", "mapping": []}]
+        expect_rule("R5-bad-ref", _v2_fixture(tmp, "r5", _badref), "R5")
+        # R6：callable=true 但 executor.kind=role
+        def _badcallable(d):
+            d["components"][0]["callable"] = True
+            d["components"][0]["executor"] = {"kind": "role", "entrypoint": ""}
+        expect_rule("R6-callable-mismatch", _v2_fixture(tmp, "r6", _badcallable), "R6")
+        # R7：双副本不等
+        r7_path = _v2_fixture(tmp, "r7", None)
         r7_data = json.loads(r7_path.read_text(encoding="utf-8"))
-        copy_path = Path(r7_data["evidenceCopy"])
-        _write(copy_path, json.dumps({"different": True}, ensure_ascii=False))
-        result = validate(r7_path, docs)
-        if result["ok"]:
-            failures.append("R7-copy-mismatch: 应 FAIL，实际 ok=true")
-        if result["counts"]["copyMismatch"] is not True:
-            failures.append("R7-copy-mismatch: counts.copyMismatch 应为 true")
-        if not any(v["ruleId"] == "R7" for v in result["violations"]):
-            failures.append("R7-copy-mismatch: 未命中 R7")
-        # R8 红：summary 计数不一致
-        def _badsum(d):
-            d["summary"]["total"] = 99
-        expect_rule("R8-summary-mismatch", write_registry("r8", _badsum), "R8")
-        # 无输入：registry 不存在 ⇒ ValidationError ⇒ exit 2（由 main 体现；此处断言抛错）
-        try:
-            validate(tmp / "no-such-registry.json", docs)
-            failures.append("no-input: 缺失 registry 时必须报错，实际未抛")
-        except ValidationError:
-            pass
-        # 无输入：docs 不存在 ⇒ 报错
-        try:
-            validate(green, tmp / "no-such-docs.md")
-            failures.append("no-input-docs: 缺失文档时必须报错，实际未抛")
-        except ValidationError:
-            pass
+        _write(Path(r7_data["evidenceCopy"]), json.dumps({"different": True}, ensure_ascii=False))
+        r7_result = validate(r7_path, docs_v2, ROOT / DEFAULT_SCHEMA)
+        if r7_result["ok"] or r7_result["counts"]["copyMismatch"] is not True:
+            failures.append("R7-copy-mismatch: 应 FAIL 且 counts.copyMismatch=true")
+        # R8：summary 计数不一致
+        expect_rule("R8-summary-mismatch",
+                    _v2_fixture(tmp, "r8", lambda d: d["summary"].__setitem__("total", 99)), "R8")
+        # 无输入：registry/docs 缺失 ⇒ ValidationError（exit 2）
+        for label, args in (("no-registry", (tmp / "no-such-registry.json", docs_v2)),
+                            ("no-docs", (ROOT / DEFAULT_REGISTRY, tmp / "no-such-docs.md"))):
+            try:
+                validate(*args)
+                failures.append(f"{label}: 缺失输入时必须报错，实际未抛")
+            except ValidationError:
+                pass
 
     if failures:
         print("SELFTEST FAIL")
         for item in failures:
             print(" -", item)
         return 1
-    print("SELFTEST PASS：R1/R2/R3/R4(缺键/空 components)/R5/R6/R7(副本不等)/R8 各自必红；"
-          "合法 fixture 必绿；无输入（registry/docs 缺失）必报错（不空过）。")
+    print("SELFTEST PASS：v2 真实 registry + v1 向后兼容均 exit 0；"
+          "R1/R2/R3(坏 version/缺根版本)/R4(缺键/空 components)/R5(targetId)/R6(callable)/R7(副本不等)/R8(summary) 各自必红；"
+          "无输入（registry/docs 缺失）必报错（不空过）。")
     return 0
 
 
 def main(argv: list[str] | None = None) -> int:
     parser = argparse.ArgumentParser(description="组件命名规范校验器（comp.naming-convention）")
-    parser.add_argument("--registry", default=DEFAULT_REGISTRY, help="registry 路径（默认唯一事实源）")
+    parser.add_argument("--registry", default=DEFAULT_REGISTRY, help="registry 路径（默认 v2 唯一事实源）")
     parser.add_argument("--docs", default=DEFAULT_DOCS, help="规则文档路径")
-    parser.add_argument("--json", action="store_true", help="输出 JSON（默认即 JSON；保留兼容）")
+    parser.add_argument("--schema", default=DEFAULT_SCHEMA, help="v2 JSON Schema 路径")
+    parser.add_argument("--json", action="store_true", help="输出 JSON（默认即 JSON）")
     parser.add_argument("--selftest", action="store_true", help="运行必红/必绿 fixture 自测")
     args = parser.parse_args(argv)
 
     if args.selftest:
         return selftest()
 
-    registry_path = Path(args.registry)
-    if not registry_path.is_absolute():
-        registry_path = ROOT / registry_path
-    docs_path = Path(args.docs)
-    if not docs_path.is_absolute():
-        docs_path = ROOT / docs_path
+    registry_path = _resolve(args.registry)
+    docs_path = _resolve(args.docs)
+    schema_path = _resolve(args.schema)
     try:
-        result = validate(registry_path, docs_path)
+        result = validate(registry_path, docs_path, schema_path)
     except ValidationError as exc:
         print(json.dumps({"ok": False, "error": "no-input-or-invalid", "detail": str(exc)},
                          ensure_ascii=False, indent=2))

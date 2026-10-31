@@ -58,7 +58,7 @@ except Exception as exc:  # pragma: no cover
                      ensure_ascii=False, indent=2))
     raise SystemExit(2)
 
-DEFAULT_REGISTRY = "docs/design/component-registry.v1.json"
+DEFAULT_REGISTRY = "docs/design/component-registry.v2.json"
 DECISIONS = {"reuse", "complete", "new"}
 SIMILARITY_THRESHOLD = 0.72
 ANCHOR_ID_RE = re.compile(r"^component:(comp\.[a-z0-9]+(-[a-z0-9]+)*)$")
@@ -213,10 +213,12 @@ def selftest() -> int:
     registry = load_registry(DEFAULT_REGISTRY)
     comps = registry["components"]
 
-    # ① 用 registry 自身 17 条当 candidates ⇒ 0 new、17 complete（自匹配规则）
+    # ① 用 v2 registry 自身 20 条当 candidates ⇒ 0 new、20 complete（自匹配规则）
     self_result = judge(comps, registry)
     if not self_result["ok"]:
         failures.append("self-match: 不应有 violation")
+    if len(comps) != 20:
+        failures.append(f"v2 registry 应为 20 组件，实际 {len(comps)}")
     if self_result["summary"]["new"] != 0:
         failures.append(f"self-match: new 应为 0，实际 {self_result['summary']['new']}")
     if self_result["summary"]["complete"] != len(comps):
@@ -271,7 +273,7 @@ def selftest() -> int:
         for item in failures:
             print(" -", item)
         return 1
-    print("SELFTEST PASS：自匹配 17/17 complete & 0 new；改名候选 complete 且 anchor 指向现 id；"
+    print("SELFTEST PASS：v2 registry 自匹配 20/20 complete & 0 new；改名候选 complete 且 anchor 指向现 id；"
           "空 anchor/坏 anchor 必红（exit 1）；全新候选 new + coverageGaps=1；空输入必 FAIL。")
     return 0
 

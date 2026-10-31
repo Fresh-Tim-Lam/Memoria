@@ -47,16 +47,19 @@ _configure_utf8_stdio()
 
 ROOT = Path(__file__).resolve().parents[2]
 DEFAULT_BOARD = "team/team-board-snapshot.json"
-RULE_SOURCE = "artifacts/agent/plugin-design/META-PROTOCOL-v0.1.md §2/§5"
+RULE_SOURCE = "docs/design/meta-protocol-v0.2.md §2/§5"
 
 CLASSES = {"cls.defect-fix", "cls.release", "cls.team-work-design",
            "cls.infra-change", "cls.research-forensics"}
 
-# §2 判定表 + §5 伪代码（优先级：release > infra-change > defect-fix > team-work-design > research-forensics）
+# v0.2 §2/§5 判定表 + 优先级（A-06：hasVersion 不得单独触发 release；
+# "修复 1.2.3 版本引入的回归"→defect-fix；"部署/上线基础设施"→infra-change）。
+# 优先级：release（仅当同时含发布/版本交付动作）> infra-change > defect-fix > team-work-design > research-forensics
 RULE_TABLE = (
-    ("cls.release", ("发版", "发布", "tag", "打包", "上线", "release", "版本号", "资产")),
+    # A-06：hasVersion 不得单独触发 release；「上线」单独出现（如“部署上线基础设施”）不算 release。
+    ("cls.release", ("发版", "发布", "tag", "打包", "release", "版本号", "资产", "发布包", "交付")),
     ("cls.infra-change", ("跨仓", "跨域", "依赖", "ci", "构建", "插件契约", "目录结构",
-                          "重构基础设施", "脚本", "目录")),
+                          "重构基础设施", "脚本", "目录", "部署", "基础设施", "上线")),
     ("cls.defect-fix", ("bug", "异常", "回归", "坏了", "修复", "不通过")),
     ("cls.team-work-design", ("开团队", "研讨", "设计", "工作流", "组件", "落地", "方案")),
     ("cls.research-forensics", ("取证", "调研", "评估", "对比", "查清楚")),
@@ -66,13 +69,13 @@ CLASSIFICATION_RE = __import__("re").compile(r"^\s*定性\s*[:：]\s*(cls\.[a-z0
 
 
 def classify_text(raw: str, context: dict | None = None) -> str:
-    """§5 伪代码：返回 cls.* 或 UNCLASSIFIED（空请求同样 UNCLASSIFIED，不是默认通过）。"""
+    """§5 伪代码（v0.2/A-06）：返回 cls.* 或 UNCLASSIFIED（空请求同样 UNCLASSIFIED，不是默认通过）。
+
+    注意：`context.hasVersion` **不得单独触发 release**（A-06）；只有文本同时含发布动作才走 release。
+    """
     text = str(raw or "").strip().lower()
-    context = context or {}
     if not text:
         return "UNCLASSIFIED"
-    if context.get("has_version"):
-        return "cls.release"
     for class_id, keywords in RULE_TABLE:
         if any(keyword.lower() in text for keyword in keywords):
             return class_id
@@ -181,6 +184,11 @@ def selftest() -> int:
             failures.append(f"映射错误：{text!r} → {actual}，期望 {expected}")
     if classify_text("请发版 v0.4.8 并修复 bug") != "cls.release":
         failures.append("优先级错误：release 应优先于 defect-fix")
+    # A-06：hasVersion 不得单独触发 release；版本回归 → defect-fix；部署上线基础设施 → infra
+    if classify_text("修复 1.2.3 版本引入的回归", context={"has_version": True}) != "cls.defect-fix":
+        failures.append("A-06 错误：'修复 1.2.3 版本引入的回归' 应判 defect-fix（hasVersion 不得单独触发 release）")
+    if classify_text("部署上线基础设施", context={"has_version": True}) != "cls.infra-change":
+        failures.append("A-06 错误：'部署上线基础设施' 应判 infra-change（无版本交付不算 release）")
     if classify_text("") != "UNCLASSIFIED":
         failures.append("空请求应 UNCLASSIFIED，不得默认通过")
 
@@ -235,8 +243,9 @@ def selftest() -> int:
         for item in failures:
             print(" -", item)
         return 1
-    print("SELFTEST PASS：5 类反例映射 5/5（含优先级 release>defect-fix）；空请求 UNCLASSIFIED；"
-          "板级绿 fixture 5/5 classified；删定性行 ⇒ ok=false 且对应 taskId 出现；非法分类必红；空输入 EMPTY_INPUT 不空过。")
+    print("SELFTEST PASS：v0.2 §2/§5 五类映射 5/5（含优先级 release>defect-fix；A-06 hasVersion 不单独触发 release）；"
+          "空请求 UNCLASSIFIED；板级绿 fixture 5/5 classified；删定性行 ⇒ ok=false 且对应 taskId 出现；"
+          "非法分类必红；空输入 EMPTY_INPUT 不空过；无 description 的 board ⇒ advisory（audit-only）。")
     return 0
 
 
