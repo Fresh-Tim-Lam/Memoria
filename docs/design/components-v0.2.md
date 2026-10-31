@@ -1,13 +1,14 @@
 # 组件库规范 v0.2.1（设计资产 · canonical snapshot）
 
 > **canonical snapshot（v0.2.1，2026-10-31；以下 sha256 为权威版本身份）**
-> - `docs/design/component-registry.v2.json`：`e239a515e7cc66ba27c3f5bd073f2667c7a5fa8a44773118aba96e9b346dcac2`（95,984 B；dataVersion `0.2.1`）
+> - `docs/design/component-registry.v2.json`：`97b5d8c3a3c643d4b96b0fc827766641a10283dc48c1894fb1e8f351a39c8446`（95,972 B；dataVersion `0.2.1`；status accepted）
 > - `docs/design/component-registry.schema.json`：`bd4d317705e52663d1210f21e1cb8d4de4422339c4831b6967c5e0ebc89a5cb1`（16,955 B）
 > - `docs/design/todo-requirement.schema.json`：`a603b4ed309064b4010de1c98d6d7429f731a4251c22dd96a37e5be9d68fbc02`（3,080 B）
 > - `docs/design/meta-protocol-v0.2.md`：`e5b6cacc435d7850651eed28543e4f93fe51cc37cc45626002745f5592cbe5ee`（13,506 B）
 > - `docs/design/component-classification.cases.json`：`d7ce39e6a0816484ab28ac09f4c6ec1e2548825df19c94e4b6a2176045c51a82`（5,840 B；含 acceptGap canonical 5 条）
 > - `docs/design/components-v0.2.md`（本文件）：**自身 sha256 由 Lead 交付回执给出**（避免自引用；v0.2.1 落盘后计算）
-> **状态**：draft-pending-review（**v0.2.1：修复复评剩余 4 项 P0 = A-01 / A-04 / C-02 / C-03**；等 seminar 按 golden cases 最终复评）
+> **Status: accepted 2026-10-31（Lead 冻结；M-1 复评 P0 13/13 PASS，见 `SEMINAR-COMPONENTS-M1/REVIEW-v0.2.2-final.md`）**
+> **状态**：accepted（2026-10-31；M-1 复评 P0 13/13 PASS，golden cases canonical 31 机跑 PASS + 1 MANUAL；见 REVIEW-v0.2.2-final.md）
 > **依据**：Lead 2026-10-31 P0-1…P0-5 与复评裁决；`SEMINAR-COMPONENTS-M1/objections.md`（32 条）+ `REVIEW-v0.2.md`（剩余 4 项）+ `golden-cases/`（31 条）；`INBOX-20261030-01`。
 > **Owner**：`plugin-todo-owner`｜写域：`docs/design/**`、`artifacts/agent/plugin-design/**`｜**不 commit**（Lead 审后提交）。
 > **v0.2 → v0.2.1 关系**：v0.2（6 文件，快照已由复评核验）；v0.2.1 修复 A-01/A-04/C-02/C-03；v0.1（`docs/design/components-v0.1.md` + `component-registry.v1.json`，Lead commit `b28c6cf7`）保留历史。tracked 状态：v0.1 已 tracked；v0.2.1 **待 Lead `git add` + commit**（本组不写 tracked）。
