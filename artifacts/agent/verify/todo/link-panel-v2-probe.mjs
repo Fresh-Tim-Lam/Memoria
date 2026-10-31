@@ -404,6 +404,12 @@ async function main() {
   await sleep(500);
   out.steps.P9 = { initial: await cdp.evalJS(READ) };
   await out.steps.P9.initial.pinPressed;
+  // 1x 图标截图（真实 13px 尺寸，判定"13px 下可辨"）
+  try {
+    const r1 = out.steps.P9.initial.rect;
+    const cap1 = await cdp.send("Page.captureScreenshot", { format: "png", clip: { x: r1.x, y: r1.y, width: r1.w, height: 40, scale: 1 } });
+    fs.writeFileSync(path.join(shotDir, "P9-pin-icon-unpinned-1x.png"), Buffer.from(cap1.data, "base64"));
+  } catch (_) { /* noop */ }
   // 2x 图标截图（未钉住）
   try {
     const r9 = out.steps.P9.initial.rect;
@@ -417,6 +423,11 @@ async function main() {
   out.steps.P9.clickPin = await clickRect("[data-panel-pin]");
   await sleep(400);
   out.steps.P9.afterPin = await cdp.evalJS(READ);
+  try {
+    const r1b = out.steps.P9.afterPin.rect;
+    const cap1b = await cdp.send("Page.captureScreenshot", { format: "png", clip: { x: r1b.x, y: r1b.y, width: r1b.w, height: 40, scale: 1 } });
+    fs.writeFileSync(path.join(shotDir, "P9-pin-icon-pinned-1x.png"), Buffer.from(cap1b.data, "base64"));
+  } catch (_) { /* noop */ }
   try {
     const r9b = out.steps.P9.afterPin.rect;
     await cdp.send("Emulation.setDeviceMetricsOverride", { width: 1280, height: 800, deviceScaleFactor: 2, mobile: false });

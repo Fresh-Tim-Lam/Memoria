@@ -4,13 +4,13 @@
   "contract": "docs/conventions/ui-contract.md",
   "counts": {
     "FAIL": 210,
-    "WARN": 60,
+    "WARN": 61,
     "by_rule": {
       "C2.FAIL": 176,
       "C2.WARN": 7,
       "C3.FAIL": 21,
       "C3.WARN": 30,
-      "C4.WARN": 1,
+      "C4.WARN": 2,
       "C5.WARN": 3,
       "C7.FAIL": 13,
       "C7.WARN": 19
@@ -2592,15 +2592,26 @@
       "value": "12.5px"
     },
     {
-      "fp": "C4|app/js/agent-panel.js|contentMinPx|contentMinPx|(180, 560)|duplicate",
+      "fp": "C4|app/js/agent-panel.js|contentMinPx|contentMinPx|{'def': 360}|duplicate",
+      "rule": "C4",
+      "severity": "WARN",
+      "file": "app/js/agent-panel.js",
+      "line": 224,
+      "selector": "contentMinPx",
+      "detail": "同一范围/默认值在 app/js/display-settings.js 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出）",
+      "prop": "contentMinPx",
+      "value": "{'def': 360}"
+    },
+    {
+      "fp": "C4|app/js/agent-panel.js|contentMinPx|contentMinPx|{'min': 180, 'max': 560}|duplicate",
       "rule": "C4",
       "severity": "WARN",
       "file": "app/js/agent-panel.js",
       "line": 231,
       "selector": "contentMinPx",
-      "detail": "同一范围在 app/js/display-settings.js 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出）",
+      "detail": "同一范围/默认值在 app/js/display-settings.js 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出）",
       "prop": "contentMinPx",
-      "value": "(180, 560)"
+      "value": "{'min': 180, 'max': 560}"
     },
     {
       "fp": "C5||C10-modal-vs-search||9000>1000|known-issue",

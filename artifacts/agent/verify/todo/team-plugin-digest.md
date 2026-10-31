@@ -50,19 +50,18 @@
 | 拦截任意工具做门禁 | `tools/execute` wrapper 机制存在，**未原型验证** |
 | teammate 能用 AOCI/Xerj MCP | **未验证**（MCP 是否随 spawn 继承） |
 
-## 需要你裁决的 3 个决策点
+## 2026-10-25 裁决结果（Lead 已判）与下一步
 
-1. **监督角色先走哪条**：
-   - **A（推荐）** 先做 schedule 自触发（10 分钟验证 + supervisor 模板），B 的 repo 侧检查同期上；
-   - B 先做契约强制审查门（改动大、涉及发版流程）；
-   - 暂不做（保持现状）。
-2. **插件版本策略（v3→v4）**：
-   - **A（推荐）** 先重建 DSH 让运行插件=源码 v4，并把"声明>插件"改成**拒绝版本级任务**；
-   - B 锁定 v3，把项目声明降回 3（避免"声明了但插件不支持"）；
-   - C 只发通知（现状，不推荐）。
-3. **产品化优先级**：
-   - **A（推荐）** 先把内部 kernel 跑通 + 生成"用户可读 digest"（P1–P3），再谈 DSH 插件分发；
-   - B 优先做独立 DSH 插件包（对外分发）；
-   - C 优先接 Memoria 学习/复习场景（产品化先行）。
+| 决策 | 裁决 | 下一步 |
+| --- | --- | --- |
+| 1 监督角色 | **A 已验证不可行**：teammate 调 schedule 被 DSH 拒 `{"code":"subagent_session","message":"A delegated subagent cannot use reminders."}`（会话类型级，换 preset 无效）⇒ 主路径 **B（契约 + repo 侧门禁）** + 过渡 **Lead 代持定时唤醒** | 证据 `team-plugin-schedule-verify.md`；做 P2-0（Lead schedule → send_message 唤醒 supervisor）；B 的 repo 侧脚本已落地（待按新 release 规范扩展检查项） |
+| 2 v3→v4 | **(a) 原则批准"声明>插件 ⇒ 拒绝"；(b) 今天不重建 DSH**（改宿主需回滚演练 + 人给时间窗） | 拒绝规则**只写文档、默认开关 off**；顺序固定：备份 → 重建 → 验证 pluginVersion=4 → 开开关 → 验一次版本级任务 |
+| 3 产品化 | **A：内部 kernel + 用户可读 digest 先行**（用户读懂=第一验收标准；先做独立包会重演"出生即死"） | P1-6/P4-1 先于 P4-4；digest 验收 = 未参与本轮的读者 5 分钟内答对三问（做了什么/为什么/已知问题） |
+
+**已交付（不等裁决、纯 repo 侧）**：`scripts/agent/release_preflight.py` —— 发版前置检查，缺 supervisor review artifact（或 verdict≠pass）⇒ exit 1；`--selftest` 四条 fixture 证明红/绿（PASS）。
+
+**新增设计约束（Lead 补充）**：
+- 监督者最大失败模式不是"不触发"，是**"触发但看不出问题"** ⇒ 任务书必须含检查项 S1–S6 与必报 FAIL 条件（vision §4.1）。
+- "用户跟得上"必须可测：**≤2 页 digest + 5 分钟三问**（vision §9）。
 
 （完整路线图：P0 版本对齐 → P1 义务强制化 → P2 监督角色 → P3 profile+试点 → P4 产品化；每阶段都有可验证完成定义与"需查 DSH API"标注。）

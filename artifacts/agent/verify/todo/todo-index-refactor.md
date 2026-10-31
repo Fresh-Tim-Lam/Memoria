@@ -104,3 +104,39 @@ git diff --numstat -- docs/todo.md docs/todo docs/conventions/docs-management.md
 | 文档索引同步 | ✅ docs-management（目录登记 + §4.2 规则 5/6 + 预算记录）+ docs/todo/README |
 | pytest / i18n / audit | ✅ pytest 1516 passed；i18n PASS；audit FAIL=0 |
 | 报告 | ✅ 本文件 |
+
+---
+
+## 10. Batch C（其余 15 节全量迁移）—— 已完成
+
+- 迁移：§0/§1/§2/§3/§4/§5/§6/§7/§8/§9/§11/§14/§15/§16/§17 共 **15 节**，逐字搬入 `docs/todo/NN-*.md`（新增 15 个附件；含 §16 纯叙述节、§0/§11 项目符号节；§10 本身是索引、§18 是指针，保留不迁）。
+- 索引形态：每节 = 标题 + 统计/摘要 + 项级索引行（ID/项/状态/`[详](todo/…md#anchor)`，共 **94 项**）或（§16）摘要 + 单一详情链接；全部锚点 `#<id-lower>`。
+- **实测**：`todo.md` 50,404 → **24,132 B**（−26,272 B，−52.1%），428 → 320 行。
+- **A+B+C 累计**：65,445 → **24,132 B（−41,313 B，−63.1%）**；附件 17 个 + README（合计约 71006 B）。
+- **不丢内容校验（以 HEAD 的 todo.md 为原版）**：15 节共 **223 行原文**逐行核对在对应附件逐字存在（0 缺失）；原版长行（>80B）未残留在新 todo（无双事实源）。
+- 机检：`check_todo_size.py` PASS（**WARN=0**，死链 0；selftest PASS）；`team_audit` FAIL=0；`i18n` PASS；`pytest` 1520 passed（工作区当前基线，含他人新增 4 条测试）。
+- 同步：`docs/todo/README.md` 现役文件表已按 17 个附件重生成（含大小）。
+
+## 11. 额外登记（Lead 路由，2026-10-26）
+
+1. **`docs/conventions/ui-contract.md` 入索引**：`docs/conventions/README.md` + `README.cn.md` 各加一行（"视觉层硬约束 C1–C7 + 机检 + 基线"；遵循 readme-i18n 双语规则）。
+2. **`scripts/check_ui_contract.py` 门禁登记**：写入 `docs/todo/12-build-table.md` 新增节 `#ui-gate`（含"基线 210F/60W"与"未并入 team_audit"说明），`todo.md §12` 索引加 `GATE-1` 行（状态 ✅ 已落地）。
+   - **team_audit 是否并入的建议：暂不并入**。理由：① 55 KB 独立脚本 + 独立基线文件（`artifacts/agent/verify/ui/ui-contract-baseline.js`），并入会让 `team_audit` 变重/变慢；② 基线语义是"新增违规红、存量冻结"，与 `team_audit`（治理/派发/证据类）不同域；③ 建议先独立跑一期（release 前置/pre-commit 挂接更合适），稳定后再决定是否并入。
+3. **`contentMinPx.def` 双源登记**：`docs/todo/13-agent-panel.md` 新增 **AG109**（`display-settings.js:25` `CONTENT_MIN_RANGE.def=360` vs `agent-panel.js:224` `CONTENT_MIN_PX=360`；注释已写"必须同口径"；改默认值会静默失效；owner=JS Owner，状态 🔴 K1 潜在双源）；`todo.md §13` 索引加 AG109 行，统计更新为 107 行（活跃 53）。
+
+## 12. 预算建议（待 Lead/人批准）
+
+- 当前预算 **56 KB**，实测 24,132 B（余量 **33,204 B**）；索引页现在能"无限增长"不挤别人。
+- 建议全量迁移后按实测把预算收紧到 **32 KB**（留 ~7.9 KB 增长余量）——**待批**；未批准前保持 56 KB（已 PASS）。
+
+## 13. 最终关闭条件对照（task-165）
+
+| 条件 | 状态 |
+| --- | --- |
+| 方案先报 Lead 批准 | ✅ |
+| 试点 ≥2 大项 + 实测下降 | ✅ §13 + §12（A+B）；另全量 C 完成 |
+| 新机检 + 必红 fixture | ✅ `--selftest` PASS |
+| `check_todo_size.py` 调整后 PASS | ✅ 56 KB 预算；24,132 B；WARN=0 |
+| 文档索引同步 | ✅ docs-management + docs/todo/README + conventions README（ui-contract） |
+| pytest / i18n / audit | ✅ 1520 passed；i18n PASS；audit FAIL=0 |
+| 报告 | ✅ 本文件（Batch A/B/C + 登记 + 预算） |

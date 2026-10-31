@@ -116,3 +116,22 @@ scripts/benchmark/surface/results/*-run[0-9]*.json
 
 # 测试 KB 的运行期缓存/产物（可再生，非事实源；见 AGENTS.md §1）
 tests/probe-kb/.memoria/
+# --- triage 2026-10-31 (task-275) ---
+# benchmark：一次性探针快照 / 原始中间测量（canonical 结果已显式提交）
+scripts/benchmark/surface/_kbguard_*.json
+scripts/benchmark/surface/results/selection-*.json
+scripts/benchmark/surface/results/selection-*.node.log
+# 本地工具缓存 / 发布产物（体量大，不入库）
+.tmp/
+/dist-release/
+# DSH 团队运行时轨迹（生成的事件流；U7 建议放 artifacts/，待 Lead 定）
+team/trajectory/
+# 图标设计中间产物
+resources/icons/_candidates/
+resources/icons/_old/
+
+# AOCI 认知索引/运行态（本地维护，不入库；见 AGENTS.md aoci 段）
+aoci.txt
+aoci.code.txt
+aoci.meta.txt
+.aoci/

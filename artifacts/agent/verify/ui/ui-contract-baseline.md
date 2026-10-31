@@ -4,16 +4,16 @@
 > 生成命令：`python scripts/check_ui_contract.py --update-baseline`；契约：`docs/conventions/ui-contract.md`。
 > 语义：基线内违规**不阻断**（存量债），新增违规才 FAIL；基线只允许变小（`--force` 例外）。
 
-## 汇总
+## 汇总（210 FAIL / 61 WARN = 271 条）
 
 | 约束 | FAIL | WARN |
 |---|---|---|
 | C2 | 176 | 7 |
 | C3 | 21 | 30 |
-| C4 | 0 | 1 |
+| C4 | 0 | 2 |
 | C5 | 0 | 3 |
 | C7 | 13 | 19 |
-| **合计** | **210** | **60** |
+| **合计** | **210** | **61** |
 
 ## 主要集中点（file × rule 计数）
 
@@ -27,7 +27,7 @@
 | `theme/mermaid.css` | C3 | 4 |
 | `theme/memoria.css` | C3 | 3 |
 | `` | C5 | 3 |
-| `app/js/agent-panel.js` | C4 | 1 |
+| `app/js/agent-panel.js` | C4 | 2 |
 | `theme/light.css` | C7 | 1 |
 
 ## 需要优先看的条目（C7 主题 token / C4 双源 / C3 字号圆角 FAIL）
@@ -53,7 +53,8 @@
 - `theme/mermaid.css:79` [C3][FAIL] `.-mermaid-container .nodeLabel, .-mermaid-container .node foreignObjec` — 字号/行高必须用 rem（跟随“界面缩放/字号”设置），禁止 px (13px)
 - `theme/mermaid.css:84` [C3][FAIL] `.-mermaid-container text.nodeLabel, .-mermaid-container text .tspan` — 字号/行高必须用 rem（跟随“界面缩放/字号”设置），禁止 px (13px)
 - `theme/mermaid.css:107` [C3][FAIL] `.-mermaid-container .noteText > tspan, .-mermaid-container .noteText` — 字号/行高必须用 rem（跟随“界面缩放/字号”设置），禁止 px (12.5px)
-- `app/js/agent-panel.js:231` [C4][WARN] `contentMinPx` — 同一范围在 app/js/display-settings.js 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出） ((180, 560))
+- `app/js/agent-panel.js:224` [C4][WARN] `contentMinPx` — 同一范围/默认值在 app/js/display-settings.js 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出） ({'def': 360})
+- `app/js/agent-panel.js:231` [C4][WARN] `contentMinPx` — 同一范围/默认值在 app/js/display-settings.js 之外又写了一份（当前一致，但迟早漂移；应收口到单一导出） ({'min': 180, 'max': 560})
 - `app/css/app.css:179` [C7][FAIL] `.-import-section-title` — `--border-subtle` 只在浅色主题定义、深色无定义且此处无兜底 ⇒ 深色下该声明失效 (--border-subtle)
 - `app/css/app.css:1644` [C7][FAIL] `.-suggest-score--muted` — `--text-muted` 只在浅色主题定义、深色无定义且此处无兜底 ⇒ 深色下该声明失效 (--text-muted)
 - `app/css/app.css:1659` [C7][FAIL] `.-search-section-label` — `--text-muted` 只在浅色主题定义、深色无定义且此处无兜底 ⇒ 深色下该声明失效 (--text-muted)
@@ -92,7 +93,8 @@
 - **C1 `!important` = 0 FAIL**：37 条声明已逐条登记豁免（契约 `important-exemptions`，每条含理由），检查确实跑过。
 - **C2 硬编码颜色 176 FAIL**：主要是状态色回退值、链接/选区高亮、按钮实心色、调色板；清零需要新 token（如 `--text-on-accent`）与替换批次，不在本批完成。
 - **C3 21 FAIL**：字号 px 8 条 + 圆角离档若干；**WARN 30 条**是间距离格（1/3/5/7px）。
+- **C4 2 WARN**：`min/max` 与 `def` 两条双源（当前同口径，待 JS 侧收口为单一导出）。
 - **C7 13 FAIL**：`--bg`×5（未定义且无兜底，真 bug）、`--border-subtle`×3、`--text-muted`×5 —— 已由真机 computed-style 探针确认为**真缺陷**（见 `theme-probe.json` / `ui-owner-inaugural.md`）。
 - **C5 3 WARN** = C10 已知层级债务（模态低于搜索/右键/取色器），登记在案，不是新问题。
-- 完整逐条清单见 JSON（270 条）。
+- 完整逐条清单见 JSON（271 条）。
 
