@@ -1,0 +1,1108 @@
+{
+    "schema":  "component-registry/v1",
+    "registryId":  "memoria-team-components",
+    "version":  "0.1.0",
+    "updatedAt":  "2026-10-31T09:30:00+08:00",
+    "source":  "INBOX-20261030-01",
+    "owner":  "plugin-todo-owner",
+    "status":  "lead-approved-structure; naming-pending-human-approval",
+    "namingRule":  {
+                       "componentId":  "comp.\u003ckebab-case\u003e",
+                       "note":  "Lead 2026-10-31 裁决：命名规范设计资产 = docs/design/components-v0.1.md（待人类批准后升 docs/conventions/）；registry 唯一事实源 = docs/design/component-registry.v1.json；本文件（artifacts 副本）须与源 byte-identical（一致性检查项见 components-v0.1.md §5）。",
+                       "anchors":  [
+                                       "docs/conventions/docs-management.md#L35",
+                                       "docs/guides/team-protocols.md#L26-L41",
+                                       "artifacts/agent/plugin-design/TODO.md#R-06",
+                                       "artifacts/agent/plugin-design/TODO.md#C-01",
+                                       "docs/design/components-v0.1.md"
+                                   ]
+                   },
+    "summary":  {
+                    "total":  17,
+                    "reuse":  4,
+                    "complete":  9,
+                    "new":  4,
+                    "missingPure":  4,
+                    "missingPartial":  9
+                },
+    "components":  [
+                       {
+                           "id":  "comp.task-classifier",
+                           "version":  "0.1.0",
+                           "name":  "任务定性",
+                           "summary":  "把人的原始请求判定为五类之一并选择处理流转；判定结果留痕、可更正。",
+                           "inputs":  [
+                                          {
+                                              "name":  "rawRequest",
+                                              "type":  "text",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "context",
+                                              "type":  "json{repo,domain,hasVersion,isCrossRepo}",
+                                              "required":  false
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "classification",
+                                               "type":  "enum(cls.defect-fix|cls.release|cls.team-work-design|cls.infra-change|cls.research-forensics)"
+                                           },
+                                           {
+                                               "name":  "flow",
+                                               "type":  "ref(meta-protocol §3)"
+                                           },
+                                           {
+                                               "name":  "owner",
+                                               "type":  "member-ref"
+                                           },
+                                           {
+                                               "name":  "acceptance",
+                                               "type":  "text"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "收到新请求或 INBOX raw 条目",
+                                                 "已读 team/agents.json 与 team/protocols.json 现状"
+                                             ],
+                           "failureStates":  [
+                                                 "UNCLASSIFIED",
+                                                 "MISCLASSIFIED",
+                                                 "CLASSIFIED_BUT_UNTRACED",
+                                                 "MISSING_CORPUS"
+                                             ],
+                           "sideEffects":  [
+                                               "append decision record",
+                                               "update task description first line"
+                                           ],
+                           "idempotent":  true,
+                           "composesWith":  [
+                                                "comp.requirement-completer",
+                                                "comp.phase-gate"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "tool",
+                                                 "ref":  "team_preflight（仅义务清单；无分类谓词/无拒绝点）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "docs/guides/team-protocols.md#L39-L41",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "AGENTS.md#0.5 L8",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案 + cls.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.requirement-completer",
+                           "version":  "0.1.0",
+                           "name":  "需求补全（团队维护组织）",
+                           "summary":  "把 B 类含糊请求（如只说要开团队并落地）补成可执行需求：推断需求、假设、待确认项。",
+                           "inputs":  [
+                                          {
+                                              "name":  "rawRequest",
+                                              "type":  "text",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "corpusContext",
+                                              "type":  "json",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "completedRequirement",
+                                               "type":  "markdown",
+                                               "schemaRef":  "REQUIREMENTS-TRACE 五列格式"
+                                           },
+                                           {
+                                               "name":  "openQuestions",
+                                               "type":  "text[]"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "语料库至少一项可用",
+                                                 "已知当前组织/协议现状"
+                                             ],
+                           "failureStates":  [
+                                                 "MISSING_CORPUS",
+                                                 "ASSUMPTION_UNVERIFIED"
+                                             ],
+                           "sideEffects":  [
+                                               "append decision record",
+                                               "write requirements trace"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.corpus-retriever",
+                                                "comp.workflow-analysis-writer"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "convention",
+                                                 "ref":  "steward + plugin-design-researcher 角色（team/agents.json）；无专门补全器"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "team/agents.json#steward",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/agent-team-org.md#L226-L297",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md",
+                                                       "decision":  "reuse"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.corpus-retriever",
+                           "version":  "0.1.0",
+                           "name":  "语料库检索",
+                           "summary":  "按补全需要检索五类语料（团队现状/既有协议/成熟工作流/开源 skill/正反案例），逐条给锚。",
+                           "inputs":  [
+                                          {
+                                              "name":  "query",
+                                              "type":  "text",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "corpusScope",
+                                              "type":  "enum[]",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "evidence",
+                                               "type":  "markdown{citation,kind,limits}"
+                                           },
+                                           {
+                                               "name":  "unverified",
+                                               "type":  "text[]"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "只读权限",
+                                                 "不使用未落盘/未核材料当事实"
+                                             ],
+                           "failureStates":  [
+                                                 "NO_ANCHOR",
+                                                 "UNVERIFIED_ONLY"
+                                             ],
+                           "sideEffects":  [
+                                               "none"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.requirement-completer",
+                                                "comp.workflow-analysis-writer"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "tool",
+                                                 "ref":  "plugin-design-researcher（spawn 角色）+ web_search/web_fetch + 仓库文档/注册表"
+                                             },
+                           "status":  "implemented",
+                           "reuse":  "reuse",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/EVIDENCE-OSS.md",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/team-protocols.md",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "team/protocols.json",
+                                                       "decision":  "reuse"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.workflow-analysis-writer",
+                           "version":  "0.1.0",
+                           "name":  "阶段工作流分析文本（记忆型）",
+                           "summary":  "产出一次工作的阶段/环节分析文本（A 内容形态），定性为记忆型，供后处理拆分。",
+                           "inputs":  [
+                                          {
+                                              "name":  "completedRequirement",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "evidence",
+                                              "type":  "json[]",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "workflowAnalysis",
+                                               "type":  "markdown{stages,actors,inputs,outputs,gates,evidence}"
+                                           },
+                                           {
+                                               "name":  "memoryMarker",
+                                               "type":  "enum(memory-type)"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "需求已补全并确认（或记录假设）"
+                                             ],
+                           "failureStates":  [
+                                                 "ANALYSIS_WITHOUT_EVIDENCE",
+                                                 "STAGE_MISSING"
+                                             ],
+                           "sideEffects":  [
+                                               "write analysis doc",
+                                               "append decision record"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.workflow-component-extractor",
+                                                "comp.seminar-runner"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "doc",
+                                                 "ref":  "artifacts/agent/plugin-design/SEMINAR-M1.md（分析结构先例）+ docs/guides/team-work-record-and-steward-design.md §2（三层记录）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/SEMINAR-M1.md#L1-L33",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/team-work-record-and-steward-design.md#L76-L112",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.workflow-component-extractor",
+                           "version":  "0.1.0",
+                           "name":  "后处理拆分器",
+                           "summary":  "把记忆型分析文本按步骤/环节拆成组件条目（候选 registry entries），复用优先。",
+                           "inputs":  [
+                                          {
+                                              "name":  "workflowAnalysis",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "componentRegistry",
+                                              "type":  "component-registry/v1",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "candidateComponents",
+                                               "type":  "json[]",
+                                               "schemaRef":  "component-registry/v1#components[]"
+                                           },
+                                           {
+                                               "name":  "reuseCandidates",
+                                               "type":  "json[]"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "分析文本已落盘",
+                                                 "registry 可读"
+                                             ],
+                           "failureStates":  [
+                                                 "EXTRACTION_LOSS",
+                                                 "UNMAPPED_STEP"
+                                             ],
+                           "sideEffects":  [
+                                               "write candidate file (待评审)"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.component-registry",
+                                                "comp.component-reuse-judge",
+                                                "comp.naming-convention"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "missing",
+                                                 "ref":  "缺失：期望输入=分析文本路径；输出=候选组件 JSON（含 inputs/outputs/preconditions/failureStates）"
+                                             },
+                           "status":  "missing",
+                           "reuse":  "new",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/INBOX-20261030-01（TODO-INBOX.md#L18）",
+                                                       "decision":  "new"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.component-registry",
+                           "version":  "0.1.0",
+                           "name":  "组件库注册表",
+                           "summary":  "机器可读组件库（本文件）：id/version/inputs/outputs/preconditions/failureStates/implementedBy/status，供复用判定与组装。",
+                           "inputs":  [
+                                          {
+                                              "name":  "registryFile",
+                                              "type":  "path",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "componentById",
+                                               "type":  "json"
+                                           },
+                                           {
+                                               "name":  "reuseIndex",
+                                               "type":  "json"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "schema 校验通过",
+                                                 "id 命名符合规范"
+                                             ],
+                           "failureStates":  [
+                                                 "INVALID_SCHEMA",
+                                                 "DUPLICATE_ID",
+                                                 "UNKNOWN_REF"
+                                             ],
+                           "sideEffects":  [
+                                               "none (read-only lookup); writes only when authoring registry"
+                                           ],
+                           "idempotent":  true,
+                           "composesWith":  [
+                                                "comp.component-reuse-judge",
+                                                "comp.workflow-composer"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "doc",
+                                                 "ref":  "artifacts/agent/plugin-design/component-registry.v1.json（v0.1 首版；无查询工具）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "team/protocols.json（同类注册表先例）",
+                                                       "decision":  "new"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/team-protocols.md#L1-L8",
+                                                       "decision":  "new"
+                                                   }
+                                               ],
+                           "namingBasis":  "文件名 kebab-case（docs-management §1）；根键 camelCase（DSH schema 先例）；id comp.\u003ckebab\u003e 草案"
+                       },
+                       {
+                           "id":  "comp.component-reuse-judge",
+                           "version":  "0.1.0",
+                           "name":  "组件复用判定",
+                           "summary":  "对候选组件与现有库逐条比对，输出复用/完善/新建三选一 + 证据锚，不许“相似但未核对”。",
+                           "inputs":  [
+                                          {
+                                              "name":  "candidateComponents",
+                                              "type":  "json[]",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "componentRegistry",
+                                              "type":  "component-registry/v1",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "decisions",
+                                               "type":  "json[]{componentId,decision,anchor,reason}"
+                                           },
+                                           {
+                                               "name":  "coverageGaps",
+                                               "type":  "text[]"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "registry 可读且 schema 通过"
+                                             ],
+                           "failureStates":  [
+                                                 "UNDECIDED",
+                                                 "ANCHOR_MISSING"
+                                             ],
+                           "sideEffects":  [
+                                               "append decision record"
+                                           ],
+                           "idempotent":  true,
+                           "composesWith":  [
+                                                "comp.component-registry",
+                                                "comp.workflow-composer"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "missing",
+                                                 "ref":  "缺失：期望输入=候选+registry；输出=三选一决策表（ref 必给 path/§/票号）"
+                                             },
+                           "status":  "missing",
+                           "reuse":  "new",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/TODO-INBOX.md#L33",
+                                                       "decision":  "new"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.naming-convention",
+                           "version":  "0.1.0",
+                           "name":  "组件命名规范",
+                           "summary":  "组件/协议/分类 id 的命名与校验规则；当前无成文规范，本项为草案来源。",
+                           "inputs":  [
+                                          {
+                                              "name":  "proposedId",
+                                              "type":  "text",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "verdict",
+                                               "type":  "enum(ok|violation)",
+                                               "schemaRef":  "META-PROTOCOL §头注 / 本文 §5"
+                                           },
+                                           {
+                                               "name":  "suggestedId",
+                                               "type":  "text"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "已引用现有先例（kebab/team_*/双命名空间）"
+                                             ],
+                           "failureStates":  [
+                                                 "NO_RULE",
+                                                 "AMBIGUOUS_NAMESPACE"
+                                             ],
+                           "sideEffects":  [
+                                               "none"
+                                           ],
+                           "idempotent":  true,
+                           "composesWith":  [
+                                                "comp.component-registry",
+                                                "comp.workflow-component-extractor",
+                                                "comp.workflow-composer"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "missing",
+                                                 "ref":  "缺失：期望输入=id；输出=合规判定+建议；规则来源=草案（【规范缺失·Lead 待裁】）"
+                                             },
+                           "status":  "missing",
+                           "reuse":  "new",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "docs/conventions/docs-management.md#L35",
+                                                       "decision":  "new"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/TODO.md#C-01",
+                                                       "decision":  "new"
+                                                   }
+                                               ],
+                           "namingBasis":  "本组件即命名规则本身；id 用 comp.\u003ckebab\u003e 草案"
+                       },
+                       {
+                           "id":  "comp.workflow-composer",
+                           "version":  "0.1.0",
+                           "name":  "工作流组装器",
+                           "summary":  "把选定组件按阶段/依赖组装成一次任务的执行工作流（谁在何时做什么、门在哪）。",
+                           "inputs":  [
+                                          {
+                                              "name":  "componentIds",
+                                              "type":  "text[]",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "taskContext",
+                                              "type":  "json",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "workflowPlan",
+                                               "type":  "json{steps,owners,gates,evidence}"
+                                           },
+                                           {
+                                               "name":  "handoffList",
+                                               "type":  "json[]"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "组件均已 registry 存在且 status != missing（或显式 accept gap）"
+                                             ],
+                           "failureStates":  [
+                                                 "MISSING_COMPONENT",
+                                                 "CYCLE",
+                                                 "NO_OWNER"
+                                             ],
+                           "sideEffects":  [
+                                               "write workflow plan（待评审）"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.component-registry",
+                                                "comp.component-reuse-judge",
+                                                "comp.phase-gate",
+                                                "comp.deployment-runner"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "missing",
+                                                 "ref":  "缺失：期望输入=组件 id 列表+任务上下文；输出=可执行工作流计划（含门/证据/责任人）"
+                                             },
+                           "status":  "missing",
+                           "reuse":  "new",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/INBOX-20261030-01（TODO-INBOX.md#L18）",
+                                                       "decision":  "new"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.deployment-runner",
+                           "version":  "0.1.0",
+                           "name":  "部署执行",
+                           "summary":  "按既定单向门协议执行打包/新会话启用/验证；不承诺热更新。",
+                           "inputs":  [
+                                          {
+                                              "name":  "buildSpec",
+                                              "type":  "json",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "rollbackPlan",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "buildArtifacts",
+                                               "type":  "path[]"
+                                           },
+                                           {
+                                               "name":  "newSessionEvidence",
+                                               "type":  "markdown"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "人批准的重建窗口",
+                                                 "已退出所有 app 进程（0 个 DeepSeek Harness）",
+                                                 "回滚方案已写"
+                                             ],
+                           "failureStates":  [
+                                                 "ASAR_LOCKED",
+                                                 "BUILD_FAILED",
+                                                 "NEW_SESSION_NOT_VERIFIED"
+                                             ],
+                           "sideEffects":  [
+                                               "rebuild asar",
+                                               "restart evidence"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.phase-gate",
+                                                "comp.plugin-gap-recorder"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "convention",
+                                                 "ref":  "docs/guides/dsh-agent-teams-contract.md §13（单向门协议）+ docs/guides/team-plugin-migration.md §7 G8（新会话验证）"
+                                             },
+                           "status":  "implemented",
+                           "reuse":  "reuse",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "docs/guides/dsh-agent-teams-contract.md#L245-L294",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/V9-MIGRATION.md#L111-L122",
+                                                       "decision":  "reuse"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.plugin-gap-recorder",
+                           "version":  "0.1.0",
+                           "name":  "插件能力缺失登记",
+                           "summary":  "部署/运行中发现插件能力缺失时，按需求规范详细记录到待办草稿箱，供后续消化。",
+                           "inputs":  [
+                                          {
+                                              "name":  "gapObservation",
+                                              "type":  "text",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "evidence",
+                                              "type":  "path[]",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "inboxEntry",
+                                               "type":  "markdown",
+                                               "schemaRef":  "TODO-INBOX 条目模板"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "能区分“插件缺失”与“团队流程缺失”",
+                                                 "有可复现证据"
+                                             ],
+                           "failureStates":  [
+                                                 "GAP_UNPROVEN",
+                                                 "INBOX_UNSTRUCTURED"
+                                             ],
+                           "sideEffects":  [
+                                               "append TODO-INBOX"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.inbox-digester",
+                                                "comp.deployment-runner"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "doc",
+                                                 "ref":  "docs/design/plugin-todo-inbox.md + artifacts/agent/plugin-design/TODO-INBOX.md（raw 入口；缺结构化需求规范校验）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "docs/design/plugin-todo-inbox.md#L9-L38",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/TODO-INBOX.md#L9-L38",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.inbox-digester",
+                           "version":  "0.1.0",
+                           "name":  "待办草稿消化",
+                           "summary":  "把 INBOX raw 条目按需求规范消化成可跟踪票/文档，回链 source，不改原话。",
+                           "inputs":  [
+                                          {
+                                              "name":  "inboxEntry",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "classification",
+                                               "type":  "meta-protocol classification"
+                                           },
+                                           {
+                                               "name":  "ticketsOrDocs",
+                                               "type":  "path[]"
+                                           },
+                                           {
+                                               "name":  "receipt",
+                                               "type":  "markdown{source,classification,files,openQuestions}"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "条目已定性（comp.task-classifier）",
+                                                 "任务板有 owner/配额"
+                                             ],
+                           "failureStates":  [
+                                                 "UNCLASSIFIED",
+                                                 "BOARD_FULL",
+                                                 "SPEC_INCOMPLETE"
+                                             ],
+                           "sideEffects":  [
+                                               "append TODO-INBOX receipt",
+                                               "write docs/tickets"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.task-classifier",
+                                                "comp.component-reuse-judge"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "convention",
+                                                 "ref":  "plugin-todo-owner 角色 + artifacts/agent/plugin-design/TODO.md §1/§7（编号与裁决规则）+ TODO-INBOX 回执模板"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "docs/design/plugin-todo-inbox.md#L3-L5",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/TODO.md#L588",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.seminar-runner",
+                           "version":  "0.1.0",
+                           "name":  "研讨团队执行",
+                           "summary":  "按任务书跑独立提案→并集→交叉异议→Lead 裁决→冻结的完整研讨流程。",
+                           "inputs":  [
+                                          {
+                                              "name":  "questionsBrief",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "proposerCount",
+                                              "type":  "integer",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "proposalUnion",
+                                               "type":  "markdown"
+                                           },
+                                           {
+                                               "name":  "objections",
+                                               "type":  "markdown[]"
+                                           },
+                                           {
+                                               "name":  "frozenRuling",
+                                               "type":  "markdown+sha256"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "Lead 已放行该议题",
+                                                 "proposer 独立、互不读取提案",
+                                                 "任务书为唯一纪律版本"
+                                             ],
+                           "failureStates":  [
+                                                 "HOP_BLOCKED",
+                                                 "DIRTY_READ",
+                                                 "UNFROZEN"
+                                             ],
+                           "sideEffects":  [
+                                               "spawn teammates",
+                                               "append seminar docs"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.design-author",
+                                                "comp.design-reviewer",
+                                                "comp.workflow-analysis-writer"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "tool",
+                                                 "ref":  "plugin-design-seminar 主持 + spawn_teammate/send_message + SEMINAR-M1/M2 模板（工件 artifacts/agent/plugin-design/SEMINAR-M*.md）"
+                                             },
+                           "status":  "implemented",
+                           "reuse":  "reuse",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/SEMINAR-M1-QUESTIONS.md",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/SEMINAR-M2-PHASE3-BRIEF.md",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/team-plugin-improvement-spec.md#R5",
+                                                       "decision":  "reuse"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.design-author",
+                           "version":  "0.1.0",
+                           "name":  "设计文档撰写",
+                           "summary":  "按设计规范产出设计文档/schema/迁移清单；每条设计带参照/理由/放弃条件。",
+                           "inputs":  [
+                                          {
+                                              "name":  "frozenRuling",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "requirements",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "designDocs",
+                                               "type":  "path[]"
+                                           },
+                                           {
+                                               "name":  "schemas",
+                                               "type":  "path[]"
+                                           },
+                                           {
+                                               "name":  "migrationList",
+                                               "type":  "markdown"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "裁决已冻结（R/C 编号可引）",
+                                                 "已读 docs/conventions/**"
+                                             ],
+                           "failureStates":  [
+                                                 "SPEC_CONFLICT",
+                                                 "UNANCHORED_CLAIM"
+                                             ],
+                           "sideEffects":  [
+                                               "write docs/schemas"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.design-reviewer",
+                                                "comp.requirement-verifier"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "convention",
+                                                 "ref":  "plugin-design-architect/team-plugin-creator 角色 + docs/conventions/markdown-form-std.md + MODEL-v1 三字段模板"
+                                             },
+                           "status":  "implemented",
+                           "reuse":  "reuse",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/MODEL-v1.md",
+                                                       "decision":  "reuse"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/conventions/docs-management.md",
+                                                       "decision":  "reuse"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.design-reviewer",
+                           "version":  "0.1.0",
+                           "name":  "设计评审（可行性/规范性）",
+                           "summary":  "对设计文档提出质疑（可行性/规范符合性），并借机对齐项目全貌；结论留痕。",
+                           "inputs":  [
+                                          {
+                                              "name":  "designDocs",
+                                              "type":  "path[]",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "projectConventions",
+                                              "type":  "path[]",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "reviewFindings",
+                                               "type":  "json[]{rule_ref,severity,evidence}"
+                                           },
+                                           {
+                                               "name":  "alignmentNotes",
+                                               "type":  "markdown"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "评审者未参与设计",
+                                                 "引用现有规范条款（无锚建议只能作为新增建议）"
+                                             ],
+                           "failureStates":  [
+                                                 "NO_RULE_REF",
+                                                 "REVIEW_NOT_INDEPENDENT"
+                                             ],
+                           "sideEffects":  [
+                                               "append decisions/findings"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.design-author",
+                                                "comp.phase-gate"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "convention",
+                                                 "ref":  "docs/conventions/** 评审规范 + team/plugin-contract.json reviewedChanges + team-plugin-improvement-spec R1–R9（无独立评审清单）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "docs/conventions/README.md",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "team/plugin-contract.json",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/lead-dispatch-rules.md",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.requirement-verifier",
+                           "version":  "0.1.0",
+                           "name":  "依需求测试验证",
+                           "summary":  "按需求/设计需求逐条验证并留证；先证红、失败可见，不用“口头已修”结案。",
+                           "inputs":  [
+                                          {
+                                              "name":  "requirements",
+                                              "type":  "markdown",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "artifacts",
+                                              "type":  "path[]",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "verificationReport",
+                                               "type":  "markdown{item→evidence→pass/fail}"
+                                           },
+                                           {
+                                               "name":  "redEvidence",
+                                               "type":  "path[]"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "测试者未参与实现",
+                                                 "需求/设计文档可读"
+                                             ],
+                           "failureStates":  [
+                                                 "NO_RED_PROOF",
+                                                 "TRACE_MISSING",
+                                                 "FALSE_GREEN"
+                                             ],
+                           "sideEffects":  [
+                                               "write verify artifacts"
+                                           ],
+                           "idempotent":  true,
+                           "composesWith":  [
+                                                "comp.phase-gate",
+                                                "comp.design-author"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "tool",
+                                                 "ref":  "scripts/agent/release_preflight.py、test_guard_check.py、team_audit.py（缺需求→证据矩阵校验）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "scripts/agent/release_preflight.py",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/conventions/test-assertion-granularity.md",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       },
+                       {
+                           "id":  "comp.phase-gate",
+                           "version":  "0.1.0",
+                           "name":  "阶段门与交接",
+                           "summary":  "在阶段边界做 gate（入口/产出/责任人/证据齐）并把结果交给 Lead/下一阶段；Lead 汇总后转用户。",
+                           "inputs":  [
+                                          {
+                                              "name":  "stageOutputs",
+                                              "type":  "path[]",
+                                              "required":  true
+                                          },
+                                          {
+                                              "name":  "acceptanceCriteria",
+                                              "type":  "text",
+                                              "required":  true
+                                          }
+                                      ],
+                           "outputs":  [
+                                           {
+                                               "name":  "gateResult",
+                                               "type":  "enum(pass|fail|blocked)"
+                                           },
+                                           {
+                                               "name":  "handoffPackage",
+                                               "type":  "markdown{what,evidence,openItems,nextOwner}"
+                                           }
+                                       ],
+                           "preconditions":  [
+                                                 "当前阶段产出已落盘",
+                                                 "验收人未参与实现（R1 时）"
+                                             ],
+                           "failureStates":  [
+                                                 "EVIDENCE_MISSING",
+                                                 "OWNER_UNASSIGNED",
+                                                 "GATE_BYPASSED"
+                                             ],
+                           "sideEffects":  [
+                                               "append dispatch-log",
+                                               "update task status"
+                                           ],
+                           "idempotent":  false,
+                           "composesWith":  [
+                                                "comp.seminar-runner",
+                                                "comp.design-author",
+                                                "comp.requirement-verifier",
+                                                "comp.deployment-runner"
+                                            ],
+                           "implementedBy":  {
+                                                 "kind":  "tool",
+                                                 "ref":  "team_preflight + team_task_update + team/dispatch-log.jsonl（无显式阶段移交清单）"
+                                             },
+                           "status":  "partial",
+                           "reuse":  "complete",
+                           "matchedExisting":  [
+                                                   {
+                                                       "ref":  "AGENTS.md#0.5 L3/L4",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "docs/guides/agent-team-org.md#L315-L329",
+                                                       "decision":  "complete"
+                                                   },
+                                                   {
+                                                       "ref":  "scripts/agent/team_audit.py",
+                                                       "decision":  "complete"
+                                                   }
+                                               ],
+                           "namingBasis":  "comp.\u003ckebab\u003e 草案（【规范缺失·Lead 待裁】）"
+                       }
+                   ],
+    "sourceOfTruth":  "docs/design/components-v0.1.md",
+    "canonicalPath":  "docs/design/component-registry.v1.json",
+    "evidenceCopy":  "artifacts/agent/plugin-design/component-registry.v1.json"
+}
