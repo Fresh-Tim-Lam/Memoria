@@ -36,3 +36,19 @@
 - [ ] 元协议（任务定性）是否落成可执行条目（触发条件 + 分类表 + 处理流转）
 
 ---
+
+## 落地回执（2026-10-31；append-only；原话未改）
+
+- **状态**：`raw` → `digested` → `tickets-drafted` → **`p0+p1-landed`（v0.2.1 accepted）**
+- **P0（5 张，全部 completed）**：`task-260`（命名校验器）/ `261`（registry 查询）/ `262`（任务定性检查）/ `263`（复用判定）/ `264`（4 脚本对齐 registry v0.2）→ Memoria commits `54db680c` + `e9370564`
+- **P1（9 张，全部 completed）**：
+  - Memoria `3a43036b`（7 张交付）：`task-265`（分析模板）、`266`（需求补全模板）、`267`（消化检查）、`268`（设计评审清单）、`269`（需求→证据矩阵）、`270`（拆分器）、`273`（工作流组装器）
+  - 插件侧：`task-271`（插件缺失登记器，artifacts 副本未 tracked，待 `task-274` 提升后提交）；`task-272`（DSH `team_snapshot` 带 description）→ DSH commit `02b3671b40`
+- **收口进行中**：`task-274`（检查器并入 `team_audit` advisory + gap-recorder 提升 + r12），owner=steward
+- **设计资产冻结**：v0.2（schema+registry 20 组件+acceptGap+golden cases，6 文件）→ Memoria `14ea2c71`；v0.2.1 冻结（status accepted；M-1 复评 P0 13/13）→ Memoria `5e59c478`
+- **未建/后续**：TD-13（`comp.phase-gate`，P2）未建票；剩余未实现 = golden-cases 06-07 runner（P2）+ M-3（另议）
+- **本组边界**：未建票、未改 scripts、未 commit；逐票明细见 `artifacts/agent/plugin-design/TICKET-DRAFTS-v0.1.md`（v0.1.2 执行回填）。
+
+---
+
+*（本回执由 `plugin-todo-owner` 于 2026-10-31 追加；原文/原话未改。）*
