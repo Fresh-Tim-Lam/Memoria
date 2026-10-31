@@ -4,7 +4,7 @@
 把「团队编制/任务状态/交付物」里可机检的部分固化下来，避免靠 Lead
 "碰巧注意到"才维护。只读仓库，不写任何文件；输出逐条 finding + 退出码。
 
-覆盖 21 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
+覆盖 22 类检查（下表列初版 9 类 + 后续新增；最终以 run_checks 注册为准）
 -------------
 1. snapshot_health : 任务板快照是否存在/可解析/关键字段齐全（并提示快照可能过期）
 2. roster          : `docs/guides/agent-team-org.md` §2 Owner 表 vs 快照成员/已退役集合
@@ -61,6 +61,10 @@
                      spawn 行必须有 task；task 必须在台账（快照/轨迹/日志非 spawn 行）存在；
                      若能取到 task 创建时间（team/trajectory 的 team_task_create 事件），spawn 早于创建 ⇒ FAIL；
                      取不到 ⇒ 退化为「只校验存在」，并显式报退化条数（不静默判绿）。
+20. component_library : **组件化检查器常驻巡检（advisory 起步；task-274 新增）**。
+                     逐个调用 9 个组件化检查器的只读路径（`--selftest`），每个输出状态：
+                     通过 ⇒ INFO；退出码非 0 / 文件缺失 / 超时 ⇒ WARN（**首轮不改 FAIL 语义**）；
+                     任一检查器缺失必须显式 WARN（不得静默 0）。调用入口见 `docs/design/components-v0.2.md §7`。
 
 用法
 ----
@@ -129,6 +133,19 @@ MODE_POLICY_WINDOW_DAYS = 14     # mode_policy：spawn 记录回溯窗口
 # 此时间点之后（含 DSH 插件直写的行）缺 task 视为违规。
 L1_TASK_ENFORCE_FROM = "2026-10-27T00:00:00+08:00"
 L1_TASK_WINDOW_DAYS = 30          # l1_task_before_spawn：只看近 N 天的 spawn（历史噪声折叠）
+# component_library（task-274）：每个组件化检查器 --selftest 的超时；首轮只 INFO/WARN（advisory）
+COMPONENT_LIBRARY_CHECKERS = (
+    ("comp_naming_convention", "scripts/agent/comp_naming_convention.py"),
+    ("comp_component_registry", "scripts/agent/comp_component_registry.py"),
+    ("comp_task_classifier", "scripts/agent/comp_task_classifier.py"),
+    ("comp_component_reuse_judge", "scripts/agent/comp_component_reuse_judge.py"),
+    ("comp_inbox_digest_check", "scripts/agent/comp_inbox_digest_check.py"),
+    ("comp_requirement_evidence_matrix", "scripts/agent/comp_requirement_evidence_matrix.py"),
+    ("comp_workflow_component_extractor", "scripts/agent/comp_workflow_component_extractor.py"),
+    ("comp_workflow_composer", "scripts/agent/comp_workflow_composer.py"),
+    ("comp_plugin_gap_recorder", "scripts/agent/comp_plugin_gap_recorder.py"),
+)
+COMPONENT_LIBRARY_TIMEOUT_SECONDS = 180
 # DSH 插件直写的 spawn 行（source=dsh-agent-team）不含 task（插件不知道任务）⇒
 # 它必须与 Lead 手工写的、带 --task 的 spawn 行配对；窗口内同 target 视为同一次派发。
 L1_SPAWN_PAIR_WINDOW_MINUTES = 10
@@ -3333,6 +3350,57 @@ def _read_jsonl_safe(path: Path) -> tuple[list[dict], list[dict]]:
 # ---------------------------------------------------------------------------
 # 汇总/自测
 # ---------------------------------------------------------------------------
+def check_component_library(ctx: AuditContext) -> None:
+    """组件化检查器常驻巡检（task-274；**advisory 起步：只 INFO/WARN，不改 FAIL 语义**）。
+
+    调用入口：`docs/design/components-v0.2.md §7`（检查器调用入口与 team_audit 关系）。
+    对 9 个检查器逐个跑只读 `--selftest`；通过 ⇒ INFO；缺文件/非 0 退出/超时 ⇒ WARN。
+    **任一检查器缺失必须显式 WARN（不得静默 0）**；空输入由各检查器自身返回非 0，同样 WARN。
+    """
+    check = "component_library"
+    present = [rel for _, rel in COMPONENT_LIBRARY_CHECKERS if (ctx.repo / rel).is_file()]
+    if not present:
+        # fixture/非真实仓库（无任何组件化检查器）：显式 INFO，不静默 0、也不误报 9 条 WARN
+        ctx.add(check, INFO,
+                "component_library：本仓未发现组件化检查器（非真实仓库/不适用），显式跳过（不静默 0）",
+                f"{ctx.repo}/scripts/agent/comp_*.py")
+        return
+    passed = 0
+    for name, rel_path in COMPONENT_LIBRARY_CHECKERS:
+        script_path = ctx.repo / rel_path
+        if not script_path.is_file():
+            ctx.add(check, WARN,
+                    f"{name}: 检查器文件缺失（{rel_path}）⇒ 本段不得静默通过（advisory）",
+                    f"missing file: {rel_path}")
+            continue
+        try:
+            proc = subprocess.run(
+                [sys.executable, str(script_path), "--selftest"],
+                cwd=str(ctx.repo), capture_output=True, text=True,
+                encoding="utf-8", errors="replace",
+                timeout=COMPONENT_LIBRARY_TIMEOUT_SECONDS,
+            )
+        except subprocess.TimeoutExpired:
+            ctx.add(check, WARN,
+                    f"{name}: --selftest 超时 >{COMPONENT_LIBRARY_TIMEOUT_SECONDS}s（advisory）",
+                    f"{rel_path} timeout")
+            continue
+        except (OSError, subprocess.SubprocessError) as exc:
+            ctx.add(check, WARN, f"{name}: 无法执行检查器（{type(exc).__name__}）", f"{rel_path}")
+            continue
+        if proc.returncode == 0:
+            passed += 1
+            ctx.add(check, INFO, f"{name}: ok（只读 --selftest exit=0）", rel_path)
+        else:
+            ctx.add(check, WARN,
+                    f"{name}: --selftest exit={proc.returncode} ⇒ 检查器异常（advisory，不改 FAIL）",
+                    f"{rel_path} exit={proc.returncode}")
+    ctx.add(check, INFO,
+            f"component_library：{passed}/{len(COMPONENT_LIBRARY_CHECKERS)} 检查器通过"
+            f"（advisory 首轮；调用入口见 docs/design/components-v0.2.md §7）",
+            "scripts/agent/team_audit.py::component_library")
+
+
 def run_checks(ctx: AuditContext) -> list:
     data = check_snapshot(ctx)
     check_roster(ctx, data)
@@ -3361,6 +3429,8 @@ def run_checks(ctx: AuditContext) -> list:
     check_deliberation_quality(ctx)
     # task-152：知识库 Agent 提示词漂移（prompt_drift_check.py 的门禁接线；脚本缺失/崩溃也 FAIL）
     check_prompt_drift(ctx)
+    # task-274：组件化检查器常驻巡检（advisory：9 个检查器只读 --selftest，只 INFO/WARN，不改 FAIL 语义）
+    check_component_library(ctx)
     ctx.findings.sort(key=lambda f: (_SEV_ORDER.get(f.severity, 9), f.check, f.message))
     return ctx.findings
 

@@ -164,6 +164,33 @@ python artifacts/agent/plugin-design/tools/validate_registry_v2.py --check accep
 **待 steward（TD-01）**：把上述检查固化为正式校验器/CI（先独立跑，Lead 批准才并入 `team_audit`）；并把 4 个脚本的 `--selftest` 断言从 v0.1 的 17/4/9/4 对齐到 v2 的 20/4/11/5。
 **golden cases**：`docs/design/component-classification.cases.json`（classification 10 条 + **acceptGap canonical 5 条，validator 默认运行源**；META v0.2 §5 判定表） + `SEMINAR-COMPONENTS-M1/golden-cases/`（31 条评审契约来源；旧 04 文件用 `owner` 字段，已被 canonical 5 条取代，不再作为运行源）。
 
+### 7.1 检查器调用入口与 `team_audit` 关系（task-274）
+
+组件化检查器分两层，入口与强制力不同：
+
+| 层 | 入口 | 角色 |
+|---|---|---|
+| **独立 CLI（人工/CI）** | `scripts/agent/comp_*.py`（9 个，见下表） | 各自 `--selftest` 可独立跑；只读（候选/草稿不写 registry、不改 INBOX） |
+| **常驻巡检（advisory）** | `team_audit.py::component_library` | 逐个跑 `--selftest`：通过 ⇒ INFO；退出码非 0 / 文件缺失 / 超时 ⇒ **WARN**；**首轮不改 FAIL 语义** |
+
+检查器清单（`team_audit` 调用顺序）：
+
+| # | 检查器（`scripts/agent/`） | 对应组件 |
+|---|---|---|
+| 1 | `comp_naming_convention.py` | `comp.naming-convention` |
+| 2 | `comp_component_registry.py` | `comp.component-registry` |
+| 3 | `comp_task_classifier.py` | `comp.task-classifier` |
+| 4 | `comp_component_reuse_judge.py` | `comp.component-reuse-judge` |
+| 5 | `comp_inbox_digest_check.py` | `comp.inbox-digester` |
+| 6 | `comp_requirement_evidence_matrix.py` | `comp.requirement-verifier` |
+| 7 | `comp_workflow_component_extractor.py` | `comp.workflow-component-extractor` |
+| 8 | `comp_workflow_composer.py` | `comp.workflow-composer` |
+| 9 | `comp_plugin_gap_recorder.py` | `comp.plugin-gap-recorder` |
+
+- **缺文件/空输入不静默**：任一检查器缺失或 `--selftest` 非 0 ⇒ `component_library` 报 WARN（若整批都不存在则显式 INFO「不适用」，不误报 9 条 WARN）。
+- **升 FAIL 的时机**：首轮 advisory；待 v0.2 稳定、经 Lead 批准后把 `component_library` 升为 FAIL 语义（届时随 r12 重签）。
+- **调用命令**：`python scripts/agent/team_audit.py --json`（查 `check=component_library` 段）；单跑：`python scripts/agent/<checker>.py --selftest`。
+
 ---
 
 ## 8. 权威与锚点
