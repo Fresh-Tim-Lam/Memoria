@@ -1,0 +1,108 @@
+{
+  "schema": "steward-standards-read/v1",
+  "audit_ts": "2026-10-31T10:14:31.519611+08:00",
+  "round": "r12",
+  "tool": "team_audit.py@3ec11899b7f8",
+  "git_base": "ad6f1ef7",
+  "worktree_dirty_standards": [
+    "artifacts/agent/verify/debate/freeze-v2.json",
+    "artifacts/agent/verify/debate/graph-utility/G4-verify-report.md",
+    "artifacts/agent/verify/debate/graph-utility/JUDGE-SHEET-for-stranger.md",
+    "team/steward/findings.jsonl",
+    "team/steward/audit-2026-10-31-r12/"
+  ],
+  "standards": [
+    {
+      "path": "AGENTS.md",
+      "sections": "§0.5",
+      "sha256": "6c87fe55077c4a73e2d14df8757683994c5da100dea913970452c5eea0cc8e5b",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-31T10:14:31.519611+08:00"
+    },
+    {
+      "path": "docs/guides/lead-dispatch-rules.md",
+      "sections": "全部（§V-frontend-1/2、B-danger-1、§1.2b/§1.3b/§5.4/§6.5）",
+      "sha256": "3df918b12349a204acf0c874b9fccd5c96ab416e9bf7a9cf02f68f6aba4e8089",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-31T10:14:31.519611+08:00"
+    },
+    {
+      "path": "docs/guides/agent-team-lessons.md",
+      "sections": "全部（含 L9.6/L9.7）",
+      "sha256": "f2f86b090d6e088a734e640bb6552af591eaa7d8f7d41199e227ef95a9b71268",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-31T10:14:31.519611+08:00"
+    },
+    {
+      "path": "scripts/agent/team_audit.py",
+      "sections": "22 类检查（含 component_library advisory）+ determinism + sha-explain + deliberation_quality + prompt_drift",
+      "sha256": "3ec11899b7f86ac4c2f81b91147da1cb68b9da2391e5e94fd6d70cc5b9d5c377",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-31T10:14:31.519611+08:00"
+    },
+    {
+      "path": "scripts/agent/prompt_drift_check.py",
+      "sections": "C1-C5 接口 + NOT_RUN 语义 + exit 0/1/2/3 + --recheck-deps/--resign",
+      "sha256": "75a2563c40e44728911225826dc5888a4cd048f287e9da54cc325114d4279834",
+      "sha_mode": "content-lf（\\r\\n→\\n 后算；task-110/org.md §2.6 B3）",
+      "read_at": "2026-10-31T10:14:31.519611+08:00"
+    }
+  ],
+  "refreeze_record": {
+    "file": "artifacts/agent/verify/debate/freeze-v2.json",
+    "standards_updated_index": 7,
+    "changed": [
+      {
+        "path": "scripts/agent/team_audit.py",
+        "from": "8bb64e31649f7078454bf139ff2e616bc801e6b6e403ac4ae41f10dc70ccd575",
+        "to": "3ec11899b7f86ac4c2f81b91147da1cb68b9da2391e5e94fd6d70cc5b9d5c377",
+        "role": "机检实现",
+        "tooling": true
+      }
+    ],
+    "note": "task-274 r12-prep 应用；commit=ad6f1ef7；tooling 项。"
+  },
+  "prompt_drift_standalone": {
+    "command": "python scripts/agent/prompt_drift_check.py --json",
+    "exit": 0,
+    "summary": {
+      "findings": 6,
+      "FAIL": 0,
+      "NOT_RUN": 0,
+      "WARN": 0,
+      "INFO": 6,
+      "status": "ok",
+      "not_run": []
+    }
+  },
+  "freeze_refreeze_check": {
+    "command": "python scripts/agent/freeze_refreeze.py --check",
+    "exit": 0,
+    "output_head": [
+      "freeze 检查：D:\\AAA_Jupyter\\Memoria\\artifacts\\agent\\verify\\debate\\freeze-v2.json",
+      "sha 口径：team_audit.content_sha256（LF 归一化，与 dq5 共用）",
+      "",
+      "MATCH   AGENTS.md  [Lead 派发不变量 L1-L10]",
+      "MATCH   docs/guides/lead-dispatch-rules.md  [派发细则]",
+      "MATCH   docs/guides/agent-team-lessons.md  [教训台账]",
+      "MATCH   docs/guides/agent-team-org.md  [组织与角色章程]",
+      "MATCH   scripts/agent/team_audit.py  [机检实现]",
+      "",
+      "汇总：5 项；MATCH=5，DRIFT=0（决策标准 0 / tooling 0）"
+    ]
+  },
+  "determinism": {
+    "checked": true,
+    "command": "python scripts/agent/team_audit.py --determinism",
+    "result": "PASS: audit determinism（2 次运行除 generatedAt 外逐字节一致；sha256=d9cb0194c3b67b2d…，compared_findings=98）"
+  },
+  "prior_round_validity": {
+    "r11": "r11 对 AGENTS/rules/lessons/prompt_drift 仍匹配，但 team_audit.py 由 8bb64e31→3ec11899 ⇒ r11 按 B3 失效，r12 取代。"
+  },
+  "not_read": [
+    "docs/guides/agent-team-org.md#§13（未逐条复核）",
+    "src/**（产品代码不在 steward 审计范围）",
+    "docs/conventions/ui-contract.md 全文（只核接口/基线/退出码）",
+    "session 正文（按设计不读）"
+  ]
+}

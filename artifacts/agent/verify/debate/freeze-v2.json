@@ -34,7 +34,7 @@
     },
     {
       "path": "scripts/agent/team_audit.py",
-      "sha256_lf": "8bb64e31649f7078454bf139ff2e616bc801e6b6e403ac4ae41f10dc70ccd575",
+      "sha256_lf": "3ec11899b7f86ac4c2f81b91147da1cb68b9da2391e5e94fd6d70cc5b9d5c377",
       "role": "机检实现"
     }
   ],
@@ -52,7 +52,7 @@
   ],
   "proposals_pinned": "PINNED-PROPOSALS.json",
   "note": "本文件补全 F1：v1 的 PHASE1-BASELINE.json 缺 question/acceptance_criteria/standards，按 steward O-S4 裁决补全，不重开 Phase 1。 2026-10-25 补 standards（修 steward F-1，sha 由 Lead 独立复算 5/5 MATCH）。",
-  "standards_frozen_at": "2026-10-30T11:21:35.808174+08:00",
+  "standards_frozen_at": "2026-10-31T10:14:31.519611+08:00",
   "standards_updated": [
     {
       "at": "2026-10-26T08:43:23.585821+08:00",
@@ -164,6 +164,23 @@
       ],
       "rule_ref": "docs/guides/team-protocols.md 附录 E.3 + scripts/agent/team_audit.py",
       "note": "tooling 项（dq5 只 WARN）；与 steward r11 同批重签，顺带消 dq5 tooling WARN。工作区尚未提交，提交字节不变则 r11 有效。"
+    },
+    {
+      "at": "2026-10-31T10:14:31.519611+08:00",
+      "by": "steward",
+      "reason": "task-274 component_library 常驻巡检（advisory）+ gap-recorder 提升为 tracked 检查器；按 r12-prep 应用",
+      "commit": "ad6f1ef7",
+      "changed": [
+        {
+          "path": "scripts/agent/team_audit.py",
+          "from": "8bb64e31649f7078454bf139ff2e616bc801e6b6e403ac4ae41f10dc70ccd575",
+          "to": "3ec11899b7f86ac4c2f81b91147da1cb68b9da2391e5e94fd6d70cc5b9d5c377",
+          "role": "机检实现",
+          "tooling": true
+        }
+      ],
+      "rule_ref": "docs/design/components-v0.2.md §7.1",
+      "note": "tooling 项（dq5 只 WARN）；与 steward r12 同批；提交字节不变则 r12 有效。"
     }
   ]
 }
