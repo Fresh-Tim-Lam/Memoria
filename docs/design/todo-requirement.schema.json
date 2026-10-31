@@ -1,0 +1,74 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://memoria.local/design/todo-requirement.schema.json",
+  "title": "Todo Requirement (INBOX / gap record) v1",
+  "description": "插件待办草稿箱（TODO-INBOX）条目的需求规范。用于 plugin-gap-recorder 写入前校验、inbox-digester 消化前校验；v0.2 由 comp.todo-requirement 承载。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "schema", "id", "title", "source", "observedAt", "category",
+    "expected", "actual", "repro", "evidence", "acceptance",
+    "ownerDomain", "writeScope", "priority", "relatedInbox", "status"
+  ],
+  "properties": {
+    "schema": { "const": "todo-requirement/v1" },
+    "id": { "type": "string", "pattern": "^(INBOX|GAP|TD)-[A-Za-z0-9][A-Za-z0-9-]{2,63}$" },
+    "title": { "type": "string", "minLength": 4, "maxLength": 200 },
+    "source": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "ref"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["human", "lead", "plugin", "audit", "review"] },
+        "ref": { "type": "string", "minLength": 1 },
+        "quote": { "type": "string" }
+      }
+    },
+    "observedAt": { "type": "string", "format": "date-time" },
+    "category": {
+      "type": "string",
+      "enum": ["cls.defect-fix", "cls.release", "cls.team-work-design", "cls.infra-change", "cls.research-forensics", "unclassified"]
+    },
+    "expected": { "type": "string", "minLength": 1 },
+    "actual": { "type": "string", "minLength": 1 },
+    "repro": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["steps", "command"],
+      "properties": {
+        "steps": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "command": { "type": "string", "minLength": 1 },
+        "environment": { "type": "string" }
+      }
+    },
+    "evidence": {
+      "type": "array",
+      "minItems": 1,
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": ["path"],
+        "properties": {
+          "path": { "type": "string", "minLength": 1 },
+          "sha256": { "type": "string", "pattern": "^[0-9a-f]{64}$" },
+          "note": { "type": "string" }
+        }
+      }
+    },
+    "acceptance": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["criteria"],
+      "properties": {
+        "criteria": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "machineCheck": { "type": "string" }
+      }
+    },
+    "ownerDomain": { "type": "string", "enum": ["memoria-tooling", "dsh-plugin", "lead"] },
+    "writeScope": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+    "priority": { "type": "string", "enum": ["P0", "P1", "P2"] },
+    "relatedInbox": { "type": "string", "minLength": 1 },
+    "status": { "type": "string", "enum": ["raw", "classified", "digested", "tickets-drafted", "closed"] },
+    "notes": { "type": "string" }
+  }
+}

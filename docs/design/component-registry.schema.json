@@ -1,0 +1,432 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://memoria.local/design/component-registry.schema.json",
+  "title": "Memoria Team Component Registry v2",
+  "description": "机器可读组件库 schema。registry 根必须带 $schema 指向本文件；校验器按本 schema 做结构与交叉引用检查（引用存在性/计数一致性由校验器补充）。",
+  "type": "object",
+  "additionalProperties": false,
+  "required": [
+    "$schema",
+    "schema",
+    "registryId",
+    "schemaVersion",
+    "dataVersion",
+    "updatedAt",
+    "source",
+    "owner",
+    "status",
+    "namingRule",
+    "sourceOfTruth",
+    "canonicalPath",
+    "evidenceCopy",
+    "roleTemplates",
+    "typeVocabulary",
+    "acceptGapPolicy",
+    "summary",
+    "gaps",
+    "components"
+  ],
+  "properties": {
+    "$schema": { "type": "string", "minLength": 1 },
+    "schema": { "const": "component-registry/v2" },
+    "registryId": { "type": "string", "pattern": "^[a-z][a-z0-9-]{2,63}$" },
+    "schemaVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "dataVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+    "updatedAt": { "type": "string", "format": "date-time" },
+    "source": { "type": "string", "minLength": 1 },
+    "owner": { "type": "string", "minLength": 1 },
+    "status": {
+      "type": "string",
+      "enum": ["draft-pending-review", "accepted", "superseded"]
+    },
+    "revisionOf": { "type": "string" },
+    "namingRule": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["componentId", "clsId", "metaProtocolDocId", "protocolId", "fileName", "jsonFields", "namespaces"],
+      "properties": {
+        "componentId": { "type": "string", "minLength": 1 },
+        "clsId": { "type": "string", "minLength": 1 },
+        "metaProtocolDocId": { "type": "string", "minLength": 1 },
+        "protocolId": { "type": "string", "minLength": 1 },
+        "fileName": { "type": "string", "minLength": 1 },
+        "jsonFields": { "const": "camelCase" },
+        "namespaces": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["prefix", "purpose", "registrableInTeamProtocols"],
+            "properties": {
+              "prefix": { "type": "string", "minLength": 1 },
+              "purpose": { "type": "string", "minLength": 1 },
+              "pattern": { "type": "string" },
+              "registrableInTeamProtocols": { "type": "boolean" }
+            }
+          }
+        }
+      }
+    },
+    "sourceOfTruth": { "type": "string", "minLength": 1 },
+    "canonicalPath": { "type": "string", "minLength": 1 },
+    "evidenceCopy": { "type": "string", "minLength": 1 },
+    "roleTemplates": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/roleTemplate" }
+    },
+    "typeVocabulary": {
+      "type": "object",
+      "minProperties": 1,
+      "additionalProperties": { "$ref": "#/$defs/typeDef" }
+    },
+    "acceptGapPolicy": { "$ref": "#/$defs/acceptGapPolicy" },
+    "summary": { "$ref": "#/$defs/summary" },
+    "gaps": { "type": "array", "items": { "$ref": "#/$defs/gap" } },
+    "components": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/component" }
+    }
+  },
+  "$defs": {
+    "ref": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["path", "tool", "role", "doc", "missing"] },
+        "path": { "type": "string" },
+        "anchor": { "type": "string" },
+        "tool": { "type": "string" },
+        "role": { "type": "string" },
+        "expected": { "type": "string" },
+        "note": { "type": "string" }
+      },
+      "allOf": [
+        { "if": { "properties": { "kind": { "const": "path" } } }, "then": { "required": ["path"] } },
+        { "if": { "properties": { "kind": { "const": "tool" } } }, "then": { "required": ["tool"] } },
+        { "if": { "properties": { "kind": { "const": "role" } } }, "then": { "required": ["role"] } },
+        { "if": { "properties": { "kind": { "const": "missing" } } }, "then": { "required": ["expected"] } }
+      ]
+    },
+    "roleTemplate": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["duty", "durable"],
+      "properties": {
+        "duty": { "type": "string", "minLength": 1 },
+        "durable": { "type": "boolean" },
+        "spawn": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "domain": { "type": "string" },
+            "group": { "type": "string" },
+            "workKind": { "type": "string", "enum": ["seminar", "implementation", "audit", "planning", "other"] },
+            "mode": { "type": "string" }
+          }
+        },
+        "note": { "type": "string" }
+      }
+    },
+    "typeDef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["primitive", "enum", "object", "array", "ref"] },
+        "jsonType": { "type": "string", "enum": ["string", "integer", "boolean", "object", "array"] },
+        "values": { "type": "array", "items": { "type": "string" }, "minItems": 1 },
+        "itemType": { "type": "string" },
+        "schemaRef": { "type": "string" },
+        "schema": { "type": "object" },
+        "description": { "type": "string" }
+      }
+    },
+    "acceptGapPolicy": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["required", "rule", "fallback", "gapFields"],
+      "properties": {
+        "required": { "type": "boolean" },
+        "rule": { "type": "string", "minLength": 1 },
+        "fallback": { "type": "string", "enum": ["manual-sop", "block"] },
+        "maxGapsPerWorkflow": { "type": "integer", "minimum": 0 },
+        "gapFields": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["name", "required"],
+            "properties": {
+              "name": { "type": "string", "minLength": 1 },
+              "required": { "type": "boolean" },
+              "description": { "type": "string" }
+            }
+          }
+        }
+      }
+    },
+    "summary": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["total", "reuse", "complete", "new", "statusImplemented", "statusPartial", "statusMissing", "callable", "manual"],
+      "properties": {
+        "total": { "type": "integer", "minimum": 1 },
+        "reuse": { "type": "integer", "minimum": 0 },
+        "complete": { "type": "integer", "minimum": 0 },
+        "new": { "type": "integer", "minimum": 0 },
+        "statusImplemented": { "type": "integer", "minimum": 0 },
+        "statusPartial": { "type": "integer", "minimum": 0 },
+        "statusMissing": { "type": "integer", "minimum": 0 },
+        "callable": { "type": "integer", "minimum": 0 },
+        "manual": { "type": "integer", "minimum": 0 }
+      }
+    },
+    "gap": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "summary", "workaround", "ownerRole", "status", "expiry"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^GAP-[A-Z0-9-]{2,32}$" },
+        "componentId": { "type": "string", "pattern": "^comp\\.[a-z0-9]+(-[a-z0-9]+)*$" },
+        "summary": { "type": "string", "minLength": 1 },
+        "workaround": { "type": "string", "enum": ["manual-sop", "accept-gap", "deferred", "new-component"] },
+        "ownerRole": { "type": "string", "minLength": 1 },
+        "status": { "type": "string", "enum": ["open", "mitigated", "accepted"] },
+        "expiry": { "type": "string", "minLength": 4 },
+        "note": { "type": "string" }
+      }
+    },
+    "input": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "required"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$" },
+        "type": { "$ref": "#/$defs/typeName" },
+        "required": { "type": "boolean" },
+        "schemaRef": { "type": "string" },
+        "description": { "type": "string" }
+      }
+    },
+    "output": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "type", "schemaRef"],
+      "properties": {
+        "name": { "type": "string", "pattern": "^[a-zA-Z][a-zA-Z0-9]*$" },
+        "type": { "$ref": "#/$defs/typeName" },
+        "schemaRef": { "type": "string", "minLength": 1 },
+        "description": { "type": "string" }
+      }
+    },
+    "typeName": {
+      "type": "string",
+      "enum": [
+        "text", "markdown", "path", "path-list", "json-object", "json-array",
+        "member-ref", "component-id", "component-id-list", "registry-file",
+        "task-category", "priority", "reuse-decision", "questions-brief",
+        "gap-record", "trace-rows", "evidence-list", "handoff-package",
+        "user-summary", "workflow-plan", "matrix-rows", "analysis-doc",
+        "sop-id", "gate-result", "workflow-analysis"
+      ]
+    },
+    "precondition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["text"],
+      "properties": {
+        "text": { "type": "string", "minLength": 1 },
+        "manual": { "type": "boolean" },
+        "check": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["file-exists", "approved", "author-not-in", "env", "schema-valid", "schema-validation", "human-review", "custom", "cross-check"]
+            },
+            "args": { "type": "object" }
+          }
+        },
+        "evidence": { "type": "string" },
+        "sopRef": { "type": "string" }
+      },
+      "anyOf": [
+        { "required": ["check"] },
+        { "properties": { "manual": { "const": true } }, "required": ["manual"] }
+      ]
+    },
+    "failure": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "detect", "recover", "severity"],
+      "properties": {
+        "id": { "type": "string", "pattern": "^[A-Z][A-Z0-9_]{2,48}$" },
+        "detect": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": {
+              "type": "string",
+              "enum": ["exit-code", "schema-validation", "missing-file", "platform-error", "human-review", "timeout", "cross-check", "env"]
+            },
+            "args": { "type": "object" }
+          }
+        },
+        "recover": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["action", "ownerRole", "retry"],
+          "properties": {
+            "action": { "type": "string", "minLength": 1 },
+            "ownerRole": { "type": "string", "minLength": 1 },
+            "retry": { "type": "string", "enum": ["none", "same-step", "manual", "route-via-lead", "escalate"] }
+          }
+        },
+        "severity": { "type": "string", "enum": ["high", "medium", "low"] }
+      }
+    },
+    "sideEffect": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["kind", "target", "reversible"],
+      "properties": {
+        "kind": { "type": "string", "enum": ["write", "append", "spawn", "rebuild", "read", "none"] },
+        "target": { "type": "string", "minLength": 1 },
+        "reversible": { "type": "boolean" }
+      }
+    },
+    "idempotent": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["value"],
+      "properties": {
+        "value": { "type": "boolean" },
+        "dedupeKey": { "type": "string" }
+      }
+    },
+    "composition": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["targetId", "mapping"],
+      "properties": {
+        "targetId": { "type": "string", "pattern": "^comp\\.[a-z0-9]+(-[a-z0-9]+)*$" },
+        "optional": { "type": "boolean" },
+        "mapping": {
+          "type": "array",
+          "minItems": 1,
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["fromOutput", "toInput"],
+            "properties": {
+              "fromOutput": { "type": "string", "minLength": 1 },
+              "toInput": { "type": "string", "minLength": 1 }
+            }
+          }
+        }
+      }
+    },
+    "matchedExisting": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["ref", "decision"],
+      "properties": {
+        "ref": { "$ref": "#/$defs/ref" },
+        "decision": { "type": "string", "enum": ["reuse", "complete", "new"] }
+      }
+    },
+    "lifecycle": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["since"],
+      "properties": {
+        "since": { "type": "string", "minLength": 4 },
+        "reviewedBy": { "type": "string" },
+        "supersedes": { "type": "string" },
+        "deprecatedAt": { "type": "string" }
+      }
+    },
+    "component": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": [
+        "id", "version", "interfaceVersion", "name", "summary",
+        "callable", "executor", "sopRef", "reuseDecision", "reuseKind", "evidence",
+        "inputs", "outputs", "preconditions", "failureStates", "sideEffects",
+        "idempotent", "composesWith", "matchedExisting", "ownerRole",
+        "writeScope", "permissions", "lifecycle", "status", "namingBasis"
+      ],
+      "properties": {
+        "id": { "type": "string", "pattern": "^comp\\.[a-z0-9]+(-[a-z0-9]+)*$" },
+        "version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "interfaceVersion": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+        "name": { "type": "string", "minLength": 1 },
+        "summary": { "type": "string", "minLength": 1 },
+        "callable": { "type": "boolean" },
+        "executor": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["kind"],
+          "properties": {
+            "kind": { "type": "string", "enum": ["tool", "role", "manual"] },
+            "entrypoint": { "type": "string" },
+            "role": { "type": "string" }
+          }
+        },
+        "sopRef": { "type": "string" },
+        "argsSchema": { "type": "string" },
+        "returnsSchema": { "type": "string" },
+        "reuseDecision": { "type": "string", "enum": ["reuse", "complete", "new"] },
+        "reuseKind": { "type": "string", "enum": ["callable", "template", "role", "convention", "manual-sop", "none"] },
+        "evidence": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/ref" } },
+        "inputs": { "type": "array", "items": { "$ref": "#/$defs/input" } },
+        "outputs": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/output" } },
+        "preconditions": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/precondition" } },
+        "failureStates": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/failure" } },
+        "sideEffects": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/sideEffect" } },
+        "idempotent": { "$ref": "#/$defs/idempotent" },
+        "composesWith": { "type": "array", "items": { "$ref": "#/$defs/composition" } },
+        "matchedExisting": { "type": "array", "minItems": 1, "items": { "$ref": "#/$defs/matchedExisting" } },
+        "ownerRole": { "type": "string", "minLength": 1 },
+        "writeScope": { "type": "array", "minItems": 1, "items": { "type": "string", "minLength": 1 } },
+        "permissions": { "type": "array", "minItems": 1, "items": { "type": "string", "enum": ["read", "write", "append", "spawn", "rebuild"] } },
+        "lifecycle": { "$ref": "#/$defs/lifecycle" },
+        "status": { "type": "string", "enum": ["implemented", "partial", "missing"] },
+        "namingBasis": { "type": "string", "minLength": 1 }
+      },
+      "allOf": [
+        {
+          "if": { "properties": { "callable": { "const": true } }, "required": ["callable"] },
+          "then": {
+            "required": ["argsSchema", "returnsSchema"],
+            "properties": {
+              "executor": {
+                "required": ["kind", "entrypoint"],
+                "properties": { "kind": { "const": "tool" } }
+              }
+            }
+          }
+        },
+        {
+          "if": { "properties": { "callable": { "const": false } }, "required": ["callable"] },
+          "then": {
+            "properties": {
+              "executor": {
+                "required": ["kind"],
+                "properties": { "kind": { "enum": ["role", "manual"] } }
+              }
+            }
+          }
+        }
+      ]
+    }
+  }
+}

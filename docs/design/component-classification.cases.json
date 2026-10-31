@@ -1,0 +1,156 @@
+{
+  "schema": "component-classification-cases/v1",
+  "description": "任务定性元协议 golden cases（v0.2.1）；用于校验判定函数/人工复核。expected 为 cls.* 或 UNCLASSIFIED。另含 acceptGapCases（A-04；字段以 registry.acceptGapPolicy.gapFields 为准：componentId/ownerRole/reason/expiry/degradedTo）。",
+  "version": "0.2.1",
+  "cases": [
+    {
+      "id": "C01",
+      "input": "修复 1.2.3 版本引入的回归 bug",
+      "context": { "hasVersion": true, "hasReleaseAction": false },
+      "expected": "cls.defect-fix",
+      "why": "A-06：版本号不得单独触发 release；修复/回归优先"
+    },
+    {
+      "id": "C02",
+      "input": "发版 1.2.3，打包并核对资产",
+      "context": { "hasVersion": true, "hasReleaseAction": true },
+      "expected": "cls.release",
+      "why": "版本号+发布动作同时出现"
+    },
+    {
+      "id": "C03",
+      "input": "开研讨团队研讨图层面板设计并落地",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "cls.team-work-design",
+      "why": "设计+落地=团队工作分析与设计"
+    },
+    {
+      "id": "C04",
+      "input": "把 __pycache__ 从 git 移除并修审计脚本",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "cls.infra-change",
+      "why": "仓库结构/脚本改造"
+    },
+    {
+      "id": "C05",
+      "input": "查一下 n8n 和 LangGraph 的编排差异，给证据，不落地",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "cls.research-forensics",
+      "why": "纯取证，无设计/代码产出"
+    },
+    {
+      "id": "C06",
+      "input": "帮我把这套工作流部署一下",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "cls.infra-change",
+      "why": "A-06 补充：部署基础设施（无版本交付）归 infra"
+    },
+    {
+      "id": "C07",
+      "input": "修一下按钮点击无反应",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "cls.defect-fix",
+      "why": "现有行为错误"
+    },
+    {
+      "id": "C08",
+      "input": "给组件库加一个 user-report 组件",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "cls.team-work-design",
+      "why": "设计/组件产出"
+    },
+    {
+      "id": "C09",
+      "input": "打包 DSH 桌面应用",
+      "context": { "hasVersion": false, "hasReleaseAction": true },
+      "expected": "cls.release",
+      "why": "打包=发布动作（单向门）"
+    },
+    {
+      "id": "C10",
+      "input": "帮我看下这段 PR 描述的措辞",
+      "context": { "hasVersion": false, "hasReleaseAction": false },
+      "expected": "UNCLASSIFIED",
+      "why": "无命中关键词；需人工或先取证（记录假设），不得硬归一类"
+    }
+  ],
+  "acceptGapCases": {
+    "schema": "component-registry-validation-cases/v1",
+    "target": "workflow-composer precondition / acceptGap（v0.2.1；字段=acceptGapPolicy.gapFields）",
+    "caseSemantics": "input 交给 composer 前置校验；expected.result=PASS 表示可组装（缺组件被完整 acceptGap 覆盖或全可用），FAIL 表示匹配 expected.errorCodes。acceptGap 必需字段：componentId/ownerRole/reason/expiry/degradedTo（degradedTo 固定 manual-sop 语义）。",
+    "cases": [
+      {
+        "id": "GC-04-01",
+        "purpose": "全部组件可用 ⇒ 可组装（基线）",
+        "input": {
+          "componentIds": ["comp.a", "comp.b"],
+          "available": ["comp.a", "comp.b"],
+          "acceptGap": []
+        },
+        "expected": { "result": "PASS", "errorCodes": [] }
+      },
+      {
+        "id": "GC-04-02",
+        "purpose": "缺 comp.b 且无 acceptGap ⇒ FAIL（MISSING_COMPONENT）",
+        "input": {
+          "componentIds": ["comp.a", "comp.b"],
+          "available": ["comp.a"],
+          "acceptGap": []
+        },
+        "expected": { "result": "FAIL", "errorCodes": ["MISSING_COMPONENT"] }
+      },
+      {
+        "id": "GC-04-03",
+        "purpose": "缺 comp.b 但 acceptGap 完整（policy 五字段齐）⇒ PASS（允许 bootstrap）",
+        "input": {
+          "componentIds": ["comp.a", "comp.b"],
+          "available": ["comp.a"],
+          "acceptGap": [
+            {
+              "componentId": "comp.b",
+              "ownerRole": "lead",
+              "reason": "bootstrap：comp.b 属本轮 missing 之一，先人工 SOP",
+              "expiry": "2026-11-30",
+              "degradedTo": "manual-sop"
+            }
+          ]
+        },
+        "expected": { "result": "PASS", "errorCodes": [] }
+      },
+      {
+        "id": "GC-04-04",
+        "purpose": "acceptGap 缺 ownerRole ⇒ FAIL（缺任一 policy 字段即不可审计）",
+        "input": {
+          "componentIds": ["comp.a", "comp.b"],
+          "available": ["comp.a"],
+          "acceptGap": [
+            {
+              "componentId": "comp.b",
+              "reason": "先人工",
+              "expiry": "2026-11-30",
+              "degradedTo": "manual-sop"
+            }
+          ]
+        },
+        "expected": { "result": "FAIL", "errorCodes": ["ACCEPT_GAP_INCOMPLETE"] }
+      },
+      {
+        "id": "GC-04-05",
+        "purpose": "acceptGap 缺 degradedTo ⇒ FAIL（专门验证 degradedTo 为必需字段）",
+        "input": {
+          "componentIds": ["comp.a", "comp.b"],
+          "available": ["comp.a"],
+          "acceptGap": [
+            {
+              "componentId": "comp.b",
+              "ownerRole": "lead",
+              "reason": "先人工",
+              "expiry": "2026-11-30"
+            }
+          ]
+        },
+        "expected": { "result": "FAIL", "errorCodes": ["ACCEPT_GAP_INCOMPLETE"] }
+      }
+    ]
+  }
+}

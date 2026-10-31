@@ -1,0 +1,3505 @@
+{
+  "$schema": "./component-registry.schema.json",
+  "schema": "component-registry/v2",
+  "registryId": "memoria-team-components",
+  "schemaVersion": "2.0.0",
+  "dataVersion": "0.2.1",
+  "updatedAt": "2026-10-31T09:45:00+08:00",
+  "source": "INBOX-20261030-01",
+  "owner": "plugin-todo-owner",
+  "status": "draft-pending-review",
+  "revisionOf": "component-registry.v2.json (v0.2; sha256 7F4638045D5A40505E33A6DFA6BC9E770B9F7604BAB5574F61162B2A923B018F)；v0.2.1 修复 A-01/A-04/C-02/C-03",
+  "namingRule": {
+    "componentId": "^comp\\.[a-z0-9]+(-[a-z0-9]+)*$",
+    "clsId": "^cls\\.[a-z0-9]+(-[a-z0-9]+)*$",
+    "metaProtocolDocId": "doc.meta.task-classification（文档 id，不是协议注册 id）",
+    "protocolId": "workflow-task-classification（合法 kebab；候选手册，未注册进 team/protocols.json）",
+    "fileName": "component-registry.v2.json",
+    "jsonFields": "camelCase",
+    "namespaces": [
+      {
+        "prefix": "comp.",
+        "purpose": "组件 id",
+        "pattern": "^comp\\.[a-z0-9]+(-[a-z0-9]+)*$",
+        "registrableInTeamProtocols": false
+      },
+      {
+        "prefix": "cls.",
+        "purpose": "任务定性分类 id",
+        "pattern": "^cls\\.[a-z0-9]+(-[a-z0-9]+)*$",
+        "registrableInTeamProtocols": false
+      },
+      {
+        "prefix": "doc.",
+        "purpose": "文档内 id（如元协议）",
+        "pattern": "^doc\\.[a-z0-9.]+$",
+        "registrableInTeamProtocols": false
+      },
+      {
+        "prefix": "tool.",
+        "purpose": "内置协议 id 命名空间",
+        "registrableInTeamProtocols": true
+      },
+      {
+        "prefix": "kebab",
+        "purpose": "团队自订协议 id（如 workflow-task-classification）",
+        "pattern": "^[a-z][a-z0-9-]{2,63}$",
+        "registrableInTeamProtocols": true
+      }
+    ]
+  },
+  "sourceOfTruth": "docs/design/components-v0.2.md",
+  "canonicalPath": "docs/design/component-registry.v2.json",
+  "evidenceCopy": "artifacts/agent/plugin-design/component-registry.v2.json",
+  "roleTemplates": {
+    "lead": {
+      "duty": "主控/派发/最终汇报",
+      "durable": true
+    },
+    "steward": {
+      "duty": "团队管理员：组织资产/过程审计/机检",
+      "durable": true
+    },
+    "team-plugin-creator": {
+      "duty": "DSH Agent Teams 插件维护（Creator 模式）",
+      "durable": true
+    },
+    "plugin-design-seminar": {
+      "duty": "研讨主持（派发/合并/归纳/冻结），不写设计结论",
+      "durable": false,
+      "spawn": {
+        "domain": "seminar",
+        "group": "plugin-design",
+        "workKind": "seminar"
+      }
+    },
+    "plugin-design-architect": {
+      "duty": "设计作者（文档/schema/迁移）",
+      "durable": false,
+      "spawn": {
+        "domain": "design",
+        "group": "plugin-design",
+        "workKind": "implementation"
+      }
+    },
+    "plugin-design-researcher": {
+      "duty": "只读取证（五类语料+证据等级）",
+      "durable": false,
+      "spawn": {
+        "domain": "research",
+        "group": "plugin-design",
+        "workKind": "other"
+      }
+    },
+    "plugin-todo-owner": {
+      "duty": "插件台账/组件库/票清单",
+      "durable": false,
+      "spawn": {
+        "domain": "plugin",
+        "group": "plugin-design",
+        "workKind": "planning"
+      }
+    },
+    "verifier": {
+      "duty": "独立验收（未参与实现，只看磁盘产物）",
+      "durable": false,
+      "spawn": {
+        "domain": "audit",
+        "group": "memoria-governance",
+        "workKind": "audit"
+      }
+    }
+  },
+  "typeVocabulary": {
+    "text": {
+      "kind": "primitive",
+      "jsonType": "string"
+    },
+    "markdown": {
+      "kind": "primitive",
+      "jsonType": "string",
+      "description": "text/markdown"
+    },
+    "path": {
+      "kind": "primitive",
+      "jsonType": "string",
+      "description": "workspace-relative path"
+    },
+    "path-list": {
+      "kind": "array",
+      "itemType": "path"
+    },
+    "json-object": {
+      "kind": "object"
+    },
+    "json-array": {
+      "kind": "array",
+      "itemType": "json-object"
+    },
+    "member-ref": {
+      "kind": "primitive",
+      "jsonType": "string",
+      "description": "member target or role name"
+    },
+    "component-id": {
+      "kind": "primitive",
+      "jsonType": "string",
+      "description": "comp.<kebab>"
+    },
+    "component-id-list": {
+      "kind": "array",
+      "itemType": "component-id"
+    },
+    "registry-file": {
+      "kind": "primitive",
+      "jsonType": "string",
+      "description": "path to docs/design/component-registry.v2.json"
+    },
+    "task-category": {
+      "kind": "enum",
+      "values": [
+        "cls.defect-fix",
+        "cls.release",
+        "cls.team-work-design",
+        "cls.infra-change",
+        "cls.research-forensics"
+      ]
+    },
+    "priority": {
+      "kind": "enum",
+      "values": [
+        "P0",
+        "P1",
+        "P2"
+      ]
+    },
+    "reuse-decision": {
+      "kind": "enum",
+      "values": [
+        "reuse",
+        "complete",
+        "new"
+      ]
+    },
+    "questions-brief": {
+      "kind": "object",
+      "schema": {
+        "type": "object",
+        "required": [
+          "title",
+          "questions",
+          "discipline",
+          "proposerPlan"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "questions": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "question"
+              ],
+              "properties": {
+                "id": {
+                  "type": "string",
+                  "pattern": "^Q\\d+$"
+                },
+                "question": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "discipline": {
+            "type": "string"
+          },
+          "proposerPlan": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "acceptance": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "gap-record": {
+      "kind": "ref",
+      "schemaRef": "docs/design/todo-requirement.schema.json"
+    },
+    "trace-rows": {
+      "kind": "array",
+      "itemType": "json-object",
+      "description": "7 列：票/原话/推断需求/设计决定/理由/可验证判据/类别"
+    },
+    "evidence-list": {
+      "kind": "array",
+      "itemType": "path"
+    },
+    "handoff-package": {
+      "kind": "object",
+      "schema": {
+        "type": "object",
+        "required": [
+          "stage",
+          "outputs",
+          "evidence",
+          "openItems",
+          "nextOwner",
+          "gateResult"
+        ],
+        "properties": {
+          "stage": {
+            "type": "string"
+          },
+          "outputs": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "openItems": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "nextOwner": {
+            "type": "string"
+          },
+          "gateResult": {
+            "type": "string",
+            "enum": [
+              "pass",
+              "fail",
+              "blocked"
+            ]
+          }
+        }
+      }
+    },
+    "user-summary": {
+      "kind": "object",
+      "schema": {
+        "type": "object",
+        "required": [
+          "title",
+          "didWhat",
+          "evidence",
+          "openItems",
+          "cost",
+          "next"
+        ],
+        "properties": {
+          "title": {
+            "type": "string"
+          },
+          "didWhat": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "evidence": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "openItems": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "cost": {
+            "type": "string"
+          },
+          "next": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "workflow-plan": {
+      "kind": "object",
+      "schema": {
+        "type": "object",
+        "required": [
+          "steps",
+          "handoffs",
+          "gates",
+          "acceptGaps"
+        ],
+        "properties": {
+          "steps": {
+            "type": "array",
+            "items": {
+              "type": "object",
+              "required": [
+                "order",
+                "componentId",
+                "ownerRole"
+              ],
+              "properties": {
+                "order": {
+                  "type": "integer"
+                },
+                "componentId": {
+                  "type": "string"
+                },
+                "ownerRole": {
+                  "type": "string"
+                },
+                "gate": {
+                  "type": "string"
+                }
+              }
+            }
+          },
+          "handoffs": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "gates": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          },
+          "acceptGaps": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          }
+        }
+      }
+    },
+    "matrix-rows": {
+      "kind": "array",
+      "itemType": "json-object",
+      "description": "requirementId/criterion/evidencePath/status"
+    },
+    "analysis-doc": {
+      "kind": "object",
+      "schema": {
+        "type": "object",
+        "required": [
+          "meta",
+          "stages",
+          "decisions",
+          "openItems"
+        ],
+        "properties": {
+          "meta": {
+            "type": "object",
+            "required": [
+              "memoryType",
+              "source",
+              "author"
+            ]
+          },
+          "stages": {
+            "type": "array",
+            "minItems": 1,
+            "items": {
+              "type": "object",
+              "required": [
+                "id",
+                "name",
+                "actor",
+                "inputs",
+                "outputs"
+              ]
+            }
+          },
+          "decisions": {
+            "type": "array",
+            "items": {
+              "type": "object"
+            }
+          },
+          "openItems": {
+            "type": "array",
+            "items": {
+              "type": "string"
+            }
+          }
+        }
+      }
+    },
+    "sop-id": {
+      "kind": "primitive",
+      "jsonType": "string",
+      "description": "docs/design/components-v0.2.md#sop-*"
+    },
+    "gate-result": {
+      "kind": "enum",
+      "values": [
+        "pass",
+        "fail",
+        "blocked"
+      ]
+    },
+    "workflow-analysis": {
+      "kind": "ref",
+      "schemaRef": "#/typeVocabulary/analysis-doc"
+    }
+  },
+  "acceptGapPolicy": {
+    "required": true,
+    "rule": "workflow-composer 允许 status=missing 的组件进入工作流，但必须为每个 missing 组件产出 acceptGap 条目（componentId/ownerRole/reason/expiry/degradedTo=manual-sop），并把该阶段降级为人工 SOP；不阻塞组装。每工作流最多 4 条；超限即 FAIL。",
+    "fallback": "manual-sop",
+    "maxGapsPerWorkflow": 4,
+    "gapFields": [
+      {
+        "name": "componentId",
+        "required": true
+      },
+      {
+        "name": "ownerRole",
+        "required": true
+      },
+      {
+        "name": "reason",
+        "required": true
+      },
+      {
+        "name": "expiry",
+        "required": true,
+        "description": "ISO date 或下个评审节点"
+      },
+      {
+        "name": "degradedTo",
+        "required": true,
+        "description": "固定 manual-sop"
+      }
+    ]
+  },
+  "summary": {
+    "total": 20,
+    "reuse": 4,
+    "complete": 11,
+    "new": 5,
+    "statusImplemented": 4,
+    "statusPartial": 14,
+    "statusMissing": 2,
+    "callable": 4,
+    "manual": 16
+  },
+  "gaps": [
+    {
+      "id": "GAP-A04-BOOTSTRAP",
+      "summary": "INBOX 工作流需 4 个 missing 组件；v0.2 用 acceptGap 降级人工 SOP，不阻塞组装",
+      "workaround": "accept-gap",
+      "ownerRole": "plugin-todo-owner",
+      "status": "accepted",
+      "expiry": "P1 票验收后复核"
+    },
+    {
+      "id": "GAP-A05-DYNROLE",
+      "summary": "plugin-design-*/plugin-todo-owner 是动态 teammate，不在 team/agents.json；v0.2 用 roleTemplates + spawn 契约表达，不写死成员 id",
+      "workaround": "manual-sop",
+      "ownerRole": "steward",
+      "status": "mitigated",
+      "expiry": "下次 agents.json 修订"
+    },
+    {
+      "id": "GAP-A07-APPROVAL",
+      "summary": "审批类前置（人批窗口）无 approvalId 机检；v0.2 标 check.kind=approved + manual=true，证据引用 decisions.jsonl",
+      "workaround": "manual-sop",
+      "ownerRole": "lead",
+      "status": "open",
+      "expiry": "TD-13 后复核"
+    },
+    {
+      "id": "GAP-D04-GOVERNANCE",
+      "summary": "缺组件库治理/生命周期流程（新增/变更/废弃/取代/入库评审）",
+      "workaround": "manual-sop",
+      "ownerRole": "steward",
+      "status": "open",
+      "expiry": "P1 批次后评审"
+    },
+    {
+      "id": "GAP-D05-INDEPENDENCE",
+      "summary": "研讨独立性（DIRTY_READ）无自动核验；v0.2 用声明+文件审计+人工评审",
+      "workaround": "manual-sop",
+      "ownerRole": "plugin-design-seminar",
+      "status": "open",
+      "expiry": "P1 批次后评审"
+    },
+    {
+      "id": "GAP-D06-MATRIX",
+      "summary": "需求→证据矩阵未落 schema；v0.2 用 matrix-rows 类型 + SOP 手填",
+      "workaround": "manual-sop",
+      "ownerRole": "steward",
+      "status": "open",
+      "expiry": "TD-12 前"
+    },
+    {
+      "id": "GAP-D07-DOCS-PLACEMENT",
+      "summary": "整理进体系化文档文件夹的归位/索引步骤无组件；v0.2 在 inbox-digester SOP 中写人工归位+索引",
+      "workaround": "manual-sop",
+      "ownerRole": "plugin-todo-owner",
+      "status": "open",
+      "expiry": "P1 批次后评审"
+    },
+    {
+      "id": "GAP-D08-MEMORY-STORE",
+      "summary": "记忆型产物存储/检索未接轨迹 v2/memory card；v0.2 指向 artifacts 文档+后续票",
+      "workaround": "manual-sop",
+      "ownerRole": "plugin-todo-owner",
+      "status": "open",
+      "expiry": "P2 后评审"
+    },
+    {
+      "id": "GAP-D09-CORPUS-CASES",
+      "summary": "网上正反案例库来源/许可/检索命令未清单化；v0.2 要求 URL+访问日期+许可，来源清单待补",
+      "workaround": "manual-sop",
+      "ownerRole": "plugin-design-researcher",
+      "status": "open",
+      "expiry": "P1 批次后评审"
+    },
+    {
+      "id": "GAP-C03-TRACKED",
+      "summary": "v0.1 设计资产已由 Lead commit b28c6cf7；v0.2 三文件待 Lead 审后提交（本组不 commit）",
+      "workaround": "manual-sop",
+      "ownerRole": "lead",
+      "status": "mitigated",
+      "expiry": "v0.2 提交后关闭"
+    },
+    {
+      "id": "GAP-B01-CHECKER",
+      "summary": "schema 已落盘；校验器（字段/枚举/引用/计数）由 TD-01 steward 承接，v0.2 用命令行草案自检",
+      "workaround": "manual-sop",
+      "ownerRole": "steward",
+      "status": "open",
+      "expiry": "TD-01 验收后关闭"
+    }
+  ],
+  "components": [
+    {
+      "id": "comp.task-classifier",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "任务定性",
+      "summary": "把人的原始请求判定为五类之一并选择处理流转；定性留痕、可更正。",
+      "callable": true,
+      "executor": {
+        "kind": "tool",
+        "entrypoint": "scripts/agent/comp_task_classifier.py"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-task-classifier",
+      "reuseDecision": "complete",
+      "reuseKind": "callable",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/META-PROTOCOL-v0.1.md"
+        },
+        {
+          "kind": "path",
+          "path": "AGENTS.md",
+          "anchor": "#§0.5"
+        },
+        {
+          "kind": "path",
+          "path": "scripts/agent/comp_task_classifier.py",
+          "note": "steward 实现（commit 54db680c）；本组只登记、不改脚本"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "rawRequest",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "context",
+          "type": "json-object",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "classification",
+          "type": "task-category",
+          "schemaRef": "#/typeVocabulary/task-category"
+        },
+        {
+          "name": "flow",
+          "type": "text",
+          "schemaRef": "#/typeVocabulary/text"
+        },
+        {
+          "name": "owner",
+          "type": "member-ref",
+          "schemaRef": "#/typeVocabulary/member-ref"
+        },
+        {
+          "name": "acceptance",
+          "type": "text",
+          "schemaRef": "#/typeVocabulary/text"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "收到新请求或 INBOX raw 条目",
+          "check": {
+            "kind": "env",
+            "args": {
+              "event": "request-or-inbox"
+            }
+          }
+        },
+        {
+          "text": "定性记录可落盘（任务 description/decisions）",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "UNCLASSIFIED",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "against": "golden-cases"
+            }
+          },
+          "recover": {
+            "action": "按 golden cases 回退人工判定并登记新案例",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "manual"
+          },
+          "severity": "medium"
+        },
+        {
+          "id": "MISCLASSIFIED",
+          "detect": {
+            "kind": "human-review",
+            "args": {
+              "reviewer": "plugin-design-seminar"
+            }
+          },
+          "recover": {
+            "action": "按 meta-rules 规则 2 标记并 append 记录更正",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "route-via-lead"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "team/decisions.jsonl",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(rawRequestHash,classifierVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.requirement-completer",
+          "mapping": [
+            {
+              "fromOutput": "classification",
+              "toInput": "classification"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "classification",
+              "toInput": "stageOutputs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/meta-protocol-v0.2.md"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "plugin-todo-owner",
+      "writeScope": [
+        "docs/design/"
+      ],
+      "permissions": [
+        "read",
+        "append"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1",
+      "argsSchema": "CLI: --board <path> | --classify <text> | --json | --selftest；只读",
+      "returnsSchema": "JSON {ok:bool, ruleSource, classification:{category,priority,flow,owner,acceptance}|{tasks:[{taskId,hasClassification,classification,flowValid,violations[]}]}}"
+    },
+    {
+      "id": "comp.requirement-completer",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "需求补全（团队维护组织）",
+      "summary": "把含糊请求补成可执行需求（7 列 trace：票/原话/推断需求/设计决定/理由/可验证判据/类别）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-todo-owner"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-requirement-completer",
+      "reuseDecision": "complete",
+      "reuseKind": "role",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "rawRequest",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "classification",
+          "type": "task-category",
+          "required": false
+        },
+        {
+          "name": "corpusRefs",
+          "type": "evidence-list",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "completedRequirement",
+          "type": "trace-rows",
+          "schemaRef": "#/typeVocabulary/trace-rows"
+        },
+        {
+          "name": "assumptions",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        },
+        {
+          "name": "openQuestions",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "语料库至少一条可用证据（file:line/URL）",
+          "check": {
+            "kind": "custom",
+            "args": {
+              "checker": "evidence-list-nonempty"
+            }
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "MISSING_CORPUS",
+          "detect": {
+            "kind": "missing-file",
+            "args": {
+              "expect": "evidence-list"
+            }
+          },
+          "recover": {
+            "action": "转 research-forensics 先取证",
+            "ownerRole": "plugin-design-researcher",
+            "retry": "manual"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(inboxId,traceVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.workflow-analysis-writer",
+          "mapping": [
+            {
+              "fromOutput": "completedRequirement",
+              "toInput": "completedRequirement"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md",
+            "anchor": "#§1"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "plugin-todo-owner",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；REQUIREMENTS-TRACE 主表实际 7 列，A-03 已修正"
+    },
+    {
+      "id": "comp.corpus-retriever",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "语料库检索",
+      "summary": "按补全需要检索五类语料（团队现状/既有协议/成熟工作流/开源 skill/正反案例），逐条给锚。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-design-researcher"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-corpus-retriever",
+      "reuseDecision": "reuse",
+      "reuseKind": "role",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/EVIDENCE-OSS.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "query",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "corpusScope",
+          "type": "json-array",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "evidence",
+          "type": "evidence-list",
+          "schemaRef": "#/typeVocabulary/evidence-list"
+        },
+        {
+          "name": "unverified",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "只读权限；未核材料不作事实",
+          "check": {
+            "kind": "env",
+            "args": {
+              "readonly": true
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "NO_ANCHOR",
+          "detect": {
+            "kind": "human-review",
+            "args": {
+              "reviewer": "plugin-design-seminar"
+            }
+          },
+          "recover": {
+            "action": "退回补锚或标未核",
+            "ownerRole": "plugin-design-researcher",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "none",
+          "target": "read-only",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(query,scopeHash)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.requirement-completer",
+          "mapping": [
+            {
+              "fromOutput": "evidence",
+              "toInput": "corpusRefs"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.workflow-analysis-writer",
+          "mapping": [
+            {
+              "fromOutput": "evidence",
+              "toInput": "evidence"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/EVIDENCE-OSS.md"
+          },
+          "decision": "reuse"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/guides/team-protocols.md"
+          },
+          "decision": "reuse"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "team/protocols.json"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "plugin-design-researcher",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "implemented",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；reuseKind=role（非 callable；A-02 修正）"
+    },
+    {
+      "id": "comp.workflow-analysis-writer",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "阶段工作流分析（记忆型）",
+      "summary": "产出一次工作的阶段/环节分析文本（记忆型），供后处理拆分。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-design-architect"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-workflow-analysis-writer",
+      "reuseDecision": "complete",
+      "reuseKind": "template",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/SEMINAR-M1.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "completedRequirement",
+          "type": "trace-rows",
+          "required": true
+        },
+        {
+          "name": "evidence",
+          "type": "evidence-list",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "workflowAnalysis",
+          "type": "analysis-doc",
+          "schemaRef": "#/typeVocabulary/analysis-doc"
+        },
+        {
+          "name": "memoryMarker",
+          "type": "sop-id",
+          "schemaRef": "#/typeVocabulary/sop-id"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "需求已补全并记录假设",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "ANALYSIS_WITHOUT_EVIDENCE",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "schema": "analysis-doc"
+            }
+          },
+          "recover": {
+            "action": "补证据或标未核",
+            "ownerRole": "plugin-design-architect",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "artifacts/agent/plugin-design/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(inboxId,stageSetVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.workflow-component-extractor",
+          "mapping": [
+            {
+              "fromOutput": "workflowAnalysis",
+              "toInput": "workflowAnalysis"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.seminar-runner",
+          "mapping": [
+            {
+              "fromOutput": "workflowAnalysis",
+              "toInput": "questionsBrief"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/SEMINAR-M1.md",
+            "anchor": "#§2"
+          },
+          "decision": "complete"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/guides/team-work-record-and-steward-design.md",
+            "anchor": "#§2"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "plugin-design-architect",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.workflow-component-extractor",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "后处理拆分器",
+      "summary": "把记忆型分析文本按步骤/环节拆成候选组件条目（复用优先）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-todo-owner"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-workflow-component-extractor",
+      "reuseDecision": "new",
+      "reuseKind": "none",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/COMPONENT-DECOMPOSITION-v0.1.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "workflowAnalysis",
+          "type": "analysis-doc",
+          "required": true
+        },
+        {
+          "name": "componentRegistry",
+          "type": "registry-file",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "candidateComponents",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        },
+        {
+          "name": "unmatched",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "分析文本已落盘且可解析",
+          "check": {
+            "kind": "file-exists",
+            "args": {
+              "glob": "artifacts/agent/plugin-design/*ANALYSIS*.md"
+            }
+          }
+        },
+        {
+          "text": "registry 可读且 schema 校验通过",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "docs/design/component-registry.schema.json"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "EXTRACTION_LOSS",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "expected": "stage-count"
+            }
+          },
+          "recover": {
+            "action": "补人工映射并登记 GAP",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "manual"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "artifacts/agent/plugin-design/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(analysisHash,registryDataVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.component-registry",
+          "mapping": [
+            {
+              "fromOutput": "candidateComponents",
+              "toInput": "registryFile"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.component-reuse-judge",
+          "mapping": [
+            {
+              "fromOutput": "candidateComponents",
+              "toInput": "candidateComponents"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.naming-convention",
+          "mapping": [
+            {
+              "fromOutput": "candidateComponents",
+              "toInput": "proposedId"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/TODO-INBOX.md",
+            "expected": "当前无解析器，标注人工 SOP"
+          },
+          "decision": "new"
+        }
+      ],
+      "ownerRole": "plugin-todo-owner",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "missing",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.component-registry",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "组件库注册表",
+      "summary": "机器可读组件库（本文件 v2）：结构化 I/O、executor、校验 schema、acceptGap。",
+      "callable": true,
+      "executor": {
+        "kind": "tool",
+        "entrypoint": "scripts/agent/comp_component_registry.py"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-component-registry",
+      "reuseDecision": "complete",
+      "reuseKind": "callable",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/component-registry.schema.json"
+        },
+        {
+          "kind": "path",
+          "path": "scripts/agent/comp_component_registry.py",
+          "note": "steward 实现（commit 54db680c）；本组只登记、不改脚本"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "registryFile",
+          "type": "registry-file",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "componentById",
+          "type": "json-object",
+          "schemaRef": "#/typeVocabulary/json-object"
+        },
+        {
+          "name": "reuseIndex",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "registry 通过 component-registry.schema.json 校验",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "docs/design/component-registry.schema.json"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "INVALID_SCHEMA",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "schema": "docs/design/component-registry.schema.json"
+            }
+          },
+          "recover": {
+            "action": "按校验错误修 registry 后重跑",
+            "ownerRole": "steward",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        },
+        {
+          "id": "DUPLICATE_ID",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "field": "components[].id"
+            }
+          },
+          "recover": {
+            "action": "拒绝加载并报重复 id",
+            "ownerRole": "steward",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "read",
+          "target": "docs/design/component-registry.v2.json",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(registryDataVersion,componentId)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.component-reuse-judge",
+          "mapping": [
+            {
+              "fromOutput": "componentById",
+              "toInput": "componentRegistry"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.workflow-composer",
+          "mapping": [
+            {
+              "fromOutput": "componentById",
+              "toInput": "componentIds"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/component-registry.v2.json"
+          },
+          "decision": "complete"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/guides/team-protocols.md",
+            "anchor": "#§1"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "steward",
+      "writeScope": [
+        "docs/design/"
+      ],
+      "permissions": [
+        "read"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；schema+registry 已落；查询工具 TD-02 待做（C-06/A-01 修正）",
+      "argsSchema": "CLI: --registry <path> | --docs <path> | --list | --id <componentId> | --json | --selftest；只读",
+      "returnsSchema": "JSON --list → {rows:[{id,name,status,reuse,implementedBy}]}；--id → 完整组件对象；未知 id exit 2"
+    },
+    {
+      "id": "comp.component-reuse-judge",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "组件复用判定",
+      "summary": "对候选组件与现有库逐条比对，输出 reuse/complete/new 三选一 + 结构化证据锚。",
+      "callable": true,
+      "executor": {
+        "kind": "tool",
+        "entrypoint": "scripts/agent/comp_component_reuse_judge.py"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-component-reuse-judge",
+      "reuseDecision": "new",
+      "reuseKind": "callable",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/components-v0.2.md",
+          "anchor": "#§5"
+        },
+        {
+          "kind": "path",
+          "path": "scripts/agent/comp_component_reuse_judge.py",
+          "note": "steward 实现（commit 54db680c）；本组只登记、不改脚本"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "candidateComponents",
+          "type": "json-array",
+          "required": true
+        },
+        {
+          "name": "componentRegistry",
+          "type": "registry-file",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "decisions",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        },
+        {
+          "name": "coverageGaps",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "registry 可读且校验通过",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "docs/design/component-registry.schema.json"
+            }
+          }
+        },
+        {
+          "text": "候选至少 1 条且带来源",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "ANCHOR_MISSING",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "required": "matchedExisting[].ref"
+            }
+          },
+          "recover": {
+            "action": "补锚后再判",
+            "ownerRole": "steward",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "team/decisions.jsonl",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(candidateHash,registryDataVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.component-registry",
+          "mapping": [
+            {
+              "fromOutput": "decisions",
+              "toInput": "componentById"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.workflow-composer",
+          "mapping": [
+            {
+              "fromOutput": "coverageGaps",
+              "toInput": "componentIds"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/TODO-INBOX.md",
+            "expected": "当前无判定器，标注人工 SOP"
+          },
+          "decision": "new"
+        }
+      ],
+      "ownerRole": "steward",
+      "writeScope": [
+        "docs/design/"
+      ],
+      "permissions": [
+        "read",
+        "append"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；B-06 口径：顶层 reuseDecision 为唯一权威，matchedExisting[].decision 仅证据",
+      "argsSchema": "CLI: --candidates <json> | --registry <path> | --json | --selftest",
+      "returnsSchema": "JSON {ok,decisions:[{componentId,decision,matchedId,anchor,reason}],coverageGaps:[{componentId,reason}],summary:{total,reuse,complete,new,coverageGaps}}"
+    },
+    {
+      "id": "comp.naming-convention",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "组件命名规范",
+      "summary": "组件/分类/元协议 id 与 registry 结构的命名规范与校验（校验器待 TD-01）。",
+      "callable": true,
+      "executor": {
+        "kind": "tool",
+        "entrypoint": "scripts/agent/comp_naming_convention.py"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-naming-convention",
+      "reuseDecision": "complete",
+      "reuseKind": "callable",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/components-v0.2.md"
+        },
+        {
+          "kind": "path",
+          "path": "scripts/agent/comp_naming_convention.py",
+          "note": "steward 实现（commit 54db680c）；本组只登记、不改脚本"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "proposedId",
+          "type": "text",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "verdict",
+          "type": "json-object",
+          "schemaRef": "#/typeVocabulary/json-object"
+        },
+        {
+          "name": "suggestedId",
+          "type": "text",
+          "schemaRef": "#/typeVocabulary/text"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "规则源 docs/design/components-v0.2.md 存在",
+          "check": {
+            "kind": "file-exists",
+            "args": {
+              "path": "docs/design/components-v0.2.md"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "NO_RULE",
+          "detect": {
+            "kind": "missing-file",
+            "args": {
+              "path": "docs/design/components-v0.2.md"
+            }
+          },
+          "recover": {
+            "action": "先落规范再校验",
+            "ownerRole": "steward",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "none",
+          "target": "read-only",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(proposedId,ruleVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.component-registry",
+          "mapping": [
+            {
+              "fromOutput": "suggestedId",
+              "toInput": "registryFile"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.workflow-component-extractor",
+          "mapping": [
+            {
+              "fromOutput": "suggestedId",
+              "toInput": "componentRegistry"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/components-v0.2.md",
+            "anchor": "#§2"
+          },
+          "decision": "complete"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/conventions/docs-management.md",
+            "anchor": "#§3"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "steward",
+      "writeScope": [
+        "docs/design/"
+      ],
+      "permissions": [
+        "read"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；C-06 修正：规范已落，校验器归 TD-01",
+      "argsSchema": "CLI: --registry <path> | --docs <path> | --json | --selftest",
+      "returnsSchema": "JSON {ok:bool,violations:[{ruleId:R1..R8,componentId,detail}],counts:{...}}；违规 exit 1"
+    },
+    {
+      "id": "comp.workflow-composer",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "工作流组装器",
+      "summary": "把选定组件按阶段/依赖组装成任务工作流；missing 组件按 acceptGap 降级为人工 SOP。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "team-plugin-creator"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-workflow-composer",
+      "reuseDecision": "new",
+      "reuseKind": "none",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/components-v0.2.md",
+          "anchor": "#§6"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "componentIds",
+          "type": "component-id-list",
+          "required": true
+        },
+        {
+          "name": "taskContext",
+          "type": "json-object",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "workflowPlan",
+          "type": "workflow-plan",
+          "schemaRef": "#/typeVocabulary/workflow-plan"
+        },
+        {
+          "name": "acceptGaps",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "组件存在于 registry（status=missing 允许，须走 acceptGap）",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "docs/design/component-registry.schema.json"
+            }
+          }
+        },
+        {
+          "text": "acceptGap 条目齐（componentId/ownerRole/reason/expiry）",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "MISSING_COMPONENT",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "against": "registry"
+            }
+          },
+          "recover": {
+            "action": "登记 acceptGap 并降级人工 SOP，不阻塞",
+            "ownerRole": "team-plugin-creator",
+            "retry": "manual"
+          },
+          "severity": "medium"
+        },
+        {
+          "id": "CYCLE",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "graph": "composesWith"
+            }
+          },
+          "recover": {
+            "action": "按依赖拓扑重排或拆阶段",
+            "ownerRole": "team-plugin-creator",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "artifacts/agent/plugin-design/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(componentIdsHash,taskId)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "workflowPlan",
+              "toInput": "stageOutputs"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.deployment-runner",
+          "mapping": [
+            {
+              "fromOutput": "workflowPlan",
+              "toInput": "buildSpec"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.user-report",
+          "mapping": [
+            {
+              "fromOutput": "acceptGaps",
+              "toInput": "openItems"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/TODO-INBOX.md",
+            "expected": "当前无组装器，A-04 自举缺口走 acceptGap"
+          },
+          "decision": "new"
+        }
+      ],
+      "ownerRole": "team-plugin-creator",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "missing",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；A-04 修正：acceptGapPolicy 见 registry 根"
+    },
+    {
+      "id": "comp.deployment-runner",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "部署执行",
+      "summary": "按单向门协议执行打包/新会话启用/验证；需人批窗口。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "team-plugin-creator"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-deployment-runner",
+      "reuseDecision": "reuse",
+      "reuseKind": "convention",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/guides/dsh-agent-teams-contract.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "buildSpec",
+          "type": "json-object",
+          "required": true
+        },
+        {
+          "name": "rollbackPlan",
+          "type": "markdown",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "buildArtifacts",
+          "type": "path-list",
+          "schemaRef": "#/typeVocabulary/path-list"
+        },
+        {
+          "name": "newSessionEvidence",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "人批准的重建窗口（approvalRef 记录）",
+          "check": {
+            "kind": "approved",
+            "args": {
+              "ref": "team/decisions.jsonl"
+            }
+          },
+          "manual": true
+        },
+        {
+          "text": "app 进程数为 0",
+          "check": {
+            "kind": "env",
+            "args": {
+              "check": "process-count==0"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "ASAR_LOCKED",
+          "detect": {
+            "kind": "platform-error",
+            "args": {
+              "code": "EPERM"
+            }
+          },
+          "recover": {
+            "action": "退出 app 后重试；仍失败则报 Lead",
+            "ownerRole": "team-plugin-creator",
+            "retry": "manual"
+          },
+          "severity": "high"
+        },
+        {
+          "id": "NEW_SESSION_NOT_VERIFIED",
+          "detect": {
+            "kind": "missing-file",
+            "args": {
+              "expect": "team_tools_in_new_session"
+            }
+          },
+          "recover": {
+            "action": "不得宣称生效；回滚并补证据",
+            "ownerRole": "team-plugin-creator",
+            "retry": "escalate"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "rebuild",
+          "target": "DSH app.asar",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(buildId,commit)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.plugin-gap-recorder",
+          "mapping": [
+            {
+              "fromOutput": "newSessionEvidence",
+              "toInput": "evidence"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "newSessionEvidence",
+              "toInput": "stageOutputs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/guides/dsh-agent-teams-contract.md",
+            "anchor": "#§13"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "team-plugin-creator",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write",
+        "rebuild"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "implemented",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；C-02 修正：失效路径 docs/guides/team-plugin-migration.md 已改为 V9-MIGRATION.md/C-02 记载"
+    },
+    {
+      "id": "comp.plugin-gap-recorder",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "插件能力缺失登记",
+      "summary": "按 todo-requirement schema 校验并登记插件能力缺失到草稿箱。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-todo-owner"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-plugin-gap-recorder",
+      "reuseDecision": "complete",
+      "reuseKind": "template",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/todo-requirement.schema.json"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "gapObservation",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "evidence",
+          "type": "evidence-list",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "gapRecord",
+          "type": "gap-record",
+          "schemaRef": "#/typeVocabulary/gap-record"
+        },
+        {
+          "name": "inboxDraft",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "todo-requirement.schema.json 校验通过",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "docs/design/todo-requirement.schema.json"
+            }
+          }
+        },
+        {
+          "text": "能区分插件缺失与流程缺失",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "GAP_UNPROVEN",
+          "detect": {
+            "kind": "missing-file",
+            "args": {
+              "expect": "evidencePaths"
+            }
+          },
+          "recover": {
+            "action": "补复现命令与证据后重登记",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        },
+        {
+          "id": "INBOX_UNSTRUCTURED",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "schema": "docs/design/todo-requirement.schema.json"
+            }
+          },
+          "recover": {
+            "action": "按 schema 补字段",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "artifacts/agent/plugin-design/TODO-INBOX.md",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(gapId,observedAt)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.todo-requirement",
+          "mapping": [
+            {
+              "fromOutput": "gapRecord",
+              "toInput": "gapRecord"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.inbox-digester",
+          "mapping": [
+            {
+              "fromOutput": "inboxDraft",
+              "toInput": "inboxEntry"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/todo-requirement.schema.json"
+          },
+          "decision": "complete"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/plugin-todo-inbox.md"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "plugin-todo-owner",
+      "writeScope": [
+        "artifacts/agent/plugin-design/",
+        "docs/design/"
+      ],
+      "permissions": [
+        "read",
+        "write",
+        "append"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；D-03 修正：新增 todo-requirement.schema.json"
+    },
+    {
+      "id": "comp.inbox-digester",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "待办草稿消化",
+      "summary": "把 INBOX raw 条目按需求规范消化成可跟踪票/文档，回链 source；任务板满时排队。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-todo-owner"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-inbox-digester",
+      "reuseDecision": "complete",
+      "reuseKind": "role",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/plugin-todo-inbox.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "inboxEntry",
+          "type": "markdown",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "classification",
+          "type": "task-category",
+          "schemaRef": "#/typeVocabulary/task-category"
+        },
+        {
+          "name": "ticketsOrDocs",
+          "type": "path-list",
+          "schemaRef": "#/typeVocabulary/path-list"
+        },
+        {
+          "name": "receipt",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "条目已定性",
+          "check": {
+            "kind": "cross-check",
+            "args": {
+              "against": "classification"
+            }
+          }
+        },
+        {
+          "text": "任务板有空位（满则排队，见 SOP）",
+          "check": {
+            "kind": "env",
+            "args": {
+              "check": "board-slots>0"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "UNCLASSIFIED",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "against": "golden-cases"
+            }
+          },
+          "recover": {
+            "action": "先定性再消化",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        },
+        {
+          "id": "BOARD_FULL",
+          "detect": {
+            "kind": "env",
+            "args": {
+              "check": "board-slots==0"
+            }
+          },
+          "recover": {
+            "action": "登记排队并等 Lead 清位；不得用别的票夹带",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "route-via-lead"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "artifacts/agent/plugin-design/TODO-INBOX.md",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(inboxId,receiptVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.task-classifier",
+          "mapping": [
+            {
+              "fromOutput": "classification",
+              "toInput": "context"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "ticketsOrDocs",
+              "toInput": "stageOutputs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/plugin-todo-inbox.md"
+          },
+          "decision": "reuse"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/TODO.md",
+            "anchor": "#§1"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "plugin-todo-owner",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write",
+        "append"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.seminar-runner",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "研讨团队执行",
+      "summary": "按任务书跑独立提案→并集→交叉异议→Lead 裁决→冻结。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-design-seminar"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-seminar-runner",
+      "reuseDecision": "reuse",
+      "reuseKind": "role",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/SEMINAR-M1-QUESTIONS.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "questionsBrief",
+          "type": "questions-brief",
+          "required": true
+        },
+        {
+          "name": "proposerCount",
+          "type": "json-object",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "proposalUnion",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        },
+        {
+          "name": "objections",
+          "type": "path-list",
+          "schemaRef": "#/typeVocabulary/path-list"
+        },
+        {
+          "name": "frozenRuling",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "Lead 已放行该议题",
+          "check": {
+            "kind": "approved",
+            "args": {
+              "ref": "task-board"
+            }
+          }
+        },
+        {
+          "text": "proposer 独立且未读他人提案（声明+审计）",
+          "check": {
+            "kind": "author-not-in",
+            "args": {
+              "fields": "objections/proposals"
+            }
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "HOP_BLOCKED",
+          "detect": {
+            "kind": "platform-error",
+            "args": {
+              "code": "TEAM_PEER_HOPS_EXCEEDED"
+            }
+          },
+          "recover": {
+            "action": "经 Lead 代转，不重试直发",
+            "ownerRole": "plugin-design-seminar",
+            "retry": "route-via-lead"
+          },
+          "severity": "medium"
+        },
+        {
+          "id": "DIRTY_READ",
+          "detect": {
+            "kind": "human-review",
+            "args": {
+              "reviewer": "plugin-design-seminar"
+            }
+          },
+          "recover": {
+            "action": "作废重写并补独立性证据",
+            "ownerRole": "plugin-design-seminar",
+            "retry": "manual"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "spawn",
+          "target": "teammates",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(briefHash,proposerSet)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.design-author",
+          "mapping": [
+            {
+              "fromOutput": "frozenRuling",
+              "toInput": "frozenRuling"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.workflow-analysis-writer",
+          "mapping": [
+            {
+              "fromOutput": "proposalUnion",
+              "toInput": "completedRequirement"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/SEMINAR-M1.md",
+            "anchor": "#§7"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "plugin-design-seminar",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write",
+        "spawn"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "implemented",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；A-02：reuseKind=role（流程模板复用，人工/多 agent 执行）"
+    },
+    {
+      "id": "comp.design-author",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "设计文档撰写",
+      "summary": "按设计规范产出设计文档/schema/迁移清单；每条设计带参照/理由/放弃条件。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-design-architect"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-design-author",
+      "reuseDecision": "reuse",
+      "reuseKind": "template",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/MODEL-v1.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "frozenRuling",
+          "type": "markdown",
+          "required": true
+        },
+        {
+          "name": "requirements",
+          "type": "trace-rows",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "designDocs",
+          "type": "path-list",
+          "schemaRef": "#/typeVocabulary/path-list"
+        },
+        {
+          "name": "schemas",
+          "type": "path-list",
+          "schemaRef": "#/typeVocabulary/path-list"
+        },
+        {
+          "name": "migrationList",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "裁决已冻结（R/C 编号可引）",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        },
+        {
+          "text": "已读 docs/conventions/**",
+          "check": {
+            "kind": "env",
+            "args": {
+              "readonly": true
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "SPEC_CONFLICT",
+          "detect": {
+            "kind": "cross-check",
+            "args": {
+              "against": "conventions"
+            }
+          },
+          "recover": {
+            "action": "按 conventions 优先并记 conflict",
+            "ownerRole": "plugin-design-architect",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "docs/design/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(rulingId,docVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.design-reviewer",
+          "mapping": [
+            {
+              "fromOutput": "designDocs",
+              "toInput": "designDocs"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.requirement-verifier",
+          "mapping": [
+            {
+              "fromOutput": "migrationList",
+              "toInput": "requirements"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/MODEL-v1.md"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "plugin-design-architect",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "implemented",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.design-reviewer",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "设计评审（可行性/规范性）",
+      "summary": "对设计文档质疑可行性/规范符合性并留 finding（ruleRef 必填）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-design-seminar"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-design-reviewer",
+      "reuseDecision": "complete",
+      "reuseKind": "convention",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/conventions/README.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "designDocs",
+          "type": "path-list",
+          "required": true
+        },
+        {
+          "name": "projectConventions",
+          "type": "path-list",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "reviewFindings",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        },
+        {
+          "name": "alignmentNotes",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "评审者未参与设计",
+          "check": {
+            "kind": "author-not-in",
+            "args": {
+              "fields": "designDocs.authors"
+            }
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "NO_RULE_REF",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "required": "findings[].ruleRef"
+            }
+          },
+          "recover": {
+            "action": "补 ruleRef 或列为新增建议",
+            "ownerRole": "plugin-design-seminar",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "team/decisions.jsonl",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(designDocsHash,reviewer)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.design-author",
+          "mapping": [
+            {
+              "fromOutput": "reviewFindings",
+              "toInput": "designDocs"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "reviewFindings",
+              "toInput": "stageOutputs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/conventions/README.md"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "plugin-design-seminar",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write",
+        "append"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.requirement-verifier",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "依需求测试验证",
+      "summary": "按需求逐条验证并留证（需求→证据矩阵；先证红，unknown 不算 pass）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "verifier"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-requirement-verifier",
+      "reuseDecision": "complete",
+      "reuseKind": "template",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "requirements",
+          "type": "trace-rows",
+          "required": true
+        },
+        {
+          "name": "artifacts",
+          "type": "path-list",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "verificationReport",
+          "type": "matrix-rows",
+          "schemaRef": "#/typeVocabulary/matrix-rows"
+        },
+        {
+          "name": "redEvidence",
+          "type": "evidence-list",
+          "schemaRef": "#/typeVocabulary/evidence-list"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "测试者未参与实现",
+          "check": {
+            "kind": "author-not-in",
+            "args": {
+              "fields": "implementation.authors"
+            }
+          },
+          "manual": true
+        },
+        {
+          "text": "需求有可执行判据（非空 criterion）",
+          "check": {
+            "kind": "schema-validation",
+            "args": {
+              "required": "rows[].criterion"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "FALSE_GREEN",
+          "detect": {
+            "kind": "human-review",
+            "args": {
+              "reviewer": "Lead"
+            }
+          },
+          "recover": {
+            "action": "先证红再复测；失败可见",
+            "ownerRole": "verifier",
+            "retry": "escalate"
+          },
+          "severity": "high"
+        },
+        {
+          "id": "TRACE_MISSING",
+          "detect": {
+            "kind": "missing-file",
+            "args": {
+              "expect": "REQUIREMENTS-TRACE rows"
+            }
+          },
+          "recover": {
+            "action": "回设计补需求再测",
+            "ownerRole": "verifier",
+            "retry": "manual"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "artifacts/agent/verify/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(requirementVersion,artifactHash)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "verificationReport",
+              "toInput": "stageOutputs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/REQUIREMENTS-TRACE.md"
+          },
+          "decision": "complete"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/conventions/test-assertion-granularity.md"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "verifier",
+      "writeScope": [
+        "artifacts/agent/verify/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.phase-gate",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "阶段门与交接",
+      "summary": "阶段边界 gate（产出/证据/责任人齐）并产出 handoffPackage；Lead 汇总后转用户（user-report）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "lead"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-phase-gate",
+      "reuseDecision": "complete",
+      "reuseKind": "convention",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "AGENTS.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "stageOutputs",
+          "type": "path-list",
+          "required": true
+        },
+        {
+          "name": "acceptanceCriteria",
+          "type": "json-object",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "gateResult",
+          "type": "gate-result",
+          "schemaRef": "#/typeVocabulary/gate-result"
+        },
+        {
+          "name": "handoffPackage",
+          "type": "handoff-package",
+          "schemaRef": "#/typeVocabulary/handoff-package"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "当前阶段产出已落盘",
+          "check": {
+            "kind": "file-exists",
+            "args": {
+              "glob": "artifacts/**"
+            }
+          }
+        },
+        {
+          "text": "R1 级由未参与实现者验收",
+          "check": {
+            "kind": "author-not-in",
+            "args": {
+              "fields": "gate.reviewers"
+            }
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "GATE_BYPASSED",
+          "detect": {
+            "kind": "human-review",
+            "args": {
+              "reviewer": "Lead"
+            }
+          },
+          "recover": {
+            "action": "不得静默通过；补门或标 blocked",
+            "ownerRole": "lead",
+            "retry": "escalate"
+          },
+          "severity": "high"
+        },
+        {
+          "id": "EVIDENCE_MISSING",
+          "detect": {
+            "kind": "missing-file",
+            "args": {
+              "expect": "evidence[]"
+            }
+          },
+          "recover": {
+            "action": "补证据或标 no-artifact-reason",
+            "ownerRole": "lead",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "append",
+          "target": "team/dispatch-log.jsonl",
+          "reversible": false
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(stageId,outputHash)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.user-report",
+          "mapping": [
+            {
+              "fromOutput": "handoffPackage",
+              "toInput": "handoffPackage"
+            }
+          ]
+        },
+        {
+          "targetId": "comp.design-reviewer",
+          "mapping": [
+            {
+              "fromOutput": "gateResult",
+              "toInput": "designDocs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "AGENTS.md",
+            "anchor": "#§0.5"
+          },
+          "decision": "complete"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/guides/agent-team-org.md",
+            "anchor": "#§4"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "lead",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "append"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1"
+    },
+    {
+      "id": "comp.user-report",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "用户可读汇报（Lead 可直接转发）",
+      "summary": "把 gateResult/handoff 转成可直接转发给用户的中文汇报（做了什么/证据/未决/代价/下一步）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "lead"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-user-report",
+      "reuseDecision": "new",
+      "reuseKind": "template",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/TODO-INBOX.md",
+          "anchor": "#L16-L16"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "handoffPackage",
+          "type": "handoff-package",
+          "required": true
+        },
+        {
+          "name": "gateResult",
+          "type": "gate-result",
+          "required": true
+        },
+        {
+          "name": "openItems",
+          "type": "json-array",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "userSummary",
+          "type": "user-summary",
+          "schemaRef": "#/typeVocabulary/user-summary"
+        },
+        {
+          "name": "bilingualVariant",
+          "type": "markdown",
+          "schemaRef": "#/typeVocabulary/markdown"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "handoffPackage 已通过 phase-gate",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "handoff-package"
+            }
+          }
+        },
+        {
+          "text": "含 evidence 路径与未决项（不得空口）",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "REPORT_WITHOUT_EVIDENCE",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "required": "evidence[]"
+            }
+          },
+          "recover": {
+            "action": "补证据路径再汇报",
+            "ownerRole": "lead",
+            "retry": "same-step"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "artifacts/agent/plugin-design/reports/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(taskId,reportVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.phase-gate",
+          "mapping": [
+            {
+              "fromOutput": "userSummary",
+              "toInput": "stageOutputs"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/plugin-todo-inbox.md",
+            "anchor": "#L9-L9"
+          },
+          "decision": "new"
+        }
+      ],
+      "ownerRole": "lead",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；D-01 新增；模板参考 release-copy 汇报结构"
+    },
+    {
+      "id": "comp.seminar-brief-author",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "研讨任务书/议题生成",
+      "summary": "把模糊请求转成可派发的研讨任务书（问题清单/纪律/proposer 分工/验收）。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-design-seminar"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-seminar-brief-author",
+      "reuseDecision": "new",
+      "reuseKind": "template",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "artifacts/agent/plugin-design/SEMINAR-M1-QUESTIONS.md"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "rawRequest",
+          "type": "text",
+          "required": true
+        },
+        {
+          "name": "classification",
+          "type": "task-category",
+          "required": false
+        },
+        {
+          "name": "corpusRefs",
+          "type": "evidence-list",
+          "required": false
+        }
+      ],
+      "outputs": [
+        {
+          "name": "questionsBrief",
+          "type": "questions-brief",
+          "schemaRef": "#/typeVocabulary/questions-brief"
+        },
+        {
+          "name": "proposerPlan",
+          "type": "json-array",
+          "schemaRef": "#/typeVocabulary/json-array"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "议题范围可由已有证据界定",
+          "check": {
+            "kind": "human-review"
+          },
+          "manual": true
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "BRIEF_TOO_VAGUE",
+          "detect": {
+            "kind": "human-review",
+            "args": {
+              "reviewer": "Lead"
+            }
+          },
+          "recover": {
+            "action": "按产品可见效果改写成可判问题，不写内部结构",
+            "ownerRole": "plugin-design-seminar",
+            "retry": "manual"
+          },
+          "severity": "medium"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "write",
+          "target": "artifacts/agent/plugin-design/",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": false,
+        "dedupeKey": "(rawRequestHash,corpusVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.seminar-runner",
+          "mapping": [
+            {
+              "fromOutput": "questionsBrief",
+              "toInput": "questionsBrief"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/SEMINAR-M1-QUESTIONS.md"
+          },
+          "decision": "reuse"
+        }
+      ],
+      "ownerRole": "plugin-design-seminar",
+      "writeScope": [
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read",
+        "write"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；D-02 新增；模板=SEMINAR-M1-QUESTIONS.md"
+    },
+    {
+      "id": "comp.todo-requirement",
+      "version": "0.2.0",
+      "interfaceVersion": "1.0.0",
+      "name": "待办需求规范校验",
+      "summary": "按 todo-requirement.schema.json 校验 INBOX 条目字段/证据/验收后放行消化。",
+      "callable": false,
+      "executor": {
+        "kind": "role",
+        "role": "plugin-todo-owner"
+      },
+      "sopRef": "docs/design/components-v0.2.md#sop-todo-requirement",
+      "reuseDecision": "complete",
+      "reuseKind": "convention",
+      "evidence": [
+        {
+          "kind": "path",
+          "path": "docs/design/todo-requirement.schema.json"
+        }
+      ],
+      "inputs": [
+        {
+          "name": "gapRecord",
+          "type": "gap-record",
+          "required": true
+        },
+        {
+          "name": "inboxEntry",
+          "type": "markdown",
+          "required": true
+        }
+      ],
+      "outputs": [
+        {
+          "name": "validatedEntry",
+          "type": "gap-record",
+          "schemaRef": "#/typeVocabulary/gap-record"
+        },
+        {
+          "name": "validationReport",
+          "type": "json-object",
+          "schemaRef": "#/typeVocabulary/json-object"
+        }
+      ],
+      "preconditions": [
+        {
+          "text": "待校验条目含 schema 必填字段",
+          "check": {
+            "kind": "schema-valid",
+            "args": {
+              "schema": "docs/design/todo-requirement.schema.json"
+            }
+          }
+        }
+      ],
+      "failureStates": [
+        {
+          "id": "SPEC_INCOMPLETE",
+          "detect": {
+            "kind": "schema-validation",
+            "args": {
+              "schema": "docs/design/todo-requirement.schema.json"
+            }
+          },
+          "recover": {
+            "action": "按 missing[] 补字段，不进入消化",
+            "ownerRole": "plugin-todo-owner",
+            "retry": "same-step"
+          },
+          "severity": "high"
+        }
+      ],
+      "sideEffects": [
+        {
+          "kind": "none",
+          "target": "read-only",
+          "reversible": true
+        }
+      ],
+      "idempotent": {
+        "value": true,
+        "dedupeKey": "(entryId,schemaVersion)"
+      },
+      "composesWith": [
+        {
+          "targetId": "comp.inbox-digester",
+          "mapping": [
+            {
+              "fromOutput": "validatedEntry",
+              "toInput": "inboxEntry"
+            }
+          ]
+        }
+      ],
+      "matchedExisting": [
+        {
+          "ref": {
+            "kind": "path",
+            "path": "docs/design/todo-requirement.schema.json"
+          },
+          "decision": "new"
+        },
+        {
+          "ref": {
+            "kind": "path",
+            "path": "artifacts/agent/plugin-design/TODO-INBOX.md",
+            "anchor": "#L20-L20"
+          },
+          "decision": "complete"
+        }
+      ],
+      "ownerRole": "plugin-todo-owner",
+      "writeScope": [
+        "docs/design/",
+        "artifacts/agent/plugin-design/"
+      ],
+      "permissions": [
+        "read"
+      ],
+      "lifecycle": {
+        "since": "2026-10-31",
+        "reviewedBy": "plugin-design-seminar"
+      },
+      "status": "partial",
+      "namingBasis": "comp.<kebab>；docs/design/components-v0.2.md §2.1；D-03 新增；schema 文件随 v0.2 落盘，校验器实现待票"
+    }
+  ]
+}
