@@ -1,0 +1,1243 @@
+{
+  "schema": "memoria-selection-matrix-run/v1",
+  "startedAt": "2026-10-25T08:42:57.027Z",
+  "finishedAt": "2026-10-25T08:44:00.901Z",
+  "label": "task112-real-fg4",
+  "matrix": "selection-matrix.json",
+  "file": "selection-matrix.md",
+  "live": true,
+  "liveTarget": {
+    "title": "Memoria v0.4.6",
+    "url": "http://127.0.0.1:47404/"
+  },
+  "browser": "Edg/155.0.4283.62",
+  "meta": {
+    "mode": "attach",
+    "browser": "Edg/155.0.4283.62",
+    "setup": {
+      "grantPermissions": "ok"
+    }
+  },
+  "summary": {
+    "total": 14,
+    "pass": 14,
+    "fail": 0
+  },
+  "cases": [
+    {
+      "id": "paragraph-span1-copy",
+      "type": "paragraph",
+      "span": "span1",
+      "op": "copy",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:01.646] [STYLE] _extract range=sel",
+        "[16:43:01.649] [STYLE] _extract start=bi=4 path=[0] off=23 | L5:23 [charlie |d|elta]  end=bi=6 path=[0] off=3 | L7:3 [P2 |e|cho foxt]",
+        "[16:43:01.649] [STYLE] _extract FAIL: invalid/cross-block start=4 end=6",
+        "[16:43:05.298] [UNDO] undo NO-OP undo=0 redo=0"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "delta\n\n\nP2 ",
+        "anchorBlock": 4,
+        "focusBlock": 6
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          5
+        ],
+        "partialBlocks": [
+          4,
+          6
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "delta": 1,
+          "P2": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "delta\n\n\nP2 ",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "delta=delta",
+          "P2=P2"
+        ],
+        "deletedCount": 2
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "delta\r\n\r\n\r\nP2 ",
+        "coveredCount": 2,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "paragraph-span1-cut",
+      "type": "paragraph",
+      "span": "span1",
+      "op": "cut",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:06.706] [STYLE] _extract range=sel",
+        "[16:43:06.706] [STYLE] _extract start=bi=4 path=[0] off=23 | L5:23 [charlie |d|elta]  end=bi=6 path=[0] off=3 | L7:3 [P2 |e|cho foxt]",
+        "[16:43:06.706] [STYLE] _extract FAIL: invalid/cross-block start=4 end=6",
+        "[16:43:06.707] [STYLE] deleteMulti blocks=3 srcLines=[4,6] blm=[s{\"startLine\":4,\"endLine\":4} e{\"startLine\":6,\"endLine\":6}] newSrc=\"P1 alpha bravo charlie echo foxtrot golf hotel\"",
+        "[16:43:06.707] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=4 path=[0] off=23 | L5:23 [charlie |d|elta] coalesce=false | undo=0 redo=0",
+        "[16:43:06.707] [UNDO] recordUndo push pre=bi=4 path=[0] off=23 | L5:23 [charlie |d|elta] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:06.710] [UNDO] recordGroup kind=deleteSelection post=bi=4 path=[0] off=23 | L5:23 [charlie |e|cho foxt]",
+        "[16:43:06.710] [UNDO] restoreCursor bi=4 path=[0] off=23",
+        "[16:43:08.567] [UNDO] currentSnapshot cursor=bi=4 path=[0] off=23 | L5:23 [charlie |e|cho foxt] | undo=1 redo=0",
+        "[16:43:08.567] [UNDO] undo -> apply cursor=bi=4 path=[0] off=23 | L5:23 [charlie |e|cho foxt] | undo=0 redo=1",
+        "[16:43:08.567] [UNDO] applySnapshot cursor=bi=4 path=[0] off=23 | L5:23 [charlie |e|cho foxt] bodyLen=1040 | undo=0 redo=1",
+        "[16:43:08.569] [UNDO] applySnapshot done -> restoreCursor bi=4 path=[0] off=23 | L5:23 [charlie |d|elta]",
+        "[16:43:08.569] [UNDO] restoreCursor bi=4 path=[0] off=23"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "delta\n\n\nP2 ",
+        "anchorBlock": 4,
+        "focusBlock": 6
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          5
+        ],
+        "partialBlocks": [
+          4,
+          6
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "delta": 1,
+          "P2": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "delta\n\n\nP2 ",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 2
+      },
+      "ghost": [],
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "delta\n\n\nP2 ",
+        "coveredCount": 2,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "paragraph-span2same-copy",
+      "type": "paragraph",
+      "span": "span2same",
+      "op": "copy",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:10.069] [STYLE] _extract range=sel",
+        "[16:43:10.069] [STYLE] _extract start=bi=4 path=[0] off=0 | L5:0 [|P|1 alpha ]  end=bi=6 path=[0] off=26 | L7:26 [lf hotel|·|]",
+        "[16:43:10.069] [STYLE] _extract FAIL: invalid/cross-block start=4 end=6",
+        "[16:43:13.711] [UNDO] undo NO-OP undo=0 redo=1"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "P1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel",
+        "anchorBlock": 4,
+        "focusBlock": 6
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          5
+        ],
+        "partialBlocks": [
+          4,
+          6
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "P1": 1,
+          "alpha": 1,
+          "bravo": 1,
+          "charlie": 1,
+          "delta": 1,
+          "P2": 1,
+          "echo": 1,
+          "foxtrot": 1,
+          "golf": 1,
+          "hotel": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "P1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "P1=P1",
+          "alpha=alpha",
+          "bravo=bravo",
+          "charlie=charlie",
+          "delta=delta",
+          "P2=P2",
+          "echo=echo",
+          "foxtrot=foxtrot"
+        ],
+        "deletedCount": 10
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "P1 alpha bravo charlie delta\r\n\r\n\r\nP2 echo foxtrot golf hotel",
+        "coveredCount": 10,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "paragraph-span2same-cut",
+      "type": "paragraph",
+      "span": "span2same",
+      "op": "cut",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:15.120] [STYLE] _extract FAIL: invalid/cross-block start=4 end=6",
+        "[16:43:15.120] [STYLE] _extract range=sel",
+        "[16:43:15.120] [STYLE] _extract start=bi=4 path=[0] off=0 | L5:0 [|P|1 alpha ]  end=bi=6 path=[0] off=26 | L7:26 [lf hotel|·|]",
+        "[16:43:15.120] [STYLE] _extract FAIL: invalid/cross-block start=4 end=6",
+        "[16:43:15.121] [STYLE] deleteMulti blocks=3 srcLines=[4,6] blm=[s{\"startLine\":4,\"endLine\":4} e{\"startLine\":6,\"endLine\":6}] newSrc=\"\"",
+        "[16:43:15.121] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=4 path=[0] off=0 | L5:0 [|P|1 alpha ] coalesce=false | undo=0 redo=1",
+        "[16:43:15.121] [UNDO] recordUndo push pre=bi=4 path=[0] off=0 | L5:0 [|P|1 alpha ] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:15.128] [UNDO] recordGroup kind=deleteSelection post=bi=4 path=[] off=0 | L5:0 [|·|]",
+        "[16:43:15.128] [UNDO] restoreCursor bi=4 path=[] off=0",
+        "[16:43:17.001] [UNDO] currentSnapshot cursor=bi=4 path=[] off=0 | L5:0 [|·|] | undo=1 redo=0",
+        "[16:43:17.001] [UNDO] undo -> apply cursor=bi=4 path=[0] off=0 | L5:0 [|·|] | undo=0 redo=1",
+        "[16:43:17.001] [UNDO] applySnapshot cursor=bi=4 path=[0] off=0 | L5:0 [|·|] bodyLen=1040 | undo=0 redo=1",
+        "[16:43:17.002] [UNDO] applySnapshot done -> restoreCursor bi=4 path=[0] off=0 | L5:0 [|P|1 alpha ]",
+        "[16:43:17.002] [UNDO] restoreCursor bi=4 path=[0] off=0"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "P1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel",
+        "anchorBlock": 4,
+        "focusBlock": 6
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          5
+        ],
+        "partialBlocks": [
+          4,
+          6
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "P1": 1,
+          "alpha": 1,
+          "bravo": 1,
+          "charlie": 1,
+          "delta": 1,
+          "P2": 1,
+          "echo": 1,
+          "foxtrot": 1,
+          "golf": 1,
+          "hotel": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\n\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "P1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 10
+      },
+      "ghost": [],
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\n\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "P1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel",
+        "coveredCount": 10,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "paragraph-span3mix-copy",
+      "type": "paragraph",
+      "span": "span3mix",
+      "op": "copy",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:18.503] [STYLE] _extract range=sel",
+        "[16:43:18.503] [STYLE] _extract start=bi=4 path=[0] off=3 | L5:3 [P1 |a|lpha bra]  end=bi=8 path=[0] off=25 | L9:25 [ilo lima|·|]",
+        "[16:43:18.503] [STYLE] _extract FAIL: invalid/cross-block start=4 end=8",
+        "[16:43:22.159] [UNDO] undo NO-OP undo=0 redo=1"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel\n\n\nP3 india juliet kilo lima",
+        "anchorBlock": 4,
+        "focusBlock": 8
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          5,
+          6,
+          7
+        ],
+        "partialBlocks": [
+          4,
+          8
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "alpha": 1,
+          "bravo": 1,
+          "charlie": 1,
+          "delta": 1,
+          "P2": 1,
+          "echo": 1,
+          "foxtrot": 1,
+          "golf": 1,
+          "hotel": 1,
+          "P3": 1,
+          "india": 1,
+          "juliet": 1,
+          "kilo": 1,
+          "lima": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel\n\n\nP3 india juliet kilo lima",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "alpha=alpha",
+          "bravo=bravo",
+          "charlie=charlie",
+          "delta=delta",
+          "P2=P2",
+          "echo=echo",
+          "foxtrot=foxtrot",
+          "golf=golf"
+        ],
+        "deletedCount": 14
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "alpha bravo charlie delta\r\n\r\n\r\nP2 echo foxtrot golf hotel\r\n\r\n\r\nP3 india juliet kilo lima",
+        "coveredCount": 14,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "paragraph-span3mix-cut",
+      "type": "paragraph",
+      "span": "span3mix",
+      "op": "cut",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:23.563] [STYLE] _extract range=sel",
+        "[16:43:23.563] [STYLE] _extract start=bi=4 path=[0] off=3 | L5:3 [P1 |a|lpha bra]  end=bi=8 path=[0] off=25 | L9:25 [ilo lima|·|]",
+        "[16:43:23.563] [STYLE] _extract FAIL: invalid/cross-block start=4 end=8",
+        "[16:43:23.563] [STYLE] deleteMulti blocks=5 srcLines=[4,8] blm=[s{\"startLine\":4,\"endLine\":4} e{\"startLine\":8,\"endLine\":8}] newSrc=\"P1 \"",
+        "[16:43:23.563] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=4 path=[0] off=3 | L5:3 [P1 |a|lpha bra] coalesce=false | undo=0 redo=1",
+        "[16:43:23.563] [UNDO] recordUndo push pre=bi=4 path=[0] off=3 | L5:3 [P1 |a|lpha bra] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:23.565] [UNDO] recordGroup kind=deleteSelection post=bi=4 path=[0] off=3 | L5:3 [P1 |·|]",
+        "[16:43:23.565] [UNDO] restoreCursor bi=4 path=[0] off=3",
+        "[16:43:25.427] [UNDO] currentSnapshot cursor=bi=4 path=[0] off=3 | L5:3 [P1 |·|] | undo=1 redo=0",
+        "[16:43:25.427] [UNDO] undo -> apply cursor=bi=4 path=[0] off=3 | L5:3 [P1 |·|] | undo=0 redo=1",
+        "[16:43:25.427] [UNDO] applySnapshot cursor=bi=4 path=[0] off=3 | L5:3 [P1 |·|] bodyLen=1040 | undo=0 redo=1",
+        "[16:43:25.429] [UNDO] applySnapshot done -> restoreCursor bi=4 path=[0] off=3 | L5:3 [P1 |a|lpha bra]",
+        "[16:43:25.429] [UNDO] restoreCursor bi=4 path=[0] off=3"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel\n\n\nP3 india juliet kilo lima",
+        "anchorBlock": 4,
+        "focusBlock": 8
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          5,
+          6,
+          7
+        ],
+        "partialBlocks": [
+          4,
+          8
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "alpha": 1,
+          "bravo": 1,
+          "charlie": 1,
+          "delta": 1,
+          "P2": 1,
+          "echo": 1,
+          "foxtrot": 1,
+          "golf": 1,
+          "hotel": 1,
+          "P3": 1,
+          "india": 1,
+          "juliet": 1,
+          "kilo": 1,
+          "lima": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 \n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel\n\n\nP3 india juliet kilo lima",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 14
+      },
+      "ghost": [],
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 \n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "alpha bravo charlie delta\n\n\nP2 echo foxtrot golf hotel\n\n\nP3 india juliet kilo lima",
+        "coveredCount": 14,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "heading-span1-copy",
+      "type": "heading",
+      "span": "span1",
+      "op": "copy",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:26.945] [STYLE] _extract range=sel",
+        "[16:43:26.945] [STYLE] _extract start=bi=0 path=[0] off=11 | L1:13 [heading |m|arker]  end=bi=2 path=[0] off=3 | L3:6 [## H2 |m|ike nove]",
+        "[16:43:26.945] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:30.581] [UNDO] undo NO-OP undo=0 redo=1"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "marker\n\nH2 ",
+        "anchorBlock": 0,
+        "focusBlock": 2
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1
+        ],
+        "partialBlocks": [
+          0,
+          2
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "marker": 1,
+          "H2": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "marker\n\nH2 ",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "marker=marker",
+          "H2=H2"
+        ],
+        "deletedCount": 2
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "marker\r\n\r\nH2 ",
+        "coveredCount": 2,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "heading-span1-cut",
+      "type": "heading",
+      "span": "span1",
+      "op": "cut",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:31.981] [STYLE] _extract range=sel",
+        "[16:43:31.981] [STYLE] _extract start=bi=0 path=[0] off=11 | L1:13 [heading |m|arker]  end=bi=2 path=[0] off=3 | L3:6 [## H2 |m|ike nove]",
+        "[16:43:31.981] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:31.981] [STYLE] deleteMulti blocks=3 srcLines=[0,2] blm=[s{\"startLine\":0,\"endLine\":0} e{\"startLine\":2,\"endLine\":2}] newSrc=\"# H1 heading mike november\"",
+        "[16:43:31.981] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=0 path=[0] off=11 | L1:13 [heading |m|arker] coalesce=false | undo=0 redo=1",
+        "[16:43:31.981] [UNDO] recordUndo push pre=bi=0 path=[0] off=11 | L1:13 [heading |m|arker] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:31.983] [UNDO] recordGroup kind=deleteSelection post=bi=0 path=[0] off=11 | L1:13 [heading |m|ike nove]",
+        "[16:43:31.983] [UNDO] restoreCursor bi=0 path=[0] off=11",
+        "[16:43:33.872] [UNDO] currentSnapshot cursor=bi=0 path=[0] off=11 | L1:13 [heading |m|ike nove] | undo=1 redo=0",
+        "[16:43:33.873] [UNDO] undo -> apply cursor=bi=0 path=[0] off=11 | L1:13 [heading |m|ike nove] | undo=0 redo=1",
+        "[16:43:33.873] [UNDO] applySnapshot cursor=bi=0 path=[0] off=11 | L1:13 [heading |m|ike nove] bodyLen=1040 | undo=0 redo=1",
+        "[16:43:33.874] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=11 | L1:13 [heading |m|arker]",
+        "[16:43:33.874] [UNDO] restoreCursor bi=0 path=[0] off=11"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "marker\n\nH2 ",
+        "anchorBlock": 0,
+        "focusBlock": 2
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1
+        ],
+        "partialBlocks": [
+          0,
+          2
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "marker": 1,
+          "H2": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "marker\n\nH2 ",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 2
+      },
+      "ghost": [],
+      "bodyAfterRender": "# H1 heading mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "marker\n\nH2 ",
+        "coveredCount": 2,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "heading-span2same-copy",
+      "type": "heading",
+      "span": "span2same",
+      "op": "copy",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:35.377] [STYLE] _extract range=sel",
+        "[16:43:35.378] [STYLE] _extract start=bi=0 path=[0] off=0 | L1:2 [# |H|1 headin]  end=bi=2 path=[0] off=16 | L3:19 [november|·|]",
+        "[16:43:35.378] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:39.026] [UNDO] undo NO-OP undo=0 redo=1"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "H1 heading marker\n\nH2 mike november",
+        "anchorBlock": 0,
+        "focusBlock": 2
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1
+        ],
+        "partialBlocks": [
+          0,
+          2
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "H1": 1,
+          "heading": 1,
+          "marker": 1,
+          "H2": 1,
+          "mike": 1,
+          "november": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "H1 heading marker\n\nH2 mike november",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "H1=H1",
+          "heading=heading",
+          "marker=marker",
+          "H2=H2",
+          "mike=mike",
+          "november=november"
+        ],
+        "deletedCount": 6
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "H1 heading marker\r\n\r\nH2 mike november",
+        "coveredCount": 6,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "heading-span2same-cut",
+      "type": "heading",
+      "span": "span2same",
+      "op": "cut",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:40.431] [STYLE] _extract range=sel",
+        "[16:43:40.431] [STYLE] _extract start=bi=0 path=[0] off=0 | L1:2 [# |H|1 headin]  end=bi=2 path=[0] off=16 | L3:19 [november|·|]",
+        "[16:43:40.431] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:40.431] [STYLE] deleteMulti blocks=3 srcLines=[0,2] blm=[s{\"startLine\":0,\"endLine\":0} e{\"startLine\":2,\"endLine\":2}] newSrc=\"\"",
+        "[16:43:40.431] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=0 path=[0] off=0 | L1:2 [# |H|1 headin] coalesce=false | undo=0 redo=1",
+        "[16:43:40.431] [UNDO] recordUndo push pre=bi=0 path=[0] off=0 | L1:2 [# |H|1 headin] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:40.434] [UNDO] recordGroup kind=deleteSelection post=bi=0 path=[] off=0 | L1:0 [|·|]",
+        "[16:43:40.434] [UNDO] restoreCursor bi=0 path=[] off=0",
+        "[16:43:42.318] [UNDO] currentSnapshot cursor=bi=0 path=[] off=0 | L1:0 [|·|] | undo=1 redo=0",
+        "[16:43:42.318] [UNDO] undo -> apply cursor=bi=0 path=[0] off=0 | L1:0 [|·|] | undo=0 redo=1",
+        "[16:43:42.318] [UNDO] applySnapshot cursor=bi=0 path=[0] off=0 | L1:0 [|·|] bodyLen=1040 | undo=0 redo=1",
+        "[16:43:42.320] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=0 | L1:2 [# |H|1 headin]",
+        "[16:43:42.320] [UNDO] restoreCursor bi=0 path=[0] off=0"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "H1 heading marker\n\nH2 mike november",
+        "anchorBlock": 0,
+        "focusBlock": 2
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1
+        ],
+        "partialBlocks": [
+          0,
+          2
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "H1": 1,
+          "heading": 1,
+          "marker": 1,
+          "H2": 1,
+          "mike": 1,
+          "november": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "H1 heading marker\n\nH2 mike november",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 6
+      },
+      "ghost": [],
+      "bodyAfterRender": "\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "H1 heading marker\n\nH2 mike november",
+        "coveredCount": 6,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "heading-span3mix-copy",
+      "type": "heading",
+      "span": "span3mix",
+      "op": "copy",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:43.844] [STYLE] _extract range=sel",
+        "[16:43:43.844] [STYLE] _extract start=bi=0 path=[0] off=11 | L1:13 [heading |m|arker]  end=bi=6 path=[0] off=20 | L7:20 [rot golf| |hotel]",
+        "[16:43:43.844] [STYLE] _extract FAIL: invalid/cross-block start=0 end=6",
+        "[16:43:47.475] [UNDO] undo NO-OP undo=0 redo=1"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "marker\n\nH2 mike november\n\nP1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf",
+        "anchorBlock": 0,
+        "focusBlock": 6
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "partialBlocks": [
+          0,
+          6
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "marker": 1,
+          "H2": 1,
+          "mike": 1,
+          "november": 1,
+          "P1": 1,
+          "alpha": 1,
+          "bravo": 1,
+          "charlie": 1,
+          "delta": 1,
+          "P2": 1,
+          "echo": 1,
+          "foxtrot": 1,
+          "golf": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "marker\n\nH2 mike november\n\nP1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "marker=marker",
+          "H2=H2",
+          "mike=mike",
+          "november=november",
+          "P1=P1",
+          "alpha=alpha",
+          "bravo=bravo",
+          "charlie=charlie"
+        ],
+        "deletedCount": 13
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "marker\r\n\r\nH2 mike november\r\n\r\nP1 alpha bravo charlie delta\r\n\r\n\r\nP2 echo foxtrot golf",
+        "coveredCount": 13,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "heading-span3mix-cut",
+      "type": "heading",
+      "span": "span3mix",
+      "op": "cut",
+      "selMode": "programmatic",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:48.859] [STYLE] _extract FAIL: invalid/cross-block start=0 end=6",
+        "[16:43:48.862] [STYLE] _extract range=sel",
+        "[16:43:48.862] [STYLE] _extract start=bi=0 path=[0] off=11 | L1:13 [heading |m|arker]  end=bi=6 path=[0] off=20 | L7:20 [rot golf| |hotel]",
+        "[16:43:48.862] [STYLE] _extract FAIL: invalid/cross-block start=0 end=6",
+        "[16:43:48.863] [STYLE] deleteMulti blocks=7 srcLines=[0,6] blm=[s{\"startLine\":0,\"endLine\":0} e{\"startLine\":6,\"endLine\":6}] newSrc=\"# H1 heading  hotel\"",
+        "[16:43:48.863] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=0 path=[0] off=11 | L1:13 [heading |m|arker] coalesce=false | undo=0 redo=1",
+        "[16:43:48.863] [UNDO] recordUndo push pre=bi=0 path=[0] off=11 | L1:13 [heading |m|arker] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:48.867] [UNDO] recordGroup kind=deleteSelection post=bi=0 path=[0] off=11 | L1:13 [heading | |hotel]",
+        "[16:43:48.867] [UNDO] restoreCursor bi=0 path=[0] off=11",
+        "[16:43:50.747] [UNDO] currentSnapshot cursor=bi=0 path=[0] off=11 | L1:13 [heading | |hotel] | undo=1 redo=0",
+        "[16:43:50.747] [UNDO] undo -> apply cursor=bi=0 path=[0] off=11 | L1:13 [heading | |hotel] | undo=0 redo=1",
+        "[16:43:50.747] [UNDO] applySnapshot cursor=bi=0 path=[0] off=11 | L1:13 [heading | |hotel] bodyLen=1040 | undo=0 redo=1",
+        "[16:43:50.749] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=11 | L1:13 [heading |m|arker]",
+        "[16:43:50.749] [UNDO] restoreCursor bi=0 path=[0] off=11"
+      ],
+      "selection": {
+        "how": "programmatic",
+        "text": "marker\n\nH2 mike november\n\nP1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf",
+        "anchorBlock": 0,
+        "focusBlock": 6
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1,
+          2,
+          3,
+          4,
+          5
+        ],
+        "partialBlocks": [
+          0,
+          6
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "marker": 1,
+          "H2": 1,
+          "mike": 1,
+          "november": 1,
+          "P1": 1,
+          "alpha": 1,
+          "bravo": 1,
+          "charlie": 1,
+          "delta": 1,
+          "P2": 1,
+          "echo": 1,
+          "foxtrot": 1,
+          "golf": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading  hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "marker\n\nH2 mike november\n\nP1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 13
+      },
+      "ghost": [],
+      "bodyAfterRender": "# H1 heading  hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "marker\n\nH2 mike november\n\nP1 alpha bravo charlie delta\n\n\nP2 echo foxtrot golf",
+        "coveredCount": 13,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "mouse-heading-span2-copy",
+      "type": "heading",
+      "span": "span2same",
+      "op": "copy",
+      "selMode": "mouse",
+      "checks": {
+        "selReady": true,
+        "copyNoop": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:52.403] [STYLE] _extract FAIL: invalid/cross-block start=0 end=1",
+        "[16:43:52.527] [STYLE] _extract range=sel",
+        "[16:43:52.528] [STYLE] _extract start=bi=0 path=[0] off=1 | L1:3 [# H|1| heading]  end=bi=2 path=[0] off=10 | L3:13 [ mike no|v|ember]",
+        "[16:43:52.528] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:52.544] [STYLE] _extract range=sel",
+        "[16:43:52.544] [STYLE] _extract start=bi=0 path=[0] off=1 | L1:3 [# H|1| heading]  end=bi=2 path=[0] off=11 | L3:14 [mike nov|e|mber]",
+        "[16:43:52.544] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:52.602] [STYLE] _extract range=sel",
+        "[16:43:52.603] [STYLE] _extract start=bi=0 path=[0] off=1 | L1:3 [# H|1| heading]  end=bi=2 path=[0] off=12 | L3:15 [ike nove|m|ber]",
+        "[16:43:52.603] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:52.816] [STYLE] _extract range=sel",
+        "[16:43:52.816] [STYLE] _extract start=bi=0 path=[0] off=3 | L1:5 [# H1 |h|eading m]  end=bi=2 path=[0] off=7 | L3:10 [ H2 mike| |november]",
+        "[16:43:52.816] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:56.459] [UNDO] undo NO-OP undo=0 redo=1"
+      ],
+      "selection": {
+        "how": "mouse+snap",
+        "text": "heading marker\n\nH2 mike",
+        "anchorBlock": 0,
+        "focusBlock": 2
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1
+        ],
+        "partialBlocks": [
+          0,
+          2
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "heading": 1,
+          "marker": 1,
+          "H2": 1,
+          "mike": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "copy:execCommand={\"ok\":true,\"err\":null}",
+      "selText": "heading marker\n\nH2 mike",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [
+          "heading=heading",
+          "marker=marker",
+          "H2=H2",
+          "mike=mike"
+        ],
+        "deletedCount": 4
+      },
+      "bodyAfterRender": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "heading marker\r\n\r\nH2 mike",
+        "coveredCount": 4,
+        "missingCovered": []
+      }
+    },
+    {
+      "id": "mouse-heading-span2-cut",
+      "type": "heading",
+      "span": "span2same",
+      "op": "cut",
+      "selMode": "mouse",
+      "checks": {
+        "selReady": true,
+        "changed": true,
+        "deletedGone": true,
+        "keptPresent": true,
+        "noDuplicate": true,
+        "silentWhenEditable": true,
+        "domNoGhost": true,
+        "renderStable": true,
+        "singleUndo": true,
+        "clipboard": true
+      },
+      "failChecks": [],
+      "pass": true,
+      "error": null,
+      "logs": [
+        "[16:43:58.432] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:58.437] [STYLE] _extract range=sel",
+        "[16:43:58.437] [STYLE] _extract start=bi=0 path=[0] off=3 | L1:5 [# H1 |h|eading m]  end=bi=2 path=[0] off=7 | L3:10 [ H2 mike| |november]",
+        "[16:43:58.437] [STYLE] _extract FAIL: invalid/cross-block start=0 end=2",
+        "[16:43:58.437] [STYLE] deleteMulti blocks=3 srcLines=[0,2] blm=[s{\"startLine\":0,\"endLine\":0} e{\"startLine\":2,\"endLine\":2}] newSrc=\"# H1  november\"",
+        "[16:43:58.437] [UNDO] beginUndo kind=deleteSelection force=true pre=bi=0 path=[0] off=3 | L1:5 [# H1 |h|eading m] coalesce=false | undo=0 redo=1",
+        "[16:43:58.437] [UNDO] recordUndo push pre=bi=0 path=[0] off=3 | L1:5 [# H1 |h|eading m] bodyLen=1040 | undo=1 redo=0",
+        "[16:43:58.440] [UNDO] recordGroup kind=deleteSelection post=bi=0 path=[0] off=3 | L1:5 [# H1 | |november]",
+        "[16:43:58.440] [UNDO] restoreCursor bi=0 path=[0] off=3",
+        "[16:44:00.326] [UNDO] currentSnapshot cursor=bi=0 path=[0] off=3 | L1:5 [# H1 | |november] | undo=1 redo=0",
+        "[16:44:00.326] [UNDO] undo -> apply cursor=bi=0 path=[0] off=3 | L1:5 [# H1 | |november] | undo=0 redo=1",
+        "[16:44:00.326] [UNDO] applySnapshot cursor=bi=0 path=[0] off=3 | L1:5 [# H1 | |november] bodyLen=1040 | undo=0 redo=1",
+        "[16:44:00.328] [UNDO] applySnapshot done -> restoreCursor bi=0 path=[0] off=3 | L1:5 [# H1 |h|eading m]",
+        "[16:44:00.328] [UNDO] restoreCursor bi=0 path=[0] off=3"
+      ],
+      "selection": {
+        "how": "mouse+snap",
+        "text": "heading marker\n\nH2 mike",
+        "anchorBlock": 0,
+        "focusBlock": 2
+      },
+      "coverageMeta": {
+        "coveredBlocks": [
+          1
+        ],
+        "partialBlocks": [
+          0,
+          2
+        ],
+        "anomalies": [],
+        "deletedWords": {
+          "heading": 1,
+          "marker": 1,
+          "H2": 1,
+          "mike": 1
+        }
+      },
+      "preBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "postBody": "# H1  november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "notice": null,
+      "noticeCalls": [],
+      "flashes": {
+        "info": [],
+        "error": [],
+        "all": []
+      },
+      "opNote": "cut:prevented=true",
+      "selText": "heading marker\n\nH2 mike",
+      "domOnlyChange": false,
+      "diff": {
+        "missing": [],
+        "extra": [],
+        "fused": [],
+        "deletedCount": 4
+      },
+      "ghost": [],
+      "bodyAfterRender": "# H1  november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "undoBody": "# H1 heading marker\n\n## H2 mike november\n\nP1 alpha bravo charlie delta\n\nP2 echo foxtrot golf hotel\n\nP3 india juliet kilo lima\n\n> BQ1 quebec romeo sierra\n>\n> BQ1B tango uniform victor\n\n> BQ2 whiskey xray yankee\n>\n> BQ2B zulu alfa beta\n\n- L1 gamma2 delta2\n- L1B epsilon2 zeta2\n\n1. L2 eta2 theta2\n2. L2B iota2 kappa2\n\nPREC kilo3 lima3\n\n```python\nC1 lambda2 mu2\nC1B nu2 xi2\n```\n\nMIDC mike3 november3\n\n```python\nC2 omicron2 pi2\nC2B rho2 sigma2\n```\n\nPOSTC papa3 quebec3\n\nPRET romeo3 sierra3\n\n| T1 tau2 | T1B upsilon2 |\n| --- | --- |\n| T1C phi2 | T1D chi2 |\n\nMIDT tango3 uniform3\n\n| T2 psi2 | T2B omega2 |\n| --- | --- |\n| T2C alpha3 | T2D bravo3 |\n\nPOSTT victor3 whiskey3\n\nPREM xray3 yankee3\n\n$$\nM1 = 1\n$$\n\nMIDM zulu3 alfa3\n\n$$\nM2 = 2\n$$\n\nPOSTM bravo4 charlie4\n\nPREMM delta4 echo4\n\n```mermaid\ngraph TD\n  MM1 --> MM2\n```\n\nMIDMM foxtrot4 golf4\n\n```mermaid\ngraph TD\n  MM3 --> MM4\n```\n\nPOSTMM hotel4 india4\n\nP9 juliet4 kilo4\n\nPIMG1 lima5 mike5\n\n![IMG1](./sel-img-alpha.png)\n\nMIDIMG november5 oscar5\n\n![IMG2](./sel-img-beta.png)\n\nPOSTIMG papa5 quebec5\n",
+      "clipboard": {
+        "source": "backend-clipboard",
+        "text": "heading marker\n\nH2 mike",
+        "coveredCount": 4,
+        "missingCovered": []
+      }
+    }
+  ]
+}

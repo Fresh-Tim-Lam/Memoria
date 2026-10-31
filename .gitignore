@@ -135,3 +135,17 @@ aoci.txt
 aoci.code.txt
 aoci.meta.txt
 .aoci/
+
+# canonical selection 结果必须入库（上面的 selection-* 通配只针对一次性 dump）
+!scripts/benchmark/surface/results/selection-after-stage5_872505a6.json
+!scripts/benchmark/surface/results/selection-after-stage5_872505a6.node.log
+!scripts/benchmark/surface/results/selection-p1-final-canonical_5aaba784.json
+!scripts/benchmark/surface/results/selection-p1-final-canonical_5aaba784.node.log
+!scripts/benchmark/surface/results/selection-real_5cbc737b.json
+!scripts/benchmark/surface/results/selection-real_5cbc737b.node.log
+!scripts/benchmark/surface/results/selection-task112-headless9c_5c6e93cc.json
+!scripts/benchmark/surface/results/selection-task112-headless9c_5c6e93cc.node.log
+!scripts/benchmark/surface/results/selection-task112-real-fg4_5c6e93cc.json
+!scripts/benchmark/surface/results/selection-task112-real-fg4_5c6e93cc.node.log
+!scripts/benchmark/surface/results/selection-task112-real-fg_5c6e93cc.json
+!scripts/benchmark/surface/results/selection-task112-real-fg_5c6e93cc.node.log
