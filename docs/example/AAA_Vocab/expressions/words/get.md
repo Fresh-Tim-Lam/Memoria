@@ -143,3 +143,5 @@
 
 - [[queue-for-ages]] —— 库内实作：`After queuing for ages, we finally got our tickets sorted out.`
 - [[good-news-flight-transfer]] —— 口语素材里 `get sth sorted out` 的落点。
+- [[go]] —— 同目录姊妹条：`get` 管「拿到／办成」，`go` 管「走向／结果」；`get somewhere` 与 `go somewhere` 意思几乎一样，只是语域略不同。
+- [[listening-small-word-drift]] —— **听力实况**：同一个「意思全由虚词决定」的机制，`be after`（想要）、`bracket`（价位区间）都是被熟悉义项挡住的次高频义项；卡住的不是单词，是它在句里的任务。

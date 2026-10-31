@@ -1,7 +1,7 @@
 # hard though ... may be（让步倒装）
 
 > **条目类型**：**句式 / 句型框架**（sentence pattern）——它不是单词，也不是一个固定的说法，而是一个**带可替换词槽的句法骨架**：把让步部分的形容词提到 `though` 之前，先让一步，再给结论。
-> **来源**：用户本人的输出句与订正版（`vocab/rewarding.md` §5 User Output Sample）；库内同类让步 / 强调句式另见 `writing/part2/1.md`、`writing/part2/2.md`。
+> **来源**：用户本人的输出句与订正版（`vocab/rewarding.md` §5 User Output Sample）；库内同类让步 / 强调句式另见 `writing/part2/income-equality-impact.md`。
 
 ---
 
@@ -26,6 +26,8 @@
     （尽管这段经历可能很艰难，最终却是值得的。）—— 用户原句的订正版
 - **[pattern] adj/adv + as + S + V, S + V** – 同义变体：`as` 也能引导同一种倒装（`Hard as it was, ...`），但**只能用 as / though**；`although` 不能这样倒装（~~Hard although it was~~）。
   （中文说明：as 与 though 可互换引导这种倒装；although 只用于正常语序。）
+- **[related pattern] Had + S + p.p., S + would have + p.p.** – 同属「倒装」但功能完全不同：那是**虚拟条件**倒装（省掉 `if`），与让步无关，见 [[conditional-inversion]]。
+- **[related expression] rain or shine** – 让步义的**固定短语**（无论晴雨都照常做某事），与倒装无关，但同属「先让一步」的家族，见 [[rain-or-shine]]。
 
 ---
 
@@ -97,6 +99,7 @@ __________ the journey was, we would do it all over again.
 Describe a difficult decision you once made.（口语 Part 2 决定题）
   （中文说明：用一句让步倒装收尾——先摆「难」，再给「为什么值得」）
 > 📎 库内实作：`speaking/part2/experience_3.md`（[[missed-train-plan-change|holiday-plan-derailed]]）——把反思收进一句话的收尾：**Promising though the timetable looked on paper**, it had no room for anything to go wrong。
+> 📎 库内实作：`speaking/part2/place_1.md`（[[hilltop-viewing-platform]]）——地点题收尾先承认一个小缺点再推荐：**Steep though the walk is**, I would recommend it to anyone who needs to reset。
 ### 3. Writing scenario
 Write one Task-2 sentence admitting that a policy may be costly, then arguing that it is still worth adopting.
   （中文说明：大作文写一句话——先承认政策可能有代价，再论证仍值得采纳；用 may 让让步显得克制）
@@ -113,4 +116,4 @@ Make one complex sentence using this pattern, [[rewarding]] and [[perilous]].
 
 **🔑 Answer Key**
 - **Gap-fill**: Hard though the journey was, we would do it all over again.（尽管旅程艰难，我们仍会重来一次。）
-- **Word-weaving sample**: Perilous though the route was, the trip turned out to be the most rewarding thing I have ever done.（尽管这条路线凶险，这趟旅行却成了我做过最有收获的事。）
+- **Word-weaving sample**: Perilous though the route was, the trip turned out to be the most rewarding thing I have ever done.（尽管这条路线凶险，这趟旅行却成了我做过最有收获的事。）> 🔗 **关联**：导师评语里的让步背书（`though …, and rightly so`）与委婉批评（`could have been more clearly expressed`）见 [[feedback-hedging]]；情态动词 + have + 过去分词的听力辨认可对照 [[modal-perfect]]。

@@ -1,0 +1,37 @@
+schema_version: 1
+file: expressions/phrases/income-from.md
+knowledge_points:
+- id: income-from
+  name: income from …
+  range:
+    start:
+      snippet: '# income from …'
+      line_hint: 1
+    end:
+      snippet: '- [[rocket]]：说收入涨跌时配 `rocket` / `plummet`'
+      line_hint: 16
+  tags:
+  - 雅思
+  - 写作
+  - 介词
+  - 收入
+  - 图表
+links:
+- anchor_text: household-spending
+  occurrence: 0
+  targets:
+  - household-spending
+  edge_type: reference
+  instances:
+  - line: 15
+    wrapped: true
+  source_id: income-from
+- anchor_text: rocket
+  occurrence: 0
+  targets:
+  - rocket
+  edge_type: reference
+  instances:
+  - line: 16
+    wrapped: true
+  source_id: income-from

@@ -1,0 +1,69 @@
+schema_version: 1
+file: vocab/utilitarian.md
+knowledge_points:
+- id: utilitarian
+  name: utilitarian
+  range:
+    start:
+      snippet: '# utilitarian'
+      line_hint: 1
+    end:
+      snippet: '- **Word‑weaving sample**: The council called the old station building
+        **utilita'
+      line_hint: 104
+  tags:
+  - IELTS
+  - 词汇
+  - 文化
+  - 写作
+  - 阅读
+  - 口语
+  - C1
+links:
+- anchor_text: humanitarian
+  occurrence: 0
+  targets:
+  - humanitarian
+  edge_type: reference
+  target_edges:
+    humanitarian:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 41
+    wrapped: true
+  - line: 74
+    wrapped: true
+  excluded: []
+  pool:
+  - humanitarian
+- anchor_text: heritage
+  occurrence: 0
+  targets:
+  - heritage
+  edge_type: reference
+  target_edges:
+    heritage:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 75
+    wrapped: true
+  excluded: []
+  pool:
+  - heritage
+- anchor_text: rewarding
+  occurrence: 0
+  targets:
+  - rewarding
+  edge_type: reference
+  target_edges:
+    rewarding:
+      edge_type: reference
+      relevance: 0.7
+  instances:
+  - line: 76
+    wrapped: true
+  excluded: []
+  pool:
+  - rewarding

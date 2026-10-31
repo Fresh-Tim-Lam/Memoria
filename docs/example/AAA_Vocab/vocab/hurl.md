@@ -78,6 +78,8 @@ Write one Task‑2 sentence about social media where people hurl accusations wit
 ### 4. Word‑weaving (advanced)
 Make one complex sentence with “hurl … at” covering both physical action and figurative criticism.
 (中文提示：用hurl … at写复合句，兼顾实物投掷和比喻义言语抨击)
+
+> 🔗 **关联**：[[smack]] —— **对照**：`hurl` 出手即离手（扔出去），`smack` 打中才出声（落下来）；一个管「飞」，一个管「响」。
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined`

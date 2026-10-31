@@ -13,7 +13,7 @@
 - **[fixed adverbial]** for ages = for a very long time（很久）——英式口语，语气比 for a long time 更随意
 - **Speaking example** – We queued for ages outside the ticket office, but it was worth it in the end.
   （我们在售票处外排了好久的队，但最后觉得值得。）
-- **Writing example** –[[\c:blue| Because passengers had to queue for ages at the check-in desk, many of them missed the chance to shop in the departure lounge.]]
+- **Writing example** – Because passengers had to [[\h:#1e3a8a:#bfdbfe|queue for ages]] at the check-in desk, many of them missed the chance to shop in the departure lounge.
   （由于旅客在值机柜台排了很久的队，许多人错过了在候机厅购物的机会。）
 
 > 💡 用法提示：这个表达＝**动作**（queue）＋**时长强化**（for ages），三处常见落点：
@@ -51,7 +51,7 @@
 | verb phrase (US) | stand in line / wait in line | 排队（美式说法） | Speaking/Writing (Both) |
 ### ⚠️ 常见误用
 - ✗ `after queue for ages` —— 介词 after 后必须接 -ing：**after queuing for ages**。
-- ✗ `such as queue for ages` —— such as 后只接名词短语：**such as **[[\c:blue|***queuing for ages****。*]]
+- ✗ `such as queue for ages` —— such as 后只接名词短语：**such as queuing for ages**。
 - ✗ `queing` —— 少了一个 u，正确拼写为 **queuing** ／ **queueing**。
 - ✗ `I queued for ages waiting in the queue` —— 语义重复，二者留一：I queued for ages. ／ I spent ages waiting.
 - ⚠️ 语域偏差：`for ages` 很口语，正式书面请用 **for a long time / for hours**。

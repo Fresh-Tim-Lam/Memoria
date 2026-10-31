@@ -103,3 +103,4 @@ Make one complex sentence using "lush", [[picturesque]], [[secluded]] and [[peri
 **🔑 Answer Key**
 - **Gap-fill**: lush
 - Answer: lush（茂盛的；郁郁葱葱的；丰盛的）
+> 🔗 **关联**：一个量**草木的密度**、一个给**颜色与香气** —— 写花田时两词常连用：*In July the hills turn lush and faintly lavender.*（七月里山丘草木丰茂，泛着一层淡淡的薰衣草色。）绿底是本词，那一片紫是 [[lavender]]。

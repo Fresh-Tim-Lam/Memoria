@@ -1,0 +1,38 @@
+schema_version: 1
+file: expressions/patterns/concerned-postpositive.md
+knowledge_points:
+- id: concerned-postpositive
+  name: 形容词后置：the authorities concerned（有关当局）
+  range:
+    start:
+      snippet: '# 形容词后置：the authorities concerned（有关当局）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The authorities concerned have promised
+        to **curb** e'
+      line_hint: 52
+  tags:
+  - IELTS
+  - 语法
+  - 语域
+  - 写作
+  - C1
+links:
+- anchor_text: curb
+  occurrence: 0
+  targets:
+  - curb
+  edge_type: reference
+  instances:
+  - line: 44
+    wrapped: true
+  source_id: concerned-postpositive
+- anchor_text: exacerbate
+  occurrence: 0
+  targets:
+  - exacerbate
+  edge_type: reference
+  instances:
+  - line: 44
+    wrapped: true
+  source_id: concerned-postpositive

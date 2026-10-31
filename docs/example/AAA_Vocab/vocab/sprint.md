@@ -97,3 +97,4 @@ Make one complex sentence using "sprint", [[flail]] and [[queue-for-ages|queuing
 **🔑 Answer Key**
 - **Gap‑fill**: sprinting
 - Answer: sprint（冲刺；猛跑）；名词 a sprint（短跑；一阵冲刺），派生 sprinter（短跑运动员）
+> 🔗 **关联**：[[spin]] —— **形近对照**：`spin` /spɪn/ 与 `sprint` /sprɪnt/ 只差一个 `r` 与词尾 `t`；一个原地打转，一个朝前冲 —— *The wheels spun for a second, then the car sprinted off.*（车轮空转了一秒，然后车蹿了出去。）⚠ 自撰

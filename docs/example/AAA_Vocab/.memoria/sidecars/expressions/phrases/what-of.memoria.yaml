@@ -1,0 +1,47 @@
+schema_version: 1
+file: expressions/phrases/what-of.md
+knowledge_points:
+- id: what-of
+  name: what of ...?（那……呢？）
+  range:
+    start:
+      snippet: '# what of ...?（那……呢？）'
+      line_hint: 1
+    end:
+      snippet: '- Answer: And what of …?（那……呢？）——书面转场；**不能**用来提建议（提建议用 What about）'
+      line_hint: 99
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - DiscourseMarker
+  - Formal
+  - B2
+links:
+- anchor_text: enumeration-linkers
+  occurrence: 0
+  targets:
+  - enumeration-linkers
+  edge_type: reference
+  instances:
+  - line: 86
+    wrapped: true
+  source_id: what-of
+- anchor_text: contrast-linkers
+  occurrence: 0
+  targets:
+  - contrast-linkers
+  edge_type: reference
+  instances:
+  - line: 87
+    wrapped: true
+  source_id: what-of
+- anchor_text: herein-lies-inversion
+  occurrence: 0
+  targets:
+  - herein-lies-inversion
+  edge_type: reference
+  instances:
+  - line: 88
+    wrapped: true
+  source_id: what-of

@@ -1,0 +1,67 @@
+schema_version: 1
+file: expressions/phrases/rain-or-shine.md
+knowledge_points:
+- id: rain-or-shine
+  name: rain or shine
+  range:
+    start:
+      snippet: '# rain or shine'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The bins sit out on the **kerb** all night,
+        rain or s'
+      line_hint: 92
+  tags:
+  - IELTS
+  - 习语
+  - 天气
+  - 习惯
+  - Speaking
+  - Writing
+  - C1
+links:
+- anchor_text: describing-heat
+  occurrence: 0
+  targets:
+  - describing-heat
+  edge_type: reference
+  instances:
+  - line: 26
+    wrapped: true
+  source_id: rain-or-shine
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 35
+    wrapped: true
+  source_id: rain-or-shine
+- anchor_text: at-every-turn
+  occurrence: 0
+  targets:
+  - at-every-turn
+  edge_type: reference
+  instances:
+  - line: 65
+    wrapped: true
+  source_id: rain-or-shine
+- anchor_text: curb
+  occurrence: 0
+  targets:
+  - curb
+  edge_type: reference
+  instances:
+  - line: 84
+    wrapped: true
+  source_id: rain-or-shine
+- anchor_text: stench
+  occurrence: 0
+  targets:
+  - stench
+  edge_type: reference
+  instances:
+  - line: 84
+    wrapped: true
+  source_id: rain-or-shine

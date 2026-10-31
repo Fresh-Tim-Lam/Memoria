@@ -8,8 +8,8 @@ knowledge_points:
       snippet: '# speculation'
       line_hint: 1
     end:
-      snippet: '- Answer: speculation（推测、猜测；投机）／动词 speculate（推测；猜测）／形容词 speculative（推测的；投机性的）'
-      line_hint: 146
+      snippet: '> 🔗 **关联**：[[conceive]] —— **同场（对未成事实的「想」）**：speculation 是无据地**猜**发生了什么，`conceiv'
+      line_hint: 148
   tags:
   - IELTS
   - Speaking
@@ -80,3 +80,21 @@ links:
   excluded: []
   pool:
   - rumour-has-it
+- anchor_text: rumour-has-it
+  occurrence: 0
+  targets:
+  - rumour-has-it
+  edge_type: reference
+  instances:
+  - line: 147
+    wrapped: true
+  source_id: speculation
+- anchor_text: take-sb-at-their-word
+  occurrence: 0
+  targets:
+  - take-sb-at-their-word
+  edge_type: reference
+  instances:
+  - line: 147
+    wrapped: true
+  source_id: speculation

@@ -1,0 +1,56 @@
+schema_version: 1
+file: vocab/lavender.md
+knowledge_points:
+- id: lavender
+  name: lavender
+  range:
+    start:
+      snippet: '# lavender'
+      line_hint: 1
+    end:
+      snippet: '- [[breathtaking]] —— 力度不同：`lavender` 语气轻、画面柔，要写「震撼到屏息」得换本词 —— *The
+        lavender fie'
+      line_hint: 107
+  tags:
+  - IELTS
+  - Speaking
+  - Writing
+  - Reading
+  - Nature
+  - Place
+  - 颜色
+  - 植物
+links:
+- anchor_text: breathtaking
+  occurrence: 0
+  targets:
+  - breathtaking
+  edge_type: reference
+  instances:
+  - line: 35
+    wrapped: true
+  - line: 107
+    wrapped: true
+  source_id: lavender
+- anchor_text: picturesque
+  occurrence: 0
+  targets:
+  - picturesque
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  - line: 105
+    wrapped: true
+  source_id: lavender
+- anchor_text: lush
+  occurrence: 0
+  targets:
+  - lush
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  - line: 106
+    wrapped: true
+  source_id: lavender

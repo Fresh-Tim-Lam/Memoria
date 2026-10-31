@@ -10,7 +10,7 @@ knowledge_points:
     end:
       snippet: '- **Word-weaving sample**: Perilous though the route was, the trip
         turned out to'
-      line_hint: 116
+      line_hint: 119
   tags:
   - 句式
   - 让步
@@ -25,7 +25,7 @@ links:
   - rewarding
   edge_type: reference
   instances:
-  - line: 104
+  - line: 106
     wrapped: true
   source_id: concessive-inversion
 - anchor_text: perilous
@@ -34,7 +34,7 @@ links:
   - perilous
   edge_type: reference
   instances:
-  - line: 104
+  - line: 106
     wrapped: true
   source_id: concessive-inversion
 - anchor_text: holiday-plan-derailed
@@ -43,7 +43,7 @@ links:
   - missed-train-plan-change
   edge_type: reference
   instances:
-  - line: 99
+  - line: 101
     wrapped: true
   source_id: concessive-inversion
 - anchor_text: missed-train-plan-change
@@ -52,7 +52,7 @@ links:
   - missed-train-plan-change
   edge_type: reference
   instances:
-  - line: 99
+  - line: 101
     wrapped: true
   source_id: concessive-inversion
 - anchor_text: on the fence
@@ -65,8 +65,44 @@ links:
       edge_type: reference
       relevance: 0.7
   instances:
-  - line: 42
+  - line: 44
     wrapped: true
   excluded: []
   pool:
   - on-the-fence
+- anchor_text: conditional-inversion
+  occurrence: 0
+  targets:
+  - conditional-inversion
+  edge_type: reference
+  instances:
+  - line: 29
+    wrapped: true
+  source_id: concessive-inversion
+- anchor_text: rain-or-shine
+  occurrence: 0
+  targets:
+  - rain-or-shine
+  edge_type: reference
+  instances:
+  - line: 30
+    wrapped: true
+  source_id: concessive-inversion
+- anchor_text: feedback-hedging
+  occurrence: 0
+  targets:
+  - feedback-hedging
+  edge_type: reference
+  instances:
+  - line: 118
+    wrapped: true
+  source_id: concessive-inversion
+- anchor_text: modal-perfect
+  occurrence: 0
+  targets:
+  - modal-perfect
+  edge_type: reference
+  instances:
+  - line: 118
+    wrapped: true
+  source_id: concessive-inversion

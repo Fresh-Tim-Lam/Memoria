@@ -116,6 +116,10 @@ Write one Task‑2 sentence about a public service that is failing to cope.
 ### 4. Word-weaving (advanced)
 Make one complex sentence using "flail", [[troubled]] and [[perilous]].
 （中文提示：用 flail、troubled、perilous 合成一句）
+
+> 🔗 **关联**：[[smack]] —— **对照**：`flail` 是乱挥、以打不中为常态，`smack` 是瞄着打、一下出声；写失措用 flail，写命中用 smack。
+
+> 🔗 **关联**：[[mime]] —— **对照**：两词都靠身体说话，`mime` 是**控制住**给人看的一套动作，`flail` 是**失控**的动作；`He tried to mime swimming and ended up flailing.`（他想比划游泳，结果成了乱挥。）
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined` `#Movement` `#Metaphor` `#News` `#C1`

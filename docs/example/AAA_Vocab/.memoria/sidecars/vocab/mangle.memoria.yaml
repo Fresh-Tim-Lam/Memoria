@@ -1,0 +1,55 @@
+schema_version: 1
+file: vocab/mangle.md
+knowledge_points:
+- id: mangle
+  name: mangle
+  range:
+    start:
+      snippet: '# mangle'
+      line_hint: 1
+    end:
+      snippet: '- [[apparatus]] —— **同族「设备」但粒度不同**：`apparatus` 是可数但泛指的**成套器具／器械**，`mangle`
+        是一台**'
+      line_hint: 105
+  tags:
+  - IELTS
+  - Listening
+  - Reading
+  - WritingTask1
+  - Industry
+  - Process
+  - C1
+links:
+- anchor_text: ooze
+  occurrence: 0
+  targets:
+  - ooze
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  - line: 103
+    wrapped: true
+  source_id: mangle
+- anchor_text: incision
+  occurrence: 0
+  targets:
+  - incision
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  - line: 99
+    wrapped: true
+  - line: 104
+    wrapped: true
+  source_id: mangle
+- anchor_text: apparatus
+  occurrence: 0
+  targets:
+  - apparatus
+  edge_type: reference
+  instances:
+  - line: 105
+    wrapped: true
+  source_id: mangle

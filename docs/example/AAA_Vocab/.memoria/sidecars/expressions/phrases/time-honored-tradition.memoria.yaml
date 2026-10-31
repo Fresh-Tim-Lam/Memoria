@@ -1,0 +1,45 @@
+schema_version: 1
+file: expressions/phrases/time-honored-tradition.md
+knowledge_points:
+- id: time-honored-tradition
+  name: time-honored tradition
+  range:
+    start:
+      snippet: '# time-honored tradition'
+      line_hint: 1
+    end:
+      snippet: '- [[step-back-in-time]] —— 讲老地方「仿佛回到过去」时用'
+      line_hint: 24
+  tags:
+  - 听力
+  - 传统
+  - 短语
+  - C1
+links:
+- anchor_text: heritage
+  occurrence: 0
+  targets:
+  - heritage
+  edge_type: reference
+  instances:
+  - line: 22
+    wrapped: true
+  source_id: time-honored-tradition
+- anchor_text: dignitary
+  occurrence: 0
+  targets:
+  - dignitary
+  edge_type: reference
+  instances:
+  - line: 23
+    wrapped: true
+  source_id: time-honored-tradition
+- anchor_text: step-back-in-time
+  occurrence: 0
+  targets:
+  - step-back-in-time
+  edge_type: reference
+  instances:
+  - line: 24
+    wrapped: true
+  source_id: time-honored-tradition

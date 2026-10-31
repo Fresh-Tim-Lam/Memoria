@@ -75,3 +75,6 @@ Make one complex sentence using "a secluded spot", [[picturesque]] and [[hustle-
 **🔑 Answer Key**
 - **Gap-fill**: secluded
 - Answer: secluded（僻静的；幽静的；远离人烟的）
+
+---
+> 🔗 **相关条目**：[[not-the-least-bit|not the least bit]] —— 说某处「一点也不清静」即 `not the least bit quiet`：`secluded` 是**正向**说安静，本条是**反向**把安静否掉。

@@ -65,6 +65,7 @@ For me, the small park near my office is an __________ of calm in the middle of 
 Describe a peaceful place in your city that you often go to. Explain what it is like and why you like it.
 （中文说明：口语 Part 2 地点题，描述城市中一个你常去的宁静之处，说明其样貌与喜爱原因）
 > 💡 Use "an oasis of calm" and contrast it with [[hustle-and-bustle|the hustle and bustle of the city]].
+> 📎 库内实作：`speaking/part2/place_1.md`（[[hilltop-viewing-platform]]）——喻义用法（喧嚣中的一片宁静之地）：it is an **oasis** of calm above the hustle and bustle。
 ### 3. Writing scenario
 Write one Task‑2 sentence about the role of urban green spaces.
 （中文说明：大作文写一句话，论述城市绿地的作​用）

@@ -1,0 +1,74 @@
+schema_version: 1
+file: expressions/patterns/not-the-least-bit.md
+knowledge_points:
+- id: not-the-least-bit
+  name: not the least bit ...（否定最小量强调式）
+  range:
+    start:
+      snippet: '# not the least bit ...（否定最小量强调式）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The cottage that was supposed to be **secluded**
+        is *'
+      line_hint: 141
+  tags:
+  - 句式
+  - 否定
+  - 否定极性项
+  - 强调
+  - 听力
+  - 口语
+  - 语法
+  - C1
+links:
+- anchor_text: contrast-linkers
+  occurrence: 0
+  targets:
+  - contrast-linkers
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  - line: 102
+    wrapped: true
+  source_id: not-the-least-bit
+- anchor_text: hustle-and-bustle
+  occurrence: 0
+  targets:
+  - hustle-and-bustle
+  edge_type: reference
+  instances:
+  - line: 100
+    wrapped: true
+  - line: 128
+    wrapped: true
+  source_id: not-the-least-bit
+- anchor_text: secluded
+  occurrence: 0
+  targets:
+  - secluded
+  edge_type: reference
+  instances:
+  - line: 101
+    wrapped: true
+  - line: 128
+    wrapped: true
+  source_id: not-the-least-bit
+- anchor_text: exclusively
+  occurrence: 0
+  targets:
+  - exclusively
+  edge_type: reference
+  instances:
+  - line: 103
+    wrapped: true
+  source_id: not-the-least-bit
+- anchor_text: clear-cut
+  occurrence: 0
+  targets:
+  - clear-cut
+  edge_type: reference
+  instances:
+  - line: 104
+    wrapped: true
+  source_id: not-the-least-bit

@@ -1,0 +1,43 @@
+schema_version: 1
+file: vocab/exclusively.md
+knowledge_points:
+- id: exclusively
+  name: exclusively
+  range:
+    start:
+      snippet: '# exclusively'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The new reading room was **specifically**
+        built for e'
+      line_hint: 128
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - Speaking
+  - Listening
+  - ActiveVocabulary
+  - Adverb
+  - C1
+links:
+- anchor_text: feedback-hedging
+  occurrence: 0
+  targets:
+  - feedback-hedging
+  edge_type: reference
+  instances:
+  - line: 35
+    wrapped: true
+  - line: 90
+    wrapped: true
+  source_id: exclusively
+- anchor_text: not-the-least-bit
+  occurrence: 0
+  targets:
+  - not-the-least-bit
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  source_id: exclusively

@@ -101,3 +101,7 @@ Make one complex sentence using "bungalow", [[secluded]] and [[renovation]].
 - **Gap‑fill**: bungalow（平房；单层住宅）
 - **Word‑weaving sample**: What began as a **secluded** 1950s **bungalow** came back to life after an eighteen‑month **renovation**.（一栋原本偏僻的一九五〇年代平房，经过十八个月翻新后重获新生。）
 - Answer: bungalow（平房；只有一层的住宅——英式常带门廊；「小屋／度假小屋」义在英式口语里也常见）
+
+> 🔗 **关联**：[[attic]] —— **同场对照**：`bungalow` 只有一层，头顶上方通常只剩一层很浅的屋顶空间，算不上真正的阁楼；所以英式里「加建阁楼」的典型对象是两层老排屋：*Bungalows have no usable attic, which is why so many families move rather than extend.*（平房没有可用的阁楼，所以很多家庭宁可搬家也不扩建。）
+
+> 🔗 **关联**：[[high-rise]] —— **对照**：建筑描述词里的「层数」两极——bungalow 只有**一层**，high‑rise 有**很多层**。例：The council replaced the old bungalows with high‑rise blocks.（市政把旧平房拆掉，改建成了高层楼群。）

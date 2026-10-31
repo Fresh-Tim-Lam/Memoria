@@ -1,0 +1,47 @@
+schema_version: 1
+file: vocab/mainstay.md
+knowledge_points:
+- id: mainstay
+  name: mainstay
+  range:
+    start:
+      snippet: '# mainstay'
+      line_hint: 1
+    end:
+      snippet: '- Answer: mainstay（支柱；中坚）——`the mainstay of sth`；作定语时为 `mainstay elements`（骨干成分）'
+      line_hint: 94
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - Economy
+  - Culture
+  - B2
+links:
+- anchor_text: heritage
+  occurrence: 0
+  targets:
+  - heritage
+  edge_type: reference
+  instances:
+  - line: 81
+    wrapped: true
+  source_id: mainstay
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 82
+    wrapped: true
+  source_id: mainstay
+- anchor_text: legacy
+  occurrence: 0
+  targets:
+  - legacy
+  edge_type: reference
+  instances:
+  - line: 83
+    wrapped: true
+  source_id: mainstay

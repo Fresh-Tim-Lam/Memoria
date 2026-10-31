@@ -59,6 +59,7 @@ After six hours of climbing, we were rewarded with a __________ view of the whol
 Describe a place with a spectacular view you have been to. Say where it is and why the view impressed you.
 （中文说明：口语 Part 2 地点题，描述一处你到过的景色绝佳之地，说明位置与震撼的原因）
 > 💡 Use breathtaking and one sensory detail (light, sound, temperature).
+> 📎 库内实作：`speaking/part2/place_1.md`（[[hilltop-viewing-platform]]）——山顶看日落与全城灯海的场面：the view is genuinely **breathtaking**（VIEW 槽位的定调句）。
 ### 3. Writing scenario
 Write one Task‑2 sentence about protecting natural landscapes from over‑development.
 （中文说明：大作文写一句话，论述应保护自然风光免于过度开发）
@@ -72,3 +73,5 @@ Make one complex sentence using breathtaking, [[picturesque]] and "sunrise".
 **🔑 Answer Key**
 - **Gap-fill**: breathtaking
 - Answer: breathtaking（令人叹为观止的；美得令人屏息的）
+> 🔗 **关联**：写花田先定**力度**再挑词 —— 要「震撼到屏息」用本词，要「柔和的淡紫」用 [[lavender]]：*The lavender fields were not breathtaking, only quietly beautiful, pale purple to the horizon.*（那片薰衣草谈不上震撼，只是安静地美：淡紫一直到天边。）
+> 🔗 **关联**：[[high-rise]] —— **同场出现**：描述从高层看到的景色。例：The view from my high‑rise apartment is absolutely breathtaking.（从我高层公寓看到的景色美极了。）

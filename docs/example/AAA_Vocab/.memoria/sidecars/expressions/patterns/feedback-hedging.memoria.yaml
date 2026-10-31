@@ -1,0 +1,53 @@
+schema_version: 1
+file: expressions/patterns/feedback-hedging.md
+knowledge_points:
+- id: feedback-hedging
+  name: 导师评语解码：先盖章，再推动（feedback hedging）
+  range:
+    start:
+      snippet: '# 导师评语解码：先盖章，再推动（feedback hedging）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: Your section deals exclusively with advertising
+        in Eu'
+      line_hint: 130
+  tags:
+  - 听力
+  - 语用
+  - 导师反馈
+  - 话语模式
+  - IELTS
+links:
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  - line: 135
+    wrapped: true
+  source_id: feedback-hedging
+- anchor_text: contrast-linkers
+  occurrence: 0
+  targets:
+  - contrast-linkers
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  - line: 135
+    wrapped: true
+  source_id: feedback-hedging
+- anchor_text: modal-perfect
+  occurrence: 0
+  targets:
+  - modal-perfect
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  - line: 133
+    wrapped: true
+  source_id: feedback-hedging

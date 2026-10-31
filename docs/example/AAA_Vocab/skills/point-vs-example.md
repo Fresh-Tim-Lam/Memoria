@@ -8,7 +8,7 @@
 
 ## 🎯 一句话定义
 
-> 标记词不是词汇量问题，是 [[\h|转场问题]]。说不出 `Moreover`，多半不是不会这个词，而是**不确定下面这句是新观点还是同一个观点的例子**——没东西可标，就只能硬塞。
+> 标记词不是词汇量问题，是 [[\h:#fff3cd:#5c4a00|转场问题]]。说不出 `Moreover`，多半不是不会这个词，而是**不确定下面这句是新观点还是同一个观点的例子**——没东西可标，就只能硬塞。
 
 顺序永远是：先分清 point / example → 再练从例子爬回 point → 标记词最后一个自然就位。
 
@@ -71,7 +71,7 @@
 | **骑墙**（谁也不得罪、不给判断） | `both have advantages and disadvantages` | 立场可辨但得找：Band 4 `the reader has to read carefully to find it`（`docs/ielts_band_descriptors.md:144`） |
 
 - 前两条是**同一种病的两侧**：只有 example 是「不敢下判断」，只有 point 是「没有证据硬下判断」。
-- 同一提醒库里已有四处，可对照改句：`vocab/delinquency.md:100`、`vocab/indulge.md:103`、`vocab/juvenile.md:103`、`vocab/rebel.md:100`；写作实作见 `writing/part2/2.md:90` 与 `:167`。
+- 同一提醒库里已有四处，可对照改句：`vocab/delinquency.md:100`、`vocab/indulge.md:103`、`vocab/juvenile.md:103`、`vocab/rebel.md:100`；写作实作见 `writing/part2/income-equality-impact.md`（改写示范段）。
 
 ## 🧩 可套用骨架 / Skeleton
 
@@ -115,9 +115,10 @@
 ## 📎 库内实作 / Where it shows up
 
 - **口语**：`speaking/part2/experience_1.md`（[[good-news-flight-transfer]]）、`experience_2.md`（[[rafting-whirlpool-rescue]]）、`experience_3.md`（[[missed-train-plan-change]]）——三篇的「收尾感想」就是第 ③ 级；`experience_1.md:208` 的追问演练直接给了 `I suppose it comes down to ...`。
-- **写作**：`writing/part2/1.md`（[[income-equality-impact]]）、`writing/part2/2.md`——让步段＋结论句即本模块在写作侧的用法；`writing/part2/2.md:90` 是把过度概括改成带条件比较句的实作。
+- **写作**：`writing/part2/income-equality-impact.md`（[[income-equality-impact]]）——批改 + 改写示范，让步段＋结论句即本模块在写作侧的用法；改写示范的反驳段是把过度概括改成带条件比较句的实作。
 - **对面参照**：[[on-the-fence]] 是「不下判断」的说法，与本模块「必须落到一个判断」正好相反。
 - **抬一层的手段**：[[concessive-inversion]]（先让一步、再给结论，用在收口）。
+- **首尾两段**：[[op-ed-skeleton]]（OP 与 ED 段落骨架）——本模块管主体段里判断与例证的分工，它管开头段与结尾段怎么搭。
 
 ## 📌 Revision Tags
 

@@ -1,0 +1,45 @@
+schema_version: 1
+file: expressions/patterns/conditional-inversion.md
+knowledge_points:
+- id: conditional-inversion
+  name: Had he remained ...（虚拟条件倒装）
+  range:
+    start:
+      snippet: '# Had he remained ...（虚拟条件倒装）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: Had he stayed in his home country, his
+        career would p'
+      line_hint: 124
+  tags:
+  - 句式
+  - 条件句
+  - 倒装
+  - 语法
+  - 写作
+  - 口语
+links:
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  - line: 48
+    wrapped: true
+  - line: 82
+    wrapped: true
+  - line: 83
+    wrapped: true
+  source_id: conditional-inversion
+- anchor_text: mainstream
+  occurrence: 0
+  targets:
+  - mainstream
+  edge_type: reference
+  instances:
+  - line: 112
+    wrapped: true
+  source_id: conditional-inversion

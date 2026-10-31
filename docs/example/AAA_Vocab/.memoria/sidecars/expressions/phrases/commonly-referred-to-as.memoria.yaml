@@ -1,0 +1,26 @@
+schema_version: 1
+file: expressions/phrases/commonly-referred-to-as.md
+knowledge_points:
+- id: commonly-referred-to-as
+  name: commonly referred to as
+  range:
+    start:
+      snippet: '# commonly referred to as'
+      line_hint: 1
+    end:
+      snippet: '- [[appendage]] —— 同句：术语 `appendages` 与通俗名 `legs` 就是被它连起来的。'
+      line_hint: 18
+  tags:
+  - IELTS
+  - Reading
+  - Listening
+links:
+- anchor_text: appendage
+  occurrence: 0
+  targets:
+  - appendage
+  edge_type: reference
+  instances:
+  - line: 18
+    wrapped: true
+  source_id: commonly-referred-to-as

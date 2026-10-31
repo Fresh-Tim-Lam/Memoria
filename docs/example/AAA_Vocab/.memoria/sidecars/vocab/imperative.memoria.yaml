@@ -1,0 +1,39 @@
+schema_version: 1
+file: vocab/imperative.md
+knowledge_points:
+- id: imperative
+  name: imperative
+  range:
+    start:
+      snippet: '# imperative'
+      line_hint: 1
+    end:
+      snippet: '- Answer: imperative（当务之急；硬要求）——形容词义「非做不可」，名词义「非做不可的那件事」'
+      line_hint: 108
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - ActiveVocabulary
+  - Formal
+  - C1
+  - Culture
+links:
+- anchor_text: utilitarian
+  occurrence: 0
+  targets:
+  - utilitarian
+  edge_type: reference
+  instances:
+  - line: 95
+    wrapped: true
+  source_id: imperative
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 96
+    wrapped: true
+  source_id: imperative

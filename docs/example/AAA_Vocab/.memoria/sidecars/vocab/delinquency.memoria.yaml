@@ -41,3 +41,31 @@ links:
   - line: 99
     wrapped: true
   source_id: delinquency
+- anchor_text: deterrent
+  occurrence: 0
+  targets:
+  - deterrent
+  edge_type: reference
+  target_edges:
+    deterrent:
+      edge_type: reference
+      relevance: 0.7
+  pool:
+  - deterrent
+  instances:
+  - line: 109
+    wrapped: true
+  - line: 109
+    wrapped: false
+  - line: 109
+    wrapped: true
+  excluded: []
+- anchor_text: a-real-head-scratcher
+  occurrence: 0
+  targets:
+  - a-real-head-scratcher
+  edge_type: reference
+  instances:
+  - line: 34
+    wrapped: true
+  source_id: delinquency

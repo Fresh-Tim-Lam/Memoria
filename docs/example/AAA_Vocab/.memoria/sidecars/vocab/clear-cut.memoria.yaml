@@ -1,0 +1,65 @@
+schema_version: 1
+file: vocab/clear-cut.md
+knowledge_points:
+- id: clear-cut
+  name: clear-cut
+  range:
+    start:
+      snippet: '# clear-cut'
+      line_hint: 1
+    end:
+      snippet: '- [[feedback-hedging]] —— `not so clear-cut` 是**程度下调**（hedging）的一种：不把话说满，留出反例的余地'
+      line_hint: 128
+  tags:
+  - IELTS
+  - Listening
+  - Reading
+  - Speaking
+  - Writing
+  - ActiveVocabulary
+  - Adjective
+  - Clarity
+  - B2
+links:
+- anchor_text: not-the-least-bit
+  occurrence: 0
+  targets:
+  - not-the-least-bit
+  edge_type: reference
+  instances:
+  - line: 3
+    wrapped: true
+  - line: 109
+    wrapped: true
+  - line: 126
+    wrapped: true
+  source_id: clear-cut
+- anchor_text: take-sb-at-their-word
+  occurrence: 0
+  targets:
+  - take-sb-at-their-word
+  edge_type: reference
+  instances:
+  - line: 109
+    wrapped: true
+  - line: 127
+    wrapped: true
+  source_id: clear-cut
+- anchor_text: feedback-hedging
+  occurrence: 0
+  targets:
+  - feedback-hedging
+  edge_type: reference
+  instances:
+  - line: 128
+    wrapped: true
+  source_id: clear-cut
+- anchor_text: incision
+  occurrence: 0
+  targets:
+  - incision
+  edge_type: reference
+  instances:
+  - line: 128
+    wrapped: true
+  source_id: clear-cut

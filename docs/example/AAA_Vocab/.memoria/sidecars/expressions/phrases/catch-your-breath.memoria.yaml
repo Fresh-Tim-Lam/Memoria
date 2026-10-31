@@ -9,7 +9,7 @@ knowledge_points:
       line_hint: 1
     end:
       snippet: '- Answer: catch your breath（（运动后）把气喘匀；（引申）歇口气——释义据 Oxford / Cambridge）'
-      line_hint: 110
+      line_hint: 111
   tags:
   - 习语
   - 口语
@@ -17,3 +17,31 @@ knowledge_points:
   - 运动
   - 呼吸
   - 高频搭配
+links:
+- anchor_text: breathtaking
+  occurrence: 0
+  targets:
+  - breathtaking
+  edge_type: reference
+  instances:
+  - line: 50
+    wrapped: true
+  source_id: catch-your-breath
+- anchor_text: sprint
+  occurrence: 0
+  targets:
+  - sprint
+  edge_type: reference
+  instances:
+  - line: 101
+    wrapped: true
+  source_id: catch-your-breath
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 101
+    wrapped: true
+  source_id: catch-your-breath

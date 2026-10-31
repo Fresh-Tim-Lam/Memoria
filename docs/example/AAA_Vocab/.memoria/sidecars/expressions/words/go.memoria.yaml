@@ -1,0 +1,54 @@
+schema_version: 1
+file: expressions/words/go.md
+knowledge_points:
+- id: go
+  name: go
+  range:
+    start:
+      snippet: '# go'
+      line_hint: 1
+    end:
+      snippet: '- [[go-back-a-long-way]] —— `go` 家族里已单独立条的短语：`go back a long way`（追溯到很久以前），与本条簇'
+      line_hint: 127
+  tags:
+  - IELTS
+  - 口语
+  - 短语动词
+  - Listening
+  - 基础词
+links:
+- anchor_text: go-back-a-long-way
+  occurrence: 0
+  targets:
+  - go-back-a-long-way
+  edge_type: reference
+  instances:
+  - line: 4
+    wrapped: true
+  - line: 111
+    wrapped: true
+  - line: 127
+    wrapped: true
+  source_id: go
+- anchor_text: get
+  occurrence: 0
+  targets:
+  - get
+  edge_type: reference
+  instances:
+  - line: 16
+    wrapped: true
+  - line: 37
+    wrapped: true
+  - line: 125
+    wrapped: true
+  source_id: go
+- anchor_text: feedback-hedging
+  occurrence: 0
+  targets:
+  - feedback-hedging
+  edge_type: reference
+  instances:
+  - line: 126
+    wrapped: true
+  source_id: go

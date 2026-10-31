@@ -108,3 +108,5 @@ Create a short paragraph (4–5 sentences) using **at least three** of the follo
 - **Gap-fill**: dilapidated
 - **Word-weaving sample**: The once-thriving industrial district had fallen into **dilapidation** after the factories closed. The **dilapidated** buildings, with their broken windows and crumbling walls, became a safety hazard. However, the local community decided to **renovate** the area rather than demolish it. After years of **neglect**, they **restored** the old factories into modern art galleries and coffee shops, breathing new life into the neighborhood.
   （曾经繁荣的工业区在工厂关闭后陷入了**破败**。那些**破旧的**建筑，窗户破碎、墙壁剥落，成了安全隐患。然而，当地社区决定**翻新**该区域而非拆除。在多年的**忽视**之后，他们将旧工厂**改造**成了现代艺术画廊和咖啡馆，为社区注入了新的活力。）
+> 🔗 **关联**：[[attic]] —— **上下游**：房子破败，毛病常常先在阁楼露头（漏雨、木料腐朽、隔热层老化）；写房屋状况时先给整体判断（dilapidated），再落一处具体证据：*The attic of the dilapidated house had been open to the rain for years.*（那栋破败房子的阁楼已经漏了好几年的雨。）
+> 🔗 **关联**：[[on-the-premises]] —— **场景**：谈论房产状况时，`premises`（复数）是「场所」的正式说法，破败的场地正好接上：*The premises had been empty and dilapidated for over a decade.*（那处场地已经空置破败十多年。）⚠ 自撰

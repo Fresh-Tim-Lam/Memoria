@@ -1,0 +1,80 @@
+schema_version: 1
+file: expressions/patterns/enumeration-linkers.md
+knowledge_points:
+- id: enumeration-linkers
+  name: 列举与追加词（firstly / besides / what's more / finally）
+  range:
+    start:
+      snippet: '# 列举与追加词（firstly / besides / what''s more / finally）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: On balance, hard though the changes were,
+        equalising'
+      line_hint: 169
+  tags:
+  - 衔接词
+  - 列举
+  - 追加
+  - 话语标记
+  - 写作
+  - 口语
+  - CC
+links:
+- anchor_text: not-the-least-bit
+  occurrence: 0
+  targets:
+  - not-the-least-bit
+  edge_type: reference
+  instances:
+  - line: 81
+    wrapped: true
+  - line: 112
+    wrapped: true
+  source_id: enumeration-linkers
+- anchor_text: point-vs-example
+  occurrence: 0
+  targets:
+  - point-vs-example
+  edge_type: reference
+  instances:
+  - line: 108
+    wrapped: true
+  source_id: enumeration-linkers
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 109
+    wrapped: true
+  - line: 136
+    wrapped: true
+  source_id: enumeration-linkers
+- anchor_text: income-equality-impact-rewrite
+  occurrence: 0
+  targets:
+  - income-equality-impact-rewrite
+  edge_type: reference
+  instances:
+  - line: 110
+    wrapped: true
+  source_id: enumeration-linkers
+- anchor_text: household-spending-rewrite
+  occurrence: 0
+  targets:
+  - household-spending-rewrite
+  edge_type: reference
+  instances:
+  - line: 110
+    wrapped: true
+  source_id: enumeration-linkers
+- anchor_text: enumeration-linkers
+  occurrence: 0
+  targets:
+  - enumeration-linkers
+  edge_type: reference
+  instances:
+  - line: 111
+    wrapped: true
+  source_id: enumeration-linkers

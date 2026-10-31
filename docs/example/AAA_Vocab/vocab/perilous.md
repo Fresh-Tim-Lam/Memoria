@@ -168,3 +168,6 @@ Make one complex sentence using "perilous", "imperil" and [[lush]].
 **🔑 Answer Key**
 - **Gap-fill**: perilous
 - Answer: perilous（危险的；凶险的）；名词形式 peril（危险；险境）
+> 🔗 **关联**：[[coma]] —— **上下游代价**：perilous 的路与动作是**因**，coma 是**果** —— *The path was perilous, and one slip could put a climber in a coma.*（这条路相当凶险，一步失足就能让登山者昏迷。）⚠ 自撰
+
+> 🔗 **关联**：[[position]] —— **「处境」义**：`position` 除了「职位」，还指「状况」，最常用的修饰语正是 perilous —— *The company is now in a perilous financial position.*（该公司目前财务状况岌岌可危。）

@@ -1,0 +1,59 @@
+schema_version: 1
+file: vocab/exacerbate.md
+knowledge_points:
+- id: exacerbate
+  name: exacerbate
+  range:
+    start:
+      snippet: '# exacerbate'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The bins that sit out on the kerb all night
+        **exacerb'
+      line_hint: 102
+  tags:
+  - 词汇
+  - 动词
+  - 环境
+  - 城市
+  - 学术
+  - Writing
+links:
+- anchor_text: curb
+  occurrence: 0
+  targets:
+  - curb
+  edge_type: reference
+  instances:
+  - line: 74
+    wrapped: true
+  - line: 94
+    wrapped: true
+  source_id: exacerbate
+- anchor_text: humanitarian
+  occurrence: 0
+  targets:
+  - humanitarian
+  edge_type: reference
+  instances:
+  - line: 75
+    wrapped: true
+  source_id: exacerbate
+- anchor_text: dispel-prejudice-and-hostility
+  occurrence: 0
+  targets:
+  - dispel-prejudice-and-hostility
+  edge_type: reference
+  instances:
+  - line: 76
+    wrapped: true
+  source_id: exacerbate
+- anchor_text: stench
+  occurrence: 0
+  targets:
+  - stench
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  source_id: exacerbate

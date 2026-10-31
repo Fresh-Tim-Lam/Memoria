@@ -96,3 +96,9 @@ Make one complex sentence using "apparatus", "equipment" and [[gadget]].
 - **Gap‑fill**: apparatus（仪器；器械）
 - **Word‑weaving sample**: A lab's **equipment** budget is spent not on a single **gadget** but on **apparatus** that only works as a complete set.（实验室的装备预算不是买一件小玩意，而是买一整套缺一不可的仪器。）
 - Answer: apparatus（成套仪器；器械；引申指国家机器 —— 正式／学术语域；泛指器材改用 equipment）
+---
+> 🔗 **关联**：[[appendage]] —— 词族对照：`appendix`（特指阑尾／附录）与 `appendage`（泛指附肢、外挂件）同源，别与成套器械的 `apparatus` 混。
+> 🔗 **关联**：[[incision]] —— **工具 vs 结果**：`apparatus` 是下手的器械，`incision` 是它留下的那条口子，两者不能互换：`A simple apparatus is all it takes — one blade, one incision.`
+> 🔗 **关联**：[[scrubbing]] —— **装置与工序**：`scrubbing` 是工序，完成它的整套 `apparatus` 里最关键的一件叫 scrubber（洗涤塔） —— *The scrubbing apparatus accounts for a third of the plant's cost.*（洗涤装置占这座厂成本的三分之一。）⚠ 自撰
+
+> 🔗 **关联**：[[akin-to]] —— **同场类比**：原文正是拿两种器械作类比 —— *The concept of the treadle pump is akin to that of an exercise bicycle.*（脚踏泵的原理与健身车的原理相类。）

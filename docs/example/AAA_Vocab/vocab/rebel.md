@@ -89,6 +89,7 @@ Talk about a time you disagreed with a rule at school or at work.
 Write one Task‑2 sentence on whether schools should allow students to question their rules.
 （中文说明：大作文写一句话，论述学校是否应允许学生质疑校规）
 > 💡 例：Schools that punish every challenge to their rules may push students to rebel against authority rather than think critically.（把每次质疑都当违纪来罚的学校，可能把学生推向反抗权威，而不是批判性思考。）
+> 💡 反向对照：这条 drill 要批的正是相反的做法 —— 不理解、只靠重复的 `rote learning`，见 [[rote]]。
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using "rebel", [[mainstream]] and [[troubled]].
 （中文提示：用 rebel、mainstream、troubled 合成一句——写一个叛逆少年后来被主流社会接纳）

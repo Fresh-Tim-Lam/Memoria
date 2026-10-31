@@ -73,6 +73,8 @@ Compare with put a strain on, place a burden on
 | Formality (English + 中文) | neutral（口语与写作皆可） | neutral | neutral‑formal（偏书面） |
 | Typical collocates (English + 中文) | put pressure on sb to do sth；pressure on hospitals / housing | put a strain on the budget / on family life / on relations | place a burden on taxpayers / on small firms |
 | IELTS example (English + 中文翻译) | Free tuition would put pressure on universities to cut costs.（免学费会逼高校削减成本。） | Free tuition would put a strain on taxpayers.（免学费会让纳税人吃不消。） | Free tuition places a burden on taxpayers.（免学费把负担加到纳税人身上。） |
+> 🔗 **关联**：若压力的源头是**把任务量揽得超出自己能完成的量**（一口咬得比嚼得动的多），见 [[bite-off-more-than-you-can-chew]]。
+> 🔗 **关联**：若被挤压的对象是**经费**，那套说法见 [[budget-cuts]]（cut the budget ／ budget cuts，库内实据 *Budget cuts make it difficult…*）。
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:

@@ -1,0 +1,63 @@
+schema_version: 1
+file: vocab/resilience.md
+knowledge_points:
+- id: resilience
+  name: resilience
+  range:
+    start:
+      snippet: '# resilience'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: For a **troubled** district, the reopened
+        workshops a'
+      line_hint: 113
+  tags:
+  - 写作
+  - 社会
+  - 韧性
+  - 听力陷阱
+links:
+- anchor_text: testament
+  occurrence: 0
+  targets:
+  - testament
+  edge_type: reference
+  instances:
+  - line: 25
+    wrapped: true
+  - line: 79
+    wrapped: true
+  - line: 107
+    wrapped: true
+  source_id: resilience
+- anchor_text: troubled
+  occurrence: 0
+  targets:
+  - troubled
+  edge_type: reference
+  instances:
+  - line: 79
+    wrapped: true
+  - line: 100
+    wrapped: true
+  - line: 109
+    wrapped: true
+  source_id: resilience
+- anchor_text: perilous
+  occurrence: 0
+  targets:
+  - perilous
+  edge_type: reference
+  instances:
+  - line: 79
+    wrapped: true
+  source_id: resilience
+- anchor_text: rewarding
+  occurrence: 0
+  targets:
+  - rewarding
+  edge_type: reference
+  instances:
+  - line: 108
+    wrapped: true
+  source_id: resilience

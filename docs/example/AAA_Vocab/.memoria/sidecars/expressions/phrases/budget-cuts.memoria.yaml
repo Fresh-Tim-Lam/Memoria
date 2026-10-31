@@ -1,0 +1,42 @@
+schema_version: 1
+file: expressions/phrases/budget-cuts.md
+knowledge_points:
+- id: budget-cuts
+  name: budget cuts
+  range:
+    start:
+      snippet: '# budget cuts'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: **Budget cuts** that **put pressure on**
+        youth clubs'
+      line_hint: 79
+  tags:
+  - IELTS
+  - 搭配
+  - 教育
+  - 金钱
+  - 写作
+  - 听力
+  - B2
+links:
+- anchor_text: put-pressure-on
+  occurrence: 0
+  targets:
+  - put-pressure-on
+  edge_type: reference
+  instances:
+  - line: 61
+    wrapped: true
+  - line: 71
+    wrapped: true
+  source_id: budget-cuts
+- anchor_text: juvenile
+  occurrence: 0
+  targets:
+  - juvenile
+  edge_type: reference
+  instances:
+  - line: 71
+    wrapped: true
+  source_id: budget-cuts

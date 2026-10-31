@@ -19,3 +19,24 @@ knowledge_points:
   - Housing
   - Architecture
   - B1
+links:
+- anchor_text: secluded
+  occurrence: 0
+  targets:
+  - secluded
+  edge_type: reference
+  instances:
+  - line: 33
+    wrapped: true
+  - line: 94
+    wrapped: true
+  source_id: bungalow
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  source_id: bungalow

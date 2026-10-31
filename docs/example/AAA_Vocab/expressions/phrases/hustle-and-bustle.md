@@ -61,6 +61,7 @@ After a week in the countryside, I actually began to miss the __________ of the 
 Describe a place you like to go to in order to relax, and contrast it with the busiest places in your city.
 （中文说明：口语 Part 2 地点题，描述一个你放松常去的地方，并与城市最喧闹处作对比）
 > 💡 Use "the hustle and bustle of ..." at least once.
+> 📎 库内实作：`speaking/part2/place_1.md`（[[hilltop-viewing-platform]]）——山顶观景台与山下闹市的一步之隔：it is an oasis of calm above **the hustle and bustle**（FEELING 槽位的对比句）。
 ### 3. Writing scenario
 Write one Task‑2 sentence explaining why some people prefer to live away from city centres.
 （中文说明：大作文写一句话，说明为何有些人愿意住在远离市中心的地方）
@@ -74,3 +75,6 @@ Make one complex sentence combining "the hustle and bustle of ...", [[oasis|oasi
 **🔑 Answer Key**
 - **Gap-fill**: the hustle and bustle
 - Answer: hustle and bustle（喧嚣繁忙；城市的喧嚣热闹）
+
+---
+> 🔗 **相关条目**：[[not-the-least-bit|not the least bit]] —— 说某处「一点也不安静」（`not the least bit quiet`）时用它；本条的嘈杂面正是它要否定的那一面。

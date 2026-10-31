@@ -87,6 +87,9 @@
 | IELTS example (English + 中文翻译) | Electric vehicles have entered the mainstream.（电动车已进入主流。） | The prevailing view is that education should be free.（当前主流观点是教育应当免费。） | Conventional teaching methods are being replaced by online learning.（传统教学方法正被线上学习取代。） |
 
 > 🔗 **关联**：媒体语境里，[[speculation]] 最典型的形式就是它与 `mainstream` 同框：*mainstream media* 加本词构成的搭配；写「未经证实的报道」时，可从「谁在猜」（本词）与「谁在传」（rumour）两个角度切入。
+> 🔗 **关联**：谈移民与主流文化时，本词的对立概念是 [[assimilation]]——`mainstream culture` 说「多数人的文化」，`cultural assimilation` 说「外来者被它吸收、差异消失」；写文化题时两句常同段出现。
+> 🔗 **关联**：同一条轴的另一端是 [[embrace-exotic-culture]]——`mainstream culture` 描述「多数人在过什么生活」，`embrace an exotic culture` 描述「有人主动把陌生的东西迎进来」；写多元文化题时两句一进一出，正好对照。
+> 🔗 **关联**：媒体语境里，受众被反复喂料后的两种反应是 [[desensitise]]（不再震惊）与 [[cynical]]（不再相信）；`mainstream media` 的选题标准就是这条因果链的起点——*Constant exposure to bad news desensitises audiences and leaves them cynical about the world.*
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:
@@ -115,3 +118,5 @@ Make one complex sentence using "mainstream", "prevailing" and "conventional wis
 **🔑 Answer Key**
 - **Gap-fill**: entered
 - Answer: mainstream（主流的；主流思潮；使纳入主流）
+> 🔗 **关联**：同为「立场词」的一端是 [[feminism]]——`the mainstream` 说的是「多数人在哪里」，`feminism` 说的是「一部分人主张什么」；两者合体就是最高频的 `mainstream feminism` —— *Feminism was once a fringe position; today it is argued about inside the mainstream.*（女性主义曾是边缘立场，如今在主流内部被争论。）
+> 🔗 **关联**：[[conceive]] —— **同场（观念来源）**：`the mainstream conception of …` 说的就是「主流对…的构想」，名词 conception 常与 mainstream 连用 —— *The mainstream conception of success leaves little room for failure.*（主流对成功的构想几乎不给失败留位置。）⚠ 自撰

@@ -70,7 +70,7 @@ Write one Task‑2 sentence about whether governments should spend money on heri
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using "heritage", [[blend]] and [[renovation]].
 
-my answer[[\c:red|(not check yet!!!):]]
+my answer[[\h:#7f1d1d:#fecaca|(not check yet!!!):]]
 that        heritage was   a blend of modern style and historical connotation
 
 （中文提示：用 heritage、a blend of、renovation 合成一句）
@@ -81,3 +81,7 @@ that        heritage was   a blend of modern style and historical connotation
 **🔑 Answer Key**
 - **Gap-fill**: heritage
 - Answer: heritage（遗产；文化传统；底蕴）
+> 🔗 **关联**：接纳外来文化时，问题总会拐回「自己的 [[heritage]] 怎么办」——[[embrace-exotic-culture]] 说的是**把差异迎进来**，本词说的是**自己要守住什么**：*A city can embrace foreign influences without trading away its own heritage.*
+> 🔗 **关联**：谈「传统该留什么、弃什么」时，本词是**被取舍的对象**，动作句见 [[absorb-the-essence-and-drop-the-dross]]——先分清哪些是 essence、哪些是 dross，再谈保护：*Traditional culture is worth keeping, but we should absorb the essence and drop the dross.*
+> 🔗 **关联**：总有人拿「有没有用」这把尺子来量老城——那把尺子的形容词是 [[utilitarian]]：*Judge the old town by its usefulness and you will trade it for car parks.*（用「有没有用」去量老城，你就会把它换成停车场。）
+> 🔗 **关联**：谈「值不值得留」时，最能一锤定音的结构在 [[cannot-be-overestimated]]：*The old station's value to the town's heritage cannot be overstated, though the cost of restoring it should not be underestimated.*（老车站对小镇遗产的价值怎么强调都不为过，但修复费用也不宜低估。）

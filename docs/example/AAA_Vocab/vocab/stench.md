@@ -95,10 +95,12 @@ Write one Task‑2 sentence about how poor waste treatment affects people living
 ### 4. Word‑weaving (advanced)
 Make one complex sentence using 'stench', [[dilapidated]] and [[renovation]].
 （中文提示：用 stench、dilapidated、renovation 合成一句，例如写河边一片破败厂房翻新前后的对比）
+- 城市场景扩展：再带上 [[curb]] —— 垃圾桶整夜 sit out on the curb overnight, rain or shine（见 [[rain-or-shine]]），恶臭与市政管理就能写进同一句。
+- 因果扩展：这类路边垃圾与恶臭常被写成城市问题的**加剧**因素 —— 用 [[exacerbate]]（`the bins exacerbate the city's pollution problem`）。
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined` `#Senses` `#Environment` `#C1`
 ---
 **🔑 Answer Key**
 - **Gap-fill**: stench
-- **Word-weaving sample**: The **dilapidated** warehouses by the river had stood empty for years, and the **stench** of damp and rotting timber kept even the homeless away; after the **renovation** they became studios and cafés, and the smell of coffee replaced the old reek.（河边那些**破败**的仓库空置多年，潮湿朽木的**恶臭**连无家可归的人都不愿靠近；**翻新**之后它们成了工作室和咖啡馆，咖啡香取代了当年的臭味。）
+- **Word-weaving sample**: The **dilapidated** warehouses by the river had stood empty for years, and the **stench** of damp and rotting timber kept even the homeless away; after the **renovation** they became studios and cafés, and the smell of coffee replaced the old reek.（河边那些**破败**的仓库空置多年，潮湿朽木的**恶臭**连无家可归的人都不愿靠近；**翻新**之后它们成了工作室和咖啡馆，咖啡香取代了当年的臭味。）> 🔗 **关联**：气味词汇的两端 —— 刺鼻恶臭这一端是本词，好闻那一端是 [[lavender]]（*the smell of lavender*）；写地点时先定气味是**暖的还是呛的**，再挑词。> 🔗 **关联**：[[incineration]]｜[[scrubbing]] —— **垃圾处理链的两端**：`incineration` 与 `scrubbing` 处理的是**排放里的化学物质**，`stench` 说的却是**人真正闻到的那口气** —— *Even after scrubbing, incineration plants are often blamed for the stench in nearby streets.*（即便做了洗涤，焚烧厂仍常被指为附近异味的来源。）⚠ 自撰

@@ -1,0 +1,42 @@
+schema_version: 1
+file: vocab/dignitary.md
+knowledge_points:
+- id: dignitary
+  name: dignitary
+  range:
+    start:
+      snippet: '# dignitary'
+      line_hint: 1
+    end:
+      snippet: '> 🔗 **相关条目**：[[time-honored-tradition|time-honored tradition]] ——
+        同一段听力里的那句 `it'''
+      line_hint: 108
+  tags:
+  - 词汇
+  - C1
+  - 政要
+  - 正式
+  - 听力
+links:
+- anchor_text: time-honored-tradition
+  occurrence: 0
+  targets:
+  - time-honored-tradition
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  - line: 108
+    wrapped: true
+  source_id: dignitary
+- anchor_text: testament
+  occurrence: 0
+  targets:
+  - testament
+  edge_type: reference
+  instances:
+  - line: 94
+    wrapped: true
+  - line: 108
+    wrapped: true
+  source_id: dignitary

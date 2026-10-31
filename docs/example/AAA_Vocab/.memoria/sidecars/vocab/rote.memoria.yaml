@@ -1,0 +1,64 @@
+schema_version: 1
+file: vocab/rote.md
+knowledge_points:
+- id: rote
+  name: rote
+  range:
+    start:
+      snippet: '# rote'
+      line_hint: 1
+    end:
+      snippet: '- Answer: rote（死记硬背；机械记忆）—— 它只有 `by rote` 与 `rote + 名词` 两个槽位，没有动词形态'
+      line_hint: 106
+  tags:
+  - 词汇
+  - 教育
+  - 学习方法
+  - 名词
+  - IELTS
+links:
+- anchor_text: assimilation
+  occurrence: 0
+  targets:
+  - assimilation
+  edge_type: reference
+  instances:
+  - line: 74
+    wrapped: true
+  source_id: rote
+- anchor_text: impart-instil-cultivate
+  occurrence: 0
+  targets:
+  - impart-instil-cultivate
+  edge_type: reference
+  instances:
+  - line: 75
+    wrapped: true
+  source_id: rote
+- anchor_text: quote
+  occurrence: 0
+  targets:
+  - quote
+  edge_type: reference
+  instances:
+  - line: 76
+    wrapped: true
+  source_id: rote
+- anchor_text: rebel
+  occurrence: 0
+  targets:
+  - rebel
+  edge_type: reference
+  instances:
+  - line: 97
+    wrapped: true
+  source_id: rote
+- anchor_text: rewarding
+  occurrence: 0
+  targets:
+  - rewarding
+  edge_type: reference
+  instances:
+  - line: 97
+    wrapped: true
+  source_id: rote

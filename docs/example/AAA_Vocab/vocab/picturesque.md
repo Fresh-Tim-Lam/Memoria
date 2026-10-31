@@ -76,3 +76,4 @@ Make one complex sentence using picturesque, [[lush]], [[secluded]] and [[herita
 **🔑 Answer Key**
 - **Gap-fill**: picturesque
 - Answer: picturesque（风景如画的；优美的）
+> 🔗 **关联**：紫色的花田是「如画」这一路的现成素材 —— `picturesque` 说的是**整幅构图**（村庄、小巷、视角），[[lavender]] 说的是**其中那一块颜色与气味**：*From the ridge the valley looked picturesque, a patchwork of lavender and wheat.*（从山脊望去，山谷如画：薰衣草与麦田拼成的花毯。）

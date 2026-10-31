@@ -1,0 +1,48 @@
+schema_version: 1
+file: expressions/patterns/herein-lies-inversion.md
+knowledge_points:
+- id: herein-lies-inversion
+  name: herein lies ...（倒装：问题就在这里）
+  range:
+    start:
+      snippet: '# herein lies ...（倒装：问题就在这里）'
+      line_hint: 1
+    end:
+      snippet: '- Answer: herein lies the conundrum（难处正在于此）——herein ＝ in this；倒装时**主语在动词后**'
+      line_hint: 102
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - SentencePattern
+  - Inversion
+  - Formal
+  - C1
+links:
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 88
+    wrapped: true
+  source_id: herein-lies-inversion
+- anchor_text: conditional-inversion
+  occurrence: 0
+  targets:
+  - conditional-inversion
+  edge_type: reference
+  instances:
+  - line: 89
+    wrapped: true
+  source_id: herein-lies-inversion
+- anchor_text: at-its-most
+  occurrence: 0
+  targets:
+  - at-its-most
+  edge_type: reference
+  instances:
+  - line: 90
+    wrapped: true
+  source_id: herein-lies-inversion

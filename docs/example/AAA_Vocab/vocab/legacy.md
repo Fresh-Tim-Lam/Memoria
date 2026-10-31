@@ -78,3 +78,5 @@ Combine: war; lasting legacy; economic hardship; modern‑day communities.
 ---
 **🔑 Answer Key** (for gap‑fill)
 - Answer: legacy (历史遗留；遗产)
+> 🔗 **相关条目**：[[testament]] —— **语义场相近**：两者都是「留下来的东西」，`legacy` 是**可继承的遗存**（连同其中的问题），`testament` 是**能作证的凭据**：*Shoddy housing is the legacy of that policy; the empty towers are a testament to how badly it failed.*
+> 🔗 **关联**：[[inception]] —— **一头一尾**：`inception` 讲「开始」，`legacy` 讲「最后留下什么」，写政策评价时正好构成首尾对举 —— *Judged by the legacy it left, the scheme's inception was a turning point.*（从它留下的遗产看，该方案的创立是一个转折点。）⚠ 自撰

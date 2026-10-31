@@ -1,0 +1,47 @@
+schema_version: 1
+file: vocab/curator.md
+knowledge_points:
+- id: curator
+  name: curator
+  range:
+    start:
+      snippet: '# curator'
+      line_hint: 1
+    end:
+      snippet: '- Answer: curator（策展人；馆藏负责人）——与 custodian（看管）、conservator（修复）、director（馆长）分工不同'
+      line_hint: 95
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - Culture
+  - Museum
+  - B2
+links:
+- anchor_text: mainstay
+  occurrence: 0
+  targets:
+  - mainstay
+  edge_type: reference
+  instances:
+  - line: 82
+    wrapped: true
+  source_id: curator
+- anchor_text: heritage
+  occurrence: 0
+  targets:
+  - heritage
+  edge_type: reference
+  instances:
+  - line: 83
+    wrapped: true
+  source_id: curator
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 84
+    wrapped: true
+  source_id: curator

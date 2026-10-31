@@ -1,0 +1,47 @@
+schema_version: 1
+file: vocab/commendable.md
+knowledge_points:
+- id: commendable
+  name: commendable
+  range:
+    start:
+      snippet: '# commendable'
+      line_hint: 1
+    end:
+      snippet: '- Answer: commendable（值得称道的）——常出现在「先肯定、后转折」的让步句里'
+      line_hint: 93
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - Evaluation
+  - Formal
+  - C1
+links:
+- anchor_text: leaven
+  occurrence: 0
+  targets:
+  - leaven
+  edge_type: reference
+  instances:
+  - line: 80
+    wrapped: true
+  source_id: commendable
+- anchor_text: rewarding
+  occurrence: 0
+  targets:
+  - rewarding
+  edge_type: reference
+  instances:
+  - line: 81
+    wrapped: true
+  source_id: commendable
+- anchor_text: favourable
+  occurrence: 0
+  targets:
+  - favourable
+  edge_type: reference
+  instances:
+  - line: 82
+    wrapped: true
+  source_id: commendable

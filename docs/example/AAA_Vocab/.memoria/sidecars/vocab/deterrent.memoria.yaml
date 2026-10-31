@@ -1,0 +1,42 @@
+schema_version: 1
+file: vocab/deterrent.md
+knowledge_points:
+- id: deterrent
+  name: deterrent
+  range:
+    start:
+      snippet: '# deterrent'
+      line_hint: 1
+    end:
+      snippet: '- [[delinquency]] —— **固定搭配同现**：`a deterrent to juvenile delinquency`。例：`Youth
+        c'
+      line_hint: 91
+  tags:
+  - IELTS
+  - Listening
+  - Environment
+  - Society
+  - C1
+links:
+- anchor_text: curb
+  occurrence: 0
+  targets:
+  - curb
+  edge_type: reference
+  instances:
+  - line: 79
+    wrapped: true
+  - line: 90
+    wrapped: true
+  source_id: deterrent
+- anchor_text: delinquency
+  occurrence: 0
+  targets:
+  - delinquency
+  edge_type: reference
+  instances:
+  - line: 79
+    wrapped: true
+  - line: 91
+    wrapped: true
+  source_id: deterrent

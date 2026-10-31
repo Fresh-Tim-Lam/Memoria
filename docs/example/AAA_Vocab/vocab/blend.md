@@ -50,6 +50,9 @@ Compare with mix, combine
 | Formality (English + 中文) | neutral‑formal（中性偏正式） | neutral（中性） | formal（正式） |
 | Typical collocates (English + 中文) | a blend of culture / style / flavours（文化、风格、风味的融合） | mix A with B；a mix of（把 A 与 B 混合；混合体） | combine A with B；combined efforts（把 A 与 B 结合；共同努力） |
 | IELTS example (English + 中文翻译) | The city is a blend of historical heritage and modernity.（这座城市是历史底蕴与现代气息的融合。） | The city mixes old buildings with new ones.（这座城市把新旧建筑混在一起。） | The project combines tradition with innovation.（该项目把传统与创新结合起来。） |
+> 🔗 **关联**：谈到「融入」时别只想到 blend——`blend into sth` 只说**不突兀、与周围协调**，而 [[assimilation]] 说的是**差异被抹平**（同化）；写移民／文化题时两者的立场完全不同，见 [[assimilation]] 的 Confusion Matrix。
+> 🔗 **关联**：同样是「与外来文化相处」，[[embrace-exotic-culture]] 求的是**主动迎进来**（差异被欣赏），本词只求**与周围协调、不突兀**：*Newcomers may blend into the neighbourhood long before anyone embraces their culture.*
+> 🔗 **关联**：取舍之后的**结果**常是本词的画面——[[absorb-the-essence-and-drop-the-dross]] 说的是筛选动作（留精华、弃糟粕），本词说的是筛完之后融成的整体：*Take the essence of both traditions and you get a blend that belongs to neither.*
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:

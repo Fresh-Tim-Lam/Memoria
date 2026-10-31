@@ -1,0 +1,28 @@
+schema_version: 1
+file: skills/op-ed-skeleton.md
+knowledge_points:
+- id: op-ed-skeleton
+  name: op-ed skeleton（OP 与 ED 段落骨架）
+  range:
+    start:
+      snippet: '# op-ed skeleton（OP 与 ED 段落骨架）'
+      line_hint: 1
+    end:
+      snippet: '- [[point-vs-example]] —— 主体段里「判断 vs 例证」怎么分工；本条目只管首尾两段。'
+      line_hint: 53
+  tags:
+  - IELTS
+  - Writing
+  - Task2
+  - EssayStructure
+  - 写作结构
+links:
+- anchor_text: point-vs-example
+  occurrence: 0
+  targets:
+  - point-vs-example
+  edge_type: reference
+  instances:
+  - line: 53
+    wrapped: true
+  source_id: op-ed-skeleton

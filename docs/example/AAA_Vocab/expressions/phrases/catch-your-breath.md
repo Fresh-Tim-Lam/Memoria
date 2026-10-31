@@ -94,6 +94,7 @@ I sprinted all the way to the gate, and it took me a minute to __________ my ___
 Describe a time you had to run for something — a bus, a train or a plane.
 （中文说明：口语 Part 2 经历题——跑完之后的那个瞬间，用 catch one's breath 说恢复，再用 be out of breath 说当时的窘态）
 > 💡 Use both: "I was completely out of breath" (state) + "it took me a moment to catch my breath" (recovery).
+> 📎 库内实作：`speaking/part2/place_1.md`（[[hilltop-viewing-platform]]）——爬坡后的恢复义（ACCESS 槽位）：I always stop at the top to **catch my breath**。
 ### 3. Writing scenario
 Write one sentence describing what a hiker does at the top of a long climb.
 （中文说明：写一句登山者登顶后的动作——用 catch one's breath 收住节奏，别写 take a breath）

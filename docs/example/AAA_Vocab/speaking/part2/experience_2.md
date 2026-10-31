@@ -168,10 +168,10 @@ The rest of the ride was calmer, and I finally made it to the finishing point. M
 
 ## 🔍 高分句（背下来就能用）
 
-1. [[\h|we could not pole out of the whirlpool behind it]] —— 用 `pole out` 说「撑不出去」，比 `we couldn't move` 具体得多，`pole` 把「用杆撑船」这个画面钉住，`behind it` 又顺手交代了漩涡在大石后面。
-2. [[\h|the raft flipped over, my friend was trapped underneath it]] —— 两个动词短语把事故讲清：`flip over`（翻）＋ `be trapped underneath`（被压在下面）；`underneath` 比 `under` 多一层「在船底、看不见人」的画面感。
-3. [[\h|he poled his raft over and pulled me out of the water]] —— 救援动作有**顺序感**（先撑过来、再拉人），`out of the water` 收尾让画面完整。
-4. [[\h|Terrifying though it was, it taught me something I have never forgotten]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]），把刚才的惊险一句话收成感想，是 Part 2 最划算的加分句型。
+1. [[\h:#fff3cd:#5c4a00|we could not pole out of the whirlpool behind it]] —— 用 `pole out` 说「撑不出去」，比 `we couldn't move` 具体得多，`pole` 把「用杆撑船」这个画面钉住，`behind it` 又顺手交代了漩涡在大石后面。
+2. [[\h:#fff3cd:#5c4a00|the raft flipped over, my friend was trapped underneath it]] —— 两个动词短语把事故讲清：`flip over`（翻）＋ `be trapped underneath`（被压在下面）；`underneath` 比 `under` 多一层「在船底、看不见人」的画面感。
+3. [[\h:#fff3cd:#5c4a00|he poled his raft over and pulled me out of the water]] —— 救援动作有**顺序感**（先撑过来、再拉人），`out of the water` 收尾让画面完整。
+4. [[\h:#fff3cd:#5c4a00|Terrifying though it was, it taught me something I have never forgotten]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]），把刚才的惊险一句话收成感想，是 Part 2 最划算的加分句型。
 
 ---
 

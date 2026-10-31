@@ -99,6 +99,8 @@ Write one sentence about why a story gets more interesting when the villain has 
 ### 4. Word-weaving (advanced)
 Make one complex sentence using "the protagonist", [[twist-ending]] and [[intriguing]].
 （中文提示：用「主角」「反转结局」「勾人」串一句，练把结构词与评价词同时用对）
+
+> 🔗 **关联**：[[mime]] —— **文化同场**：英式 `pantomime`（口语 `panto`）是圣诞档的童话剧，本词 `a pantomime villain`（`:55`）就活在那套戏里；而 `mime` 是它无声的内核——用整段动作代替台词，`He never speaks; the whole role is done in mime.`（他一句不说，整个角色靠哑剧完成。）
 ---
 ## 📌 Revision Tags
 `#IELTS` `#Speaking` `#Writing` `#ActiveVocabulary` `#UserDefined` `#Books` `#Media` `#ConfusionPair` `#B2`

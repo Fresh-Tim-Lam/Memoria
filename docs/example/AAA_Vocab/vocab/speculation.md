@@ -144,3 +144,5 @@ Make one complex sentence using "speculation", "conjecture" and "forecast".
 - **Gap-fill**: speculation
 - **Word-weaving sample**: While economists' forecasts were based on hard data, most of the coverage was pure speculation — and the conjecture on the comment pages only made it worse.（经济学家的预测以硬数据为据，而多数报道纯属猜测；评论版上的臆断更是火上浇油。）
 - Answer: speculation（推测、猜测；投机）／动词 speculate（推测；猜测）／形容词 speculative（推测的；投机性的）
+> 🔗 **关联**：谈「信息可不可信」还有两端——把消息推给传闻而自己不背书是 [[rumour-has-it]]；不加核实就把某人说的当真，是 [[take-sb-at-their-word]]。
+> 🔗 **关联**：[[conceive]] —— **同场（对未成事实的「想」）**：speculation 是无据地**猜**发生了什么，`conceive of` 是把另一种可能**构想出来** —— *Rather than speculate about the cause, engineers conceived of three alternative designs.*（工程师没有去猜原因，而是构想出三种替代设计。）⚠ 自撰

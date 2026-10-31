@@ -1,0 +1,48 @@
+schema_version: 1
+file: expressions/patterns/at-its-most.md
+knowledge_points:
+- id: at-its-most
+  name: at its most ...（At its most extreme）
+  range:
+    start:
+      snippet: '# at its most ...（At its most extreme）'
+      line_hint: 1
+    end:
+      snippet: '- Answer: at its most extreme（走到最极端）——`at + 物主 + most + 形容词`，重音在形容词上'
+      line_hint: 98
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - SentencePattern
+  - Degree
+  - Formal
+  - B2
+links:
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 84
+    wrapped: true
+  source_id: at-its-most
+- anchor_text: cannot-be-overestimated
+  occurrence: 0
+  targets:
+  - cannot-be-overestimated
+  edge_type: reference
+  instances:
+  - line: 85
+    wrapped: true
+  source_id: at-its-most
+- anchor_text: herein-lies-inversion
+  occurrence: 0
+  targets:
+  - herein-lies-inversion
+  edge_type: reference
+  instances:
+  - line: 86
+    wrapped: true
+  source_id: at-its-most

@@ -71,7 +71,7 @@ Compare with youthful, childish
 | Core nuance (English + 中文) | 与「未成年」相关（法律语域）；贬义时指行为**幼稚**（juvenile humour） | **年轻、有朝气**，中性偏褒（youthful enthusiasm） | **幼稚、不成熟**，直接贬义（a childish tantrum） |
 | Formality (English + 中文) | formal（法律／官方，日常口语少用） | neutral（中性） | informal‑neutral（口语书面皆可） |
 | Typical collocates (English + 中文) | juvenile delinquency / court / detention / offender | youthful energy / enthusiasm / appearance / indiscretion | childish behaviour / argument / fear |
-| IELTS example (English + 中文翻译) | Juvenile delinquency often has more to do with family breakdown than with poverty.（青少年违法更多与家庭破裂有关，而非贫困。） | His youthful enthusiasm made up for his lack of experience.（他年轻的热情弥补了经验的不足。） | It is childish to blame your own mistakes on other people.（把自己的错误怪到别人头上很幼稚。） |
+| IELTS example (English + 中文翻译) | Juvenile delinquency often has more to do with family breakdown than with poverty.（青少年违法更多与家庭破裂有关，而非贫困。） | His youthful enthusiasm made up for his lack of experience.（他年轻的热情弥补了经验的不足。） | It is childish to blame your own mistakes on other people.（把自己的错误怪到别人头上很幼稚。）（`credit` 是它的反极，见 [[credit-vs-attribute]]） |
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:
@@ -109,3 +109,4 @@ Make one complex sentence using "juvenile", [[troubled]] and [[promising]].
 - **Gap-fill**: juvenile
 - **Word-weaving sample**: A **troubled** but **promising** teenager was caught shoplifting, and the **juvenile** court sent him to a mentoring scheme instead of prison.（一个**问题缠身**却**有前途**的少年因入店行窃被抓住，**少年**法庭没有判他入狱，而是送他去参加导师计划。）
 - Answer: juvenile（少年的；幼稚的；未成年人）—— 固定搭配记 `juvenile delinquency`
+> 🔗 **关联**：[[rear]] —— 一个讲**年龄**（幼的），一个讲**把幼的养到能自立** —— *Chicks are reared in a warm shed until they are old enough to go outside.*（小鸡在暖棚里养到能出门为止。）⚠ 自撰

@@ -106,3 +106,5 @@ Make one complex sentence using "troubled", "troubling" and [[promising]].
 **🔑 Answer Key**
 - **Gap-fill**: troubled
 - Answer: troubled（有严重问题的；忧心忡忡的）—— 核心：**持续存在的问题**才用它；一次性事件用 difficult / stressful
+> 🔗 **相关条目**：[[resilience]] —— **上下游情境**：本词说「持续存在问题」（`vocab/troubled.md:108`），[[resilience]] 说「出了问题还能弹回来」——一个铺困境，一个给结论：*A troubled childhood does not rule out resilience later in life.*
+> 🔗 **关联**：[[patch-things-up]] —— **同场（关系状态与动作）**：`a troubled relationship` 是需要修的那种关系，`patch things up` 是修它的动作 —— *They patched things up, but the troubled marriage never really healed.*（他们把关系修补好了，可那段有问题的婚姻始终没真正愈合。）⚠ 自撰

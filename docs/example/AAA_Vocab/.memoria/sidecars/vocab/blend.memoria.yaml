@@ -21,7 +21,7 @@ knowledge_points:
       line_hint: 1
     end:
       snippet: '- Answer: blend（融合体；使融合；使混合）'
-      line_hint: 80
+      line_hint: 83
 links:
 - anchor_text: heritage
   occurrence: 0
@@ -29,7 +29,34 @@ links:
   - heritage
   edge_type: reference
   instances:
-  - line: 72
+  - line: 75
+    wrapped: true
+  source_id: blend
+- anchor_text: assimilation
+  occurrence: 0
+  targets:
+  - assimilation
+  edge_type: reference
+  instances:
+  - line: 53
+    wrapped: true
+  source_id: blend
+- anchor_text: embrace-exotic-culture
+  occurrence: 0
+  targets:
+  - embrace-exotic-culture
+  edge_type: reference
+  instances:
+  - line: 54
+    wrapped: true
+  source_id: blend
+- anchor_text: absorb-the-essence-and-drop-the-dross
+  occurrence: 0
+  targets:
+  - absorb-the-essence-and-drop-the-dross
+  edge_type: reference
+  instances:
+  - line: 55
     wrapped: true
   source_id: blend
 edges: []

@@ -1,0 +1,51 @@
+schema_version: 1
+file: vocab/humanitarian.md
+knowledge_points:
+- id: humanitarian
+  name: humanitarian
+  range:
+    start:
+      snippet: '# humanitarian'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: When humanitarian relief is delayed at
+        the border, it'
+      line_hint: 77
+  tags:
+  - IELTS
+  - 词汇
+  - 社会
+  - 写作
+  - 阅读
+  - 听力
+  - C1
+links:
+- anchor_text: exacerbate
+  occurrence: 0
+  targets:
+  - exacerbate
+  edge_type: reference
+  instances:
+  - line: 58
+    wrapped: true
+  - line: 69
+    wrapped: true
+  source_id: humanitarian
+- anchor_text: utilitarian
+  occurrence: 0
+  targets:
+  - utilitarian
+  edge_type: reference
+  instances:
+  - line: 59
+    wrapped: true
+  source_id: humanitarian
+- anchor_text: curb
+  occurrence: 0
+  targets:
+  - curb
+  edge_type: reference
+  instances:
+  - line: 69
+    wrapped: true
+  source_id: humanitarian

@@ -1,0 +1,67 @@
+schema_version: 1
+file: vocab/curb.md
+knowledge_points:
+- id: curb
+  name: curb
+  range:
+    start:
+      snippet: '# curb'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: After the **renovation** of the old market,
+        the counc'
+      line_hint: 101
+  tags:
+  - IELTS
+  - 词汇
+  - 城市
+  - 环境
+  - Speaking
+  - Writing
+  - C1
+links:
+- anchor_text: rain-or-shine
+  occurrence: 0
+  targets:
+  - rain-or-shine
+  edge_type: reference
+  instances:
+  - line: 28
+    wrapped: true
+  source_id: curb
+- anchor_text: exacerbate
+  occurrence: 0
+  targets:
+  - exacerbate
+  edge_type: reference
+  instances:
+  - line: 74
+    wrapped: true
+  source_id: curb
+- anchor_text: concerned-postpositive
+  occurrence: 0
+  targets:
+  - concerned-postpositive
+  edge_type: reference
+  instances:
+  - line: 75
+    wrapped: true
+  source_id: curb
+- anchor_text: stench
+  occurrence: 0
+  targets:
+  - stench
+  edge_type: reference
+  instances:
+  - line: 93
+    wrapped: true
+  source_id: curb
+- anchor_text: renovation
+  occurrence: 0
+  targets:
+  - renovation
+  edge_type: reference
+  instances:
+  - line: 93
+    wrapped: true
+  source_id: curb

@@ -107,4 +107,4 @@ Make one complex sentence using "scorching", [[oasis]] and [[lush]].
 ---
 **🔑 Answer Key**
 - **Gap-fill**: scorching
-- Answer: scorch（烤焦；烫黄；天气酷热）／scorching（酷热的）—— 核心：**干、晒、烤**的极端热；闷热潮湿改用 `sweltering`
+- Answer: scorch（烤焦；烫黄；天气酷热）／scorching（酷热的）—— 核心：**干、晒、烤**的极端热；闷热潮湿改用 `sweltering`> 🔗 **关联**：[[combustion]] —— **同族机制的对照**：`combustion` 是完整、有控制的燃烧过程，`scorch` 是火只擦了表面、留下焦痕而没烧透 —— *The flames barely combusted the wood but scorched the paint.*（火没把木头烧着，只把漆面燎焦了。）⚠ 自撰

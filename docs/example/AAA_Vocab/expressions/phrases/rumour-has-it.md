@@ -128,3 +128,4 @@ Make one complex sentence using rumour has it (that) … , [[speculation]] and [
 **🔑 Answer Key**
 - **Gap-fill**: has（Rumour has it that … ＝ 据传……；句首用单数、不加冠词）
 - Answer: rumour has it (that) …（据传；听人说……）；同结构还有 word has it that …、legend has it that …
+> 🔗 **关联**：本句式站在「**传**」这一端——把消息推给传闻、自己不背书；「**信**」的另一端见 [[take-sb-at-their-word]]（不加核实就把某人说的当真），而「**猜**」交给 [[speculation]]。

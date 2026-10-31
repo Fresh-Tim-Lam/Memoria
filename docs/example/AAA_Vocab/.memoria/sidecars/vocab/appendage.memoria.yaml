@@ -1,0 +1,41 @@
+schema_version: 1
+file: vocab/appendage.md
+knowledge_points:
+- id: appendage
+  name: appendage
+  range:
+    start:
+      snippet: '# appendage'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The hairs on a bee''s **appendages** are
+        as efficient'
+      line_hint: 65
+  tags:
+  - IELTS
+  - Reading
+  - Technical
+  - C1
+links:
+- anchor_text: apparatus
+  occurrence: 0
+  targets:
+  - apparatus
+  edge_type: reference
+  instances:
+  - line: 38
+    wrapped: true
+  - line: 52
+    wrapped: true
+  - line: 58
+    wrapped: true
+  source_id: appendage
+- anchor_text: commonly-referred-to-as
+  occurrence: 0
+  targets:
+  - commonly-referred-to-as
+  edge_type: reference
+  instances:
+  - line: 59
+    wrapped: true
+  source_id: appendage

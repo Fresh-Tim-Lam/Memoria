@@ -1,0 +1,54 @@
+schema_version: 1
+file: vocab/rocket.md
+knowledge_points:
+- id: rocket
+  name: rocket
+  range:
+    start:
+      snippet: '# rocket'
+      line_hint: 1
+    end:
+      snippet: '- Answer: rocket（飙升；火箭）—— 核心：**直冲 + 极快**；与 plummet（直坠）成对，小幅上升改 `edge
+        up`'
+      line_hint: 108
+  tags:
+  - 雅思
+  - 写作
+  - 图表
+  - 数据描述
+  - 趋势
+  - 上升
+links:
+- anchor_text: plummet
+  occurrence: 0
+  targets:
+  - plummet
+  edge_type: reference
+  instances:
+  - line: 25
+    wrapped: true
+  - line: 33
+    wrapped: true
+  - line: 72
+    wrapped: true
+  - line: 100
+    wrapped: true
+  source_id: rocket
+- anchor_text: household-spending-rewrite
+  occurrence: 0
+  targets:
+  - household-spending-rewrite
+  edge_type: reference
+  instances:
+  - line: 73
+    wrapped: true
+  source_id: rocket
+- anchor_text: scorch
+  occurrence: 0
+  targets:
+  - scorch
+  edge_type: reference
+  instances:
+  - line: 100
+    wrapped: true
+  source_id: rocket

@@ -1,0 +1,52 @@
+schema_version: 1
+file: vocab/testament.md
+knowledge_points:
+- id: testament
+  name: testament
+  range:
+    start:
+      snippet: '# testament'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: The rebuilt market is a testament to the
+        **resilience'
+      line_hint: 108
+  tags:
+  - 写作
+  - 正式
+  - 证明
+  - 听力陷阱
+links:
+- anchor_text: resilience
+  occurrence: 0
+  targets:
+  - resilience
+  edge_type: reference
+  instances:
+  - line: 73
+    wrapped: true
+  - line: 95
+    wrapped: true
+  - line: 102
+    wrapped: true
+  source_id: testament
+- anchor_text: legacy
+  occurrence: 0
+  targets:
+  - legacy
+  edge_type: reference
+  instances:
+  - line: 95
+    wrapped: true
+  - line: 103
+    wrapped: true
+  source_id: testament
+- anchor_text: exclusively
+  occurrence: 0
+  targets:
+  - exclusively
+  edge_type: reference
+  instances:
+  - line: 104
+    wrapped: true
+  source_id: testament

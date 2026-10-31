@@ -10,17 +10,17 @@
 ## 📖 Core Definitions (Dictionary‑Based)
 > Source: Oxford / Cambridge；库内语料 data/sources/vocab_source2.txt:4539（delinquent）
 
-- **[noun, uncountable] (formal / law; usually juvenile delinquency)** illegal or antisocial behaviour, especially by young people（（尤指青少年的）违法行为；不良行为）
-  (中文释义：**不可数**，❌ 不说 `a delinquency`；核心搭配是 `juvenile delinquency`，指反复的、程度偏轻的违法与反社会行为)
-- **Writing example** – Youth clubs are seen as one way of reducing juvenile delinquency.
-  （青少年活动中心被视为减少青少年违法的一种途径。）
-- **Speaking example** – Rates of juvenile delinquency have fallen since the scheme started.
-  （该方案启动以来，青少年违法率有所下降。）
+- **[noun, uncountable] (formal / law；通常写 juvenile delinquency)** [[\h:#fff3cd:#5c4a00|illegal or antisocial behaviour]]，尤指**青少年的**违法行为／不良行为
+> **释义**：**不可数** —— ❌ 不说 `a delinquency`；核心搭配是 [[\h:#1e3a8a:#bfdbfe|juvenile delinquency]]，指**反复的、程度偏轻**的违法与反社会行为
+> **例（写作）** – Youth clubs are seen as one way of reducing juvenile delinquency.（青少年活动中心被视为减少青少年违法的一种途径。）
+> **例（口语）** – Rates of juvenile delinquency have fallen since the scheme started.（该方案启动以来，青少年违法率有所下降。）
+> ⚠ **程度**：指青少年**反复的轻微违法**，不是重罪（重罪用 `serious crime`），也不是单次犯错（单次用 `an offence`）
 
-- **[noun, uncountable / plural countable, formal]** failure to pay money owed on time, or failure to do what is required（拖欠；失职；未履行义务）
-  (中文释义：金融与法律语域的第二个义项——`the delinquency rate on student loans` 助学贷款拖欠率；此义可有复数 `delinquencies`)
-- **Writing example** – Banks tightened lending after a sharp rise in loan delinquencies.
-  （贷款拖欠激增后，银行收紧了放贷。）
+- **［义项二 · 金融／法律］[noun, uncountable / plural countable, formal]** [[\h:#e8f5e9:#1b5e20|failure to pay money owed on time]] 或 **failure to do what is required**（拖欠；失职；未履行义务）
+> **释义**：`the delinquency rate on student loans` 助学贷款**拖欠率**；此义**可有复数** `delinquencies`（与义项一的「不可数」相反）
+> **例（写作）** – Banks tightened lending after a sharp rise in loan delinquencies.（贷款拖欠激增后，银行收紧了放贷。）
+> ⚠ **语域**：金融报表／法律文本用语，口语说 `late payments`
+> 💡 **两义分界**：义项一**不可数**（只作 juvenile delinquency）；义项二**可数**（loan delinquencies）
 ---
 ## 🎯 Best Situation & Register Gate（何时该用 / 何时别用）
 - **✅ Best situation**: ① 写作犯罪／社会题：`juvenile delinquency`、`a rise in delinquency` ② 写作教育／家庭题：`family breakdown and delinquency` ③ 写作预防政策题：`programmes to prevent delinquency` ④ 经济／金融（第二义项）：`the delinquency rate on loans`
@@ -29,7 +29,7 @@
   - ✗ 想说某人一次犯错 → 用 `a mistake` / `an offence`（delinquency 含**长期、模式化**意味）
   - ✗ 当可数名词用（❌ `a delinquency`）→ 只有「拖欠」义可以有复数
 - **强度标记 Strength**: formal、偏学术；违法程度**轻于** `crime`
-- **语域三档 Register ladder**: 日常 `getting into trouble` → 通用 `youth crime` → 正式／学术 **`juvenile delinquency`**
+- **语域三档 Register ladder**: 日常 `getting into trouble` → 通用 `youth crime` → 正式／学术 [[\h:#1e3a8a:#bfdbfe|**juvenile delinquency**]]
 - **来源 Source**: 用户本次输出句 ＋ Oxford / Cambridge（库内语料仅 1 条含 delinquent 的条目注）
 - **🔗 相关表达**: 想表达「这个议题至今让人费解」，口语可用 [[a-real-head-scratcher]]；正式立论句改用 a vexing question（别在正式写作里用口语调侃词）
 ---
@@ -37,7 +37,7 @@
 ### Morphology / Root (memory aid)
 - 源自拉丁语 `delinquere` = 失职、未做到（de‑ 离开 + linquere 撇下、留下）——「该做的撇下没做」→ 先指拖欠／失职，再引申为违法
 - 词形变化：本义**不可数**；「拖欠」义复数 **delinquencies**
-- **Memory hook**: 该尽的义务撇下不管：欠钱不还叫 delinquency，少年该守的规矩不守也叫 delinquency。
+- **Memory hook**: 该尽的义务[[\c:#b45309|撇下不管]]：**欠钱不还**叫 delinquency，**少年该守的规矩不守**也叫 delinquency —— 两个义项共用一个内核。
 ### High‑Frequency Collocations
 | Type | Collocation (English) | Chinese Meaning | Example Sentence (English) | Translation (Chinese) |
 |:---|:---|:---|:---|:---|
@@ -106,3 +106,4 @@ Make one complex sentence using "delinquency", [[rebel]] and [[indulge]].
 - **Gap-fill**: delinquency
 - **Word-weaving sample**: A **rebel** who **indulges in** petty theft at fifteen is far more likely to drift into adult crime — which is why **juvenile delinquency** is treated as a warning sign rather than a phase.（十五岁就**放纵自己**小偷小摸的**叛逆**少年，成年后走上犯罪的可能性大得多——所以**青少年违法**被视为警号，而不是「一个阶段」。）
 - Answer: delinquency（违法行为；拖欠；失职）—— 记固定搭配 `juvenile delinquency`
+> 🔗 **关联**：[[deterrent]] —— 谈「怎么防」时它与本词同现：`a deterrent to juvenile delinquency`。例：`Youth clubs are often presented as a [[deterrent]] to juvenile delinquency.`

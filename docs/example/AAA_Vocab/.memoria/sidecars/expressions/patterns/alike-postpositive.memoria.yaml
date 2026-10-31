@@ -1,0 +1,47 @@
+schema_version: 1
+file: expressions/patterns/alike-postpositive.md
+knowledge_points:
+- id: alike-postpositive
+  name: alike 后置（A and B alike）
+  range:
+    start:
+      snippet: '# alike 后置（A and B alike）'
+      line_hint: 1
+    end:
+      snippet: '- Answer: … and … alike（……和……都一样）——alike 必须**后置**，意为「两者都」，不是「相似的」'
+      line_hint: 97
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - Grammar
+  - WordOrder
+  - B2
+links:
+- anchor_text: concerned-postpositive
+  occurrence: 0
+  targets:
+  - concerned-postpositive
+  edge_type: reference
+  instances:
+  - line: 84
+    wrapped: true
+  source_id: alike-postpositive
+- anchor_text: in-ways-that
+  occurrence: 0
+  targets:
+  - in-ways-that
+  edge_type: reference
+  instances:
+  - line: 85
+    wrapped: true
+  source_id: alike-postpositive
+- anchor_text: not-the-least-bit
+  occurrence: 0
+  targets:
+  - not-the-least-bit
+  edge_type: reference
+  instances:
+  - line: 86
+    wrapped: true
+  source_id: alike-postpositive

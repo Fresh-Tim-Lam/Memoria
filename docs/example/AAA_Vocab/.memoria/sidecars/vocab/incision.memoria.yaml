@@ -1,0 +1,54 @@
+schema_version: 1
+file: vocab/incision.md
+knowledge_points:
+- id: incision
+  name: incision
+  range:
+    start:
+      snippet: '# incision'
+      line_hint: 1
+    end:
+      snippet: '> 🔗 **关联**：[[coma]] —— **同场（医疗）**：一道 `incision` 是手术的入口，重度脑损伤的代价是 `in
+        a coma`；写医疗'
+      line_hint: 102
+  tags:
+  - IELTS
+  - Listening
+  - Science
+  - Plants
+  - Health
+  - ActiveVocabulary
+  - UserDefined
+  - C1
+links:
+- anchor_text: clear-cut
+  occurrence: 0
+  targets:
+  - clear-cut
+  edge_type: reference
+  instances:
+  - line: 86
+    wrapped: true
+  - line: 97
+    wrapped: true
+  source_id: incision
+- anchor_text: apparatus
+  occurrence: 0
+  targets:
+  - apparatus
+  edge_type: reference
+  instances:
+  - line: 86
+    wrapped: true
+  - line: 98
+    wrapped: true
+  source_id: incision
+- anchor_text: ooze
+  occurrence: 0
+  targets:
+  - ooze
+  edge_type: reference
+  instances:
+  - line: 99
+    wrapped: true
+  source_id: incision

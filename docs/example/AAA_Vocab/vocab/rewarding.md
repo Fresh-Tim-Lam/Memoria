@@ -78,6 +78,7 @@
 | IELTS example (English + 中文翻译) | Nursing is a rewarding but stressful career.（护理是有意义但高压的职业。） | It is worthwhile spending a year abroad before university.（上大学前在国外待一年是值得的。） | Many graduates choose a lucrative career in finance.（许多毕业生选择金融业的高薪职业。） |
 
 > 🔗 **关联**：`rewarding` 说的是「**难，但值**」——它天生与「难」的词搭档：走过 `a perilous journey`（[[perilous]]）或熬过 `a troubled period`（[[troubled]]），人常收一句 *It was hard, but rewarding.* 要分清「有回报」与「有报酬」：谈薪酬用 `remuneration`（[[remuneration]]）与 `reward` 的名词义，谈满足感才用 rewarding。同属**正面评价组**，可与 `promising`（[[promising]]）、`favourable`（[[favourable]]）一起用于结论句。
+> 🔗 **关联**：另有一把只算效用的尺子——[[utilitarian]] 量的是**账面上的效用**（有没有用），本词量的是**心里的满足**（难但值）：*Volunteering may look useful on a CV, yet what makes it rewarding cannot be measured at all.*（志愿经历写在简历上也许显得「有用」，可让它有意义的东西恰恰量不出来。）
 ---
 ## 🖼️ Visual Memory Aids (Image Prompts – English only)
 **Scene prompt**:
@@ -113,4 +114,4 @@ Make one complex sentence using "rewarding", [[perilous]] and [[remuneration]].
 ---
 **🔑 Answer Key**
 - **Gap-fill**: rewarding
-- **Word-weaving sample**: He turned down a **financially rewarding** post in the city for a **perilous** year of fieldwork abroad; his savings and his **remuneration** both fell, yet he still calls it the most **rewarding** decision he has ever made.（他放弃了城里一份**收入可观**的职位，去国外做了一年**险象环生**的田野工作；存款和**报酬**都少了，他却仍说这是自己做过最**有收获**的决定。）
+- **Word-weaving sample**: He turned down a **financially rewarding** post in the city for a **perilous** year of fieldwork abroad; his savings and his **remuneration** both fell, yet he still calls it the most **rewarding** decision he has ever made.（他放弃了城里一份**收入可观**的职位，去国外做了一年**险象环生**的田野工作；存款和**报酬**都少了，他却仍说这是自己做过最**有收获**的决定。）> 🔗 **相关条目**：[[resilience]] —— **同型听力陷阱**：本词首音节 /rɪ-/ 弱到能听成 *we're ordering*（`vocab/rewarding.md:6`），而 [[resilience]] 的首 /rɪ-/ 与词尾 `-ence` 同样被吞，只余 /-ZIL-/ 一根重音柱——两词都只能靠**重音位置**定位，别等词界。

@@ -1,0 +1,50 @@
+schema_version: 1
+file: vocab/quote.md
+knowledge_points:
+- id: quote
+  name: quote
+  range:
+    start:
+      snippet: '# quote'
+      line_hint: 1
+    end:
+      snippet: '- [[go-back-a-long-way]] —— 同为听力陷阱条目：库内已记 `quite` 的 /t/ 在连读里常被吞掉（`expressions/ph'
+      line_hint: 118
+  tags:
+  - IELTS
+  - Listening
+  - AcademicWriting
+  - 引用
+  - 音近词
+links:
+- anchor_text: rote
+  occurrence: 0
+  targets:
+  - rote
+  edge_type: reference
+  instances:
+  - line: 105
+    wrapped: true
+  - line: 116
+    wrapped: true
+  source_id: quote
+- anchor_text: credit-vs-attribute
+  occurrence: 0
+  targets:
+  - credit-vs-attribute
+  edge_type: reference
+  instances:
+  - line: 105
+    wrapped: true
+  - line: 117
+    wrapped: true
+  source_id: quote
+- anchor_text: go-back-a-long-way
+  occurrence: 0
+  targets:
+  - go-back-a-long-way
+  edge_type: reference
+  instances:
+  - line: 118
+    wrapped: true
+  source_id: quote

@@ -1,0 +1,61 @@
+schema_version: 1
+file: expressions/patterns/credit-vs-attribute.md
+knowledge_points:
+- id: credit-vs-attribute
+  name: credit A to sb / attribute A to sb（归功 vs 归因）
+  range:
+    start:
+      snippet: '# credit A to sb / attribute A to sb（归功 vs 归因）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: Falling **juvenile** crime is often credited
+        **to** b'
+      line_hint: 162
+  tags:
+  - 归功
+  - 归因
+  - 近义词辨析
+  - 动词短语
+  - 搭配
+  - 写作
+  - 口语
+  - ConfusableWords
+links:
+- anchor_text: juvenile
+  occurrence: 0
+  targets:
+  - juvenile
+  edge_type: reference
+  instances:
+  - line: 124
+    wrapped: true
+  - line: 150
+    wrapped: true
+  source_id: credit-vs-attribute
+- anchor_text: put-pressure-on
+  occurrence: 0
+  targets:
+  - put-pressure-on
+  edge_type: reference
+  instances:
+  - line: 125
+    wrapped: true
+  source_id: credit-vs-attribute
+- anchor_text: contrast-linkers
+  occurrence: 0
+  targets:
+  - contrast-linkers
+  edge_type: reference
+  instances:
+  - line: 126
+    wrapped: true
+  source_id: credit-vs-attribute
+- anchor_text: cannot-be-overestimated
+  occurrence: 0
+  targets:
+  - cannot-be-overestimated
+  edge_type: reference
+  instances:
+  - line: 162
+    wrapped: true
+  source_id: credit-vs-attribute

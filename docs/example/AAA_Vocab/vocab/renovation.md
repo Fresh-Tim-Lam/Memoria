@@ -75,3 +75,6 @@ Make one complex sentence using "undergo renovation", [[dilapidated]] and "herit
 **🔑 Answer Key**
 - **Gap-fill**: undergone
 - Answer: renovation（翻新；整修；改造）
+> 🔗 **关联**：[[patch-things-up]] —— **同场（修补的分寸）**：`renovation` 是正经翻修，`patch sth up` 是将就补一补；这一对正好把「彻底」与「临时」分开 —— *They patched up the roof instead of paying for a full renovation.*（他们没有花钱翻修，只是把屋顶将就补了补。）⚠ 自撰
+
+> 🔗 **关联**：[[on-the-premises]] —— **场景**：翻新工程常按「场所内／外」划分噪音时段与责任：*No structural work may be carried out on the premises before eight in the morning.*（上午八点前不得在场所内进行结构施工。）⚠ 自撰

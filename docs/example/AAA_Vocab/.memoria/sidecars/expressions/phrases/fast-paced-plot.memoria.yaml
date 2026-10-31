@@ -26,3 +26,24 @@ edges:
   targets:
   - twist-ending
   relevance: 0.7
+links:
+- anchor_text: sprint
+  occurrence: 0
+  targets:
+  - sprint
+  edge_type: reference
+  instances:
+  - line: 87
+    wrapped: true
+  - line: 93
+    wrapped: true
+  source_id: fast-paced-plot
+- anchor_text: hustle-and-bustle
+  occurrence: 0
+  targets:
+  - hustle-and-bustle
+  edge_type: reference
+  instances:
+  - line: 93
+    wrapped: true
+  source_id: fast-paced-plot

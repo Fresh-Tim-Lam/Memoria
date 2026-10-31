@@ -83,3 +83,5 @@ Make one complex sentence using "remuneration package", "well‑remunerated" and
 **🔑 Answer Key**
 - **Gap-fill**: remuneration
 - Answer: remuneration（报酬；酬金；薪酬）
+
+> 🔗 **关联**：[[position]] —— **招聘语域双人组**：*The position carries a competitive remuneration package.*（该职位提供有竞争力的薪酬方案。）—— 正式求职文本里 position（职位）与 remuneration（薪酬）几乎总是成对出现。

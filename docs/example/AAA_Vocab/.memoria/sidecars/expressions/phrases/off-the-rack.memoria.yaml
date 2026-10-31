@@ -1,0 +1,47 @@
+schema_version: 1
+file: expressions/phrases/off-the-rack.md
+knowledge_points:
+- id: off-the-rack
+  name: off the rack
+  range:
+    start:
+      snippet: '# off the rack'
+      line_hint: 1
+    end:
+      snippet: '- Answer: off the rack（成衣的；引申为批量现成、缺个性）——英式同义为 off the peg'
+      line_hint: 94
+  tags:
+  - IELTS
+  - Reading
+  - Writing
+  - Culture
+  - Metaphor
+  - C1
+links:
+- anchor_text: mainstream
+  occurrence: 0
+  targets:
+  - mainstream
+  edge_type: reference
+  instances:
+  - line: 81
+    wrapped: true
+  source_id: off-the-rack
+- anchor_text: utilitarian
+  occurrence: 0
+  targets:
+  - utilitarian
+  edge_type: reference
+  instances:
+  - line: 82
+    wrapped: true
+  source_id: off-the-rack
+- anchor_text: leaven
+  occurrence: 0
+  targets:
+  - leaven
+  edge_type: reference
+  instances:
+  - line: 83
+    wrapped: true
+  source_id: off-the-rack

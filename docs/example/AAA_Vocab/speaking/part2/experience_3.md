@@ -167,10 +167,10 @@ He was really disappointed — the silence on the line was awkward — and the o
 
 ## 🔍 高分句（背下来就能用）
 
-1. [[\h|things went wrong at every turn]] —— 把「一路被拖慢」压成四个词：`at every turn`（每一步、每一次）比 `I kept being late` 具体得多；后面再用三个数字（15 / 6 / 15 分钟）把「每一次」逐个兑现，逻辑立刻严密起来。
-2. [[\h|"Half an hour to spare — I'll be fine," I told myself]] —— 「我以为来得及」平铺直叙也行（`I thought I would have enough time to spare`）；想说得更有画面，就把这句心里的估算变成自己对自己说的话（`I told myself`），后面再跟 `on paper, the timing looked promising` 点出「纸面上的计划」——考官听见的是**你真的算过时间**，还听见了你当时的信心。
-3. [[\h|the turning point came when I got to the gate — my train had stopped taking passengers]] —— 课件 Target 点名要「一个清楚的转折点」，这句就是：`the turning point came when + 一个动作画面` 把转折钉死在检票口（破折号后面直接给结果，比 `and saw that …` 更急）；`had stopped` 用过去完成，说明「我到的时候它已经停了」。
-4. [[\h|Promising though the timetable looked on paper, it had no room for anything to go wrong]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]）：先承认计划本身没毛病（`promising`），再一刀切到「容不下任何意外」；`no room for anything to go wrong` 比 `I was too optimistic` 更有画面。
+1. [[\h:#fff3cd:#5c4a00|things went wrong at every turn]] —— 把「一路被拖慢」压成四个词：`at every turn`（每一步、每一次）比 `I kept being late` 具体得多；后面再用三个数字（15 / 6 / 15 分钟）把「每一次」逐个兑现，逻辑立刻严密起来。
+2. [[\h:#fff3cd:#5c4a00|"Half an hour to spare — I'll be fine," I told myself]] —— 「我以为来得及」平铺直叙也行（`I thought I would have enough time to spare`）；想说得更有画面，就把这句心里的估算变成自己对自己说的话（`I told myself`），后面再跟 `on paper, the timing looked promising` 点出「纸面上的计划」——考官听见的是**你真的算过时间**，还听见了你当时的信心。
+3. [[\h:#fff3cd:#5c4a00|the turning point came when I got to the gate — my train had stopped taking passengers]] —— 课件 Target 点名要「一个清楚的转折点」，这句就是：`the turning point came when + 一个动作画面` 把转折钉死在检票口（破折号后面直接给结果，比 `and saw that …` 更急）；`had stopped` 用过去完成，说明「我到的时候它已经停了」。
+4. [[\h:#fff3cd:#5c4a00|Promising though the timetable looked on paper, it had no room for anything to go wrong]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]）：先承认计划本身没毛病（`promising`），再一刀切到「容不下任何意外」；`no room for anything to go wrong` 比 `I was too optimistic` 更有画面。
 
 ---
 

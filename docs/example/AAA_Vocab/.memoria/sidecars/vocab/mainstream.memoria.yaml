@@ -25,8 +25,9 @@ knowledge_points:
       snippet: '# mainstream'
       line_hint: 1
     end:
-      snippet: '- Answer: mainstream（主流的；主流思潮；使纳入主流）'
-      line_hint: 117
+      snippet: '> 🔗 **关联**：[[conceive]] —— **同场（观念来源）**：`the mainstream conception
+        of …` 说的就是「主流'
+      line_hint: 122
 links:
 - anchor_text: speculation
   occurrence: 0
@@ -43,4 +44,22 @@ links:
   excluded: []
   pool:
   - speculation
+- anchor_text: assimilation
+  occurrence: 0
+  targets:
+  - assimilation
+  edge_type: reference
+  instances:
+  - line: 90
+    wrapped: true
+  source_id: mainstream
+- anchor_text: embrace-exotic-culture
+  occurrence: 0
+  targets:
+  - embrace-exotic-culture
+  edge_type: reference
+  instances:
+  - line: 91
+    wrapped: true
+  source_id: mainstream
 edges: []

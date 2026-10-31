@@ -1,0 +1,57 @@
+schema_version: 1
+file: expressions/patterns/see-witness-time-subject.md
+knowledge_points:
+- id: see-witness-time-subject
+  name: the 1980s saw ...（时间作主语的 see / witness 句型）
+  range:
+    start:
+      snippet: '# the 1980s saw ...（时间作主语的 see / witness 句型）'
+      line_hint: 1
+    end:
+      snippet: '- **Word-weaving sample**: On balance, the past decade has seen a
+        shift towards'
+      line_hint: 147
+  tags:
+  - 句式
+  - 句型框架
+  - 阅读
+  - 写作
+  - 趋势描述
+  - 拟人化
+  - IELTS
+links:
+- anchor_text: enumeration-linkers
+  occurrence: 0
+  targets:
+  - enumeration-linkers
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  - line: 44
+    wrapped: true
+  - line: 109
+    wrapped: true
+  - line: 134
+    wrapped: true
+  source_id: see-witness-time-subject
+- anchor_text: contrast-linkers
+  occurrence: 0
+  targets:
+  - contrast-linkers
+  edge_type: reference
+  instances:
+  - line: 5
+    wrapped: true
+  - line: 110
+    wrapped: true
+  source_id: see-witness-time-subject
+- anchor_text: concessive-inversion
+  occurrence: 0
+  targets:
+  - concessive-inversion
+  edge_type: reference
+  instances:
+  - line: 111
+    wrapped: true
+  source_id: see-witness-time-subject

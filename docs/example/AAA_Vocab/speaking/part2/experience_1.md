@@ -144,10 +144,10 @@ So how did I feel? A huge wave of relief — it was like a weight coming off my 
 
 ## 🔍 高分句（背下来就能用）
 
-1. [[\h|by the time we landed, we had only about fifty minutes to make the transfer]] —— 主语是 `we`：「我们」在赶路，而不是「航班晚了」这件客观事实；`by the time + 过去式` 一句话就把时间压力压上来，`make the transfer` 是机场里最地道的说法。
-2. [[\h|we were sprinting through the crowd with our carry-on bags bumping along behind us]] —— `sprint`（冲刺）比 `run` 更快更形象，配 `through the crowd` 直接把画面拉出来；`carry-on bags` 一点明，就知道这段跑得多费劲。
-3. [[\h|the connecting flight had been delayed by an hour]] —— **点题句**：好消息的具体内容；`had been delayed by + 时长`（被动＋过去完成）说明「在我们到达之前就已经发生」。
-4. [[\h|Perilous though that half an hour was, it ended far better than I had any right to expect]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]），把前面的波折一句话收成感想，是 Part 2 最划算的加分句型。
+1. [[\h:#fff3cd:#5c4a00|by the time we landed, we had only about fifty minutes to make the transfer]] —— 主语是 `we`：「我们」在赶路，而不是「航班晚了」这件客观事实；`by the time + 过去式` 一句话就把时间压力压上来，`make the transfer` 是机场里最地道的说法。
+2. [[\h:#fff3cd:#5c4a00|we were sprinting through the crowd with our carry-on bags bumping along behind us]] —— `sprint`（冲刺）比 `run` 更快更形象，配 `through the crowd` 直接把画面拉出来；`carry-on bags` 一点明，就知道这段跑得多费劲。
+3. [[\h:#fff3cd:#5c4a00|the connecting flight had been delayed by an hour]] —— **点题句**：好消息的具体内容；`had been delayed by + 时长`（被动＋过去完成）说明「在我们到达之前就已经发生」。
+4. [[\h:#fff3cd:#5c4a00|Perilous though that half an hour was, it ended far better than I had any right to expect]] —— 让步倒装收尾（句式说明见 [[concessive-inversion]]），把前面的波折一句话收成感想，是 Part 2 最划算的加分句型。
 
 ---
 
