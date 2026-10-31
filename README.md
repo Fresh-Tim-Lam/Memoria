@@ -9,7 +9,7 @@
 
 [![Version](https://img.shields.io/badge/Version-0.4.9-8A2BE2)](src/memoria/__version__.py)
 [![Platform](https://img.shields.io/badge/Platform-Windows%2010%2F11%20x64-blue)](https://github.com/)
-[![License](https://img.shields.io/badge/License-MIT-yellow)](LICENSE)
+[![License](https://img.shields.io/badge/License-AGPL--3.0-blue)](LICENSE)
 [![Tests](https://img.shields.io/badge/Tests-1600%2B%20passing-brightgreen)](https://github.com/)
 [![中文](https://img.shields.io/badge/README-中文-green)](README.cn.md)
 
@@ -282,4 +282,6 @@ has a README, and contract-level rules live under `docs/conventions/`.
 
 ## License
 
-[MIT](LICENSE) © 2026 FreshTim
+[AGPL-3.0-only](LICENSE) © 2026 FreshTim
+
+**Starting with the next release after v0.4.10, Memoria is licensed under AGPL-3.0-only.** Versions up to and including v0.4.10, and commits made before this license change, remain under MIT — that grant is irrevocable. If you need a commercial license outside AGPL-3.0, please contact the maintainer.

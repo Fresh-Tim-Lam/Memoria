@@ -1,5 +1,5 @@
 [build-system]
-requires = ["setuptools>=68", "wheel"]
+requires = ["setuptools>=77", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
@@ -8,6 +8,10 @@ dynamic = ["version"]
 description = "Local knowledge-graph IDE with offline retrieval: Markdown notes with wiki-links, knowledge points, highlighters, LaTeX math, Mermaid diagrams and 2D/3D graph visualization."
 readme = "README.md"
 requires-python = ">=3.11"
+license = "AGPL-3.0-only"
+license-files = ["LICENSE"]
+# 说明：PEP 639 起 License classifier 与 SPDX license expression 互斥；
+# setuptools>=77 会直接拒绝同时出现（实测 InvalidConfigError）⇒ 只保留 SPDX expression。
 dependencies = [
     "pywebview>=5.0",
     "PyYAML>=6.0",
