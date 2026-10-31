@@ -1,5 +1,6 @@
 # G4 · 链路级语义评价准备（链路定义 / 判定协议 / 负例与难度校准 / 盲判协议 / 现有数据能做什么）
 
+> **文件版本**：**v3（定稿）**｜变更记录见 §12；V3 定稿冻结清单见 `G4-freeze.json`（含本文件 sha256 / 行数 / census 与脚本哈希 / 快照 MANIFEST）；R1–R3 逐条回应见 §11。
 > **议题**：G4 —— 「网内几个节点提取出来他们组成的这条链路，是否具有语义」（人 2026-10-27 原话，见 task-203/209）。
 > **本文件范围**：只做 L3（链路级）的**方法与协议**；不进入 G5 数据模型定稿、G6 实测、不改产品代码、不写 `docs/design`、不 commit。
 > **上游输入**：`G1-framework.md`（三维缺口 / L3 三候选不足）、`G1-papers-instruments.md`（六条文献线：无现成仪器）、`G2-L2-protocol.md`（P1–P5/D 谓词 + 人判协议 + α 门槛）、`G3-multiplicity.md`（placement/inbound/派生 + 四条硬规则）。
@@ -235,7 +236,7 @@ K4                 只用于：报告判别力 / 检验负例是否太易，**�
 | `clean_65_54`（65 / 54 边 clean） | 4,160 | **1.30%** | **18.9%** | 2.76% | **26.3%** | **0.869** | 0.958 | 0.906 |
 
 **帧口径（复核 FAIL-1 修正后）**：357 帧的 universe = **全部 357 个 KP**（从 11 个 frozen sidecar 读 `KP.id → file`；**357/357 都有非空 file**，共 **9 个文件含 KP**，另有 2 个 sidecar 的 KP 数为 0）⇒ 同文件有序对 **35,558**、p=**27.98%**、BA=**0.860**（raw/clean 相同）。79/65 帧的 universe = 被边覆盖节点（79/65），同文件分子相应为 1,612 / 1,094。
-> **v2 的 1.27%/0.86%/0.994* 是错的**：那两行把"边端点映射"（79/65 帧的数）当成了 357 帧的分子、分母却用 127,092 —— 分子/分母混帧；"孤立节点无 file"的前提也不成立（实测 357/357 有 file）。已在 census v3 修正（`G4-path-census.json.node_file_coverage`）。
+> **v2 的 357 帧同文件两行已作废**：原因是**分子/分母混帧**——把"边端点映射"（79/65 帧的数）当成 357 帧的分子、分母却用 127,092；且"孤立节点无 file"的前提不成立（实测 357/357 有 file）。**已修**：现按全量 357 KP 的 file 归属计 ⇒ 同文件 **35,558 / 27.98% / BA 0.860**（census v3 的 `node_file_coverage` + `same_file_ordered_pairs`）。
 
 **含义**：正例（23 条 2 跳链）**全部同文件、全部在最大块**。若负例取随机节点对：
 - 规则"两端同文件 ⇒ 判正"：BA = (1 + P(不同文件))/2 = **0.860（357 帧）/ 0.869（79、65 帧）**；
@@ -302,7 +303,10 @@ Step 5 只报 hard 档
 ### 3.5 数量配比与功效（预注册）
 
 - **配比**：正例 : N1+N2 : N3 = 1 : 1 : 1（每类 ≥8 条起；pilot）。
-- **功效**：单类 n=20、p=0.8 ⇒ 二项 SE≈0.089、95% CI ≈ ±17.5pp；单类 n=32 ⇒ ±13.8pp。**⇒ "balanced accuracy ≥0.80"这条门槛，单类 n<32 时无法认证**（只能报点估计+CI 作 pilot）。
+- **功效（正态近似半宽，仅作功效粗估，不作 CI 报告）**：`w = z·√(p(1−p)/n)`，z=1.96。
+  单类 n=20、p=0.8 ⇒ w≈**±17.5pp**；单类 n=32 ⇒ w≈**±13.8pp**。
+  **⇒ "balanced accuracy ≥0.80"这条门槛，单类 n<32 时无法认证**（只能报点估计+CI 作 pilot）。
+  > **口径声明**：本节是**正态近似**，只用来估"需要多少样本"；**正式 CI 不得用本节数字**——报告比例区间时一律用 §4.4 的 **Wilson 区间**（同 n 时 Wilson 略宽：p=0.8、n=20 → ±16.8pp；n=32 → ±13.5pp）。
 - **不做**：事后按结果调档、把 N0 混进 head-line、用同一批链既选阈值又报效果（预注册集/验证集分离：pilot 集只用于校准判定表，认证集须另取）。
 
 ---
@@ -390,7 +394,24 @@ agent 代判单独一组，不与人混算主 α
 - **组件门槛**：H3/C2（真值）的 α ≥ 0.667——核心项不得低于其它项；若只有核心项掉档，先改题目再扩样。
 - **一致性达档前不得多数表决**；分歧裁决记录理由，裁决结果不计入 α 的分母（α 只算独立判定）。
 
-**n=13/20 不能做阈值认证（写进预注册）**：Wilson 区间（p=0.5）半宽：**n=20 → ±20.07pp；n=13 → ±23.88pp；n=23 → ±18.9pp**（不是正态近似的 ±22/±27pp）。⇒ 只能报 pilot，不能宣称"达到/未达到 70%/80% 门槛"。认证需要 **n ≥ 32 条近似独立链**（Wilson n=32、p=.5 → **±16.37pp**；且每类负例 ≥32 才能认证判别力门槛）。
+**比例区间口径：一律 Wilson 区间（score interval），全文唯一口径。**
+公式（二项比例 p̂，样本 n，z=1.959963984540054）：
+
+```
+中心  c = (p̂ + z²/(2n)) / (1 + z²/n)
+半宽  w = z/(1 + z²/n) · √( p̂(1−p̂)/n + z²/(4n²) )      # 报告时写 ±w
+理由  Wilson 在小 n 与非 0/1 比例下覆盖更稳；正态近似仅保留在 §3.5 的功效粗估，且已标注、不作 CI 报告
+```
+
+| n | p̂=0.5 的 Wilson 半宽 | 用途 |
+|---|---|---|
+| 13 | **±23.88pp** | qrels 小样本（不可认证） |
+| 20 | **±20.07pp** | 小 pilot（不可认证） |
+| 23 | **±18.92pp** | 本轮 2 跳链 pilot（不可认证门槛） |
+| 32 | **±16.37pp** | 认证最低样本（描述统计） |
+| 100 | **±9.62pp** | 产品门禁建议量级 |
+
+**n=13/20/23 不能做阈值认证（写进预注册）**：按上表 Wilson 半宽 ⇒ 只能报 pilot，不能宣称"达到/未达到 70%/80% 门槛"；认证需 **n ≥ 32 条近似独立链**（±16.37pp；且每类负例 ≥32 才能认证判别力门槛）。
 
 ### 4.5 样本量、扩样与认证条件
 
@@ -660,7 +681,9 @@ recipe_id = g4-canon-json-v1
 | `G4-path-census.json` canonical content hash（g4-canon-json-v1） | **`906e392517e7240456b83a432d9fe857648b9ebe9d87969ed491bffd0a25e4ee`** |
 | `scripts/G4-path-census.py` 文件 sha256 | **`9c7d130e07da79572f1dbc0aa1a977b19deeb9931850d28d816231ee4d42f3ca`** |
 | census 文件字节 sha256（示例实例，含 generated_at） | `1202a4c4a917356c705f0ff80474bcc1c20cbd134b172dabbdaae614697d1b92`（字节哈希每次运行会变，以 canonical 为准） |
-| 本文件 `G4-link-semantics.md` | 不自我哈希（内容会随复核修订变）；以本文件 git 状态/评审记录为准 |
+| 本文件 `G4-link-semantics.md` 的 sha256 / 行数 / 字节 | **记录在 `G4-freeze.json`（`file_sha256` / `line_count` / `byte_count`）**——文档无法自我哈希（写进去即改变自身 sha），故由同目录冻结清单承载；冻结清单本身不自我引用 |
+
+> **定稿冻结清单**：`G4-freeze.json`（本文件 sha256/行数/字节 + 各自 mtime；census 版本/字节 sha/canonical sha；**普查脚本 sha + 门禁脚本 `G4-selfcheck.py` sha**；快照 MANIFEST/taken_at；schema 版本；`generated_at` = **本清单实际写入时刻**，非人工预设）。修改本文件/脚本后必须同步重算 freeze 清单，否则 self-check 会报 stale（§10）。
 
 **关于 G1 的 canonical 哈希**：G1 §11 称"去掉 generated_at 后 sha256 = `bfdd85ab64d9fd20142002c33c995e06c75f5bc48d4999060325575fd4cdab3e`"，但复核员用 42 种 canonicalization 方式均无法复现，且原文未给 recipe。⇒ **本文件不引用该值**；建议 Lead 要求 G1 补 recipe 或删除该声明（已登记 GUE-IDEA-016）。
 
@@ -682,3 +705,72 @@ recipe_id = g4-canon-json-v1
 5. A7/A8 只核到 title/venue（ACL Anthology bib），未读全文；其"最小编辑/对抗负例"主张作为设计方向引用，未引用其任何实验数字。
 6. v1 census（已废弃）的 `candidate_sample_2hop_authored` 只列 15/23 且选择规则未入 JSON；**v2 起改为全量 23 并写明 `selection_rule`/`selection_bias`**；**v3 修 357 帧同文件混帧**。任何引用 v1/v2 错误数字的地方作废。
 7. 本轮**未新增 C 源**，也未用 D 源作设计依据。
+
+---
+
+## 10. 定稿自检命令与输出（可机检）
+
+> 运行目录：`artifacts/agent/verify/debate/graph-utility/`（PowerShell；**不依赖 `PYTHONIOENCODING`**：脚本入口强制 stdout/stderr=UTF-8）。
+> 一键自检（C1–C5，退出码 0=PASS / 1=FAIL）；**管道/重定向下也必须 exit 0**：
+
+```powershell
+python scripts/G4-selfcheck.py                 # 交互控制台
+python scripts/G4-selfcheck.py > g4-check.txt 2>&1; echo $LASTEXITCODE   # 管道/重定向（CI 场景）→ 0
+```
+
+| 检查 | 内容 | PASS 判据 |
+|---|---|---|
+| **C1** | 文档 sha256 / 行数 / 字节数 == `G4-freeze.json.document` | 三者全等 |
+| **C2** | census canonical（`g4-canon-json-v1`）/ 文件字节 sha / 普查脚本 sha / **门禁脚本 `G4-selfcheck.py` sha** == `G4-freeze.json` 对应项 | 四者全等 |
+| **C3** | 旧哈希与旧解释残留扫描：`45d5c843 / 50f7d801 / schema v2 / census v2 / 伪影 / 独立 0.99` | **命中必须可归类**：①命令文本自身；②§11–§12 的"修改前/变更记录"引用；③§3.1–§0.1 的 v2 更正说明（根因/FAIL 行）。**无归类者判 FAIL**（脚本逐条打印行号+模式+归类） |
+| **C4** | census ↔ §3.1 对账：同文件有序对 / p_same_file / 三个帧的 BA | 五个值全部出现在正文 |
+| **C5** | stdio UTF-8：入口 `stdout/stderr.reconfigure(encoding='utf-8', errors='replace')`；写全角探针不抛异常 | `stdout.encoding == utf-8` **且** 全角探针写成功 |
+
+**C3 的允许命中清单（人工判读口径）**：
+
+| 位置 | 命中内容 | 判定 |
+|---|---|---|
+| §10 本节命令/模式文本 | 模式字符串自身（如 `45d5c843`） | **允许**（命令文本，非陈述残留） |
+| §11 逐条回应表 | "修改前"列引用的旧哈希/旧解释 | **允许**（复核证据，必须可追溯） |
+| §12 变更记录 | v2 行引用的 `f75163cc… / 45d5c843… / 50f7d801…` | **允许**（版本历史） |
+| §3.1 / §0.1 | "v2 的 357 帧同文件两行已作废（混帧根因…）" | **允许**（错值更正说明，不含旧解释作为依据） |
+| 其它正文（§1–§9） | 任一旧哈希 / "0.99 伪影" / schema v2 | **FAIL（残留）** |
+
+**V3 定稿实测（2026-10-31，`python scripts/G4-selfcheck.py`，**交互与管道各跑一次**）**：`RESULT: PASS / exit 0`；C1 sha/行数/字节与 freeze 一致；C2 canonical/字节/普查脚本/门禁脚本一致；C3 全部命中均归入上表允许类（0 残留）；C4 对账值 `['35558','27.98','0.860','0.869','0.869']` 均在正文出现；**C5 stdio 管道下 stdout_encoding=utf-8（未设 `PYTHONIOENCODING`）**。逐条 REVIEW 回应见 §11，变更记录见 §12。
+
+---
+
+## 11. 第二轮复核 R1–R3 逐条回应（REVIEW → 修改前 / 修改后 / 证据 / 判定）
+
+| REVIEW | 修改前（被复核指出） | 修改后（本版落盘） | 证据位置 | 判定 |
+|---|---|---|---|---|
+| **FAIL-R1** 版本/哈希停留 v2 | 文件头与 §9.1 写 "census v2 / schema v2"；§9.2 仍是 canonical `45d5c843…`、脚本 `50f7d801…`；无变更记录、无文件自身 sha | 文件头改为 **v3（定稿）**；§5.1/§9.1 全部 v3；§9.2 换 canonical **`906e3925…`**、脚本 **`9c7d130e…`**、census 字节 **`1202a4c4…`**；新增 **`G4-freeze.json`** 承载本文件 sha/行数/字节 + census 版本/hash + 脚本 sha + **快照 MANIFEST `a4beaedc…` / taken_at `2026-10-27T14:09:46`** + `schema_versions` + `generated_at`；新增 **§12 变更记录** | §0 文件头、§5.1、§9.1、§9.2、§12、`G4-freeze.json` | **关闭** |
+| **FAIL-R2** 残留被推翻的"0.99 伪影"解释 | §6.4 item 8 写"357 帧因 278 个孤立点把 BA 抬到 0.99，不可用"；§9.4 item 3 同 | 两处均改为："357 帧的 278 个孤立点使其不适合作为随机负例池；但 **BA 实测 0.860 仍 >0.80**，同样支持'随机负例不可用'"。§3.1 的 v2 作废说明改为**混帧口径错误已修：同文件 35,558 / 27.98% / BA 0.860**（不再出现旧数值作为解释依据） | §6.4 item 8、§9.4 item 3、§3.1 帧口径段 | **关闭** |
+| **FAIL-R3** 区间名/公式不一致 | §4.4 写 "Wilson n=32 → ±17.3pp"（实为正态近似值）；§3.5 用正态近似但未标名/未给公式 | §4.4 **写死 Wilson 区间**并给公式（中心/半宽），同表核对 **n=13/20/23/32/100** = 23.88 / 20.07 / **18.92** / **16.37** / 9.62pp；§3.5 明确标注"**正态近似半宽 `w=z√(p(1−p)/n)`，仅功效粗估、不作 CI 报告**"，并给 Wilson 对照值（p=0.8, n=20 → ±16.8pp；n=32 → ±13.5pp），两类区间不混名 | §4.4（公式+表）、§3.5（标注+公式+对照） | **关闭** |
+| （前置）第二轮 FAIL-1 357 帧同文件混帧 | v2 分子用边端点映射、分母用 357 帧 → 错误值 | 改为从 frozen sidecar 读全部 357 KP 的 file 归属；同文件有序对 **35,558 / 27.98% / BA 0.860**（raw/clean 相同）；census v3 的 `node_file_coverage` 记录 357/357 有 file、9 个文件含 KP | §3.1、§9.1、`G4-path-census.json`（v3） | **已关闭（上一轮）** |
+
+---
+
+## 12. 变更记录
+
+| 版本 | 日期 | 主要变更 | 产物身份 |
+|---|---|---|---|
+| **v1** | 2026-10-28 | 首版：链路定义 / G0–G4 判据 / 负例族 / 盲判协议 / 普查 v1（候选只列 15/23，选择规则未入 JSON） | 未冻结；census v1 canonical 未记录 |
+| **v2** | 2026-10-28 | 复核第一轮 7 项 FAIL 收口：candidate 全量 23、四显式帧、canonicalization recipe；677 行 | file sha `f75163cc…`；census v2 canonical `45d5c843…`、脚本 `50f7d801…` |
+| **v3（定稿）** | 2026-10-31 | 复核第二轮收口：① FAIL-1 修 357 帧同文件混帧（35,558 / 27.98% / BA 0.860）；② R1 版本/哈希/冻结清单 + §12；③ R2 删"0.99 伪影"解释；④ R3 Wilson 写死 + 公式 + n=13/20/23/32/100 表；⑤ 新增 §10 自检、§11 逐条回应；⑥ 最长 extend 链改"不唯一（4 条）" | **本文件 sha 见 `G4-freeze.json`**；census **v3** canonical `906e392517e7240456b83a432d9fe857648b9ebe9d87969ed491bffd0a25e4ee`、字节 `1202a4c4a917356c705f0ff80474bcc1c20cbd134b172dabbdaae614697d1b92`、脚本 `9c7d130e07da79572f1dbc0aa1a977b19deeb9931850d28d816231ee4d42f3ca` |
+
+**冻结口径（v3）**：
+
+```text
+文件           G4-link-semantics.md        sha256 / 行数 / 字节 / mtime → G4-freeze.json
+census         G4-path-census.json         schema gue-g4-path-census/v3
+               canonical g4-canon-json-v1  = 906e3925…（去 generated_at）
+               字节 sha（实例，每次跑变）  = 1202a4c4…
+普查脚本       scripts/G4-path-census.py   sha256 = 9c7d130e…
+门禁脚本       scripts/G4-selfcheck.py     sha256 记录于 freeze.selfcheck_script（防门禁漂移）
+快照           数字通信原理 frozen           MANIFEST a4beaedc5f852816… · taken_at 2026-10-27T14:09:46 · pre_build
+schema 版本    census v3 / canonical g4-canon-json-v1 / 谓词映射待 L2（G2 v1）/ judge protocol v3
+generated_at   = G4-freeze.json 实际写入时刻（非人工预设；见 freeze.generated_at_note）
+```
+
+> **修改纪律**：v3 定稿后任何对 `G4-link-semantics.md`、`G4-path-census.json`、普查脚本或门禁脚本的改动 ⇒ 必须重算 `G4-freeze.json`（含门禁脚本 sha）并重跑 §10 自检；否则冻结清单 stale，复核按 FAIL 处理。
