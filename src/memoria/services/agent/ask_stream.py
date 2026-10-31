@@ -252,7 +252,7 @@ class AskJob:
                 "process_delta": [dict(item) for item in self.process[p_start:]],
                 "process_cursor": len(self.process),
                 # 追加键（2026-09-22）：待人工确认的写类调用（逐条确认卡；只增不改）
-                "pending_approvals": pending_for(self.kb_path), "pending_questions": pending_questions_for(self.kb_path),
+                "pending_approvals": pending_for(self.kb_path), "pending_questions": pending_questions_for(self.kb_path), "pending_summons": _take_summons(self.kb_path),
                 "answer": self.answer,
                 "anchors": [dict(anchor) for anchor in self.anchors],
                 "tool_calls": [dict(call) for call in self.tool_calls],
@@ -668,3 +668,12 @@ def get_exec_jobs() -> ExecJobManager:
 
 
 __all__ += ["EXEC_SHELLS", "ExecJob", "ExecJobManager", "get_exec_jobs"]
+
+
+# ── R4-3 v1（2026-10-12）：呼出事件捎带进轮询快照 ────────────────────────────────
+# `take_summons` 定义在 `tools/kb.py` 末尾；本函数**延迟导入**（定义在文件末尾、调用期取用），
+# 不把 kb 的顶层 import 拉到本模块顶部 ⇒ 不推移任何 `<文件>:<行号>` 锚点（`AskJob.snapshot` 第 255 行同行替换引用它）。
+def _take_summons(kb_path: str):
+    from memoria.services.agent.tools.kb import take_summons
+
+    return take_summons(kb_path)

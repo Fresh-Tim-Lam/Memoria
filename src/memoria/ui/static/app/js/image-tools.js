@@ -183,8 +183,20 @@ window.MemoriaImageTools = (function () {
     state.doc.body = body;
     state.doc.lines = lines;
     state.doc.preview_body = null;
+    // task-198 B1：图片属性/名称写回是"整篇重渲"，必须走 keep-scroll 入口；
+    // 直接 renderPreview 会把预览（及编辑器）滚回顶部（人报「预览区域图片编辑后闪到文件开头」）。
+    const editorPane = document.getElementById("editor-pane");
+    const srcScrollTop = editorPane ? editorPane.scrollTop : null;
     renderEditor(state.doc);
-    await renderPreview(state.doc);
+    if (editorPane && srcScrollTop != null) {
+      requestAnimationFrame(() => { editorPane.scrollTop = srcScrollTop; });
+    }
+    const A2 = A();
+    if (typeof A2.renderPreviewKeepScroll === "function") {
+      await A2.renderPreviewKeepScroll();
+    } else {
+      await renderPreview(state.doc);
+    }
     _srcAfterEdit();
     markDirty();
   }

@@ -1679,8 +1679,10 @@
     blockEl.contentEditable = "true";
     blockEl.classList.add("-block-editing");
 
-    // 聚焦
-    blockEl.focus();
+    // 聚焦 —— task-198 B1：必须 preventScroll。图片属性提交后会重进编辑模式，
+    // 旧代码的 `.focus()` 会把图片块滚进视口，叠加在 keep-scroll 恢复之上 ⇒ 预览又偏移。
+    // 块编辑的进入动作来自用户已在视口内可见的块（双击/工具栏），不应改变滚动位置。
+    try { blockEl.focus({ preventScroll: true }); } catch (_) { /* 不退回会滚动的 focus() */ }
 
     // 选中所有内容
     var range = document.createRange();

@@ -1931,6 +1931,8 @@
       collapse: "折叠",
       expand: "展开",
       close: "关闭",
+      locate: "↩ 定位入口",
+      locateTitle: "关闭小窗并跳到该链接在原文中的位置（关闭本身不会滚动）",
       pull: "拉到编辑区",
       loading: "加载中…",
       noRegion: "（无区域正文）",

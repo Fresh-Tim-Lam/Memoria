@@ -2037,6 +2037,8 @@
       collapse: "Collapse",
       expand: "Expand",
       close: "Close",
+      locate: "↩ Go to link",
+      locateTitle: "Close the panel and jump to this link's position in the document (closing alone never scrolls)",
       pull: "Pull to editor",
       loading: "Loading…",
       noRegion: "(No region text)",

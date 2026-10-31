@@ -7503,14 +7503,13 @@ async function call(fn, ...args) {
     return { lines: slice, total: total };
   }
 
-  function _linkPanelRenderPreview(pop, docEl, regionText, doc) {
+  async function _linkPanelRenderPreview(pop, docEl, regionText, doc) {
     if (!docEl) return;
     const MP = window.MemoriaMarkdownPreview;
     if (!MP || typeof MP.renderHtml !== "function") {
       docEl.innerHTML = `<pre class="-link-panel-pre">${esc(regionText)}</pre>`;
       return;
     }
-    const c = _linkPanelCandidate(pop);
     try {
       docEl.innerHTML = MP.renderHtml(regionText, {
         knownTargets: state.linkTargetSet,
@@ -7519,6 +7518,17 @@ async function call(fn, ...args) {
       });
     } catch (_) {
       docEl.innerHTML = `<pre class="-link-panel-pre">${esc(regionText)}</pre>`;
+      return;
+    }
+    // task-198 B2：主预览的 `renderHtml` 只负责 HTML；mermaid 由**同一个**后处理器
+    // `renderMermaidBlocks` 异步替换（复用主渲染路径，不在这里二次 init mermaid —— 重复
+    // 初始化有已知风险）。小窗此前漏了这一步 ⇒ 区域里的 mermaid 一直是源码块。
+    if (typeof MP.renderMermaidBlocks === "function") {
+      try {
+        await MP.renderMermaidBlocks(docEl);
+      } catch (_) {
+        /* 失败由主渲染器的错误块/源码块兜底；不影响小窗其余内容 */
+      }
     }
   }
 
@@ -7562,7 +7572,7 @@ async function call(fn, ...args) {
       if (pop.mode === "source") {
         docEl.innerHTML = `<pre class="-link-panel-pre">${esc(head.join("\n"))}</pre>`;
       } else {
-        _linkPanelRenderPreview(pop, docEl, head.join("\n"), doc);
+        await _linkPanelRenderPreview(pop, docEl, head.join("\n"), doc);
       }
       if (lines.length > head.length) {
         const t = document.createElement("div");
@@ -7578,7 +7588,7 @@ async function call(fn, ...args) {
         (truncated ? `<div class="-link-panel-trunc -muted">${esc(truncated)}</div>` : "");
       return;
     }
-    _linkPanelRenderPreview(pop, docEl, region.lines.join("\n"), doc);
+    await _linkPanelRenderPreview(pop, docEl, region.lines.join("\n"), doc);
     if (truncated) {
       const t = document.createElement("div");
       t.className = "-link-panel-trunc -muted";
@@ -7675,6 +7685,24 @@ async function call(fn, ...args) {
     _linkPanelApplyRect(pop, { persist: false });
   }
 
+  /** 焦点回位但**绝不滚动**：关闭 = "我不看了"，不是"我要去入口"（task-198 B3）。 */
+  function _focusNoScroll(el) {
+    if (!el || !el.isConnected || typeof el.focus !== "function") return;
+    try { el.focus({ preventScroll: true }); } catch (_) {
+      /* preventScroll 不支持时宁可不聚焦，也绝不退回会滚动的 focus() */
+    }
+  }
+
+  /** 显式"定位入口"：只由按钮 click 触发；关闭路径本身没有任何滚动代码。 */
+  function _linkPanelLocateAnchor(pop) {
+    const anchor = pop && pop.anchorEl;
+    closeLinkPanel({ focusBack: true });  // close 只关面板 + 无滚动焦点回位
+    if (!anchor || !anchor.isConnected || typeof anchor.scrollIntoView !== "function") return;
+    try { anchor.scrollIntoView({ block: "center", behavior: "smooth" }); } catch (_) {
+      try { anchor.scrollIntoView(); } catch (__) { /* noop */ }
+    }
+  }
+
   function closeLinkPanel(opts = {}) {
     const pop = state.linkPanel;
     if (!pop) return;
@@ -7687,11 +7715,13 @@ async function call(fn, ...args) {
     document.removeEventListener("mousedown", _linkPanelOutside, true);
     document.removeEventListener("keydown", _linkPanelKeydown, true);
     state.linkPanel = null;
-    if (opts.focusBack && pop.anchorEl && pop.anchorEl.isConnected) {
-      try { pop.anchorEl.focus(); } catch (_) { /* noop */ }
-    } else if (!opts.noFocus && pop.opener && pop.opener !== document.body &&
-               pop.opener.isConnected && typeof pop.opener.focus === "function") {
-      try { pop.opener.focus(); } catch (_) { /* noop */ }
+    // ★ task-198 B3：两条焦点回位都必须 preventScroll。旧代码 `.focus()` 会让浏览器
+    //   把入口链接滚进视口 —— 这正是人报的「关闭小窗后闪到跳转入口位置」。
+    //   这里没有条件分支决定"要不要滚"；滚动只存在于 _linkPanelLocateAnchor（按钮）。
+    if (opts.focusBack) {
+      _focusNoScroll(pop.anchorEl);
+    } else if (!opts.noFocus && pop.opener && pop.opener !== document.body) {
+      _focusNoScroll(pop.opener);
     }
   }
 
@@ -7759,6 +7789,7 @@ async function call(fn, ...args) {
       `<div class="-link-panel-list" data-panel-list role="listbox" aria-label="${esc(linkPanelT("listAria"))}"${multi ? "" : " hidden"}></div>` +
       `<div class="-link-panel-doc" data-panel-doc role="document"></div></div>`;
     const status = `<div class="-link-panel-status"><span class="-link-panel-meta -muted" data-panel-meta></span>` +
+      `<button type="button" class="-btn secondary -btn--sm" data-panel-locate title="${esc(linkPanelT("locateTitle"))}">${esc(linkPanelT("locate"))}</button>` +
       `<button type="button" class="-btn primary -btn--sm" data-panel-pull>${esc(linkPanelT("pull"))}</button></div>`;
     const el = document.createElement("div");
     el.id = "link-panel";
@@ -7806,6 +7837,7 @@ async function call(fn, ...args) {
     if (allBtn) allBtn.addEventListener("click", () => _linkPanelOpenAll(pop));
     el.querySelector("[data-panel-collapse]").addEventListener("click", () => _linkPanelToggleCollapse(pop));
     el.querySelector("[data-panel-close]").addEventListener("click", () => closeLinkPanel({ focusBack: true }));
+    el.querySelector("[data-panel-locate]").addEventListener("click", () => _linkPanelLocateAnchor(pop));
     el.querySelector("[data-panel-pull]").addEventListener("click", () => _linkPanelPull(pop));
     el.querySelectorAll("[data-panel-resize]").forEach((h) => {
       h.addEventListener("pointerdown", (e) => _linkPanelStartResize(pop, e, h.dataset.panelResize));
@@ -19269,6 +19301,8 @@ async function call(fn, ...args) {
     },
     renderEditor,
     renderPreview,
+    // task-198 B1：图片属性/名称写回走整篇重渲时必须保住预览滚动（与源码编辑同一入口）
+    renderPreviewKeepScroll: _renderPreviewKeepScroll,
     showTreeContextMenu,
     confirmTreeAction,
     // ── 文件树子系统（file-tree.js）追加的私有服务 ─────────────────
