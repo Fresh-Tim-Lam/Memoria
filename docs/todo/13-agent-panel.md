@@ -135,3 +135,11 @@
 > **2026-10-25 台账补录（AG107/AG108，Lead 自认违例，如实记录）**：
 > - **AG107（release 规范违例）**：`version.md:124` 早已规定「Release 标题只允许 `Memoria vX.Y.Z`」，但 v0.4.7/v0.4.8 两版 + 0.5.0（已撤回）都写了副标题；另造价段缺量级与统计口径、正文非双语。**根因**：规范只写在文档里、靠"记得住"= 随机数。**修法**：`e030dc1d` 规范升三条硬规则 + `b5c7ee5a` 做成机检（必红 32/32）+ 3 个 release body 重写为双语。**留下机制**：release_preflight 不通过就发不出去。
 > - **AG108（资产命名漂移）**：v0.3.x–v0.4.6 canonical 是 `-win64-lite.zip`，v0.4.7 起漂成 `-lite.zip`。**根因**：打包时只看最近自己的命名习惯照抄，没回头对照 `operations.md` 表。**处置**：canonical 保持 `-win64-lite.zip`；**已发布资产不改名**（外部链接/用户已存路径）；`operations.md §5.1` + `release-copy.md` 记漂移；机检 ASSETS-COUNT 两种都收、`-lite` 只 WARN；**新发布一律 canonical**。***
+
+## 新增登记（2026-10-26）<a id="ag109"></a>
+
+- **AG109｜JS/CSS 常量双源：`contentMinPx.def`**（来源：ui-designer 2026-10-26 报告，Lead 路由登记；owner = JS Owner 处理）：
+  `src/memoria/ui/static/app/js/display-settings.js:25` `CONTENT_MIN_RANGE = { min: 180, max: 560, step: 10, def: 360 }`
+  与 `src/memoria/ui/static/app/js/agent-panel.js:224` `const CONTENT_MIN_PX = 360;` **两处写死同一默认值**（`:222` 注释已写「必须同口径」）。
+  **风险**：改默认值时只改一处会静默失效（2026-10-26 改 320→180 只改了 min/max，`def` 仍是双写）。
+  **状态**：🔴 K1（未触发，潜在双源；不是当前故障）——待 JS Owner 收口（单一事实源或运行时互校）。

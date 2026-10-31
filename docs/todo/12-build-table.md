@@ -69,3 +69,9 @@ F01（KB 完整性检查/审计 `validate_kb` + 静默检查 + 徽标）、F02�
 **§12 遗留（非门禁项）**：打开库 `sync_kb_pending` 全库扫描 \~1.06s（G5.4 实测）；`kp_panel` 作业在文件切换瞬间偶发 `expected str, bytes or os.PathLike object, not NoneType` 失败（真机 2026-09-10 日志），待排查触发条件。
 
 ***
+
+## G. 新增登记（2026-10-26）：UI 契约门禁 <a id="ui-gate"></a>
+
+| # | 任务 | 现状 |
+| --- | --- | --- |
+| GATE-1 | `scripts/check_ui_contract.py`（UI 域机器守卫：视觉层 C1–C7 违规检查；新增违规红，基线 **210F/60W**） | ✅ 已落地（独立脚本 + 基线 `artifacts/agent/verify/ui/ui-contract-baseline.js`）；**未并入 `team_audit` 门禁链**（建议先独立观察一期，再由 Lead 决定是否并入；并入前不改变现有门禁语义） |
