@@ -3043,8 +3043,13 @@ class DocumentService:
         edge_type: str,
         *,
         relevance: float | None = None,
+        assertion_source: dict | None = None,
     ) -> dict:
-        """在 sidecar edges[] 中创建纯边。"""
+        """在 sidecar edges[] 中创建纯边。
+
+        assertion_source（G5b 裁决 3）：可选，供未来回填器把断言出处带进**内存返回对象**。
+        本阶段不写 sidecar 文件（不改 kb_build 回写）；传 None / 空 dict 则不出现该键。
+        """
         from memoria.graph.edge_types import normalize_edge_type, default_relevance
 
         source_id = (source_id or "").strip()
@@ -3114,12 +3119,17 @@ class DocumentService:
 
         self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
         self._cache.pop(rel_path, None)
-        return {"status": "ok", "edge": {
+        result_edge = {
             "type": et,
             "source_id": source_id,
             "targets": [target_id],
             "relevance": rel_val,
-        }}
+        }
+        # G5b 裁决 3：assertion_source 只进内存返回对象，不写 sidecar；
+        # None / 空 dict 不写该键（保持旧结构）。
+        if assertion_source:
+            result_edge["assertion_source"] = assertion_source
+        return {"status": "ok", "edge": result_edge}
 
     def delete_edge(
         self,

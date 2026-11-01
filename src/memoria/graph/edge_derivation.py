@@ -33,6 +33,27 @@ from memoria.services.kp_index import build_kp_index
 from memoria.services.kp_resolver import resolve_knowledge_points
 
 
+#: contain 派生边的生成算法版本（G5 DM-P3 / G5b 裁决 1）。
+#: schema `^contain-v[0-9]+$`；G5a 夹具用 contain-v1。containment 算法语义变化时手动 +1
+#: （须同步 G5a schema 与 fixture）。仅 system_range（contain）边写；system_link 边不写。
+CONTAIN_EDGE_GENERATOR_VERSION = "contain-v1"
+
+
+#: G5 §2.2.1 作者边可透传的 provenance 字段（白名单，逐键 copy）。
+#: 仅在 sidecar edges[] 条目里【已存在】时才透传；旧语料无这些键 ⇒ 0 增量、字节不变。
+#: 8 个 JSON 键对应 7 个字段（valid_from + valid_to 合并计 1）。
+SIDECAR_EDGE_PROVENANCE_KEYS = (
+    "derived_by",
+    "provenance_state",
+    "assertion_source",
+    "instances",
+    "generator_version",
+    "valid_from",
+    "valid_to",
+    "confidence",
+)
+
+
 
 
 
@@ -336,6 +357,8 @@ def derive_contain_edges(
                 "relevance": default_relevance("contain"),
                 "derived": True,
                 "origin": "range",
+                "derived_by": "system_range",
+                "generator_version": CONTAIN_EDGE_GENERATOR_VERSION,
             }
             if no_build_set and key in no_build_set:
                 edge["no_build"] = True
@@ -432,6 +455,9 @@ def _add_edge(
             "derived": True,
 
             "origin": origin,
+
+            # G5b 裁决 1：link 派生边标注 derived_by=system_link；generator_version 不写。
+            "derived_by": "system_link",
 
             "file": file,
 
@@ -664,7 +690,7 @@ def derive_sidecar_edges(
             resolve_target_kp=resolve_target_kp,
         )
         for target_id in targets:
-            edges.append({
+            out_edge: dict = {
                 "type": edge_type,
                 "source_id": source_id,
                 "targets": [target_id],
@@ -672,7 +698,12 @@ def derive_sidecar_edges(
                 "derived": False,
                 "origin": "sidecar_edge",
                 "file": rel_path,
-            })
+            }
+            # M1（G5 §2.2.3）：白名单逐键透传 provenance；值原样 copy（不转 datetime、不重写）。
+            for key in SIDECAR_EDGE_PROVENANCE_KEYS:
+                if key in edge:
+                    out_edge[key] = edge[key]
+            edges.append(out_edge)
     return edges
 
 
