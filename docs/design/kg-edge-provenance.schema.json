@@ -1,0 +1,186 @@
+{
+ "$schema": "https://json-schema.org/draft/2020-12/schema",
+ "$id": "https://memoria.local/schema/gue-g5-schema-edge-provenance/v0.1",
+ "title": "sidecar edges[] 条目 + 可选 provenance 扩展（G5a 草案，已获 P0-1 批准）",
+ "x-status": "accepted",
+ "x-approval": {
+  "decision_id": "dec-20261101-p01reopen",
+  "approved_by": "human",
+  "approved_at": "2026-11-01T19:05:00+08:00"
+ },
+ "x-counting": "G5 字段表口径为 7 个字段（valid_from+valid_to 合并计 1），对应 8 个 JSON 键。本 schema 用 8 键；对账按 7 组。",
+ "description": "对齐 G5.1 §2.2.1 的 edges[] 可选扩展。base 字段（type/source_id/targets/relevance/derived/origin/file/line/no_build）保持产品现状；新增 8 个键分属 7 个字段。schema 是研究侧严格视图（additionalProperties=false）；产品读取仍按 G5 §2.2 DM-P6 对未知键宽容。",
+ "type": "object",
+ "required": [
+  "type",
+  "source_id",
+  "targets"
+ ],
+ "additionalProperties": false,
+ "properties": {
+  "type": {
+   "description": "base：边类型（v0 三种，FROZEN）",
+   "enum": [
+    "contain",
+    "reference",
+    "extend"
+   ]
+  },
+  "source_id": {
+   "description": "base：源知识点 id",
+   "type": "string",
+   "minLength": 1
+  },
+  "targets": {
+   "description": "base：目标知识点 id 列表（sidecar 可多目标；collector 会拆单）",
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "type": "string",
+    "minLength": 1
+   }
+  },
+  "relevance": {
+   "description": "base：0–1",
+   "type": "number",
+   "minimum": 0,
+   "maximum": 1
+  },
+  "derived": {
+   "description": "base：兼容布尔（UI 目前唯一读取的来源字段；本阶段冻结不动）",
+   "type": "boolean"
+  },
+  "origin": {
+   "description": "base：collector 来源（range=contain 几何派生 / link=links[] 投影 / sidecar_edge=作者纯边）",
+   "enum": [
+    "range",
+    "link",
+    "sidecar_edge"
+   ]
+  },
+  "file": {
+   "description": "base：边所在 md 相对路径（collector 输出）",
+   "type": "string",
+   "minLength": 1
+  },
+  "line": {
+   "description": "base：link 投影边的锚点行（collector 输出；纯边没有）",
+   "type": "integer",
+   "minimum": 1
+  },
+  "no_build": {
+   "description": "base：抑制 contain 派生边的标记（dedupe key 的一部分）",
+   "type": "boolean"
+  },
+  "derived_by": {
+   "description": "字段 1/7：谁产出了这条边",
+   "enum": [
+    "author",
+    "system_range",
+    "system_link"
+   ]
+  },
+  "provenance_state": {
+   "description": "字段 2/7：断言出处状态（G5 §2.2.1b 三态）",
+   "enum": [
+    "asserted",
+    "inferred",
+    "missing"
+   ]
+  },
+  "assertion_source": {
+   "description": "字段 3/7：作者断言出处；仅 provenance_state=asserted 时必填（G5 DM-P2/C8）",
+   "$ref": "#/$defs/assertionSource"
+  },
+  "instances": {
+   "description": "字段 4/7：可多锚点（与 links[].instances 同构）",
+   "type": "array",
+   "minItems": 1,
+   "items": {
+    "$ref": "#/$defs/anchor"
+   }
+  },
+  "generator_version": {
+   "description": "字段 5/7：仅 system_range 边；派生算法版本（可复算）",
+   "type": [
+    "string",
+    "null"
+   ],
+   "pattern": "^contain-v[0-9]+$"
+  },
+  "valid_from": {
+   "description": "字段 6/7a：T 轴只存不用（AS5）",
+   "type": [
+    "string",
+    "null"
+   ],
+   "format": "date"
+  },
+  "valid_to": {
+   "description": "字段 6/7b：T 轴只存不用（AS5）",
+   "type": [
+    "string",
+    "null"
+   ],
+   "format": "date"
+  },
+  "confidence": {
+   "description": "字段 7/7：仅 L2 判据过闸后允许写（G5 §2.3）",
+   "type": [
+    "number",
+    "null"
+   ],
+   "minimum": 0,
+   "maximum": 1
+  }
+ },
+ "$defs": {
+  "anchor": {
+   "type": "object",
+   "required": [
+    "file",
+    "line"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "file": {
+     "type": "string",
+     "minLength": 1
+    },
+    "line": {
+     "type": "integer",
+     "minimum": 1
+    }
+   }
+  },
+  "assertionSource": {
+   "type": "object",
+   "required": [
+    "file",
+    "line_start",
+    "line_end"
+   ],
+   "additionalProperties": false,
+   "properties": {
+    "file": {
+     "type": "string",
+     "minLength": 1
+    },
+    "line_start": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "line_end": {
+     "type": "integer",
+     "minimum": 1
+    },
+    "quote_sha256": {
+     "type": "string",
+     "pattern": "^[0-9a-f]{64}$"
+    }
+   }
+  }
+ },
+ "x-contract": "docs/design/kg-ontology-v0.md v0.1 §2.2",
+ "x-canonical-copy": "artifacts/agent/verify/debate/graph-utility/g5-schema-fixtures/"
+}
