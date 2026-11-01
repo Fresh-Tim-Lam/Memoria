@@ -1,4 +1,5 @@
-> **状态**：**v0 冻结**（2026-10-25T20:40+08:00）
+> **状态**：**v0.1 冻结**（2026-11-01T19:05+08:00；v0 → v0.1 补丁：仅加 edges[] 可选 provenance 字段，无新类型）
+> **v0.1 补丁记录**：`dec-20261101-p01reopen`（人批，2026-11-01T19:05:00+08:00，见 `team/decisions.jsonl`）；变更清单与回滚见 §11。
 > **来源**：4 份独立提案 → Lead 并集（0 自创）→ 4 份交叉异议 → 13 条裁决。
 > **可复核**：`artifacts/agent/verify/debate/kg/`（PROPOSAL×4 / PHASE2-UNION / PHASE3-OBJECTION×4 / PHASE4-RULINGS / ruling/rulings-kg.jsonl）
 > **协议**：`artifacts/agent/verify/debate/PROTOCOL.md`（FROZEN；M1 证据优先 / M2 独立根 >1 / M3 登记未知 / E1 证据身份）
@@ -55,7 +56,51 @@ reference 既不是"纯边"也不是"不是边" —— 它是【无断言跳转�
   且映射保真度测量（M-08/M-09）需要边侧类型
 ```
 
-## 3. v0 交付清单（5 件，全部是"修缺陷"不是"加功能"）
+### 2.2 `edges[]` 可选 provenance 字段（v0.1 新增；不改变边/链接定义）
+
+> 目的：让"边/链路是否被作者断言"可核（G4 C8），L2/L3 真值不再只依赖节点区间弱证据。
+> 边界：**只加字段、不新类型、不改 link/edge 概念模型、不 bump `schema_version`（保持 1）**；旧数据无这些键时行为与 v0 完全一致。
+> 字段语义与取值来源：`G5-board-design.md` §2.2（G5.1 冻结版）与 `g5-schema-fixtures/schema-edge-provenance.v0.1.json`（accepted-for-G5b）。
+
+| # | 字段（G5 计 7 组） | JSON 键 | 类型/取值 | 必填 | 说明 |
+|---|---|---|---|---|---|
+| 1 | `derived_by` | `derived_by` | `author` \| `system_range` \| `system_link` | 否 | 谁产出了这条边；`derived` 布尔保持不动 |
+| 2 | `provenance_state` | `provenance_state` | `asserted` \| `inferred` \| `missing` | 否 | 断言出处三态；旧数据缺省视为 `missing` |
+| 3 | `assertion_source` | `assertion_source` | `{file, line_start, line_end, quote_sha256?}` | 否 | 作者断言出处；仅 `asserted` 时必填 |
+| 4 | `instances` | `instances` | `[{file, line}, ...]` | 否 | 可多锚点，与 `links[].instances` 同构 |
+| 5 | `generator_version` | `generator_version` | `contain-vN` \| `null` | 否 | 仅 `system_range` 边：派生算法版本（可复算） |
+| 6 | `valid_from` + `valid_to` | `valid_from`, `valid_to` | date \| `null` | 否 | T 轴只存不用（G5 AS5，未实现） |
+| 7 | `confidence` | `confidence` | 0–1 \| `null` | 否 | 仅 L2 判据过闸后允许写 |
+
+```yaml
+# sidecar edges[] 条目可选扩展（全部可选；不存在 = 旧行为）
+edges:
+  - type: extend|reference|contain      # 不变（3 类）
+    source_id: <kp_id>                  # 不变
+    targets: [<kp_id>]                  # 不变
+    relevance: 0.0-1.0                  # 不变
+    derived_by: author | system_range | system_link      # 可选
+    provenance_state: asserted | inferred | missing      # 可选
+    assertion_source:                                    # 可选（asserted 时必填）
+      file: 教材/03_….md
+      line_start: 5
+      line_end: 5
+      quote_sha256: <sha256?>
+    instances: [{file: 教材/03_….md, line: 5}]           # 可选
+    generator_version: contain-v1                        # 可选（仅 system_range）
+    valid_from: null                                     # 可选（T 轴只存不用）
+    valid_to: null
+    confidence: null                                     # 可选（仅 L2 后）
+```
+
+规则（引自 G5.1 §2.2，写死）：
+- 作者边（`origin=sidecar_edge`）目标 `provenance_state=asserted` + `assertion_source`；未回填前只能 `missing`/`inferred`，不得冒充断言。
+- `contain` 派生边不写 `assertion_source`，写 `derived_by=system_range` + `generator_version`；出处由 KP `range` 复算。
+- `confidence` 不得由作者手写，只能由 L2 判据过闸后写入。
+- UI/既有代码**不读**新字段（`derived` 布尔冻结）；新字段消费者仅研究脚本与 G5b 透传路径。
+
+
+## 3. v0 交付清单（6 件：5 件"修缺陷" + 1 件 v0.1 可选字段扩展）
 
 | # | 事项 | 为什么必须做 | 依据裁决 |
 |---|---|---|---|
@@ -64,6 +109,7 @@ reference 既不是"纯边"也不是"不是边" —— 它是【无断言跳转�
 | ③ | **一致性断言测试** | 锁住"两端枚举不对称"这个事实，防回退 | D-KG-04 |
 | ④ | **边使用埋点** | `nodeClick` 有事件但**零统计消费**，`edge_id` 从未被记录 ⇒ 不埋点则"边有没有用"永远不可测 | D-KG-07 |
 | ⑤ | **语料冻结脚本入库 + 三元组规则** | 四家测出四个数字（479/454/408/429/404）⇒ 没有冻结口径就没有可比性 | D-KG-01 |
+| ⑥ | **边 provenance 可选字段（v0.1）** | `edges[]` 无 provenance ⇒ "作者是否断言"不可核，L2/L3 真值只能靠节点区间弱证据（G4 C8） | dec-20261101-p01reopen |
 
 ### 埋点位置（D-KG-07 给定，三处）
 ```
@@ -220,3 +266,12 @@ python artifacts/agent/verify/debate/kg/evidence/kg_corpus_freeze.py --json /tmp
 # 机读裁决
 cat artifacts/agent/verify/debate/kg/ruling/rulings-kg.jsonl | python -m json.tool
 ```
+
+## 11. 变更记录（v0.1）
+
+| 版本 | 日期 | 变更 | 批准 |
+|---|---|---|---|
+| v0 | 2026-10-25 | 初版冻结（5 件交付清单） | — |
+| v0.1 | 2026-11-01 | 仅新增 §2.2 `edges[]` 可选 provenance 字段（7 组/8 键）+ §3 交付项 ⑥；类型空间、link/edge 定义、`schema_version` 均不变 | `dec-20261101-p01reopen`（人批） |
+
+**回滚**：v0.1 只改本文件文本、无数据迁移、未 bump `schema_version`；**已提交后**回滚用 `git revert <v0.1-commit>`（或 `git checkout <v0-commit> -- docs/design/kg-ontology-v0.md`）——不要用 `git checkout -- <path>`（提交后它恢复的是 v0.1）。回滚验证：文件 sha 回到 `84bfa8844ce79721c9602bf66ab2d2a4fee119d9c46129951ecdb0f919b4cf8b`，且 §2.2/§11 不存在。
