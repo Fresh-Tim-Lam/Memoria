@@ -20,6 +20,7 @@ authority: machine
 
 
 
+
 ## gm-seminar-researcher · 图谱-agent板块：G4 定稿（修 R1–R3）+ G5 板块设计提案
 <!-- task-id: task-276 -->
 ### 我确认的事实（带证据：file:line / commit / 命令输出）
@@ -34,6 +35,7 @@ authority: machine
 ### 我推翻过的假设
 authority: machine
 - （未自动分类；复查上方机器事实时请人工标注被推翻项）
+
 
 
 
@@ -53,6 +55,7 @@ authority: machine
 - （未自动分类；复查上方机器事实时请人工标注被推翻项）
 
 
+
 ## gm-seminar-researcher · 图谱-agent板块·G5c 准备：L2 盲判包 + 抽样 + α 计算器（不代填人判）
 <!-- task-id: task-282 -->
 ### 我确认的事实（带证据：file:line / commit / 命令输出）
@@ -68,11 +71,27 @@ authority: machine
 authority: machine
 - （未自动分类；复查上方机器事实时请人工标注被推翻项）
 
+
 ## gm-seminar-researcher · 图谱-agent板块·G5d-1：M6 provenance 回填器（frozen 副本，三态建议，不写用户库）
 <!-- task-id: task-283 -->
 ### 我确认的事实（带证据：file:line / commit / 命令输出）
 authority: machine
 - 完成任务 task-283「图谱-agent板块·G5d-1：M6 provenance 回填器（frozen 副本，三态建议，不写用户库）」：scripts/agent/g5_backfill_provenance.py, artifacts/agent/verify/graph-utility/g5d/edges-suggestions.jsonl, artifacts/agent/verify/graph-utility/g5d/backfill-report.json, artifacts/agent/verify/graph-utility/g5d/DELIVERY.md
+### 我试过但失败的路（含失败原因 —— 比成功经验更省时间）
+authority: machine
+（本段会话没有记录到失败的调用）
+### 我留下的坑 / 下一个人该从哪开始
+authority: machine
+（没有未完成任务；从本段会话的结论继续）
+### 我推翻过的假设
+authority: machine
+- （未自动分类；复查上方机器事实时请人工标注被推翻项）
+
+## gm-seminar-researcher · 图谱-agent板块·G5d-2：写回器副本演练（只写副本，快照→写→verify 红→restore 绿）
+<!-- task-id: task-286 -->
+### 我确认的事实（带证据：file:line / commit / 命令输出）
+authority: machine
+- 完成任务 task-286「图谱-agent板块·G5d-2：写回器副本演练（只写副本，快照→写→verify 红→restore 绿）」：scripts/agent/g5d_apply_provenance.py, artifacts/agent/verify/graph-utility/g5d/apply/expected-diff.json, artifacts/agent/verify/graph-utility/g5d/apply/APPLY-REHEARSAL.md, artifacts/agent/verify/graph-utility/g5d/apply/run-rehearsal.log, artifacts/agent/verify/graph-utility/g5d/apply/positive-control-author-edge.json
 ### 我试过但失败的路（含失败原因 —— 比成功经验更省时间）
 authority: machine
 （本段会话没有记录到失败的调用）
