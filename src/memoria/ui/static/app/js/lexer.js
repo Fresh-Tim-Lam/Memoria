@@ -63,6 +63,32 @@ window.MemoriaLexer = (function () {
       var ch = sourceLine[i];
       var rem = len - i;
 
+      // ── 行内数学内部：只有 `$`（关闭）与反斜杠转义有语法意义 ──
+      // `$[a]_\times$`、`$p\mapsto R(p-c)+c$` 这类公式里会出现 [ ] _ * 等字符；
+      // 若让它们走下面的链接/强调分支，`[a]` 会与行内真正的链接 `[transform.hpp](…)`
+      // 被匹配成同一个 link_open（2026-11-02 实测：整句公式 + 后文被吞成一条坏链接，
+      // 预览/气泡里显示成 `$a]_\times…` 与 `[transform.hpp）`）。
+      // 公式是叶节点：内部一切按原文进 token，等 parser 用 token.value 拼回 formula。
+      if (_hasUnmatched(tokens, "math_inline_open")) {
+        if (ch === "$") {
+          tokens.push(make("math_inline_close", "$", i, srcOffset));
+          i += 1;
+          continue;
+        }
+        if (ch === "\\" && i + 1 < len) {
+          // 反斜杠转义（含 `\$`）按 escape 令牌产出：parser 会还原成 "\"+char，
+          // 所以公式源码（\times / \mapsto）逐字节回写不丢反斜杠。
+          tokens.push(make("escape", sourceLine[i + 1], i, srcOffset));
+          i += 2;
+          continue;
+        }
+        var jm = i + 1;
+        while (jm < len && sourceLine[jm] !== "$" && sourceLine[jm] !== "\\") jm++;
+        tokens.push(make("text", sourceLine.slice(i, jm), i, srcOffset));
+        i = jm;
+        continue;
+      }
+
       // ── 行首标记 ──
       if (i === 0) {
         // 标题前缀 ### / ## / #
