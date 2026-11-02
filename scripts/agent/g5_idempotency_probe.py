@@ -1,4 +1,4 @@
-"""验证 width=4096 下 sidecar save 的幂等性 + 语义等价（G5b-3 口径 a/b）。"""
+﻿"""验证 sidecar save 的幂等性 + 语义等价（G5b-3 口径 a/b；save_sidecar 默认 width=80）。"""
 from __future__ import annotations
 
 import shutil
@@ -67,7 +67,7 @@ def main() -> int:
             else:
                 sema_fail.append(sc.name)
 
-    print("=== 验证：语义等价 + 幂等（width=4096）===")
+    print("=== 验证：语义等价 + 幂等（save 默认 width=80）===")
     print(f"  幂等（save 两次字节相等）: {idem_ok}/{len(sidecars)}")
     if idem_fail:
         for n in idem_fail:
