@@ -304,7 +304,7 @@
 | 6.5 | 批量重命名级联（改文件名 → 全库 `[[stem]]` 改写） | ✅ 有：见 2.6（`document.py:629`，含 `replace_link_id_in_markdown` 级联 `:637`） | 见 2.6 | ❌（复用 2.6） | `confirm` | M3b |
 | 6.6 | KP id 全库级联改（正文 `[[id]]` + 各 sidecar 引用） | ✅ 有：见 1.8（`document.py:2004`） | 见 1.8 | ❌（复用 1.8） | `confirm` | M3b |
 | 6.7 | 安装 / 刷新 KB Agent 文件（写 `<kb>/.memoria/agent/**`） | ⚠️ 有但**不同性质**：`install_kb_agent`（RPC `ui.py:1106`）向库内写提示词/规范文件，属**程序安装面**；且打开知识库时会**自动补写/刷新**，是**有意例外于"禁止 silent 写入"**（`docs-management.md §4.2` 2026-09-10 行） | — | ❌ 不建议 | — | **不建议给 agent 做** |
-| 6.8 | 会话 / 偏好 / 模型配置类写入 | ⚠️ 存在但**不在内容面**：`agent_session_delete`（`ui.py:1401`，删会话 JSONL）、`save_ui_settings`（`ui.py:775`）、`agent_save_config`（`ui.py:1190`，写 `config/agent.json`）；会话目录与备份目录都**不在** §2.4 的插件 `permissions.write` 白名单内 | — | ❌ 不建议 | — | **不建议给 agent 做** |
+| 6.8 | 会话 / 偏好 / 模型配置类写入 | ⚠️ 存在但**不在内容面**：`agent_session_delete`（`ui.py:1435`，删会话 JSONL）、`save_ui_settings`（`ui.py:775`）、`agent_save_config`（`ui.py:1190`，写 `config/agent.json`）；会话目录与备份目录都**不在** §2.4 的插件 `permissions.write` 白名单内 | — | ❌ 不建议 | — | **不建议给 agent 做** |
 | 6.9 | 备份与撤销（写前 pre-image / 撤销上一批） | ❌ **尚无**（M3a 待实现）：既有只有 `atomic_yaml.write_backup`（`storage/atomic_yaml.py:22`）留下的**单版本 `.bak`**，且 **fail-open**（`:41-43`），不按事务聚合；正文 `.md` 路径**完全没有**这层 | 由 apply 入口隐式做（§6 第 5 行） | ✅ **需要**（`snapshot_pre_images` + `agent_capability_call(action="undo")`） | 撤销本身仍 `confirm` | M3a |
 
 ---

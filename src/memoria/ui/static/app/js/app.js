@@ -4485,13 +4485,17 @@ async function call(fn, ...args) {
       }));
 
     const noBuildSet = new Set();
+    // v0.2 作者流程：sidecar edges[] 里的 curation overlay 决定该 contain 边是否 semantic
+    const curatedSet = new Set();
     for (const e of sidecarEdges) {
       if (!e || typeof e !== "object") continue;
-      if (!e.no_build) continue;
       if ((e.type || "").trim().toLowerCase() !== "contain") continue;
       const sid = (e.source_id || "").trim();
+      const isCurated = e.contain_kind === "semantic";
       for (const tgt of e.targets || []) {
-        noBuildSet.add(sid + "|" + String(tgt).trim());
+        const key = sid + "|" + String(tgt).trim();
+        if (isCurated) curatedSet.add(key);
+        if (e.no_build) noBuildSet.add(key);
       }
     }
 
@@ -4503,6 +4507,7 @@ async function call(fn, ...args) {
         // Only include if outer or inner is current KP
         if (outer.kp_id !== kpId && inner.kp_id !== kpId) continue;
         const nb = noBuildSet.has(outer.kp_id + "|" + inner.kp_id);
+        const semantic = curatedSet.has(outer.kp_id + "|" + inner.kp_id);
         addEdge({
           type: "contain",
           source_id: outer.kp_id,
@@ -4511,6 +4516,7 @@ async function call(fn, ...args) {
           derived: true,
           origin: "range",
           no_build: nb,
+          contain_kind: semantic ? "semantic" : "structural",
         });
       }
     }
@@ -4643,6 +4649,40 @@ async function call(fn, ...args) {
     return edge.origin || "";
   }
 
+  // v0.2 作者流程：把「子知识点的正文行」作为人确认整体-部分的证据锚点。
+  // 服务端会再用同一份正文重算 quote_sha256 校验（stale 拒绝），这里只是客户端预计算。
+  async function sha256Hex(text) {
+    const buf = await crypto.subtle.digest("SHA-256", new TextEncoder().encode(text));
+    return Array.from(new Uint8Array(buf)).map((b) => b.toString(16).padStart(2, "0")).join("");
+  }
+
+  async function buildContainAnchor(childId) {
+    const lines = (state.doc?.body || "").split("\n");
+    const kp = (state.doc?.knowledge_points || []).find((k) => k.id === childId);
+    const rr = kp?.range_resolved || {};
+    let start = rr.ok && rr.start_line != null ? Number(rr.start_line) : NaN;
+    let end = rr.end_line != null ? Number(rr.end_line) : start;
+    if (!Number.isFinite(start) || !Number.isFinite(end) || start < 1 || end < start) {
+      const name = kp?.name || "";
+      const hit = name ? lines.findIndex((line) => line.includes(name)) : -1;
+      if (hit < 0) return null;
+      start = hit + 1;
+      end = start;
+    }
+    const slice = lines.slice(start - 1, end).join("\n");
+    if (!slice.trim()) return null;
+    return {
+      file: state.currentPath,
+      line_start: start,
+      line_end: end,
+      quote_sha256: await sha256Hex(slice),
+    };
+  }
+
+  function humanConfirmId() {
+    return "human:ui";
+  }
+
   function renderKpEdgesTabHtml(kp) {
     const kpId = kp.id;
     const edges = deriveKpEdgesForCurrentFile(kp);
@@ -4670,6 +4710,12 @@ async function call(fn, ...args) {
           html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-restore" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">${esc(T("cfg.edge.restoreBtn"))}</button>`;
         } else if (e.type === "contain" && !e.no_build) {
           html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-suppress" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">${esc(T("cfg.edge.suppressBtn"))}</button>`;
+          // v0.2 作者流程：只有人能确认 semantic（agent 只能提议）；semantic 可撤销。
+          if (e.contain_kind === "semantic") {
+            html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-uncurate" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">${esc(T("cfg.edge.curateRemoveBtn"))}</button>`;
+          } else {
+            html += `<button type="button" class="-btn secondary -btn--sm -edge-btn-curate" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}">${esc(T("cfg.edge.curateBtn"))}</button>`;
+          }
         }
         if (e.origin === "sidecar_edge") {
           html += `<button type="button" class="-btn danger -btn--sm -edge-btn-delete" data-source="${esc(e.source_id)}" data-target="${esc(e.target_id)}" data-type="${esc(e.type)}">${esc(T("common.delete"))}</button>`;
@@ -4765,6 +4811,57 @@ async function call(fn, ...args) {
           return;
         }
         setStatus(T("cfg.edge.restoredContain"));
+        await reloadDocAndRefreshEdges(kp.id);
+      });
+    });
+
+    // v0.2 作者流程：确认一条 contain 为整体-部分（人确认 + 证据锚点）
+    body.querySelectorAll(".-edge-btn-curate").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const parentId = btn.dataset.source;
+        const childId = btn.dataset.target;
+        if (!state.currentPath || !parentId || !childId) return;
+        const anchor = await buildContainAnchor(childId);
+        if (!anchor) {
+          setStatus(T("cfg.edge.curateNoAnchor"));
+          return;
+        }
+        const ok = window.confirm(T("cfg.edge.curateConfirm", {
+          parent: kpNameForId(parentId),
+          child: kpNameForId(childId),
+          file: anchor.file,
+          line: anchor.line_start,
+        }));
+        if (!ok) return;
+        setStatus(T("cfg.edge.curateInProg"));
+        const res = await call("curate_contain", state.currentPath, parentId, childId, anchor, humanConfirmId());
+        if (res.status !== "ok") {
+          setStatus(res.message || T("cfg.edge.curateFailed"));
+          return;
+        }
+        setStatus(T("cfg.edge.curated"));
+        await reloadDocAndRefreshEdges(kp.id);
+      });
+    });
+
+    // v0.2 作者流程：撤销 semantic 确认（回 structural）
+    body.querySelectorAll(".-edge-btn-uncurate").forEach((btn) => {
+      btn.addEventListener("click", async () => {
+        const parentId = btn.dataset.source;
+        const childId = btn.dataset.target;
+        if (!state.currentPath || !parentId || !childId) return;
+        const ok = window.confirm(T("cfg.edge.curateRemoveConfirm", {
+          parent: kpNameForId(parentId),
+          child: kpNameForId(childId),
+        }));
+        if (!ok) return;
+        setStatus(T("cfg.edge.curateInProg"));
+        const res = await call("remove_contain_curation", state.currentPath, parentId, childId, humanConfirmId());
+        if (res.status !== "ok") {
+          setStatus(res.message || T("cfg.edge.curateFailed"));
+          return;
+        }
+        setStatus(T("cfg.edge.curateRemoved"));
         await reloadDocAndRefreshEdges(kp.id);
       });
     });

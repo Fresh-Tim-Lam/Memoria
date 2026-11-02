@@ -171,7 +171,7 @@ apply 入口（核心，M3a）
 | 面 | 口径 |
 |---|---|
 | 粒度 | **以事务（批次）为单位**（一次 apply = 一个 `txid`）；"单条提议"= 该提议单独成批时即一批；**整轮** = 该轮各批次倒序；**整会话** = 会话内全部批次倒序。M3a 只做**撤销上一批**；整轮 / 整会话留 M3b（§2.6） |
-| 入口 | 走 §2.2 的**唯一通用网关**：`agent_capability_call(id, action="undo", payload={txid?})`（缺省 = 该会话最新批次），形态对齐既有 `agent_session_delete`（`presentation/api/ui.py:1401`）；**不新增具名方法**（§2.2 口径） |
+| 入口 | 走 §2.2 的**唯一通用网关**：`agent_capability_call(id, action="undo", payload={txid?})`（缺省 = 该会话最新批次），形态对齐既有 `agent_session_delete`（`presentation/api/ui.py:1435`）；**不新增具名方法**（§2.2 口径） |
 | UI | 紧挨面板里每条 `capability/apply` 审计卡片的「撤销」按钮（复用同一张 apply/reject 卡片，不新开面板） |
 | 审批 | 撤销本身是**写**（会覆盖当前盘上内容）⇒ 仍需 `approval=confirm` 逐条确认，**不因"是撤销"免审** |
 | 审计 | 追加 `capability/undo`（含 `txid`、逐文件 sha256 前后、结果）；纯追加，旧读者对未知 type 跳过 |
@@ -321,7 +321,7 @@ apply 入口（核心，M3a）
 
 - ⚠️ **不做任意脚本/命令执行（2026-09-24 部分修订，见 §3.6）**：`permissions.exec` 仍属 §2.1 **暂缓字段**（v1 无 exec 声明面）；上游沙箱/执行族（`sandbox/*`、`shell/*`、`terminal/*` …）**仍不吃**（[dsh-agent-port.md §5](dsh-agent-port.md) ❌ 行，CVE 面见其 §9 P6）。**唯一开口**：库内脚本工作区里**由人在面板点「运行」**才执行的脚本 —— 模型面**没有**任何执行工具（见 §3.6）；"模型自动执行"依然明确不做；
 - ❌ **不做"模型自动应用"**：`approval.write=confirm` 是**装载期硬校验**，插件无法自行降档（用户能否覆写见 §10 P9）；
-- ❌ **不做跨库写**：一次会话只绑一个库（`presentation/api/ui.py:1325 _agent_kb`），写原语的 `scope` 恒为当前库；
+- ❌ **不做跨库写**：一次会话只绑一个库（`presentation/api/ui.py:1359 _agent_kb`），写原语的 `scope` 恒为当前库；
 - ❌ **不做库外写**（含程序目录与用户主目录，见 2.4）；
 - ❌ **不做 `kb.file.move`**（见上表）；
 - ❌ **不做 plan 的"部分应用"**：一律**拒整批**（§2.3.3 失败语义）；逐条 ✗ 属**编译前**选择、不是编译后的部分执行；

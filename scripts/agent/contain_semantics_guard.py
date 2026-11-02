@@ -50,6 +50,13 @@ REQUIRED = [
     ("derivation-overlay-valid", "src/memoria/graph/edge_derivation.py", "validate_contain_curation_overlay"),
     ("document-curate-api", "src/memoria/services/document.py", "def curate_contain("),
     ("curate-requires-human", "src/memoria/services/document.py", "confirmed_by 不能为空"),
+    # v0.2 作者流程的 UI 入口（人确认按钮 + RPC + i18n）
+    ("ui-curate-button", "src/memoria/ui/static/app/js/app.js", "-edge-btn-curate"),
+    ("ui-curate-rpc", "src/memoria/ui/static/app/js/app.js", 'call("curate_contain"'),
+    ("ui-uncurate-rpc", "src/memoria/ui/static/app/js/app.js", 'call("remove_contain_curation"'),
+    ("ui-i18n-zh-curate", "src/memoria/ui/static/app/i18n/zh-CN.js", 'curateBtn: "确认为整体-部分"'),
+    ("ui-i18n-en-curate", "src/memoria/ui/static/app/i18n/en.js", 'curateBtn: "Confirm whole-part"'),
+    ("ui-rpc-backend", "src/memoria/presentation/api/ui.py", "def curate_contain("),
 ]
 #: 必须**不存在**的文本（agent 只能提议，落库仅人确认）。
 NEGATIVE = [
@@ -157,17 +164,20 @@ def _fixture_files() -> dict[str, str]:
         "src/memoria/ui/static/app/i18n/zh-CN.js": (
             'typeContain: "结构包含",\ncontainNote: "由知识点区间推导，语义未验证",\n'
             'typeContainSemantic: "包含（作者确认）",\ncontainSemanticNote: "作者/人工确认的整体-部分关系",\n'
+            'curateBtn: "确认为整体-部分",\n'
         ),
         "src/memoria/ui/static/app/i18n/en.js": (
             'typeContain: "Structural contain",\n'
             'containNote: "Derived from note ranges; semantic containment is NOT verified",\n'
             'typeContainSemantic: "Contain (author-confirmed)",\n'
             'containSemanticNote: "Whole-part relation asserted by the author/curation",\n'
+            'curateBtn: "Confirm whole-part",\n'
         ),
         "src/memoria/ui/static/app/js/app.js": (
             'const isSemantic = type === "contain" && edge && edge.contain_kind === "semantic";\n'
             'T("cfg.edge.typeContainSemantic")\n'
             'e.type === "contain"\ncontain_kind === "semantic"\n'
+            '-edge-btn-curate\ncall("curate_contain"\ncall("remove_contain_curation"\n'
         ),
         "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
         "src/memoria/graph/edge_derivation.py": (
@@ -184,6 +194,7 @@ def _fixture_files() -> dict[str, str]:
         "src/memoria/graph/collector.py": "dedupe_graph_edges\nmerge_contain_curation_overlays\n",
         "src/memoria/services/document.py": "def curate_contain(\nconfirmed_by 不能为空\n",
         "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
+        "src/memoria/presentation/api/ui.py": "def curate_contain(\n",
     }
 
 
@@ -217,6 +228,7 @@ def selftest() -> int:
             ("docs/design/kg-ontology-v0.md", "contain_kind", ""),
             ("src/memoria/graph/collector.py", "merge_contain_curation_overlays", ""),
             ("src/memoria/services/document.py", "def curate_contain(", ""),
+            ("src/memoria/ui/static/app/js/app.js", "-edge-btn-curate", ""),
         ]
         for rel, old, new in red_cases:
             path = root / rel
@@ -241,7 +253,7 @@ def selftest() -> int:
             print("SELFTEST FAIL: agent 工具面出现 curate_contain 后仍全绿")
             return 1
 
-    print("SELFTEST PASS: 正常夹具全绿；11 个口径被破坏时均报红；删消费点/agent 工具面越界被报出")
+    print("SELFTEST PASS: 正常夹具全绿；12 个口径被破坏时均报红；删消费点/agent 工具面越界被报出")
     return 0
 
 

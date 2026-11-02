@@ -833,6 +833,40 @@ class UIAPI:
         except (RuntimeError, FileNotFoundError) as e:
             return {"status": "error", "message": str(e)}
 
+    # ── v0.2 作者流程：semantic contain 的 curation（仅人确认） ──────────
+
+    def curate_contain(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        assertion_source: dict,
+        confirmed_by: str,
+    ) -> dict:
+        """人确认一条派生 contain 边为 semantic（整体-部分）；agent 只能提议、不得调用。"""
+        try:
+            return self._svc.curate_contain(
+                rel_path, source_id, target_id, assertion_source,
+                confirmed_by=confirmed_by,
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
+    def remove_contain_curation(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        confirmed_by: str,
+    ) -> dict:
+        """撤销 semantic curation（回到 structural）。"""
+        try:
+            return self._svc.remove_contain_curation(
+                rel_path, source_id, target_id, confirmed_by=confirmed_by,
+            )
+        except (RuntimeError, FileNotFoundError) as e:
+            return {"status": "error", "message": str(e)}
+
     # ── R11: 平面文件导入 ──────────────────────────────────────────
 
     def select_import_files(self) -> list[dict]:

@@ -188,3 +188,19 @@ def test_remove_curation_restores_structural(kb: Path) -> None:
 def test_agent_tools_do_not_expose_curate_contain() -> None:
     text = (_ROOT / "src/memoria/services/agent/tools/kb.py").read_text(encoding="utf-8")
     assert "curate_contain" not in text, "agent 只能提议，落库只允许人确认（curate_contain 不得进 agent 工具面）"
+
+
+def test_ui_entry_wired() -> None:
+    """UI 入口静态接线：人确认按钮 + RPC + i18n + 后端方法（防止只做后端没入口）。"""
+    app = (_ROOT / "src/memoria/ui/static/app/js/app.js").read_text(encoding="utf-8")
+    assert "-edge-btn-curate" in app
+    assert 'call("curate_contain"' in app
+    assert 'call("remove_contain_curation"' in app
+    assert "buildContainAnchor" in app
+    zh = (_ROOT / "src/memoria/ui/static/app/i18n/zh-CN.js").read_text(encoding="utf-8")
+    en = (_ROOT / "src/memoria/ui/static/app/i18n/en.js").read_text(encoding="utf-8")
+    assert 'curateBtn: "确认为整体-部分"' in zh
+    assert 'curateBtn: "Confirm whole-part"' in en
+    ui_py = (_ROOT / "src/memoria/presentation/api/ui.py").read_text(encoding="utf-8")
+    assert "def curate_contain(" in ui_py
+    assert "def remove_contain_curation(" in ui_py
