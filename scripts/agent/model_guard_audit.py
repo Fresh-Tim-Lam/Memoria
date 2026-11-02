@@ -133,7 +133,20 @@ def _roster(snapshot: Path) -> dict[str, dict[str, Any]]:
     return rows
 
 
-def audit(dsh_home: Path, snapshot: Path, allowed: Iterable[str]) -> dict[str, Any]:
+def _quarantine(path: Path) -> dict[str, dict[str, Any]]:
+    """Documented quarantine: known Pro-descriptor sessions kept intentionally un-wakeable."""
+    if not path.is_file():
+        return {}
+    data = json.loads(path.read_text(encoding="utf-8"))
+    entries = {}
+    for item in data.get("quarantined") or []:
+        sid = item.get("sessionId")
+        if isinstance(sid, str) and sid:
+            entries[sid] = item
+    return entries
+
+
+def audit(dsh_home: Path, snapshot: Path, allowed: Iterable[str], exceptions: Path | None = None) -> dict[str, Any]:
     """Compute the actual-model report for every session."""
     sessions_root = dsh_home / "sessions"
     if not sessions_root.is_dir():
@@ -142,9 +155,11 @@ def audit(dsh_home: Path, snapshot: Path, allowed: Iterable[str]) -> dict[str, A
     ledger = _token_cost_models(dsh_home / "token-cost")
     roster = _roster(snapshot)
     allow = set(allowed)
+    quarantine = _quarantine(exceptions) if exceptions is not None else {}
 
     findings: list[dict[str, Any]] = []
     historical: list[dict[str, Any]] = []
+    quarantined: list[dict[str, Any]] = []
     for sid, info in sessions.items():
         descriptor = info.get("descriptor") or {}
         actual = descriptor.get("agentModel")
@@ -173,7 +188,10 @@ def audit(dsh_home: Path, snapshot: Path, allowed: Iterable[str]) -> dict[str, A
             reasons.append("ledger-pro-calls")
         if reasons:
             entry["reasons"] = reasons
-            if entry["member"] is None:
+            if sid in quarantine:
+                entry["quarantined"] = quarantine[sid].get("reason", "documented quarantine")
+                quarantined.append(entry)
+            elif entry["member"] is None:
                 historical.append(entry)
             else:
                 findings.append(entry)
@@ -185,6 +203,7 @@ def audit(dsh_home: Path, snapshot: Path, allowed: Iterable[str]) -> dict[str, A
         "rosterRows": len(roster),
         "findings": sorted(findings, key=lambda item: item["sessionId"]),
         "historical": sorted(historical, key=lambda item: item["sessionId"]),
+        "quarantined": sorted(quarantined, key=lambda item: item["sessionId"]),
     }
 
 
@@ -197,15 +216,23 @@ def main(argv: list[str] | None = None) -> int:
         help="team_snapshot JSON used to map session ids to member names",
     )
     parser.add_argument("--allow-session", action="append", default=[], help="known exception session id (repeatable)")
+    parser.add_argument(
+        "--exceptions",
+        default=str(Path(__file__).resolve().parents[2] / "artifacts" / "agent" / "verify" / "model-guard" / "known-quarantine.json"),
+        help="documented quarantine entries: known Pro-descriptor sessions that are NOT wakeable until re-spawn",
+    )
     parser.add_argument("--json", action="store_true", help="emit machine-readable JSON")
     args = parser.parse_args(argv)
 
-    report = audit(Path(args.dsh_home).expanduser(), Path(args.snapshot), args.allow_session)
+    report = audit(Path(args.dsh_home).expanduser(), Path(args.snapshot), args.allow_session, Path(args.exceptions).expanduser())
     if args.json:
         print(json.dumps(report, ensure_ascii=False, indent=2))
     else:
         print(f"sessions scanned: {report['sessionsScanned']}  roster rows: {report['rosterRows']}")
         print(f"historical (never wakeable) Pro descriptors: {len(report['historical'])}")
+        print(f"quarantined (documented, not wakeable until re-spawn): {len(report['quarantined'])}")
+        for item in report["quarantined"]:
+            print(f"  ~ {item['sessionId']}  member={item.get('member')}  reason={item['quarantined']}")
         if not report["findings"]:
             print("RESULT: PASS (no wakeable roster member has Pro-tier evidence)")
         else:
