@@ -24,6 +24,7 @@ authority: machine
 
 
 
+
 ## lead · 0.5.0 R1 级重验收：S1–S5 在当前 HEAD（含 0.4.7/0.4.8 改动）重新证明
 <!-- task-id: task-139 -->
 ### 我确认的事实（带证据：file:line / commit / 命令输出）
@@ -39,6 +40,7 @@ authority: machine
 ### 我推翻过的假设
 authority: machine
 - （未自动分类；复查上方机器事实时请人工标注被推翻项）
+
 
 
 
@@ -60,10 +62,12 @@ authority: machine
 - （未自动分类；复查上方机器事实时请人工标注被推翻项）
 
 
+
 ## lead · 代完成任务 task-140
 ### 代完成记录
 authority: machine
 - 代完成任务 task-140「跳转滚动定位三处行为不符：延迟被拉顶部 / 已可见仍滚动 / 固定向下（根因已定位 app.js:15612+15639 block:"start"）」（owner=sync-mapper；主记忆段写入 owner 的卡）
+
 
 ## lead · Release 规范机器化：三条硬规则做成 preflight 机检（标题严格相等 / 双语 EN 在 ZH 前 / 造价含量级），每条配必红 fixture
 <!-- task-id: task-143 -->
@@ -77,6 +81,23 @@ authority: machine
 - 工具 team_task_update 失败：Error: stale team task "task-140" revision 1; current revision is 2
 - 工具 team_task_update 失败：Error: only an in-progress task can complete
 - 工具 team_task_update 失败：Error: team task "task-143" is owned by another member
+### 我留下的坑 / 下一个人该从哪开始
+authority: machine
+（没有未完成任务；从本段会话的结论继续）
+### 我推翻过的假设
+authority: machine
+- （未自动分类；复查上方机器事实时请人工标注被推翻项）
+
+## lead · 图谱-agent板块·G5b：provenance 透传最小实现 + 回归/隔离闸（不写用户库）
+<!-- task-id: task-280 -->
+### 我确认的事实（带证据：file:line / commit / 命令输出）
+authority: machine
+- 完成任务 task-280「图谱-agent板块·G5b：provenance 透传最小实现 + 回归/隔离闸（不写用户库）」：artifacts/agent/verify/graph-utility/g5b/G5B-DELIVERY.md, artifacts/agent/verify/graph-utility/g5b/g5b3-final-report.json, src/memoria/graph/edge_derivation.py, src/memoria/services/document.py, scripts/agent/g5_regress_collect.py, scripts/agent/g5b3_finalize_report.py
+### 我试过但失败的路（含失败原因 —— 比成功经验更省时间）
+authority: machine
+- 工具 team_task_update 失败：Error: only an in-progress task can complete
+- 工具 team_task_update 失败：Error: team task "task-280" is owned by another member
+- 工具 team_task_update 失败：Error: task completion accepts evidence or no_artifact_reason, not both
 ### 我留下的坑 / 下一个人该从哪开始
 authority: machine
 （没有未完成任务；从本段会话的结论继续）
