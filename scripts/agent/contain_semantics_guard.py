@@ -57,11 +57,15 @@ REQUIRED = [
     ("ui-i18n-zh-curate", "src/memoria/ui/static/app/i18n/zh-CN.js", 'curateBtn: "确认为整体-部分"'),
     ("ui-i18n-en-curate", "src/memoria/ui/static/app/i18n/en.js", 'curateBtn: "Confirm whole-part"'),
     ("ui-rpc-backend", "src/memoria/presentation/api/ui.py", "def curate_contain("),
+    ("ui-inapp-confirm", "src/memoria/ui/static/app/js/app.js", "function showConfirm(title, message, okLabel, opts = {})"),
+    ("ui-inapp-confirm-used", "src/memoria/ui/static/app/js/app.js", "const ok = await showConfirm("),
 ]
 #: 必须**不存在**的文本（agent 只能提议，落库仅人确认）。
 NEGATIVE = [
     ("agent-tools-no-curate", "src/memoria/services/agent/tools/kb.py", "curate_contain",
      "agent 只能提议；semantic 落库仅允许人确认（curate_contain 不得进 agent 工具面）"),
+    ("no-native-confirm-curate", "src/memoria/ui/static/app/js/app.js", 'window.confirm(T("cfg.edge.curateConfirm"',
+     "semantic 确认必须用应用内弹窗，不得弹浏览器原生 confirm（会中断预览/WEBVIEW）"),
 ]
 
 #: 已知 contain 消费/定义点：删改必须显式面对（读取点清单是审计对象）。
@@ -178,6 +182,7 @@ def _fixture_files() -> dict[str, str]:
             'T("cfg.edge.typeContainSemantic")\n'
             'e.type === "contain"\ncontain_kind === "semantic"\n'
             '-edge-btn-curate\ncall("curate_contain"\ncall("remove_contain_curation"\n'
+            'function showConfirm(title, message, okLabel, opts = {})\nconst ok = await showConfirm(\n'
         ),
         "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
         "src/memoria/graph/edge_derivation.py": (
@@ -229,6 +234,7 @@ def selftest() -> int:
             ("src/memoria/graph/collector.py", "merge_contain_curation_overlays", ""),
             ("src/memoria/services/document.py", "def curate_contain(", ""),
             ("src/memoria/ui/static/app/js/app.js", "-edge-btn-curate", ""),
+            ("src/memoria/ui/static/app/js/app.js", "const ok = await showConfirm(", ""),
         ]
         for rel, old, new in red_cases:
             path = root / rel
@@ -253,7 +259,7 @@ def selftest() -> int:
             print("SELFTEST FAIL: agent 工具面出现 curate_contain 后仍全绿")
             return 1
 
-    print("SELFTEST PASS: 正常夹具全绿；12 个口径被破坏时均报红；删消费点/agent 工具面越界被报出")
+    print("SELFTEST PASS: 正常夹具全绿；13 个口径被破坏时均报红；删消费点/agent 工具面/原生 confirm 越界被报出")
     return 0
 
 

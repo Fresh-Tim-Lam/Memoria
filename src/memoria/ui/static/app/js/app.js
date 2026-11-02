@@ -1436,6 +1436,44 @@ async function call(fn, ...args) {
     }
   }
 
+  /** 应用内确认弹窗（Promise 版；不弹浏览器原生 confirm） */
+  function showConfirm(title, message, okLabel, opts = {}) {
+    return new Promise((resolve) => {
+      const overlay = document.createElement("div");
+      overlay.className = "-modal";
+      overlay.innerHTML = `
+        <div class="-modal-backdrop"></div>
+        <div class="-modal-box" style="width:min(440px,92vw)" role="dialog" aria-modal="true">
+          <div class="-modal-header" style="cursor:default"><span></span></div>
+          <div class="-modal-body" style="white-space:pre-line"></div>
+          <div class="-modal-footer -btn-bar">
+            <span class="-modal-footer-spacer"></span>
+            <button type="button" class="-btn" data-act="cancel"></button>
+            <button type="button" class="-btn ${opts.danger ? "danger" : "primary"}" data-act="ok"></button>
+          </div>
+        </div>`;
+      overlay.querySelector(".-modal-header span").textContent = title || T("common.ok");
+      overlay.querySelector(".-modal-body").textContent = message || "";
+      overlay.querySelector('[data-act="cancel"]').textContent = T("common.cancel");
+      overlay.querySelector('[data-act="ok"]').textContent = okLabel || T("common.ok");
+      document.body.appendChild(overlay);
+      const close = (val) => {
+        document.removeEventListener("keydown", onKey);
+        overlay.remove();
+        resolve(val);
+      };
+      const onKey = (e) => {
+        if (e.key === "Escape") close(false);
+        if (e.key === "Enter") close(true);
+      };
+      overlay.querySelector(".-modal-backdrop").addEventListener("click", () => close(false));
+      overlay.querySelector('[data-act="cancel"]').addEventListener("click", () => close(false));
+      overlay.querySelector('[data-act="ok"]').addEventListener("click", () => close(true));
+      document.addEventListener("keydown", onKey);
+      overlay.querySelector('[data-act="ok"]').focus();
+    });
+  }
+
   /** 轻量应用内确认弹窗 */
   function confirmTreeAction(title, message, okLabel, cb) {
     const overlay = document.createElement("div");
@@ -4826,12 +4864,16 @@ async function call(fn, ...args) {
           setStatus(T("cfg.edge.curateNoAnchor"));
           return;
         }
-        const ok = window.confirm(T("cfg.edge.curateConfirm", {
-          parent: kpNameForId(parentId),
-          child: kpNameForId(childId),
-          file: anchor.file,
-          line: anchor.line_start,
-        }));
+        const ok = await showConfirm(
+          T("cfg.edge.curateTitle"),
+          T("cfg.edge.curateConfirm", {
+            parent: kpNameForId(parentId),
+            child: kpNameForId(childId),
+            file: anchor.file,
+            line: anchor.line_start,
+          }),
+          T("cfg.edge.curateBtn"),
+        );
         if (!ok) return;
         setStatus(T("cfg.edge.curateInProg"));
         const res = await call("curate_contain", state.currentPath, parentId, childId, anchor, humanConfirmId());
@@ -4850,10 +4892,15 @@ async function call(fn, ...args) {
         const parentId = btn.dataset.source;
         const childId = btn.dataset.target;
         if (!state.currentPath || !parentId || !childId) return;
-        const ok = window.confirm(T("cfg.edge.curateRemoveConfirm", {
-          parent: kpNameForId(parentId),
-          child: kpNameForId(childId),
-        }));
+        const ok = await showConfirm(
+          T("cfg.edge.curateRemoveTitle"),
+          T("cfg.edge.curateRemoveConfirm", {
+            parent: kpNameForId(parentId),
+            child: kpNameForId(childId),
+          }),
+          T("cfg.edge.curateRemoveBtn"),
+          { danger: true },
+        );
         if (!ok) return;
         setStatus(T("cfg.edge.curateInProg"));
         const res = await call("remove_contain_curation", state.currentPath, parentId, childId, humanConfirmId());

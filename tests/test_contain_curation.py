@@ -197,6 +197,10 @@ def test_ui_entry_wired() -> None:
     assert 'call("curate_contain"' in app
     assert 'call("remove_contain_curation"' in app
     assert "buildContainAnchor" in app
+    # 必须是应用内弹窗，不得弹浏览器原生 confirm（本轮人明确要求）
+    assert "function showConfirm(title, message, okLabel, opts = {})" in app
+    assert "const ok = await showConfirm(" in app
+    assert 'window.confirm(T("cfg.edge.curateConfirm"' not in app
     zh = (_ROOT / "src/memoria/ui/static/app/i18n/zh-CN.js").read_text(encoding="utf-8")
     en = (_ROOT / "src/memoria/ui/static/app/i18n/en.js").read_text(encoding="utf-8")
     assert 'curateBtn: "确认为整体-部分"' in zh
