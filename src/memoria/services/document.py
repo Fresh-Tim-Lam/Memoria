@@ -3131,6 +3131,152 @@ class DocumentService:
             result_edge["assertion_source"] = assertion_source
         return {"status": "ok", "edge": result_edge}
 
+    def curate_contain(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        assertion_source: dict,
+        *,
+        confirmed_by: str,
+    ) -> dict:
+        """把一条派生 contain 边标记为 semantic（作者/人工确认的整体-部分，v0.2）。
+
+        设计：CONTAIN-AUTHOR-FLOW.md 候选 A。写入 sidecar edges[] 的 curation overlay：
+        `{type: contain, contain_kind: semantic, derived_by: author, assertion_source}`；
+        collector 在 dedupe 之后按 canonical id 合并到派生边（M8a）。**只允许人确认**
+        （confirmed_by 必填；agent 只能提议、不得调用本方法落库）；一次一条，无批量 API。
+        """
+        from memoria.graph.edge_types import EDGE_CONTAIN, normalize_edge_type
+        from memoria.graph.edge_derivation import (
+            canonical_edge_id,
+            validate_contain_curation_overlay,
+        )
+        from memoria.graph.collector import collect_graph_data
+
+        confirmed = (confirmed_by or "").strip()
+        if not confirmed:
+            return {"status": "error", "message": "必须由人确认（confirmed_by 不能为空）；agent 只能提议"}
+        source_id = (source_id or "").strip()
+        target_id = (target_id or "").strip()
+        if not source_id or not target_id:
+            return {"status": "error", "message": "source_id、target_id 均不能为空"}
+        if source_id == target_id:
+            return {"status": "error", "message": "source_id 与 target_id 不能相同"}
+        if not isinstance(assertion_source, dict) or not assertion_source:
+            return {"status": "error", "message": "semantic 必须带 assertion_source（作者证据）"}
+
+        # 这条边必须是系统派生的 contain（不允许凭空造 semantic 关系）
+        graph = collect_graph_data(self.kb_path)
+        derived = None
+        for edge in graph.get("edges") or []:
+            if (
+                normalize_edge_type(edge.get("type")) == EDGE_CONTAIN
+                and (edge.get("source_id") or "").strip() == source_id
+                and target_id in (edge.get("targets") or [])
+            ):
+                derived = edge
+                break
+        if derived is None:
+            return {"status": "error", "message": "找不到对应的派生 contain 边（不凭空创建）"}
+
+        overlay = {
+            "type": EDGE_CONTAIN,
+            "source_id": source_id,
+            "targets": [target_id],
+            "relevance": derived.get("relevance"),
+            "contain_kind": "semantic",
+            "derived_by": "author",
+            "assertion_source": dict(assertion_source),
+        }
+        problems = validate_contain_curation_overlay(overlay, self.kb_path)
+        if problems:
+            return {"status": "error", "message": "curation overlay 校验失败: " + "; ".join(problems)}
+
+        body, _fm, lines = self._read_body(rel_path)
+        full = os.path.join(self.kb_path, rel_path)
+        sidecar = load_sidecar_for_md(full, self.kb_path) or {
+            "schema_version": SIDECAR_SCHEMA_VERSION,
+            "file": rel_path.replace("\\", "/"),
+            "knowledge_points": [],
+        }
+        kps = sidecar.get("knowledge_points") or []
+        if not any(k.get("id") == source_id for k in kps):
+            return {"status": "error", "message": f"source_id 不存在：{source_id}"}
+        cid = canonical_edge_id(overlay)
+        for edge in sidecar.get("edges") or []:
+            if not isinstance(edge, dict):
+                continue
+            if canonical_edge_id(edge) == cid and edge.get("contain_kind") == "semantic":
+                return {"status": "error", "message": "该 contain 边已有 semantic curation"}
+        sidecar.setdefault("edges", []).append(overlay)
+        sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
+        sidecar["file"] = rel_path.replace("\\", "/")
+        validation = validate_sidecar(
+            sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"])
+        )
+        if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
+            return {"status": "error", "message": "配置校验失败: " + "; ".join(err_msgs), "validation": validation}
+        self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
+        self._cache.pop(rel_path, None)
+        return {"status": "ok", "edge": overlay, "confirmed_by": confirmed,
+                "consumer": "collect_graph_data merges this overlay by canonical id (M8a)"}
+
+    def remove_contain_curation(
+        self,
+        rel_path: str,
+        source_id: str,
+        target_id: str,
+        *,
+        confirmed_by: str,
+    ) -> dict:
+        """撤销 semantic curation：删除 overlay → 该边回退为系统派生的 structural。"""
+        from memoria.graph.edge_derivation import canonical_edge_id
+
+        confirmed = (confirmed_by or "").strip()
+        if not confirmed:
+            return {"status": "error", "message": "必须由人确认（confirmed_by 不能为空）"}
+        source_id = (source_id or "").strip()
+        target_id = (target_id or "").strip()
+        full = os.path.join(self.kb_path, rel_path)
+        sidecar = load_sidecar_for_md(full, self.kb_path)
+        if not sidecar:
+            return {"status": "error", "message": "sidecar 不存在"}
+        body, _fm, lines = self._read_body(rel_path)
+        cid = canonical_edge_id({"type": "contain", "source_id": source_id, "targets": [target_id]})
+        kept = []
+        removed = 0
+        for edge in sidecar.get("edges") or []:
+            if (
+                isinstance(edge, dict)
+                and canonical_edge_id(edge) == cid
+                and edge.get("contain_kind") == "semantic"
+            ):
+                removed += 1
+                continue
+            kept.append(edge)
+        if removed == 0:
+            return {"status": "error", "message": "找不到对应的 semantic curation"}
+        sidecar["edges"] = kept
+        sidecar["schema_version"] = SIDECAR_SCHEMA_VERSION
+        sidecar["file"] = rel_path.replace("\\", "/")
+        validation = validate_sidecar(
+            sidecar, sidecar["file"], lines, baseline=_sidecar_on_disk(self.kb_path, sidecar["file"])
+        )
+        if not validation["ok"]:
+            err_msgs = [
+                e.get("message", str(e)) if isinstance(e, dict) else str(e)
+                for e in validation["errors"]
+            ]
+            return {"status": "error", "message": "配置校验失败: " + "; ".join(err_msgs), "validation": validation}
+        self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
+        self._cache.pop(rel_path, None)
+        return {"status": "ok", "removed": removed, "confirmed_by": confirmed}
+
     def delete_edge(
         self,
         rel_path: str,

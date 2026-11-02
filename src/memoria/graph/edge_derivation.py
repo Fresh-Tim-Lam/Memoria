@@ -6,6 +6,8 @@ from __future__ import annotations
 
 
 
+import hashlib
+import os
 from dataclasses import dataclass
 
 
@@ -685,6 +687,10 @@ def derive_sidecar_edges(
         # no_build 条目仅用于抑制 contain 边，不作为纯边生成
         if edge.get("no_build"):
             continue
+        # v0.2 作者流程：contain 的 semantic curation overlay 不是作者纯边，由 collector
+        # 在 dedupe 之后按 canonical id 合并（M8a）；这里跳过，避免孤儿 overlay 造出假边。
+        if normalize_edge_type(edge.get("type")) == EDGE_CONTAIN and edge.get("contain_kind") == "semantic":
+            continue
         source_id = (edge.get("source_id") or "").strip()
         edge_type = normalize_edge_type(edge.get("type"))
         if not source_id or not edge_type:
@@ -767,3 +773,122 @@ def derive_file_graph_edges(
 
     return contain, link_edges, sidecar_edges
 
+
+
+# ── v0.2 作者流程（M8a）：contain 的 semantic curation overlay ──────────────
+# 设计：dec-20261102-3b8e6eb6（v0.2 字段）+ CONTAIN-AUTHOR-FLOW.md（候选 A）。
+# 存储：sidecar edges[] 里 type=contain、contain_kind=semantic、derived_by=author、
+#       带完整 assertion_source 的 overlay；collector 在 dedupe **之后**按 canonical id
+#       合并到派生边（只覆盖 curation 三字段，几何字段不动，generator_version 移除）。
+# 安全：仅人确认写入（curate_contain 要求 confirmed_by）；程序不得推断 semantic；
+#       孤儿不造边、重复冲突拒绝、锚点 stale 拒绝。
+
+
+def canonical_edge_id(edge: dict) -> str:
+    """canonical id = type|source_id|target（与 DM-P1 / dedupe key 一致）。"""
+    edge_type = normalize_edge_type(edge.get("type")) or (edge.get("type") or "")
+    source_id = (edge.get("source_id") or "").strip()
+    targets = _normalize_targets(edge.get("targets"))
+    target = targets[0] if targets else ""
+    return f"{edge_type}|{source_id}|{target}"
+
+
+def is_contain_curation_overlay(edge: object) -> bool:
+    """是不是 contain 的 semantic curation overlay（v0.2 作者流程）。"""
+    if not isinstance(edge, dict):
+        return False
+    return (
+        normalize_edge_type(edge.get("type")) == EDGE_CONTAIN
+        and edge.get("contain_kind") == "semantic"
+    )
+
+
+def extract_contain_curation_overlays(sidecar: dict | None) -> list[dict]:
+    """从 sidecar edges[] 提取 semantic curation overlay（原样返回，未校验）。"""
+    sidecar = sidecar or {}
+    return [edge for edge in sidecar.get("edges") or [] if is_contain_curation_overlay(edge)]
+
+
+def validate_contain_curation_overlay(overlay: dict, kb_path: str) -> list[str]:
+    """校验一条 overlay 是否能被产品消费；返回问题清单（空 = 合法）。"""
+    problems: list[str] = []
+    if overlay.get("derived_by") != "author":
+        problems.append("derived_by 必须为 author（semantic 只能来自作者/人工 curation）")
+    source = overlay.get("assertion_source")
+    if not isinstance(source, dict):
+        problems.append("缺 assertion_source（semantic 必须带作者证据）")
+        return problems
+    file_rel = str(source.get("file") or "").strip()
+    line_start = source.get("line_start")
+    line_end = source.get("line_end")
+    quote = source.get("quote_sha256")
+    if not file_rel or not isinstance(line_start, int) or not isinstance(line_end, int):
+        problems.append("assertion_source 缺 file/line_start/line_end")
+        return problems
+    if line_start < 1 or line_end < line_start:
+        problems.append("assertion_source 行号非法")
+        return problems
+    if not isinstance(quote, str) or len(quote) != 64:
+        problems.append("assertion_source 缺 quote_sha256（64 位 hex）")
+        return problems
+    if "generator_version" in overlay:
+        problems.append("overlay 不得携带 generator_version（几何派生字段不参与 curation）")
+    full = os.path.join(kb_path, file_rel)
+    if not os.path.isfile(full):
+        problems.append(f"assertion_source.file 不存在：{file_rel}")
+        return problems
+    with open(full, "r", encoding="utf-8") as f:
+        lines = f.read().splitlines()
+    if line_end > len(lines):
+        problems.append(f"assertion_source 行号越界：{line_start}-{line_end} > {len(lines)}")
+        return problems
+    slice_text = "\n".join(lines[line_start - 1:line_end])
+    if not slice_text.strip():
+        problems.append("assertion_source 切片为空")
+        return problems
+    actual = hashlib.sha256(slice_text.encode("utf-8")).hexdigest()
+    if actual != quote:
+        problems.append("assertion_source quote_sha256 与正文切片不符（stale）")
+    return problems
+
+
+def merge_contain_curation_overlays(
+    edges: list[dict],
+    overlays: list[dict],
+    *,
+    kb_path: str,
+) -> tuple[list[dict], list[dict]]:
+    """dedupe 之后把合法 overlay 合并进派生边；返回 (edges, warnings)。"""
+    index: dict[str, int] = {}
+    for position, edge in enumerate(edges):
+        index[canonical_edge_id(edge)] = position
+    warnings: list[dict] = []
+    seen: set[str] = set()
+    for overlay in overlays:
+        cid = canonical_edge_id(overlay)
+        if not cid or cid.endswith("|"):
+            warnings.append({"code": "contain_overlay_invalid", "canonical_id": cid,
+                             "problems": ["canonical id 不完整"]})
+            continue
+        if cid in seen:
+            warnings.append({"code": "contain_overlay_duplicate", "canonical_id": cid,
+                             "problems": ["同一 canonical id 存在多条 overlay（冲突，拒绝）"]})
+            continue
+        seen.add(cid)
+        problems = validate_contain_curation_overlay(overlay, kb_path)
+        if problems:
+            warnings.append({"code": "contain_overlay_rejected", "canonical_id": cid,
+                             "problems": problems})
+            continue
+        position = index.get(cid)
+        if position is None:
+            warnings.append({"code": "contain_overlay_orphan", "canonical_id": cid,
+                             "problems": ["找不到对应的派生 contain 边（孤儿 overlay，不造边）"]})
+            continue
+        base = dict(edges[position])
+        base["contain_kind"] = "semantic"
+        base["derived_by"] = "author"
+        base["assertion_source"] = dict(overlay["assertion_source"])
+        base.pop("generator_version", None)
+        edges[position] = base
+    return edges, warnings

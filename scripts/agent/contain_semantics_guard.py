@@ -44,6 +44,17 @@ REQUIRED = [
     ("agent-prompt-v02", "src/memoria/services/agent/tools/kb.py", "contain_kind=structural"),
     ("schema-field", "docs/design/kg-edge-provenance.schema.json", '"contain_kind"'),
     ("ontology-v02", "docs/design/kg-ontology-v0.md", "contain_kind"),
+    # v0.2 作者流程（semantic 的唯一合法写入通路；人批 dec-20261102-2dcefd31）
+    ("ontology-overlay-rule", "docs/design/kg-ontology-v0.md", "curation overlay"),
+    ("collector-overlay-merge", "src/memoria/graph/collector.py", "merge_contain_curation_overlays"),
+    ("derivation-overlay-valid", "src/memoria/graph/edge_derivation.py", "validate_contain_curation_overlay"),
+    ("document-curate-api", "src/memoria/services/document.py", "def curate_contain("),
+    ("curate-requires-human", "src/memoria/services/document.py", "confirmed_by 不能为空"),
+]
+#: 必须**不存在**的文本（agent 只能提议，落库仅人确认）。
+NEGATIVE = [
+    ("agent-tools-no-curate", "src/memoria/services/agent/tools/kb.py", "curate_contain",
+     "agent 只能提议；semantic 落库仅允许人确认（curate_contain 不得进 agent 工具面）"),
 ]
 
 #: 已知 contain 消费/定义点：删改必须显式面对（读取点清单是审计对象）。
@@ -72,7 +83,7 @@ def read_text(path: Path) -> str | None:
         return None
 
 
-def run_checks(root: Path) -> tuple[list[dict], list[dict]]:
+def run_checks(root: Path) -> tuple[list[dict], list[dict], list[dict]]:
     required: list[dict] = []
     for name, rel, needle in REQUIRED:
         text = read_text(root / rel)
@@ -89,7 +100,14 @@ def run_checks(root: Path) -> tuple[list[dict], list[dict]]:
         text = read_text(root / rel)
         ok = text is not None and needle in text
         consumers.append({"file": rel, "needle": needle, "role": role, "present": ok})
-    return required, consumers
+    negatives: list[dict] = []
+    for name, rel, needle, why in NEGATIVE:
+        text = read_text(root / rel)
+        # 文件不存在时视为"没有该文本"（不因缺文件而误判为违规）
+        absent = text is None or needle not in text
+        negatives.append({"check": name, "file": rel, "needle": needle, "why": why,
+                          "pass": absent, "detail": None if absent else f"禁止出现：{needle!r}"})
+    return required, consumers, negatives
 
 
 def main(argv: list[str] | None = None) -> int:
@@ -100,16 +118,19 @@ def main(argv: list[str] | None = None) -> int:
     if args.selftest:
         return selftest()
 
-    required, consumers = run_checks(REPO)
+    required, consumers, negatives = run_checks(REPO)
     failures = [item for item in required if not item["pass"]]
     missing = [item for item in consumers if not item["present"]]
+    bad = [item for item in negatives if not item["pass"]]
     result = {
-        "schema": "contain-semantics-guard/v2",
+        "schema": "contain-semantics-guard/v3",
         "required": required,
         "consumers": consumers,
+        "negatives": negatives,
         "failures": failures,
         "missing_consumers": missing,
-        "ok": not failures and not missing,
+        "negative_failures": bad,
+        "ok": not failures and not missing and not bad,
     }
     if args.json:
         print(json.dumps(result, ensure_ascii=False, indent=2))
@@ -122,6 +143,10 @@ def main(argv: list[str] | None = None) -> int:
         print(f"消费/定义点：{len(consumers) - len(missing)}/{len(consumers)} 仍在")
         for item in missing:
             print(f"  MISSING  {item['file']} :: {item['needle']!r}（{item['role']}）")
+        for item in negatives:
+            print(("PASS  " if item["pass"] else "FAIL  ") + f"{item['check']:<26} {item['file']}")
+            if not item["pass"]:
+                print(f"        {item['detail']}")
         print()
         print("RESULT:", "PASS" if result["ok"] else "FAIL")
     return 0 if result["ok"] else 1
@@ -145,14 +170,20 @@ def _fixture_files() -> dict[str, str]:
             'e.type === "contain"\ncontain_kind === "semantic"\n'
         ),
         "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
-        "src/memoria/graph/edge_derivation.py": 'def derive_contain_edges():\n"contain_kind": "structural"\n',
+        "src/memoria/graph/edge_derivation.py": (
+            'def derive_contain_edges():\n"contain_kind": "structural"\n'
+            "def validate_contain_curation_overlay():\n"
+        ),
         "src/memoria/graph/collector.py": "dedupe_graph_edges\n",
         "src/memoria/graph/edge_types.py": "DERIVE_ONLY_EDGE_TYPES = ()  # contain\n",
         "src/memoria/services/agent/plan.py": "contain\n",
         "src/memoria/ui/static/app/js/graph-engine.js": "expandLinks\n",
         "src/memoria/ui/static/app/js/graph-synthetic.js": "expandLinks\n",
         "docs/design/kg-edge-provenance.schema.json": '"contain_kind"\n',
-        "docs/design/kg-ontology-v0.md": "contain_kind\n",
+        "docs/design/kg-ontology-v0.md": "contain_kind\ncuration overlay\n",
+        "src/memoria/graph/collector.py": "dedupe_graph_edges\nmerge_contain_curation_overlays\n",
+        "src/memoria/services/document.py": "def curate_contain(\nconfirmed_by 不能为空\n",
+        "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
     }
 
 
@@ -165,8 +196,12 @@ def selftest() -> int:
             path.parent.mkdir(parents=True, exist_ok=True)
             path.write_text(text, encoding="utf-8")
 
-        required, consumers = run_checks(root)
-        if any(not item["pass"] for item in required) or any(not item["present"] for item in consumers):
+        required, consumers, negatives = run_checks(root)
+        if (
+            any(not item["pass"] for item in required)
+            or any(not item["present"] for item in consumers)
+            or any(not item["pass"] for item in negatives)
+        ):
             print("SELFTEST FAIL: 正常夹具应当全绿")
             return 1
 
@@ -180,24 +215,33 @@ def selftest() -> int:
             ("src/memoria/services/agent/tools/kb.py", "contain_kind=structural", ""),
             ("docs/design/kg-edge-provenance.schema.json", '"contain_kind"', ""),
             ("docs/design/kg-ontology-v0.md", "contain_kind", ""),
+            ("src/memoria/graph/collector.py", "merge_contain_curation_overlays", ""),
+            ("src/memoria/services/document.py", "def curate_contain(", ""),
         ]
         for rel, old, new in red_cases:
             path = root / rel
             original = path.read_text(encoding="utf-8")
             path.write_text(original.replace(old, new), encoding="utf-8")
-            required_now, _ = run_checks(root)
+            required_now, _, _ = run_checks(root)
             if all(item["pass"] for item in required_now):
                 print(f"SELFTEST FAIL: 破坏 {rel}（{old!r}）后仍全绿")
                 return 1
             path.write_text(original, encoding="utf-8")
 
         (root / "src/memoria/ui/static/app/js/graph-synthetic.js").write_text("nothing\n", encoding="utf-8")
-        _, consumers_now = run_checks(root)
+        _, consumers_now, _ = run_checks(root)
         if all(item["present"] for item in consumers_now):
             print("SELFTEST FAIL: 删除消费读取点后仍全绿")
             return 1
+        # 负向检查的证红：agent 工具面出现 curate_contain 必须被抓到
+        tools = root / "src/memoria/services/agent/tools/kb.py"
+        tools.write_text(tools.read_text(encoding="utf-8") + "\ncurate_contain\n", encoding="utf-8")
+        _, _, negatives_now = run_checks(root)
+        if all(item["pass"] for item in negatives_now):
+            print("SELFTEST FAIL: agent 工具面出现 curate_contain 后仍全绿")
+            return 1
 
-    print("SELFTEST PASS: 正常夹具全绿；9 个口径被破坏时均报红；删消费点被报出")
+    print("SELFTEST PASS: 正常夹具全绿；11 个口径被破坏时均报红；删消费点/agent 工具面越界被报出")
     return 0
 
 

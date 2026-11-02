@@ -139,7 +139,7 @@
         "structural",
         "semantic"
       ],
-      "description": "字段 8/8（v0.2）：contain 边的包含类型。structural=仅由知识点区间/层级几何推导，不承诺整体-部分语义（系统派生 contain 一律此值）；semantic=作者或人工 curation 明确断言的整体-部分关系，必须同时带 assertion_source 作者证据。缺省按 structural 处理（fail-safe，不假设语义成立）。仅 contain 边可写；不得通过写回 contain 到 sidecar 实现（B1/dec-20261102-50f0acdb）。"
+      "description": "字段 8/8（v0.2）：contain 边的包含类型。structural=仅由知识点区间/层级几何推导，不承诺整体-部分语义（系统派生 contain 一律此值）；semantic=作者或人工 curation 明确断言的整体-部分关系，必须同时带 assertion_source 作者证据。缺省按 structural 处理（fail-safe）。仅 contain 边可写。semantic 允许以 sidecar curation overlay 持久化，但必须有消费通路（collector M8a 合并），禁止无消费通路的影子写（dec-20261102-50f0acdb；作者流程批准 dec-20261102-2dcefd31）。"
     }
   },
   "$defs": {

@@ -8,6 +8,8 @@ from memoria.graph.edge_derivation import (
     build_target_kp_resolver,
     dedupe_graph_edges,
     derive_file_graph_edges,
+    extract_contain_curation_overlays,
+    merge_contain_curation_overlays,
 )
 from memoria.services.kp_index import build_kp_index, entry_to_dict
 from memoria.storage.markdown import strip_frontmatter
@@ -71,10 +73,14 @@ def collect_graph_data(kb_path: str) -> dict:
 
     resolve_target_kp = build_target_kp_resolver(kb_path)
     all_edges: list[dict] = []
+    overlays: list[dict] = []
     for rel in collect_md_files(kb_path):
         rel_norm = rel.replace("\\", "/")
         full = os.path.join(kb_path, rel)
         sidecar = load_sidecar_for_md(full, kb_path) or {}
+        # v0.2 作者流程（M8a）：contain 的 semantic curation overlay 单独收集，
+        # 在 dedupe 之后按 canonical id 合并进派生边（CONTAIN-AUTHOR-FLOW.md 候选 A）。
+        overlays.extend(extract_contain_curation_overlays(sidecar))
         body = _read_body(kb_path, rel)
         contain, link_edges, sidecar_edges = derive_file_graph_edges(
             rel_norm, body, sidecar, resolve_target_kp=resolve_target_kp
@@ -83,4 +89,11 @@ def collect_graph_data(kb_path: str) -> dict:
             e.setdefault("file", rel_norm)
         all_edges.extend(contain + link_edges + sidecar_edges)
 
-    return {"status": "ok", "nodes": nodes, "edges": dedupe_graph_edges(all_edges)}
+    merged, warnings = merge_contain_curation_overlays(
+        dedupe_graph_edges(all_edges), overlays, kb_path=kb_path
+    )
+    result: dict = {"status": "ok", "nodes": nodes, "edges": merged}
+    if warnings:
+        # 坏 overlay 不静默（L6：让失败可见），但也不阻断整张图。
+        result["warnings"] = warnings
+    return result

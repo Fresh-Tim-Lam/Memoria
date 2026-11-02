@@ -118,7 +118,7 @@ edges:
 | `semantic` | 作者/人工 curation 明确断言的"整体-部分"关系 | 作者流程或人工 curation，**必须**同时有 `assertion_source` 作者证据 | 可作语义关系；缺证据即降级为 structural/unknown |
 
 规则（写死）：
-1. **不得用 sidecar 写回实现** `contain_kind`：contain 边无 sidecar 存储位且写回是影子写（B1，`dec-20261102-50f0acdb`）；`structural` 由派生层生成。
+1. **禁止无消费通路的影子写**：`structural` 由派生层生成，不写 sidecar。`semantic` 允许以 sidecar `edges[]` 的 **curation overlay** 持久化，但必须同时满足（a）collector 在 dedupe 之后按 canonical id 合并（M8a，有真实消费通路）；（b）overlay 只覆盖 `contain_kind/derived_by/assertion_source` 三字段，几何字段不动、`generator_version` 移除；（c）**仅人确认可写**（`curate_contain` 要求 `confirmed_by`；agent 只能提议、不得落库）；（d）孤儿不造边、重复冲突拒绝、锚点 stale 拒绝。该修订由 `dec-20261102-2dcefd31`（人批）批准；D4 审计身份仍未决，最小切片复用 agent session 作审计，不宣称“纯人路径审计已满足”。
 2. 旧数据/无字段 ⇒ 视为 `structural`（fail-safe：不假设语义成立，也不删除边）。
 3. `semantic` 必须带 `assertion_source`（schema `allOf` 强制）；程序不得自动推断 `semantic`。
 4. 不 bump `schema_version`（保持 1）；本补丁只加可选字段。
