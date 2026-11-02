@@ -4619,7 +4619,11 @@ async function call(fn, ...args) {
     };
     const color = colors[type] || "#999";
     const label = labels[type] || type;
-    return `<span class="-edge-type-badge" style="background:${color};color:#fff">${esc(label)}</span>`;
+    // contain 边由知识点**区间**几何包含推导（derive_contain_edges），不是作者断言的
+    // "整体-部分"语义；badge 只写短标签，语义口径放 title，避免被读成作者断言。
+    const note = type === "contain" ? T("cfg.edge.containNote") : "";
+    const title = note ? ` title="${esc(note)}"` : "";
+    return `<span class="-edge-type-badge" style="background:${color};color:#fff"${title}>${esc(label)}</span>`;
   }
 
   function edgeOriginLabel(edge) {

@@ -208,7 +208,8 @@
         tagCandEmpty: "点击「系统建议」或下方新建",
       },
       edge: {
-        typeContain: "包含",
+        typeContain: "结构包含",
+        containNote: "由知识点区间推导，语义未验证",
         typeReference: "引用",
         typeExtend: "扩展",
         originLink: "链接",

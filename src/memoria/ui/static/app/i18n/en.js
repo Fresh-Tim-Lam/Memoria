@@ -208,7 +208,8 @@
         tagCandEmpty: "Click \u201cSystem suggestions\u201d or create below",
       },
       edge: {
-        typeContain: "Contain",
+        typeContain: "Structural contain",
+        containNote: "Derived from note ranges; semantic containment is NOT verified",
         typeReference: "Reference",
         typeExtend: "Extend",
         originLink: "Link",
