@@ -210,6 +210,8 @@
       edge: {
         typeContain: "结构包含",
         containNote: "由知识点区间推导，语义未验证",
+        typeContainSemantic: "包含（作者确认）",
+        containSemanticNote: "作者/人工确认的整体-部分关系",
         typeReference: "引用",
         typeExtend: "扩展",
         originLink: "链接",

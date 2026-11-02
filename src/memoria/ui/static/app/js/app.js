@@ -4610,7 +4610,8 @@ async function call(fn, ...args) {
     return edges;
   }
 
-  function edgeTypeBadgeHtml(type) {
+  function edgeTypeBadgeHtml(edge) {
+    const type = edge && edge.type;
     const colors = { contain: "#5cb85c", reference: "#5bc0de", extend: "#f0ad4e" };
     const labels = {
       contain: T("cfg.edge.typeContain"),
@@ -4618,10 +4619,19 @@ async function call(fn, ...args) {
       extend: T("cfg.edge.typeExtend"),
     };
     const color = colors[type] || "#999";
-    const label = labels[type] || type;
-    // contain 边由知识点**区间**几何包含推导（derive_contain_edges），不是作者断言的
-    // "整体-部分"语义；badge 只写短标签，语义口径放 title，避免被读成作者断言。
-    const note = type === "contain" ? T("cfg.edge.containNote") : "";
+    // v0.2：contain 边区分 structural（区间推导，语义未验证）与 semantic（作者/curation
+    // 确认的整体-部分）。旧数据/缺字段一律按 structural（fail-safe，不假设语义成立）。
+    const isSemantic = type === "contain" && edge && edge.contain_kind === "semantic";
+    let label = labels[type] || type;
+    let note = "";
+    if (type === "contain") {
+      if (isSemantic) {
+        label = T("cfg.edge.typeContainSemantic");
+        note = T("cfg.edge.containSemanticNote");
+      } else {
+        note = T("cfg.edge.containNote");
+      }
+    }
     const title = note ? ` title="${esc(note)}"` : "";
     return `<span class="-edge-type-badge" style="background:${color};color:#fff"${title}>${esc(label)}</span>`;
   }
@@ -4649,7 +4659,7 @@ async function call(fn, ...args) {
       for (const e of outgoing) {
         html += `<div class="-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}" ${e.anchor_text ? `data-edge-anchor="${esc(e.anchor_text)}"` : ""}>`;
         html += `<div class="-edge-main">`;
-        html += edgeTypeBadgeHtml(e.type);
+        html += edgeTypeBadgeHtml(e);
         html += `<span class="-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
         html += `<span class="-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
         html += `<span class="-edge-origin">${esc(edgeOriginLabel(e))}</span>`;
@@ -4684,7 +4694,7 @@ async function call(fn, ...args) {
       for (const e of incoming) {
         html += `<div class="-edge-item" data-edge-type="${esc(e.type)}" data-edge-source="${esc(e.source_id)}" data-edge-target="${esc(e.target_id)}" data-edge-origin="${esc(e.origin || "")}">`;
         html += `<div class="-edge-main">`;
-        html += edgeTypeBadgeHtml(e.type);
+        html += edgeTypeBadgeHtml(e);
         html += `<span class="-edge-arrow">${esc(kpNameForId(e.source_id))} → ${esc(kpNameForId(e.target_id))}</span>`;
         html += `<span class="-edge-relevance">${e.relevance != null ? Number(e.relevance).toFixed(2) : "—"}</span>`;
         html += `<span class="-edge-origin">${esc(edgeOriginLabel(e))}</span>`;

@@ -1,5 +1,6 @@
-> **状态**：**v0.1 冻结**（2026-11-01T19:05+08:00；v0 → v0.1 补丁：仅加 edges[] 可选 provenance 字段，无新类型）
+> **状态**：**v0.2 冻结**（2026-11-02T11:48+08:00；v0 → v0.1：仅加 edges[] 可选 provenance 字段；v0.1 → v0.2：再加可选 contain_kind，无新类型、不 bump schema_version）
 > **v0.1 补丁记录**：`dec-20261101-p01reopen`（人批，2026-11-01T19:05:00+08:00，见 `team/decisions.jsonl`）；变更清单与回滚见 §11。
+> **v0.2 补丁记录**：`dec-20261102-3b8e6eb6`（人批，2026-11-02T11:48:21+08:00，「落地方案B」）；只加可选 `contain_kind`，无新类型、不 bump `schema_version`。
 > **来源**：4 份独立提案 → Lead 并集（0 自创）→ 4 份交叉异议 → 13 条裁决。
 > **可复核**：`artifacts/agent/verify/debate/kg/`（PROPOSAL×4 / PHASE2-UNION / PHASE3-OBJECTION×4 / PHASE4-RULINGS / ruling/rulings-kg.jsonl）
 > **协议**：`artifacts/agent/verify/debate/PROTOCOL.md`（FROZEN；M1 证据优先 / M2 独立根 >1 / M3 登记未知 / E1 证据身份）
@@ -71,6 +72,7 @@ reference 既不是"纯边"也不是"不是边" —— 它是【无断言跳转�
 | 5 | `generator_version` | `generator_version` | `contain-vN` \| `null` | 否 | 仅 `system_range` 边：派生算法版本（可复算） |
 | 6 | `valid_from` + `valid_to` | `valid_from`, `valid_to` | date \| `null` | 否 | T 轴只存不用（G5 AS5，未实现） |
 | 7 | `confidence` | `confidence` | 0–1 \| `null` | 否 | 仅 L2 判据过闸后允许写 |
+| 8 | `contain_kind` | `contain_kind` | `structural` \| `semantic` | 否 | v0.2：contain 边的包含类型；缺省按 structural（语义未验证） |
 
 ```yaml
 # sidecar edges[] 条目可选扩展（全部可选；不存在 = 旧行为）
@@ -91,6 +93,7 @@ edges:
     valid_from: null                                     # 可选（T 轴只存不用）
     valid_to: null
     confidence: null                                     # 可选（仅 L2 后）
+    contain_kind: structural | semantic                   # 可选（v0.2，仅 contain 边）
 ```
 
 规则（引自 G5.1 §2.2，写死）：
@@ -98,7 +101,28 @@ edges:
 - `contain` 派生边不写 `assertion_source`，写 `derived_by=system_range` + `generator_version`；出处由 KP `range` 复算。
 - `confidence` 不得由作者手写，只能由 L2 判据过闸后写入。
 - UI/既有代码**不读**新字段（`derived` 布尔冻结）；新字段消费者仅研究脚本与 G5b 透传路径。
+- `contain_kind` 只用于 contain 边：系统派生边固定 `structural`；`semantic` 只能来自作者/人工 curation 且必须带 `assertion_source`；旧数据/缺字段按 `structural`（fail-safe，不假设语义成立）。
 
+
+
+### 2.3 `contain` 的两种含义：结构包含 vs 语义整体-部分（v0.2 新增）
+
+> 来源（人，2026-11-02）：「文本上的 contain 不一定真实具有 contain 的语义，所以有必要做一些区分，
+> 别让程序自动一视同仁处理为 contain 边。」批准重开 v0.2：`dec-20261102-3b8e6eb6`。
+> 研究证据：`artifacts/agent/verify/debate/graph-utility/CONTAIN-SEMANTICS.md`、
+> `contain-evidence.json`（33/33 contain 仅由 KP range 几何包含生成；14 个消费读取点无一检查 derived_by）。
+
+| 值 | 含义 | 来源 | 消费者必须怎么读 |
+|---|---|---|---|
+| `structural` | 仅"B 的知识点区间在 A 的区间内"这一结构事实；**不承诺**整体-部分语义 | 系统派生（`derive_contain_edges()`），派生层静态写入，不写 sidecar | 读作"结构包含候选，语义未验证"；不得作为语义链路 |
+| `semantic` | 作者/人工 curation 明确断言的"整体-部分"关系 | 作者流程或人工 curation，**必须**同时有 `assertion_source` 作者证据 | 可作语义关系；缺证据即降级为 structural/unknown |
+
+规则（写死）：
+1. **不得用 sidecar 写回实现** `contain_kind`：contain 边无 sidecar 存储位且写回是影子写（B1，`dec-20261102-50f0acdb`）；`structural` 由派生层生成。
+2. 旧数据/无字段 ⇒ 视为 `structural`（fail-safe：不假设语义成立，也不删除边）。
+3. `semantic` 必须带 `assertion_source`（schema `allOf` 强制）；程序不得自动推断 `semantic`。
+4. 不 bump `schema_version`（保持 1）；本补丁只加可选字段。
+5. 消费侧：UI 文案必须区分两种含义；agent/G6 读边时 `contain_kind!="semantic"` 不得计入语义链路（G6 门禁，`dec-20261102-7b140e94`）。
 
 ## 3. v0 交付清单（6 件：5 件"修缺陷" + 1 件 v0.1 可选字段扩展）
 

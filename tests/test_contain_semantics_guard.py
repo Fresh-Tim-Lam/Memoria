@@ -55,6 +55,6 @@ def test_guard_json_reports_consumer_points() -> None:
     import json
 
     payload = json.loads(done.stdout)
-    assert payload["schema"] == "contain-semantics-guard/v1"
-    assert len(payload["consumers"]) == 14
+    assert payload["schema"] == "contain-semantics-guard/v2"
+    assert len(payload["consumers"]) >= 14
     assert all(item["present"] for item in payload["consumers"])

@@ -210,6 +210,8 @@
       edge: {
         typeContain: "Structural contain",
         containNote: "Derived from note ranges; semantic containment is NOT verified",
+        typeContainSemantic: "Contain (author-confirmed)",
+        containSemanticNote: "Whole-part relation asserted by the author/curation",
         typeReference: "Reference",
         typeExtend: "Extend",
         originLink: "Link",

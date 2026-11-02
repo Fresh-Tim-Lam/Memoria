@@ -359,6 +359,10 @@ def derive_contain_edges(
                 "origin": "range",
                 "derived_by": "system_range",
                 "generator_version": CONTAIN_EDGE_GENERATOR_VERSION,
+                # v0.2（dec-20261102-3b8e6eb6）：区间几何包含只是**结构**事实，不承诺
+                # “整体-部分”语义；派生层静态写 structural，semantic 只能由作者/curation
+                # 提供并带 assertion_source（禁止写回 sidecar，B1/dec-20261102-50f0acdb）。
+                "contain_kind": "structural",
             }
             if no_build_set and key in no_build_set:
                 edge["no_build"] = True
