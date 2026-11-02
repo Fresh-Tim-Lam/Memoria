@@ -1,15 +1,15 @@
 {
   "$schema": "https://json-schema.org/draft/2020-12/schema",
-  "$id": "https://memoria.local/schema/gue-g5-schema-edge-provenance/v0.2",
-  "title": "sidecar edges[] 条目 + 可选 provenance 扩展（v0.2：新增 contain_kind）",
+  "$id": "https://memoria.local/schema/gue-g5-schema-edge-provenance/v0.3",
+  "title": "sidecar edges[] 条目 + 可选 provenance 扩展（v0.3：curation 审计身份）",
   "x-status": "accepted",
   "x-approval": {
-    "decision_id": "dec-20261102-3b8e6eb6",
+    "decision_id": "dec-20261102-5f71d1da",
     "approved_by": "human",
-    "approved_at": "2026-11-02T11:48:21+08:00"
+    "approved_at": "2026-11-02T14:11:35+08:00"
   },
   "x-counting": "G5 字段表口径为 7 个字段（valid_from+valid_to 合并计 1），对应 8 个 JSON 键。本 schema 用 8 键；对账按 7 组。",
-  "description": "对齐 G5 §2.2.1 的 edges[] 可选扩展。base 字段（type/source_id/targets/relevance/derived/origin/file/line/no_build）保持产品现状；v0.1 新增 8 个键分属 7 个字段；v0.2 再加 1 个可选键 contain_kind（仅 contain 边，structural|semantic），共 9 键 / 8 字段。schema 是研究侧严格视图（additionalProperties=false）；产品读取仍按 G5 §2.2 DM-P6 对未知键宽容。",
+  "description": "对齐 G5 §2.2.1 的 edges[] 可选扩展。base 字段（type/source_id/targets/relevance/derived/origin/file/line/no_build）保持产品现状；v0.1 新增 8 个键分属 7 个字段；v0.2 加 contain_kind；v0.3 加 curation 审计身份 curated_by / curated_at（共 11 键 / 10 字段）。schema 是研究侧严格视图（additionalProperties=false）；产品读取仍按 G5 §2.2 DM-P6 对未知键宽容。",
   "type": "object",
   "required": [
     "type",
@@ -140,6 +140,14 @@
         "semantic"
       ],
       "description": "字段 8/8（v0.2）：contain 边的包含类型。structural=仅由知识点区间/层级几何推导，不承诺整体-部分语义（系统派生 contain 一律此值）；semantic=作者或人工 curation 明确断言的整体-部分关系，必须同时带 assertion_source 作者证据。缺省按 structural 处理（fail-safe）。仅 contain 边可写。semantic 允许以 sidecar curation overlay 持久化，但必须有消费通路（collector M8a 合并），禁止无消费通路的影子写（dec-20261102-50f0acdb；作者流程批准 dec-20261102-2dcefd31）。"
+    },
+    "curated_by": {
+      "type": "string",
+      "description": "字段 9/9（v0.3）：谁确认了这条 semantic contain（审计身份）。人 = `human:<id>`；agent = `agent:<session-id>`。仅 contain_kind=semantic 的 curation overlay 需要。"
+    },
+    "curated_at": {
+      "type": "string",
+      "description": "字段 10/9（v0.3）：确认发生时间（ISO-8601，带时区）。仅 contain_kind=semantic 的 curation overlay 需要；用于审计/撤销追溯。"
     }
   },
   "$defs": {
@@ -189,7 +197,7 @@
       }
     }
   },
-  "x-contract": "docs/design/kg-ontology-v0.md v0.2 §2.2+§2.3",
+  "x-contract": "docs/design/kg-ontology-v0.md v0.3 §2.2+§2.3",
   "x-canonical-copy": "artifacts/agent/verify/debate/graph-utility/g5-schema-fixtures/",
   "allOf": [
     {
@@ -205,7 +213,9 @@
       },
       "then": {
         "required": [
-          "assertion_source"
+          "assertion_source",
+          "curated_by",
+          "curated_at"
         ]
       }
     },

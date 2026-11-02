@@ -1,6 +1,7 @@
-> **状态**：**v0.2 冻结**（2026-11-02T11:48+08:00；v0 → v0.1：仅加 edges[] 可选 provenance 字段；v0.1 → v0.2：再加可选 contain_kind，无新类型、不 bump schema_version）
+> **状态**：**v0.3 冻结**（2026-11-02T14:11+08:00；v0 → v0.1：edges[] 可选 provenance；v0.1 → v0.2：contain_kind；v0.2 → v0.3：curation 审计身份 curated_by/curated_at。无新类型、不 bump schema_version）
 > **v0.1 补丁记录**：`dec-20261101-p01reopen`（人批，2026-11-01T19:05:00+08:00，见 `team/decisions.jsonl`）；变更清单与回滚见 §11。
 > **v0.2 补丁记录**：`dec-20261102-3b8e6eb6`（人批，2026-11-02T11:48:21+08:00，「落地方案B」）；只加可选 `contain_kind`，无新类型、不 bump `schema_version`。
+> **v0.3 补丁记录**：`dec-20261102-5f71d1da`（人批，2026-11-02T14:11:35+08:00，「agent 全权接管知识组织设计」）；加可选 `curated_by` / `curated_at` 审计身份；semantic curation 可由 agent 经 `propose_write` 的 `curate_contain` 直接落库（取代 v0.2 的“仅人确认”，见 §2.3 规则 1 修订）。
 > **来源**：4 份独立提案 → Lead 并集（0 自创）→ 4 份交叉异议 → 13 条裁决。
 > **可复核**：`artifacts/agent/verify/debate/kg/`（PROPOSAL×4 / PHASE2-UNION / PHASE3-OBJECTION×4 / PHASE4-RULINGS / ruling/rulings-kg.jsonl）
 > **协议**：`artifacts/agent/verify/debate/PROTOCOL.md`（FROZEN；M1 证据优先 / M2 独立根 >1 / M3 登记未知 / E1 证据身份）
@@ -73,6 +74,8 @@ reference 既不是"纯边"也不是"不是边" —— 它是【无断言跳转�
 | 6 | `valid_from` + `valid_to` | `valid_from`, `valid_to` | date \| `null` | 否 | T 轴只存不用（G5 AS5，未实现） |
 | 7 | `confidence` | `confidence` | 0–1 \| `null` | 否 | 仅 L2 判据过闸后允许写 |
 | 8 | `contain_kind` | `contain_kind` | `structural` \| `semantic` | 否 | v0.2：contain 边的包含类型；缺省按 structural（语义未验证） |
+| 9 | `curated_by` | `curated_by` | `human:<id>` \| `agent:<session>` | 否 | v0.3：谁确认了 semantic（审计身份） |
+| 10 | `curated_at` | `curated_at` | ISO-8601 字符串 | 否 | v0.3：确认时间（审计/撤销追溯） |
 
 ```yaml
 # sidecar edges[] 条目可选扩展（全部可选；不存在 = 旧行为）
@@ -94,6 +97,8 @@ edges:
     valid_to: null
     confidence: null                                     # 可选（仅 L2 后）
     contain_kind: structural | semantic                   # 可选（v0.2，仅 contain 边）
+    curated_by: human:<id> | agent:<session>          # 可选（v0.3，仅 semantic）
+    curated_at: 2026-11-02T14:11:35+08:00              # 可选（v0.3，仅 semantic）
 ```
 
 规则（引自 G5.1 §2.2，写死）：
@@ -118,7 +123,7 @@ edges:
 | `semantic` | 作者/人工 curation 明确断言的"整体-部分"关系 | 作者流程或人工 curation，**必须**同时有 `assertion_source` 作者证据 | 可作语义关系；缺证据即降级为 structural/unknown |
 
 规则（写死）：
-1. **禁止无消费通路的影子写**：`structural` 由派生层生成，不写 sidecar。`semantic` 允许以 sidecar `edges[]` 的 **curation overlay** 持久化，但必须同时满足（a）collector 在 dedupe 之后按 canonical id 合并（M8a，有真实消费通路）；（b）overlay 只覆盖 `contain_kind/derived_by/assertion_source` 三字段，几何字段不动、`generator_version` 移除；（c）**仅人确认可写**（`curate_contain` 要求 `confirmed_by`；agent 只能提议、不得落库）；（d）孤儿不造边、重复冲突拒绝、锚点 stale 拒绝。该修订由 `dec-20261102-2dcefd31`（人批）批准；D4 审计身份仍未决，最小切片复用 agent session 作审计，不宣称“纯人路径审计已满足”。
+1. **禁止无消费通路的影子写；semantic 由 agent 全权接管（v0.3 修订）**：`structural` 由派生层生成，不写 sidecar。`semantic` 允许以 sidecar `edges[]` 的 **curation overlay** 持久化，但必须同时满足（a）collector 在 dedupe 之后按 canonical id 合并（M8a，有真实消费通路）；（b）overlay 覆盖 `contain_kind/derived_by/assertion_source` 以及审计身份 `curated_by/curated_at`，几何字段不动、`generator_version` 移除；（c）**agent 可直接确认并落库**（经 `propose_write` 的 `curate_contain` op；`curated_by=agent:<session>`）；人可抽查/撤销；不再要求人工逐条确认（**取代** `dec-20261102-2dcefd31` 的“仅人确认”，依据 `dec-20261102-5f71d1da`）；（d）孤儿不造边、重复冲突拒绝、锚点 stale 拒绝；（e）每条 semantic 必须有可读正文锚点与 `curated_by/curated_at` 审计，否则 collector 拒绝合并（fail-closed）。
 2. 旧数据/无字段 ⇒ 视为 `structural`（fail-safe：不假设语义成立，也不删除边）。
 3. `semantic` 必须带 `assertion_source`（schema `allOf` 强制）；程序不得自动推断 `semantic`。
 4. 不 bump `schema_version`（保持 1）；本补丁只加可选字段。

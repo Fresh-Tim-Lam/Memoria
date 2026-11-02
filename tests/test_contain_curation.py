@@ -157,6 +157,8 @@ def test_orphan_overlay_warns_without_creating_edge(kb: Path) -> None:
         "contain_kind": "semantic",
         "derived_by": "author",
         "assertion_source": anchor,
+        "curated_by": "agent:test",
+        "curated_at": "2026-11-02T14:15:00+08:00",
     }
     full = kb / rel
     sidecar = load_sidecar_for_md(str(full), str(kb))
@@ -185,9 +187,13 @@ def test_remove_curation_restores_structural(kb: Path) -> None:
     assert restored.get("derived_by") == "system_range"
 
 
-def test_agent_tools_do_not_expose_curate_contain() -> None:
-    text = (_ROOT / "src/memoria/services/agent/tools/kb.py").read_text(encoding="utf-8")
-    assert "curate_contain" not in text, "agent 只能提议，落库只允许人确认（curate_contain 不得进 agent 工具面）"
+def test_agent_curation_goes_through_plan_op_not_a_new_tool() -> None:
+    """v0.3（dec-20261102-5f71d1da）：agent 可确认 semantic，但入口是 propose_write 的
+    `curate_contain` **op**（带证据/审计/撤销），不是另立一个只会写库的工具。"""
+    plan_py = (_ROOT / "src/memoria/services/agent/plan.py").read_text(encoding="utf-8")
+    apply_py = (_ROOT / "src/memoria/services/agent/apply.py").read_text(encoding="utf-8")
+    assert 'OP_CURATE_CONTAIN = "curate_contain"' in plan_py
+    assert '"curate_contain": _call_curate_contain' in apply_py
 
 
 def test_ui_entry_wired() -> None:

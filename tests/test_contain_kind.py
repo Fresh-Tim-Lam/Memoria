@@ -86,6 +86,8 @@ def test_schema_accepts_semantic_with_author_source(validator) -> None:
         "line_end": 12,
         "quote_sha256": "a" * 64,
     }
+    edge["curated_by"] = "agent:test"
+    edge["curated_at"] = "2026-11-02T14:15:00+08:00"
     assert list(validator.iter_errors(edge)) == []
 
 

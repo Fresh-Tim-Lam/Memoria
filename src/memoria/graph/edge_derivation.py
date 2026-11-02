@@ -813,7 +813,14 @@ def validate_contain_curation_overlay(overlay: dict, kb_path: str) -> list[str]:
     """校验一条 overlay 是否能被产品消费；返回问题清单（空 = 合法）。"""
     problems: list[str] = []
     if overlay.get("derived_by") != "author":
-        problems.append("derived_by 必须为 author（semantic 只能来自作者/人工 curation）")
+        problems.append("derived_by 必须为 author（semantic 必须有人/agent 明确确认）")
+    # v0.3（dec-20261102-5f71d1da）：审计身份是 semantic 的硬前置（fail-closed）
+    curated_by = str(overlay.get("curated_by") or "").strip()
+    curated_at = str(overlay.get("curated_at") or "").strip()
+    if not curated_by:
+        problems.append("缺 curated_by（谁确认了这条 semantic；human:<id> / agent:<session>）")
+    if not curated_at:
+        problems.append("缺 curated_at（确认时间，审计/撤销追溯）")
     source = overlay.get("assertion_source")
     if not isinstance(source, dict):
         problems.append("缺 assertion_source（semantic 必须带作者证据）")
@@ -889,6 +896,8 @@ def merge_contain_curation_overlays(
         base["contain_kind"] = "semantic"
         base["derived_by"] = "author"
         base["assertion_source"] = dict(overlay["assertion_source"])
+        base["curated_by"] = str(overlay.get("curated_by") or "").strip()
+        base["curated_at"] = str(overlay.get("curated_at") or "").strip()
         base.pop("generator_version", None)
         edges[position] = base
     return edges, warnings

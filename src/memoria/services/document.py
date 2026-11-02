@@ -3139,8 +3139,10 @@ class DocumentService:
         assertion_source: dict,
         *,
         confirmed_by: str,
+        curated_by: str | None = None,
+        curated_at: str | None = None,
     ) -> dict:
-        """把一条派生 contain 边标记为 semantic（作者/人工确认的整体-部分，v0.2）。
+        """把一条派生 contain 边标记为 semantic（v0.3：agent 全权接管）。
 
         设计：CONTAIN-AUTHOR-FLOW.md 候选 A。写入 sidecar edges[] 的 curation overlay：
         `{type: contain, contain_kind: semantic, derived_by: author, assertion_source}`；
@@ -3154,9 +3156,14 @@ class DocumentService:
         )
         from memoria.graph.collector import collect_graph_data
 
-        confirmed = (confirmed_by or "").strip()
-        if not confirmed:
-            return {"status": "error", "message": "必须由人确认（confirmed_by 不能为空）；agent 只能提议"}
+        # v0.3（dec-20261102-5f71d1da）：agent 全权接管——curated_by 记录真实确认者
+        # （human:<id> / agent:<session>），confirmed_by 保留为旧字段/兜底。
+        audit_by = (curated_by or confirmed_by or "").strip()
+        if not audit_by:
+            return {"status": "error", "message": "必须带审计身份（curated_by / confirmed_by 不能为空）"}
+        from datetime import datetime, timezone
+
+        audit_at = (curated_at or "").strip() or datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")
         source_id = (source_id or "").strip()
         target_id = (target_id or "").strip()
         if not source_id or not target_id:
@@ -3188,6 +3195,8 @@ class DocumentService:
             "contain_kind": "semantic",
             "derived_by": "author",
             "assertion_source": dict(assertion_source),
+            "curated_by": audit_by,
+            "curated_at": audit_at,
         }
         problems = validate_contain_curation_overlay(overlay, self.kb_path)
         if problems:
@@ -3223,7 +3232,7 @@ class DocumentService:
             return {"status": "error", "message": "配置校验失败: " + "; ".join(err_msgs), "validation": validation}
         self._write_sidecar(rel_path.replace("\\", "/"), sidecar)
         self._cache.pop(rel_path, None)
-        return {"status": "ok", "edge": overlay, "confirmed_by": confirmed,
+        return {"status": "ok", "edge": overlay, "curated_by": audit_by, "curated_at": audit_at,
                 "consumer": "collect_graph_data merges this overlay by canonical id (M8a)"}
 
     def remove_contain_curation(

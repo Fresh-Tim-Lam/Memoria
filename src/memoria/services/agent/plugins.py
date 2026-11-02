@@ -654,6 +654,7 @@ OP_TOOL_IDS: dict[str, tuple[str, ...]] = {
     "rename_kp": ("kb.kp.rename",),
     "delete_kp": ("kb.kp.delete",),
     "upsert_edge": ("kb.link.create",),
+    "curate_contain": ("kb.link.create",),
     "replace_lines": ("kb.file.edit",),
     "insert_lines": ("kb.file.edit",),
     "delete_lines": ("kb.file.edit",),

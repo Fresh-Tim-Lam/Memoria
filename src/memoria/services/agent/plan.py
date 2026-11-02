@@ -90,6 +90,10 @@ OP_DELETE_FILE = "delete_file"
 #: 把整篇文档移到**另一个目录**（2026-09-22 新增）：只改目录、**保持文件名** ⇒ 不改写任何 `[[…]]`
 #: 引用（id/stem 寻址不受路径影响）；正文里的**文件相对**链接/图片会被预演拦下（见 `_validate_move_file()`）。
 OP_MOVE_FILE = "move_file"
+#: v0.3（dec-20261102-5f71d1da）：agent 全权接管 semantic contain —— 把一条派生的
+#: `contain_kind=structural` 边确认为 `semantic`（写 sidecar curation overlay + 审计身份）。
+OP_CURATE_CONTAIN = "curate_contain"
+
 #: KP↔KP 的**纯边**（2026-09-22 新增；设计 §7 1.2 的 `upsert_edge` → 原语 `kb.link.create`）：只写
 #: sidecar 的 `edges[]`、**不碰正文**（要写正文锚点用 `attach_links`）。边类型只收 `reference` / `extend`
 #: —— `contain` 由标题层级自动推导、**禁手标**（`<库>/.memoria/agent/kb-spec.zh-CN.md` §4）。
@@ -131,6 +135,7 @@ KNOWN_OPS: tuple[str, ...] = (
     OP_DELETE_FILE,
     OP_MOVE_FILE,
     OP_UPSERT_EDGE,
+    OP_CURATE_CONTAIN,
     OP_DELETE_KP,
     OP_REBUILD_MANIFEST,
 )
@@ -158,6 +163,7 @@ COMPILED_OPS: tuple[str, ...] = (
     OP_MOVE_FILE,
     OP_RENAME_KP,
     OP_UPSERT_EDGE,
+    OP_CURATE_CONTAIN,
     OP_DELETE_KP,
     OP_REBUILD_MANIFEST,
 )
@@ -945,6 +951,99 @@ def _validate_upsert_edge(
     }
 
 
+def _validate_curate_contain(
+    kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict]
+) -> dict:
+    """把派生 contain 边确认为 semantic（agent 全权接管，v0.3）。
+
+    设计：`CONTAIN-AUTHOR-FLOW.md` 候选 A + `dec-20261102-5f71d1da`。
+    硬前置：source 必须是本文档 KP、target 可解析、证据锚点必须能在当前正文上重算出
+    同一个 `quote_sha256`（stale 拒绝）；同名 semantic overlay 已存在则拒。
+    “该边确实是派生 contain”由 apply 时 `DocumentService.curate_contain()` 再校验（整批原子回滚）。
+    """
+    import hashlib
+    import os
+
+    source_id = str(op.get("source_id") or "").strip()
+    target_id = str(op.get("target_id") or "").strip()
+    if not source_id:
+        errors.append(_err(op_id, "missing_field", "缺 source_id（哪条 contain 的起点）"))
+    if not target_id:
+        errors.append(_err(op_id, "missing_field", "缺 target_id（哪条 contain 的终点）"))
+    if source_id and source_id == target_id:
+        errors.append(_err(op_id, "bad_field", "source_id 与 target_id 不能相同"))
+    evidence = op.get("assertion_source")
+    if not isinstance(evidence, Mapping):
+        errors.append(_err(op_id, "missing_field", "缺 assertion_source（semantic 必须带正文证据）"))
+        return {"action": "invalid"}
+    ev_file = str(evidence.get("file") or "").strip()
+    line_start = evidence.get("line_start")
+    line_end = evidence.get("line_end")
+    quote = evidence.get("quote_sha256")
+    if not ev_file or not isinstance(line_start, int) or not isinstance(line_end, int):
+        errors.append(_err(op_id, "bad_field", "assertion_source 需要 file / line_start / line_end"))
+        return {"action": "invalid"}
+    if line_start < 1 or line_end < line_start:
+        errors.append(_err(op_id, "bad_field", "assertion_source 行号非法"))
+        return {"action": "invalid"}
+    if not isinstance(quote, str) or len(quote) != 64:
+        errors.append(_err(op_id, "bad_field", "assertion_source 需要 64 位 quote_sha256"))
+        return {"action": "invalid"}
+    full = os.path.join(kb_path, ev_file)
+    if not os.path.isfile(full):
+        errors.append(_err(op_id, "file_not_found", f"证据文件不存在：{ev_file}"))
+        return {"action": "invalid"}
+    with open(full, "r", encoding="utf-8") as f:
+        lines = f.read().splitlines()
+    if line_end > len(lines):
+        errors.append(_err(op_id, "bad_field", f"证据行号越界：{line_start}-{line_end} > {len(lines)}"))
+        return {"action": "invalid"}
+    text = "\n".join(lines[line_start - 1:line_end])
+    if not text.strip():
+        errors.append(_err(op_id, "bad_field", "证据切片为空"))
+        return {"action": "invalid"}
+    if hashlib.sha256(text.encode("utf-8")).hexdigest() != quote:
+        errors.append(_err(op_id, "stale_evidence", "quote_sha256 与当前正文切片不符（stale）；请重读正文后重算"))
+        return {"action": "invalid"}
+    kp_ids = {
+        str(kp.get("id") or "").strip()
+        for kp in _as_list(_sidecar_of(kb_path, rel).get("knowledge_points"))
+        if isinstance(kp, Mapping)
+    }
+    if source_id not in kp_ids:
+        errors.append(_err(op_id, "source_not_in_file", f"source_id 不是本文档的知识点：{source_id}"))
+        return {"action": "invalid"}
+    if resolve_link_target(kb_path, target_id).get("status") != "ok":
+        errors.append(_err(op_id, "target_not_found", f"目标不可解析：{target_id}"))
+        return {"action": "invalid"}
+    for edge in _as_list(_sidecar_of(kb_path, rel).get("edges")):
+        if not isinstance(edge, Mapping):
+            continue
+        if (
+            str(edge.get("type") or "").strip().lower() == "contain"
+            and edge.get("contain_kind") == "semantic"
+            and str(edge.get("source_id") or "").strip() == source_id
+            and target_id in _edge_targets_of(edge)
+        ):
+            errors.append(_err(op_id, "already_curated", f"{source_id} → {target_id} 已有 semantic curation"))
+            return {"action": "invalid"}
+    if errors:
+        return {"action": "invalid"}
+    return {
+        "action": "curate_contain",
+        "resolved": {
+            "source_id": source_id,
+            "target_id": target_id,
+            "assertion_source": {
+                "file": ev_file,
+                "line_start": line_start,
+                "line_end": line_end,
+                "quote_sha256": quote,
+            },
+        },
+    }
+
+
 def _validate_delete_kp(
     kb_path: str, rel: str, op: Mapping, op_id: str, errors: list[dict], warnings: list[dict]
 ) -> dict:
@@ -1125,6 +1224,8 @@ def _validate_op(
         detail = _validate_move_file(kb_path, rel, data, op_id, errors)
     elif verb == OP_UPSERT_EDGE:
         detail = _validate_upsert_edge(kb_path, rel, data, op_id, errors, pending_targets)
+    elif verb == OP_CURATE_CONTAIN:
+        detail = _validate_curate_contain(kb_path, rel, data, op_id, errors)
     elif verb == OP_DELETE_KP:
         detail = _validate_delete_kp(kb_path, rel, data, op_id, errors, warnings)
     else:

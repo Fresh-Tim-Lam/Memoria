@@ -57,13 +57,20 @@ REQUIRED = [
     ("ui-i18n-zh-curate", "src/memoria/ui/static/app/i18n/zh-CN.js", 'curateBtn: "确认为整体-部分"'),
     ("ui-i18n-en-curate", "src/memoria/ui/static/app/i18n/en.js", 'curateBtn: "Confirm whole-part"'),
     ("ui-rpc-backend", "src/memoria/presentation/api/ui.py", "def curate_contain("),
+    # v0.3（dec-20261102-5f71d1da）：agent 全权接管 —— semantic 确认走 propose_write 的 op
+    ("agent-plan-op", "src/memoria/services/agent/plan.py", 'OP_CURATE_CONTAIN = "curate_contain"'),
+    ("agent-plan-validator", "src/memoria/services/agent/plan.py", "_validate_curate_contain"),
+    ("agent-apply-primitive", "src/memoria/services/agent/apply.py", '"curate_contain": _call_curate_contain'),
+    ("agent-prompt-op", "src/memoria/services/agent/tools/kb.py", "⑱ `curate_contain`"),
+    ("audit-fields-schema", "docs/design/kg-edge-provenance.schema.json", '"curated_by"'),
+    ("audit-fields-merge", "src/memoria/graph/edge_derivation.py", 'base["curated_by"]'),
     ("ui-inapp-confirm", "src/memoria/ui/static/app/js/app.js", "function showConfirm(title, message, okLabel, opts = {})"),
     ("ui-inapp-confirm-used", "src/memoria/ui/static/app/js/app.js", "const ok = await showConfirm("),
 ]
 #: 必须**不存在**的文本（agent 只能提议，落库仅人确认）。
 NEGATIVE = [
-    ("agent-tools-no-curate", "src/memoria/services/agent/tools/kb.py", "curate_contain",
-     "agent 只能提议；semantic 落库仅允许人确认（curate_contain 不得进 agent 工具面）"),
+    ("no-standalone-curate-tool", "src/memoria/services/agent/tools/kb.py", 'name="curate_contain"',
+     "semantic 确认的 agent 入口必须是 propose_write 的 op（带证据/审计/撤销），不得另立同名工具"),
     ("no-native-confirm-curate", "src/memoria/ui/static/app/js/app.js", 'window.confirm(T("cfg.edge.curateConfirm"',
      "semantic 确认必须用应用内弹窗，不得弹浏览器原生 confirm（会中断预览/WEBVIEW）"),
 ]
@@ -187,19 +194,22 @@ def _fixture_files() -> dict[str, str]:
         "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
         "src/memoria/graph/edge_derivation.py": (
             'def derive_contain_edges():\n"contain_kind": "structural"\n'
-            "def validate_contain_curation_overlay():\n"
+            'def validate_contain_curation_overlay():\nbase["curated_by"]\n'
         ),
         "src/memoria/graph/collector.py": "dedupe_graph_edges\n",
         "src/memoria/graph/edge_types.py": "DERIVE_ONLY_EDGE_TYPES = ()  # contain\n",
         "src/memoria/services/agent/plan.py": "contain\n",
         "src/memoria/ui/static/app/js/graph-engine.js": "expandLinks\n",
         "src/memoria/ui/static/app/js/graph-synthetic.js": "expandLinks\n",
-        "docs/design/kg-edge-provenance.schema.json": '"contain_kind"\n',
+        "docs/design/kg-edge-provenance.schema.json": '"contain_kind"\n"curated_by"\n',
         "docs/design/kg-ontology-v0.md": "contain_kind\ncuration overlay\n",
         "src/memoria/graph/collector.py": "dedupe_graph_edges\nmerge_contain_curation_overlays\n",
         "src/memoria/services/document.py": "def curate_contain(\nconfirmed_by 不能为空\n",
         "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n",
         "src/memoria/presentation/api/ui.py": "def curate_contain(\n",
+        "src/memoria/services/agent/plan.py": 'OP_CURATE_CONTAIN = "curate_contain"\n_validate_curate_contain\n',
+        "src/memoria/services/agent/apply.py": '"curate_contain": _call_curate_contain\n',
+        "src/memoria/services/agent/tools/kb.py": "contain_kind=structural\ncontain\n⑱ `curate_contain`\n",
     }
 
 
@@ -235,6 +245,7 @@ def selftest() -> int:
             ("src/memoria/services/document.py", "def curate_contain(", ""),
             ("src/memoria/ui/static/app/js/app.js", "-edge-btn-curate", ""),
             ("src/memoria/ui/static/app/js/app.js", "const ok = await showConfirm(", ""),
+            ("src/memoria/services/agent/plan.py", 'OP_CURATE_CONTAIN = "curate_contain"', ""),
         ]
         for rel, old, new in red_cases:
             path = root / rel
@@ -253,13 +264,13 @@ def selftest() -> int:
             return 1
         # 负向检查的证红：agent 工具面出现 curate_contain 必须被抓到
         tools = root / "src/memoria/services/agent/tools/kb.py"
-        tools.write_text(tools.read_text(encoding="utf-8") + "\ncurate_contain\n", encoding="utf-8")
+        tools.write_text(tools.read_text(encoding="utf-8") + '\nname="curate_contain"\n', encoding="utf-8")
         _, _, negatives_now = run_checks(root)
         if all(item["pass"] for item in negatives_now):
             print("SELFTEST FAIL: agent 工具面出现 curate_contain 后仍全绿")
             return 1
 
-    print("SELFTEST PASS: 正常夹具全绿；13 个口径被破坏时均报红；删消费点/agent 工具面/原生 confirm 越界被报出")
+    print("SELFTEST PASS: 正常夹具全绿；14 个口径被破坏时均报红；删消费点/独立工具/原生 confirm 越界被报出")
     return 0
 
 

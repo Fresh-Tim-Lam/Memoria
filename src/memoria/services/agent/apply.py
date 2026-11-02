@@ -37,6 +37,7 @@ from typing import Any, Callable
 from memoria.services.agent import audit, backup
 from memoria.services.agent.plan import (
     BODY_EDIT_OPS,
+    OP_CURATE_CONTAIN,
     OP_ATTACH_LINKS,
     OP_CREATE_FILE,
     OP_DELETE_FILE,
@@ -191,6 +192,21 @@ def _call_create_edge(service: Any, args: Mapping) -> dict:
     )
 
 
+def _call_curate_contain(service: Any, args: Mapping) -> dict:
+    """原语 `kb.link.curate`（v0.3）：agent 确认一条 contain 为 semantic（写 curation overlay）。"""
+    from datetime import datetime, timezone
+
+    return service.curate_contain(
+        args["rel_path"],
+        args["source_id"],
+        args["target_id"],
+        args["assertion_source"],
+        confirmed_by="",
+        curated_by=str(args.get("curated_by") or "agent:plan"),
+        curated_at=str(args.get("curated_at") or datetime.now(timezone.utc).astimezone().isoformat(timespec="seconds")),
+    )
+
+
 def _call_delete_kp(service: Any, args: Mapping) -> dict:
     """原语 `kb.kp.delete`（§7 的 1.7）：删一个 KP 的 sidecar 配置（**不改正文**）。"""
     return service.delete_kp(args["rel_path"], args["kp_id"])
@@ -223,6 +239,7 @@ PRIMITIVES: dict[str, Callable[[Any, Mapping], dict]] = {
     "delete_file": _call_delete_file,
     "move_file": _call_move_file,
     "create_edge": _call_create_edge,
+    "curate_contain": _call_curate_contain,
     "delete_kp": _call_delete_kp,
     "rename_kp_id": _call_rename_kp_id,
     "rebuild_manifest": _call_rebuild_manifest,
@@ -417,6 +434,22 @@ def compile_plan(kb_path: str, plan: Any, *, service: Any = None) -> dict:
                         "target_id": resolved.get("target_id"),
                         "edge_type": resolved.get("edge_type"),
                         "relevance": (_raw_op(plan, op_id) or {}).get("relevance"),
+                    },
+                }
+            )
+        elif verb == OP_CURATE_CONTAIN:
+            resolved = parsed.get("resolved") or {}
+            calls.append(
+                {
+                    "op_id": op_id,
+                    "op": verb,
+                    "primitive": "curate_contain",
+                    "args": {
+                        "rel_path": rel,
+                        "source_id": resolved.get("source_id"),
+                        "target_id": resolved.get("target_id"),
+                        "assertion_source": resolved.get("assertion_source"),
+                        "curated_by": "agent:plan",
                     },
                 }
             )
