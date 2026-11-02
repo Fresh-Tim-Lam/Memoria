@@ -9,6 +9,7 @@
 > **日期**：2026-11-02（Asia/Shanghai）。
 > **写域声明**：本文件与 `ENGINEERING-PLAN.md` 为本人唯二写入；**未**修改 S0 提案 A/B、未改契约、未写产品代码、未 commit。
 > **证据分级**：A = 契约/代码 file:line 或已冻结文档；B = 本仓可复跑；C = 单源研究结论；H = 本项目假设（无来源，需裁决）。
+> **版本注记（2026-11-02T17:1x，S0-RULINGS 后）**：本文为 **S0 裁决前**的校核 v0，保留原始判定与证据链；裁决后的冻结前机检见 `S0-freeze-check.md`。术语已按 `S0-RULINGS.md` 对齐：`presence ∈ {shown, suppressed, unknown}`（本文早期草稿曾写 `present`，以 `shown` 为准）；`ctx` 增加 `view_family`；D-1..D-5 的处置见 `ENGINEERING-PLAN.md §1.6/§1.7`。
 
 ---
 
@@ -23,7 +24,7 @@
 
 **术语约定**（本文件新增，供 S0 采纳/否决）：
 - **视图上下文键** `ctx = (level, dimension, focus, hop_budget, edition)`：所有「同一对节点在不同层/维/上下文边存无不同」（U-27）必须用这个键表达。
-- **三值存在性** `presence ∈ {present, suppressed, unknown}`：`suppressed` = 有意不显示（有规则 id）；`unknown` = 未计算/数据未加载。**二者都不得写成「不存在」**。
+- **三值存在性** `presence ∈ {shown, suppressed, unknown}`（S0-RULINGS 定名；本文草稿曾用 `present`，以 `shown` 为准）：`suppressed` = 有意不显示（有规则 id）；`unknown` = 未计算/数据未加载。**二者都不得写成「不存在」**。
 - **语义承载度** `semantic_bearing ∈ {none, structural, asserted}`：显式对应现有 `contain_kind`/`provenance_state`（`kg-ontology-v0.md` §2.2/§2.3），避免新造一套语义词。
 
 ---

@@ -51,6 +51,9 @@ erDiagram
     KP_CONCEPT ||--o{ KP_OCCURRENCE : "realized as"
     CLUSTER_RUN ||--o{ CLUSTER : produces
     CLUSTER_RUN }o--|| LEVEL : "at level"
+    VIEW_FAMILY ||--o{ CLUSTER_RUN : scopes
+    VIEW_FAMILY ||--o{ MEMBERSHIP : "scope of"
+    VIEW_FAMILY ||--o{ VIEW_FRAME : "family of"
     CLUSTER ||--o{ MEMBERSHIP : has
     KP_CONCEPT ||--o{ MEMBERSHIP : "belongs via"
     KP_CONCEPT ||--o{ EDGE_CANDIDATE : "source of"
@@ -66,9 +69,9 @@ erDiagram
     KB ||--o{ GRAPH_AUDIT_REPORT : "audited by"
 
     KB {
-        string kb_id PK
-        string manifest_sha
-        string edition_sha
+        string kb_path PK
+        string corpus_manifest_sha
+        string collect_version
     }
     DOCUMENT {
         string file PK
@@ -94,10 +97,13 @@ erDiagram
         string params_hash
         string corpus_manifest_sha
         string level_id FK
+        string view_family_id FK
     }
     CLUSTER {
         string cluster_id PK
         string run_id FK
+        int local_seq
+        string cluster_key
         float cohesion_metric
         float bridge_metric
         string state
@@ -105,9 +111,13 @@ erDiagram
     MEMBERSHIP {
         string kp_id FK
         string cluster_id FK
+        string level_id FK
+        string dimension_id FK
+        string view_family_id FK
         float weight
         string role
         string source
+        string provenance
     }
     EDGE_CANDIDATE {
         string edge_id PK
@@ -130,6 +140,11 @@ erDiagram
         bool is_leaf
         string policy
     }
+    VIEW_FAMILY {
+        string family_id PK
+        string basis
+        string level_chain
+    }
     DIMENSION {
         string dimension_id PK
         string status
@@ -139,6 +154,7 @@ erDiagram
         string frame_id PK
         string level_id FK
         string dimension_id FK
+        string view_family_id FK
         string focus_id
         int hop_budget
         string edition_sha
@@ -146,7 +162,9 @@ erDiagram
     VIEW_MODEL {
         string vm_id PK
         string frame_id FK
-        string node_kind
+        string level_id
+        string dimension_id
+        string view_family_id
         string presence
         string rule_id
     }
@@ -181,19 +199,20 @@ erDiagram
 
 | 实体 | 主键 | 生命周期 | 归属 | 现存对应 / 差异 |
 |---|---|---|---|---|
-| `KB` | kb_id | 打开/关闭 KB | 事实（外部） | 现 `state.kbPath`（`app.js:1843`），无 kb_id 字段 |
+| `KB` | kb_path（DataSource 身份 = kb_path + corpus_manifest_sha + collect_version） | 打开/关闭 KB | 事实（外部） | 现 `state.kbPath`（`app.js:1843`）；身份三元组对齐 A-v2 §8 |
 | `DOCUMENT` | file（KB 相对路径） | 文件创建/删除/改名 | 事实 | `collect_md_files`；`content_sha` 为 `manifest_sha` 的组成（`kg-ontology-v0.md:162-177`） |
 | `KP_CONCEPT` | kp_id | 创建/合并/改名/删除 | 事实 | `kp_index.py:18-73` 的 `by_id` 键；改名 = 全库重命名（`document.py:2090-2100`） |
 | `KP_OCCURRENCE` | occurrence_id（派生：file + kp_id + range） | 随正文/range 变化重建 | 事实（锚点） | 现 `KpIndexEntry` 多值被压成单节点（`collector.py:57-72`）——**新增层** |
-| `CLUSTER_RUN` | run_id | 每次聚类生成，旧 run 保留审计 | 派生缓存 | 无（现 group 现场算，无版本） |
-| `CLUSTER` | cluster_id | 随 run 生成；curation 可固定 | 派生缓存 | `graph-groups.js:83-134` 的 `groups[]`（无版本/无 level） |
-| `MEMBERSHIP` | (kp_id, cluster_id) 复合（**不唯一约束到单值**） | 随 run/curation | 派生 + 可选 curation 事实 | 现 `nodeToGroup` 单值（`graph-groups.js:123-126`）——**必须废弃** |
+| `CLUSTER_RUN` | run_id（稳定编码 = corpus_manifest + level + view_family + algorithm + version + params） | 每次聚类生成，旧 run 保留审计 | 派生缓存 | 无（现 group 现场算，无版本） |
+| `CLUSTER` | cluster_id（run-scoped 实例 id = run_id + local_seq） | 随 run 生成；旧 run 保留审计 | 派生缓存 | `graph-groups.js:83-134` 的 `groups[]`（无版本/无 level）；`cluster_key` = sha256(sorted(member_canonical_ids)+algorithm_id+version+params_hash)（S0-RULINGS D-2） |
+| `MEMBERSHIP` | (kp_id, cluster_id) 复合（**不唯一约束到单值**） | 随 run 重建 | 派生缓存（**不写产品 sidecar**，S0-RULINGS D-3） | 现 `nodeToGroup` 单值（`graph-groups.js:123-126`）——**必须废弃**；`view_family_id` 承载 partition 作用域 (level, 视图族)（D-1/对齐 A-v2 §7） |
 | `EDGE_CANDIDATE` | edge_id = `type|source_id|target_id`（沿用 `canonical_edge_id`，`edge_derivation.py:787-793`） | sidecar/正文变化时重建；保留 provenance | 事实 | `collector.py` 输出 `edges[]`（无 ctx） |
 | `EDGE_PROVENANCE` | provenance_id | 随 edge 生命周期；`valid_from/to` 只存不用 | 事实（审计） | `kg-edge-provenance.schema.json` 字段；`curated_by/at` |
 | `LEVEL` | level_id | 配置/冻结后稳定 | 视图坐标（配置） | 无 —— S1 定层级语义 |
-| `DIMENSION` | dimension_id | 注册表项；`slot` 为开放槽位 | 配置（含开放槽位） | 无 —— S1；`graphStyle` 明确**不是**维度 |
-| `VIEW_FRAME` | frame_id | 每次取景一个，可被历史栈引用 | 视图状态（可持久化会话） | 无（现仅有 `graphGroupId`，`app.js:141`） |
-| `VIEW_MODEL` | vm_id | 每次渲染产物；按 frame+edition 缓存 | 派生缓存 | 现 `loadPayload` 载荷（`graph-engine.js:167-216`） |
+| `VIEW_FAMILY` | family_id | 配置（S1/S2 冻结定义） | 视图坐标（配置，partition 作用域） | 无；A-v2 §2 定义 `⟨family_id, basis, level_chain⟩`，B-v2 定义为「同一 (level,dimension) 下的视图族」——**冻结稿需统一**（见 §1.7） |
+| `DIMENSION` | dimension_id | 注册表项；`status ∈ {reserved, specified, frozen, deprecated}`（A-v2 §3 超集） | 配置（含开放槽位） | 无 —— S1；`graphStyle` 明确**不是**维度 |
+| `VIEW_FRAME` | frame_id | 每次取景一个，可被历史栈引用 | 视图状态（可持久化会话） | 无（现仅有 `graphGroupId`，`app.js:141`）；含 `view_family_id`（D-1） |
+| `VIEW_MODEL` | vm_id | 每次渲染产物；按 frame+edition 缓存 | 派生缓存 | 现 `loadPayload` 载荷（`graph-engine.js:167-216`）；**不含导航/模式**（D-4） |
 | `GRAPH_NAV_FRAME` | nav_id | 下钻/返回生命周期 | 视图状态（内存） | 现 `MemoriaNavStack` 是文件栈，非图谱栈（`nav-stack.js:23-36`） |
 | `RENDER_BACKEND` | backend_id | 注册/切换 | 配置 + 运行时状态 | 现 2D/3D 各自持 engine（`app.js:1643-1660`） |
 | `AUDIT_EVENT` | event_id | append-only | 事实（审计） | 新；现有交互计数仅内存（`app.js:26-101`） |
@@ -201,27 +220,38 @@ erDiagram
 
 ### 1.4 `ViewModel` 最小字段（ER 的投影形态，S6a 冻结）
 
+> 纯度约束（S0-RULINGS D-4）：**不含导航状态、不含模式开关**（`mode`/`breadcrumb`/`navigateBack` 归 `VIEW_FRAME`/`GRAPH_NAV_FRAME`/状态机）；全展开是 Presentation 参数，不是 ViewModel 字段。
+> 字段并集来源：A-v2 §9（kind/role/state/presence/rule_id/capabilities）+ B-v2 §9（`renderer_capabilities`、事件清单）。**presence 值域统一为 `shown|suppressed|unknown`**（S0-RULINGS S0-6；本文早期 v0 曾用 `present`，已改）。
+
 ```jsonc
 {
-  "view":  { "frame_id": "...", "level_id": "L0", "dimension_id": "level",
-             "focus_id": "...", "breadcrumb": ["c-1", "c-7"], "hop_budget": 1,
-             "edition_sha": "..." },
-  "nodes": [{ "node_id": "...", "kind": "kp|cluster", "role": "member|hop|bridge", "label": "...",
-              "metrics": { "member_count": 12, "degree": 4 },
-              "badges": ["+11"], "member_of_origin": "c-1" }],
-  "edges": [{ "edge_id": "...", "presence": "present", "type": "extend",
-              "rule_id": "admit.within_level", "hop": 0, "style_class": "semantic" }],
-  "omitted": [{ "edge_id": "...", "presence": "suppressed|unknown", "reason": "hop_budget|cross_cluster|not_loaded" }]
+  "view_model_id": "vm-...",
+  "level_id": "L0",
+  "dimension_id": "level",
+  "view_family_id": "fam-whole-kb",
+  "nodes": [{ "node_id": "...", "kind": "kp|cluster", "role": "member|one_hop|bridge|focus",
+              "label": "...", "expandable": true,
+              "metrics": { "member_count": 12, "degree": 4 }, "badges": ["+11"] }],
+  "edges": [{ "edge_id": "...", "source": "...", "target": "...",
+              "type": "extend", "contain_kind": null,
+              "label": "semantic|structural|navigation",
+              "display_type": "extend",
+              "presence": "shown|suppressed|unknown",
+              "rule_id": "admit.within_level", "state": null,
+              "hop": 0, "underlying_hop_count": 0 }],
+  "renderer_capabilities": { "labels": true, "zoom_hint": "2d|3d" }
 }
 ```
+
+> 兼容性说明：本文早期 v0 用 `omitted[]` 单独列缺席边；为对齐 A-v2/B-v2，**缺席信息由每条边的 `presence/rule_id` 承载**（`omitted` 若保留只能是由 `presence!=shown` 导出的便捷视图，不得成为第二真相）。`frame_id`/`edition_sha` 等取景元数据保留在 `VIEW_FRAME`，不塞进 ViewModel（D-4）。
 
 ### 1.5 ER 待裁决点（S6a 前必须逐项裁决）
 
 | # | 待裁决 | 候选 | 推荐（工程视角） | 依据 |
 |---|---|---|---|---|
 | D-ER-01 | KP 概念/出现位置是否拆两层 | 拆 / 不拆 | **拆**；不拆则 U-21 无法表达，且跳转目标（editor）永远只有一个 occurrence | E-2；`kp_index.py:37-73`；`collector.py:57-72` |
-| D-ER-02 | 簇是分区（partition）还是覆盖（cover） | 分区 / 覆盖 | **覆盖**（支持多归属 U-21/U-31）；`MEMBERSHIP` 多对多 | `graph-groups.js:123-126`（现状分区） |
-| D-ER-03 | 簇结果：事实 / 派生缓存 / 带审计 overlay | 三选一 | **派生缓存 + 可选 curation overlay（事实，带审计）** | `AGENTS.md` §1；`kg-ontology-v0.md:162-177` |
+| D-ER-02 | 簇是分区（partition）还是覆盖（cover） | 分区 / 覆盖 | **覆盖**（支持多归属 U-21/U-31）；partition 仅在 (level, 视图族) 内成立（S0-RULINGS D-1） | `graph-groups.js:123-126`（现状分区） |
+| D-ER-03 | 簇结果：事实 / 派生缓存 / 带审计 overlay | 三选一 | **派生缓存**；S0 禁止写产品 sidecar（S0-RULINGS D-3），簇 curation 待 S6 | `AGENTS.md` §1；`kg-ontology-v0.md:162-177` |
 | D-ER-04 | `LEVEL` 是持久实体还是配置 | 实体 / 配置 | 配置（版本化）+ `CLUSTER_RUN` 引用；避免 level 成为第二事实源 | S0-2/H-1 |
 | D-ER-05 | `EDGE_PROVENANCE` 是否独立实体 | 独立 / 内联 | 独立（审计与「只存不用」字段扩展频繁） | schema 已有 11 键 |
 | D-ER-06 | `VIEW_MODEL` 是否持久化 | 持久缓存 / 纯内存 | 持久缓存（键 frame+edition），但**不得**被当作事实回写 | S0-6 |
@@ -229,17 +259,32 @@ erDiagram
 
 ---
 
-### 1.6 与 S0 提案 A/B 的形式化差异（工程影响，只读核对，不合并）
+### 1.6 与 S0 提案 A/B 的形式化差异与 Lead 裁决（`S0-RULINGS.md`，已定）
 
-> 详细差异见 `S0-engineering-review.md` §9；这里只写对 ER/DFD/ST 的施工影响。**未裁决前，本文图按「保守形态」绘制**（不预设 A 或 B）。
+> 差异原始清单见 `S0-engineering-review.md` §9；Lead 已在 `S0-RULINGS.md` §1/§2 裁决。**本文图按裁决形态维护**；若 S6a 冻结时裁决被推翻，按对应行回退。
 
-| 差异 | 对本文图的影响 | 未裁决时的保守处理 |
-|---|---|---|
-| D-1 层次是「每层划分」还是「粒度轴」 | `MEMBERSHIP` 是否对 `(level,kp)` 唯一；是否需要 `LEVEL_PARTITION` 实体 | 图 v0 用 `MEMBERSHIP` 多对多（不写唯一约束）；裁决后若采用 A，再拆 `LEVEL_PARTITION` 实体并加唯一性约束（ER-01@v2） |
-| D-2 `cluster_id` 是 run-scoped 还是内容哈希 | 影响 `CLUSTER` 主键与 curation 引用 | 图 v0 用 run-scoped `cluster_id` + `CLUSTER_RUN` 版本键；内容哈希作为可选 `cluster_key` 另加 |
-| D-3 membership 是否可持久化为 curation | 影响 `MEMBERSHIP.source` 与审计字段 | 图 v0 保留 `source ∈ {derived_cluster, curated_overlay}`；若裁决「不可持久化」，则删 `curated_overlay` 取值 |
-| D-4 ViewModel 是否含导航/模式 | 影响 `VIEW_MODEL` vs `VIEW_FRAME` 边界 | 图 v0 采用「ViewModel 只作渲染输入，导航/模式归 VIEW_FRAME/GRAPH_NAV_FRAME」 |
-| D-5 维度单值/组合 | 影响 `VIEW_FRAME.dimension_id` 基数 | 图 v0 按单值画，字段表注明「组合维度时扩展为有序列表」 |
+| 差异 | Lead 裁决（S0-RULINGS） | 本文图已落实为 | 若未来推翻 |
+|---|---|---|---|
+| D-1 层次「每层划分」 vs 「粒度轴」 | **partition 只约束同一 (level, 视图族)**；跨层次嵌套、跨维度/视图族允许重叠（§2 D-1） | `MEMBERSHIP` 多对多、不写全局唯一约束；`scope_family` 字段承载作用域 | 若改全局每层划分：加 (level,kp) 唯一约束 + 新增 `LEVEL_PARTITION` 实体（ER-01@v2） |
+| D-2 `cluster_id` 身份 | **run-scoped 实例 id + `cluster_key`**；curation/审计引用必须同时记 run 与 key（§2 D-2） | `CLUSTER.run_id` + `CLUSTER.cluster_key`；`CLUSTER_RUN` 保存算法/版本/参数/语料键 | 不采纳内容哈希主键（D-2 已否） |
+| D-3 membership 持久化 | **S0 不允许**把簇/成员关系写入产品 sidecar 或新增产品段；semantic 边 curation overlay 仍走 v0.3；簇 curation 等 S6（§2 D-3） | `MEMBERSHIP.source` 只留 `derived_cluster`；DFD 簇存储标「派生缓存，不写产品 sidecar」 | 若 S6 允许 curation：恢复 `curated_overlay` + 审计字段（需 S6 契约） |
+| D-4 ViewModel 纯度 | ViewModel **不含**导航状态与模式开关；导航归 S5，全展开是 Presentation 参数（§2 D-4） | `VIEW_MODEL` 只作渲染输入；导航/模式在 `VIEW_FRAME`/`GRAPH_NAV_FRAME`/状态图 Presentation 区 | 无（与 U-33 不冲突） |
+| D-5 维度组合 | **v1 同一视图只激活一个维度**；组合留开放槽位（§2 D-5） | `VIEW_FRAME.dimension_id` 单值；字段表注明组合时扩展为有序列表 | S1 若开组合：`dimension_id` → `dimension_list + order`（S6a） |
+
+---
+
+### 1.7 与 S0 冻结候选（A-v2/B-v2）的一致性卡点（SE 机检产出，详见 `S0-freeze-check.md`）
+
+> 下列为 A-v2 与 B-v2 **各自合规但口径不一致**之处，冻结稿 `S0-terms-v1.md` 必须二选一或取并集，否则 S2/S6a 会出现两套都「合规」的实现。SE 不代裁，只列工程影响。
+
+| # | 卡点 | A-v2 | B-v2 | 工程影响 / 建议 |
+|---|---|---|---|---|
+| C-1 | `view_family` 定义 | `⟨family_id, basis, level_chain⟩`（A-v2 §2:100-108） | 「同一 (level, dimension) 下的视图族」（B-v2 §S0-2:91） | B 的定义把 family 又定义回 level/dimension，与「partition 作用域 = (level, view_family)」形成循环；无法表达 basis⊂K 的子库族。建议采用 A（ER 已加 `VIEW_FAMILY` 实体） |
+| C-2 | 渲染事件集 | `nodeClick/edgeClick/backgroundClick`（A-v2 §9:420-424） | `nodeClick/edgeClick/hover/clusterExpand`（B-v2 §S0-9:304-308） | 冻结稿取并集并声明「导航/模式事件不进渲染契约、由 S5 路由」；`clusterExpand` 是导航请求语义，需明确归属 S5（否则渲染器越层） |
+| C-3 | bridge 表示 | node `role=bridge`（A-v2 §9:410,434） | node `state=bridge` + role {member,one_hop,focus}（B-v2 §S0-9:295-296） | 需统一：建议 node `role=bridge`（节点级）+ edge `state=bridge_only`（边级）；否则 ViewModel 校验器要同时接受两种 |
+| C-4 | partition 机检覆盖断言 | 伪代码 V5 用 `set(K)`（A-v2 §2:129），但边界用例允许 basis⊂K（:149） | `check_level_partition` 同样用 `K` 断言覆盖（B-v2 §S0-2:123-124） | 机检必须参数化为 `K_f`（family basis）；否则子库族恒 FAIL。属 S2/S6a 施工项，不阻塞 S0 术语冻结 |
+| C-5 | `DIMENSION.status` 枚举 | `{reserved, specified, frozen, deprecated}`（A-v2 §3:166） | `{active, reserved}`（B-v2 §S0-3:146） | 取 A 超集；B 的 `active` 对应 A 的 `specified/frozen`，需映射表，否则注册表校验两种枚举互斥 |
+| C-6 | capabilities 命名 | `capabilities`（A-v2 §9:414） | `renderer_capabilities`（B-v2 §S0-9:299） | S6a 冻结 ViewModel schema 时统一字段名（建议 `renderer_capabilities`，语义更窄） |
 
 ---
 
@@ -247,8 +292,8 @@ erDiagram
 
 ### 2.1 设计立场
 
-- **一个 KB 一个根**（S0-11 不跨库）：DFD 不出现第二个 KB 根，ER 无 `kb_id` 外键。
-- **事实源 vs 缓存**：正文 `.md` 与 sidecar 是事实源；`.memoria/build/**`、cluster/embedding 是**可再生缓存**（`kg-ontology-v0.md:162-177`）；视图状态（frame/nav/设置）**不是事实源**，不得被 agent 写。
+- **一个 KB 一个根**（S0-11 不跨库）：DFD 不出现第二个 KB 根，ER 无 `kb_id` 外键；DataSource 身份 = `⟨kb_path, corpus_manifest_sha, collect_version⟩`（对齐 A-v2 §8）。
+- **事实源 vs 缓存**：正文 `.md` 与 sidecar 是事实源；`.memoria/build/**`、cluster/embedding 是**可再生缓存**（`kg-ontology-v0.md:162-177`）；视图状态（frame/nav/设置）与视图配置注册表（level/dimension/view_family）**不是事实源**，不得被 agent 写。
 - **取景在服务端**（U-32）：`P4 取景检索` + `P5 Admission` 属于后端；渲染后端只消费 ViewModel。
 - **agent 只读取景**（S0-10）：`P9` 只有读箭头回到 agent，写路径归 `P2/curation`（另一条独立写流，见 `kg-ontology-v0.md:126`）。
 
@@ -270,7 +315,7 @@ flowchart LR
         P2["P2 边派生 + dedupe + overlay 合并"]
         P3["P3 聚类 S2"]
         P4["P4 取景检索 S9"]
-        P5["P5 Admission 选择性渲染 S4"]
+        P5["P5 Admission S4 presence=shown/suppressed/unknown + rule_id"]
         P6["P6 ViewModel 构建 S6/S3"]
         P7["P7 渲染后端 2D/3D U-33"]
         P8["P8 交互与导航状态机 S5"]
@@ -290,6 +335,10 @@ flowchart LR
         V3[("交互计数 内存")]
     end
 
+    subgraph CFG["视图配置（注册表，非事实源）"]
+        F1[("level / dimension / view_family 注册表")]
+    end
+
     MD --> P1
     SC --> P1
     P1 --> P2
@@ -305,6 +354,10 @@ flowchart LR
     C1 -.-> P6
     C2 -.-> P4
     C3 -.-> P4
+    F1 -.-> P3
+    F1 -.-> P4
+    F1 -.-> P5
+    F1 -.-> P6
     P4 --> P5
     P5 --> P6
     P6 --> P7
@@ -321,7 +374,7 @@ flowchart LR
     P9 --> AGENT
 ```
 
-> 图注：实线 = 事实/主数据流；虚线 = 缓存读写或视图状态（非事实）。`P2` 的写路径（curation overlay）在 v1 细化时应单独画一条「agent/人 → curation 校验 → sidecar」的写流（本图只保留 `SC → P2`，避免把写权画进主链）。
+> 图注：实线 = 事实/主数据流；虚线 = 缓存、视图状态或配置（非事实）。`P2` 的写路径（curation overlay）在 v1 细化时应单独画一条「agent/人 → curation 校验 → sidecar」的写流（本图只保留 `SC → P2`，避免把写权画进主链）。`F1` 注册表是 S1 的 `level/dimension/view_family` 配置（reserved 槽位只登记、不进渲染分支）。
 
 ### 2.3 外部实体表
 
@@ -337,10 +390,10 @@ flowchart LR
 |---|---|---|---|---|
 | P1 | 从正文+sidecar 建 KP 索引（概念/occurrence/range） | `MD, SC → KP 集` | `kp_index.py:37-73` | S6/S10 |
 | P2 | 派生 contain/link/sidecar 边 + dedupe + semantic overlay 合并 | `MD, SC, KP → EdgeCandidate[]` | `collector.py:46-99`；`edge_derivation.py:630-717,862+` | S6 |
-| P3 | 聚类（算法/参数/版本/语料键） | `EdgeCandidate[], KP → CLUSTER_RUN` | 现 `graph-groups.js:83-134`（前端、无版本） | S2 |
-| P4 | 取景：`(level,dimension,focus,budget) → 候选节点/簇/边` | `ctx, cache → 候选集` | 无（S9 新设计，U-32 关键） | S9 |
-| P5 | Admission：逐候选判 present/suppressed/unknown + effective_type | `候选集, ctx → admitted 集 + omitted[]` | 无（现全量渲染，`graph-view-2d.js:634-663`） | S4 |
-| P6 | ViewModel 构建（按 §1.4 schema） | `admitted, omitted → ViewModel` | `graph-engine.js:167-216`（旧载荷） | S6/S3 |
+| P3 | 聚类（算法/参数/版本/语料键；视图族/level 作用域） | `EdgeCandidate[], KP, 配置 → CLUSTER_RUN` | 现 `graph-groups.js:83-134`（前端、无版本） | S2 |
+| P4 | 取景：`(level,dimension,view_family,focus,budget) → 候选节点/簇/边` | `ctx, cache, 配置 → 候选集` | 无（S9 新设计，U-32 关键） | S9 |
+| P5 | Admission：逐候选判 `presence∈{shown,suppressed,unknown}` + `rule_id` + effective_type | `候选集, ctx → 边状态` | 无（现全量渲染，`graph-view-2d.js:634-663`） | S4 |
+| P6 | ViewModel 构建（按 §1.4 schema；不含导航/模式） | `边状态, ctx → ViewModel` | `graph-engine.js:167-216`（旧载荷） | S6/S3 |
 | P7 | 渲染后端（2D/3D 同一接口） | `ViewModel → 画面` | `graph-view-2d.js` / `graph-view-3d.js` | S3/S5a |
 | P8 | 交互与导航状态机（见 §3） | `事件 → 新 ctx / 导航栈 / 编辑器跳转` | `app.js:1661-1677`；`nav-stack.js` | S5 |
 | P9 | agent 检索（只读取景/链路） | `ctx → 检索结果` | 无（agent 目前不读边，`kg-ontology-v0.md:23-26`） | S7/S9 |
@@ -353,8 +406,9 @@ flowchart LR
 | `正文 .md` | 用户知识原文 | ✅ 是 | `corpus_manifest_sha` | `kg-ontology-v0.md:162-177` |
 | `sidecar .memoria.yaml` | KP/links/edges/curation overlay | ✅ 是 | 内容 sha + `curated_at` | `sidecar.py:75-112`；`kg-ontology-v0.md:61-131` |
 | 图 payload 缓存 `.memoria/build` | collect_graph_data 产物 | ❌ 缓存 | `manifest_sha + collector_version` | `kg-ontology-v0.md:162-177`（严禁当事实源） |
-| Cluster revision 缓存 | 簇/成员 | ❌ 缓存（curation 例外） | `manifest_sha + algorithm_id + version + params_hash` | S0-4；E-9 |
+| Cluster revision 缓存 | 簇/成员 | ❌ 派生缓存（**不写产品 sidecar**；S0-RULINGS D-3，簇 curation 待 S6） | `corpus_manifest_sha + level_id + view_family_id + algorithm_id + version + params_hash` + `cluster_run_id` | S0-4；E-9；S0-RULINGS §2 |
 | Embedding 索引 | S9 近似检索 | ❌ 缓存 | `manifest_sha + embed_model + version` | H（S9 待定） |
+| 视图配置注册表 | `level / dimension / view_family`（含 reserved 槽位） | ❌ 配置（非事实源；版本化） | `registry_version`（变更须 S1 章程 + 决策记录） | S0-3/S0-RULINGS D-5；A-v2 §3 |
 | 视图设置 | graphStyle/节点半径/分组选择等 | ❌ 视图状态 | `-graph-*` localStorage + disk prefs | `graph-settings.js:127-138,193-212`；`app.js:141` |
 | 图谱导航栈/焦点 | 下钻历史、externalFocus | ❌ 视图状态（内存） | 会话 | `nav-stack.js:23-36` |
 | 交互计数 | node/edge 点击计数 | ❌ 遥测（内存） | 页面刷新清零 | `app.js:26-101`（明确不落盘/不建画像） |
@@ -376,9 +430,10 @@ flowchart LR
 ### 3.1 设计立场
 
 - **图谱导航栈与文件导航栈分离**（E-5）：`GRAPH_NAV_FRAME` 记录 `(focus, level, dimension, origin, via_edge)`；`MemoriaNavStack` 继续负责编辑器文件历史。
+- **渲染事件 → 导航事件映射**（对齐 A-v2 §9 事件最小集 / B-v2 §9 并集）：渲染后端只发 `nodeClick{node_id,kind}` / `edgeClick` / `backgroundClick`（A）与 `hover` / `clusterExpand`（B）这类**交互**事件；本文 ST 表中的 `CLICK_KP` / `CLICK_CLUSTER` / `LINK_FOCUS` 是**导航服务 S5 层**的事件（由渲染事件 + 当前 ctx 派生），不是渲染器契约事件；`modeToggle/navigateBack` 归 S5/Presentation，不进渲染器（D-4）。
 - **图 → 编辑器是单向**：点 KP 节点 = 现有 `jumpToTarget` 行为（U-20）；编辑器 → 图谱只允许「高亮/外部聚焦」（现有 `externalFocus`），**不得**改变图谱导航状态，以保住 U-17 的语义边界。证据：`app.js:1661-1677`；`app.js:5928-5945`；`app.js:8383-8410`。
 - **返回要「从哪来回哪去」**（U-21）：进入簇时把 `origin` 写入 `GRAPH_NAV_FRAME`；多归属时回到**进入来源**，而不是「任意一个父簇」。
-- **全展开是 Presentation 正交区的一个模式**，不改变 Navigation 的状态与数据源（U-26）。
+- **全展开是 Presentation 正交区的一个模式**，不改变 Navigation 的状态与数据源（U-26）；切换时执行**焦点保持/映射**（B-v2 §S0-8）：焦点仍可见 ⇒ 保留；被折叠 ⇒ 映射到包含它的最近 cluster/根并提示；无法映射 ⇒ 回当前 level 根 + 记录 reason。
 - **后端切换是 Backend 正交区**：2D/3D 切换必须无损（保留 frame/焦点/缩放语义），失败回滚（复用 `view-surface-contract.md:173-214` 的双插头纪律）。
 
 ### 3.2 状态图（v0）
@@ -448,8 +503,8 @@ stateDiagram-v2
 | ST-12 | Overview/Deepened | `ENTER_HOP_NETWORK` | `hop_allowed` | 取 `hop_budget=1` 挂接集；记录 underlying hops | 记审计（跳数/规则） | HopNetwork | U-15/U-18/U-22 |
 | ST-13 | HopNetwork | `EXPAND_HOP` | `budget_remaining` | `hop_budget += 1`；重新 Admission | 记审计 | HopNetwork | U-11/U-22 |
 | ST-14 | HopNetwork | `BACK` | — | 回到进入前的 Deepened frame | 清挂接节点 | Deepened | U-22 |
-| ST-15 | DefaultView | `TOGGLE_EXPAND` | — | 关闭聚合与 Admission（保留 candidate 全集） | 持久化开关 | ExpandedAll | U-26 |
-| ST-16 | ExpandedAll | `TOGGLE_EXPAND` | — | 重新 Admission（回到默认视图） | 持久化开关 | DefaultView | U-26 |
+| ST-15 | DefaultView | `TOGGLE_EXPAND` | — | 关闭聚合与 Admission（保留 candidate 全集）；**执行焦点保持/映射**（B-v2 §S0-8） | 持久化开关；无法映射时记录 reason | ExpandedAll | U-26 |
+| ST-16 | ExpandedAll | `TOGGLE_EXPAND` | — | 重新 Admission（回到默认视图）；**执行焦点保持/映射** | 持久化开关；无法映射时记录 reason | DefaultView | U-26 |
 | ST-17 | R2D/R3D | `SWITCH_BACKEND` | `target_backend.available` | `flush 语义视图状态 → mount 新后端 → 恢复 frame/焦点` | 失败回滚旧后端并提示（`view-surface-contract.md:185-212`） | Switching | U-33 |
 | ST-18 | GraphView | `CORPUS_CHANGED` | `edition_sha 不匹配` | 标记 stale、提示刷新 | 不自动重取景（避免打断用户） | Degraded | — |
 | ST-19 | GraphView | `CLOSE` | — | 保存视图设置（不保存导航栈） | 清内存状态 | Inactive | U-26 |
@@ -471,7 +526,7 @@ stateDiagram-v2
 ## 4. 三张图最关键的 5 个设计决定（摘要给 Lead）
 
 1. **两层身份**：`KP_CONCEPT` + `KP_OCCURRENCE` 拆开（ER）。不拆则 U-21 多归属/多锚点在数据层就无法表达（`kp_index.py:37-73` 已经是 1:N，`collector.py:57-72` 压成单值 = 丢信息）。
-2. **边存在性 = 视图投影，不是事实**（DFD P5 + ER 不建 sighting 实体）：`presence ∈ {present, suppressed, unknown}` + `rule_id`，且 `effective_type` 只在视图层。这样 U-27 的「存无/类型」才能既随上下文变化、又不写脏事实源。
+2. **边存在性 = 视图投影，不是事实**（DFD P5 + ER 不建 sighting 实体）：`presence ∈ {shown, suppressed, unknown}` + `rule_id`，且 `effective_type` 只在视图层。这样 U-27 的「存无/类型」才能既随上下文变化、又不写脏事实源。
 3. **簇 = 版本化派生缓存（可选 curation overlay 为事实）**：`CLUSTER_RUN` 带 `algorithm_id/version/params_hash/corpus_manifest_sha`；`MEMBERSHIP` 多对多、单值 `nodeToGroup` 废弃。没有版本键 ⇒ 缓存永远无法判 stale（E-9）。
 4. **单一 ViewModel → 2D/3D 双实现**（DFD P6/P7 + ER `VIEW_MODEL`/`RENDER_BACKEND`）：渲染后端不懂语义；复用 `view-surface-contract.md` 双插头 capabilities/switchTo/回滚先例。这正是 U-33 的工程落法。
 5. **图谱导航栈与文件导航栈分离、图→编辑器单向**（状态图）：`GRAPH_NAV_FRAME` 记录 origin/via；KP 点击仍走 `jumpToTarget`（U-20）；编辑器→图谱只 externalFocus（U-17）。全展开是 Presentation 正交区开关，与 Navigation 解耦（U-26）。
