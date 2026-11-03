@@ -470,6 +470,88 @@ erDiagram
 
 ---
 
+### 1.10 S3 增量（ER-04 草案：节点/边视图 + 视觉 token + 渲染后端；待 S3 冻结）
+
+> 依据：`S3-charter.md` S3-1..S3-12、S0-8/S0-9、S1 D-4、S2 D-4、S0 D-3。**渲染只读**：视觉编码从 ViewModel/VIEW_STATUS 派生，渲染器不取数、不重算簇、不写状态；VM 中不含簇/run/dendrogram 内部字段。
+
+```mermaid
+erDiagram
+    VIEW_MODEL ||--o{ NODE_VIEW : contains
+    VIEW_MODEL ||--o{ EDGE_VIEW : contains
+    VIEW_STATUS ||--o| VIEW_MODEL : "data_state annotation"
+    VISUAL_ENCODING_MAP ||--o{ VISUAL_TOKEN : selects
+    RENDER_BACKEND ||--o{ VISUAL_TOKEN : "applicable_in"
+    NODE_VIEW ||--o{ VISUAL_TOKEN : "resolved(by kind/level/state)"
+    EDGE_VIEW ||--o{ VISUAL_TOKEN : "resolved(by type/presence/bridge)"
+
+    NODE_VIEW {
+        string node_id PK
+        string kind
+        string level_id
+        string presence
+        string label
+        int aggregate_count
+        bool is_root
+        bool representative
+    }
+    EDGE_VIEW {
+        string edge_id PK
+        string source_node_id FK
+        string target_node_id FK
+        string base_type
+        string effective_type
+        string presence
+        string rule_id
+        string bridge_state
+        string data_edge_ids
+    }
+    VIEW_STATUS {
+        string status_id PK
+        string data_state
+        string dimension_id
+        string level_id
+        int representative_cluster_count
+        float coverage
+    }
+    VISUAL_TOKEN {
+        string token_id PK
+        string token_kind
+        string value
+        string scale
+        string backend_applicability
+    }
+    VISUAL_ENCODING_MAP {
+        string map_id PK
+        string selector
+        string token_id FK
+        int priority
+        string fallback_token_id
+        string map_sha256
+    }
+    RENDER_BACKEND {
+        string backend_id PK
+        string backend_kind
+        bool supports_3d
+        int max_nodes_per_screen
+        bool supports_animation
+        bool supports_reduced_motion
+        string capabilities_sha256
+    }
+```
+
+| 增量 | 落点 | 关键约束/机检点 |
+|---|---|---|
+| `NODE_VIEW` | `kind∈{kp,cluster}`（**不得第三类型**）；`role ∈ {member, focus}`（**无 bridge**，R-S3-3）；presence 三值；cluster `aggregate_count`/`is_root`/`representative`；**label 确定性**（R-S3-1：min canonical member id 的 KP label + 本地化「等 N 个」；root_exempt=「全库」；禁 local_seq）；KP 固定大小（R-S3-7）；cluster 大小 `clamp(8+2.2·log2(member_count+1),12,28)`；`layout_group` 仅布局且 `semantic=false` | VM 不含 `cluster_key`/`run_id`/`dendrogram`/成员内部（S2 D-4）；singleton `representative=false`；`metrics` 不进 VM（R-S3-8） |
+| `EDGE_VIEW` | base/effective type 分离；presence+rule_id；`state=bridge_only`（**桥只作边状态**，R-S3-3）；`data_edge_ids` 仅供 R-3 审计/计数、**不传给渲染器**（R-S3-8） | 不得以视觉编码暗示数据中不存在的边（S3-5）；R-3 子集机检在 VM 构建侧 |
+| `VIEW_STATUS` | 纯展示数据状态：`data_state ∈ {ok, no_semantic_edges}`（+ dimension/level/counts/coverage）；`level_label`（非交互显示串，R-S3-6）；**不是**簇/run 内部状态，也不含导航/模式 | 单独 DTO（不塞簇/run 内部进 VM，保持 S1 D-4）；`no_semantic_edges` 由 S2 run `result_status` 派生，仅暴露展示聚合 |
+| `VISUAL_TOKEN` | `token_kind ∈ {color,size,shape,opacity,dash,icon,label}`；2D/3D 适用性；无数据语义 | token 值可机检（CSS/样式/DOM 断言）；不得含事实/语义判断 |
+| `VISUAL_ENCODING_MAP` | `selector`（kind/edge_type/presence/bridge/level）→ token；priority/fallback；`map_sha256` | 映射表可机检（字段→token）；未命中 ⇒ 显式 fallback，不得静默无样式；同一 selector 冲突 ⇒ fail-closed |
+| `RENDER_BACKEND` | 2D/3D 同接口（R-S3-4）：`getCapabilities()`/`render(container, vm)`/`update(vm, opts)`/`dispose()`/`on(event)`；能力声明（max_nodes/max_edges/3d/animation/reduced_motion） | 2D/3D 同签名；后端不可用 ⇒ 显式 fallback（2D）并审计/提示；**预算裁剪归 S4**（R-S3-2）：Renderer 只校验+渲染已选 VM，超硬上限 ⇒ `RENDER_BUDGET_EXCEEDED` fail-visible；不取数、不重算簇、不写状态 |
+
+> **ER-04 待裁决**：① `VIEW_STATUS` 与 VM 的关系（推荐独立 DTO，保持 VM 纯度；S3-8 的 `no_semantic_edges` 只读 `data_state`）；② `aggregate_count`/`representative`/`layout_group(semantic=false)` 是否允许进 NODE_VIEW（R-S3-5/R-S3-8：允许展示聚合与仅布局提示，不含成员内部/语义）；③ 视觉映射表存 registry 配置还是前端静态表（推荐版本化配置 + `map_sha256`，S6/S3 定）。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -706,6 +788,51 @@ flowchart LR
 
 ---
 
+### 2.9 S3 增量（DF-04 草案：视觉解析 + 渲染接口 + 事件回传 + 无簇 UX；待 S3 冻结）
+
+> 渲染是**纯展示**：输入 = `ViewModel`（S1 D-4，只含 dimension_id + 节点/边视图）+ `VIEW_STATUS`（展示数据状态）+ 版本化视觉映射表 + 后端能力；输出 = 场景/事件；**渲染器不取数、不重算簇、不做语义判断、不写状态**（S0-8 不得第二数据源）。
+
+```mermaid
+flowchart LR
+    VM[("ViewModel（纯：dimension_id + NODE_VIEW/EDGE_VIEW）")]
+    VS[("VIEW_STATUS（data_state ∈ ok/no_semantic_edges）")]
+    MAP[("VISUAL_ENCODING_MAP + VISUAL_TOKEN（版本化）")]
+    CAP[("RENDER_BACKEND.getCapabilities()")]
+    P18["P18 视觉解析（selector→token；无数据/语义访问）"]
+    P19["P19 渲染适配（2D/3D 同签名；无取数/无重算簇）"]
+    P20["P20 事件回传（nodeClick/edgeClick/backgroundClick/hover/focus）"]
+    P21["P21 无簇 UX（空态 banner/legend + 结构布局 + agent affordance）"]
+    P22["P22 预算守卫（max_nodes/fps/动画；显式降级）"]
+    S5["S5 导航/选择（唯一导航状态所有者）"]
+    ERR(["错误/降级：UNSUPPORTED_BACKEND / MAP_MISSING / BUDGET_EXCEEDED / VM_IMPURE"])
+
+    VM --> P18
+    VS --> P21
+    MAP --> P18
+    CAP --> P19
+    P18 --> P19
+    P19 --> P20
+    P19 --> P22
+    VS --> P19
+    P20 --> S5
+    P21 --> P19
+    P19 -- backend unavailable --> ERR
+    P18 -- map missing --> ERR
+    P22 -- over budget --> ERR
+```
+
+| 流/接口 | 约束/机检点 |
+|---|---|
+| `P18` 视觉解析 | 只读 `NODE_VIEW/EDGE_VIEW` + 映射表；label 由 VM 提供（R-S3-1 确定性），渲染器不再生成/猜；`selector` 未命中 ⇒ fallback token（不得无样式）；同一 selector 冲突 ⇒ fail-closed；**不得读 DataSource/簇/run 内部/metrics** |
+| `P19` 渲染适配 | 2D/3D **同签名**（R-S3-4）`getCapabilities()`/`render(container, vm)`/`update(vm, opts)`/`dispose()`/`on(event)`；后端不可用 ⇒ 显式 fallback（2D）并提示；渲染器不取数、不重算簇、不写状态；**不自行裁剪**（R-S3-2） |
+| `P20` 事件回传 | 最小事件集 `nodeClick(node_id, kind)`/`edgeClick(edge_id)`/`backgroundClick()`；hover/focus 可选；**事件不含导航状态**；导航动作只在 S5（S3-7） |
+| `P21` 无簇 UX | `VIEW_STATUS.data_state=no_semantic_edges` ⇒ 显示空态说明 + KP/结构布局（`semantic=false`、仅布局、不称簇、无徽标/展开语义）+ 用户动作触发的 agent affordance；**不得伪造语义簇**；状态转 `ok` 后回正常视图（S3-8/R-S3-5） |
+| `P22` 预算守卫 | `max_nodes/max_edges`/帧率目标/动画时长/布局稳定性进 capabilities；**超预算由 S4 先裁剪（presence=suppressed+rule_id）**；Renderer 只校验已选 VM，VM 超硬上限 ⇒ `RENDER_BUDGET_EXCEEDED` fail-visible，不静默丢（R-S3-2/S3-11） |
+| `P23` S4 接口 | S4 负责选择性渲染/选点/裁剪并产出 `presence/rule_id`；S3 只消费 VM；S4 不得注入结构/引用边制造语义簇（无簇态）、不得改变 kind/presence 语义（S3-8/S4 边界） |
+| 数据源 | **不得引入第二数据源**（S0-8）；渲染路径无 RPC/无 facts 读写；D-3 无 sidecar |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -891,6 +1018,61 @@ stateDiagram-v2
 | `base_run_id` | agent 候选请求必须带 `base_run_id`（R-S2-13）；候选与基线 run 并存、不覆盖；adopt 后旧 run 保留 |
 | 失败回滚 | 重聚类失败/超限（`algorithm_failed`/`size_exceeded`）⇒ 保持当前 adopted run（`KEEP_PREVIOUS_RUN`），失败 run 不 adopted、错误可见+审计；不得静默替换（SE 需 v1 明写，v1 目前缺此句） |
 | VM/渲染器 | 簇状态/run_id 不进 ViewModel（D-4）；frame 携带 run/edition 元数据（视图状态，非事实源） |
+
+---
+
+### 3.7 S3 增量（ST-04 草案：渲染器生命周期 + 展示/交互状态 + 无簇态；待 S3 冻结）
+
+> 渲染器是**无状态展示适配器**：生命周期与后端能力显式；展示/交互状态可枚举；**导航状态只属 S5**；`no_semantic_edges` 是合法展示态（不伪造簇）。
+
+```mermaid
+stateDiagram-v2
+    state Renderer {
+        state Lifecycle {
+            [*] --> Created
+            Created --> Initialized : getCapabilities_ok
+            Initialized --> Rendering : render(vm,status)
+            Rendering --> Updating : update(vm,status)
+            Updating --> Rendering : frame_done
+            Rendering --> Suspended : hidden_or_background
+            Suspended --> Rendering : resume
+            Created --> Unsupported : capabilities_missing
+            Unsupported --> Initialized : fallback_backend_2d
+            Renderer --> Disposed : dispose
+        }
+        --
+        state Presentation {
+            [*] --> DefaultView
+            DefaultView --> ExpandedAll : TOGGLE_EXPAND
+            ExpandedAll --> DefaultView : TOGGLE_EXPAND
+            DefaultView --> EmptyNoSemantic : VIEW_STATUS_no_semantic_edges
+            EmptyNoSemantic --> DefaultView : VIEW_STATUS_ok
+        }
+        --
+        state Interaction {
+            [*] --> Idle
+            Idle --> HoverNode : pointer_over_kp_or_cluster
+            HoverNode --> Idle : pointer_out
+            Idle --> HoverEdge : pointer_over_edge
+            HoverEdge --> Idle : pointer_out
+            Idle --> SelectedNode : nodeClick_emit_to_S5
+            Idle --> SelectedEdge : edgeClick_emit_to_S5
+            SelectedNode --> Idle : backgroundClick_or_S5_clear
+            SelectedEdge --> Idle : backgroundClick_or_S5_clear
+        }
+    }
+```
+
+| 状态/转换 | 约束/机检 |
+|---|---|
+| `Created→Initialized` | `getCapabilities()` 显式返回能力（supports_3d/max_nodes/animation/reduced_motion）；2D/3D 同签名 |
+| `Unsupported→Initialized` | 3D 不可用 ⇒ 显式 fallback 2D + 提示/审计；不得静默空白 |
+| `Rendering/Updating` | 只接收 `(ViewModel, VIEW_STATUS)`；**不取数、不重算簇、不写状态**；VM 不纯/含簇内部 ⇒ 拒绝（VM_IMPURE） |
+| `DefaultView↔ExpandedAll` | S0-8 正交展示开关；不得引入第二数据源（S0-8） |
+| `DefaultView↔EmptyNoSemantic` | `VIEW_STATUS.data_state=no_semantic_edges` ⇒ 空态 banner + KP/结构布局 + agent affordance；**不得伪造语义簇**；`ok` 后回正常视图（S3-8） |
+| `Interaction` | 只发最小事件（nodeClick/edgeClick/backgroundClick/hover/focus）；**导航动作/导航状态不在渲染器**（S5 唯一所有者）；事件 payload 不带 cluster_key/run_id 内部 |
+| `Disposed` | 资源释放；无落盘状态（D-3）；重挂载从 VM/VIEW_STATUS 重建 |
+| 预算 | `max_nodes_per_screen`/帧率/动画/reduced motion；超预算显式降级 + rule_id（S3-11） |
 
 ---
 
