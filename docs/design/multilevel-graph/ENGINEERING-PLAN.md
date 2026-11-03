@@ -695,6 +695,239 @@ erDiagram
 
 ---
 
+### 1.13 S6 增量（ER-07 定稿草案：DataSource→View→Frame→Presence→VM→Renderer + run/registry/nav/cache/audit；待 S6 冻结）
+
+> 单一真源：**DataSource（事实）→ 各层派生 View/Frame/Presence → VM（渲染）**；`DataSource` 只读；`CLUSTER_RUN`/`VIEW_MODEL`/`PRESENCE_ASSIGNMENT`/`GRAPH_NAV_FRAME` 为派生/会话；缓存可重建；禁用并行事实源；D-3 不写产品 sidecar；D-4 VM 纯。
+
+```mermaid
+erDiagram
+    DATA_SOURCE ||--o{ GRAPH_VIEW : "read-only project"
+    GRAPH_VIEW ||--o{ CLUSTER_RUN : "per(level,view_family)"
+    CLUSTER_RUN ||--o{ CLUSTER : contains
+    CLUSTER ||--o{ CLUSTER_MEMBERSHIP : has
+    CLUSTER_RUN ||--o{ CLUSTER_EDGE : projects
+    CLUSTER_RUN ||--o{ CLUSTER_STABILITY : compared
+    DIMENSION_REGISTRY ||--o{ DIMENSION_VERSION : versions
+    DIMENSION_REGISTRY ||--o{ DIMENSION_HISTORY : history
+    FRAME_SPEC ||--o{ PRESENCE_ASSIGNMENT : decides
+    PRESENCE_RULE ||--o{ PRESENCE_ASSIGNMENT : applies
+    FRAME_SPEC ||--o| VIEW_MODEL : builds
+    VIEW_MODEL ||--o{ NODE_VIEW : contains
+    VIEW_MODEL ||--o{ EDGE_VIEW : contains
+    VIEW_MODEL ||--o| VIEW_STATUS : status
+    GRAPH_NAV_FRAME ||--o{ NAV_STACK : records
+    GRAPH_NAV_FRAME ||--o{ NAV_EVENT : consumes
+    CLUSTER_RUN ||--o{ CACHE_ENTRY : cached_as
+    DATA_SOURCE ||--o{ AUDIT_EVENT : audited
+    CLUSTER_RUN ||--o{ AUDIT_EVENT : audited
+    GRAPH_NAV_FRAME ||--o{ AUDIT_EVENT : audited
+
+    DATA_SOURCE {
+        string data_source_id PK
+        string kb_id
+        string corpus_manifest_sha
+        string read_only
+    }
+    GRAPH_VIEW {
+        string view_id PK
+        string level_id
+        string view_family_id
+        string kind_scope
+        string data_source_id FK
+    }
+    DIMENSION_REGISTRY {
+        string registry_id PK
+        string dimension_id
+        string version
+        string status
+    }
+    DIMENSION_VERSION {
+        string version_id PK
+        string registry_id FK
+        string schema_sha256
+        string created_at
+    }
+    DIMENSION_HISTORY {
+        string history_id PK
+        string registry_id FK
+        string from_version
+        string to_version
+        string change_kind
+        bool signature_valid
+    }
+    CLUSTER_RUN {
+        string run_id PK
+        string view_id FK
+        string level_id
+        string view_family_id
+        string algorithm_id
+        string algorithm_version
+        string params_hash
+        string status
+        string result_status
+        string parent_run_id FK
+    }
+    CLUSTER {
+        string cluster_id PK
+        string run_id FK
+        int local_seq
+        string cluster_key
+        string parent_cluster_id FK
+        int member_count
+        bool representative
+        bool root_exempt
+    }
+    CLUSTER_MEMBERSHIP {
+        string run_id FK
+        string cluster_id FK
+        string kp_id FK
+        string role
+        string view_family_id
+    }
+    CLUSTER_EDGE {
+        string cluster_edge_id PK
+        string run_id FK
+        string source_cluster_id FK
+        string target_cluster_id FK
+        string edge_kind
+        string data_edge_ids
+    }
+    CLUSTER_STABILITY {
+        string stability_id PK
+        string run_id FK
+        string previous_run_id FK
+        string metric
+        float value
+        float threshold
+        bool pass
+    }
+    FRAME_SPEC {
+        string frame_id PK
+        string view_id FK
+        string level_id
+        string view_family_id
+        string dimension_id
+        string focus_id
+        int hop_budget
+        bool new_hop
+        string mode
+        int max_nodes
+        int max_edges
+        string mandatory_ids
+        string reserved_ids
+        string candidate_scope
+    }
+    PRESENCE_RULE {
+        string rule_id PK
+        string applies_to
+        string rule_kind
+        int priority
+        string condition
+        string presence
+        string version
+    }
+    PRESENCE_ASSIGNMENT {
+        string assignment_id PK
+        string frame_id FK
+        string object_kind
+        string object_id
+        string presence
+        string rule_id FK
+        string reason
+    }
+    VIEW_MODEL {
+        string vm_id PK
+        string frame_id FK
+        string level_id
+        string level_label
+        string dimension_id
+        string view_family_id
+        string nodes
+        string edges
+    }
+    NODE_VIEW {
+        string node_id PK
+        string kind
+        string label
+        string role
+        string presence
+        string rule_id
+        int aggregate_count
+        string layout_group
+    }
+    EDGE_VIEW {
+        string edge_id PK
+        string type
+        string state
+        string presence
+        string data_edge_ids
+    }
+    VIEW_STATUS {
+        string status_id PK
+        string data_state
+        float coverage
+    }
+    GRAPH_NAV_FRAME {
+        string nav_id PK
+        string frame_id
+        string focus_id
+        string level_id
+        string dimension_id
+        int hop_budget
+        bool new_hop
+        bool full_expand
+        int stack_depth
+        string checksum
+    }
+    NAV_STACK {
+        string entry_id PK
+        string nav_id FK
+        int seq
+        string focus_id
+        string level_id
+        string dimension_id
+        string checksum
+    }
+    NAV_EVENT {
+        string event_id PK
+        string event_type
+        string payload
+        string dedupe_key
+        string result
+        string reason_code
+    }
+    CACHE_ENTRY {
+        string cache_id PK
+        string cache_kind
+        string run_id FK
+        string path
+        string sha256
+        bool rebuildable
+    }
+    AUDIT_EVENT {
+        string audit_id PK
+        string kind
+        string actor
+        string ref
+        string decision
+        string at
+    }
+```
+
+| 契约 | 单一真源/约束 |
+|---|---|
+| DataSource/GraphView | 只读事实；per `(level,view_family)`；不写产品 sidecar（D-3） |
+| DIMENSION_REGISTRY/VERSION/HISTORY | registry 只增不删；history 不可变/签名；跨版本校验；失败 fail-closed |
+| CLUSTER_RUN/CLUSTER/MEMBERSHIP/EDGE/STABILITY | 派生缓存；run_id/params_hash 按 S2；candidate 不自动 adopted；可重建 |
+| FRAME_SPEC/PRESENCE_RULE/PRESENCE_ASSIGNMENT | S4 唯一裁剪；11 类 rule_id；候选全量 presence；MANDATORY/reserved；不写事实 |
+| VIEW_MODEL/NODE_VIEW/EDGE_VIEW/VIEW_STATUS | S3 白名单 + ADDENDUM-1；data_edge_ids 审计/Renderer 禁读；VM 不含 nav/frame/run |
+| GRAPH_NAV_FRAME/NAV_STACK/NAV_EVENT | Presentation 会话；frame_id=sha(canonical frame_spec)；T01–T30 生成 S5a；持久化白名单 |
+| CACHE/AUDIT | 缓存可重建/删除；审计 append-only；GC 策略 S6/S6a |
+
+> **ER-07 待裁决**：① `DIMENSION_HISTORY` 的签名/存储位置；② `AUDIT_EVENT` 是否产品内 append-only（不写用户数据段）；③ `CACHE_ENTRY` 的 GC/失败回退语义；④ 旧 `graph-groups` 数据忽略/迁移策略（S6-10）。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -1074,6 +1307,55 @@ flowchart LR
 
 ---
 
+### 2.12 S6 增量（DF-07 定稿草案：事实→view→框架→presence→VM→渲染 + run/registry/audit/GC；待 S6 冻结）
+
+> 数据流定稿：DataSource（只读事实）→ GraphView（per level/view_family）→ Frame/Admission（S4 唯一裁剪）→ VM（S3 白名单）→ Renderer；run 构建/registry 校验/缓存/audit/GC 为旁路；失败回退按 S2/S4/S5 事务/降级语义；D-3/D-4 全链路。
+
+```mermaid
+flowchart LR
+    DS[("DataSource 只读事实（manifest/edges/KP）")]
+    REG[("DIMENSION_REGISTRY/VERSION/HISTORY（只增不删）")]
+    RUN[("CLUSTER_RUN/CLUSTER/MEMBERSHIP（S2 派生缓存）")]
+    FR[("FRAME_SPEC（S4/S5 输入）")]
+    ADM["Admission（S4 唯一 presence/rule_id；MANDATORY/reserved）"]
+    VM[("VM（S3 白名单+ADDENDUM-1）")]
+    REN["Renderer（2D/3D；只渲染 shown）"]
+    CACHE[("CACHE_ENTRY（可重建）")]
+    AUD[("AUDIT_EVENT（append-only）")]
+    GC["GC/清理（派生缓存/过期 run）"]
+    ERR(["错误/回退：REGISTRY_INVALID / RUN_FAILED / S4_BUDGET_INVALID / RENDER_BUDGET_EXCEEDED / CACHE_MISS"])
+
+    DS --> RUN
+    REG --> RUN
+    DS --> ADM
+    RUN --> ADM
+    FR --> ADM
+    ADM --> VM
+    VM --> REN
+    ADM --> CACHE
+    RUN --> CACHE
+    CACHE --> ADM
+    DS --> AUD
+    RUN --> AUD
+    ADM --> AUD
+    CACHE --> GC
+    RUN -- failed --> ERR
+    REG -- invalid --> ERR
+    ADM -- budget invalid --> ERR
+    REN -- hard cap --> ERR
+```
+
+| 流/契约 | 约束 |
+|---|---|
+| 事实→view/run | DataSource 只读；per `(level,view_family)`；run 派生缓存、candidate 不自动 adopted；五状态 |
+| registry 校验 | schema/版本/只增不删/签名；失败 fail-closed；history 可追溯 |
+| frame→presence | S4 唯一裁剪；11 类 rule_id；候选全量 presence；MANDATORY/reserved；不写事实 |
+| VM→Renderer | S3 白名单+ADDENDUM-1；data_edge_ids 审计/Renderer 禁读；无 nav/frame/run |
+| cache/audit/GC | 缓存可重建/可删除；审计 append-only；GC 不删除事实/用户数据；D-3 |
+| 失败回退 | registry/run/预算失败按 S2/S4/S5 语义；初始帧失败→Degraded；diff=0（S5） |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -1433,6 +1715,58 @@ stateDiagram-v2
 
 ---
 
+
+### 3.10 S6 增量（ST-07 定稿草案：run 生命周期/registry 版本/失败回滚 + S5a 引用；待 S6 冻结）
+
+> run/registry/cache 状态与 S5a 导航状态机分离：S5a 见 §3.9（T01–T30 唯一真源，148 边由生成器）；本图只管**数据构建/版本/失败回滚**；缓存可重建、审计 append-only、失败不破坏当前 adopted run/frame。
+
+```mermaid
+stateDiagram-v2
+    state DataContracts {
+        state RunLifecycle {
+            [*] --> RunBuilding
+            RunBuilding --> RunCandidate : RUN_VALIDATED
+            RunBuilding --> RunFailed : RUN_INVALID
+            RunCandidate --> RunReady : ADOPT
+            RunCandidate --> RunDiscarded : DISCARD
+            RunReady --> RunSuperseded : NEW_RUN_READY
+            RunFailed --> RunBuilding : RETRY
+            RunSuperseded --> [*]
+        }
+        --
+        state RegistryLifecycle {
+            [*] --> RegistryLoading
+            RegistryLoading --> RegistryActive : SCHEMA_VALID
+            RegistryLoading --> RegistryInvalid : SCHEMA_INVALID
+            RegistryActive --> RegistryStale : VERSION_STALE
+            RegistryStale --> RegistryActive : RELOAD_VALID
+            RegistryInvalid --> RegistryLoading : RETRY_OR_ROLLBACK
+            RegistryActive --> RegistryRollback : ROLLBACK
+            RegistryRollback --> RegistryActive : RESTORE_PREVIOUS
+        }
+        --
+        state CacheLifecycle {
+            [*] --> CacheMiss
+            CacheMiss --> CacheBuilding : REBUILD
+            CacheBuilding --> CacheReady : BUILD_OK
+            CacheBuilding --> CacheFailed : BUILD_FAILED
+            CacheReady --> CacheStale : EDITION_CHANGED
+            CacheStale --> CacheBuilding : REBUILD
+            CacheReady --> CacheEvicted : GC
+            CacheEvicted --> [*]
+        }
+    }
+```
+
+| 状态/转移 | 约束/机检 |
+|---|---|
+| RunLifecycle | `Building→Candidate→Ready` 需 validation；candidate 不自动 adopted（S2）；失败保持当前 adopted run；旧 run 只读；五状态枚举 |
+| RegistryLifecycle | schema/版本/只增不删校验；invalid fail-closed；stale 需 reload；rollback 只回上一有效版本；history 可追溯 |
+| CacheLifecycle | 派生缓存可重建；GC 只删缓存；失败不影响事实/adopted run/frame；D-3 无产品 sidecar |
+| S5a 引用 | 导航状态（Idle/Loading/.../Stale、T01–T30、148 边）见 §3.9；本图不替代 S5a；S5 事务化失败 diff=0 与 run/registry 失败隔离 |
+| 失败回退 | 初始 run/registry 失败 ⇒ Degraded/提示；非初始保持原 run/frame；审计记录 |
+
+---
 
 ## 4. 三张图最关键的 5 个设计决定（摘要给 Lead）
 
