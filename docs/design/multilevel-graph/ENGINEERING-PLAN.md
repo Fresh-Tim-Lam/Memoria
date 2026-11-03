@@ -292,6 +292,95 @@ erDiagram
 
 ---
 
+### 1.8 S1 增量（ER-02 草案；待 S1 冻结，不覆盖 S0 实体）
+
+> 依据：`S1-RULINGS.md` R-S1-1..R-S1-8、`S1-charter.md` §4、S0 D-3/D-4/R-1/R-3。注册表是**版本化配置**（非事实源）；H 不参与关系扩展（`relation_sources=[]`、无 hop）；A 的 `relation_sources ⊇ E_relation_min`。
+
+```mermaid
+erDiagram
+    DIMENSION_REGISTRY ||--o{ DIMENSION : contains
+    DIMENSION_REGISTRY ||--o{ REGISTRY_HISTORY : "append-only"
+    DIMENSION ||--o{ DIMENSION_RELATION_SOURCE : "relation_expansion only"
+    DIMENSION ||--o{ DIMENSION_DESCENT_SOURCE : "hierarchy_navigation only"
+    E_RELATION_SOURCE ||--o{ DIMENSION_RELATION_SOURCE : referenced_by
+    DIMENSION ||--o{ DIMENSION_TRANSITION : audited_by
+
+    DIMENSION_REGISTRY {
+        string registry_version PK
+        string schema_version
+        string registry_sha256
+        string fallback_policy
+        string frozen_at
+        string decision_id
+    }
+    REGISTRY_HISTORY {
+        string version PK
+        string content_sha256
+        string previous_sha256
+        string relation_sources_union
+        string active_dimension_ids
+        string decision_id
+    }
+    DIMENSION {
+        string dimension_id PK
+        string name
+        string kind
+        string basis_kind
+        string status
+        string direction
+        string hop_unit
+        int hop_default
+        int hop_max
+        int max_nodes
+        bool leaf_required
+        bool stop_on_no_new
+        int priority
+        string version
+        string registry_version FK
+    }
+    E_RELATION_SOURCE {
+        string source_key PK
+        string classification
+        string edge_type
+        string contain_kind
+        string producer_ref
+        string predicate_id
+        string authority
+        string accepted_in
+    }
+    DIMENSION_RELATION_SOURCE {
+        string dimension_id FK
+        string source_key FK
+    }
+    DIMENSION_DESCENT_SOURCE {
+        string dimension_id FK
+        string source_key FK
+    }
+    DIMENSION_TRANSITION {
+        string transition_id PK
+        string dimension_id FK
+        string from_status
+        string to_status
+        string decision_id
+        string at
+    }
+```
+
+| 增量 | 落点 | 关键约束/机检点 |
+|---|---|---|
+| `DIMENSION` 扩展 | `kind ∈ {hierarchy_navigation, relation_expansion}`、`hop_unit ∈ {edge, n/a}`、`hop_default/hop_max`（H 必须 NULL）、`max_nodes` 字段存在 | H：`relation_sources=[]`、`hop_unit=n/a`、hop 全 NULL、direction=down；A：`hop_unit=edge`、`1 ≤ hop_default ≤ hop_max ≤ 2`、direction∈{both,out,in} |
+| `DIMENSION_RELATION_SOURCE` | 仅 A（`relation_expansion`）的源集合 | 断言 ⊇ `E_relation_min`；R-1 只约束 A（H 为空） |
+| `DIMENSION_DESCENT_SOURCE` | 仅 H 的下降源 | H 固定 `{contain(structural)}`；只作层次派生边来源，不挂接邻居 |
+| `REGISTRY_HISTORY` | append-only（`version/content_sha256/previous_sha256/relation_sources_union/decisions`） | 跨版本 `union(new) ⊇ union(old)`；删除/改名 ⇒ `S0_REOPEN_REQUIRED` |
+| `E_RELATION_SOURCE.classification` | `edge_type/projection/derived` | `derived` 不得进 v1 active；新源须有 `producer_ref`（DataSource 可生产） |
+| `DIMENSION_REGISTRY.fallback_policy` | `allow_explicit/forbidden` | 显式 fallback 才可回默认 H，须审计 `fallback_reason`；`forbidden` ⇒ fail-closed |
+| `DIMENSION_TRANSITION` | 状态机审计（reserved→active→deprecated） | deprecated→active 必须 S1 重开 + 版本升级；插件不得写注册表 |
+| H 派生边（VM 层） | `derived_from=partition_refinement` + `partition_ref` + `data_edge_ids`（诱导集，可为空） | R-3 机检：`expand_data_edges(VM) ⊆ DataSource.edges`（空集合法）；不要求每块边非空映射 |
+
+> **ER-02 待裁决**：① H 派生边 `data_edge_ids` 的「非空」要求与 S0-2 划分语义可能冲突（块→子块由 S2 聚类划分产生，未必存在对应 `contain(structural)` 数据边），建议允许空诱导集 + `partition_ref`（详见 `S1-engineering-check.md`）；② history 存放位置（registry 内 vs 独立 artifact）S6a 定。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -430,6 +519,50 @@ flowchart LR
 
 ---
 
+### 2.7 S1 增量（DF-02 草案：注册表校验器 + 维度解析 + 取景；待 S1 冻结）
+
+> 维度参数进入 `present(e,ctx)` 的路径：`ctx.dimension_id` → `P12 resolve`（读注册表、版本校验、fail-closed）→ `P4 取景` → `P5 Admission`；**policy 对象不进 ViewModel**（VM 只带 `dimension_id`/`view_family_id`）。注册表/历史是版本化配置（非事实源），缓存键含 `registry_version`。
+
+```mermaid
+flowchart LR
+    REG[("DIMENSION_REGISTRY 维度注册表（版本化配置）")]
+    HIST[("REGISTRY_HISTORY append-only 版本历史")]
+    DS[("DataSource / EdgeCandidate 生产者集合")]
+    VAL["P11 注册表校验器（R-1 作用域 + 跨版本只增 + 字段/状态 + 生产者承载）"]
+    RES["P12 维度解析 resolve dim_id + registry_version"]
+    FRAME["P4 取景检索 S9（ctx.dimension_policy）"]
+    ADM["P5 Admission S4（relation_sources / descent_sources / hop / dir / termination）"]
+    VM["P6 ViewModel（仅 dimension_id；H 结构边带 partition_ref）"]
+    NAV["P8 交互与导航 S5（Presentation 选维度 / H 逐层下钻）"]
+    CACHE[("取景缓存（键含 registry_version + ctx）")]
+    ERR(["错误/降级：UNKNOWN / RESERVED / DEPRECATED / REGISTRY_MISMATCH / S0_REOPEN_REQUIRED"])
+
+    REG --> VAL
+    HIST --> VAL
+    DS --> VAL
+    VAL -- reject --> ERR
+    VAL -- accept --> RES
+    NAV --> RES
+    RES -- ok --> FRAME
+    RES -- fail-closed --> ERR
+    FRAME --> ADM
+    ADM --> VM
+    VM --> NAV
+    ADM -.-> CACHE
+    RES -.-> CACHE
+```
+
+| 流/存储 | 约束 |
+|---|---|
+| `VAL` 校验器 | ① R-1 仅校验 `kind=relation_expansion`（A）⊇ `E_relation_min`；② 历史跨版本 `union(new) ⊇ union(old)`，删除/改名 ⇒ `S0_REOPEN_REQUIRED`；③ 新 source 必须有 DataSource 生产者（`producer_ref` 可跑）；④ H：`relation_sources=[]`/`hop_unit=n/a`/hop NULL；⑤ status 三态与迁移表 |
+| `RES` 解析 | 未知/保留/弃用 ⇒ 错误码（fail-closed，不静默回退）；`fallback_policy=allow_explicit` 时显式 fallback + 审计 `fallback_reason`；纯函数、无会话态 |
+| `FRAME/ADM` | `ctx` 含 `dimension_id`，policy 由 RES 注入；A：沿 `E_relation(A)` 的 BFS + hop_budget；H：层次派生边（不参与 hop）；截断 → `presence=suppressed/unknown + rule_id` |
+| `VM` | 仅 `dimension_id`/`level_id`/`view_family_id`；无 mode/nav/capabilities/policy；H 结构边 `derived_from=partition_refinement` |
+| `CACHE` | 键 = `⟨kb/corpus/collect, registry_version, ctx, view_family⟩`；registry 变更必须新键，禁止回写事实源 |
+| 事实源 | 注册表/历史 = 设计产物+决策记录（非 sidecar；D-3）；`selected_dimension_id` = `VIEW_FRAME` 视图状态（非事实源） |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -526,6 +659,48 @@ stateDiagram-v2
 | D-ST-05 | stale 时是否自动重取景 | 否（提示 + 手动刷新），避免打断 | S8 体验指标 |
 | D-ST-06 | 全展开是否单独持久化 | 是（复用 `graph-settings` 持久化模式） | U-26；`graph-settings.js:127-212` |
 | D-ST-07 | 会话恢复粒度（frame 深度/焦点） | v1 只恢复「上次 level=0」，深栈不恢复 | H（避免 stale 深栈） |
+
+---
+
+### 3.5 S1 增量（ST-02 草案：维度选择 / fail-closed / H 与 A 语义分离；待 S1 冻结）
+
+> 维度切换属 Presentation/S5（新 `VIEW_FRAME`）；H 的下钻是**导航动作**（推进 level/focus，走 S0 状态图 Navigation 区），**不消耗 A 的 hop 预算**；S0-5 的 hop 机检只作用于 `basis=relation_neighborhood`（A）。注册表级 `active` 集合 = {H, A}（可用维度），视图级 `selected_dimension_id` 恰一个——两个断言作用对象不同。
+
+```mermaid
+stateDiagram-v2
+    state Presentation {
+        state ViewMode {
+            [*] --> DefaultView
+            DefaultView --> ExpandedAll : TOGGLE_EXPAND / load_full_candidate_set
+            ExpandedAll --> DefaultView : TOGGLE_EXPAND / reapply_admission
+        }
+        --
+        state DimensionSelection {
+            [*] --> DimH
+            DimH --> DimSwitching : SELECT_DIMENSION id_A
+            DimA --> DimSwitching : SELECT_DIMENSION id_H
+            DimH --> DimSwitching : SELECT_DIMENSION id_reserved_or_unknown
+            DimA --> DimSwitching : SELECT_DIMENSION id_reserved_or_unknown
+            DimSwitching --> DimA : RESOLVE_OK target_A / reset_hop_visited_focus
+            DimSwitching --> DimH : RESOLVE_OK target_H / reset_hop_visited_focus
+            DimSwitching --> DimensionBlocked : RESOLVE_FAIL unknown_reserved_deprecated
+            DimensionBlocked --> DimH : DISMISS / record_reason_and_return_H
+            DimA --> DimA : EXPAND_HOP budget_remaining / admit_next_hop
+            DimA --> DimA : TERMINATION_REACHED / hold_view
+            DimA --> DimA : BUDGET_TRUNCATED / mark_suppressed_rule_id
+            DimH --> DimH : DEEPEN_LEVEL level_depth_remaining / push_nav_frame
+        }
+    }
+```
+
+| 转换/状态 | 约束/机检 |
+|---|---|
+| `SELECT_DIMENSION(id)` | id 必须 `status=active`；reserved/deprecated/unknown ⇒ `DimensionBlocked`（`DIM_NOT_ACTIVE`/`DIM_UNKNOWN`），不静默回退 |
+| `RESOLVE_OK` | 生成新 frame；`hop` 重置为**目标维度** default（H 无 hop）；focus 可表示则保持，否则映射/提示（S5） |
+| `EXPAND_HOP` | 仅 A；`hop_budget ≤ hop_max=2`；`new_hop` 显式才允许 2；预算耗尽 ⇒ suppressed+rule_id |
+| `DEEPEN_LEVEL` | 仅 H；一次一层，走 S0 Navigation `CLICK_CLUSTER` 语义；**不进入 hop_budget 机检** |
+| `DimensionBlocked` | 必须记录 reason（未知/保留/弃用/版本不匹配）；`fallback_policy=allow_explicit` 时才可显式回 H 并审计 |
+| VM/渲染器 | 维度切换事件只到 S5；Renderer 事件仍为 `nodeClick/edgeClick/backgroundClick`；VM 无维度状态 |
 
 ---
 
