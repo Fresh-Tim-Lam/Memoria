@@ -618,11 +618,11 @@ erDiagram
 
 | 增量 | 落点 | 关键约束/机检点 |
 |---|---|---|
-| `FRAME_SPEC` | 取景输入：level/view_family/dimension/focus/hop_budget/mode/default/full/max_nodes/max_edges；frame_sha 可复算 | 同输入同 frame/presence；`hop_budget≤S1 hop_max`；mode 只 default/full；预算与 S3 `getCapabilities()`/S8 同源 |
-| `SELECTION` | 选点结果：rank/score/rule_id；确定性排序 | 给定 VM+ctx+预算 ⇒ 唯一排序；tie-break 用 canonical id；score 规则可复算；不得用未定义随机量 |
-| `PRESENCE_RULE` | 规则表：`rule_kind ∈ {budget_trim, dimension_scope, hop_depth, type_existence, level_scope, unknown_data}`；priority；presence 三值 | `rule_id` 可枚举；同对象多规则按 priority 决出唯一 presence；unknown≠suppressed；不得改 type/label |
-| `PRESENCE_ASSIGNMENT` | 每 object（node/edge）每 frame 恰一条 presence+rule_id | 覆盖所有候选对象（含 suppressed/unknown）；`shown(default) ⊆ shown(full)` |
-| `HOP_ATTACH` | 一跳：focus → 恰好一条 `E_relation(D)` 边 → 端点（kind∈{kp,cluster}）；direction | **depth=1 严格**；不闭包/不带背后图；2 跳只能 S5 `EXPLICIT_NEW_HOP`；端点 kind/维度由 S1 定义 |
+| `FRAME_SPEC` | 取景输入：level/view_family/dimension/**focus（唯一 base）**/hop_budget/new_hop/mode/default/full/max_nodes/max_edges/**MANDATORY 最小必选集**；frame_sha 可复算 | 同输入同 frame/presence；`base(F)={focus}`（R-S4-1）；`hop_budget≤S1 hop_max`；mode 只 default/full；预算与 S3 `getCapabilities()`/S8 同源；MANDATORY 可枚举 |
+| `SELECTION` | 选点结果：rank/tier/hop/relation_class/label_rank/rule_id；确定性排序 | 排序键 = `(tier, hop, relation_class, label_rank, canonical_id)`（R-S4-6）；同输入同 rank/presence；不得随机/时间/内存序 |
+| `PRESENCE_RULE` | 规则表：`rule_id` 11 类枚举（R-S4-5）；priority；presence 三值 | `rule_id` 闭合；同对象多规则按 priority 决出唯一 presence；unknown≠suppressed；不得改 type/label |
+| `PRESENCE_ASSIGNMENT` | 每 object（node/edge）每 frame 恰一条 presence+rule_id；**候选全量载体**（R-S4-4） | 覆盖所有候选对象（含 suppressed/unknown）；Renderer 只用 shown；`shown(default) ⊆ shown(full)` |
+| `HOP_ATTACH` | 一跳：**F={focus}** → 恰好一条 `E_relation(D)` 边 → 端点（kind∈{kp,cluster}）；direction | **depth=1 严格**；不闭包/不带背后图；无隐式 2 跳（R-S4-2）；2 跳只能 S5 `EXPLICIT_NEW_HOP`；端点 kind/维度由 S1 定义 |
 | 预算归属 | S4 唯一裁剪者；Renderer 不裁剪（S3 R-S3-2） | 超预算 ⇒ `suppressed+rule_id`（显式），不是 fail；VM 超硬上限才 `RENDER_BUDGET_EXCEEDED` |
 | VM 纯度 | S4 输出 S3 VM schema；簇/run/内部字段不进 VM | `aggregate_count` 取景层给；`data_edge_ids` 仅审计（Renderer 禁读）；focus/selection/nav 不进 VM |
 
@@ -951,11 +951,11 @@ flowchart LR
 | 流/接口 | 约束/机检点 |
 |---|---|
 | `P24` frame 校验 | `ctx.dimension_id` 必须在 S1 registry active；level/view_family 合法；`hop_budget≤S1 hop_max`；mode∈{default,full}；非法 fail-closed；不得改事实 |
-| `P25` 候选集 | H：当前层 partition（S2 run）+ 层次边；A：focus 的**恰好一跳**邻居（方向按 S1 dir），端点 kind∈{kp,cluster}；**不闭包**、不带背后图；跨层边按 S4-5/S4-7 规则 |
-| `P26` 确定性排序 | 排序键 =（focus 邻域优先级、维度/层次、规则权重、canonical id）；同输入同 rank/presence；不得随机/时间/内存序；tie-break 冻结 |
-| `P27` 预算裁剪 | **S4 唯一裁剪者**；`max_nodes/max_edges` 来自 S3 capabilities/S8；超预算对象 `presence=suppressed` + `rule_id(budget)`；不得静默丢、不得 Renderer 裁 |
-| `P28` presence 规则 | 三值 + `rule_id` 可枚举；`unknown`（存在性未知）≠ `suppressed`（被取景抑制）；类型不同导致边存在/不存在（U-27）；不改 type/label/contain_kind |
-| `P29` VM 构建 | 严格 S3 VM schema；`aggregate_count` 取景层显式；`data_edge_ids` 仅审计（Renderer 禁读）；簇/run/dendrogram/focus/nav 不进 VM |
+| `P25` 候选集 | H：focus + 当前层 partition/H 结构边；A：**F={focus}**，恰好一跳邻居（方向按 S1 dir），端点 kind∈{kp,cluster}；**不闭包**、不带背后图；无隐式 2 跳（R-S4-1/R-S4-2）；跨层边按 S4-5/S4-7 |
+| `P26` 确定性排序 | 排序键冻结（R-S4-6）= `(tier, hop, relation_class, label_rank, canonical_id)`；relation_class=semantic<structural<navigation<reference；同输入同 rank/presence；不得随机/时间/内存序 |
+| `P27` 预算裁剪 | **S4 唯一裁剪者**；`max_nodes/max_edges` 来自 S3 capabilities/S8；**先保证 MANDATORY（focus+必要上下文的最小集）**；其余超预算 `presence=suppressed`+`rule_id(budget)`；仅 MANDATORY 超预算才 `S4_BUDGET_INVALID`（R-S4-3）；不得静默丢、不得 Renderer 裁 |
+| `P28` presence 规则 | 三值 + `rule_id` 枚举闭合（R-S4-5）；`unknown`（source.unavailable/endpoint.unresolved/admission.undecided/invalid.data）≠ `suppressed`（已知但不显示）；类型不同独立判定（U-27）；不改 type/label/contain_kind |
+| `P29` VM 构建 | 严格 S3 VM schema + **候选节点/边逐条 presence/rule_id（R-S4-4）**；`aggregate_count` 取景层显式；`data_edge_ids` 仅审计（Renderer 禁读）；簇/run/dendrogram/focus/nav 不进 VM |
 | `P30` 全展开 | 同 DataSource/同 present/同 Renderer；`shown(default) ⊆ shown(full)` 机检；全展开仍走预算/降级 |
 | `P31` 度量/审计 | 每屏节点/边、抑制比例、一跳准确率、确定性、性能；G6 可复跑；审计不写产品 sidecar（D-3） |
 | 数据源 | 不得第二数据源（S0-8）；presence 只改取景不改事实；无 sidecar |
