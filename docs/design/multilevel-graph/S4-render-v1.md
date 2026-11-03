@@ -54,8 +54,9 @@
 - **来源**：A-v2 S4-7；B-v2 S4-7。
 
 ### S4-9 全展开与 subset 构造保证
-- **规则**：全展开与默认走**同一 Admission/present**；`relation_scope = candidate_scope`（不是 raw data edges 直出）；**构造性保证 subset**：full 先把 `shown(default)` 作为 **reserved** 全部保留，再按同一排序填剩余预算；要求 `budget_full ≥ budget_default`；因此 `shown(default) ⊆ shown(full)` 由构造保证，而非事后断言；full 仍受 S8 硬上限，无第二数据源。
-- **R-S4-7（冻结）**：subset 是构造性质，机检需同时验证「full 中 reserved 集 == default shown 集」与「无第二数据源」。
+- **规则**：全展开与默认走**同一 Admission/present**；`relation_scope = candidate_scope`（不是 raw data edges 直出）；**构造性保证 subset** 需同时满足两个前提：① **`candidates(full) ⊇ candidates(default)`**（full 的 candidate_scope 必须覆盖 default 的全部候选；若数据源/查询不能保证该超集，⇒ `S4_BUDGET_INVALID` 或**显式回退 default**，不得静默补入）；② full 先把 `shown(default)` 作为 **reserved** 全部保留，再按同一排序填剩余预算；要求 `budget_full ≥ budget_default`；因此 `shown(default) ⊆ shown(full)` 由构造保证，而非事后断言；full 仍受 S8 硬上限，无第二数据源。
+- **R-S4-7（冻结）**：subset 是构造性质，机检必须同时验证：`candidates(full) ⊇ candidates(default)`、`reserved(full) == shown(default)`、`budget_full ≥ budget_default`、无第二数据源。
+- **R-S4-9（冻结）**：full 的候选超集前提不成立 ⇒ `S4_BUDGET_INVALID` 或显式回退 default（两种都必须可见，禁止静默）。
 - **来源**：A-v2 S4-8；B-v2 S4-8；R-S4-7；S4 v2 P1-1。
 
 ### S4-10 VM 载体与 S3 兼容
