@@ -1041,6 +1041,52 @@ erDiagram
 
 ---
 
+### 1.15 S8 增量（ER-09 草案：G6/G7 快照、指标、阈值、CI 门禁；待 S8 冻结）
+
+```mermaid
+erDiagram
+    METRIC_RUN ||--o{ G6_SNAPSHOT : produces
+    METRIC_RUN ||--o{ G7_SNAPSHOT : produces
+    METRIC_RUN ||--o{ METRIC_RESULT : records
+    METRIC_THRESHOLD ||--o{ METRIC_RESULT : judges
+    METRIC_RUN ||--o{ CI_GATE : gates
+    G6_SNAPSHOT ||--o{ ARTIFACT : stores
+    G7_SNAPSHOT ||--o{ ARTIFACT : stores
+    METRIC_RUN { string run_id PK
+        string edition_sha
+        string g6_version
+        string started_at }
+    G6_SNAPSHOT { string snapshot_id PK
+        string run_id FK
+        string path
+        string sha256
+        bool immutable }
+    G7_SNAPSHOT { string snapshot_id PK
+        string run_id FK
+        string path
+        string sha256
+        bool immutable }
+    METRIC_RESULT { string result_id PK
+        string metric
+        float value
+        string threshold_id FK
+        bool pass }
+    METRIC_THRESHOLD { string threshold_id PK
+        string metric
+        string op
+        float value
+        string severity }
+    CI_GATE { string gate_id PK
+        string name
+        string status
+        string command }
+    ARTIFACT { string artifact_id PK
+        string path
+        string sha256 }
+```
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -1507,6 +1553,31 @@ flowchart LR
 
 ---
 
+
+> **G6/G7 快照命令（S8a 草案）**：`python scripts/benchmark/graph/g6_snapshot.py --out artifacts/agent/verify/graph/g6/<run_id>.json --sha256`；`python scripts/benchmark/graph/g7_snapshot.py --out .../g7/<run_id>.json`；复跑 `--replay <snapshot>` 断言 sha 一致。路径 cache/config/audit 按 S6。**CI 接入草案**：`pytest -q tests/graph` + `node --check` + mermaid `parse_mermaid.js`（24→27 图）+ G6/G7 snapshot sha + 性能守卫（60fps/≤180ms 条件化）；P0 失败阻断，flaky 重跑一次仍失败即阻断并留证。**0.5 DoD 映射**：I-01..I-13 逐项验收（DataSource→…→SchemaValidator）；I-05/I-06/I-07/I-08 为 P0 阻断，其余 P1。
+
+### 2.14 S8 增量（DF-09 草案：度量/快照/CI 管线）
+
+```mermaid
+flowchart LR
+    CODE[("代码/测试/图谱产物")]
+    RUNNER["指标运行器（G6/G7/正确性/性能/降级）"]
+    SNAP[("G6/G7 快照（不可变；sha+path）")]
+    TH["阈值判定（P0/P1；exit code）"]
+    CI["CI 门禁（本地/CI 一致；flaky 隔离）"]
+    ART[("证据产物（reports/、日志）")]
+    FAIL(["失败：可见失败 + 证据；不可静默"])
+    CODE --> RUNNER
+    RUNNER --> SNAP
+    SNAP --> TH
+    TH --> CI
+    RUNNER --> ART
+    CI --> ART
+    TH -- fail --> FAIL
+```
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -1956,6 +2027,28 @@ stateDiagram-v2
 | `Failed` | `GRAPH_*` 错误；可重试/中止；审计 |
 | `ReadOnly→Denied` | v1 任何写尝试拒绝（`GRAPH_READ_ONLY`）；写仅 S10 工具+审计/人工确认 |
 | 审计 | 每次调用落 audit；无 sidecar/registry 写入（D-3） |
+
+---
+
+### 3.12 S8 增量（ST-09 草案：CI 门禁生命周期/flaky/重跑）
+
+```mermaid
+stateDiagram-v2
+    state CIGate {
+        state Gate {
+            [*] --> Pending
+            Pending --> Running : RUN
+            Running --> Passed : ALL_P0_PASS
+            Running --> Failed : P0_FAIL
+            Running --> FlakySuspect : FLAKY_DETECTED
+            FlakySuspect --> Rerun : RETRY_ONCE
+            Rerun --> Passed : PASS
+            Rerun --> Failed : FAIL
+            Failed --> [*]
+            Passed --> [*]
+        }
+    }
+```
 
 ---
 
