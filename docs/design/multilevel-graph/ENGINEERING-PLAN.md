@@ -552,6 +552,84 @@ erDiagram
 
 ---
 
+### 1.11 S4 增量（ER-05 草案：frame/presence/selection/one-hop；待 S4 冻结）
+
+> 依据：`S4-charter.md` S4-1..S4-12、S0-6/S0-9、S1 H/A、S2 run、S3 VM/presence/Renderer 契约。**S4 是唯一裁剪者**（R-S3-2）：在 VM 构建前决定 `presence∈{shown,suppressed,unknown}` + `rule_id`；只改取景不改事实；簇/run 内部不进 VM；`shown(default) ⊆ shown(full)`。
+
+```mermaid
+erDiagram
+    FRAME_SPEC ||--o{ SELECTION : decides
+    FRAME_SPEC ||--o{ PRESENCE_ASSIGNMENT : assigns
+    FRAME_SPEC ||--o{ HOP_ATTACH : one_hop
+    PRESENCE_RULE ||--o{ PRESENCE_ASSIGNMENT : applies
+    VIEW_MODEL ||--|| FRAME_SPEC : built_from
+    VIEW_MODEL ||--o{ NODE_VIEW : contains
+    VIEW_MODEL ||--o{ EDGE_VIEW : contains
+
+    FRAME_SPEC {
+        string frame_id PK
+        string level_id
+        string view_family_id
+        string dimension_id
+        string focus_id
+        int hop_budget
+        string mode
+        int max_nodes
+        int max_edges
+        string frame_sha
+    }
+    SELECTION {
+        string selection_id PK
+        string frame_id FK
+        string object_kind
+        string object_id
+        int rank
+        float score
+        string rule_id FK
+    }
+    PRESENCE_RULE {
+        string rule_id PK
+        string applies_to
+        string rule_kind
+        int priority
+        string condition
+        string presence
+        string version
+    }
+    PRESENCE_ASSIGNMENT {
+        string assignment_id PK
+        string frame_id FK
+        string object_kind
+        string object_id
+        string presence
+        string rule_id FK
+        string reason
+    }
+    HOP_ATTACH {
+        string hop_id PK
+        string frame_id FK
+        string focus_id
+        string edge_id FK
+        string endpoint_id
+        string direction
+        int hop_depth
+    }
+```
+
+| 增量 | 落点 | 关键约束/机检点 |
+|---|---|---|
+| `FRAME_SPEC` | 取景输入：level/view_family/dimension/focus/hop_budget/mode/default/full/max_nodes/max_edges；frame_sha 可复算 | 同输入同 frame/presence；`hop_budget≤S1 hop_max`；mode 只 default/full；预算与 S3 `getCapabilities()`/S8 同源 |
+| `SELECTION` | 选点结果：rank/score/rule_id；确定性排序 | 给定 VM+ctx+预算 ⇒ 唯一排序；tie-break 用 canonical id；score 规则可复算；不得用未定义随机量 |
+| `PRESENCE_RULE` | 规则表：`rule_kind ∈ {budget_trim, dimension_scope, hop_depth, type_existence, level_scope, unknown_data}`；priority；presence 三值 | `rule_id` 可枚举；同对象多规则按 priority 决出唯一 presence；unknown≠suppressed；不得改 type/label |
+| `PRESENCE_ASSIGNMENT` | 每 object（node/edge）每 frame 恰一条 presence+rule_id | 覆盖所有候选对象（含 suppressed/unknown）；`shown(default) ⊆ shown(full)` |
+| `HOP_ATTACH` | 一跳：focus → 恰好一条 `E_relation(D)` 边 → 端点（kind∈{kp,cluster}）；direction | **depth=1 严格**；不闭包/不带背后图；2 跳只能 S5 `EXPLICIT_NEW_HOP`；端点 kind/维度由 S1 定义 |
+| 预算归属 | S4 唯一裁剪者；Renderer 不裁剪（S3 R-S3-2） | 超预算 ⇒ `suppressed+rule_id`（显式），不是 fail；VM 超硬上限才 `RENDER_BUDGET_EXCEEDED` |
+| VM 纯度 | S4 输出 S3 VM schema；簇/run/内部字段不进 VM | `aggregate_count` 取景层给；`data_edge_ids` 仅审计（Renderer 禁读）；focus/selection/nav 不进 VM |
+
+> **ER-05 待裁决**：① `FRAME_SPEC` 是否复用 S0 `VIEW_MODEL`/`GRAPH_NAV_FRAME`（推荐 S4 FRAME 作为 frame 输入，VIEW_MODEL 为输出）；② `PRESENCE_ASSIGNMENT` 是否必须逐对象落库（推荐仅内存派生，审计可选）；③ `unknown` 的产生规则（数据不可达/维度未解析 vs 取景未知）需 S4 冻结。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -833,6 +911,57 @@ flowchart LR
 
 ---
 
+### 2.10 S4 增量（DF-05 草案：取景/选点/预算/presence/一跳；待 S4 冻结）
+
+> 取景在 **S4 唯一裁剪者**内完成：输入 DataSource（事实）+ S2 run（簇节点/成员）+ S1 维度/层次 + `FRAME_SPEC` + 预算；输出 S3 VM（presence/rule_id）；**一跳 depth=1、不闭包/不带背后图**；全展开同 `present` 且 `shown(default) ⊆ shown(full)`；渲染器只渲染已选 VM。
+
+```mermaid
+flowchart LR
+    DS[("DataSource 事实（E_relation/节点）")]
+    RUN[("S2 adopted CLUSTER_RUN（簇/成员/边）")]
+    REG[("S1 维度/层次 registry + frame_spec(level/dim/focus)")]
+    BUD[("S3 getCapabilities / S8 预算 max_nodes/max_edges")]
+    P24["P24 frame 校验（dimension/level/hop_budget/mode；非法 fail-closed）"]
+    P25["P25 候选集（H 层次；A 一跳 depth=1；不闭包/不带背后图）"]
+    P26["P26 确定性排序（focus 邻域/维度/层次/规则 → rank；tie-break canonical id）"]
+    P27["P27 预算裁剪（S4 唯一；超预算 suppressed+rule_id）"]
+    P28["P28 presence 规则（shown/suppressed/unknown + rule_id；不改 type/label）"]
+    P29["P29 VM 构建（S3 schema；aggregate_count 显式；data_edge_ids 仅审计）"]
+    P30["P30 全展开（同 present；shown(default) ⊆ shown(full)）"]
+    REN["S3 Renderer（只校验/渲染；不裁剪）"]
+    AUD["P31 度量/审计（选点/抑制比例/一跳准确率/确定性/G6）"]
+    ERR(["错误/降级：FRAME_INVALID / HOP_BUDGET / PRESENCE_RULE_MISSING / RENDER_BUDGET_EXCEEDED（仅硬上限）"])
+
+    DS --> P25
+    RUN --> P25
+    REG --> P24
+    BUD --> P24
+    P24 -- reject --> ERR
+    P24 -- ok --> P25
+    P25 --> P26
+    P26 --> P27
+    P27 --> P28
+    P28 --> P29
+    P29 --> P30
+    P30 --> REN
+    P29 --> AUD
+    REN -- hard cap only --> ERR
+```
+
+| 流/接口 | 约束/机检点 |
+|---|---|
+| `P24` frame 校验 | `ctx.dimension_id` 必须在 S1 registry active；level/view_family 合法；`hop_budget≤S1 hop_max`；mode∈{default,full}；非法 fail-closed；不得改事实 |
+| `P25` 候选集 | H：当前层 partition（S2 run）+ 层次边；A：focus 的**恰好一跳**邻居（方向按 S1 dir），端点 kind∈{kp,cluster}；**不闭包**、不带背后图；跨层边按 S4-5/S4-7 规则 |
+| `P26` 确定性排序 | 排序键 =（focus 邻域优先级、维度/层次、规则权重、canonical id）；同输入同 rank/presence；不得随机/时间/内存序；tie-break 冻结 |
+| `P27` 预算裁剪 | **S4 唯一裁剪者**；`max_nodes/max_edges` 来自 S3 capabilities/S8；超预算对象 `presence=suppressed` + `rule_id(budget)`；不得静默丢、不得 Renderer 裁 |
+| `P28` presence 规则 | 三值 + `rule_id` 可枚举；`unknown`（存在性未知）≠ `suppressed`（被取景抑制）；类型不同导致边存在/不存在（U-27）；不改 type/label/contain_kind |
+| `P29` VM 构建 | 严格 S3 VM schema；`aggregate_count` 取景层显式；`data_edge_ids` 仅审计（Renderer 禁读）；簇/run/dendrogram/focus/nav 不进 VM |
+| `P30` 全展开 | 同 DataSource/同 present/同 Renderer；`shown(default) ⊆ shown(full)` 机检；全展开仍走预算/降级 |
+| `P31` 度量/审计 | 每屏节点/边、抑制比例、一跳准确率、确定性、性能；G6 可复跑；审计不写产品 sidecar（D-3） |
+| 数据源 | 不得第二数据源（S0-8）；presence 只改取景不改事实；无 sidecar |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -1074,6 +1203,47 @@ stateDiagram-v2
 | `Disposed` | 资源释放；无落盘状态（D-3）；重挂载从 VM/VIEW_STATUS 重建 |
 | 预算 | `max_nodes/max_edges`/帧率/动画/reduced motion 进 capabilities；**裁剪归 S4**（R-S3-2），Renderer 超硬上限 ⇒ `RENDER_BUDGET_EXCEEDED` fail-visible；不静默丢节点/边（S3-11） |
 | 角色边界 | node `role ∈ {member, focus}`（**无 bridge**，R-S3-3）；桥只作 edge `state=bridge_only`；事件按 `kind` 语义，不因 role 改变点击/导航（S3-1/S3-7） |
+
+---
+
+### 3.8 S4 增量（ST-05 草案：取景 frame 生命周期 + presence 决策 + 全展开/降级；待 S4 冻结）
+
+> S4 状态只描述**取景计算**：ctx/focus/dimension/level 变化 ⇒ 新 frame；presence 三值决策确定；超预算显式 `suppressed`（非失败）；全展开同 `present`；**导航状态属 S5**，不在 S4/VM。
+
+```mermaid
+stateDiagram-v2
+    state Framing {
+        state FrameLifecycle {
+            [*] --> FrameReady
+            FrameReady --> Recomputing : CTX_CHANGED dimension|level|focus|hop_budget
+            Recomputing --> FrameReady : PRESENCE_DECIDED
+            FrameReady --> FullExpand : TOGGLE_FULL
+            FullExpand --> FrameReady : TOGGLE_FULL
+            Recomputing --> Failed : FRAME_INVALID
+            FrameReady --> FrameReady : BUDGET_CHANGED / re_select
+        }
+        --
+        state PresenceDecision {
+            [*] --> Candidate
+            Candidate --> Shown : SELECT_and_budget_ok
+            Candidate --> Suppressed : BUDGET_TRIM / dimension_scope / level_scope
+            Candidate --> Unknown : type_existence_unknown / data_unavailable
+            Shown --> Suppressed : BUDGET_CHANGED_reduce
+            Suppressed --> Shown : BUDGET_CHANGED_increase
+        }
+    }
+```
+
+| 状态/转换 | 约束/机检 |
+|---|---|
+| `CTX_CHANGED` | dimension 切换/drill/新一跳/full toggle/hop_budget 变化 ⇒ 新 frame；drill 后 hop_budget 重置为 S1 default；不得复用旧 presence |
+| `PRESENCE_DECIDED` | 每个候选对象恰一个 `presence+rule_id`；同输入确定性；`shown` 只给通过预算+规则的；`suppressed` 带 rule_id |
+| `PresenceDecision` | `unknown` 与 `suppressed` 语义不同；presence 只改取景不改 type/label/事实；决策在 S4，不在 Renderer |
+| `FullExpand` | 同 present/同 Renderer；`shown(default) ⊆ shown(full)`；全展开仍走预算/降级；不引入第二数据源 |
+| `BUDGET_CHANGED` | 预算缩小 ⇒ Shown→Suppressed（rule_id budget）；预算增大 ⇒ 可恢复 Shown（无新事实）；不得 Renderer 裁剪 |
+| `Failed` | frame 非法（dimension 非 active/level 非法/hop_budget 超限）⇒ fail-closed；不渲染部分结果 |
+| `Renderer` 边界 | Renderer 只渲染 VM；`RENDER_BUDGET_EXCEEDED` 仅 VM 超硬上限（S4 应保证不超）；不取数/不重算簇 |
+| S5 边界 | focus/selection/navigation 状态不进 VM；S5 消费 click 事件后触发新 frame |
 
 ---
 
