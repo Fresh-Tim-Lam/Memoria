@@ -1037,6 +1037,8 @@ erDiagram
 
 > **ER-08/G7 待裁决**：① 工具名/错误码按 R-S7-3 冻结；`graph_path` v1 不做；② token budget 数值（S8）；③ 引用 anchor 采用行号还是 content hash；④ 审计落盘 `.memoria/agent/audit/graph/`（S6 路径）。
 
+> **S7a 定稿注记（对照 `S7-agent-v1.md` sha `70dd8748…`）**：5 只读工具 `graph_focus/graph_explain_edge/graph_expand_cluster/graph_summary/graph_resolve_ref`；无 `graph_path`；`ViewResponse.edges[]` 只含 shown + `suppressed_summary/rule_histogram`；所有工具可选 `expected_edition`、回带 `edition_sha`（不匹配 `GRAPH_EDITION_STALE`）；`graph_resolve_ref` 对 source_assertion 返回 `source_excerpt`（≤500 字符、只读、不缓存正文、审计）；错误码按 S6 `GRAPH_*` + `S6-ADDENDUM-1` 六码；幂等键 `(tool,args,edition,budget)`；默认 `max_tokens=4000/max_nodes=200`；G7 引用 G6 字段不复制事实。
+
 ---
 
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
