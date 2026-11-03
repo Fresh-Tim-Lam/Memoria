@@ -926,6 +926,26 @@ erDiagram
 
 > **ER-07 待裁决**：① `DIMENSION_HISTORY` 的签名/存储位置；② `AUDIT_EVENT` 是否产品内 append-only（不写用户数据段）；③ `CACHE_ENTRY` 的 GC/失败回退语义；④ 旧 `graph-groups` 数据忽略/迁移策略（S6-10）。
 
+**0.5 实现接口清单（S6a 草案；供 S6-12 冻结）**
+
+| # | 接口/模块 | 输入 | 输出 | 约束 |
+|---|---|---|---|---|
+| I-01 | `DataSourceReader` | kb path / manifest | nodes/edges/E_relation_min（只读） | 只读事实；不写 sidecar（D-3） |
+| I-02 | `GraphViewBuilder` | DataSource + `(level,view_family)` | GraphView | per-level/family；不缓存事实 |
+| I-03 | `RegistryService` | dimension schema / schema_sha | DimensionRegistry/Version/History | 只增不删；history 不可变；可选签名；失败 `GRAPH_REGISTRY_*` |
+| I-04 | `ClusterRunBuilder` | GraphView + params_hash | CLUSTER_RUN/CLUSTER/MEMBERSHIP/EDGE/STABILITY | S2 身份/五状态；候选不自动 adopted |
+| I-05 | `AdmissionService`（S4） | FRAME_SPEC + GraphView + run | PresenceAssignment + VM | 唯一裁剪；presence/rule_id/MANDATORY/subset；事务化 |
+| I-06 | `ViewModelBuilder` | AdmissionResult + S3 白名单 | VM（NODE/EDGE_VIEW/VIEW_STATUS） | S3 白名单+ADDENDUM-1；data_edge_ids 审计/Renderer 禁读 |
+| I-07 | `RendererAdapter`（S3） | VM + capabilities | 2D/3D 渲染 + 事件 | 同签名；不取数/不裁剪/不算 presence |
+| I-08 | `NavController`（S5） | S3 事件 + Presentation 输入 | Frame/transition/next FRAME_SPEC | T01–T30；事务化 diff=0；frame_id 派生 |
+| I-09 | `CacheStore` | run/nav/frame | cache entries | `.memoria/cache/graph/`；可删重建；GC 只删缓存 |
+| I-10 | `AuditLog` | decisions/curation/agent 请求 | append-only audit | `.memoria/agent/audit/graph/`；不参与事实源 |
+| I-11 | `G6Snapshot` | 全链路对象 sha | g6_version/shas/直方图/subset/closure | 可复跑；sha 稳定；阈值冻结 |
+| I-12 | `ErrorMap` | S2–S5 legacy codes | `GRAPH_*` canonical + legacy_code | 统一命名空间；i18n key 归 UI |
+| I-13 | `SchemaValidator` | 各 schema JSON | pass/fail + code | 字段/枚举/默认/失败码；fail-closed |
+
+> **接口清单待 S6-12/Lead 裁**：I-01..I-13 的模块边界/依赖方向/0.5 做与不做；3D 只留 I-07 接口（capability=false）；agent 写/跨库/时间维不在 0.5。
+
 ---
 
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
