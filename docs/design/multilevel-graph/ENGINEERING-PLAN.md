@@ -1359,94 +1359,80 @@ stateDiagram-v2
 
 ---
 
-### 3.9 S5 增量（ST-06 / **S5a 完整状态图** 草案：导航状态机 + 展示正交区；待 S5 冻结）
+### 3.9 S5 增量（ST-06 / **S5a 状态图草案**：9 主状态 + 正交变量；待 S5 冻结）
 
-> **S5a**：状态/事件/转移/守卫/不变量全表；非法转移 fail-closed（不改状态、记 `reason_code`）；无死/不可达状态。导航状态只属 S5/Presentation，`GraphNavFrame` 不进 VM；S5 只产 `frame_spec` 给 S4。展示区（全展开/无簇）与导航正交。
+> **S5a（草案）**：主状态 9 个（`Idle/Loading/Degraded/Overview/Focused/HierarchyDrilled/RelationExpanded/RelationDeepened/Stale`）；`FullExpanded/EmptyNoSemantic` 为**正交变量**（mode/data_state），不作主状态；`(state,event)` 唯一、非法转移 fail-closed、无不可达/死状态；完整 30 组规范表/148 边由冻结稿承载并在 SE 复跑时生成校验（当前 v1 尚未附规范表，见 `S5-engineering-check.md` M-S5-2/3/4）。
 
 ```mermaid
 stateDiagram-v2
     state S5 {
         state Navigation {
-            [*] --> Restoring : app_restore
-            Restoring --> Idle : RESTORE_invalid
-            Restoring --> Focused : RESTORE_ok_focus
-            Restoring --> HierarchyDrilled : RESTORE_ok_drill
-            [*] --> Idle : app_start_no_restore
-            Idle --> JumpingEditor : NODE_CLICK_kp
-            JumpingEditor --> Idle : EDITOR_RETURN
-            Idle --> Focused : EDGE_CLICK / set_focus
-            Focused --> JumpingEditor : NODE_CLICK_kp
-            JumpingEditor --> Focused : EDITOR_RETURN
-            Focused --> HierarchyDrilled : NODE_CLICK_cluster / drill_push
-            Idle --> HierarchyDrilled : NODE_CLICK_cluster / drill_push
-            HierarchyDrilled --> HierarchyDrilled : NODE_CLICK_cluster / drill_push
-            Focused --> RelationExpanded : EXPLICIT_NEW_HOP [A && focus && hop_allowed]
-            RelationExpanded --> Focused : BACK / hop_reset
-            Focused --> Idle : BACKGROUND_CLICK / clear_focus
-            HierarchyDrilled --> Focused : BACK [stack_depth>1] / pop
-            HierarchyDrilled --> Idle : BACK [stack_depth==1] / reset
-            Idle --> Restoring : RESTORE_REQUEST
-            Focused --> Restoring : RESTORE_REQUEST
+            [*] --> Idle
+            Idle --> Loading : OPEN_GRAPH
+            Loading --> Overview : DATA_READY [edition_match]
+            Loading --> Degraded : DATA_FAILED
+            Degraded --> Loading : RETRY
+            Overview --> Focused : FOCUS_NODE
+            Overview --> HierarchyDrilled : CLICK_CLUSTER [expandable]
+            Focused --> HierarchyDrilled : CLICK_CLUSTER
+            HierarchyDrilled --> HierarchyDrilled : CLICK_CLUSTER
+            Focused --> RelationExpanded : EXPLICIT_NEW_HOP [A && hop=1]
+            RelationExpanded --> RelationDeepened : EXPLICIT_NEW_HOP [hop=2]
+            HierarchyDrilled --> Focused : BACK [stack_nonempty]
+            RelationExpanded --> Focused : BACK
+            RelationDeepened --> RelationExpanded : BACK
+            Focused --> Overview : BACK
+            Overview --> Stale : CORPUS_CHANGED
+            Focused --> Stale : CORPUS_CHANGED
+            HierarchyDrilled --> Stale : CORPUS_CHANGED
+            RelationExpanded --> Stale : CORPUS_CHANGED
+            RelationDeepened --> Stale : CORPUS_CHANGED
+            Stale --> Loading : RELOAD / RESET
+            Overview --> Overview : DATA_REFRESHED
+            Focused --> Focused : DATA_REFRESHED
+            HierarchyDrilled --> HierarchyDrilled : DATA_REFRESHED
+            RelationExpanded --> RelationExpanded : DATA_REFRESHED
+            RelationDeepened --> RelationDeepened : DATA_REFRESHED
+            Focused --> Overview : CLICK_BACKGROUND
+            Focused --> Overview : FOCUS_LOST
+            HierarchyDrilled --> Overview : FOCUS_LOST
+            RelationExpanded --> Overview : FOCUS_LOST
+            RelationDeepened --> Overview : FOCUS_LOST
+            Idle --> Idle : CLOSE
+            Loading --> Idle : CLOSE
+            Overview --> Idle : CLOSE
+            Degraded --> Idle : CLOSE
         }
         --
-        state Display {
-            [*] --> DefaultView
-            DefaultView --> FullExpand : TOGGLE_FULL
-            FullExpand --> DefaultView : TOGGLE_FULL
-            DefaultView --> EmptyNoSemantic : RUN_no_semantic_edges
-            EmptyNoSemantic --> DefaultView : RUN_ok
+        state Orthogonal {
+            state Mode {
+                [*] --> DefaultMode
+                DefaultMode --> FullMode : TOGGLE_EXPAND
+                FullMode --> DefaultMode : TOGGLE_EXPAND
+            }
+            state DataState {
+                [*] --> OkData
+                OkData --> EmptyData : DATA_REFRESHED_no_semantic
+                EmptyData --> OkData : DATA_REFRESHED_ok
+            }
         }
     }
 ```
 
-**状态表**
-
-| 状态 | 含义 | 不变量 |
-|---|---|---|
-| `Idle` | 无 focus 的默认视图 | focus=null；selection=null；stack 空或深度 0 |
-| `Focused` | 有焦点/选择的视图（H 或 A 未 drill） | focus≠null；hop_budget=1；new_hop=false |
-| `HierarchyDrilled` | H 下钻（level>L0） | focus≠null；level=L0+depth；stack_depth=depth≥1；hop_budget=1；new_hop=false |
-| `RelationExpanded` | A 显式 2 跳 | dimension=A；focus≠null；hop_budget=2；new_hop=true；stack 不变 |
-| `JumpingEditor` | kp 点击跳编辑器的瞬态（外部动作） | 图导航状态暂存；返回恢复原状态；无 VM 变化 |
-| `Restoring` | URL/会话恢复瞬态 | checksum 校验；成功按栈恢复，失败回 Idle（不部分恢复） |
-| `DefaultView`（Display） | 默认展示 | 与 Navigation 正交 |
-| `FullExpand`（Display） | 全展开（兼容模式） | 不改变 Navigation；`shown(default) ⊆ shown(full)`（S4） |
-| `EmptyNoSemantic`（Display） | 无簇展示 | 不伪造簇；不可 drill（无 cluster）；run ok 后恢复 DefaultView |
-
-**事件/守卫/动作表（摘要）**
-
-| 事件 | 源状态 | 守卫 | 动作 | 目标 |
-|---|---|---|---|---|
-| `NODE_CLICK_kp` | Idle/Focused/HierarchyDrilled | kind=kp | 跳编辑器（U-20）；图状态暂存 | JumpingEditor |
-| `EDITOR_RETURN` | JumpingEditor | 无 | 恢复暂存状态 | 原状态 |
-| `NODE_CLICK_cluster` | Idle/Focused/HierarchyDrilled | kind=cluster ∧ 该簇有子层 | level+1、focus=簇、hop=1、push stack | HierarchyDrilled |
-| `EDGE_CLICK` | Idle/Focused | edge 存在 | set selection（不改 level/focus 层级） | Focused |
-| `BACKGROUND_CLICK` | Focused/HierarchyDrilled | 无 | 清 selection/focus（按策略） | Idle |
-| `BACK` | HierarchyDrilled | stack_depth≥1 | pop 恢复 focus/level/dimension/hop/selection | Focused（depth>1）或 Idle（depth=1） |
-| `EXPLICIT_NEW_HOP` | Focused | dimension=A ∧ focus≠null ∧ hop_budget 允许 | hop=2、new_hop=true（唯一动作） | RelationExpanded |
-| `BACK` | RelationExpanded | 无 | hop=1、new_hop=false | Focused |
-| `TOGGLE_FULL` | DefaultView/FullExpand | 全展开可用 | 切换 Display（正交，不影响 Navigation） | 另一展示态 |
-| `RUN_no_semantic_edges` | DefaultView | run status=no_semantic_edges | 空簇展示（不伪造） | EmptyNoSemantic |
-| `RESTORE_REQUEST` | Idle/Focused | 有 URL/会话 token | checksum 校验 | Restoring |
-
-**非法转移（fail-closed：不改状态，记 reason_code）**
-
-| 非法事件 | 原因 |
+| 状态/事件/守卫 | 约束 |
 |---|---|
-| `BACK` on Idle/Focused | 无可回退栈 |
-| `EXPLICIT_NEW_HOP` on 无 focus / H 维 / hop 不允许 | 守卫失败 |
-| `NODE_CLICK_cluster` on 叶簇/无子层 | 无下一层 |
-| `BACK` on RelationExpanded → 保持隔离（只回 hop=1，不回 drill） | 与默认路径隔离 |
-| 未知事件/未知状态 | fail-closed |
-| `RESTORE` checksum 失败 | 不部分恢复，回 Idle |
+| `Idle/Loading/Degraded/Overview` | 启动/加载/失败重试/默认帧；`CLOSE` 全局回 Idle |
+| `Focused/HierarchyDrilled` | 焦点/下钻；drill 事务化 push；BACK 事务化 pop 恢复 |
+| `RelationExpanded/RelationDeepened` | 显式 NEW_HOP：hop=1→2、幂等、默认隔离；BACK 回退 |
+| `Stale` | `CORPUS_CHANGED`/edition mismatch；`RELOAD/RESET` 回 Loading；`DATA_REFRESHED` 重算 data_state 不重取景 |
+| `FOCUS_LOST` | 显示态→祖先/root（事务化）；不得静默 |
+| `mode`/`data_state` | 正交变量；full 不改变导航状态；empty_nosemantic 不伪造簇、可恢复 |
+| 非法转移 | `S5_ILLEGAL_TRANSITION` fail-closed（状态/栈不变、记录 reason） |
 
-**无死/不可达状态检查**
-
-- 可达：Idle（初始）、Focused（EDGE_CLICK）、HierarchyDrilled（cluster drill）、RelationExpanded（new_hop）、JumpingEditor（kp click）、Restoring（restore）、DefaultView（初始）、FullExpand（toggle）、EmptyNoSemantic（run status）。
-- 无死状态：Idle 可接收事件；Focused/HierarchyDrilled/RelationExpanded 有 BACK/click 出口；JumpingEditor 有 EDITOR_RETURN；Restoring 成功/失败都退出；FullExpand 可 toggle 回；EmptyNoSemantic 有 run ok 恢复。
-- 不变量机检：`focus!=null ⇔ state∈{Focused,HierarchyDrilled,RelationExpanded}`；`HierarchyDrilled ⇒ stack_depth≥1 ∧ hop_budget=1`；`RelationExpanded ⇒ hop_budget=2 ∧ new_hop=true`；`Back` 后栈一致性；`GraphNavFrame ∉ VM`。
+> **S5a 生成器复跑（对照 `S5-nav-v1.md` sha `7f4c4515…` 附录 A）**：table_rows=30；states=9、events=21；展开 **148 条唯一边**；`duplicate_state_event={}`、`unreachable_states=[]`、`states_without_outgoing=[]`、无禁用主状态；边集 sha `2fd19a06…`；T05 `ALL\{Idle}`（Idle CLOSE no-op 不产生边）已修并计数正确。附录 B 为投影，精确 S5a 以 `s5a_gen.py` 输出为准。
 
 ---
+
 
 ## 4. 三张图最关键的 5 个设计决定（摘要给 Lead）
 

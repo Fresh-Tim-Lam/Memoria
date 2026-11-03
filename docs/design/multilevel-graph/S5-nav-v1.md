@@ -111,3 +111,107 @@ S6（数据契约 + ER/DFD/S6a：run/registry/history/VISUAL/NAV/CACHE 的 schem
 
 - 加状态/事件/动作：S5 修订 + 决策；删/改状态机语义/点击语义/new_hop/frame 字段：重开 S5；
 - S5a 由规范表生成；手工改图视为破坏冻结。
+
+---
+
+## 附录 A：30 组规范转移表（**冻结**；唯一真源）
+
+> `*` = 显示态集合 `{Overview, Focused, HierarchyDrilled, RelationExpanded, RelationDeepened}`；`ALL` = 全部 9 主状态。
+> `(state,event)` 唯一；本表展开为 148 条边（由脚本生成，不手工维护）；与附录 B 的 S5a 必须一致。
+
+| # | From | Event | Guard | Action | To |
+|---|---|---|---|---|---|
+| T01 | Idle | OPEN_GRAPH | backend_ready | 读设置；不恢复深栈 | Loading |
+| T02 | Loading | DATA_READY | edition_match | 建默认 frame；按 S2 设 data_state | Overview |
+| T03 | Loading | DATA_FAILED | retryable | 显示降级 | Degraded |
+| T04 | Degraded | RETRY | retryable | 重试加载 | Loading |
+| T05 | ALL\{Idle} | CLOSE | — | 保存设置；清内存/history | Idle |
+| T06 | ALL | RELOAD | — | 重建 frame；清 history | Loading |
+| T07 | * | DATA_REFRESHED | edition_match | 重算 data_state；不重取景 | SELF |
+| T08 | Overview/HierarchyDrilled/RelationExpanded/RelationDeepened | FOCUS_NODE | node_focusable | 记录 origin；UI focus；不改 frame.focus | Focused |
+| T09 | * | CLICK_KP | kind=kp∧file | jump_editor；frame/stack 不变 | SELF |
+| T10 | * | CLICK_EDGE | edge_id | selection=edge；检查器；frame/stack 不变 | SELF |
+| T11 | Overview/HierarchyDrilled/RelationExpanded/RelationDeepened | CLICK_BACKGROUND | — | selection=null | SELF |
+| T12 | Focused | CLICK_BACKGROUND | — | selection=null；回 origin | Overview/HierarchyDrilled/RelationExpanded/RelationDeepened |
+| T13 | Overview | CLICK_CLUSTER | kind=cluster∧expandable | 事务 drill；push；hop 重置；清 selection | HierarchyDrilled |
+| T14 | Focused | CLICK_CLUSTER | 同上 | 事务 drill；清 UI focus；push | HierarchyDrilled/RelationExpanded |
+| T15 | HierarchyDrilled | CLICK_CLUSTER | 同上 | 事务 drill；push | HierarchyDrilled |
+| T16 | RelationExpanded | CLICK_CLUSTER | 同上 | 事务 drill；push | RelationExpanded |
+| T17 | RelationDeepened | CLICK_CLUSTER | 同上 | 事务 drill；push | RelationExpanded |
+| T18 | * | FOCUS_LOST | focus_missing | 事务恢复最近祖先/root | Overview/HierarchyDrilled/RelationExpanded/RelationDeepened |
+| T19 | Focused | FOCUS_CLEAR | — | 回 origin；清 selection | 同上 |
+| T20 | Focused | BACK | stack_nonempty | 事务 back；清 UI focus | 同上 |
+| T21 | HierarchyDrilled/RelationExpanded/RelationDeepened | BACK | stack_nonempty | 事务 pop；恢复 frame | Overview/HierarchyDrilled/RelationExpanded/RelationDeepened |
+| T22 | Overview | BACK | stack_empty | no-op；公告根层 | Overview |
+| T23 | * | BREADCRUMB_TO | target_in_stack | 截断到目标；事务恢复 | Overview/HierarchyDrilled/RelationExpanded/RelationDeepened |
+| T24 | * | SELECT_DIMENSION | dimension_active | 事务 push；hop 重置；mode 保留 | Overview/HierarchyDrilled/RelationExpanded |
+| T25 | RelationExpanded | EXPLICIT_NEW_HOP | A∧focus∧hop=1 | 事务 push；hop=2/new_hop=true | RelationDeepened |
+| T26 | RelationDeepened | EXPLICIT_NEW_HOP | hop=2 | 幂等 no-op | RelationDeepened |
+| T27 | * | TOGGLE_EXPAND | S4 candidate_superset | 事务切换 mode；不改 frame/stack | SELF |
+| T28 | * | CORPUS_CHANGED | edition_mismatch | 标 stale；不自动重取景 | Stale |
+| T29 | * | RESET | — | 清 history；重建默认 frame | Loading |
+| T30 | Stale | RESET | — | 清 history；重载 | Loading |
+
+> **T05 注**：`Idle` 上 `CLOSE` 为 no-op，不产生边、不计数；因此 `ALL\{Idle}` 展开 8 边，全表唯一展开边数 = **148**。
+
+## 附录 B：S5a 状态图（**非规范投影**；精确 S5a 由附录 A 生成；`FullExpanded`/`EmptyNoSemantic` 为直角正交变量）
+
+> **规范性说明**：附录 B 的 mermaid 是**人读投影**，不是 148 条精确图。精确 S5a = 由附录 A 的 T01–T30 在脚本中展开生成的 `states=9, events, edges=148` 边集；机检以**生成器输出**为准（断言「表展开边集 == 生成图边集」「`PARSE_OK`」「无禁用主状态」）。附录 B 仅用于评审可读性。
+
+```mermaid
+stateDiagram-v2
+    state S5 {
+        state Navigation {
+            [*] --> Idle
+            Idle --> Loading : OPEN_GRAPH
+            Loading --> Overview : DATA_READY [edition_match]
+            Loading --> Degraded : DATA_FAILED
+            Degraded --> Loading : RETRY
+            Overview --> Focused : FOCUS_NODE
+            Overview --> HierarchyDrilled : CLICK_CLUSTER [expandable]
+            Focused --> HierarchyDrilled : CLICK_CLUSTER
+            HierarchyDrilled --> HierarchyDrilled : CLICK_CLUSTER
+            Focused --> RelationExpanded : EXPLICIT_NEW_HOP [A && hop=1]
+            RelationExpanded --> RelationDeepened : EXPLICIT_NEW_HOP [hop=2]
+            HierarchyDrilled --> Focused : BACK [stack_nonempty]
+            RelationExpanded --> Focused : BACK
+            RelationDeepened --> RelationExpanded : BACK
+            Focused --> Overview : BACK
+            Overview --> Stale : CORPUS_CHANGED
+            Focused --> Stale : CORPUS_CHANGED
+            HierarchyDrilled --> Stale : CORPUS_CHANGED
+            RelationExpanded --> Stale : CORPUS_CHANGED
+            RelationDeepened --> Stale : CORPUS_CHANGED
+            Stale --> Loading : RELOAD / RESET
+            Overview --> Overview : DATA_REFRESHED
+            Focused --> Focused : DATA_REFRESHED
+            HierarchyDrilled --> HierarchyDrilled : DATA_REFRESHED
+            RelationExpanded --> RelationExpanded : DATA_REFRESHED
+            RelationDeepened --> RelationDeepened : DATA_REFRESHED
+            Focused --> Overview : CLICK_BACKGROUND
+            Focused --> Overview : FOCUS_LOST
+            HierarchyDrilled --> Overview : FOCUS_LOST
+            RelationExpanded --> Overview : FOCUS_LOST
+            RelationDeepened --> Overview : FOCUS_LOST
+            Idle --> Idle : CLOSE
+            Loading --> Idle : CLOSE
+            Overview --> Idle : CLOSE
+            Degraded --> Idle : CLOSE
+        }
+        --
+        state Orthogonal {
+            state Mode {
+                [*] --> DefaultMode
+                DefaultMode --> FullMode : TOGGLE_EXPAND
+                FullMode --> DefaultMode : TOGGLE_EXPAND
+            }
+            state DataState {
+                [*] --> OkData
+                OkData --> EmptyData : DATA_REFRESHED_no_semantic
+                EmptyData --> OkData : DATA_REFRESHED_ok
+            }
+        }
+    }
+```
+
+> **注**：附录 B 为分组投影；精确 148 条边由附录 A 展开生成，机检以「展开边集 == 图边集」为准。
