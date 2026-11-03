@@ -946,6 +946,8 @@ erDiagram
 
 > **接口清单待 S6-12/Lead 裁**：I-01..I-13 的模块边界/依赖方向/0.5 做与不做；3D 只留 I-07 接口（capability=false）；agent 写/跨库/时间维不在 0.5。
 
+> **S6a 定稿决策（SE，对照 `S6-contract-v1.md` sha `40f12e5f…`）**：① history 签名用 **detached `<content_sha>.sig`**（`content_sha` 不含 signature；entry `signature?` 可选但落盘以 detached 为准）；② cache 子布局 **`.memoria/cache/graph/{level}/{view_family}/{run_id}.json`**，edition 写入 run metadata（不进路径）；③ 旧 `.memoria/build/**`/旧 graph-groups **不读、可删**（只读 fallback 默认关闭）；④ GC 20 run/90 天只删 cache，history/audit 不 GC；⑤ 0.5 接口 I-01..I-13 采用本清单，2D 先发、3D 仅接口 capability=false。
+
 ---
 
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
