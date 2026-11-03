@@ -14,7 +14,7 @@
 ## 1. 规范性条款（S3-1..S3-12）
 
 ### S3-1 节点类型与状态
-- **规则**：`kind ∈ {kp, cluster}`，禁止第三节点类型；singleton 以 `kp` 呈现（`representative=false`）；VM node `role ∈ {member, focus}`，**v1 无 `role=bridge` 视觉**（桥只作 edge state + 成员统计）；hover/selected 是渲染器内部瞬态，不进 VM。点击语义只由 `kind` 决定（kp→S5 跳编辑器；cluster→S5 下钻）。
+- **规则**：`kind ∈ {kp, cluster}`，禁止第三节点类型；singleton 以 `kp` 呈现（`representative=false`）；VM node `role ∈ {member}`（**v1 只有 member**）；**v1 无 `role=bridge` 视觉**（桥只作 edge state + 成员统计）；**hover/selected/focus 全部是渲染器/Presentation 瞬态，不进 VM**；S5 的导航焦点保存在 GraphNavFrame/Presentation，不写入 VM（S0-9/D-4）。点击语义只由 `kind` 决定（kp→S5 跳编辑器；cluster→S5 下钻）。
 - **机检**：kind 枚举；role 枚举；无第三形状/第三点击语义。
 - **来源**：A-v2 S3-1；B-v2 S3-1；R-S3-3。
 
@@ -69,7 +69,7 @@
 - **来源**：A-v2 S3-11；B-v2 S3-11；R-S3-2。
 
 ### S3-12 与 S1/S2 的一致性 + VM 白名单
-- **规则**：VM 字段白名单：`view_model_id/level_id/level_label/dimension_id/view_family_id/nodes/edges`；节点：`id/kind/label/role/member_count?/representative?/root_exempt?/range_ok?`；边：`id/type/state/presence?/data_edge_ids?`；簇/run/dendrogram/候选状态**不进 VM**；`metrics` 不进 VM（用显式 `member_count`）；**`data_edge_ids` 仅审计/`expand_data_edges` 用，Renderer 不得读取**（S0 R-3/S1 R-S1-11 需要它在 VM 中可审计）；3D 与 2D 同 VM id 集。
+- **规则**：VM 字段白名单：`view_model_id/level_id/level_label/dimension_id/view_family_id/nodes/edges`；节点：`id/kind/label/role/member_count?/aggregate_count?/representative?/root_exempt?/range_ok?/layout_group?{semantic:false}`；边：`id/type/state/presence?/data_edge_ids?`；簇/run/dendrogram/候选状态**不进 VM**；`metrics` 不进 VM（用显式 `member_count`/`aggregate_count`）；**`data_edge_ids` 仅审计/`expand_data_edges` 用，Renderer 不得读取**（S0 R-3/S1 R-S1-11 需要它在 VM 中可审计）；**`layout_group` 只在 `no_semantic_edges` 状态出现，必须 `semantic=false`、非 cluster kind、不产生簇徽标/计数**；3D 与 2D 同 VM id 集。
 - **R-S3-9（冻结）**：`data_edge_ids` 允许出现在 VM 的派生/聚合边上（审计与 `expand_data_edges`），但 Renderer schema 必须拒绝读取；`aggregate_count` 由取景层显式给出，不遍历 `data_edge_ids`。
 - **机检**：VM 白名单；Renderer 无 `data_edge_ids` 读取；2D/3D id 集一致。
 - **来源**：A-v2 S3-12；B-v2 S3-12；R-S3-9。
