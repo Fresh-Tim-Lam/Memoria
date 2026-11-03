@@ -1029,13 +1029,13 @@ erDiagram
 | agent 工具（G7 草案） | 参数（摘要） | 返回 | 约束 |
 |---|---|---|---|
 | `graph_focus` | `level, view_family, dimension, focus, hop≤1` | 邻域 + presence/rule_id | 复用 S4 focus-only；无隐式 2 跳 |
-| `graph_explain` | `edge_id/frame_id` | 关系解释 + data_edge_ids 审计 | 只读；不暴露 Renderer 禁读字段 |
-| `graph_expand` | `cluster_key, run_id, level` | 簇成员摘要（label/member_count） | 只读 S2 run；不重算簇 |
-| `graph_path` | `source, target, max_hops?` | **v1 不提供**（S9 检索）或显式受限 | 不在 S7 做隐式多跳 |
-| `graph_refs` | `kp_id` | file/line/anchor + 簇引用 | 引用可回原文；unknown 显式 |
-| `graph_status` | `frame_id/run_id` | presence/rule_id 直方图、G6 | 只读；audit |
+| `graph_explain_edge` | `edge_id` | `{presence,rule_id,claim_*,data_edge_ids?}` 受控解释 | 只读；可解释 suppressed；不批量泄漏原始边 |
+| `graph_expand_cluster` | `cluster_key, run_id, level` | 簇成员摘要（label/member_count） | 只读 S2 run；不改 S5 导航状态/stack |
+| `graph_summary` | `frame_id/run_id` | presence/rule_id 直方图 + suppressed_summary + G7 摘要 | 只读；无原始隐藏边；token 预算 |
+| `graph_resolve_ref` | `{kp_id?|file+line|anchor}` | `{resolved,kp_id,file,line,anchor,stale,claim_type}` | 只读/幂等/审计；`GRAPH_ANCHOR_STALE` |
+| 错误码 | — | `GRAPH_TOOL_INPUT_INVALID/BUDGET_EXCEEDED/ANCHOR_STALE/RETRIEVAL_UNAVAILABLE/WRITE_FORBIDDEN/AUDIT_FAILED`（S6-ADDENDUM-1） | 逐码 legacy/i18n/severity；audit_id |
 
-> **ER-08/G7 待裁决**：① `graph_path` 是否进 v1（推荐 v1 不做，S9 提供候选）；② token budget 数值（S8）；③ 引用 anchor 采用行号还是 content hash；④ 审计落盘 `.memoria/agent/audit/graph/`（S6 路径）。
+> **ER-08/G7 待裁决**：① 工具名/错误码按 R-S7-3 冻结；`graph_path` v1 不做；② token budget 数值（S8）；③ 引用 anchor 采用行号还是 content hash；④ 审计落盘 `.memoria/agent/audit/graph/`（S6 路径）。
 
 ---
 
@@ -1474,7 +1474,7 @@ flowchart LR
 ```mermaid
 flowchart LR
     AG[("agent 调用（MCP/内部工具）")]
-    TOOL["工具层（graph_focus/explain/expand/refs/status）"]
+    TOOL["工具层（graph_focus/graph_explain_edge/graph_expand_cluster/graph_summary/graph_resolve_ref）"]
     FR[("frame/level/view_family/dimension（S5/S4 只读）")]
     RUN[("S2 run/簇成员（只读）")]
     S4["S4 取景/presence（只读复用；无新裁剪）"]
@@ -1496,10 +1496,10 @@ flowchart LR
 | 流/契约 | 约束 |
 |---|---|
 | `graph_focus` | 复用 S4：focus/一跳/presence/rule_id；不闭包、不带背后图 |
-| `graph_explain` | 关系解释 + `presence/rule_id`；`data_edge_ids` 仅审计，不暴露 Renderer 禁读 |
-| `graph_expand` | 簇成员摘要（label/member_count/多归属）；只读 run、不重算簇 |
-| `graph_refs` | kp_id/file/line/anchor + cluster_key/run_id；unknown 显式 |
-| `graph_path` | v1 不做（S9 提供候选）；禁止隐式多跳 |
+| `graph_explain_edge` | 关系解释 + `presence/rule_id`；`data_edge_ids` 仅审计，不暴露 Renderer 禁读 |
+| `graph_expand_cluster` | 簇成员摘要（label/member_count/多归属）；只读 run、不重算簇 |
+| `graph_resolve_ref` | kp_id/file/line/anchor + cluster_key/run_id；unknown 显式 |
+| 无 `graph_path` | v1 不做隐式多跳；未来需显式 `allow_two_hop` + S5 `EXPLICIT_NEW_HOP` 另开修订 |
 | 预算/降级 | token 预算/截断可见；`unknown/suppressed/no_semantic_edges` 显式，不编造 |
 | 审计 | 每次调用可追溯；`.memoria/agent/audit/graph/`；只读 v1 |
 
