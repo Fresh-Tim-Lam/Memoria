@@ -1087,6 +1087,34 @@ erDiagram
 
 ---
 
+### 1.16 S9 增量（ER-10 草案：candidate_ref/score/reason/edition/索引/评估）
+
+```mermaid
+erDiagram
+    RETRIEVAL_QUERY ||--o{ CANDIDATE : returns
+    RETRIEVAL_QUERY { string query_id PK
+        string kb_id
+        string query
+        string query_type
+        string filters
+        int budget
+        string expected_edition }
+    CANDIDATE { string candidate_id PK
+        string candidate_ref
+        string kind
+        float score
+        string reason
+        string edition
+        int rank }
+    INDEX_ENTRY { string index_id PK
+        string kind
+        string path
+        string edition
+        bool rebuildable }
+```
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -1579,6 +1607,27 @@ flowchart LR
 
 ---
 
+### 2.15 S9 增量（DF-10 草案：召回→排序→候选→S4；不写事实）
+
+```mermaid
+flowchart LR
+    Q[("query/filters/budget/expected_edition")]
+    IDX[("索引（cache 域；可重建；edition 绑定）")]
+    REC["召回（keyword/vector/graph/hybrid）"]
+    RANK["排序/过滤（确定性/tie-break/semantic-only）"]
+    CAND[("candidates（candidate_ref/score/reason/edition）")]
+    S4["S4 取景/presence（唯一裁剪）"]
+    ERR(["降级/失败：GRAPH_RETRIEVAL_UNAVAILABLE 等，可见"])
+    Q --> REC
+    IDX --> REC
+    REC --> RANK
+    RANK --> CAND
+    CAND --> S4
+    REC -- fail --> ERR
+```
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -2048,6 +2097,26 @@ stateDiagram-v2
             Failed --> [*]
             Passed --> [*]
         }
+    }
+```
+
+---
+
+### 3.13 S9 增量（ST-10 草案：检索生命周期/预算/降级）
+
+```mermaid
+stateDiagram-v2
+    state Retrieval {
+        [*] --> Idle
+        Idle --> Searching : QUERY
+        Searching --> Bounded : RESULTS_OK
+        Searching --> Degraded : INDEX_MISSING / STALE / NO_SEMANTIC
+        Searching --> Unavailable : RETRIEVAL_UNAVAILABLE
+        Bounded --> Truncated : BUDGET_EXCEEDED
+        Bounded --> Idle : CONSUMED
+        Truncated --> Idle : CONSUMED
+        Degraded --> Idle : CONSUMED
+        Unavailable --> Idle : RETRY_OR_ABORT
     }
 ```
 
