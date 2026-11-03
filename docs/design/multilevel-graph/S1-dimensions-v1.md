@@ -20,7 +20,31 @@
 - **来源**：A-v2 S1-1；B-v2 S1-1。
 
 ### S1-2 维度注册表 schema
-- **规则**：entry 字段：`id/name/kind/basis/relation_sources/direction/hop_unit/hop_default/hop_max/termination/status/priority/version`；`kind ∈ {hierarchy_navigation, relation_expansion}` 且与 `basis.kind` 一致（**只保留 `kind` 一个规范字段**，`basis.kind` 为派生展示，不是第二个事实源）；`registry_sha` = 规范化 registry 的 sha256。
+- **规则**：entry 字段见下表（类型/枚举/默认值/失败码）；`kind` 是**唯一规范字段**，`basis.kind = map(kind)` 仅为派生展示；二者不一致 ⇒ `DIM_KIND_MISMATCH` 硬失败；`registry_sha = sha256(canonical(registry 去掉 registry_sha 字段后的序列化))`；`history_ref` = 不可变 history 的版本 id（见 R-S1-9）。
+- **S1-2 schema 字段表（冻结）**：
+
+| 字段 | 类型 | 枚举/取值 | 默认 | 失败码 |
+|---|---|---|---|---|
+| `id` | string | 非空、注册表内唯一 | — | `DIM_ID_INVALID` |
+| `name` | string | 非空 | — | `DIM_NAME_INVALID` |
+| `kind` | enum | `hierarchy_navigation`\|`relation_expansion` | — | `DIM_KIND_INVALID` |
+| `basis.kind` | enum(派生) | 必须等于 `map(kind)` | 由 kind 派生 | `DIM_KIND_MISMATCH` |
+| `relation_sources` | array<string> | 关系扩展维度须 ⊇ `E_relation_min`；H 必须 `[]` | `[]` | `DIM_SOURCES_INVALID` |
+| `direction` | enum | `down`\|`up`\|`both`\|`out`\|`in` | H=`down`，A=`both` | `DIM_DIRECTION_INVALID` |
+| `hop_unit` | enum | `edge`\|`n/a` | H=`n/a`，A=`edge` | `DIM_HOP_UNIT_INVALID` |
+| `hop_default` | int\|null | 1..`hop_max`；H 必须 null | H=null，A=1 | `DIM_HOP_INVALID` |
+| `hop_max` | int\|null | 1..2；H 必须 null | H=null，A=2 | `DIM_HOP_INVALID` |
+| `termination.max_nodes` | int\|null | >0 或 null（数值归 S8） | null | `DIM_TERMINATION_INVALID` |
+| `termination.leaf_required` | bool | H=true；A 不要求 | H=true，A=false | `DIM_TERMINATION_INVALID` |
+| `termination.stop_on_no_new` | bool | true | true | `DIM_TERMINATION_INVALID` |
+| `status` | enum | `reserved`\|`active`\|`deprecated` | `reserved` | `DIM_STATUS_INVALID` |
+| `priority` | int | 唯一（同 registry 内不重复） | 0 | `DIM_PRIORITY_DUPLICATE` |
+| `version` | string | 非空 | — | `DIM_VERSION_INVALID` |
+| `history_ref` | string | 指向 history 版本 id，且末条 `content_sha == registry_sha` | — | `DIM_HISTORY_REF_INVALID` |
+| `fallback_policy` | enum | `allow`\|`forbidden`（registry 级） | `allow` | `DIM_FALLBACK_POLICY_INVALID` |
+| `registry_sha` | string(64) | 见上式计算域 | — | `DIM_REGISTRY_SHA_INVALID` |
+
+- **hit 规则**：未知 `id`/`status=reserved|deprecated` 的取景请求 ⇒ `DIM_UNKNOWN`/`DIM_NOT_ACTIVE` fail-closed；`hop_unit="n/a"` 时 `hop_default/hop_max` 必须为 null（H）；`hop_unit="edge"` 时二者必须为 int。
 - **R-S1-9（冻结）**：`registry_history` 为**不可变 append-only 存储**：以 `content_sha` 为 id；每版条目**自包含** `version/relation_sources/active_dimensions/previous_sha/decision_id`；registry 带 `history_ref` 且末条 `content_sha == registry_sha`；validator **不需要外部旧 registry** 即可证明跨版本 `new⊇old`。
 - **机检**：字段齐全/类型/枚举/默认值；未知 id、reserved、缺 min、H 方向非法、hop 非法、priority 重复、registry 坏、history 断链 ⇒ fail-closed。
 - **来源**：A-v2 S1-2；B-v2 S1-2；R-S1-3；R-S1-9（Lead）。
@@ -31,9 +55,9 @@
 - **来源**：A-v2 S1-3；B-v2 S1-3。
 
 ### S1-4 H（层次导航维度）精确定义
-- **规则**：`basis.kind=level_partition`、`relation_sources=[]`、`direction=down`、`hop_unit=n/a`、hop 无预算；一次下钻 = 一层；只沿层次划分下降；终止 = KP 叶子 / 无子块 / 用户取消。H 派生边必须带 `data_edge_ids`（R-S1-4）。
-- **R-S1-11（冻结）**：H 派生边身份：`edge_id = sha256(canonical(parent_id, child_id, level, view_family))`；`data_edge_ids` = 该 (parent,child) 对应的**全部** `contain(structural)` 数据边 id（去重、排序、可枚举）；`expand_data_edges(H_vm)` = 所有 H 边 `data_edge_ids` 的并集，必须 ⊆ `DataSource.edges`；显示计数规则留 S3（S1 只要求集合语义）。
-- **机检**：H entry `relation_sources=[]`；hop 字段为 null/n/a；每条 H 边有非空 `data_edge_ids` 且可映射；`expand_data_edges` 子集。
+- **规则**：`basis.kind=level_partition`、`relation_sources=[]`、`direction=down`、`hop_unit="n/a"`、`hop_default=null`、`hop_max=null`（H 无关系跳预算）；一次下钻 = 一层；只沿层次划分下降；终止 = KP 叶子 / 无子块 / 用户取消。
+- **R-S1-11（冻结，含映射谓词）**：H 派生边身份 `edge_id = sha256(canonical(parent_id, child_id, level, view_family))`；`data_edge_ids(e_H) = { e ∈ DataSource.edges | e.type=contain ∧ e.contain_kind=structural ∧ e.source ∈ members(parent) ∧ e.target ∈ members(child) }`（去重、排序、可枚举；**允许空集**——字段必须存在，空集合法，不得伪造 id）；`expand_data_edges(H_vm) = ⋃ data_edge_ids(e_H)`，必须 ⊆ `DataSource.edges`（空集也满足）；显示计数规则留 S3（S1 只冻结集合语义）。
+- **机检**：H entry `relation_sources=[]`、`hop_unit="n/a"`、hop 字段 null；每条 H 边有 `data_edge_ids` 字段（可为空集）；`expand_data_edges` 子集；空集不得被当成缺失。
 - **来源**：A-v2 S1-4；B-v2 S1-4；R-S1-1/2/4；R-S1-11（Lead）。
 
 ### S1-5 A（关联扩展维度）精确定义（U-10/U-30）
@@ -104,7 +128,7 @@
 - **R-S1-8**：并集 A/B（A 的 M1–M6/E1–E7/H 细节 + B 的 history 自包含/new_hop/registry_sha）。
 - **R-S1-9**：`registry_history` 不可变 append-only、条目自包含、registry 引用 history 尾、validator 不需外部旧 registry。
 - **R-S1-10**：`new_hop` 请求字段；hop=2 仅由 S5 唯一显式动作设置；默认/自动禁止。
-- **R-S1-11**：H 派生边 id/data_edge_ids/expand_data_edges 语义冻结（见 S1-4）。
+- **R-S1-11**：H 派生边 id/data_edge_ids/expand_data_edges 语义冻结（映射谓词见 S1-4；`data_edge_ids` 允许空集，字段必须存在，不得伪造 id）。
 
 ## 3. 冻结前机检（SE，M-S1-1..M-S1-12）
 

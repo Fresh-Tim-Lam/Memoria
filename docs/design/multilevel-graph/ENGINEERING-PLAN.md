@@ -375,9 +375,10 @@ erDiagram
 | `E_RELATION_SOURCE.classification` | `edge_type/projection/derived` | `derived` 不得进 v1 active；新源须有 `producer_ref`（DataSource 可生产） |
 | `DIMENSION_REGISTRY.fallback_policy` | `allow_explicit/forbidden` | 显式 fallback 才可回默认 H，须审计 `fallback_reason`；`forbidden` ⇒ fail-closed |
 | `DIMENSION_TRANSITION` | 状态机审计（reserved→active→deprecated） | deprecated→active 必须 S1 重开 + 版本升级；插件不得写注册表 |
-| H 派生边（VM 层） | `derived_from=partition_refinement` + `partition_ref` + `data_edge_ids`（诱导集，可为空） | R-3 机检：`expand_data_edges(VM) ⊆ DataSource.edges`（空集合法）；不要求每块边非空映射 |
+| H 派生边（VM 层） | `derived_from=partition_refinement` + `partition_ref` + `data_edge_ids`（R-S1-11 冻结：`edge_id=sha256(canonical(parent_id, child_id, level, view_family))`；`data_edge_ids(e_H) = { e ∈ DataSource.edges \| e.type=contain ∧ e.contain_kind=structural ∧ e.source∈members(parent) ∧ e.target∈members(child) }`；去重/排序/可枚举；**允许空集**——字段必须存在、空集合法、不得伪造 id） | R-3 机检：`expand_data_edges(VM) ⊆ DataSource.edges`（空集合法）；空集不得被当成缺失 |
+| `expand_data_edges(VM)` 签名 | `frozenset[EdgeId]`：对 VM 中 `derived_from=data_edge`（聚合/折叠）边与 H 结构边取 `data_edge_ids` 并集；前置条件 = VM 与 DataSource 同一 edition/registry_version | `expand_data_edges(VM) ⊆ DataSource.edges`；**空集合法（R-S1-11 冻结）**；不得回读事实层 |
 
-> **ER-02 待裁决**：① H 派生边 `data_edge_ids` 的「非空」要求与 S0-2 划分语义可能冲突（块→子块由 S2 聚类划分产生，未必存在对应 `contain(structural)` 数据边），建议允许空诱导集 + `partition_ref`（详见 `S1-engineering-check.md`）；② history 存放位置（registry 内 vs 独立 artifact）S6a 定。
+> **ER-02 备注**：R-S1-11 已冻结 H 结构边的映射谓词与「允许空集」（不再待裁）；history 存放位置与 `registry_sha` 计算域/`history_ref` 类型由 S6a 定（O-S1-2，非阻塞）。
 
 ---
 
@@ -560,6 +561,8 @@ flowchart LR
 | `VM` | 仅 `dimension_id`/`level_id`/`view_family_id`；无 mode/nav/capabilities/policy；H 结构边 `derived_from=partition_refinement` |
 | `CACHE` | 键 = `⟨kb/corpus/collect, registry_version, ctx, view_family⟩`；registry 变更必须新键，禁止回写事实源 |
 | 事实源 | 注册表/历史 = 设计产物+决策记录（非 sidecar；D-3）；`selected_dimension_id` = `VIEW_FRAME` 视图状态（非事实源） |
+| P6 输出校验（R-3） | `expand_data_edges(VM)`：并集 VM 中 `derived_from=data_edge` 及 H 结构边的 `data_edge_ids`，断言 ⊆ `DataSource.edges`；H 结构边 `derived_from=partition_refinement`；**空集合法**（R-S1-11 冻结），空集不得当缺失 |
+| 注册表加载 | 只读 + `registry_sha` 校验；`history_ref` 指向不可变 history（类型/计算域 S6a，O-S1-2）；损坏/版本不匹配 ⇒ fail-closed |
 
 ---
 
@@ -686,6 +689,7 @@ stateDiagram-v2
             DimSwitching --> DimensionBlocked : RESOLVE_FAIL unknown_reserved_deprecated
             DimensionBlocked --> DimH : DISMISS / record_reason_and_return_H
             DimA --> DimA : EXPAND_HOP budget_remaining / admit_next_hop
+            DimA --> DimA : EXPLICIT_NEW_HOP new_hop / hop_budget = 2
             DimA --> DimA : TERMINATION_REACHED / hold_view
             DimA --> DimA : BUDGET_TRUNCATED / mark_suppressed_rule_id
             DimH --> DimH : DEEPEN_LEVEL level_depth_remaining / push_nav_frame
@@ -697,7 +701,8 @@ stateDiagram-v2
 |---|---|
 | `SELECT_DIMENSION(id)` | id 必须 `status=active`；reserved/deprecated/unknown ⇒ `DimensionBlocked`（`DIM_NOT_ACTIVE`/`DIM_UNKNOWN`），不静默回退 |
 | `RESOLVE_OK` | 生成新 frame；`hop` 重置为**目标维度** default（H 无 hop）；focus 可表示则保持，否则映射/提示（S5） |
-| `EXPAND_HOP` | 仅 A；`hop_budget ≤ hop_max=2`；`new_hop` 显式才允许 2；预算耗尽 ⇒ suppressed+rule_id |
+| `EXPAND_HOP` | 仅 A；`hop_budget ≤ hop_max=2`；预算耗尽 ⇒ suppressed+rule_id |
+| `EXPLICIT_NEW_HOP` | **R-S1-10 唯一显式入口**：`new_hop=true` 才把 `hop_budget` 置 2；默认/自动路径禁止 2；S5a 冻结事件名/按钮/守卫（S1 只冻结语义；`present/frame` 断言 hop=2 ⇒ new_hop=true） |
 | `DEEPEN_LEVEL` | 仅 H；一次一层，走 S0 Navigation `CLICK_CLUSTER` 语义；**不进入 hop_budget 机检** |
 | `DimensionBlocked` | 必须记录 reason（未知/保留/弃用/版本不匹配）；`fallback_policy=allow_explicit` 时才可显式回 H 并审计 |
 | VM/渲染器 | 维度切换事件只到 S5；Renderer 事件仍为 `nodeClick/edgeClick/backgroundClick`；VM 无维度状态 |
