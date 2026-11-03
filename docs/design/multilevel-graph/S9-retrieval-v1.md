@@ -21,7 +21,7 @@ S9 只产出 **candidate/ranking**：请求带 `kb_id/dimension/filters/budget{m
 - `RetrievalRequest{kb_id, query, query_type, dimension_id?, filters, budget, expected_edition?}`；
   `filters = {kb_id?, level_id?, view_family_id?, dimension_id?, file?, section?, anchor?, kind?}`；
   `budget = {max_candidates, max_tokens=4000, max_latency_ms=500, cursor?}`。
-- `Candidate{kind ∈ {kp,cluster,edge,file,anchor}, status ∈ {ok,degraded,unknown}, data_state, id/ref, score∈[0,1], components, reason, edition, rank}`；稳定游标（绑定 edition/query_hash）。
+- `Candidate{candidate_ref（与 S7 同名同义；指向 kp/cluster/edge/file/anchor）, kind ∈ {kp,cluster,edge,file,anchor}, status ∈ {ok,degraded,unknown}, data_state, score∈[0,1], components, reason, edition, rank}`；`candidate_ref` 是唯一引用字段，`id`/`ref` 仅作旧别名并标注不参与 schema；稳定游标（绑定 edition/query_hash）。
 - **`request.kb_id` 唯一权威**；`filters.kb_id` 若存在必须相等，否则 `GRAPH_TOOL_INPUT_INVALID`；弃 `ref_type`（统一 `kind`）。
 - **机检**：schema 白名单；游标稳定；跨 edition `GRAPH_EDITION_STALE`。
 
