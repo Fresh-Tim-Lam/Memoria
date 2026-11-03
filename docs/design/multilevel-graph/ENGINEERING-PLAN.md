@@ -701,6 +701,8 @@ flowchart LR
 | `P4` frame 读取 | 按 `run_id`/edition 读取（重聚类不打断当前视图）；run 缺失/损坏 ⇒ fail-closed 或回退上一 Ready run（策略可配，须审计） |
 | `AG` agent/S5 | v1 **默认只读**；允许请求**候选 run**（`status=candidate`，带 `trigger/requester/reason` 审计，**不自动采用**）；不得写 membership/缓存/manifest/渲染状态（R-S2-5） |
 
+> **SE 校核待统一（task-302，详见 `S2-engineering-check.md`）**：① μ/β 必须按**端点对去重**（A-v2 的 `|E_sem|` 边计数可致 μ>1）；② 无 E_sem 时 β 应 `null/无定义`（A-v2 写 0）；③ HAC 契约 A（dendrogram+target_k）与 B（μ/β 门控合并）不一致，且 A 的切分不保证输出簇满足 μ/β、B 未定义**多级划分生成规则**；④ τ 默认值证据（A 合成夹具 vs B 待 probe）与 `params_hash` 字段集需 Lead 统一；⑤ B 需补 run 失败回滚与 VM 纯度一句。
+
 ---
 
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
@@ -875,7 +877,10 @@ stateDiagram-v2
 | 转换/状态 | 约束/机检 |
 |---|---|
 | `TRIGGER` | 触发条件可机检：`corpus_manifest_sha` 变化 / 参数或算法版本变化 / 显式手动请求 / 稳定性阈值触发；触发必须审计，不得由渲染器直接发起 |
-| `Building → Ready` | run 内容通过 `P15` 校验（partition/身份/多归属）+ `P16` 稳定性阈值；Ready 后 run 内容哈希固定（不可变） |
+| `Building → Candidate` | 通过 `P15` 校验（partition/身份/多归属）+ `P16` 稳定性后仍为**候选**（R-S2-5：agent/服务请求只能产生候选，不自动采用）；`status=candidate` |
+| `Candidate → Ready` | 只有人/S5 **显式 adopt** 才成为当前 run（新 edition）；adopt 必须审计；候选 run 不得静默替换当前视图 |
+| `Candidate → Superseded` | 候选被丢弃：保留审计（不删除），不进入当前视图；不得用候选 run 生成默认视图或 S9 检索前提 |
+| `Building → Ready` | （人工/服务直接发布路径，需决策记录）run 内容通过 P15+P16；Ready 后内容哈希固定（不可变） |
 | `Building → Failed` | 校验失败/异常；保留失败原因；不得发布部分 run |
 | `Reclustering` | 后台执行，不阻塞当前 frame（frame 持旧 run_id）；并发重聚类串行化（同 epoch 只允许一个 Building run） |
 | `RUN_READY` | 新 run Ready 后切换当前 run（新 edition）；旧 run → `Superseded`（保留审计，不删除） |
