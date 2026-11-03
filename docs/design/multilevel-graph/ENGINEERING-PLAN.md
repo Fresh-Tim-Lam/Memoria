@@ -1072,7 +1072,8 @@ stateDiagram-v2
 | `DefaultView↔EmptyNoSemantic` | `VIEW_STATUS.data_state=no_semantic_edges` ⇒ 空态 banner + KP/结构布局 + agent affordance；**不得伪造语义簇**；`ok` 后回正常视图（S3-8） |
 | `Interaction` | 只发最小事件（nodeClick/edgeClick/backgroundClick/hover/focus）；**导航动作/导航状态不在渲染器**（S5 唯一所有者）；事件 payload 不带 cluster_key/run_id 内部 |
 | `Disposed` | 资源释放；无落盘状态（D-3）；重挂载从 VM/VIEW_STATUS 重建 |
-| 预算 | `max_nodes_per_screen`/帧率/动画/reduced motion；超预算显式降级 + rule_id（S3-11） |
+| 预算 | `max_nodes/max_edges`/帧率/动画/reduced motion 进 capabilities；**裁剪归 S4**（R-S3-2），Renderer 超硬上限 ⇒ `RENDER_BUDGET_EXCEEDED` fail-visible；不静默丢节点/边（S3-11） |
+| 角色边界 | node `role ∈ {member, focus}`（**无 bridge**，R-S3-3）；桥只作 edge `state=bridge_only`；事件按 `kind` 语义，不因 role 改变点击/导航（S3-1/S3-7） |
 
 ---
 
