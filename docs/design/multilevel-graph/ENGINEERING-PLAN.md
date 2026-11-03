@@ -630,6 +630,71 @@ erDiagram
 
 ---
 
+### 1.12 S5 增量（ER-06 草案：GraphNavFrame/nav stack/nav event；待 S5 冻结）
+
+> 依据：`S5-charter.md` S5-1..S5-12、S0-9/D-4、S3 事件、S4 `frame_spec`/presence。**导航状态只属 Presentation/S5**：`GraphNavFrame` 不进 VM、不写产品 sidecar（D-3）；S5 只构造 `frame_spec` 交给 S4，不计算 presence。
+
+```mermaid
+erDiagram
+    GRAPH_NAV_FRAME ||--o{ NAV_STACK_ENTRY : pushes
+    GRAPH_NAV_FRAME ||--o{ NAV_EVENT : consumes
+    GRAPH_NAV_FRAME ||--o| GRAPH_NAV_FRAME : parent
+    GRAPH_NAV_FRAME ||--o| FRAME_SPEC : emits
+    NAV_EVENT ||--o{ NAV_EVENT : deduped_by
+
+    GRAPH_NAV_FRAME {
+        string nav_id PK
+        string frame_id FK
+        string focus_id
+        string focus_kind
+        string level_id
+        string view_family_id
+        string dimension_id
+        int hop_budget
+        bool new_hop
+        bool full_expand
+        string selection_id
+        string parent_nav_id FK
+        int stack_depth
+        string status
+        string checksum
+    }
+    NAV_STACK_ENTRY {
+        string entry_id PK
+        string nav_id FK
+        int seq
+        string focus_id
+        string level_id
+        string dimension_id
+        int hop_budget
+        bool new_hop
+        bool full_expand
+        string selection_id
+        string checksum
+    }
+    NAV_EVENT {
+        string event_id PK
+        string event_type
+        string payload
+        string dedupe_key
+        string source
+        string result
+        string reason_code
+    }
+```
+
+| 增量 | 落点 | 关键约束/机检点 |
+|---|---|---|
+| `GRAPH_NAV_FRAME` | focus/level/view_family/dimension/hop/new_hop/full/selection/parent/stack/status/checksum | **只在 Presentation**，不进 VM（S0-9/D-4）；S5→S4 只发 `frame_spec`；同输入同 frame |
+| `NAV_STACK_ENTRY` | drill/back 可逆栈：focus/level/dimension/hop/new_hop/full/selection + checksum | drill push；back pop 恢复；栈上限/去重；back 到空栈 ⇒ 拒绝（fail-closed）；restore 需 checksum 校验 |
+| `NAV_EVENT` | 事件类型：nodeClick/edgeClick/backgroundClick/drill/back/newHop/dimensionSwitch/fullToggle/restore；source：renderer/keyboard/url/presentation；result：accepted/rejected/idempotent | 非法转移 fail-closed（不改状态、记 reason）；重复 new_hop 幂等；hover 不改变导航状态；事件去重/防抖 |
+| 持久化 | 导航历史/URL 书签（若做）仅 Presentation/会话；不写产品 sidecar（D-3） | 不进 VM、不进 S2/S4 派生缓存 |
+| 边界 | S5 不计算 presence；S4_BUDGET_INVALID ⇒ 回退/提示（S5-9）；无簇 ⇒ EmptyNoSemantic 状态（S5-11） | 与 S4 `frame_spec`/presence、S3 事件、S1 H/A、S2 run 一致 |
+
+> **ER-06 待裁决**：① 导航历史/URL 是否持久化（推荐仅会话/可选，D-3 不允许产品 sidecar）；② new_hop 是否入 nav stack（推荐独立 transient、不入栈；back 只回退 drill）；③ focus 丢失/重聚类后的恢复策略（S5-6）需冻结。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -962,6 +1027,53 @@ flowchart LR
 
 ---
 
+### 2.11 S5 增量（DF-06 草案：事件→状态机→frame_spec→S4→VM；待 S5 冻结）
+
+> 导航管线：S3 渲染器事件 + Presentation 键盘/URL + S2 run 状态 → **S5 状态机（唯一导航状态所有者）** → `frame_spec` → S4 Admission → VM → S3 Renderer；`GraphNavFrame` 只在 Presentation，不进 VM；S5 不计算 presence。
+
+```mermaid
+flowchart LR
+    EVT[("S3 事件：nodeClick/edgeClick/backgroundClick")]
+    INP[("Presentation 输入：键盘/URL/restore")]
+    RUN[("S2 run status：ok/no_semantic_edges")]
+    P32["P32 事件接入/去重/防抖（dedupe_key）"]
+    P33["P33 状态机守卫（合法转移；非法 fail-closed）"]
+    P34["P34 动作解析（jump_editor/drill/back/new_hop/dimension_switch/full_toggle/restore）"]
+    P35["P35 构造 frame_spec（focus/level/hop/new_hop/dimension/budget/full）"]
+    S4["S4 Admission（presence/预算；唯一裁剪者）"]
+    VM[("VM（S3 schema；不含 nav/frame）")]
+    REN["S3 Renderer（只渲染）"]
+    NAV[("GraphNavFrame/NAV_STACK（Presentation 内存；可选 URL/会话）")]
+    A11Y["P36 a11y 播报/历史/G6 导航指标"]
+    ERR(["错误：INVALID_TRANSITION / FRAME_INVALID / S4_BUDGET_INVALID（回退或提示）"])
+
+    EVT --> P32
+    INP --> P32
+    P32 --> P33
+    RUN --> P33
+    P33 -- reject --> ERR
+    P33 -- accept --> P34
+    P34 --> P35
+    P34 --> NAV
+    P35 --> S4
+    S4 --> VM
+    VM --> REN
+    S4 -- budget invalid --> ERR
+    P35 --> A11Y
+    NAV --> A11Y
+```
+
+| 流/接口 | 约束/机检点 |
+|---|---|
+| `P32` 事件接入 | S3 事件→S5 动作映射唯一（kp→编辑器、cluster→drill）；hover 不改变导航状态；重复事件按 dedupe_key 去重/防抖 |
+| `P33` 状态机守卫 | 状态/事件/转移闭包；非法转移 fail-closed（不改状态、记 reason）；未知事件拒绝；无死/不可达状态 |
+| `P34` 动作 | kp→外部编辑器跳转（U-20，不改图状态）；cluster→drill（level+1、focus、hop 重置、push）；back→pop 恢复；new_hop→显式 hop=2（唯一动作、幂等、与默认隔离）；dimension_switch→hop 重置/focus 策略；full_toggle→正交；restore→checksum 校验 |
+| `P35` frame_spec | 字段冻结（focus/level/hop/new_hop/dimension/budget/full）；同输入同 frame；不计算 presence；S4_BUDGET_INVALID 回退/提示 |
+| `P36` a11y/历史 | 键盘等价/aria-live/历史/URL（如做）仅 Presentation；不写产品 sidecar（D-3）；G6 导航指标可复跑 |
+| VM 纯度 | VM 不含 nav/focus/selection/frame；`GraphNavFrame` 不进 VM（D-4）；S5 只发 frame_spec |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -1244,6 +1356,95 @@ stateDiagram-v2
 | `Failed` | frame 非法（dimension 非 active/level 非法/hop_budget 超限）⇒ fail-closed；不渲染部分结果 |
 | `Renderer` 边界 | Renderer 只渲染 VM；`RENDER_BUDGET_EXCEEDED` 仅 VM 超硬上限（S4 应保证不超）；不取数/不重算簇 |
 | S5 边界 | focus/selection/navigation 状态不进 VM；S5 消费 click 事件后触发新 frame |
+
+---
+
+### 3.9 S5 增量（ST-06 / **S5a 完整状态图** 草案：导航状态机 + 展示正交区；待 S5 冻结）
+
+> **S5a**：状态/事件/转移/守卫/不变量全表；非法转移 fail-closed（不改状态、记 `reason_code`）；无死/不可达状态。导航状态只属 S5/Presentation，`GraphNavFrame` 不进 VM；S5 只产 `frame_spec` 给 S4。展示区（全展开/无簇）与导航正交。
+
+```mermaid
+stateDiagram-v2
+    state S5 {
+        state Navigation {
+            [*] --> Restoring : app_restore
+            Restoring --> Idle : RESTORE_invalid
+            Restoring --> Focused : RESTORE_ok_focus
+            Restoring --> HierarchyDrilled : RESTORE_ok_drill
+            [*] --> Idle : app_start_no_restore
+            Idle --> JumpingEditor : NODE_CLICK_kp
+            JumpingEditor --> Idle : EDITOR_RETURN
+            Idle --> Focused : EDGE_CLICK / set_focus
+            Focused --> JumpingEditor : NODE_CLICK_kp
+            JumpingEditor --> Focused : EDITOR_RETURN
+            Focused --> HierarchyDrilled : NODE_CLICK_cluster / drill_push
+            Idle --> HierarchyDrilled : NODE_CLICK_cluster / drill_push
+            HierarchyDrilled --> HierarchyDrilled : NODE_CLICK_cluster / drill_push
+            Focused --> RelationExpanded : EXPLICIT_NEW_HOP [A && focus && hop_allowed]
+            RelationExpanded --> Focused : BACK / hop_reset
+            Focused --> Idle : BACKGROUND_CLICK / clear_focus
+            HierarchyDrilled --> Focused : BACK [stack_depth>1] / pop
+            HierarchyDrilled --> Idle : BACK [stack_depth==1] / reset
+            Idle --> Restoring : RESTORE_REQUEST
+            Focused --> Restoring : RESTORE_REQUEST
+        }
+        --
+        state Display {
+            [*] --> DefaultView
+            DefaultView --> FullExpand : TOGGLE_FULL
+            FullExpand --> DefaultView : TOGGLE_FULL
+            DefaultView --> EmptyNoSemantic : RUN_no_semantic_edges
+            EmptyNoSemantic --> DefaultView : RUN_ok
+        }
+    }
+```
+
+**状态表**
+
+| 状态 | 含义 | 不变量 |
+|---|---|---|
+| `Idle` | 无 focus 的默认视图 | focus=null；selection=null；stack 空或深度 0 |
+| `Focused` | 有焦点/选择的视图（H 或 A 未 drill） | focus≠null；hop_budget=1；new_hop=false |
+| `HierarchyDrilled` | H 下钻（level>L0） | focus≠null；level=L0+depth；stack_depth=depth≥1；hop_budget=1；new_hop=false |
+| `RelationExpanded` | A 显式 2 跳 | dimension=A；focus≠null；hop_budget=2；new_hop=true；stack 不变 |
+| `JumpingEditor` | kp 点击跳编辑器的瞬态（外部动作） | 图导航状态暂存；返回恢复原状态；无 VM 变化 |
+| `Restoring` | URL/会话恢复瞬态 | checksum 校验；成功按栈恢复，失败回 Idle（不部分恢复） |
+| `DefaultView`（Display） | 默认展示 | 与 Navigation 正交 |
+| `FullExpand`（Display） | 全展开（兼容模式） | 不改变 Navigation；`shown(default) ⊆ shown(full)`（S4） |
+| `EmptyNoSemantic`（Display） | 无簇展示 | 不伪造簇；不可 drill（无 cluster）；run ok 后恢复 DefaultView |
+
+**事件/守卫/动作表（摘要）**
+
+| 事件 | 源状态 | 守卫 | 动作 | 目标 |
+|---|---|---|---|---|
+| `NODE_CLICK_kp` | Idle/Focused/HierarchyDrilled | kind=kp | 跳编辑器（U-20）；图状态暂存 | JumpingEditor |
+| `EDITOR_RETURN` | JumpingEditor | 无 | 恢复暂存状态 | 原状态 |
+| `NODE_CLICK_cluster` | Idle/Focused/HierarchyDrilled | kind=cluster ∧ 该簇有子层 | level+1、focus=簇、hop=1、push stack | HierarchyDrilled |
+| `EDGE_CLICK` | Idle/Focused | edge 存在 | set selection（不改 level/focus 层级） | Focused |
+| `BACKGROUND_CLICK` | Focused/HierarchyDrilled | 无 | 清 selection/focus（按策略） | Idle |
+| `BACK` | HierarchyDrilled | stack_depth≥1 | pop 恢复 focus/level/dimension/hop/selection | Focused（depth>1）或 Idle（depth=1） |
+| `EXPLICIT_NEW_HOP` | Focused | dimension=A ∧ focus≠null ∧ hop_budget 允许 | hop=2、new_hop=true（唯一动作） | RelationExpanded |
+| `BACK` | RelationExpanded | 无 | hop=1、new_hop=false | Focused |
+| `TOGGLE_FULL` | DefaultView/FullExpand | 全展开可用 | 切换 Display（正交，不影响 Navigation） | 另一展示态 |
+| `RUN_no_semantic_edges` | DefaultView | run status=no_semantic_edges | 空簇展示（不伪造） | EmptyNoSemantic |
+| `RESTORE_REQUEST` | Idle/Focused | 有 URL/会话 token | checksum 校验 | Restoring |
+
+**非法转移（fail-closed：不改状态，记 reason_code）**
+
+| 非法事件 | 原因 |
+|---|---|
+| `BACK` on Idle/Focused | 无可回退栈 |
+| `EXPLICIT_NEW_HOP` on 无 focus / H 维 / hop 不允许 | 守卫失败 |
+| `NODE_CLICK_cluster` on 叶簇/无子层 | 无下一层 |
+| `BACK` on RelationExpanded → 保持隔离（只回 hop=1，不回 drill） | 与默认路径隔离 |
+| 未知事件/未知状态 | fail-closed |
+| `RESTORE` checksum 失败 | 不部分恢复，回 Idle |
+
+**无死/不可达状态检查**
+
+- 可达：Idle（初始）、Focused（EDGE_CLICK）、HierarchyDrilled（cluster drill）、RelationExpanded（new_hop）、JumpingEditor（kp click）、Restoring（restore）、DefaultView（初始）、FullExpand（toggle）、EmptyNoSemantic（run status）。
+- 无死状态：Idle 可接收事件；Focused/HierarchyDrilled/RelationExpanded 有 BACK/click 出口；JumpingEditor 有 EDITOR_RETURN；Restoring 成功/失败都退出；FullExpand 可 toggle 回；EmptyNoSemantic 有 run ok 恢复。
+- 不变量机检：`focus!=null ⇔ state∈{Focused,HierarchyDrilled,RelationExpanded}`；`HierarchyDrilled ⇒ stack_depth≥1 ∧ hop_budget=1`；`RelationExpanded ⇒ hop_budget=2 ∧ new_hop=true`；`Back` 后栈一致性；`GraphNavFrame ∉ VM`。
 
 ---
 
