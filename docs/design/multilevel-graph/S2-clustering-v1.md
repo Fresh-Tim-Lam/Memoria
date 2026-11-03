@@ -19,18 +19,18 @@
 - **来源**：A-v2 S2-1/S2-9；B-v2 S2-1；R-S2-1。
 
 ### S2-2 内聚度 μ（语义-only）
-- **规则**：`μ(C)=W_in / (|C|(|C|-1)/2)`，其中 `W_in` 只累计 **semantic 边**权重（v1 `weight_policy=semantic_uniform`，权重 1.0）；reference/structural/非 semantic extend **权重 0**，仅出现在 `diag_struct_*` 诊断字段，不参与 μ/β。
+- **规则**：`μ(C)=P_in / (|C|(|C|-1)/2)`，其中 `P_in` 为**去重后的 semantic 内部无序端点对数**（同一对节点之间即使有多条 semantic 边，**每个有序/无序端点对最多计 1.0**；v1 `weight_policy=semantic_uniform`）⇒ **0 ≤ μ ≤ 1**；`reference/structural/非 semantic extend` **权重 0**，仅出现在 `diag_struct_*` 诊断字段，不参与 μ/β。
 - **机检**：`used_edges(C) == E_sem ∩ internal(C)`；含非 semantic 边 ⇒ `S2_SEMANTIC_PURITY_FAIL`。
 - **来源**：A-v2 S2-2；B-v2 S2-2/S2-9；R-S2-1（P0）。
 
 ### S2-3 桥 β（语义-only）
-- **规则**：`β(C)=W_out/(W_in+W_out)`，同样只累计 semantic 边；另报 `bridge_per_member`、`single_anchor` 诊断（只作诊断，不作合格判据）。
+- **规则**：`β(C)=P_out/(P_in+P_out)`，其中 `P_in/P_out` 均为**去重后的 semantic 无序端点对数**（同对多边只计一次）；`0 ≤ β ≤ 1`；另报 `bridge_per_member`、`single_anchor` 诊断（只作诊断，不作合格判据）。
 - **机检**：β 输入边集 == E_sem；诊断字段不参与 `representative` 判定。
 - **来源**：A-v2 S2-3；B-v2 S2-3；R-S2-1。
 
 ### S2-4 划分算法（确定性 HAC 契约）
-- **规则**：v1 主算法 = **纯自实现 average-linkage HAC**，无第三方依赖；输入 `E_sem` 诱导的图；建完整 dendrogram；按 **`cut_policy`（target_k 或 min_cluster_size）** 切分；tie-break = `min canonical id`；canonical 序列化。
-- **R-S2-9（冻结）**：canonical 契约 = 标准 average-linkage dendrogram + cut（`target_k`/`min_cluster_size`），**μ/β 只作后验质量校验，不作合并门控**；B 的"μ/β 门控约束合并"列为 reserved 替代（不进 v1）。算法四态：`ok / no_semantic_edges / partial_disconnected / size_exceeded / algorithm_failed`（不得用"degraded"含糊覆盖）。
+- **规则**：v1 主算法 = **纯自实现 average-linkage HAC**，无第三方依赖；输入 `E_sem` 诱导的图（端点对去重）；建完整 dendrogram；按 **`cut_policy`（target_k 或 min_cluster_size）** 切分；**tie-break（冻结）**：在 linkage 最大的候选合并对中，取**合并后成员集合的 canonical 序列字典序最小者**；canonical 序列化；**后验校验**：切分后若任一簇不满足 μ/β 门槛，按 `cut_policy` 调整 k 重切，仍不满足 ⇒ `algorithm_failed`，**不得输出违规簇**。
+- **R-S2-9（冻结）**：canonical 契约 = 标准 average-linkage dendrogram + cut（`target_k`/`min_cluster_size`），**μ/β 只作后验质量校验，不作合并门控**；B 的"μ/β 门控约束合并"列为 reserved 替代（不进 v1）。算法**五状态**：`ok / no_semantic_edges / partial_disconnected / size_exceeded / algorithm_failed`（不得用"degraded"含糊覆盖）。
 - **机检**：两次运行 run 逐字节一致；golden 可复算；无第三方 import；失败状态可枚举；不得静默回退连通分量。
 - **来源**：A-v2 S2-4；B-v2 S2-4；R-S2-3；R-S2-9（Lead）。
 
@@ -66,7 +66,7 @@
 - **来源**：A-v2 S2-10；B-v2 S2-10；R-S2-7。
 
 ### S2-11 持久化与缓存
-- **规则**：簇/成员/边/稳定性全部为**派生缓存**（可重建）；**禁止写产品 sidecar/新段**（D-3）；旧 run 只读；路径/GC/schema 归 S6。
+- **规则**：簇/成员/边/稳定性全部为**派生缓存**（可重建）；**禁止写产品 sidecar/新段**（D-3）；旧 run 只读；路径/GC/schema 归 S6；**簇/run/dendrogram/候选 run 状态均为派生状态，不得进入 ViewModel（D-4）**，VM 仍只带 `dimension_id` 与节点/边视图。
 - **机检**：无产品 sidecar 写入；缓存可删除后重建得到同 run。
 - **来源**：A-v2 S2-11；B-v2 S2-11；S0 D-3。
 
@@ -77,7 +77,7 @@
 
 ### S2-13 与 agent
 - **规则**：v1 agent **只读** run；可请求"新建候选 run"（`requester/reason/params/base_run_id` 审计；`status=candidate`，不自动采用、不覆盖旧 run）；不得写 membership/缓存/manifest/渲染状态；跨 KB 拒绝。
-- **机检**：candidate/adopted 分离；审计字段必填；无写路径。
+- **机检**：candidate/adopted 分离；审计字段必填；无写路径；候选 run 状态不得进入 ViewModel（D-4）。
 - **来源**：A-v2 S2-13；B-v2 S2-13；R-S2-5。
 
 ## 2. 跨议题裁决（R-S2-1..R-S2-13）

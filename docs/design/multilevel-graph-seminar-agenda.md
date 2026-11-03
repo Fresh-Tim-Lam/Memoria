@@ -2,7 +2,7 @@
 
 > **依据（不可改写）**：`docs/design/multilevel-graph-vision.md`（含 §0 第一轮原话 U-1..U-24、§0.2 第二轮原话 U-25..U-35）。
 > 本议程每条设计任务都必须回指 U-编号；覆盖不全 ⇒ 不得评审通过。
-> **状态**：V0.2；人已就 Q1–Q8 作答（见 §6），按 U-34 逐议项推进。**S0 已冻结**（`S0-terms-v1.md` sha256 `241b1e1e…`）、**S1 已冻结**（`S1-dimensions-v1.md` sha256 `6676c71d…`，见 `S1-FREEZE-RECORD.md`）；下一场 S2 待章程与议程确认。
+> **状态**：V0.2；人已就 Q1–Q8 作答（见 §6），按 U-34 逐议项推进。**S0、S1、S2 已冻结**（`S0-terms-v1.md` `241b1e1e…`、`S1-dimensions-v1.md` `6676c71d…`、`S2-clustering-v1.md` `92bb0041…`，见各自 FREEZE-RECORD）；下一场 S3 待章程与议程确认。
 > **记录时间**：2026-11-02（Asia/Shanghai）。
 
 ## 0. 结论先行
@@ -165,7 +165,7 @@
 
 ## 7. 下一步
 
-1. **S0 已完成并冻结**（S0-terms-v1 + S0-FREEZE-RECORD）；**S1 已完成并冻结**（S1-dimensions-v1 + S1-FREEZE-RECORD；SE M-S1-1..12 全 PASS + Lead 独立复检）；
+1. **S0/S1/S2 均已完成并冻结**（各自 v1 + FREEZE-RECORD；SE 机检全 PASS + Lead 独立复检）；
 2. 招聘并组建研讨团队：主办研究、独立复核、**软件工程专家（DFD/ER/状态图）**、渲染接口设计；
-3. 按 S2→S10 逐场推进；每场前发章程与议程，场后 Lead 裁决并更新覆盖矩阵；
+3. 按 S3→S10 逐场推进；每场前发章程与议程，场后 Lead 裁决并更新覆盖矩阵；
 4. 全部冻结后才进入产品实现与发版。
