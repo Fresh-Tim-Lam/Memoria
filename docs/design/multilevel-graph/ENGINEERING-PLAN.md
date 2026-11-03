@@ -950,6 +950,95 @@ erDiagram
 
 ---
 
+### 1.14 S7 增量（ER-08 草案：agent 工具/引用/证据/审计；待 S7 冻结）
+
+> S7 只定义 agent **消费**图谱的契约：只读、不绕过 DataSource、不把 VM/缓存当事实、不写 sidecar/registry（v1）；工具调用可审计；引用必须可回原文（kp/file/line 或 anchor）与簇引用（cluster_key/run_id）。
+
+```mermaid
+erDiagram
+    GRAPH_TOOL ||--o{ TOOL_CALL : invokes
+    GRAPH_TOOL ||--o{ TOOL_RESULT : returns
+    TOOL_CALL ||--o{ AUDIT_ENTRY : audited
+    TOOL_RESULT ||--o{ EVIDENCE_REF : cites
+    EVIDENCE_REF ||--o{ KP_REF : kp
+    EVIDENCE_REF ||--o{ CLUSTER_REF : cluster
+    GRAPH_TOOL ||--o{ TOKEN_BUDGET : bounded_by
+
+    GRAPH_TOOL {
+        string tool_name PK
+        string mode
+        string params_schema
+        string result_schema
+        string error_codes
+        bool read_only
+        bool idempotent
+    }
+    TOOL_CALL {
+        string call_id PK
+        string tool_name FK
+        string actor
+        string params_sha
+        string frame_id
+        string run_id
+    }
+    TOOL_RESULT {
+        string result_id PK
+        string call_id FK
+        string status
+        string payload_sha
+        int token_estimate
+        bool truncated
+    }
+    EVIDENCE_REF {
+        string ref_id PK
+        string kp_id
+        string file
+        int line
+        string anchor
+        string cluster_key
+        string run_id
+        string kind
+    }
+    KP_REF {
+        string kp_id PK
+        string file
+        int line
+        string anchor
+    }
+    CLUSTER_REF {
+        string cluster_key
+        string run_id
+        string level_id
+        string view_family_id
+    }
+    TOKEN_BUDGET {
+        string budget_id PK
+        int max_tokens
+        int max_items
+        string degrade_policy
+    }
+    AUDIT_ENTRY {
+        string audit_id PK
+        string kind
+        string actor
+        string ref
+        string at
+    }
+```
+
+| agent 工具（G7 草案） | 参数（摘要） | 返回 | 约束 |
+|---|---|---|---|
+| `graph_focus` | `level, view_family, dimension, focus, hop≤1` | 邻域 + presence/rule_id | 复用 S4 focus-only；无隐式 2 跳 |
+| `graph_explain` | `edge_id/frame_id` | 关系解释 + data_edge_ids 审计 | 只读；不暴露 Renderer 禁读字段 |
+| `graph_expand` | `cluster_key, run_id, level` | 簇成员摘要（label/member_count） | 只读 S2 run；不重算簇 |
+| `graph_path` | `source, target, max_hops?` | **v1 不提供**（S9 检索）或显式受限 | 不在 S7 做隐式多跳 |
+| `graph_refs` | `kp_id` | file/line/anchor + 簇引用 | 引用可回原文；unknown 显式 |
+| `graph_status` | `frame_id/run_id` | presence/rule_id 直方图、G6 | 只读；audit |
+
+> **ER-08/G7 待裁决**：① `graph_path` 是否进 v1（推荐 v1 不做，S9 提供候选）；② token budget 数值（S8）；③ 引用 anchor 采用行号还是 content hash；④ 审计落盘 `.memoria/agent/audit/graph/`（S6 路径）。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -1378,6 +1467,44 @@ flowchart LR
 
 ---
 
+### 2.13 S7 增量（DF-08 草案：agent 查询/解释/展开/引用；待 S7 冻结）
+
+> agent 查询走 **只读 View/Presence 层**（复用 S4 focus-only、S5 frame、S2 run）；不读 Renderer 禁读字段、不做语义重算、不做隐式多跳；结果带 `presence/rule_id` 解释、token 预算与截断标记、引用（kp/file/line/anchor、cluster_key/run_id）；调用审计。
+
+```mermaid
+flowchart LR
+    AG[("agent 调用（MCP/内部工具）")]
+    TOOL["工具层（graph_focus/explain/expand/refs/status）"]
+    FR[("frame/level/view_family/dimension（S5/S4 只读）")]
+    RUN[("S2 run/簇成员（只读）")]
+    S4["S4 取景/presence（只读复用；无新裁剪）"]
+    REF["引用解析 kp/file/line/anchor + cluster_key/run_id"]
+    BUD["token 预算/截断（可见）"]
+    AUD[("审计（append-only）")]
+    ERR(["错误：GRAPH_*；unknown/suppressed/no_semantic_edges 显式"])
+    AG --> TOOL
+    FR --> TOOL
+    RUN --> TOOL
+    TOOL --> S4
+    S4 --> REF
+    REF --> BUD
+    BUD --> AG
+    TOOL --> AUD
+    TOOL -- fail --> ERR
+```
+
+| 流/契约 | 约束 |
+|---|---|
+| `graph_focus` | 复用 S4：focus/一跳/presence/rule_id；不闭包、不带背后图 |
+| `graph_explain` | 关系解释 + `presence/rule_id`；`data_edge_ids` 仅审计，不暴露 Renderer 禁读 |
+| `graph_expand` | 簇成员摘要（label/member_count/多归属）；只读 run、不重算簇 |
+| `graph_refs` | kp_id/file/line/anchor + cluster_key/run_id；unknown 显式 |
+| `graph_path` | v1 不做（S9 提供候选）；禁止隐式多跳 |
+| 预算/降级 | token 预算/截断可见；`unknown/suppressed/no_semantic_edges` 显式，不编造 |
+| 审计 | 每次调用可追溯；`.memoria/agent/audit/graph/`；只读 v1 |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -1787,6 +1914,46 @@ stateDiagram-v2
 | CacheLifecycle | 派生缓存可重建；GC 只删缓存；失败不影响事实/adopted run/frame；D-3 无产品 sidecar |
 | S5a 引用 | 导航状态（Idle/Loading/.../Stale、T01–T30、148 边）见 §3.9；本图不替代 S5a；S5 事务化失败 diff=0 与 run/registry 失败隔离 |
 | 失败回退 | 初始 run/registry 失败 ⇒ Degraded/提示；非初始保持原 run/frame；审计记录 |
+
+---
+
+### 3.11 S7 增量（ST-08 草案：agent token/预算/降级 + 写权限；待 S7 冻结）
+
+> v1 agent **只读**：工具调用状态只描述查询/预算/降级/未知，不描述图写入；写路径仅 S10（工具 + 审计 + 人工确认）。`no_semantic_edges`、预算不足、unknown/suppressed 必须**可见降级**，不得编造。
+
+```mermaid
+stateDiagram-v2
+    state AgentQuery {
+        state Lifecycle {
+            [*] --> Idle
+            Idle --> Querying : TOOL_CALL
+            Querying --> Bounded : RESULT_OK
+            Querying --> Degraded : NO_SEMANTIC_EDGES / DATA_MISSING
+            Querying --> Failed : GRAPH_ERROR
+            Bounded --> Truncated : TOKEN_BUDGET_EXCEEDED
+            Bounded --> Idle : CONSUMED
+            Truncated --> Idle : CONSUMED
+            Degraded --> Idle : CONSUMED
+            Failed --> Idle : RETRY_OR_ABORT
+        }
+        --
+        state ReadOnlyBoundary {
+            [*] --> ReadOnly
+            ReadOnly --> ReadOnly : TOOL_READ
+            ReadOnly --> Denied : WRITE_ATTEMPT
+            Denied --> ReadOnly : REPORT_ONLY
+        }
+    }
+```
+
+| 状态/转移 | 约束 |
+|---|---|
+| `Querying→Bounded` | 结果在 token/条目预算内；带 presence/rule_id/引用 |
+| `Bounded→Truncated` | 超预算显式截断（`truncated=true`），不得静默 |
+| `Degraded` | `no_semantic_edges`/数据缺失/unknown；显式说明，不编造 |
+| `Failed` | `GRAPH_*` 错误；可重试/中止；审计 |
+| `ReadOnly→Denied` | v1 任何写尝试拒绝（`GRAPH_READ_ONLY`）；写仅 S10 工具+审计/人工确认 |
+| 审计 | 每次调用落 audit；无 sidecar/registry 写入（D-3） |
 
 ---
 
