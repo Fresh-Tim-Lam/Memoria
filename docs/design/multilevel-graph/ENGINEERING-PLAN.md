@@ -382,6 +382,93 @@ erDiagram
 
 ---
 
+### 1.9 S2 增量（ER-03 草案：簇/成员/运行/稳定性；待 S2 冻结，不覆盖 S0/S1）
+
+> 依据：`S2-charter.md` S2-1..S2-13、S0-4/S0-7/D-2/D-3、S1 R-2；簇是**派生缓存**（不写产品 sidecar）；身份 = run-scoped id + `cluster_key`；同 `(level, view_family)` 单归属、跨族/维多归属。
+
+```mermaid
+erDiagram
+    CLUSTER_RUN ||--o{ CLUSTER : produces
+    CLUSTER_RUN ||--o{ CLUSTER_MEMBERSHIP : scopes
+    CLUSTER_RUN ||--o{ CLUSTER_EDGE : projects
+    CLUSTER_RUN ||--o{ CLUSTER_STABILITY : compared_with_previous
+    CLUSTER_RUN ||--o| CLUSTER_RUN : previous_run
+    CLUSTER ||--o{ CLUSTER_MEMBERSHIP : contains
+    CLUSTER ||--o{ CLUSTER : refines_parent_to_child
+    CLUSTER ||--o{ CLUSTER_EDGE : source_or_target
+    KP_CONCEPT ||--o{ CLUSTER_MEMBERSHIP : member_kp
+
+    CLUSTER_RUN {
+        string run_id PK
+        string corpus_manifest_sha
+        string level_id
+        string view_family_id
+        string algorithm_id
+        string algorithm_version
+        string params_hash
+        string status
+        string previous_run_id FK
+        string parent_run_id FK
+        string trigger
+        string requester
+        string created_at
+    }
+    CLUSTER {
+        string cluster_id PK
+        string run_id FK
+        int local_seq
+        string cluster_key
+        string parent_cluster_id FK
+        string level_id
+        string view_family_id
+        int member_count
+        bool representative
+        bool root_exempt
+    }
+    CLUSTER_MEMBERSHIP {
+        string run_id FK
+        string cluster_id FK
+        string kp_id FK
+        string source
+        float weight
+    }
+    CLUSTER_EDGE {
+        string cluster_edge_id PK
+        string run_id FK
+        string source_cluster_id FK
+        string target_cluster_id FK
+        string edge_kind
+        string data_edge_ids
+    }
+    CLUSTER_STABILITY {
+        string stability_id PK
+        string run_id FK
+        string previous_run_id FK
+        string metric
+        float value
+        float threshold
+        bool pass
+    }
+```
+
+| 增量 | 落点 | 关键约束/机检点 |
+|---|---|---|
+| `CLUSTER_RUN.run_id` | **粒度 = `(level, view_family)`（R-S2-4）**；稳定编码 `sha256(canonical(corpus_manifest_sha, view_family_id, level_id, algorithm_id, algorithm_version, params_hash))` | 同输入同 run_id；Ready 后内容不可变；新 run 不改旧 run；父子层用 `parent_run_id` 关联（跨层 refinement 校验） |
+| `CLUSTER_RUN.status` | `{building, candidate, ready, superseded, failed}`（R-S2-5：agent 可请求候选 run，**不自动采用**） | `candidate` 必须带 `trigger/requester/reason` 审计；只有人/S5 可 adopt 为 ready/current；不得静默替换 |
+| `CLUSTER.cluster_id` | `(run_id, local_seq)`（run-scoped，D-2） | `local_seq` 按成员最小 canonical id 排序、run 内唯一；不得用内容哈希当实例 id |
+| `CLUSTER.cluster_key` | `sha256(canonical(sorted(member_canonical_ids)) + algorithm_id + version + params_hash)`（S0-4/D-2） | 可复算/去重；curation/审计必须同时记 run_id + cluster_key |
+| `CLUSTER_MEMBERSHIP` | `(run_id, cluster_id, kp_id)`；同 `(level, view_family)` 内 kp 唯一，跨族/维可重叠；`source=derived_cluster`（v1 无 curation） | 复合唯一约束由校验器保证；**role 不复用 S1 node role=bridge**（R-S2-7，桥只作边 state）；不写产品 sidecar（D-3） |
+| `CLUSTER.parent_cluster_id` / `CLUSTER_RUN.parent_run_id` | Π_{ℓ+1}→Π_ℓ 精化关系（跨 run 用 parent_run_id） | 子簇成员 ⊆ 父簇成员；跨 view_family 不得成父；H 派生边由该关系 + R-S1-11 谓词生成 |
+| `CLUSTER.representative` / `root_exempt` | singleton 不作代表节点（`representative=false`，μ=null）；L0 全库单块显式 `root_exempt=true`（R-S2-6） | singleton μ=null 不参与 τ 判定；root_exempt 不是普通簇，不参与普通簇统计 |
+| `CLUSTER_EDGE` | 内部边/桥边聚合：`edge_kind ∈ {internal, bridge}`；`data_edge_ids` 映射回 DataSource（R-3） | 数据派生聚合边 `data_edge_ids` 必须非空；H 结构边按 S1 R-S1-11 允许空集（两者用 `derived_from` 区分）；桥判定确定性；边界呈现归 S4 |
+| `CLUSTER_STABILITY` | 新 run 与上一 run 的 Jaccard/churn/split-merge（仅同 `(level, view_family)` 可比） | 度量确定性；首次 run 记 `initial/null`；阈值 S8；失败/回滚见 ST-03 |
+| µ/β 参数 | 语义-only（R-S2-1）：`μ/β` 输入边集 == `E_sem`（label=semantic）；reference/structural/非 semantic extend **不进入** μ/β | 权重策略与 τ 进 `params_hash`；τ 默认值须由语义-only probe 标定（R-S2-2）；非法参数 fail-closed |
+| 持久化 | 全部为**派生缓存**（`.memoria/build` 类），可重建；审计/决策记录非 sidecar | D-3：禁止写产品 sidecar/新段；S6 需求见 DF-03 |
+
+> **ER-03 待裁决**：① `CLUSTER_MEMBERSHIP` 的「同族单归属」用 DB 唯一键还是校验器（推荐校验器，派生缓存可重建）；② `parent_cluster_id`/`parent_run_id` 是否需独立 `PARTITION_REFINEMENT` 关系表（推荐字段即可）；③ µ/β 参数/阈值存储位置（registry 配置 vs run 内嵌 params）——R-S2-4 已定 run 粒度；参数建议 run 内嵌 `params_hash` + params 只读文档，S6 定。
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -566,6 +653,56 @@ flowchart LR
 
 ---
 
+### 2.8 S2 增量（DF-03 草案：划分算法/重聚类/稳定性；待 S2 冻结）
+
+> 聚类在**后端**确定性服务：输入 DataSource + `(level, view_family)` + 算法/参数；输出 `CLUSTER_RUN + CLUSTER + CLUSTER_MEMBERSHIP`（派生缓存）；**A 维度不参与聚类**（S2-10）；frame 按 `run_id` 读取（视图稳定）；写路径禁止产品 sidecar（D-3）。
+
+```mermaid
+flowchart LR
+    DS[("DataSource 节点/边（contain/reference/extend）")]
+    REG[("level/view_family 注册表 + µ/β 参数")]
+    PREV[("上一 CLUSTER_RUN（previous_run_id）")]
+    P13["P13 参数校验（µ/β/算法/阈值；非法 fail-closed）"]
+    P14["P14 确定性聚类（不含 dimension_id）"]
+    P15["P15 身份与划分校验（run_id/cluster_key/partition V1–V6/MEMBERSHIP）"]
+    P16["P16 稳定性度量（vs 上一 run）"]
+    P17["P17 簇边投影（internal/bridge + data_edge_ids）"]
+    C3[("CLUSTER_RUN / CLUSTER / CLUSTER_MEMBERSHIP 派生缓存")]
+    C4[("CLUSTER_EDGE 派生缓存")]
+    P4["P4 frame/取景 S9（按 run_id edition 读取）"]
+    AG["AGENT/S5 重聚类请求（策略 + 审计）"]
+    ERR(["错误：PARAM_INVALID / RUN_INVALID / STABILITY_FAIL / NO_PREVIOUS_RUN"])
+
+    DS --> P13
+    REG --> P13
+    AG --> P13
+    P13 -- reject --> ERR
+    P13 -- ok --> P14
+    P14 --> P15
+    P15 --> C3
+    PREV --> P16
+    C3 --> P16
+    P16 -- fail --> ERR
+    P16 -- ok --> P17
+    P15 --> P17
+    P17 --> C4
+    C3 --> P4
+    C4 --> P4
+```
+
+| 流/存储 | 约束/机检点 |
+|---|---|
+| `P13` 参数校验 | µ/β 公式（**只含 `E_sem`，R-S2-1**）、阈值类型/范围/默认出处（语义-only probe，R-S2-2）、算法 id/版本、参数 fail-closed；参数不得来自用户会话 |
+| `P14` 聚类 | **确定性 HAC（纯自实现、无网络库依赖，R-S2-3）**：冻结精确伪代码/链接准则/tie-break（min canonical id）/序列化 + golden 2x 逐字节一致；输入不含 `dimension_id`（A 不影响簇）；禁止退化为严格连通分量（反例图机检）；规模超限 ⇒ 显式 `degraded` |
+| `P15` 身份/划分 | `run_id` 粒度 = `(level, view_family)`（R-S2-4）；`cluster_key` 可复算；partition V1–V6（S0-2）；同 `(level, view_family)` 单归属、跨族/维多归属；`parent_run_id`+`parent_cluster_id` 精化关系；singleton μ=null/representative=false；root_exempt 显式 |
+| `P16` 稳定性 | Jaccard/churn/split-merge（仅同 `(level, view_family)` 可比）；首次 run `initial/null`；阈值 S8；指标可复算 |
+| `P17` 簇边投影 | `internal/bridge` 分类确定性；**数据派生聚合边 `data_edge_ids` 非空**（R-3）；H 结构边按 S1 R-S1-11 允许空集；`expand_data_edges ⊆ DataSource.edges`；边界呈现归 S4 |
+| `C3/C4` 缓存 | 键 = `⟨corpus_manifest_sha, level, view_family, algorithm, version, params_hash⟩`；Ready 不可变；可重建；不写产品 sidecar（D-3） |
+| `P4` frame 读取 | 按 `run_id`/edition 读取（重聚类不打断当前视图）；run 缺失/损坏 ⇒ fail-closed 或回退上一 Ready run（策略可配，须审计） |
+| `AG` agent/S5 | v1 **默认只读**；允许请求**候选 run**（`status=candidate`，带 `trigger/requester/reason` 审计，**不自动采用**）；不得写 membership/缓存/manifest/渲染状态（R-S2-5） |
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -706,6 +843,45 @@ stateDiagram-v2
 | `DEEPEN_LEVEL` | 仅 H；一次一层，走 S0 Navigation `CLICK_CLUSTER` 语义；**不进入 hop_budget 机检** |
 | `DimensionBlocked` | 必须记录 reason（未知/保留/弃用/版本不匹配）；`fallback_policy=allow_explicit` 时才可显式回 H 并审计 |
 | VM/渲染器 | 维度切换事件只到 S5；Renderer 事件仍为 `nodeClick/edgeClick/backgroundClick`；VM 无维度状态 |
+
+---
+
+### 3.6 S2 增量（ST-03 草案：重聚类/run 生命周期/失败回滚；待 S2 冻结）
+
+> 簇 run 是**版本化派生缓存**：Ready 后不可变；重聚类生成新 run（新 edition），旧 run 保留审计；失败回滚到上一 Ready run（可见错误/审计）；frame 使用固定 run_id，重聚类不打断当前视图（切 epoch 由 S5 决定）。
+
+```mermaid
+stateDiagram-v2
+    state ClusterService {
+        state RunLifecycle {
+            [*] --> Building
+            Building --> Candidate : RUN_VALIDATED / candidate_only
+            Building --> Failed : RUN_INVALID
+            Candidate --> Ready : ADOPT / human_or_S5_decides
+            Candidate --> Superseded : DISCARD / candidate_not_adopted
+            Ready --> Superseded : NEW_RUN_READY
+        }
+        --
+        state ActiveClusterSet {
+            [*] --> UsingRun
+            UsingRun --> Reclustering : TRIGGER corpus_changed|params_changed|manual_request
+            Reclustering --> UsingRun : RUN_READY new_run / switch_edition_after_audit
+            Reclustering --> Rollback : RUN_INVALID
+            Rollback --> UsingRun : KEEP_PREVIOUS_RUN / record_reason
+        }
+    }
+```
+
+| 转换/状态 | 约束/机检 |
+|---|---|
+| `TRIGGER` | 触发条件可机检：`corpus_manifest_sha` 变化 / 参数或算法版本变化 / 显式手动请求 / 稳定性阈值触发；触发必须审计，不得由渲染器直接发起 |
+| `Building → Ready` | run 内容通过 `P15` 校验（partition/身份/多归属）+ `P16` 稳定性阈值；Ready 后 run 内容哈希固定（不可变） |
+| `Building → Failed` | 校验失败/异常；保留失败原因；不得发布部分 run |
+| `Reclustering` | 后台执行，不阻塞当前 frame（frame 持旧 run_id）；并发重聚类串行化（同 epoch 只允许一个 Building run） |
+| `RUN_READY` | 新 run Ready 后切换当前 run（新 edition）；旧 run → `Superseded`（保留审计，不删除） |
+| `RUN_INVALID` | 回滚到上一 Ready run（`KEEP_PREVIOUS_RUN`）；错误可见 + 审计；不得静默使用不一致 run |
+| `NO_PREVIOUS_RUN` | 首次聚类无上一 run：允许 Ready 但稳定性判定为 `unknown`（不得伪造 pass） |
+| VM/渲染器 | 簇状态/run_id 不进 ViewModel（D-4）；frame 携带 run/edition 元数据（视图状态，非事实源） |
 
 ---
 
