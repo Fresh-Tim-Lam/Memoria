@@ -3043,4 +3043,332 @@ def _graph_telemetry_summary(self) -> dict:
 UIAPI.get_graph_telemetry_summary = _graph_telemetry_summary
 
 
+# ══════════════════════════════════════════════════════════════════════════
+# 0.5 多层次图谱：**只读** RPC `get_multilevel_graph_vm`（B4.1 · task-358）
+#
+# 为什么在 ui.py 里组合管线：Lead 裁 A 方案——只加只读 RPC，不扩大 UI 写域。
+# 本段**只调用** B1–B3 既有实现（DataSourceReader→GraphViewBuilder→
+# ClusterRunBuilder→AdmissionService→ViewModelBuilder），**不重写**取景/裁剪/
+# presence/预算；presence 的唯一裁剪者仍是 AdmissionService（S4-1）。
+#
+# 契约要点：
+# - `vm` 严格 S3 白名单（S3-12 + ADDENDUM-1/2，由 view_model.validate_vm 校验）；
+# - `presentation.degrees/files` 来自**同一只读 DataSource**，**不塞进 VM**（S3-12）；
+# - 只读：不写 sidecar / 不写 cache；DataSourceReader 自带 D-3 写守卫；
+# - 失败一律结构化 `GRAPH_*` 错误（S6-9），UI 可据此回退 legacy 渲染；
+# - budget 缺省 = S8 冻结值 200 nodes / 400 edges / 180ms，**超限即结构化失败**。
+# ══════════════════════════════════════════════════════════════════════════
+
+#: 叶层（单 KP 粒度，S0-2：L_L）。默认取景层级。
+MULTILEVEL_LEVEL_LEAF = "LL"
+#: 顶层（全库簇，S0-2：L0）。只有存在多成员簇时可用。
+MULTILEVEL_LEVEL_TOP = "L0"
+#: budget 冻结上限（S8）：**请求超过即结构化失败**，不静默截断。
+MULTILEVEL_BUDGET_CAPS = {"max_nodes": 200, "max_edges": 400, "animation_ms": 180}
+#: 缺省 view_family / dimension（A=关联扩展维，S1-5）。
+MULTILEVEL_DEFAULT_FAMILY = "default"
+MULTILEVEL_DEFAULT_DIMENSION = "A"
+#: 允许的维度（S4-7：未知/保留维度 fail-closed）。
+MULTILEVEL_DIMENSIONS = ("A", "H")
+#: RPC 接受的参数名（多余键一律拒绝，避免静默忽略调用方意图）。
+MULTILEVEL_PARAM_KEYS = (
+    "level", "view_family", "dimension_id", "focus", "hop", "new_hop", "mode", "budget",
+)
+
+
+def _mlvm_canonical_bytes(payload) -> bytes:
+    import json as _json
+
+    text = _json.dumps(payload, ensure_ascii=False, sort_keys=True, separators=(",", ":"))
+    return (text + "\n").encode("utf-8")
+
+
+def _mlvm_sha256(payload) -> str:
+    import hashlib as _hashlib
+
+    return _hashlib.sha256(_mlvm_canonical_bytes(payload)).hexdigest()
+
+
+def _mlvm_error_payload(exc) -> dict:
+    """把异常转成结构化 `GRAPH_*` 错误（S6-9）；保留 `message` 便于旧 UI 提示。"""
+    from memoria.graph.multilevel.errors import GRAPH_INTERNAL, GraphError
+
+    if isinstance(exc, GraphError):
+        envelope = exc.to_envelope()
+    else:
+        envelope = GraphError(
+            GRAPH_INTERNAL, f"{type(exc).__name__}: {exc}"[:300]
+        ).to_envelope()
+    return {
+        "status": "error",
+        "error": envelope,
+        "message": envelope.get("message", "")[:300],
+    }
+
+
+def _mlvm_normalize_params(raw, overrides) -> dict:
+    """合并 `params` 字典与关键字参数；未知键/非法类型 ⇒ `GRAPH_TOOL_INPUT_INVALID`。"""
+    from memoria.graph.multilevel.errors import GRAPH_TOOL_INPUT_INVALID, GraphError
+
+    merged: dict = {}
+    if raw is not None:
+        if not isinstance(raw, dict):
+            raise GraphError(
+                GRAPH_TOOL_INPUT_INVALID,
+                "params 必须是对象（dict）",
+                detail={"kind": "params", "got": type(raw).__name__},
+            )
+        merged.update(raw)
+    merged.update(overrides or {})
+    unknown = sorted(set(merged) - set(MULTILEVEL_PARAM_KEYS))
+    if unknown:
+        raise GraphError(
+            GRAPH_TOOL_INPUT_INVALID,
+            f"未知参数：{unknown}",
+            detail={"unknown": unknown, "allowed": list(MULTILEVEL_PARAM_KEYS)},
+        )
+    return merged
+
+
+def _mlvm_budget(raw) -> dict:
+    """校验 budget；**缺省 = S8 冻结值**，超上限/非正整数 ⇒ `GRAPH_BUDGET_INVALID`。"""
+    from memoria.graph.multilevel.errors import GRAPH_BUDGET_INVALID, GraphError
+
+    budget = dict(MULTILEVEL_BUDGET_CAPS)          # 缺省即冻结值
+    if raw is None:
+        return budget
+    if not isinstance(raw, dict):
+        raise GraphError(GRAPH_BUDGET_INVALID, "budget 必须是对象",
+                         detail={"got": type(raw).__name__})
+    unknown = sorted(set(raw) - set(MULTILEVEL_BUDGET_CAPS))
+    if unknown:
+        raise GraphError(GRAPH_BUDGET_INVALID, f"budget 含未知键：{unknown}",
+                         detail={"unknown": unknown})
+    for key, value in raw.items():
+        if not isinstance(value, int) or isinstance(value, bool) or value < 1:
+            raise GraphError(GRAPH_BUDGET_INVALID, f"budget.{key} 必须是 ≥1 整数",
+                             detail={"key": key, "value": repr(value)})
+        if value > MULTILEVEL_BUDGET_CAPS[key]:
+            raise GraphError(
+                GRAPH_BUDGET_INVALID,
+                f"budget.{key}={value} 超过 S8 冻结上限 {MULTILEVEL_BUDGET_CAPS[key]}",
+                detail={"key": key, "value": value, "cap": MULTILEVEL_BUDGET_CAPS[key]},
+            )
+        budget[key] = value
+    return budget
+
+
+def _mlvm_manifest_sha(kb_path: str) -> str:
+    """`.memoria/manifest.yaml` 的 sha（只读；缺失返回空串）。"""
+    import hashlib as _hashlib
+    import os as _os
+
+    path = _os.path.join(kb_path, ".memoria", "manifest.yaml")
+    if not _os.path.isfile(path):
+        return ""
+    with open(path, "rb") as fh:
+        return _hashlib.sha256(fh.read()).hexdigest()
+
+
+def _mlvm_edition_sha(kb_path: str, datasource) -> str:
+    """语料版本身份：`sha256(canonical({kind, data_source, manifest_sha}))`。
+
+    S6-6/S5 要求 `edition_sha` 由本地派生且可复算。B1 的 `DataSource.canonical_id`
+    已覆盖"内容（kps+edges）+ manifest sha"；此处再显式拼上 manifest sha 并打版本标识，
+    使计算式**对调用方公开可复算**（测试按同一式子重算）。
+    （S5/G6 的全局 edition 派生归 B5；本 RPC 只保证本地可复算、随内容变化。）
+    """
+    return _mlvm_sha256({
+        "kind": "memoria.graph.edition/v1",
+        "data_source": str(getattr(datasource, "canonical_id", "") or ""),
+        "manifest_sha": _mlvm_manifest_sha(kb_path),
+    })
+
+
+def _mlvm_presentation(datasource, vm) -> dict:
+    """从**同一只读 DataSource** 算 `degrees`/`files`；只返回 VM 内 KP 节点的子集。
+
+    S3-12：这些是 Presentation 侧信息，**不得进 VM**（VM 只放渲染所需白名单字段）。
+    degree = 该 KP 在 DataSource 边集中出现的次数（作为 source 或 target 各计 1）。
+    """
+    vm_node_ids = {str(n["id"]) for n in (vm.get("nodes") or [])}
+    degrees: dict[str, int] = {}
+    files: dict[str, str] = {}
+
+    for kp in (getattr(datasource, "kps", ()) or ()):
+        kp_id = str(kp.get("id") or "")
+        if not kp_id or kp_id not in vm_node_ids:
+            continue
+        degrees[kp_id] = 0
+        file_rel = kp.get("file")
+        if file_rel:
+            files[kp_id] = str(file_rel)
+
+    for edge in (getattr(datasource, "edges", ()) or ()):
+        src = str(edge.get("source_id") or "")
+        if src in degrees:
+            degrees[src] += 1
+        for tgt in edge.get("targets") or ():
+            tgt = str(tgt)
+            if tgt in degrees:
+                degrees[tgt] += 1
+
+    return {"degrees": dict(sorted(degrees.items())), "files": dict(sorted(files.items()))}
+
+
+def _mlvm_view_family(level: str, family_id: str, dimension_id: str):
+    """构造 `ViewFamily`（R-2 冻结四元组）。
+
+    `level_chain` 的构造决定该层是叶层还是簇层：
+    - `level == "LL"` ⇒ 叶层（单 KP 粒度），chain 只含叶层；
+    - 其它 level ⇒ 非叶层，chain = `(level, "LL")`（真实嵌套簇 chain 归 B4.2/B5）。
+    """
+    from memoria.graph.multilevel.graph_view import ViewFamily
+
+    if level == MULTILEVEL_LEVEL_LEAF:
+        chain = (MULTILEVEL_LEVEL_LEAF,)
+        basis = "relation_neighborhood"
+    else:
+        chain = (level, MULTILEVEL_LEVEL_LEAF)
+        basis = "level_partition"
+    return ViewFamily(family_id=family_id, basis=basis,
+                      dimension_id=dimension_id, level_chain=chain)
+
+
+def _mlvm_build(kb_path: str, params: dict) -> dict:
+    """只读管线：DataSource → GraphView → ClusterRun → Admission → VM。"""
+    from memoria.graph.multilevel.admission import AdmissionService, make_frame_spec
+    from memoria.graph.multilevel.cluster_run import ClusterRunBuilder
+    from memoria.graph.multilevel.datasource import DataSourceReader
+    from memoria.graph.multilevel.errors import (
+        GRAPH_INTERNAL,
+        GRAPH_TOOL_INPUT_INVALID,
+        GraphError,
+    )
+    from memoria.graph.multilevel.graph_view import GraphViewBuilder
+    from memoria.graph.multilevel.view_model import ViewModelBuilder, validate_vm
+
+    budget = _mlvm_budget(params.get("budget"))
+    level = str(params.get("level") or MULTILEVEL_LEVEL_LEAF)
+    family_id = str(params.get("view_family") or MULTILEVEL_DEFAULT_FAMILY)
+    dimension_id = str(params.get("dimension_id") or MULTILEVEL_DEFAULT_DIMENSION)
+    hop_raw = params.get("hop", 1)
+    new_hop = params.get("new_hop", False)
+    mode = str(params.get("mode") or "default")
+
+    if dimension_id not in MULTILEVEL_DIMENSIONS:
+        raise GraphError(
+            GRAPH_TOOL_INPUT_INVALID,
+            f"dimension_id 必须是 {MULTILEVEL_DIMENSIONS} 之一（S4-7：保留/未知维度 fail-closed）",
+            detail={"dimension_id": dimension_id},
+        )
+    if not isinstance(hop_raw, int) or isinstance(hop_raw, bool) or hop_raw < 1 or hop_raw > 2:
+        raise GraphError(GRAPH_TOOL_INPUT_INVALID, "hop 必须是 1 或 2（S1-5）",
+                         detail={"hop": repr(hop_raw)})
+    if not isinstance(new_hop, bool):
+        raise GraphError(GRAPH_TOOL_INPUT_INVALID, "new_hop 必须是 bool",
+                         detail={"new_hop": repr(new_hop)})
+
+    # ① 事实（只读；DataSourceReader 内含 D-3 写守卫 + 契约 sha 绑定）
+    datasource = DataSourceReader(kb_path).read()
+    kp_ids = tuple(sorted(str(k["id"]) for k in datasource.kps if k.get("id")))
+    if not kp_ids:
+        raise GraphError(GRAPH_INTERNAL, "知识库没有知识点，无法取景",
+                         detail={"kb_path": kb_path, "kp_count": 0})
+
+    # ② 焦点：缺省取最小 canonical KP id（确定性；S4 要求 F={focus}）
+    focus = str(params.get("focus") or "")
+    if not focus:
+        focus = kp_ids[0]
+
+    # ③ 簇 run（B2；真实语料 E_sem=0 ⇒ no_semantic_edges 是合法状态）
+    run = ClusterRunBuilder().build(datasource, level_id=level, view_family_id=family_id)
+
+    # ④ 视图（B2）：叶层直接全 KP；非叶层必须有**多成员簇**，否则不伪造簇（S2-12）
+    view_family = _mlvm_view_family(level, family_id, dimension_id)
+    if level == MULTILEVEL_LEVEL_LEAF:
+        graph_view = GraphViewBuilder().build(
+            datasource, level=level, view_family=view_family, has_semantic=run.status == "ok",
+        )
+    else:
+        multi = [c for c in run.clusters if c.get("size", 0) >= 2]
+        if not multi:
+            raise GraphError(
+                GRAPH_INTERNAL,
+                f"level={level} 需要多成员簇，但当前语料无簇（S2-12：不得用结构边伪造簇）",
+                detail={
+                    "level": level,
+                    "run_status": run.status,
+                    "suggested_level": MULTILEVEL_LEVEL_LEAF,
+                },
+            )
+        graph_view = GraphViewBuilder().build(
+            datasource, level=level, view_family=view_family, cluster_run=run,
+            has_semantic=True,
+        )
+
+    # ⑤ 取景（B3，presence 的唯一裁剪者）——不重写任何裁剪逻辑
+    frame_spec = make_frame_spec(
+        level=level, view_family=family_id, dimension_id=dimension_id,
+        focus=focus, hop=hop_raw, new_hop=new_hop, mode=mode,
+        max_nodes=budget["max_nodes"], max_edges=budget["max_edges"],
+    )
+    admission = AdmissionService().admit(
+        frame_spec=frame_spec, graph_view=graph_view, datasource=datasource, run=run,
+    )
+
+    # ⑥ VM（B3；严格 S3 白名单，含 ADDENDUM-1/2）
+    vm = ViewModelBuilder().build(admission, level_label=level)
+    problems = validate_vm(vm)
+    if problems:
+        raise GraphError(GRAPH_INTERNAL, "VM 不合 S3 白名单（fail-closed）",
+                         detail={"problems": problems[:10]})
+
+    return {
+        "status": "ok",
+        "vm": vm,
+        "presentation": _mlvm_presentation(datasource, vm),
+        "edition_sha": _mlvm_edition_sha(kb_path, datasource),
+        "frame_id": frame_spec.canonical_sha(),     # = sha256(canonical(S4_FRAME_SPEC))
+        "rule_histogram": dict(admission.rule_histogram),
+        "suppressed_summary": admission.suppressed_summary(),
+    }
+
+
+def _get_multilevel_graph_vm(self, params: dict | None = None, **overrides) -> dict:
+    """**只读** RPC：多层次图谱 VM + Presentation 辅助信息（B4.1 · task-358）。
+
+    调用方式（三种都支持）::
+
+        api.get_multilevel_graph_vm({"level": "LL", "focus": "kp-1"})
+        api.get_multilevel_graph_vm(level="LL", focus="kp-1")
+        api.get_multilevel_graph_vm()          # 全用缺省
+
+    返回::
+
+        {status:"ok", vm, presentation:{degrees, files},
+         edition_sha, frame_id, rule_histogram, suppressed_summary}
+
+    失败::
+
+        {status:"error", error:{code:"GRAPH_*", legacy_code, severity, i18n_key,
+                                message, audit_id, detail}, message}
+
+    只读：不写 sidecar / 不写 cache；每次调用现算，不落盘。
+    """
+    try:
+        if not self.kb_path:
+            from memoria.graph.multilevel.errors import GRAPH_INTERNAL, GraphError
+
+            raise GraphError(GRAPH_INTERNAL, "未打开知识库",
+                             detail={"hint": "先 set_kb_path / open 一个知识库"})
+        merged = _mlvm_normalize_params(params, overrides)
+        return _mlvm_build(self.kb_path, merged)
+    except Exception as exc:  # noqa: BLE001 — RPC 边界：任何异常都必须变成结构化错误
+        return _mlvm_error_payload(exc)
+
+
+UIAPI.get_multilevel_graph_vm = _get_multilevel_graph_vm
+
+
 

@@ -82,6 +82,40 @@ def snapshot_kb(kb_path: str | Path) -> dict[str, str]:
     return out
 
 
+#: **事实源**路径判定（S6-1 / AGENTS.md §1）。
+#: 只有这三类才是"事实"：``*.md`` 正文、``.memoria/sidecars/**``、``.memoria/manifest.yaml``。
+#: ``.memoria/cache/**``（含 embeddings/undo-debug.log）、``.memoria/pending.json`` 等属
+#: **可再生缓存/队列**，不是事实源 ⇒ 后台线程写它们**不构成 D-3 违规**。
+_FACT_SIDECAR_PREFIX = ".memoria/sidecars/"
+_FACT_MANIFEST = ".memoria/manifest.yaml"
+
+
+def is_fact_path(rel_path: str) -> bool:
+    """该相对路径是否属于**事实源**（D-3 只保护这一范围）。
+
+    ⚠️ 注意：不能用 ``str.lstrip("./")`` —— 那是**字符集**剥离，会把 ``.memoria`` 的
+    前导点也吃掉（本仓库踩过这个坑）。这里按**前缀**逐次剥离。
+    """
+    rel = rel_path.replace("\\", "/")
+    while rel.startswith("./"):
+        rel = rel[2:]
+    if rel == _FACT_MANIFEST:
+        return True
+    if rel.startswith(_FACT_SIDECAR_PREFIX):
+        return True
+    return rel.endswith(".md")
+
+
+def snapshot_facts(kb_path: str | Path) -> dict[str, str]:
+    """**只**对事实源做 ``{相对路径: sha256}`` 快照（D-3 守卫的默认比较域）。
+
+    为什么不全树：实测应用有后台任务在 `.memoria/cache/**`（embeddings 索引、
+    undo-debug.log）和 `.memoria/pending.json` 上写 —— 那些是派生/队列，不是事实；
+    全树比对会把它们误判成 D-3 违规（B4.1 实测 RPC 12 次里 4 次假失败）。
+    """
+    return {rel: sha for rel, sha in snapshot_kb(kb_path).items() if is_fact_path(rel)}
+
+
 def detect_writes(before: dict[str, str], after: dict[str, str]) -> list[str]:
     """比对两份快照，返回人类可读的写痕迹（空 = 未写）。"""
     problems: list[str] = []
@@ -97,28 +131,42 @@ def detect_writes(before: dict[str, str], after: dict[str, str]) -> list[str]:
     return problems
 
 
+GUARD_SCOPES = ("facts", "all")
+
+
 @contextlib.contextmanager
-def read_only_guard(kb_path: str | Path) -> Iterator[None]:
-    """D-3 守卫：代码块内若 KB 发生任何文件写，退出时抛 ``GRAPH_WRITE_FORBIDDEN``。"""
-    before = snapshot_kb(kb_path)
+def read_only_guard(kb_path: str | Path, *, scope: str = "facts") -> Iterator[None]:
+    """D-3 守卫：代码块内若**事实源**被写，退出时抛 ``GRAPH_WRITE_FORBIDDEN``。
+
+    :param scope: ``"facts"``（默认，S6-1 口径：md + sidecars + manifest）或
+        ``"all"``（全树；仅用于离线的强断言场景，在线读取会被后台缓存写误报）。
+
+    D-3 的本意是"**读取者不得写 sidecar / 事实**"，不是"整个 KB 目录冻结"；
+    因此默认只监视事实源（见 :func:`snapshot_facts` 的实测说明）。
+    """
+    if scope not in GUARD_SCOPES:
+        raise GraphError(GRAPH_INTERNAL, f"未知 guard scope：{scope!r}",
+                         detail={"allowed": list(GUARD_SCOPES)})
+    snap = snapshot_facts if scope == "facts" else snapshot_kb
+    before = snap(kb_path)
     try:
         yield
     except BaseException:
         # 主体已失败：仍要如实报告"期间是否发生写"（不掩盖原异常，附加为 detail）
-        problems = detect_writes(before, snapshot_kb(kb_path))
+        problems = detect_writes(before, snap(kb_path))
         if problems:
             raise GraphError(
                 GRAPH_WRITE_FORBIDDEN,
-                "只读读取期间 KB 被写入（D-3 违规，且主体已失败）",
-                detail={"kb_path": str(kb_path), "writes": problems},
+                "只读读取期间事实源被写入（D-3 违规，且主体已失败）",
+                detail={"kb_path": str(kb_path), "scope": scope, "writes": problems},
             ) from None
         raise
-    problems = detect_writes(before, snapshot_kb(kb_path))
+    problems = detect_writes(before, snap(kb_path))
     if problems:
         raise GraphError(
             GRAPH_WRITE_FORBIDDEN,
-            "只读读取期间 KB 被写入（D-3：禁止写 sidecar / 事实源）",
-            detail={"kb_path": str(kb_path), "writes": problems},
+            "只读读取期间事实源被写入（D-3：禁止写 sidecar / 事实源）",
+            detail={"kb_path": str(kb_path), "scope": scope, "writes": problems},
         )
 
 

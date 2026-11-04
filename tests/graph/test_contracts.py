@@ -377,34 +377,83 @@ def test_datasource_does_not_write_kb(tmp_path: Path) -> None:
 
 
 def test_datasource_does_not_write_real_example_kb() -> None:
-    """对仓库内真实示例库做一次只读读取，KB 仍需零变化（D-3）。"""
+    """对仓库内真实示例库做一次只读读取，**事实源**仍需零变化（D-3）。
+
+    用事实源口径（md + sidecars + manifest）而非全树：在线示例库有后台任务写
+    `.memoria/cache/**` 与 `pending.json`，全树比对会被它们误报（B4.1 实测）。
+    """
     kb = REPO / "docs" / "example" / "AAA_Vocab"
     if not kb.is_dir():
         pytest.skip("示例库不存在")
-    before = snapshot_kb(kb)
+    before = ds_mod.snapshot_facts(kb)
     ds = DataSourceReader(kb).read()
-    after = snapshot_kb(kb)
+    after = ds_mod.snapshot_facts(kb)
     assert detect_writes(before, after) == []
     assert validate(ds.to_dict(), "datasource").ok
 
 
 def test_write_guard_trips_on_write(tmp_path: Path, monkeypatch) -> None:
-    """**守卫活性对照**：读取过程中写一个文件 ⇒ 必须抛 GRAPH_WRITE_FORBIDDEN。
+    """**守卫活性对照**：读取过程中写一个**事实源**文件 ⇒ 必须抛 GRAPH_WRITE_FORBIDDEN。
 
-    没有这条，``test_datasource_does_not_write_kb`` 的绿只能说明"这次没写"，
-    不能说明"写了会被抓"。
+    注意：D-3 保护的是**事实源**（md + sidecars + manifest），所以这里写 sidecar，
+    而不是 KB 根目录下的任意文件（后者不是事实，见 cache 用例）。
     """
     kb = _make_kb(tmp_path)
 
     def _writing_collect(self):
-        (Path(self.kb_path) / "evil.txt").write_text("x", encoding="utf-8")
+        (Path(self.kb_path) / ".memoria" / "sidecars" / "evil.memoria.yaml").write_text(
+            "schema_version: 1\n", encoding="utf-8")
         return {"nodes": [], "edges": []}
 
     monkeypatch.setattr(datasource_cls(), "_collect_raw", _writing_collect)
     with pytest.raises(GraphError) as ei:
         DataSourceReader(kb).read()
     assert ei.value.code == "GRAPH_WRITE_FORBIDDEN"
-    assert "evil.txt" in json.dumps(ei.value.detail, ensure_ascii=False)
+    assert "evil.memoria.yaml" in json.dumps(ei.value.detail, ensure_ascii=False)
+
+
+def test_write_guard_ignores_derived_cache_writes(tmp_path: Path) -> None:
+    """S6-1：`.memoria/cache/**` 是**可再生缓存**，不是事实源 ⇒ 写它**不算** D-3 违规。
+
+    这条是 B4.1 实测回归：在线应用的后台任务会写 embeddings 索引 / undo-debug.log /
+    pending.json，若守卫监视全树就会把只读 RPC 误判成失败（实测 12 次里 4 次假失败）。
+    """
+    kb = _make_kb(tmp_path)
+    cache_dir = kb / ".memoria" / "cache"
+    with read_only_guard(kb):                       # 不抛即通过
+        cache_dir.mkdir(parents=True, exist_ok=True)
+        (cache_dir / "embeddings-index.json").write_text("{}", encoding="utf-8")
+        (kb / ".memoria" / "pending.json").write_text("[]", encoding="utf-8")
+
+
+def test_write_guard_all_scope_still_catches_cache_write(tmp_path: Path) -> None:
+    """``scope="all"`` 保留"全树冻结"的强断言能力（离线场景可选）。"""
+    kb = _make_kb(tmp_path)
+    with pytest.raises(GraphError) as ei:
+        with read_only_guard(kb, scope="all"):
+            (kb / ".memoria" / "cache").mkdir(parents=True, exist_ok=True)
+            (kb / ".memoria" / "cache" / "x.json").write_text("{}", encoding="utf-8")
+    assert ei.value.code == "GRAPH_WRITE_FORBIDDEN"
+
+
+def test_fact_path_classification() -> None:
+    """事实源 = md + .memoria/sidecars/** + .memoria/manifest.yaml；其余不是。"""
+    assert ds_mod.is_fact_path("a.md")
+    assert ds_mod.is_fact_path("sub/dir/b.md")
+    assert ds_mod.is_fact_path(".memoria/manifest.yaml")
+    assert ds_mod.is_fact_path(".memoria/sidecars/a.memoria.yaml")
+    assert ds_mod.is_fact_path(".memoria/sidecars/sub/x.yaml")
+    assert not ds_mod.is_fact_path(".memoria/cache/embeddings/index.json")
+    assert not ds_mod.is_fact_path(".memoria/pending.json")
+    assert not ds_mod.is_fact_path("evil.txt")
+
+
+def test_guard_rejects_unknown_scope(tmp_path: Path) -> None:
+    kb = _make_kb(tmp_path)
+    with pytest.raises(GraphError) as ei:
+        with read_only_guard(kb, scope="nonsense"):
+            pass
+    assert ei.value.code == GRAPH_INTERNAL
 
 
 def test_read_only_guard_detects_modification(tmp_path: Path) -> None:
