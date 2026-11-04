@@ -245,6 +245,16 @@ class DataSourceReader:
             out["no_build"] = bool(edge["no_build"])
         if edge.get("derived_by") is not None:
             out["derived_by"] = str(edge["derived_by"])
+        # R-B2-3 / task-354：语义标记与策展身份必须**透传**（否则 E_sem 无法从
+        # DataSource 派生，B3 Admission 会漏语义边）。形状对齐 S0-1 G_sem。
+        if edge.get("contain_kind") is not None:
+            out["contain_kind"] = str(edge["contain_kind"])
+        if isinstance(edge.get("assertion_source"), dict):
+            out["assertion_source"] = dict(edge["assertion_source"])
+        if edge.get("curated_by") is not None:
+            out["curated_by"] = str(edge["curated_by"])
+        if edge.get("curated_at") is not None:
+            out["curated_at"] = str(edge["curated_at"])
         return out
 
     def _manifest_sha(self) -> str:

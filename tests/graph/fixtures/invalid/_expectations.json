@@ -48,5 +48,20 @@
     "schema": "error",
     "code": "GRAPH_INTERNAL",
     "path_has": "audit_id"
+  },
+  "edge-bad-contain-kind.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "contain_kind"
+  },
+  "edge-bad-assertion-source.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "line_start"
+  },
+  "edge-bad-quote-sha.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "quote_sha256"
   }
 }

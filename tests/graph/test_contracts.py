@@ -268,6 +268,8 @@ def _valid_cases() -> list[tuple[str, str]]:
     mapping = {
         "edge-min.json": "edge",
         "edge-full.json": "edge",
+        "edge-semantic.json": "edge",            # R-B2-3：语义标记 + 策展身份
+        "edge-structural-explicit.json": "edge",  # R-B2-3：显式 structural
         "kp-min.json": "kp",
         "kp-full.json": "kp",
         "datasource.json": "datasource",
@@ -462,8 +464,163 @@ def test_datasource_contract_guard_can_be_disabled(tmp_path: Path) -> None:
     assert ds.status in ("ok", "empty_nosemantic")
 
 
-# ── 辅助 ────────────────────────────────────────────────────────────────
+# ── task-354 / R-B2-3：edge schema 补语义标记与策展身份 ──────────────────
 
+EDGE_SEMANTIC_FIELDS = ("contain_kind", "assertion_source", "curated_by", "curated_at")
+
+_KB_MD = (
+    "# A\n"          # 1
+    "\n"             # 2
+    "## A1\n"        # 3
+    "\n"             # 4
+    "text a1\n"      # 5
+    "\n"             # 6
+    "### A1-1\n"     # 7
+    "\n"             # 8
+    "text a11\n"     # 9
+    "\n"             # 10
+    "text tail\n"    # 11
+    "\n"             # 12
+    "text end\n"     # 13
+)
+
+
+def test_edge_schema_declares_semantic_marker_fields() -> None:
+    """R-B2-3：四个字段必须在 edge schema 里，且 additionalProperties 仍为 false。"""
+    schema = load_schema("edge")
+    props = schema["properties"]
+    for field in EDGE_SEMANTIC_FIELDS:
+        assert field in props, f"edge schema 缺字段 {field}（R-B2-3）"
+    assert props["contain_kind"]["enum"] == ["structural", "semantic", None]
+    # "缺省 structural" 意味着该字段**不能是 required**（否则 B1 老数据全废）
+    assert "contain_kind" not in schema["required"]
+    assert schema["additionalProperties"] is False
+
+
+def test_edge_omitted_contain_kind_is_legal_default_structural() -> None:
+    """不写 contain_kind ⇒ 合法（语义上缺省 structural）。"""
+    payload = {"type": "contain", "source_id": "a", "targets": ["b"]}
+    assert validate(payload, "edge").ok
+    assert validate(dict(payload, contain_kind=None), "edge").ok          # 显式 null 也合法
+    assert validate(dict(payload, contain_kind="structural"), "edge").ok
+
+
+def test_edge_semantic_marker_with_curation_passes() -> None:
+    payload = json.loads((FIXTURES / "valid" / "edge-semantic.json").read_text(encoding="utf-8"))
+    assert validate(payload, "edge").ok
+
+
+def test_edge_illegal_contain_kind_fails_closed() -> None:
+    payload = json.loads(
+        (FIXTURES / "invalid" / "edge-bad-contain-kind.json").read_text(encoding="utf-8"))
+    result = validate(payload, "edge")
+    assert not result.ok, "非法 contain_kind 必须 fail-closed"
+    assert "GRAPH_EDGE_INVALID" in result.codes
+
+
+def test_edge_assertion_source_requires_evidence_triple() -> None:
+    base = {"type": "contain", "source_id": "a", "targets": ["b"], "contain_kind": "semantic"}
+    ok = dict(base, assertion_source={"file": "a.md", "line_start": 1, "line_end": 2})
+    assert validate(ok, "edge").ok
+    bad = dict(base, assertion_source={"file": "a.md"})
+    result = validate(bad, "edge")
+    assert not result.ok
+    assert any("line_start" in (e.path + e.message) for e in result.errors)
+
+
+def test_edge_assertion_source_quote_sha_must_be_hex64() -> None:
+    bad = {"type": "contain", "source_id": "a", "targets": ["b"],
+           "assertion_source": {"file": "a.md", "line_start": 1, "line_end": 2,
+                                "quote_sha256": "xyz"}}
+    assert not validate(bad, "edge").ok
+
+
+def test_edge_semantic_fields_still_reject_unknown_extra() -> None:
+    """加了新字段**不等于**放宽边界：未声明的额外字段仍被拒。"""
+    payload = {"type": "contain", "source_id": "a", "targets": ["b"],
+               "contain_kind": "semantic", "semantic_confidence": 0.9}
+    assert not validate(payload, "edge").ok
+
+
+def _make_kb_with_semantic_overlay(root: Path) -> Path:
+    """造一个带**合法 semantic curation overlay** 的 KB（模拟真实作者流程产物）。"""
+    kb = root / "kb"
+    (kb / ".memoria" / "sidecars").mkdir(parents=True)
+    (kb / "a.md").write_text(_KB_MD, encoding="utf-8")
+    (kb / ".memoria" / "manifest.yaml").write_text("schema_version: 1\n", encoding="utf-8")
+    quote = hashlib.sha256("## A1".encode("utf-8")).hexdigest()   # 第 3 行切片
+    sidecar = {
+        "schema_version": 1,
+        "file": "a.md",
+        "knowledge_points": [
+            {"id": "a", "name": "A", "range": {
+                "start": {"snippet": "# A", "line_hint": 1},
+                "end": {"snippet": "text end", "line_hint": 13}}},
+            {"id": "a1", "name": "A1", "range": {
+                "start": {"snippet": "## A1", "line_hint": 3},
+                "end": {"snippet": "text tail", "line_hint": 11}}},
+            {"id": "a1-1", "name": "A1-1", "range": {
+                "start": {"snippet": "### A1-1", "line_hint": 7},
+                "end": {"snippet": "text a11", "line_hint": 9}}},
+        ],
+        "edges": [{
+            "type": "contain", "source_id": "a", "targets": ["a1"],
+            "contain_kind": "semantic", "derived_by": "author",
+            "assertion_source": {"file": "a.md", "line_start": 3, "line_end": 3,
+                                 "quote_sha256": quote},
+            "curated_by": "human:tester", "curated_at": "2026-11-04T00:00:00+08:00",
+        }],
+    }
+    (kb / ".memoria" / "sidecars" / "a.memoria.yaml").write_text(
+        yaml.safe_dump(sidecar, allow_unicode=True, sort_keys=False, width=4096),
+        encoding="utf-8",
+    )
+    return kb
+
+
+def test_datasource_passes_through_semantic_markers(tmp_path: Path) -> None:
+    """R-B2-3 核心：语义标记必须**透传**过 DataSource（否则 E_sem 派生为空）。"""
+    kb = _make_kb_with_semantic_overlay(tmp_path)
+    ds = DataSourceReader(kb).read()
+    sem = [e for e in ds.edges if e.get("contain_kind") == "semantic"]
+    assert sem, "语义标记在 DataSource 归一化时被丢弃了（R-B2-3 回归）"
+    edge = sem[0]
+    assert edge["curated_by"] == "human:tester"
+    assert edge["curated_at"].startswith("2026-11-04")
+    assert edge["assertion_source"]["line_start"] == 3
+    assert len(edge["assertion_source"]["quote_sha256"]) == 64
+    assert validate(ds.to_dict(), "datasource").ok
+
+
+def test_structural_edges_keep_no_semantic_marker(tmp_path: Path) -> None:
+    """未策展的结构边不得被凭空赋上 semantic（防"透传"变成"伪造"）。
+
+    实测两种合法形态都要接受：
+    - range 派生的 contain 边**显式**写 ``contain_kind="structural"``（v0.2 决策）；
+    - link/sidecar 类边**不带**该字段（缺省即 structural）。
+    断言只看"没有任何边是 semantic"，不强制字段存在。
+    """
+    kb = _make_kb(tmp_path)          # B1 的纯结构 KB
+    ds = DataSourceReader(kb).read()
+    assert ds.edges
+    assert all(e.get("contain_kind") != "semantic" for e in ds.edges)
+    assert all(e.get("contain_kind") in (None, "structural") for e in ds.edges)
+    assert all("assertion_source" not in e for e in ds.edges)
+    assert all("curated_by" not in e for e in ds.edges)
+
+
+def test_datasource_derived_semantic_edges_reach_cluster_run(tmp_path: Path) -> None:
+    """端到端（B3 前置）：透传后 ``ClusterRunBuilder`` 无需显式注入即可派生 E_sem。"""
+    from memoria.graph.multilevel.cluster_run import ClusterRunBuilder
+
+    kb = _make_kb_with_semantic_overlay(tmp_path)
+    ds = DataSourceReader(kb).read()
+    run = ClusterRunBuilder().build(ds, level_id="L1", view_family_id="fam-h")
+    assert run.status == "ok", f"E_sem 未从 DataSource 派生：status={run.status}"
+    assert run.diagnostics["n_semantic_pairs"] >= 1
+
+
+# ── 辅助 ────────────────────────────────────────────────────────────────
 
 def datasource_cls():
     """取被测类（便于 monkeypatch 时避免循环导入问题）。"""

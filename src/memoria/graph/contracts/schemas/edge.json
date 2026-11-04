@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "memoria://graph/contracts/edge/v1",
   "title": "DataSource edge（E_relation_min，S0-3 R-1）",
-  "description": "边只允许 E_relation_min 的三种基础类型；semantic/structural 只是标签，不是 e_relation 过滤条件（S0-3）。",
+  "description": "边只允许 E_relation_min 的三种基础类型；semantic/structural 只是标签，不是 e_relation 过滤条件（S0-3）。语义标记字段（R-B2-3/task-354）：contain_kind ∈ {structural,semantic,null}，缺省/null 均视为 structural，只有 semantic 且通过 S0-1 G_sem 才算语义边；assertion_source{file,line_start,line_end[,quote_sha256]} 为作者证据，深层校验（quote_sha256 与正文切片一致、line_end≥line_start）由既有产品校验器 edge_derivation.validate_contain_curation_overlay 负责，不在本 schema 重复；curated_by/curated_at 为策展身份（S0-1 G_sem 前置）。",
   "x-failure-code": "GRAPH_EDGE_INVALID",
   "x-contract-sources": {
     "S6-contract-v1.md": "40f12e5fd5946c8cc4ebdb71800579d3e9098f74ef7381ad65a2e51f389db82b",
@@ -52,6 +52,41 @@
     "derived_by": {
       "type": "string",
       "enum": ["author", "system_range", "system_link"]
+    },
+    "contain_kind": {
+      "type": ["string", "null"],
+      "enum": ["structural", "semantic", null],
+      "default": "structural"
+    },
+    "assertion_source": {
+      "type": "object",
+      "required": ["file", "line_start", "line_end"],
+      "properties": {
+        "file": {
+          "type": "string",
+          "minLength": 1
+        },
+        "line_start": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "line_end": {
+          "type": "integer",
+          "minimum": 1
+        },
+        "quote_sha256": {
+          "type": "string",
+          "pattern": "^[0-9a-f]{64}$"
+        }
+      }
+    },
+    "curated_by": {
+      "type": "string",
+      "minLength": 1
+    },
+    "curated_at": {
+      "type": "string",
+      "minLength": 1
     }
   }
 }

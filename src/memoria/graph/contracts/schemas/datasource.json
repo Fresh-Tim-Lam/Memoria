@@ -70,7 +70,24 @@
         "file": {"type": "string", "minLength": 1},
         "line": {"type": "integer", "minimum": 1},
         "no_build": {"type": "boolean"},
-        "derived_by": {"type": "string", "enum": ["author", "system_range", "system_link"]}
+        "derived_by": {"type": "string", "enum": ["author", "system_range", "system_link"]},
+        "contain_kind": {
+          "type": ["string", "null"],
+          "enum": ["structural", "semantic", null],
+          "default": "structural"
+        },
+        "assertion_source": {
+          "type": "object",
+          "required": ["file", "line_start", "line_end"],
+          "properties": {
+            "file": {"type": "string", "minLength": 1},
+            "line_start": {"type": "integer", "minimum": 1},
+            "line_end": {"type": "integer", "minimum": 1},
+            "quote_sha256": {"type": "string", "pattern": "^[0-9a-f]{64}$"}
+          }
+        },
+        "curated_by": {"type": "string", "minLength": 1},
+        "curated_at": {"type": "string", "minLength": 1}
       }
     }
   }
