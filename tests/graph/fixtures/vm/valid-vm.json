@@ -1,0 +1,63 @@
+{
+  "view_model_id": "vm_0123456789abcdef0123456789abcdef",
+  "level_id": "L1",
+  "level_label": "知识点",
+  "dimension_id": "A",
+  "view_family_id": "fam-a",
+  "nodes": [
+    {
+      "id": "a",
+      "kind": "kp",
+      "label": "A",
+      "role": "member",
+      "presence": "shown"
+    },
+    {
+      "id": "b",
+      "kind": "kp",
+      "label": "B",
+      "role": "member",
+      "presence": "shown"
+    },
+    {
+      "id": "c",
+      "kind": "kp",
+      "label": "C",
+      "role": "member",
+      "presence": "suppressed",
+      "rule_id": "hop.budget"
+    },
+    {
+      "id": "cl0",
+      "kind": "cluster",
+      "label": "cl0",
+      "role": "member",
+      "presence": "shown",
+      "member_count": 3,
+      "representative": true,
+      "root_exempt": false,
+      "range_ok": true
+    }
+  ],
+  "edges": [
+    {
+      "id": "contain|a|b",
+      "type": "contain",
+      "presence": "shown"
+    },
+    {
+      "id": "extend|b|c",
+      "type": "extend",
+      "presence": "suppressed"
+    },
+    {
+      "id": "contain|cl0|cl0",
+      "type": "contain",
+      "presence": "shown",
+      "data_edge_ids": [
+        "contain|a|b",
+        "contain|a|c"
+      ]
+    }
+  ]
+}

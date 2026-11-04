@@ -37,6 +37,15 @@ from memoria.graph.multilevel.graph_view import (
     ViewFamily,
     validate_level_view,
 )
+from memoria.graph.multilevel.admission import (
+    PRESENCE_VALUES,
+    RULE_IDS,
+    AdmissionResult,
+    AdmissionService,
+    FrameSpec,
+    check_x_rule,
+    make_frame_spec,
+)
 from memoria.graph.multilevel.registry import (
     DIM_KINDS,
     DIM_STATUSES,
@@ -51,6 +60,14 @@ from memoria.graph.multilevel.schema import (
     validate_or_raise,
     verify_all_bindings,
 )
+from memoria.graph.multilevel.view_model import (
+    VM_EDGE_FIELDS,
+    VM_NODE_FIELDS,
+    VM_TOP_FIELDS,
+    ViewModelBuilder,
+    renderer_projection,
+    validate_vm,
+)
 
 __all__ = [
     # B1
@@ -63,4 +80,9 @@ __all__ = [
     "DIM_KINDS", "DIM_STATUSES",
     "ClusterRun", "ClusterRunBuilder", "RUN_STATUSES", "build_run_id", "params_hash",
     "cluster_key", "select_semantic_edges", "request_candidate_run", "adopt_run",
+    # B3
+    "AdmissionService", "AdmissionResult", "FrameSpec", "make_frame_spec",
+    "check_x_rule", "PRESENCE_VALUES", "RULE_IDS",
+    "ViewModelBuilder", "validate_vm", "renderer_projection",
+    "VM_TOP_FIELDS", "VM_NODE_FIELDS", "VM_EDGE_FIELDS",
 ]
