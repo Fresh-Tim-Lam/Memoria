@@ -35,6 +35,7 @@ GRAPH_INTERNAL = "GRAPH_INTERNAL"
 GRAPH_WRITE_FORBIDDEN = "GRAPH_WRITE_FORBIDDEN"      #: agent 尝试写图/curation（v1 只读）
 GRAPH_EDGE_INVALID = "GRAPH_EDGE_INVALID"            #: 边 type/字段非法
 GRAPH_KP_INVALID = "GRAPH_KP_INVALID"                #: KP 字段/范围/锚非法
+GRAPH_HISTORY_SIGNATURE_INVALID = "GRAPH_HISTORY_SIGNATURE_INVALID"  #: history 签名验证失败
 
 #: 只有 legacy 身份、**不是** canonical 的码（S2–S5 历史命名）。
 #: 出现在外部输入里时会被 ``canonicalize()`` 折回 canonical。
