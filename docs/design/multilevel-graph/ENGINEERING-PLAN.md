@@ -1115,6 +1115,62 @@ erDiagram
 
 ---
 
+### 1.17 S10 增量（ER-11 草案：KP/语义边/证据/curation/冲突/质量）
+
+```mermaid
+erDiagram
+    KP_PROPOSAL ||--o{ KP : proposes
+    KP ||--o{ RELATION : source
+    KP ||--o{ RELATION : target
+    RELATION ||--o{ EVIDENCE_REF : cites
+    KP_PROPOSAL ||--o{ CURATION : reviewed_by
+    KP_PROPOSAL ||--o{ CONFLICT : may_conflict
+    KP ||--o{ QUALITY : measured
+    KP_PROPOSAL { string proposal_id PK
+        string kind
+        string source_ref
+        string evidence
+        float confidence
+        string status }
+    KP { string kp_id PK
+        string title
+        string range
+        string file
+        int line
+        string anchor
+        string edition }
+    RELATION { string relation_id PK
+        string source_id
+        string target_id
+        string type
+        string direction
+        float confidence
+        string provenance }
+    EVIDENCE_REF { string ref_id PK
+        string kp_id
+        string file
+        int line
+        string anchor }
+    CURATION { string curation_id PK
+        string proposal_id FK
+        string curated_by
+        string curated_at
+        string decision }
+    CONFLICT { string conflict_id PK
+        string proposal_id FK
+        string conflict_kind
+        string resolution
+        string status }
+    QUALITY { string quality_id PK
+        string kp_id FK
+        string metric
+        float value
+        float threshold
+        bool pass }
+```
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -1628,6 +1684,35 @@ flowchart LR
 
 ---
 
+
+> **S10a 质量/写路径草案**：质量指标 precision/recall/置信分布/证据完整率/人工抽检一致率/golden；写路径 propose_write→plan(dry-run/影响面)→人工确认→backup→atomic apply→undo→audit；失败零写入；edition 变化触发 S9 全量重建/旧数据保留/可回滚；0.5 不做 agent 写（S10 仅设计）。
+
+### 2.16 S10 增量（DF-11 草案：源→提案→plan→备份/apply/undo/审计→registry/S2→S9 失效）
+
+```mermaid
+flowchart LR
+    SRC[("源 md/sidecar（只读事实）")]
+    EXT["抽取/生成（KP/边提案 + 证据锚 + 置信）"]
+    PROP[("proposals.jsonl（不自动 apply）")]
+    PLAN["propose_write/plan（dry-run + 影响面）"]
+    CONF["人工确认/冲突裁决"]
+    APPLY["backup → atomic apply → undo"]
+    AUD[("audit（append-only）")]
+    REG[("S1 registry/history")]
+    S2[("S2 run/cluster membership")]
+    S9[("S9 索引失效/重建")]
+    ERR(["失败：零写入 + 可见错误 + 回滚"])
+    SRC --> EXT --> PROP --> PLAN --> CONF --> APPLY
+    APPLY --> REG
+    APPLY --> S2
+    APPLY --> S9
+    PLAN --> AUD
+    APPLY --> AUD
+    APPLY -- fail --> ERR
+```
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -2117,6 +2202,28 @@ stateDiagram-v2
         Truncated --> Idle : CONSUMED
         Degraded --> Idle : CONSUMED
         Unavailable --> Idle : RETRY_OR_ABORT
+    }
+```
+
+---
+
+### 3.14 S10 增量（ST-11 草案：提案/冲突/合并/回滚）
+
+```mermaid
+stateDiagram-v2
+    state Curation {
+        [*] --> Proposed
+        Proposed --> Reviewing : REVIEW
+        Reviewing --> Accepted : ACCEPT
+        Reviewing --> Rejected : REJECT
+        Reviewing --> Conflicted : CONFLICT
+        Conflicted --> Merged : MERGE
+        Conflicted --> Rejected : REJECT
+        Accepted --> Applied : APPLY
+        Applied --> RolledBack : UNDO
+        Merged --> Applied : APPLY
+        Rejected --> [*]
+        RolledBack --> [*]
     }
 ```
 
