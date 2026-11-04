@@ -1,81 +1,225 @@
 {
-  "edition_sha": "867815d30e06439775139b8acf891ae85c0b3cc46ddb2c4be37fbf40640d3319",
-  "kb_id": "kb-mini",
-  "note": "edition-pinned golden；fixture KB = tests/graph/fixtures/kb-mini",
+  "edition_sha": "f4968c12bb2d50a0851a0fa538e7822f583f4045de1cd1b04804ae33b4b0d421",
+  "kb_id": "AAA_Vocab",
+  "note": "B6.2 real-corpus golden v1；edition-pinned；fixture golden 已移至 tests/graph/fixtures/golden/",
   "queries": [
     {
       "expected": [
-        "kp:ch1-lowpass"
+        "kp:apparatus"
       ],
-      "id": "q01-lowpass",
-      "query": "低通抽样定理",
+      "id": "q01-apparatus",
+      "query": "apparatus",
       "query_type": "keyword",
       "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:ch1-bandpass"
+        "kp:bungalow"
       ],
-      "id": "q02-bandpass",
-      "query": "带通抽样",
+      "id": "q02-bungalow",
+      "query": "bungalow",
       "query_type": "keyword",
       "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:ch2-uniform"
+        "kp:heritage"
       ],
-      "id": "q03-uniform",
-      "query": "均匀量化",
+      "id": "q03-heritage",
+      "query": "heritage",
       "query_type": "keyword",
       "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:ch2-nonuniform"
+        "kp:resilience"
       ],
-      "id": "q04-nonuniform",
-      "query": "非均匀量化",
+      "id": "q04-resilience",
+      "query": "resilience",
       "query_type": "keyword",
       "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:note-aliasing"
+        "kp:syllabus"
       ],
-      "id": "q05-aliasing",
-      "query": "混叠",
+      "id": "q05-syllabus",
+      "query": "syllabus",
       "query_type": "keyword",
       "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:note-snr"
+        "kp:utilitarian"
       ],
-      "id": "q06-snr",
-      "query": "信噪比",
+      "id": "q06-utilitarian",
+      "query": "utilitarian",
       "query_type": "keyword",
       "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:ch1-sampling",
-        "kp:ch1-lowpass",
-        "kp:ch1-bandpass"
+        "kp:vanity"
       ],
-      "id": "q07-sampling-hybrid",
-      "query": "抽样定理",
-      "query_type": "hybrid"
+      "id": "q07-vanity",
+      "query": "vanity",
+      "query_type": "keyword",
+      "subset": "no_semantic"
     },
     {
       "expected": [
-        "kp:ch2-whole",
-        "kp:ch2-uniform"
+        "kp:plummet"
       ],
-      "id": "q08-quant-graph",
-      "query": "量化全章",
-      "query_type": "graph"
+      "id": "q08-plummet",
+      "query": "plummet",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:scorch"
+      ],
+      "id": "q09-scorch",
+      "query": "scorch",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:secluded"
+      ],
+      "id": "q10-secluded",
+      "query": "secluded",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:renovation"
+      ],
+      "id": "q11-renovation",
+      "query": "renovation",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:dilapidated"
+      ],
+      "id": "q12-dilapidated",
+      "query": "dilapidated",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:canonical"
+      ],
+      "id": "q13-canonical",
+      "query": "canonical",
+      "query_type": "vector",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:curator"
+      ],
+      "id": "q14-curator",
+      "query": "curator",
+      "query_type": "vector",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:feminism"
+      ],
+      "id": "q15-feminism",
+      "query": "feminism",
+      "query_type": "vector",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:combustion"
+      ],
+      "id": "q16-combustion",
+      "query": "combustion",
+      "query_type": "vector",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:mainstream"
+      ],
+      "id": "q17-mainstream",
+      "query": "mainstream",
+      "query_type": "hybrid",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:assimilation"
+      ],
+      "id": "q18-assimilation",
+      "query": "assimilation",
+      "query_type": "hybrid",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:orchestrator"
+      ],
+      "id": "q19-orchestrator",
+      "query": "orchestrator",
+      "query_type": "hybrid",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:testament"
+      ],
+      "id": "q20-testament",
+      "query": "testament",
+      "query_type": "hybrid",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:legacy"
+      ],
+      "id": "q21-legacy",
+      "query": "legacy",
+      "query_type": "graph",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:imperative"
+      ],
+      "id": "q22-imperative",
+      "query": "imperative",
+      "query_type": "graph",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:intriguing"
+      ],
+      "id": "q23-intriguing",
+      "query": "intriguing",
+      "query_type": "graph",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:strenuous"
+      ],
+      "id": "q24-strenuous",
+      "query": "strenuous",
+      "query_type": "graph",
+      "subset": "no_semantic"
     }
   ],
-  "schema_version": 1
+  "schema_version": 1,
+  "source": "docs/example/AAA_Vocab（隔离副本；真实语料，只读）"
 }

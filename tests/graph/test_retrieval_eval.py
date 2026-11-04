@@ -34,7 +34,9 @@ from memoria.graph.retrieval.eval import (  # noqa: E402
 )
 
 KB_FIXTURE = REPO / "tests" / "graph" / "fixtures" / "kb-mini"
-GOLDEN = REPO / "docs" / "design" / "multilevel-graph" / "golden" / "S9-golden-set.json"
+#: fixture KB 的 8 条 golden（canonical 路径已改为真实库；fixture 用 tests 内副本）
+GOLDEN = REPO / "tests" / "graph" / "fixtures" / "golden" / "S9-golden-set.json"
+CANONICAL_GOLDEN = REPO / "docs" / "design" / "multilevel-graph" / "golden" / "S9-golden-set.json"
 
 
 @pytest.fixture()
@@ -170,7 +172,11 @@ def test_golden_is_edition_pinned_and_script_passes(kb: Path, tmp_path: Path):
     golden = load_golden(GOLDEN)
     ds = DataSourceReader(kb).read()
     assert golden["edition_sha"] == ds.canonical_id
-    assert golden_path().resolve() == GOLDEN.resolve()
+    assert golden_path().resolve() == CANONICAL_GOLDEN.resolve()
+    canonical = load_golden(CANONICAL_GOLDEN)
+    assert canonical["kb_id"] == "AAA_Vocab"
+    assert len(canonical["queries"]) >= 20
+    assert canonical["edition_sha"] != golden["edition_sha"]
     out1 = tmp_path / "run1.json"
     out2 = tmp_path / "run2.json"
     for out in (out1, out2):
@@ -197,7 +203,7 @@ def test_golden_is_edition_pinned_and_script_passes(kb: Path, tmp_path: Path):
 
 
 def test_eval_in_process_and_write_golden(kb: Path):
-    report = evaluate_isolated(kb)
+    report = evaluate_isolated(kb, load_golden(GOLDEN))
     assert report.ok is True
     assert report.detail["determinism"]["2x"] is True
     tmp_golden = kb.parent / "golden-copy.json"

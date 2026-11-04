@@ -3,11 +3,11 @@
 
 用法::
 
-    python scripts/verify/eval-retrieval.py --kb tests/graph/fixtures/kb-mini \
+    python scripts/verify/eval-retrieval.py --kb docs/example/AAA_Vocab \
         --golden docs/design/multilevel-graph/golden/S9-golden-set.json \
         --out artifacts/agent/verify/graph/retrieval/run.json
 
-    # 用当前 KB 的 edition 重建 golden（唯一路径 S9a；改 fixture 后才需要）
+    # 用当前 KB 的 edition 重建 golden（仅 fixture KB；canonical 真实库 golden 由 B6.2 校准生成）
     python scripts/verify/eval-retrieval.py --write-golden --kb tests/graph/fixtures/kb-mini
 
 退出码：0 = GATE-RET 全 PASS（含 2× 确定性）；1 = 门禁失败/执行失败；2 = 用法错误。
@@ -36,7 +36,7 @@ from memoria.graph.retrieval.eval import (  # noqa: E402
 )
 from memoria.graph.retrieval.index import canonical_bytes, sha256_canonical  # noqa: E402
 
-DEFAULT_KB = REPO / "tests" / "graph" / "fixtures" / "kb-mini"
+DEFAULT_KB = REPO / "docs" / "example" / "AAA_Vocab"
 DEFAULT_OUT = REPO / "artifacts" / "agent" / "verify" / "graph" / "retrieval"
 
 
@@ -61,6 +61,10 @@ def main(argv: list[str] | None = None) -> int:
         return 2
     try:
         if args.write_golden:
+            if kb.name != "kb-mini":
+                _emit({"ok": False, "error": "usage",
+                       "message": "--write-golden 仅用于 fixture KB（kb-mini）；真实库 golden 由 B6.2 校准生成，防止覆盖 canonical"})
+                return 2
             res = write_golden(kb)
             _emit({"ok": True, "write_golden": res})
             return 0
