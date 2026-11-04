@@ -5,6 +5,7 @@
 """
 from __future__ import annotations
 
+import copy
 import json
 import shutil
 import subprocess
@@ -13,6 +14,7 @@ from dataclasses import replace
 from pathlib import Path
 
 import pytest
+import yaml
 
 REPO = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(REPO / "src"))
@@ -211,3 +213,84 @@ def test_eval_in_process_and_write_golden(kb: Path):
     assert Path(res["path"]) == tmp_golden
     assert tmp_golden.is_file()
     assert res["edition_sha"] == DataSourceReader(kb).read().canonical_id
+
+
+# ── B6.3 分型语义（task-360）────────────────────────────────────────
+
+def _make_nosemantic(kb: Path) -> None:
+    """把 kb-mini 的 semantic overlay 去掉（库 semantic_edges=0）。"""
+    for p in (kb / ".memoria" / "sidecars").rglob("*.yaml"):
+        doc = yaml.safe_load(p.read_text(encoding="utf-8"))
+        if isinstance(doc, dict) and "edges" in doc:
+            doc["edges"] = []
+            p.write_text(yaml.safe_dump(doc, allow_unicode=True, sort_keys=False), encoding="utf-8")
+
+
+def test_no_semantic_library_graph_is_not_applicable(kb: Path):
+    """无语义库：graph=NOT_APPLICABLE，且空候选 coverage 不得=1.0；不参与聚合分母。"""
+    _make_nosemantic(kb)
+    ds = DataSourceReader(kb).read()
+    golden = dict(load_golden(GOLDEN), edition_sha=ds.canonical_id)
+    report = evaluate(kb, golden)
+    graph = report.detail["type_breakdown"]["graph"]
+    assert graph["status"] == "NOT_APPLICABLE"
+    assert "no_semantic_edges" in graph["reason"]
+    assert graph["coverage"] == 0.0 and graph["empty_candidates"] >= 1
+    assert "graph" in report.detail["not_applicable_types"]
+    assert "graph" not in report.detail["applicable_types"]
+    assert report.metrics["sem_purity"] is None
+    # 聚合指标只来自适用分型
+    assert report.metrics["n_applicable_types"] == len(report.detail["applicable_types"])
+    assert report.detail["type_gates"].get("graph") is None
+
+
+def test_semantic_fixture_graph_is_applicable_and_can_fail(kb: Path):
+    """有 semantic fixture：graph 真实评估；故意写错 expected ⇒ graph 分型红。"""
+    golden = copy.deepcopy(load_golden(GOLDEN))
+    for q in golden["queries"]:
+        if q["query_type"] == "graph":
+            q["expected"] = ["kp:definitely-not-returned"]
+    report = evaluate(kb, golden)
+    graph = report.detail["type_breakdown"]["graph"]
+    assert graph["status"] == "APPLICABLE"
+    assert graph["recall_at_5"] == 0.0
+    assert report.detail["type_gates"]["graph"]["recall_at_5"] is False
+    assert report.ok is False
+
+
+def test_negative_metric_makes_cli_exit_1(kb: Path, tmp_path: Path):
+    """负向：把适用分型指标打到阈值下 ⇒ eval CLI exit 1（不能只看聚合被平均拉绿）。"""
+    golden = copy.deepcopy(load_golden(GOLDEN))
+    for q in golden["queries"]:
+        q["expected"] = ["kp:definitely-not-returned"]
+    bad_golden = tmp_path / "bad-golden.json"
+    bad_golden.write_text(json.dumps(golden, ensure_ascii=False), encoding="utf-8")
+    out = tmp_path / "bad-run.json"
+    r = subprocess.run(
+        [sys.executable, str(REPO / "scripts" / "verify" / "eval-retrieval.py"),
+         "--kb", str(kb), "--golden", str(bad_golden), "--out", str(out)],
+        capture_output=True, text=True, encoding="utf-8",
+    )
+    assert r.returncode == 1, r.stdout + r.stderr
+    payload = json.loads(out.read_text(encoding="utf-8"))
+    assert payload["ok"] is False
+    assert any(g is False for g in payload["gates"].values() if g is not None)
+    assert payload["type_breakdown"]
+    assert payload["applicable_types"] and payload["not_applicable_types"] == ["vector"]
+
+
+def test_real_corpus_type_breakdown_contract():
+    """canonical 真实库：graph 因 0 semantic 标 NA；聚合只在适用分型。"""
+    from memoria.graph.retrieval.eval import evaluate_isolated as ev_iso
+    real = REPO / "docs" / "example" / "AAA_Vocab"
+    if not real.is_dir():
+        pytest.skip("real corpus absent")
+    report = ev_iso(real, load_golden(CANONICAL_GOLDEN))
+    types = report.detail["type_breakdown"]
+    assert types["graph"]["status"] == "NOT_APPLICABLE"
+    assert "no_semantic_edges" in types["graph"]["reason"]
+    assert report.detail["applicable_types"] == ["keyword", "vector", "hybrid"]
+    assert report.detail["not_applicable_types"] == ["graph"]
+    assert report.metrics["recall_at_5"] == 1.0  # 只在适用分型上聚合
+    assert report.metrics["sem_purity"] is None
+    assert report.ok is True

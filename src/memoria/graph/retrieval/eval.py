@@ -147,6 +147,47 @@ def _mrr(ranked: list[str], expected: list[str]) -> float:
     return 0.0
 
 
+TYPE_ORDER: tuple[str, ...] = ("keyword", "vector", "hybrid", "graph")
+
+
+def _type_metrics(rows: list[dict]) -> dict:
+    """按 query_type 计算分型指标；空候选 coverage=0，sem_purity 仅在有 semantic 候选时给值。"""
+    if not rows:
+        return {"n_queries": 0, "recall_at_5": None, "ndcg_at_10": None, "mrr": None,
+                "coverage": None, "sem_purity": None, "latency_ms_median": None,
+                "empty_candidates": 0}
+    recall = statistics.fmean(r["recall_at_5"] for r in rows)
+    ndcg = statistics.fmean(r["ndcg_at_10"] for r in rows)
+    mrr = statistics.fmean(r["mrr"] for r in rows)
+    # 空候选不得记 coverage=1.0：逐 query 已在 per_query 置 0；此处按其均值
+    coverage = statistics.fmean(r["coverage"] for r in rows)
+    sem_vals = [r["sem_purity"] for r in rows if r.get("sem_purity") is not None]
+    return {
+        "n_queries": len(rows),
+        "recall_at_5": round(recall, 6),
+        "ndcg_at_10": round(ndcg, 6),
+        "mrr": round(mrr, 6),
+        "coverage": round(coverage, 6),
+        "sem_purity": round(min(sem_vals), 6) if sem_vals else None,
+        "latency_ms_median": round(statistics.median(r["latency_ms"] for r in rows), 3),
+        "empty_candidates": sum(1 for r in rows if r.get("candidate_count", 0) == 0),
+    }
+
+
+def _gate_for(metrics: dict, *, skip_null: bool = True) -> dict:
+    """对一组指标套 S9 provisional 阈值；NULL（不适用）→ None 且不计入 ok。"""
+    out: dict = {}
+    for key, floor in (("recall_at_5", GATE_RET["recall_at_5"]),
+                       ("ndcg_at_10", GATE_RET["ndcg_at_10"]),
+                       ("mrr", GATE_RET["mrr"]),
+                       ("coverage", GATE_RET["coverage"])):
+        val = metrics.get(key)
+        out[key] = None if val is None else bool(val >= floor)
+    val = metrics.get("sem_purity")
+    out["sem_purity"] = None if val is None else bool(abs(val - GATE_RET["sem_purity"]) <= 1e-9)
+    return out
+
+
 def _evaluate_once(kb_path: str | Path, golden: dict) -> dict:
     ds = DataSourceReader(kb_path).read()
     if golden["edition_sha"] != ds.canonical_id:
@@ -159,84 +200,120 @@ def _evaluate_once(kb_path: str | Path, golden: dict) -> dict:
     store = IndexStore(kb_path)
     index, built = store.load_or_build(ds)
     retriever = Retriever(kb_path, datasource=ds, index=index)
+    has_semantic_edges = bool(index.semantic_edges)
     per_query: list[dict] = []
-    latencies: list[float] = []
-    coverage_hits = 0
-    coverage_total = 0
-    sem_purities: list[float] = []
     for q in golden["queries"]:
+        qtype = q.get("query_type", "hybrid")
         request = RetrievalRequest(
-            kb_id=golden["kb_id"], query=q["query"], query_type=q.get("query_type", "hybrid"),
+            kb_id=golden["kb_id"], query=q["query"], query_type=qtype,
             filters=dict(q.get("filters") or {}),
             budget=dict(q.get("budget") or {}),
             expected_edition=golden["edition_sha"],
         )
         start = time.perf_counter()
         response = retriever.search(request)
-        latencies.append((time.perf_counter() - start) * 1000.0)
+        latency = (time.perf_counter() - start) * 1000.0
         ranked = [c["candidate_ref"] for c in response["candidates"]]
         expected = list(q.get("expected") or [])
-        coverage_hits += int(round(response["metrics"]["coverage_ratio"] *
-                                   response["metrics"]["candidate_count"]))
-        coverage_total += response["metrics"]["candidate_count"]
-        sem_purities.append(float(response["metrics"]["sem_purity"]))
+        candidate_count = int(response["metrics"]["candidate_count"])
+        # 空候选 coverage 必须为 0（不许把 0/0 记成 1.0）
+        coverage = (float(response["metrics"]["coverage_ratio"])
+                    if candidate_count > 0 else 0.0)
+        # sem_purity 只在有 semantic 候选分量时计；否则 None（NOT_APPLICABLE）
+        graph_mass = float(response["metrics"].get("graph_score_mass", 0.0))
+        sem_purity = (float(response["metrics"]["sem_purity"])
+                      if graph_mass > 0.0 else None)
         per_query.append({
             "id": q["id"],
-            "query_type": q.get("query_type", "hybrid"),
+            "query_type": qtype,
             "recall_at_5": _recall(ranked, expected),
             "ndcg_at_10": _ndcg(ranked, expected),
             "mrr": _mrr(ranked, expected),
+            "coverage": coverage,
+            "sem_purity": sem_purity,
+            "latency_ms": latency,
+            "candidate_count": candidate_count,
+            "empty_candidates": candidate_count == 0,
             "top_refs": ranked[:10],
             "expected": expected,
             "truncated": response["truncated"],
+            "data_state": response["data_state"],
             "degraded_reasons": response["degraded_reasons"],
         })
-    recall = statistics.fmean(p["recall_at_5"] for p in per_query)
-    ndcg = statistics.fmean(p["ndcg_at_10"] for p in per_query)
-    mrr = statistics.fmean(p["mrr"] for p in per_query)
-    coverage = (coverage_hits / coverage_total) if coverage_total else 1.0
-    sem_purity = min(sem_purities) if sem_purities else 1.0
-    metrics = {
-        "n_queries": len(per_query),
-        "recall_at_5": round(recall, 6),
-        "ndcg_at_10": round(ndcg, 6),
-        "mrr": round(mrr, 6),
-        "coverage": round(coverage, 6),
-        "sem_purity": round(sem_purity, 6),
-        "latency_ms_median": round(statistics.median(latencies), 3),
-        "index_sha": index.canonical_sha(),
-        "edition_sha": index.edition,
-        "index_built": built,
-    }
+
+    type_breakdown: dict = {}
+    type_status: dict = {}
+    for qtype in TYPE_ORDER:
+        rows = [r for r in per_query if r["query_type"] == qtype]
+        if not rows:
+            metrics = _type_metrics([])
+            metrics["status"] = "NOT_APPLICABLE"
+            metrics["reason"] = "no_queries"
+            type_breakdown[qtype] = metrics
+            type_status[qtype] = "NOT_APPLICABLE"
+            continue
+        metrics = _type_metrics(rows)
+        if qtype == "graph" and not has_semantic_edges:
+            # 库无语义边：graph 不可评估（不是 0 分 PASS）
+            metrics["status"] = "NOT_APPLICABLE"
+            metrics["reason"] = "no_semantic_edges: 库 semantic_edges==0（data_state=empty_nosemantic），graph 分型不评估"
+            type_breakdown[qtype] = metrics
+            type_status[qtype] = "NOT_APPLICABLE"
+        else:
+            metrics["status"] = "APPLICABLE"
+            type_breakdown[qtype] = metrics
+            type_status[qtype] = "APPLICABLE"
+
+    applicable_types = [q for q in TYPE_ORDER if type_status[q] == "APPLICABLE"]
+    not_applicable_types = [q for q in TYPE_ORDER if type_status[q] == "NOT_APPLICABLE"]
+    applicable_rows = [r for r in per_query if r["query_type"] in applicable_types]
+    aggregate = _type_metrics(applicable_rows)
+    # 聚合只在适用分型上；NA 不参与分母
+    aggregate["n_applicable_types"] = len(applicable_types)
+    aggregate["applicable_types"] = applicable_types
+    aggregate["not_applicable_types"] = not_applicable_types
+
+    type_gates = {q: _gate_for(type_breakdown[q]) for q in applicable_types}
+    aggregate_gates = _gate_for(aggregate)
+    all_ok = all(v for v in aggregate_gates.values() if v is not None)
+    for q in applicable_types:
+        all_ok = all_ok and all(v for v in type_gates[q].values() if v is not None)
+
+    metrics = dict(aggregate)
     metrics_core = {k: v for k, v in metrics.items()
-                    if k not in {"latency_ms_median", "index_built"}}
+                    if k not in {"latency_ms_median", "index_built", "applicable_types",
+                                 "not_applicable_types", "n_applicable_types"}}
     return {
         "metrics": metrics,
         "metrics_sha": sha256_canonical(metrics_core),
         "per_query": per_query,
+        "type_breakdown": type_breakdown,
+        "type_gates": type_gates,
+        "aggregate_gates": aggregate_gates,
+        "applicable_types": applicable_types,
+        "not_applicable_types": not_applicable_types,
+        "all_queries_metrics": _type_metrics(per_query),
+        "index_sha": index.canonical_sha(),
+        "edition_sha": index.edition,
+        "index_built": built,
+        "has_semantic_edges": has_semantic_edges,
+        "all_ok": all_ok,
     }
 
 
 def evaluate(kb_path: str | Path, golden: dict | None = None) -> EvalReport:
-    """跑 2×（独立两次构建/检索）并判 GATE-RET。"""
+    """跑 2×（独立两次构建/检索）并按“适用分型”判 GATE-RET。"""
     golden = golden if golden is not None else load_golden()
     first = _evaluate_once(kb_path, golden)
     second = _evaluate_once(kb_path, golden)
     deterministic = (first["metrics_sha"] == second["metrics_sha"]
-                     and first["metrics"]["index_sha"] == second["metrics"]["index_sha"])
-    metrics = first["metrics"]
-    gates = {
-        "recall_at_5": metrics["recall_at_5"] >= GATE_RET["recall_at_5"],
-        "ndcg_at_10": metrics["ndcg_at_10"] >= GATE_RET["ndcg_at_10"],
-        "mrr": metrics["mrr"] >= GATE_RET["mrr"],
-        "coverage": metrics["coverage"] >= GATE_RET["coverage"],
-        "sem_purity": abs(metrics["sem_purity"] - GATE_RET["sem_purity"]) <= 1e-9,
-        "determinism_2x": deterministic,
-    }
-    ok = all(gates.values())
+                     and first["index_sha"] == second["index_sha"])
+    gates = dict(first["aggregate_gates"])
+    gates["determinism_2x"] = deterministic
+    ok = bool(first["all_ok"] and deterministic)
     return EvalReport(
         ok=ok,
-        metrics=metrics,
+        metrics=first["metrics"],
         gates=gates,
         detail={
             "golden_sha256": sha256_canonical(golden),
@@ -245,6 +322,12 @@ def evaluate(kb_path: str | Path, golden: dict | None = None) -> EvalReport:
             "provisional": True,
             "per_query": first["per_query"],
             "metrics_sha": first["metrics_sha"],
+            "type_breakdown": first["type_breakdown"],
+            "type_gates": first["type_gates"],
+            "applicable_types": first["applicable_types"],
+            "not_applicable_types": first["not_applicable_types"],
+            "all_queries_metrics": first["all_queries_metrics"],
+            "has_semantic_edges": first["has_semantic_edges"],
             "determinism": {
                 "2x": deterministic,
                 "first_metrics_sha": first["metrics_sha"],
