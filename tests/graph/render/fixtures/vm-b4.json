@@ -1,0 +1,22 @@
+{
+  "view_model_id": "vm_b4_render_fixture_0001",
+  "level_id": "L1",
+  "level_label": "知识点",
+  "dimension_id": "A",
+  "view_family_id": "fam-a",
+  "nodes": [
+    { "id": "a", "kind": "kp", "label": "知识点 A", "role": "member", "presence": "shown", "range_ok": true },
+    { "id": "b", "kind": "kp", "label": "知识点 B", "role": "member", "presence": "shown", "range_ok": true },
+    { "id": "c", "kind": "kp", "label": "知识点 C", "role": "member", "presence": "suppressed", "rule_id": "node.budget" },
+    { "id": "cl1", "kind": "cluster", "label": "聚类 1", "role": "member", "presence": "shown", "member_count": 5, "representative": true, "root_exempt": false, "range_ok": true, "aggregate_count": 5 },
+    { "id": "cl_root", "kind": "cluster", "label": "全库", "role": "member", "presence": "shown", "member_count": 120, "representative": true, "root_exempt": true, "range_ok": true },
+    { "id": "d", "kind": "kp", "label": "知识点 D", "role": "member", "presence": "unknown", "rule_id": "endpoint.unresolved" }
+  ],
+  "edges": [
+    { "id": "semantic|a|b", "type": "semantic", "presence": "shown" },
+    { "id": "contain|cl1|a", "type": "contain", "presence": "shown" },
+    { "id": "contain|cl_root|cl1", "type": "contain", "presence": "shown" },
+    { "id": "reference|b|c", "type": "reference", "presence": "suppressed", "rule_id": "hop.budget" },
+    { "id": "extend|a|d", "type": "extend", "presence": "unknown", "rule_id": "source.unavailable" }
+  ]
+}

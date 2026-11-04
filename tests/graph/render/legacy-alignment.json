@@ -1,0 +1,76 @@
+{
+  "schema": "memoria.graph.b4.legacy-alignment/v1",
+  "baseline": "0.4.10 已发布 KGviz v0（连续节点大小 / 度 tooltip / 标签 LOD 避让 / 布局确定性种子+会话内保位 / 边高亮 / 3D 光晕）",
+  "decision": "dec-20261104-7e6e9d63 #2 —— 旧 3D/旧入口保留 legacy + 显式 beta；0.5 只做 2D 新架构，不静默删除已发布能力",
+  "principle": "新 2D 渲染器未接入 app.js/index.html（B4 写域不含），旧 KGviz 入口仍是默认路径 ⇒ legacy 入口物理保留；新路径差异逐项登记并报 Lead，不达标不得发版。",
+  "items": [
+    {
+      "id": "legacy.continuous_node_size",
+      "feature": "连续节点大小（KGviz v0，D-KGV-13/D-KGV-14）",
+      "status": "LEGACY_ONLY_REGISTERED_DIFFERENCE",
+      "new_renderer": "按 S3 冻结 token：KP 固定半径 8px；cluster = clamp(8+2.2*log2(member+1),12,28)（不按 degree；VM 无 degree 字段，S3-12）",
+      "legacy_entry": "旧 graph-view-2d.js 连续大小与旧入口原样保留（未被 B4 修改）",
+      "alignment": "PASS（保留 legacy；差异登记：S3 明确取代 degree 连续大小，不是回退）",
+      "evidence": ["src/memoria/ui/static/app/js/graph-view-2d.js", "src/memoria/ui/static/app/js/graph-multilevel/renderer-adapter.js#nodeRadius"]
+    },
+    {
+      "id": "legacy.degree_tooltip",
+      "feature": "度 tooltip（hover 显示连接数）",
+      "status": "LEGACY_ONLY_REGISTERED_DIFFERENCE",
+      "new_renderer": "Renderer 只发 hover/nodeClick 事件；VM 按 S3 白名单不含 degree ⇒ 新图 tooltip 需 Presentation 从 S4/DataSource 补原值（B4 写域外）",
+      "legacy_entry": "旧 tooltip（graph-label.js#resolveNodeHoverHtml + app.js engine.degreeOf）保留",
+      "alignment": "PASS（legacy 保留；新路径差异登记：新 VM 无 degree 是冻结设计，非渲染器遗漏）",
+      "evidence": ["src/memoria/ui/static/app/js/graph-label.js", "tests/graph/render/renderer_adapter.test.js#events_payloads_have_no_navigation_fields"]
+    },
+    {
+      "id": "legacy.label_lod_avoidance",
+      "feature": "标签 LOD/避让（0.4.10 已发布）",
+      "status": "PASS",
+      "new_renderer": "复用 `MemoriaGraphLabels.layoutNodeLabels`（同变量同方向；只画 shown）",
+      "legacy_entry": "旧 label 模块保留",
+      "alignment": "PASS（真机测试证明调用旧模块）",
+      "evidence": ["tests/graph/render/renderer_adapter.test.js#label_lod_reuses_legacy_module"]
+    },
+    {
+      "id": "legacy.layout_deterministic_seed_session_stability",
+      "feature": "布局确定性种子 + 会话内保位（0.4.10 / D-KGV-07）",
+      "status": "PASS",
+      "new_renderer": "Renderer 自带确定性种子布局（seed=layoutSeed 或 fnv1a(view_model_id)）；update 同 VM moved=0（不 reheat）；relayout 仅在显式请求",
+      "legacy_entry": "旧 graph-layout-2d/3d 与旧入口保留",
+      "alignment": "PASS（同 VM 两次 render 位置 deep-equal；update moved=0）",
+      "evidence": ["tests/graph/render/renderer_adapter.test.js#deterministic_layout_and_session_stability"]
+    },
+    {
+      "id": "legacy.edge_highlight",
+      "feature": "边高亮（hover 关联边）",
+      "status": "PASS",
+      "new_renderer": "hover 节点时 incident edge alpha 0.95 / 非关联 0.5（S3-5 只画 shown）",
+      "legacy_entry": "旧视图保留",
+      "alignment": "PASS（机检 stroke alpha）",
+      "evidence": ["tests/graph/render/renderer_adapter.test.js#edge_highlight_on_hover"]
+    },
+    {
+      "id": "legacy.3d_halo",
+      "feature": "3D 光晕（KGviz v0）",
+      "status": "PASS_LEGACY",
+      "new_renderer": "0.5 不实现 3D：I-07 同签名接口 + capability=false；render/update fail-visible `RENDER_UNSUPPORTED_BACKEND`，不阻断 2D",
+      "legacy_entry": "旧 graph-view-3d.js 原样保留（默认 legacy 入口）",
+      "alignment": "PASS（按 S8-10/R-S8-6：3D capability=false 不阻断）",
+      "evidence": ["tests/graph/render/renderer_adapter.test.js#3d_capability_false_and_fail_visible"]
+    },
+    {
+      "id": "legacy.legacy_entry_preserved",
+      "feature": "旧 2D/3D KGviz 入口与 beta",
+      "status": "PASS",
+      "new_renderer": "新模块在 `graph-multilevel/**`，未改 app.js/index.html，也未改旧 view/layout/label 模块 ⇒ 旧入口仍是默认；新模块需显式创建 adapter",
+      "legacy_entry": "旧 app.js 仍引用 MemoriaGraphView2D/MemoriaGraphView3D（B4 未动）",
+      "alignment": "PASS（legacy 物理保留；新入口接线留给 Lead 决策的后续任务）",
+      "evidence": ["src/memoria/ui/static/app/js/app.js", "tests/graph/render/test_renderer_adapter.py#test_legacy_entry_files_untouched_by_b4"]
+    }
+  ],
+  "open_items": [
+    "新 2D RendererAdapter 尚未接入 app.js/index.html（B4 写域不含 app.js/index.html；接入需 Lead 批准并记录基线）",
+    "degree tooltip 在新架构的 Presentation 数据源（VM 无 degree）需后续任务补",
+    "S5 附录 A 的 148 边展开口径与唯一 (state,event) 口径不一致（B4 展开=89，已报 Lead/SE 复核）"
+  ]
+}
