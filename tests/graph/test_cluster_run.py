@@ -387,3 +387,73 @@ def test_missing_corpus_identity_fails_closed() -> None:
     with pytest.raises(GraphError) as ei:
         ClusterRunBuilder().build(ds, level_id="L1", view_family_id="f", semantic_edges=[])
     assert ei.value.detail["s2_code"] == "S2_RUN_ID_INVALID"
+
+
+# ── R-B3-2：标了 semantic 但证据不全 ⇒ 可见失败（与 R-B2-5 同码同语义）──
+
+
+def _full_sem_evidence(tgt: str = "b") -> dict:
+    return {
+        "type": "contain", "source_id": "a", "targets": [tgt], "contain_kind": "semantic",
+        "assertion_source": {"file": "a.md", "line_start": 1, "line_end": 1,
+                             "quote_sha256": "a" * 64},
+        "curated_by": "human:tester", "curated_at": "2026-11-04T00:00:00+08:00",
+    }
+
+
+def test_marked_semantic_without_evidence_fails_visibly() -> None:
+    """R-B3-2：``contain_kind=semantic`` 缺证据 ⇒ **抛** ``GRAPH_EDGE_SEMANTIC_MISMATCH``。
+
+    这是"证红"：修复前 ``select_semantic_edges`` 会把它静默过滤成结构边（无簇、无报错）。
+    """
+    bad = {"type": "contain", "source_id": "a", "targets": ["b"],
+           "contain_kind": "semantic"}          # 无 assertion_source/curated_by/at
+    ds = _ds(edges=[bad])
+    with pytest.raises(GraphError) as ei:
+        ClusterRunBuilder().build(ds, level_id="L1", view_family_id="f")
+    assert ei.value.code == "GRAPH_EDGE_SEMANTIC_MISMATCH"
+
+
+def test_label_semantic_without_evidence_fails_visibly() -> None:
+    """``label=semantic`` 同样受 R-B3-2 约束（不只 contain_kind）。"""
+    bad = {"type": "extend", "source_id": "a", "targets": ["b"], "label": "semantic"}
+    with pytest.raises(GraphError) as ei:
+        ClusterRunBuilder().build(_ds(edges=[bad]), level_id="L1", view_family_id="f")
+    assert ei.value.code == "GRAPH_EDGE_SEMANTIC_MISMATCH"
+
+
+def test_explicit_semantic_edges_also_checked_for_evidence() -> None:
+    """显式传入的 semantic_edges 也走同一证据检查（不信调用方）。"""
+    bad = {"type": "contain", "source_id": "a", "targets": ["b"], "contain_kind": "semantic"}
+    with pytest.raises(GraphError) as ei:
+        ClusterRunBuilder().build(_ds(), level_id="L1", view_family_id="f",
+                                  semantic_edges=[bad])
+    assert ei.value.code == "GRAPH_EDGE_SEMANTIC_MISMATCH"
+
+
+@pytest.mark.parametrize("missing", ["assertion_source", "curated_by", "curated_at"])
+def test_each_missing_evidence_field_fails_in_cluster_run(missing: str) -> None:
+    edge = _full_sem_evidence()
+    edge.pop(missing)
+    with pytest.raises(GraphError) as ei:
+        ClusterRunBuilder().build(_ds(edges=[edge]), level_id="L1", view_family_id="f")
+    assert ei.value.code == "GRAPH_EDGE_SEMANTIC_MISMATCH"
+
+
+def test_complete_semantic_evidence_still_works() -> None:
+    """补齐证据后应正常成为 E_sem（不是"一律拒绝"的过度收紧）。"""
+    ds = _ds(edges=[_full_sem_evidence("b")])
+    run = ClusterRunBuilder().build(ds, level_id="L1", view_family_id="f")
+    assert run.diagnostics["n_semantic_pairs"] >= 1
+    assert run.status == "ok"
+
+
+def test_structural_edges_unaffected_by_evidence_rule() -> None:
+    """结构边（缺省 / 显式 structural）不要求这些字段 —— 不得误伤。"""
+    ds = _ds(edges=[
+        {"type": "contain", "source_id": "a", "targets": ["b"]},
+        {"type": "contain", "source_id": "b", "targets": ["c"], "contain_kind": "structural"},
+    ])
+    run = ClusterRunBuilder().build(ds, level_id="L1", view_family_id="f")
+    assert run.status == "no_semantic_edges"      # 无语义边是合法状态，不是错误
+    assert run.diagnostics["n_semantic_pairs"] == 0

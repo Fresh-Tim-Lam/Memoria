@@ -32,6 +32,7 @@ from dataclasses import dataclass, field
 from itertools import combinations
 from typing import Iterable, Mapping, Sequence
 
+from memoria.graph.multilevel.admission import assert_semantic_marker_evidence
 from memoria.graph.multilevel.errors import GRAPH_INTERNAL, GraphError
 
 #: 五状态（R-S2-13 冻结；顺序即优先级判定顺序，见 :func:`_decide_status`）。
@@ -477,6 +478,13 @@ class ClusterRunBuilder:
         all_edges = tuple(dict(e) for e in (datasource.edges or ()))
         sem_edges = tuple(dict(e) for e in semantic_edges) if semantic_edges is not None \
             else select_semantic_edges(all_edges)
+        # R-B3-2（与 R-B2-5 **同码同语义**）：标了 semantic 但证据不全的边必须**可见失败**，
+        # 不得被 ``select_semantic_edges`` 静默过滤成"结构边"而在 B2 就被吞掉。
+        # 实现复用 admission.assert_semantic_marker_evidence（单一实现，防两处语义漂移；
+        # admission 只依赖 errors ⇒ 本依赖无环）。
+        assert_semantic_marker_evidence(all_edges)
+        if semantic_edges is not None:
+            assert_semantic_marker_evidence(sem_edges)
         # 纯度：显式传入的语义边也必须真的满足 G_sem（不信调用方）
         for e in sem_edges:
             if not is_semantic_edge(e):

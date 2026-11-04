@@ -21,6 +21,7 @@ import pytest
 
 from memoria.graph.multilevel import view_model as vm_mod
 from memoria.graph.multilevel.admission import (
+    RULE_IDS,
     AdmissionService,
     check_x_rule,
     make_frame_spec,
@@ -90,7 +91,11 @@ def test_vm_whitelist_constants_are_frozen() -> None:
         "layout_group",
         "presence", "rule_id",          # S3-ADDENDUM-1
     )
-    assert VM_EDGE_FIELDS == ("id", "type", "state", "presence", "data_edge_ids")
+    assert VM_EDGE_FIELDS == (
+        "id", "type", "state", "presence",
+        "rule_id",          # S3-ADDENDUM-2（R-B3-1）
+        "data_edge_ids",
+    )
     assert VM_NODE_KINDS == ("kp", "cluster")
     assert VM_NODE_ROLES == ("member",)          # R-S3-3：v1 无 bridge 视觉
     assert VM_EDGE_STATES == ("bridge_only",)
@@ -123,13 +128,50 @@ def test_vm_node_required_fields_and_role() -> None:
         assert node["kind"] in VM_NODE_KINDS
 
 
-def test_vm_edges_have_no_rule_id_field() -> None:
-    """S3-12 边白名单**不含** rule_id ⇒ VM 边不得带（边的 rule 归属查 AdmissionResult）。"""
+def test_vm_edges_rule_id_presence_rules() -> None:
+    """S3-ADDENDUM-2（R-B3-1）：**非 shown 边必须带 rule_id**；shown 边可缺省。"""
     ds = _ds(["a", "b", "c"], [_edge("contain", "a", "b"), _edge("contain", "b", "c")])
     vm = ViewModelBuilder().build(_admission(ds))
     for edge in vm["edges"]:
-        assert "rule_id" not in edge
         assert set(edge) <= set(VM_EDGE_FIELDS)
+        if edge["presence"] != "shown":
+            assert edge.get("rule_id"), f"non-shown 边缺 rule_id：{edge['id']}"
+            assert edge["rule_id"] in RULE_IDS
+        elif "rule_id" in edge:
+            assert edge["rule_id"] in RULE_IDS
+
+
+def test_vm_edges_rule_id_matches_admission() -> None:
+    """边的 rule_id 必须与 AdmissionResult 判定**一致**（唯一裁剪者，无二次裁决）。"""
+    ds = _ds(["a", "b", "c"], [_edge("contain", "a", "b"), _edge("contain", "b", "c")])
+    adm = _admission(ds)
+    vm = ViewModelBuilder().build(adm)
+    adm_rules = {e["id"]: e.get("rule_id") for e in adm.edges}
+    for edge in vm["edges"]:
+        assert edge.get("rule_id") == adm_rules.get(edge["id"])
+
+
+def test_validate_vm_rejects_nonshown_edge_without_rule_id() -> None:
+    """校验器必须拦住"非 shown 边缺 rule_id"（R-B3-1 硬要求）。"""
+    vm = _valid_vm()
+    suppressed = next(e for e in vm["edges"] if e["presence"] != "shown")
+    suppressed.pop("rule_id")
+    problems = validate_vm(vm)
+    assert any("rule_id" in p for p in problems), problems
+
+
+def test_validate_vm_rejects_unknown_edge_rule_id() -> None:
+    vm = _valid_vm()
+    suppressed = next(e for e in vm["edges"] if e["presence"] != "shown")
+    suppressed["rule_id"] = "made.up_rule"
+    assert any("11 类" in p for p in validate_vm(vm))
+
+
+def test_shown_edge_may_omit_rule_id() -> None:
+    vm = _valid_vm()
+    shown = next(e for e in vm["edges"] if e["presence"] == "shown")
+    shown.pop("rule_id", None)
+    assert validate_vm(vm) == []
 
 
 def test_vm_has_no_cluster_run_metrics_or_nav() -> None:
@@ -293,6 +335,10 @@ def _valid_vm() -> dict:
     (lambda v: v["nodes"][0].update({"presence": "maybe"}), "presence"),
     (lambda v: v["edges"][0].update({"endpoints": ["a", "b"]}), "非白名单"),
     (lambda v: v["edges"][0].update({"state": "highlight"}), "state"),
+    (lambda v: next(e for e in v["edges"] if e["presence"] != "shown").pop("rule_id"),
+     "rule_id"),
+    (lambda v: next(e for e in v["edges"] if e["presence"] != "shown").update(
+        {"rule_id": "not.a.rule"}), "11 类"),
     (lambda v: v["nodes"][2].pop("rule_id"), "rule_id"),
 ])
 def test_validate_vm_catches_violations(mutate, needle: str) -> None:

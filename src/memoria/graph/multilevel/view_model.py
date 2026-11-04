@@ -37,6 +37,7 @@ from typing import Iterable, Mapping, Sequence
 from memoria.graph.multilevel.admission import (
     PRESENCE_SHOWN,
     PRESENCE_VALUES,
+    RULE_IDS,
     AdmissionResult,
 )
 from memoria.graph.multilevel.errors import GRAPH_INTERNAL, GraphError
@@ -57,7 +58,11 @@ VM_NODE_FIELDS: tuple[str, ...] = (
 
 VM_NODE_REQUIRED: tuple[str, ...] = ("id", "kind", "label", "role")
 
-VM_EDGE_FIELDS: tuple[str, ...] = ("id", "type", "state", "presence", "data_edge_ids")
+VM_EDGE_FIELDS: tuple[str, ...] = (
+    "id", "type", "state", "presence",
+    "rule_id",           # S3-ADDENDUM-2（R-B3-1）：非 shown 边必填，仅解释/审计
+    "data_edge_ids",
+)
 
 VM_EDGE_REQUIRED: tuple[str, ...] = ("id", "type")
 
@@ -145,6 +150,11 @@ class ViewModelBuilder:
                 "type": str(rec["type"]),
                 "presence": str(rec["presence"]),
             }
+            # S3-ADDENDUM-2（R-B3-1）：非 shown 边**必须**带 rule_id（解释/审计用）；
+            # shown 边可缺省（无抑制原因可解释）。仅解释，不入布局几何。
+            edge_rule = rec.get("rule_id")
+            if edge_rule:
+                edge["rule_id"] = str(edge_rule)
             # 聚合边才需要 data_edge_ids（审计/expand；Renderer 禁读）
             data_ids = [str(x) for x in (rec.get("data_edge_ids") or ())]
             if int(rec.get("aggregate_count") or 0) > 1 and data_ids:
@@ -220,6 +230,8 @@ def validate_vm(vm: Mapping) -> list[str]:
             problems.append(f"nodes[{idx}] presence 非法：{node['presence']!r}")
         if node.get("presence") != PRESENCE_SHOWN and not node.get("rule_id"):
             problems.append(f"nodes[{idx}] non-shown 缺 rule_id（X-RULE）")
+        if "rule_id" in node and node["rule_id"] not in RULE_IDS:
+            problems.append(f"nodes[{idx}] rule_id 不在 11 类枚举内：{node['rule_id']!r}")
         if "layout_group" in node:
             if node["kind"] == "cluster":
                 problems.append(f"nodes[{idx}] layout_group 不得用于 cluster")
@@ -235,11 +247,13 @@ def validate_vm(vm: Mapping) -> list[str]:
                 problems.append(f"edges[{idx}] 缺必填 {field_name}")
         if "presence" in edge and edge["presence"] not in PRESENCE_VALUES:
             problems.append(f"edges[{idx}] presence 非法：{edge['presence']!r}")
-        if edge.get("presence") != PRESENCE_SHOWN and not edge.get("rule_id") \
-                and edge.get("presence") is not None:
-            # VM 边白名单不含 rule_id（S3-12）；边的 rule 归属查 AdmissionResult。
-            # 因此这里只要求 presence 合法，不要求 rule_id（避免与冻结白名单冲突）。
-            pass
+        # S3-ADDENDUM-2（R-B3-1）：非 shown 边**必须**有 rule_id（必须可解释）；
+        # shown 边可缺省。rule_id 必须是 S4-6 的 11 类之一。
+        if edge.get("presence") is not None and edge["presence"] != PRESENCE_SHOWN:
+            if not edge.get("rule_id"):
+                problems.append(f"edges[{idx}] non-shown 边缺 rule_id（S3-ADDENDUM-2 要求必填）")
+        if "rule_id" in edge and edge["rule_id"] not in RULE_IDS:
+            problems.append(f"edges[{idx}] rule_id 不在 11 类枚举内：{edge['rule_id']!r}")
         if "state" in edge and edge["state"] not in VM_EDGE_STATES:
             problems.append(f"edges[{idx}] state 非法：{edge['state']!r}")
         if "data_edge_ids" in edge and not isinstance(edge["data_edge_ids"], list):
