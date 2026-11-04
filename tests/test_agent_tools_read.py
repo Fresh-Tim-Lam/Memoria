@@ -457,6 +457,38 @@ def test_new_read_tools_registered_and_read_only(kb: Path) -> None:
     assert schemas["read_document"]["properties"]["limit"]["maximum"] == DEFAULT_READ_LIMIT
 
 
+GRAPH_TOOL_NAMES = (
+    "graph_focus",
+    "graph_explain_edge",
+    "graph_expand_cluster",
+    "graph_summary",
+    "graph_resolve_ref",
+)
+GRAPH_WRITE_TOOL_NAMES = (
+    "graph_write", "graph_apply", "graph_curate", "graph_update", "graph_delete",
+    "graph_propose", "graph_import", "graph_path",
+)
+
+
+def test_graph_read_only_tools_wired_before_trace_cost(kb: Path) -> None:
+    """B6.1（task-356 / B6 S7）：五把图谱只读工具接线；顺序与 KB_TOOL_NAMES 一致。"""
+    built = tuple(tool.name for tool in build_kb_tools(str(kb)))
+    assert built == KB_TOOL_NAMES
+    tools = {tool.name: tool for tool in build_kb_tools(str(kb))}
+    for name in GRAPH_TOOL_NAMES:
+        assert name in built, name
+        assert tools[name].read_only is True, name
+        props = tools[name].parameters["properties"]
+        assert "kb_id" in props and "expected_edition" in props, name
+    # 位置契约：read_resource 之后、trace_cost_summary 之前，且五把连续
+    after_read_resource = KB_TOOL_NAMES.index("read_resource") + 1
+    assert KB_TOOL_NAMES[after_read_resource:after_read_resource + 5] == GRAPH_TOOL_NAMES
+    assert KB_TOOL_NAMES.index("trace_cost_summary") == after_read_resource + 5
+    # 只读边界：无 path、无写工具
+    assert not (set(built) & set(GRAPH_WRITE_TOOL_NAMES))
+    assert "graph_path" not in tools
+
+
 # —— ⑧ 非 markdown 文本文件也能读（2026-09-22 人报障）——
 
 

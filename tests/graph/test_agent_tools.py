@@ -26,6 +26,20 @@ from memoria.services.agent.tools.graph import (  # noqa: E402
     make_graph_tools,
 )
 
+
+def test_build_kb_tools_wires_graph_tools_read_only(kb: Path):
+    """B6.1（task-356）：agent 工具面实际返回五把 graph 工具，且均 read_only。"""
+    from memoria.services.agent.tools.kb import KB_TOOL_NAMES, build_kb_tools
+
+    built = tuple(tool.name for tool in build_kb_tools(str(kb)))
+    assert built == KB_TOOL_NAMES
+    tools = {tool.name: tool for tool in build_kb_tools(str(kb))}
+    for name in TOOL_NAMES:
+        assert name in tools, name
+        assert tools[name].read_only is True, name
+    assert "graph_path" not in tools
+    assert not (set(tools) & set(WRITE_TOOL_NAMES))
+
 KB_FIXTURE = REPO / "tests" / "graph" / "fixtures" / "kb-mini"
 
 

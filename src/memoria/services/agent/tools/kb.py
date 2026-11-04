@@ -45,6 +45,7 @@ import tempfile
 from collections.abc import Iterator, Mapping, Sequence
 from typing import Any
 
+from memoria.services.agent.tools.graph import make_graph_tools
 from memoria.services.agent.tools.registry import (
     INVALID_ARGUMENTS_CODE,
     Tool,
@@ -86,6 +87,11 @@ KB_TOOL_NAMES = (
     # S5（task-124）：调用级成本聚合（只读）。**追加在工具面最末** —— 会话查询家族的
     # `SESSION_TOOLS` 连续性与相对次序被 tests 按符号定位钉住；把新工具插进中间会让
     # "四把连续" 的正向切片整体失效（这是测试在保护契约，不该为了新工具改它们）。
+    # B6.1（task-356 / B6 S7）：图谱只读消费五把（**均 read_only=True、无写路径**）——
+    # 位置与 `build_kb_tools()` 的 `*make_graph_tools(root)` 一致：`read_resource` 之后、
+    # `trace_cost_summary` 之前（顺序漂移由 tests/test_agent_tools_read.py 守卫抓）。
+    "graph_focus", "graph_explain_edge", "graph_expand_cluster", "graph_summary",
+    "graph_resolve_ref",
     "trace_cost_summary",
 )
 
@@ -724,7 +730,11 @@ def build_kb_tools(
                 "additionalProperties": False,
             },
             handler=lambda arguments: _read_image_tool(root, arguments),
-        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id), *_trace_cost_tools(root), *_plugin_extension_tools(root),
+        ), *_granular_read_tools(root, session_id), *_skill_tools(root), *_session_query_tools(root), *_reference_tools(root), *_write_proposal_tools(root, session_id, service), *_question_tools(root), *_web_tools(root, session_id), *_scratch_tools(root), *_exec_tools(root, session_id), *_review_tools(root, session_id), *_review_attempts_tools(root, session_id), *_review_feedback_tools(root, session_id), *_review_summon_tools(root, session_id), *_read_resource_tools(root, session_id),
+        # B6.1（task-356 / B6 S7）：图谱只读消费五把；位置与 KB_TOOL_NAMES 一致
+        # （`read_resource` 之后、`trace_cost_summary` 之前）。均 read_only=True、无写路径。
+        *make_graph_tools(root),
+        *_trace_cost_tools(root), *_plugin_extension_tools(root),
     )
 
 
