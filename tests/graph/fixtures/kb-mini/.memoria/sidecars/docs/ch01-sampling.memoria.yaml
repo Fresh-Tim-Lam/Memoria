@@ -1,0 +1,47 @@
+schema_version: 1
+file: docs/ch01-sampling.md
+knowledge_points:
+- id: ch1-sampling
+  name: 第1章 抽样定理
+  description: 抽样定理全章（低通与带通抽样）
+  range:
+    start:
+      snippet: '# 第1章 抽样定理'
+      line_hint: 1
+    end:
+      snippet: '带通抽样定理：对带宽为 B 的带通信号，抽样频率 fs 必须不小于 2B，才能无失真恢复。'
+      line_hint: 9
+- id: ch1-lowpass
+  name: 低通抽样定理
+  description: 低通信号抽样频率为何必须不小于两倍最高频率
+  range:
+    start:
+      snippet: '## 1.1 低通抽样定理'
+      line_hint: 3
+    end:
+      snippet: '低通抽样定理：对最高频率为 fmax 的低通信号，抽样频率 fs 必须不小于 2 fmax，才能无失真恢复。'
+      line_hint: 5
+- id: ch1-bandpass
+  name: 带通抽样定理
+  description: 带通信号抽样频率为何必须不小于两倍带宽
+  range:
+    start:
+      snippet: '## 1.2 带通抽样定理'
+      line_hint: 7
+    end:
+      snippet: '带通抽样定理：对带宽为 B 的带通信号，抽样频率 fs 必须不小于 2B，才能无失真恢复。'
+      line_hint: 9
+edges:
+- type: contain
+  contain_kind: semantic
+  source_id: ch1-sampling
+  targets:
+  - ch1-lowpass
+  derived_by: author
+  curated_by: human:fixture
+  curated_at: '2026-11-04T00:00:00Z'
+  assertion_source:
+    file: docs/ch01-sampling.md
+    line_start: 5
+    line_end: 5
+    quote_sha256: 804073fb6c950728859989bedb8689b21d031055f7c4966c34b6eca7869b7754

@@ -1,0 +1,23 @@
+schema_version: 1
+file: notes/review.md
+knowledge_points:
+- id: note-aliasing
+  name: 混叠
+  description: 抽样频率不足时高频折叠到低频的现象
+  range:
+    start:
+      snippet: '## 混叠'
+      line_hint: 3
+    end:
+      snippet: '混叠：当抽样频率低于 2 fmax 时，高频分量折叠到低频，产生混叠失真。'
+      line_hint: 5
+- id: note-snr
+  name: 信噪比
+  description: 信号功率与噪声功率之比，量化 bit 数与信噪比的关系
+  range:
+    start:
+      snippet: '## 信噪比'
+      line_hint: 7
+    end:
+      snippet: '信噪比：信号功率与噪声功率之比，常以 dB 表示；均匀量化每增加 1 bit 约提升 6 dB。'
+      line_hint: 9

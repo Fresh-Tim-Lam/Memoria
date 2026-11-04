@@ -1,0 +1,47 @@
+schema_version: 1
+file: docs/ch02-quantization.md
+knowledge_points:
+- id: ch2-whole
+  name: 第2章 量化
+  description: 量化全章（均匀与非均匀量化）
+  range:
+    start:
+      snippet: '# 第2章 量化'
+      line_hint: 1
+    end:
+      snippet: '非均匀量化：对小信号采用小量化间隔，对大信号采用大量化间隔，以改善小信号信噪比。'
+      line_hint: 11
+- id: ch2-uniform
+  name: 均匀量化
+  description: 量化间隔处处相等的量化方式
+  range:
+    start:
+      snippet: '## 2.1 均匀量化'
+      line_hint: 5
+    end:
+      snippet: '均匀量化：量化间隔 Δ 处处相等，量化误差均匀分布。'
+      line_hint: 7
+- id: ch2-nonuniform
+  name: 非均匀量化
+  description: 小信号用小间隔、大信号用大间隔的量化方式
+  range:
+    start:
+      snippet: '## 2.2 非均匀量化'
+      line_hint: 9
+    end:
+      snippet: '非均匀量化：对小信号采用小量化间隔，对大信号采用大量化间隔，以改善小信号信噪比。'
+      line_hint: 11
+edges:
+- type: contain
+  contain_kind: semantic
+  source_id: ch2-whole
+  targets:
+  - ch2-uniform
+  derived_by: author
+  curated_by: human:fixture
+  curated_at: '2026-11-04T00:00:00Z'
+  assertion_source:
+    file: docs/ch02-quantization.md
+    line_start: 9
+    line_end: 9
+    quote_sha256: daf0d5ed179c2e01da8649a40dad6c907d7c61b8a873ce25d98394016d2cd126

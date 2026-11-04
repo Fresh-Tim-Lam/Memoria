@@ -1,0 +1,81 @@
+{
+  "edition_sha": "867815d30e06439775139b8acf891ae85c0b3cc46ddb2c4be37fbf40640d3319",
+  "kb_id": "kb-mini",
+  "note": "edition-pinned golden；fixture KB = tests/graph/fixtures/kb-mini",
+  "queries": [
+    {
+      "expected": [
+        "kp:ch1-lowpass"
+      ],
+      "id": "q01-lowpass",
+      "query": "低通抽样定理",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:ch1-bandpass"
+      ],
+      "id": "q02-bandpass",
+      "query": "带通抽样",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:ch2-uniform"
+      ],
+      "id": "q03-uniform",
+      "query": "均匀量化",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:ch2-nonuniform"
+      ],
+      "id": "q04-nonuniform",
+      "query": "非均匀量化",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:note-aliasing"
+      ],
+      "id": "q05-aliasing",
+      "query": "混叠",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:note-snr"
+      ],
+      "id": "q06-snr",
+      "query": "信噪比",
+      "query_type": "keyword",
+      "subset": "no_semantic"
+    },
+    {
+      "expected": [
+        "kp:ch1-sampling",
+        "kp:ch1-lowpass",
+        "kp:ch1-bandpass"
+      ],
+      "id": "q07-sampling-hybrid",
+      "query": "抽样定理",
+      "query_type": "hybrid"
+    },
+    {
+      "expected": [
+        "kp:ch2-whole",
+        "kp:ch2-uniform"
+      ],
+      "id": "q08-quant-graph",
+      "query": "量化全章",
+      "query_type": "graph"
+    }
+  ],
+  "schema_version": 1
+}
