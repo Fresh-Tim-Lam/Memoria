@@ -22,3 +22,8 @@
 ### R-B2-4 `partial_disconnected` 在 average-linkage HAC 下不可达
 - **冲突**：五状态冻结，但 HAC 簇天然连通，端到端算不出 `partial_disconnected`。
 - **裁决**：保留五枚举；实现允许状态机直测覆盖；**文档明确当前算法下端到端不可达**，不得造假数据；若未来换算法/要求可达，重开 S2 修订。B2 不改算法。
+
+### R-B2-5 `contain_kind=semantic` 但证据不全：B3 显式报错，不静默降级
+- **背景**：`is_semantic_edge()` 按 S0-1 G_sem 门控返回 false；若读取路径静默降级，会把"标了 semantic 但缺 assertion_source/curated_by/at"伪装成结构边。
+- **裁决**：B3 Admission 对 `contain_kind=semantic` 或 `label=semantic` 的边做证据完整性检查：缺 `assertion_source`/`curated_by`/`curated_at` ⇒ **`GRAPH_EDGE_SEMANTIC_MISMATCH`（可见失败）**，不得静默当非语义；结构边（缺省/structural）不要求这些字段。
+- **读取路径**：不重算 `quote_sha256`（B5/G6 的 G6 快照可复核）；写入路径仍由既有 curation 校验器逐字校验。
