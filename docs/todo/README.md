@@ -28,6 +28,7 @@
 | [08-shell-release.md](08-shell-release.md) | §8 壳与发布 | 2026-10-26 | 2587 B |
 | [09-learning-products.md](09-learning-products.md) | §9 学习产品（V2+） | 2026-10-26 | 1487 B |
 | [11-notes.md](11-notes.md) | §11 备注/散记 | 2026-10-26 | 1747 B |
+| [20-multilevel-graph-0.5.md](20-multilevel-graph-0.5.md) | §20 0.5 图谱板块实现计划（2D 多层次图谱） | 2026-11-04 | S6a I-01..I-13 六批计划 / DoD / 门禁 / 风险 / task id |
 | [ideas.md](ideas.md) | 全项目（人的需求原始台账） | 2026-10-27 | 28 条人提出需求/想法 + 1 条补充裁决；状态/去向/时间 |
 | [12-build-table.md](12-build-table.md) | §12 知识库与维护机制·施工总表 | 2026-10-26 | 7822 B |
 | [13-agent-panel.md](13-agent-panel.md) | §13 应用内对话（Agent 面板） | 2026-10-26 | 21828 B |
