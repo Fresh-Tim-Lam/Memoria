@@ -134,11 +134,16 @@
   }
 
   function assertBudget(vm) {
-    if (vm.nodes.length > MAX_NODES || vm.edges.length > MAX_EDGES) {
+    // S3-11/S4 边界：S4 对 **shown** 选点做预算裁剪；VM 仍携带 suppressed/unknown
+    // 候选（审计用，S4-10），其数量不受 render 预算约束。Renderer 的硬上限因此只校验
+    // 它真正要画的 shown 子集（不做任何裁剪，超限 fail-visible）。
+    const shownNodes = vm.nodes.filter((n) => !n.presence || n.presence === "shown").length;
+    const shownEdges = vm.edges.filter((e) => !e.presence || e.presence === "shown").length;
+    if (shownNodes > MAX_NODES || shownEdges > MAX_EDGES) {
       fail(
         "RENDER_BUDGET_EXCEEDED",
-        `VM 超硬上限：nodes=${vm.nodes.length}/${MAX_NODES}, edges=${vm.edges.length}/${MAX_EDGES}（Renderer 不裁剪）`,
-        { nodes: vm.nodes.length, edges: vm.edges.length, max_nodes: MAX_NODES, max_edges: MAX_EDGES }
+        `VM 的 shown 超硬上限：nodes=${shownNodes}/${MAX_NODES}, edges=${shownEdges}/${MAX_EDGES}（Renderer 不裁剪）`,
+        { nodes: shownNodes, edges: shownEdges, max_nodes: MAX_NODES, max_edges: MAX_EDGES }
       );
     }
   }
@@ -372,6 +377,7 @@
         const h = Math.max(1, Math.round(height * dpr));
         if (this._canvas.width !== w) this._canvas.width = w;
         if (this._canvas.height !== h) this._canvas.height = h;
+        this._bindPointer();
         return;
       }
       if (!this.host) fail("GRAPH_INTERNAL", "无 host（需要 document 或注入 host）");
@@ -385,6 +391,7 @@
         this._canvas.height = Math.max(1, Math.round(height * dpr));
       }
       if (this.host.append) this.host.append(this.container, this._canvas);
+      this._bindPointer();
     }
 
     _applyLayout(layout, model) {
@@ -399,18 +406,46 @@
       if (!this.host || !this._canvas || !this.host.on) return;
       if (this._bound.length) return;
       const move = (event) => this._onPointerMove(event);
-      const click = (event) => this._onPointerClick(event);
+      const click = (event) => {
+        // 真实浏览器 click 优先；CDP/无 click 环境由 mouseup 兜底（见下方 up）
+        this._clickSeenAt = Date.now();
+        this._onPointerClick(event);
+      };
+      const up = (event) => {
+        const { x, y } = this._point(event);
+        const mark = `${x},${y}`;
+        if (this._pendingUp === mark) return;
+        this._pendingUp = mark;
+        // click 通常在 mouseup 同步随后到达；若未到达则兜底触发一次
+        setTimeout(() => {
+          this._pendingUp = null;
+          if (this._clickSeenAt && Date.now() - this._clickSeenAt < 300) return;
+          this._onPointerClick(event);
+        }, 0);
+      };
       this.host.on(this._canvas, "pointermove", move);
+      this.host.on(this._canvas, "mousemove", move);
       this.host.on(this._canvas, "click", click);
-      this._bound.push([this._canvas, "pointermove", move], [this._canvas, "click", click]);
+      this.host.on(this._canvas, "mouseup", up);
+      this._bound.push(
+        [this._canvas, "pointermove", move],
+        [this._canvas, "mousemove", move],
+        [this._canvas, "click", click],
+        [this._canvas, "mouseup", up]
+      );
     }
 
     _point(event) {
+      // 真实 PointerEvent/MouseEvent 都带 clientX/clientY；统一用画布 rect 换算，
+      // 避免合成事件 offsetX=0 或容器内滚动/边框导致的坐标偏差。
+      if (event && Number.isFinite(event.clientX) && Number.isFinite(event.clientY)) {
+        const rect = this.host && this.host.rect ? this.host.rect(this._canvas) : { left: 0, top: 0 };
+        return { x: event.clientX - (rect.left || 0), y: event.clientY - (rect.top || 0) };
+      }
       if (event && Number.isFinite(event.offsetX) && Number.isFinite(event.offsetY)) {
         return { x: event.offsetX, y: event.offsetY };
       }
-      const rect = this.host && this.host.rect ? this.host.rect(this._canvas) : { left: 0, top: 0 };
-      return { x: (event?.clientX || 0) - (rect.left || 0), y: (event?.clientY || 0) - (rect.top || 0) };
+      return { x: 0, y: 0 };
     }
 
     _pickNode(x, y) {
@@ -476,6 +511,17 @@
       if (this._active !== false) this._draw();
     }
 
+    /** 搜索定位/正文链接 hover 的高亮（Presentation 瞬态；不进 VM）。 */
+    setHighlight(nodeId) {
+      this._highlightId = nodeId || null;
+      if (this._ctx) this._draw();
+      return this._highlightId;
+    }
+
+    getHighlight() {
+      return this._highlightId || null;
+    }
+
     _draw() {
       const ctx = this._ctx;
       if (!ctx) return;
@@ -514,15 +560,16 @@
         if (!p) continue;
         const r = (this._radiusById && this._radiusById.get(node.id)) || nodeRadius(node);
         const hovered = this._hoverId === node.id;
+        const highlighted = this._highlightId === node.id;
         if (ctx.beginPath) {
           ctx.beginPath();
           if (ctx.arc) ctx.arc(p.x, p.y, r, 0, TAU);
           ctx.fillStyle = node.kind === "cluster" ? "#3d6ea8" : "#88a9c9";
           if (node.range_ok === false) ctx.fillStyle = "#6b6b6b";
           if (ctx.fill) ctx.fill();
-          if (hovered && ctx.stroke) {
-            ctx.strokeStyle = "#ffffff";
-            ctx.lineWidth = 2;
+          if ((hovered || highlighted) && ctx.stroke) {
+            ctx.strokeStyle = highlighted ? "#e5c07b" : "#ffffff";
+            ctx.lineWidth = highlighted ? 2.6 : 2;
             ctx.stroke();
           }
           if (node.kind === "cluster" && ctx.stroke) {

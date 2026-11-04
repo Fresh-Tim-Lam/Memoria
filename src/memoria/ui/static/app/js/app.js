@@ -138,6 +138,10 @@
     _editorLinkHoverLine: 0,
     graphData: null,
     graphAudit: null,
+    // 0.5 B4.1：2D 图谱引擎 feature flag（multilevel | legacy；默认 multilevel，可切回）
+    graphRendererMode: "multilevel",
+    graphRendererEffective: "legacy",
+    graphMultilevel: null,
     graphGroupId: localStorage.getItem("-graph-group") || "all",
     kbValidateReport: null,
     toolbarSearchScope: localStorage.getItem("-search-scope") || "kb",
@@ -1682,6 +1686,403 @@ async function call(fn, ...args) {
     };
     state.graphEngine.on("nodeClick", onGraphNodeClick);
     state.graphEngine.on("hover", onGraphHover);
+    initMultilevelGraphPanel(root2d);
+  }
+
+  // ══════════════════════════════════════════════════════════════════════════
+  // 0.5 B4.1：多层次图谱 UI 接入（默认 multilevel；legacy 可切回）
+  //
+  // 数据链（冻结契约）：DataSourceReader → GraphViewBuilder → ClusterRunBuilder →
+  //   AdmissionService → ViewModelBuilder → RendererAdapter(2D)。
+  // 该链在 Python 侧；UI 只调用只读 RPC `get_multilevel_graph_vm`（task-358）。
+  // 本 UI 层**绝不**用旧 `get_graph_data` 在 JS 里伪造 VM（单一事实源 + S4 唯一裁剪者）。
+  // RPC 未就绪/失败 ⇒ 显式回退 legacy（不静默、不崩溃）。
+  // ══════════════════════════════════════════════════════════════════════════
+  const MULTILEVEL_REFRAME_EVENTS = new Set([
+    "CLICK_CLUSTER", "BACK", "BREADCRUMB_TO", "SELECT_DIMENSION", "EXPLICIT_NEW_HOP",
+    "TOGGLE_EXPAND", "FOCUS_LOST", "RESET", "RELOAD",
+  ]);
+
+  function ensureMultilevelChrome(host) {
+    if (!host) return;
+    if (!host.querySelector(".graph-multilevel-toolbar")) {
+      const toolbar = document.createElement("div");
+      toolbar.className = "graph-multilevel-toolbar";
+      toolbar.innerHTML =
+        `<label class="graph-multilevel-field"><span>${esc(T("graph.multilevel.filterLabel"))}</span>` +
+        `<select class="graph-multilevel-dimension" aria-label="${esc(T("graph.multilevel.filterLabel"))}">` +
+        `<option value="A">${esc(T("graph.multilevel.dimensionA"))}</option>` +
+        `<option value="H">${esc(T("graph.multilevel.dimensionH"))}</option></select></label>` +
+        `<button type="button" class="graph-multilevel-expand -btn secondary -btn--sm">${esc(T("graph.multilevel.expandFull"))}</button>`;
+      toolbar.addEventListener("change", (e) => {
+        const sel = e.target.closest(".graph-multilevel-dimension");
+        if (!sel) return;
+        const nav = state.graphMultilevel?.nav;
+        if (nav) nav.dispatch("SELECT_DIMENSION", { dimension_id: sel.value });
+      });
+      toolbar.addEventListener("click", (e) => {
+        const btn = e.target.closest(".graph-multilevel-expand");
+        const nav = state.graphMultilevel?.nav;
+        if (!btn || !nav) return;
+        nav.dispatch("TOGGLE_EXPAND", { candidate_superset: true });
+      });
+      host.appendChild(toolbar);
+    }
+    if (!host.querySelector(".graph-multilevel-legend")) {
+      const legend = document.createElement("div");
+      legend.className = "graph-multilevel-legend";
+      const item = (cls, label) => `<span class="graph-multilevel-legend-item"><i class="${cls}"></i>${esc(label)}</span>`;
+      legend.innerHTML =
+        `<span class="graph-multilevel-legend-title">${esc(T("graph.multilevel.legendTitle"))}</span>` +
+        item("ml-swatch ml-swatch--kp", T("graph.multilevel.legendKp")) +
+        item("ml-swatch ml-swatch--cluster", T("graph.multilevel.legendCluster")) +
+        item("ml-line ml-line--semantic", T("graph.multilevel.legendEdgeSemantic")) +
+        item("ml-line ml-line--structural", T("graph.multilevel.legendEdgeStructural")) +
+        item("ml-line ml-line--reference", T("graph.multilevel.legendEdgeReference"));
+      host.appendChild(legend);
+    }
+  }
+
+  function syncMultilevelChrome(payload) {
+    const host = $("#graph-2d-multilevel-root");
+    if (!host) return;
+    const nav = state.graphMultilevel?.nav;
+    const sel = host.querySelector(".graph-multilevel-dimension");
+    if (sel && nav?.getFrame?.()) sel.value = nav.getFrame().dimension || "A";
+    const levelSel = host.querySelector(".graph-multilevel-level");
+    if (levelSel && nav?.getFrame?.()) {
+      const lv = nav.getFrame().level || "LL";
+      if (lv === "LL" || lv === "L0") levelSel.value = lv;
+    }
+    const btn = host.querySelector(".graph-multilevel-expand");
+    if (btn && nav) {
+      btn.textContent = T(nav.getMode() === "full" ? "graph.multilevel.expandDefault" : "graph.multilevel.expandFull");
+      btn.classList.toggle("active", nav.getMode() === "full");
+    }
+    const legend = host.querySelector(".graph-multilevel-legend");
+    if (legend) {
+      let sup = legend.querySelector(".graph-multilevel-suppressed");
+      if (!sup) {
+        sup = document.createElement("span");
+        sup.className = "graph-multilevel-suppressed";
+        legend.appendChild(sup);
+      }
+      const n = payload?.suppressed_summary?.nodes_total ?? payload?.suppressed_summary?.count ?? null;
+      sup.textContent = typeof n === "number" ? T("graph.multilevel.suppressed", { n }) : "";
+      sup.classList.toggle("hidden", typeof n !== "number");
+    }
+  }
+
+  function multilevelFocusNode(nodeId) {
+    const spec = state.graphMultilevel?.nav?.getFrameSpec?.() || null;
+    if (!spec || !nodeId) return false;
+    loadMultilevelGraphData({ ...spec, focus: String(nodeId) }, { reason: "search-focus" })
+      .then((ok) => {
+        if (ok) state.graphMultilevel?.mounted?.renderer?.setHighlight?.(String(nodeId));
+      })
+      .catch(() => {});
+    return true;
+  }
+
+  function multilevelApi() {
+    try {
+      const a = api();
+      return a && typeof a.get_multilevel_graph_vm === "function" ? a : null;
+    } catch (_) {
+      return null;
+    }
+  }
+
+  function ensureMultilevelHost(root2d) {
+    const root = root2d || $("#graph-2d-root");
+    if (!root) return null;
+    let host = $("#graph-2d-multilevel-root");
+    if (!host) {
+      host = document.createElement("div");
+      host.id = "graph-2d-multilevel-root";
+      host.className = "-graph-root -graph-multilevel-host";
+      host.setAttribute("aria-label", T("graph.multilevel.beta"));
+      root.appendChild(host);
+    }
+    let badge = host.querySelector(".graph-multilevel-badge");
+    if (!badge) {
+      badge = document.createElement("div");
+      badge.className = "graph-multilevel-badge";
+      badge.dataset.role = "status";
+      host.appendChild(badge);
+    }
+    return host;
+  }
+
+  function setMultilevelBadge(text, kind) {
+    const host = $("#graph-2d-multilevel-root");
+    const badge = host?.querySelector(".graph-multilevel-badge");
+    if (!badge) return;
+    badge.textContent = text || "";
+    badge.classList.toggle("graph-multilevel-badge--warn", kind === "warn");
+    badge.classList.toggle("hidden", !text);
+  }
+
+  function applyGraphRendererVisibility() {
+    const root2d = $("#graph-2d-root");
+    const host = ensureMultilevelHost(root2d);
+    if (!root2d || !host) return;
+    const showNew = state.graphRendererEffective === "multilevel";
+    host.classList.toggle("hidden", !showNew);
+    host.style.display = showNew ? "" : "none";
+    // 旧视图 canvas 是 #graph-2d-root 的直接子节点；切到 multilevel 时隐藏旧画布（保留实例可切回）
+    for (const child of root2d.children) {
+      if (child === host) continue;
+      if (child.tagName === "CANVAS") child.style.display = showNew ? "none" : "";
+    }
+  }
+
+  function initMultilevelGraphPanel(root2d) {
+    const host = ensureMultilevelHost(root2d);
+    if (!host) return;
+    ensureMultilevelChrome(host);
+    state.graphMultilevel = state.graphMultilevel || {
+      hostId: host.id,
+      mounted: null,
+      nav: null,
+      payload: null,
+      vm: null,
+      presentation: null,
+      editionSha: null,
+    };
+    const mode = window.MemoriaGraphSettings?.getViewOptions?.()?.renderer;
+    state.graphRendererMode = mode === "legacy" ? "legacy" : "multilevel";
+    state.graphRendererEffective = "legacy";
+    applyGraphRendererVisibility();
+  }
+
+  /** 设置切换：multilevel ⇄ legacy（旧 KGviz 实例不销毁，可立即切回）。 */
+  function setGraphRendererMode(mode, opts = {}) {
+    const next = mode === "legacy" ? "legacy" : "multilevel";
+    if (state.graphRendererMode === next && !opts.force) {
+      if (next === "legacy") {
+        state.graphRendererEffective = "legacy";
+        applyGraphRendererVisibility();
+      }
+      return;
+    }
+    state.graphRendererMode = next;
+    if (next === "legacy") {
+      state.graphRendererEffective = "legacy";
+      applyGraphRendererVisibility();
+      setMultilevelBadge("");
+      if (state.sidebarTab === "graph2d") updateGraphAuditHint();
+      return;
+    }
+    state.graphRendererEffective = "legacy";
+    applyGraphRendererVisibility();
+    // 重新进入 multilevel：丢弃旧 nav/mount（旧 frame 可能停在 drill/expand），按默认 root 重建
+    if (state.graphMultilevel) {
+      try { state.graphMultilevel.mounted?.destroy?.(); } catch (_) { /* noop */ }
+      state.graphMultilevel.mounted = null;
+      state.graphMultilevel.nav = null;
+      state.graphMultilevel.vm = null;
+      state.graphMultilevel.payload = null;
+      state.graphMultilevel.lastError = null;
+    }
+    loadMultilevelGraphData(null, { reason: "mode-switch" }).catch(() => {});
+  }
+
+  function multilevelQueryPayload(frameSpec) {
+    // task-358 RPC 只接受 S4 frame 参数（level/view_family/dimension_id/focus/hop/
+    // new_hop/mode/budget）；不把 frame_id/edition 传给 S4（S6-6 严格 8 字段）。
+    if (!frameSpec) return {};
+    const out = {
+      level: frameSpec.level,
+      view_family: frameSpec.view_family,
+      dimension_id: frameSpec.dimension_id,
+      focus: frameSpec.focus,
+      hop: frameSpec.hop,
+      new_hop: !!frameSpec.new_hop,
+      mode: frameSpec.mode,
+    };
+    if (frameSpec.budget && Number.isFinite(frameSpec.budget.max_nodes) && Number.isFinite(frameSpec.budget.max_edges)) {
+      out.budget = { max_nodes: frameSpec.budget.max_nodes, max_edges: frameSpec.budget.max_edges };
+    }
+    return out;
+  }
+
+  async function fetchMultilevelVM(frameSpec) {
+    const a = multilevelApi();
+    if (!a) {
+      const err = new Error("multilevel_rpc_unavailable");
+      err.code = "MULTILEVEL_RPC_UNAVAILABLE";
+      throw err;
+    }
+    const res = await a.get_multilevel_graph_vm(multilevelQueryPayload(frameSpec));
+    if (!res || res.status !== "ok") {
+      const err = new Error(res?.message || res?.error || "multilevel_vm_failed");
+      err.code = res?.code || "MULTILEVEL_VM_FAILED";
+      throw err;
+    }
+    if (!res.vm || !Array.isArray(res.vm.nodes) || !Array.isArray(res.vm.edges)) {
+      const err = new Error("multilevel_vm_shape_invalid");
+      err.code = "MULTILEVEL_VM_INVALID";
+      throw err;
+    }
+    return res;
+  }
+
+  function multilevelFallbackLegacy(reason) {
+    state.graphRendererEffective = "legacy";
+    state.graphMultilevel = state.graphMultilevel || {};
+    state.graphMultilevel.lastError = String(reason || "");
+    applyGraphRendererVisibility();
+    setMultilevelBadge("");
+    setStatus(T("graph.multilevel.fallbackLegacy"), String(reason || ""));
+    if (state.sidebarTab === "graph2d") updateGraphAuditHint();
+  }
+
+  /**
+   * 加载/重载多层次 2D 视图。返回 true 表示新视图生效；失败回退 legacy 并可见提示。
+   * frameSpec=null ⇒ 由后端给默认根 frame（S5 default frame）。
+   */
+  async function loadMultilevelGraphData(frameSpec, opts = {}) {
+    if (!state.kbPath) return false;
+    if (state.graphRendererMode !== "multilevel") return false;
+    if (!window.MemoriaGraphMount || !window.MemoriaGraphNavController || !window.MemoriaGraphRendererAdapter) {
+      multilevelFallbackLegacy("multilevel_js_not_loaded");
+      return false;
+    }
+    if (!multilevelApi()) {
+      multilevelFallbackLegacy(T("graph.multilevel.unavailable"));
+      return false;
+    }
+    setMultilevelBadge(T("graph.multilevel.loading"));
+    try {
+      const payload = await fetchMultilevelVM(frameSpec || state.graphMultilevel?.payload?.frame_spec || null);
+      // 先切到新宿主（可见）再渲染：Renderer 用容器真实尺寸布局，避免按隐藏容器 800×600 算位置
+      state.graphRendererEffective = "multilevel";
+      applyGraphRendererVisibility();
+      renderMultilevelPayload(payload, opts);
+      if (state.sidebarTab === "graph2d") updateGraphAuditHint();
+      return true;
+    } catch (err) {
+      multilevelFallbackLegacy(err?.message || err?.code || "multilevel_load_failed");
+      return false;
+    }
+  }
+
+  function multilevelPresentation() {
+    return state.graphMultilevel?.presentation || { degrees: {}, files: {}, names: {} };
+  }
+
+  function multilevelNodeForHint(nodeId) {
+    const vm = state.graphMultilevel?.vm;
+    const node = vm?.nodes?.find((n) => n.id === nodeId);
+    if (!node) return null;
+    const meta = multilevelPresentation();
+    const file = meta.files?.[nodeId] || "";
+    return {
+      id: node.id,
+      name: meta.names?.[nodeId] || node.label || node.id,
+      label: node.label || node.id,
+      file,
+      range_ok: node.range_ok !== false,
+      description: meta.descriptions?.[nodeId] || "",
+    };
+  }
+
+  function updateMultilevelHint(nodeId) {
+    const hint = activeGraphHint();
+    if (!hint) return;
+    if (!nodeId) {
+      updateGraphAuditHint();
+      return;
+    }
+    const node = multilevelNodeForHint(nodeId);
+    if (!node) return;
+    const deg = multilevelPresentation().degrees?.[nodeId];
+    const degreeText =
+      typeof deg === "number" && Number.isFinite(deg) ? T("graph.hover.degree", { n: deg }) : "";
+    if (window.MemoriaGraphLabels?.resolveNodeHoverHtml) {
+      hint.innerHTML = MemoriaGraphLabels.resolveNodeHoverHtml(node, { degreeText });
+    } else {
+      hint.textContent = `${node.name} · ${node.file}`;
+    }
+  }
+
+  function wireMultilevelNavEvents(nav) {
+    if (!nav || nav.__wired) return;
+    nav.__wired = true;
+    nav.on("editorJump", ({ node_id, file }) => {
+      if (!file) return;
+      jumpToTarget(
+        { file, kp_id: node_id, name: node_id },
+        { source: "graph" }
+      );
+    });
+    nav.on("transition", (transition) => {
+      if (!transition || !MULTILEVEL_REFRAME_EVENTS.has(transition.event)) return;
+      const spec = nav.getFrameSpec();
+      loadMultilevelGraphData(spec, { reason: `nav:${transition.event}` }).catch(() => {});
+    });
+  }
+
+  function renderMultilevelPayload(payload, opts = {}) {
+    const host = ensureMultilevelHost($("#graph-2d-root"));
+    if (!host) return;
+    ensureMultilevelChrome(host);
+    state.graphMultilevel = state.graphMultilevel || {};
+    state.graphMultilevel.payload = payload;
+    state.graphMultilevel.vm = payload.vm;
+    state.graphMultilevel.presentation = payload.presentation || { degrees: {}, files: {}, names: {} };
+    state.graphMultilevel.editionSha = payload.edition_sha || state.graphMultilevel.editionSha || null;
+
+    if (!state.graphMultilevel.mounted) {
+      // RPC 缺省 root：level=LL（叶层）、dimension=A、focus=最小 canonical KP id。
+      // 从返回 VM 的 shown KP 里取最小 id（focus 是 MANDATORY ⇒ 必在 shown 内），
+      // 使 NavController 初始 frame 与 RPC 返回的 frame_id 对齐。
+      const shownKpIds = (payload.vm.nodes || [])
+        .filter((n) => n.kind === "kp" && (!n.presence || n.presence === "shown"))
+        .map((n) => String(n.id))
+        .sort();
+      const rootFocus = payload.frame_spec?.focus || shownKpIds[0] || "root";
+      const rootLevel = payload.frame_spec?.level || "LL";
+      const rootFamily = payload.frame_spec?.view_family || "default";
+      const rootDimension = payload.frame_spec?.dimension_id || (payload.vm.dimension_id || "A");
+      const nav = state.graphMultilevel.nav || new window.MemoriaGraphNavController.NavController({
+        rootFocus,
+        rootLevel,
+        rootViewFamily: rootFamily,
+        rootDimension,
+        budget: { max_nodes: 200, max_edges: 400 },
+        editionSha: state.graphMultilevel.editionSha || undefined,
+        // 预取在 transition 后（TODO(task-358 follow-up)：peekTransition + 预取保证严格事务化）
+        requestAdmission: () => ({ status: "ok" }),
+      });
+      state.graphMultilevel.nav = nav;
+      wireMultilevelNavEvents(nav);
+      if (nav.getState() === "Idle") nav.dispatch("OPEN_GRAPH", { backendReady: true });
+      if (nav.getState() === "Loading") nav.dispatch("DATA_READY", { editionSha: state.graphMultilevel.editionSha || undefined });
+      state.graphMultilevel.mounted = window.MemoriaGraphMount.mountGraphView({
+        container: host,
+        backend: "2d",
+        nav,
+        resolveFile: (nodeId) => multilevelPresentation().files?.[nodeId] || null,
+      });
+      state.graphMultilevel.mounted.renderer.on("hover", ({ node_id }) => updateMultilevelHint(node_id));
+    }
+    const vm = payload.vm;
+    try {
+      if (opts.replace === true) state.graphMultilevel.mounted.renderer.render(host, vm);
+      else state.graphMultilevel.mounted.update(vm, {});
+    } catch (err) {
+      multilevelFallbackLegacy(err?.code || err?.message || "multilevel_render_failed");
+      return;
+    }
+    const shownNodes = (vm.nodes || []).filter((n) => !n.presence || n.presence === "shown").length;
+    if (shownNodes) {
+      setMultilevelBadge(`${T("graph.multilevel.beta")} · ${shownNodes}`);
+    } else {
+      setMultilevelBadge(T("graph.multilevel.empty"), "warn");
+    }
+    syncMultilevelChrome(payload);
   }
 
   /** 需要整体重布局（resetSimulation）的力导向参数 */
@@ -1746,6 +2147,10 @@ async function call(fn, ...args) {
   function applyGraphViewSettings(viewOpts, sourceTab) {
     const prev = state._prevViewOpts || {};
     state._prevViewOpts = { ...viewOpts };
+    // 0.5 B4.1：renderer 切换（multilevel ⇄ legacy）不重建旧实例，只切可见性/加载新 VM
+    if (viewOpts.renderer && viewOpts.renderer !== state.graphRendererMode) {
+      setGraphRendererMode(viewOpts.renderer);
+    }
     if (state.graphEngine?.nodes?.length && window.MemoriaGraphGroups) {
       state.graphEngine.groups = window.MemoriaGraphGroups.computeGraphGroups(
         state.graphEngine.nodes,
@@ -1859,6 +2264,10 @@ async function call(fn, ...args) {
         renderGraphGroupTabs();
         applyGraphGroupLayout({ relayout: true });
       }
+      // 0.5 B4.1：默认多层次 2D（RPC 未就绪/失败 ⇒ 显式回退 legacy，不阻塞旧视图）
+      if (state.graphRendererMode === "multilevel") {
+        await loadMultilevelGraphData().catch(() => {});
+      }
       updateGraphAuditHint();
     } catch (e) {
       setStatus(T("graph.loadFailed"), String(e.message || e));
@@ -1966,7 +2375,12 @@ async function call(fn, ...args) {
     const on3d = tab === "graph3d";
     const onGraph = on2d || on3d;
     if (on2d) {
-      state.graphLayout2d?.start();
+      if (state.graphRendererEffective === "multilevel") {
+        state.graphView2d?.stop();
+        state.graphLayout2d?.stop();
+      } else {
+        state.graphLayout2d?.start();
+      }
       state.graphLayout3d?.stop();
     } else if (on3d) {
       state.graphLayout3d?.start();
@@ -8338,6 +8752,22 @@ async function call(fn, ...args) {
   }
 
   function highlightGraphFromKp(kpId) {
+    // 0.5 B4.1：新多层次视图走 Presentation 高亮；不在当前 frame 的节点 → 重取景到该焦点
+    if (state.graphRendererEffective === "multilevel" && state.graphMultilevel?.mounted) {
+      const target = String(kpId || "");
+      const inVm = state.graphMultilevel.vm?.nodes?.some((n) => String(n.id) === target);
+      if (target && inVm) {
+        state.kpGraphHoverId = target;
+        state.graphMultilevel.mounted.renderer?.setHighlight?.(target);
+        updateMultilevelHint(target);
+        return;
+      }
+      if (target) {
+        state.kpGraphHoverId = target;
+        multilevelFocusNode(target);
+        return;
+      }
+    }
     const ids = resolveGraphNodeIds([kpId]);
     const nodeId = ids[0] || null;
     if (!nodeId || !isNodeInCurrentGraphLayout(nodeId)) {
@@ -8357,6 +8787,7 @@ async function call(fn, ...args) {
     state.kpGraphHoverId = null;
     state.graphView2d?.clearRemoteHover?.();
     state.graphView3d?.clearRemoteHover?.();
+    state.graphMultilevel?.mounted?.renderer?.setHighlight?.(null);
     if (!state.graphLinkFocusEl && (state.sidebarTab === "graph2d" || state.sidebarTab === "graph3d")) {
       updateGraphAuditHint();
     }
@@ -19442,6 +19873,8 @@ async function call(fn, ...args) {
     refreshFiles,
     loadLinkTargets,
     loadGraphData,
+    highlightGraphFromKp,
+    clearGraphKpHover,
     refreshKbPendingSummary,
     openFile,
     openKb,

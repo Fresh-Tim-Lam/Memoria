@@ -38,6 +38,8 @@
     graphStyle: "force",
     galaxyGlow2d: 0.6,
     galaxyGlow3d: 0.6,
+    // 0.5 多层次图谱（B4.1）：2D 引擎选择。默认 multilevel；legacy 保留旧 KGviz 行为。
+    renderer: "multilevel",
   };
 
   const SPLIT_DEFAULTS = {
@@ -282,6 +284,7 @@
       graphStyle: s.graphStyle,
       galaxyGlow2d: s.galaxyGlow2d,
       galaxyGlow3d: s.galaxyGlow3d,
+      renderer: s.renderer === "legacy" ? "legacy" : "multilevel",
     };
   }
 
@@ -577,9 +580,20 @@
   function renderStyleSection(s, is3d) {
     const galaxyVisible = s.graphStyle === "galaxy";
     const S = "graph.settings.style.";
+    const rendererField = is3d
+      ? ""
+      : `<label class="-settings-field">
+              <span>${TT("graph.multilevel.rendererLabel")}</span>
+              <select data-graph-setting="renderer">
+                <option value="multilevel"${s.renderer !== "legacy" ? " selected" : ""}>${TT("graph.multilevel.rendererMultilevel")}</option>
+                <option value="legacy"${s.renderer === "legacy" ? " selected" : ""}>${TT("graph.multilevel.rendererLegacy")}</option>
+              </select>
+            </label>
+            <p class="-muted -settings-note">${TT("graph.multilevel.rendererNote")}</p>`;
     return `<section class="-settings-section">
             <h3 class="-settings-heading">${TT(S + "heading")}</h3>
             <p class="-muted -settings-note">${TT(S + "note")}</p>
+            ${rendererField}
             <label class="-settings-field">
               <span>${TT(S + "label")}</span>
               <select data-graph-setting="graphStyle">
