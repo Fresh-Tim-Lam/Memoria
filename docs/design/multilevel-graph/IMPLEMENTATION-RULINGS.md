@@ -27,3 +27,14 @@
 - **背景**：`is_semantic_edge()` 按 S0-1 G_sem 门控返回 false；若读取路径静默降级，会把"标了 semantic 但缺 assertion_source/curated_by/at"伪装成结构边。
 - **裁决**：B3 Admission 对 `contain_kind=semantic` 或 `label=semantic` 的边做证据完整性检查：缺 `assertion_source`/`curated_by`/`curated_at` ⇒ **`GRAPH_EDGE_SEMANTIC_MISMATCH`（可见失败）**，不得静默当非语义；结构边（缺省/structural）不要求这些字段。
 - **读取路径**：不重算 `quote_sha256`（B5/G6 的 G6 快照可复核）；写入路径仍由既有 curation 校验器逐字校验。
+
+## B3（2026-11-04）
+
+### R-B3-1 VM 边白名单补 `rule_id?` → `S3-ADDENDUM-2`
+- **冲突**：S4-10 要求全部候选节点/边逐条 `presence+rule_id`，X-RULE 分母含边；但 S3-12 `EDGE_VIEW` 白名单无 `rule_id`（ADDENDUM-1 只给节点加）。
+- **裁决**：出 `S3-ADDENDUM-2` 给 `EDGE_VIEW` 加 `rule_id?`（非 shown 边必填；只用于解释/审计，不入布局几何；`data_edge_ids` 仍禁读）。B3 实现再补边 VM 的 `rule_id` 与测试。
+
+### R-B3-2 `ClusterRunBuilder` 遇非法 semantic 标记同样可见失败
+- **背景**：R-B2-5 已要求 B3 Admission 报 `GRAPH_EDGE_SEMANTIC_MISMATCH`，但 `ClusterRunBuilder.is_semantic_edge()` 仍静默门控 ⇒ 证据不全的 semantic 边在 B2 就被当结构边吞掉，到不了 B3。
+- **裁决**：`ClusterRunBuilder.build()` 对"标了 semantic 但证据不全"的边**抛 `GRAPH_EDGE_SEMANTIC_MISMATCH`**（与 R-B2-5 同码同语义），不得静默降级；结构边不要求这些字段。
+- **实现**：task-355（B4 前置小修）。
