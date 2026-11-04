@@ -1686,6 +1686,7 @@ flowchart LR
 
 
 > **S10a 质量/写路径草案**：质量指标 precision/recall/置信分布/证据完整率/人工抽检一致率/golden；写路径 propose_write→plan(dry-run/影响面)→人工确认→backup→atomic apply→undo→audit；失败零写入；edition 变化触发 S9 全量重建/旧数据保留/可回滚；0.5 不做 agent 写（S10 仅设计）。
+> **S10a 定稿（对照 `S10-kp-v1.md` sha `a5db0f1c…`）**：golden `docs/design/multilevel-graph/golden/S10-golden-set.json`、`scripts/verify/eval-kp.py`、产物 `artifacts/agent/verify/graph/kp/`、`GATE-KP`；curation 元数据/KP_HISTORY 只写 `.memoria/agent/audit/graph/curation/`；`direction=both` 物化两条有向边；Q-EVIDENCE/Q-SEM-PURITY 为 P0，P/R/τ 为 soft；语义边全类型 contain/reference/extend（`E_sem` 门槛）；错误码 `GRAPH_*`+`S6-ADDENDUM-2`；agent 只 propose_write、apply 由产品 curation writer 人工确认执行。
 
 ### 2.16 S10 增量（DF-11 草案：源→提案→plan→备份/apply/undo/审计→registry/S2→S9 失效）
 
