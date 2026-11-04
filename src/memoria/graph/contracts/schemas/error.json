@@ -1,0 +1,41 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "memoria://graph/contracts/error/v1",
+  "title": "GRAPH_* 错误信封（I-12）",
+  "description": "canonical 一律 GRAPH_*；所有错误必须带 audit_id（S6-9、ADDENDUM-1 §1、ADDENDUM-2 §1）。",
+  "x-failure-code": "GRAPH_INTERNAL",
+  "x-contract-sources": {
+    "S6-contract-v1.md": "40f12e5fd5946c8cc4ebdb71800579d3e9098f74ef7381ad65a2e51f389db82b",
+    "S6-ADDENDUM-1.md": "f9918dfdc0586b297e06f4632f0a7313b16f14e527c475fde04dfe9eba7a48dd",
+    "S6-ADDENDUM-2.md": "45b99ab2f3235515581153400533b633101c77fde4f3eb7a6a638b70300531e7"
+  },
+  "type": "object",
+  "required": ["code", "severity", "i18n_key", "message", "audit_id"],
+  "additionalProperties": false,
+  "properties": {
+    "code": {
+      "type": "string",
+      "pattern": "^GRAPH_[A-Z0-9_]+$"
+    },
+    "legacy_code": {
+      "type": "string"
+    },
+    "severity": {
+      "type": "string",
+      "enum": ["error", "warn"]
+    },
+    "i18n_key": {
+      "type": "string",
+      "pattern": "^graph\\.[a-z0-9_.]+$"
+    },
+    "message": {
+      "type": "string"
+    },
+    "audit_id": {
+      "type": "string"
+    },
+    "detail": {
+      "type": "object"
+    }
+  }
+}

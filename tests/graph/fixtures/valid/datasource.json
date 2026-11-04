@@ -1,0 +1,29 @@
+{
+  "status": "ok",
+  "canonical_id": "aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa",
+  "e_relation_min": [
+    "contain(structural)",
+    "contain(semantic)",
+    "reference",
+    "extend"
+  ],
+  "kps": [
+    {
+      "id": "ch3",
+      "kind": "kp"
+    },
+    {
+      "id": "ch3-1",
+      "kind": "kp"
+    }
+  ],
+  "edges": [
+    {
+      "type": "contain",
+      "source_id": "ch3",
+      "targets": [
+        "ch3-1"
+      ]
+    }
+  ]
+}

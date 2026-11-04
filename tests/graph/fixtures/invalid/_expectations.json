@@ -1,0 +1,52 @@
+{
+  "edge-bad-type.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "type"
+  },
+  "edge-missing-targets.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "targets"
+  },
+  "edge-extra-property.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "color"
+  },
+  "edge-bad-relevance.json": {
+    "schema": "edge",
+    "code": "GRAPH_EDGE_INVALID",
+    "path_has": "relevance"
+  },
+  "kp-bad-kind.json": {
+    "schema": "kp",
+    "code": "GRAPH_KP_INVALID",
+    "path_has": "kind"
+  },
+  "kp-missing-id.json": {
+    "schema": "kp",
+    "code": "GRAPH_KP_INVALID",
+    "path_has": "id"
+  },
+  "datasource-bad-relation.json": {
+    "schema": "datasource",
+    "code": "GRAPH_INTERNAL",
+    "path_has": "e_relation_min"
+  },
+  "datasource-bad-canonical.json": {
+    "schema": "datasource",
+    "code": "GRAPH_INTERNAL",
+    "path_has": "canonical_id"
+  },
+  "error-bad-severity.json": {
+    "schema": "error",
+    "code": "GRAPH_INTERNAL",
+    "path_has": "severity"
+  },
+  "error-missing-audit.json": {
+    "schema": "error",
+    "code": "GRAPH_INTERNAL",
+    "path_has": "audit_id"
+  }
+}

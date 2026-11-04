@@ -1,0 +1,48 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "memoria://graph/contracts/kp/v1",
+  "title": "DataSource 节点（kind ∈ {kp, cluster}，S6-2）",
+  "description": "节点只读投影；kind 只允许 kp/cluster（S6-2、S6-5 role=member 的另一侧）。",
+  "x-failure-code": "GRAPH_KP_INVALID",
+  "x-contract-sources": {
+    "S6-contract-v1.md": "40f12e5fd5946c8cc4ebdb71800579d3e9098f74ef7381ad65a2e51f389db82b",
+    "S6-ADDENDUM-1.md": "f9918dfdc0586b297e06f4632f0a7313b16f14e527c475fde04dfe9eba7a48dd",
+    "S6-ADDENDUM-2.md": "45b99ab2f3235515581153400533b633101c77fde4f3eb7a6a638b70300531e7"
+  },
+  "type": "object",
+  "required": ["id", "kind"],
+  "additionalProperties": false,
+  "properties": {
+    "id": {
+      "type": "string",
+      "minLength": 1
+    },
+    "kind": {
+      "type": "string",
+      "enum": ["kp", "cluster"]
+    },
+    "name": {
+      "type": ["string", "null"]
+    },
+    "label": {
+      "type": ["string", "null"]
+    },
+    "description": {
+      "type": ["string", "null"]
+    },
+    "file": {
+      "type": ["string", "null"]
+    },
+    "range_ok": {
+      "type": "boolean"
+    },
+    "start_line": {
+      "type": ["integer", "null"],
+      "minimum": 1
+    },
+    "end_line": {
+      "type": ["integer", "null"],
+      "minimum": 1
+    }
+  }
+}
