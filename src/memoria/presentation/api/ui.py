@@ -3185,11 +3185,69 @@ def _mlvm_edition_sha(kb_path: str, datasource) -> str:
     })
 
 
+def _mlvm_default_focus(datasource, kp_ids: tuple[str, ...]) -> str:
+    """默认 focus = 全库无向 degree 最高的 KP（tie-break canonical id）。
+
+    P0 task-380：旧默认取最小 id，遇到孤立 KP 会只显示 1 个节点。这里只改
+    **默认选择**，不改变 S4 `F={focus}` 语义；显式 focus 仍优先。
+    """
+    degree = {str(kid): 0 for kid in kp_ids}
+    for edge in (getattr(datasource, "edges", ()) or ()):
+        src = str(edge.get("source_id") or "")
+        if src in degree:
+            degree[src] += 1
+        for tgt in edge.get("targets") or ():
+            tgt = str(tgt)
+            if tgt in degree:
+                degree[tgt] += 1
+    if not degree:
+        return kp_ids[0] if kp_ids else ""
+    return sorted(degree.items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
+
+
+def _mlvm_groups(vm, files: dict[str, str]) -> list[dict]:
+    """**Presentation-only** 文件/section 分组（task-380 裁决 ②）。
+
+    - 只对 VM 内 `presence=shown` 的 KP 分组（不伪造 cluster kind、不进 VM、不写 sidecar）；
+    - `file`/`section` 来自 DataSource 的 KP.file（只读）；
+    - `presentation_only=true`：UI 可折叠展示，但**不是 S2 cluster**。
+    """
+    import os as _os
+
+    shown_ids = []
+    for node in (vm.get("nodes") or ()):
+        if node.get("kind") != "kp":
+            continue
+        if (node.get("presence") or "shown") != "shown":
+            continue
+        shown_ids.append(str(node["id"]))
+    by_file: dict[str, list[str]] = {}
+    for kid in sorted(shown_ids):
+        file_rel = str(files.get(kid) or "")
+        if not file_rel:
+            continue
+        by_file.setdefault(file_rel, []).append(kid)
+    groups = []
+    for file_rel in sorted(by_file):
+        members = sorted(set(by_file[file_rel]))
+        section = _os.path.splitext(_os.path.basename(file_rel))[0]
+        groups.append({
+            "group_id": f"file:{file_rel}",
+            "file": file_rel,
+            "section": section,
+            "member_ids": members,
+            "count": len(members),
+            "presentation_only": True,
+        })
+    return groups
+
+
 def _mlvm_presentation(datasource, vm) -> dict:
     """从**同一只读 DataSource** 算 `degrees`/`files`；只返回 VM 内 KP 节点的子集。
 
     S3-12：这些是 Presentation 侧信息，**不得进 VM**（VM 只放渲染所需白名单字段）。
     degree = 该 KP 在 DataSource 边集中出现的次数（作为 source 或 target 各计 1）。
+    task-380：额外返回 Presentation-only `groups`（按文件/section 的 shown KP 分组）。
     """
     vm_node_ids = {str(n["id"]) for n in (vm.get("nodes") or [])}
     degrees: dict[str, int] = {}
@@ -3213,7 +3271,11 @@ def _mlvm_presentation(datasource, vm) -> dict:
             if tgt in degrees:
                 degrees[tgt] += 1
 
-    return {"degrees": dict(sorted(degrees.items())), "files": dict(sorted(files.items()))}
+    return {
+        "degrees": dict(sorted(degrees.items())),
+        "files": dict(sorted(files.items())),
+        "groups": _mlvm_groups(vm, files),
+    }
 
 
 def _mlvm_view_family(level: str, family_id: str, dimension_id: str):
@@ -3276,10 +3338,10 @@ def _mlvm_build(kb_path: str, params: dict) -> dict:
         raise GraphError(GRAPH_INTERNAL, "知识库没有知识点，无法取景",
                          detail={"kb_path": kb_path, "kp_count": 0})
 
-    # ② 焦点：缺省取最小 canonical KP id（确定性；S4 要求 F={focus}）
+    # ② 焦点：显式 focus 优先；缺省 = 全库 degree 最高 hub（task-380 P0）
     focus = str(params.get("focus") or "")
     if not focus:
-        focus = kp_ids[0]
+        focus = _mlvm_default_focus(datasource, kp_ids)
 
     # ③ 簇 run（B2；真实语料 E_sem=0 ⇒ no_semantic_edges 是合法状态）
     run = ClusterRunBuilder().build(datasource, level_id=level, view_family_id=family_id)

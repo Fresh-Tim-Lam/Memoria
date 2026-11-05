@@ -70,6 +70,14 @@
       getPresentation() {
         return typeof renderer.getPresentation === "function" ? renderer.getPresentation() : null;
       },
+      /** task-380：focus 居中布局（Presentation 的 frame.focus；不进 VM）。 */
+      setFocusNode(nodeId) {
+        if (typeof renderer.setFocusNode === "function") return renderer.setFocusNode(nodeId);
+        return null;
+      },
+      getGroups() {
+        return typeof renderer.getGroups === "function" ? renderer.getGroups() : [];
+      },
       destroy() {
         for (const off of unsubscribers) {
           try { off(); } catch (_) { /* noop */ }

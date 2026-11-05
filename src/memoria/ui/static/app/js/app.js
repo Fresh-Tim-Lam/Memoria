@@ -1774,11 +1774,15 @@ async function call(fn, ...args) {
   }
 
   function multilevelFocusNode(nodeId) {
-    const spec = state.graphMultilevel?.nav?.getFrameSpec?.() || null;
+    const nav = state.graphMultilevel?.nav || null;
+    const spec = nav?.getFrameSpec?.() || null;
     if (!spec || !nodeId) return false;
-    loadMultilevelGraphData({ ...spec, focus: String(nodeId) }, { reason: "search-focus" })
+    const target = String(nodeId);
+    // task-380 P0：图表内点节点 = 切换 focus（frame.focus 变化 + 重新布局），栈/维度/mode 不变
+    try { nav.setFocusFrame?.(target); } catch (_) { /* noop */ }
+    loadMultilevelGraphData({ ...spec, focus: target }, { reason: "focus-node" })
       .then((ok) => {
-        if (ok) state.graphMultilevel?.mounted?.renderer?.setHighlight?.(String(nodeId));
+        if (ok) state.graphMultilevel?.mounted?.renderer?.setHighlight?.(target);
       })
       .catch(() => {});
     return true;
@@ -2010,12 +2014,9 @@ async function call(fn, ...args) {
   function wireMultilevelNavEvents(nav) {
     if (!nav || nav.__wired) return;
     nav.__wired = true;
-    nav.on("editorJump", ({ node_id, file }) => {
-      if (!file) return;
-      jumpToTarget(
-        { file, kp_id: node_id, name: node_id },
-        { source: "graph" }
-      );
+    nav.on("editorJump", ({ node_id }) => {
+      // task-380：单击节点 = 切换 focus（不再直接跳编辑器；跳转保留为双击/提示条入口）
+      if (node_id) multilevelFocusNode(node_id);
     });
     nav.on("transition", (transition) => {
       if (!transition || !MULTILEVEL_REFRAME_EVENTS.has(transition.event)) return;
@@ -2035,13 +2036,14 @@ async function call(fn, ...args) {
     state.graphMultilevel.editionSha = payload.edition_sha || state.graphMultilevel.editionSha || null;
 
     if (!state.graphMultilevel.mounted) {
-      // RPC 缺省 root：level=LL（叶层）、dimension=A、focus=最小 canonical KP id。
-      // 从返回 VM 的 shown KP 里取最小 id（focus 是 MANDATORY ⇒ 必在 shown 内），
+      // RPC 缺省 root：level=LL（叶层）、dimension=A、focus=全库 degree 最高 hub。
+      // 从返回 VM 的 shown KP 里按 degree 选 hub（focus 是 MANDATORY ⇒ 必在 shown 内），
       // 使 NavController 初始 frame 与 RPC 返回的 frame_id 对齐。
+      const degreeMap = payload.presentation?.degrees || {};
       const shownKpIds = (payload.vm.nodes || [])
         .filter((n) => n.kind === "kp" && (!n.presence || n.presence === "shown"))
         .map((n) => String(n.id))
-        .sort();
+        .sort((a, b) => (Number(degreeMap[b]) || 0) - (Number(degreeMap[a]) || 0) || a.localeCompare(b));
       const rootFocus = payload.frame_spec?.focus || shownKpIds[0] || "root";
       const rootLevel = payload.frame_spec?.level || "LL";
       const rootFamily = payload.frame_spec?.view_family || "default";
@@ -2068,11 +2070,20 @@ async function call(fn, ...args) {
         resolveFile: (nodeId) => multilevelPresentation().files?.[nodeId] || null,
       });
       state.graphMultilevel.mounted.renderer.on("hover", ({ node_id }) => updateMultilevelHint(node_id));
+      // task-380：双击节点保留旧编辑器跳转入口（单击改为 focus）
+      state.graphMultilevel.mounted.renderer.on("nodeDblClick", ({ node_id }) => {
+        const file = multilevelPresentation().files?.[node_id];
+        if (!file) return;
+        jumpToTarget({ file, kp_id: node_id, name: node_id }, { source: "graph" });
+      });
     }
     const vm = payload.vm;
     try {
       // S3-ADDENDUM-3：degree 原值只经 Presentation 元数据喂给 Renderer（不进 VM）
       state.graphMultilevel.mounted.setPresentation?.(state.graphMultilevel.presentation);
+      // task-380：focus 居中布局；focus 来自 Nav frame（默认 hub / 点击后重取景）
+      const focusId = state.graphMultilevel.nav?.getFrame?.()?.focus || null;
+      if (focusId) state.graphMultilevel.mounted.setFocusNode?.(focusId);
       if (opts.replace === true) state.graphMultilevel.mounted.renderer.render(host, vm);
       else state.graphMultilevel.mounted.update(vm, {});
     } catch (err) {

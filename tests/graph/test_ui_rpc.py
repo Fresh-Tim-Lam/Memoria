@@ -98,7 +98,7 @@ def test_rpc_returns_exact_contract_shape(tmp_path: Path) -> None:
         "status", "vm", "presentation", "edition_sha", "frame_id",
         "rule_histogram", "suppressed_summary",
     }
-    assert set(result["presentation"]) == {"degrees", "files"}
+    assert set(result["presentation"]) == {"degrees", "files", "groups"}
 
 
 def test_vm_whitelist_strict(tmp_path: Path) -> None:

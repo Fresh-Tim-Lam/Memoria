@@ -44,6 +44,7 @@
     nodeTarget: "#79c0ff",
     nodeDim: "#3d4350",
     nodeInvalid: "#3a4152",
+    nodeMuted: "#8b949e",
     label: "#adbac7",
     labelInvalid: "#6e7681",
     halo: "rgba(13,17,23,0.92)",
@@ -84,7 +85,7 @@
     structural: "#58a6ff",
     navigation: "#58a6ff",
   });
-  const EVENT_TYPES = Object.freeze(["nodeClick", "edgeClick", "backgroundClick", "hover"]);
+  const EVENT_TYPES = Object.freeze(["nodeClick", "edgeClick", "backgroundClick", "hover", "nodeDblClick", "groupClick"]);
 
   class RendererError extends Error {
     constructor(code, message, detail) {
@@ -157,6 +158,26 @@
     const max = degreeInfo.distinct.length ? degreeInfo.distinct[degreeInfo.distinct.length - 1] : 0;
     if (!max) return 0;
     return Math.max(0, Math.min(1, (Number(degree) || 0) / max));
+  }
+
+  // ── Presentation-only 文件/section 分组（task-380；不是 S2 cluster）────────
+  function normalizeGroups(presentation) {
+    const raw = Array.isArray(presentation && presentation.groups) ? presentation.groups : [];
+    return raw
+      .map((g) => ({
+        group_id: String(g.group_id || ""),
+        file: String(g.file || ""),
+        section: String(g.section || ""),
+        member_ids: Array.isArray(g.member_ids) ? g.member_ids.map(String) : [],
+        count: Number(g.count) || (Array.isArray(g.member_ids) ? g.member_ids.length : 0),
+        presentation_only: true,
+      }))
+      .filter((g) => g.group_id && g.member_ids.length)
+      .sort((a, b) => (a.file || a.group_id).localeCompare(b.file || b.group_id));
+  }
+
+  function groupLabel(group) {
+    return `${group.section || group.file || group.group_id} (${group.member_ids.length})`;
   }
 
   function galaxyColor(ratio) {
@@ -312,8 +333,8 @@
     }
   }
 
-  // ── 确定性布局（种子来自 VM id；update 保位、不 reheat）────────────────────
-  function computeLayout(vm, seed, width, height, prevPositions, degreeInfo) {
+  // ── 确定性布局（种子来自 VM id；focus 居中 + 邻居多臂环形；update 保位）────
+  function computeLayout(vm, seed, width, height, prevPositions, degreeInfo, focusId) {
     const shown = shownModel(vm);
     const ids = shown.nodes.map((n) => n.id).sort();
     const positions = new Map();
@@ -321,19 +342,48 @@
     const maxR = ids.reduce((m, id) => Math.max(m, radiusById.get(id) || KP_BASE_RADIUS), KP_BASE_RADIUS);
     const cx = width / 2;
     const cy = height / 2;
-    const count = Math.max(1, ids.length);
-    const spread = Math.max(60, Math.min(width, height) / 2 - maxR - 24);
+    const focus = focusId && ids.includes(String(focusId)) ? String(focusId) : null;
     const angleOffset = ((seed >>> 0) % 1000) / 1000 * TAU;
-    ids.forEach((id, index) => {
-      if (prevPositions && prevPositions.has(id)) {
-        positions.set(id, { ...prevPositions.get(id) });
-        return;
+    if (prevPositions) {
+      for (const id of ids) {
+        if (prevPositions.has(id)) positions.set(id, { ...prevPositions.get(id) });
       }
-      const t = (index + 1) / count;
-      const r = spread * Math.sqrt(t) * 0.92;
-      const angle = angleOffset + index * GOLDEN_ANGLE;
-      positions.set(id, { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r });
-    });
+    }
+    if (focus) positions.set(focus, { x: cx, y: cy });
+    const playW = Math.max(120, width - 2 * maxR - 40);
+    const playH = Math.max(120, height - 2 * maxR - 56);
+    const maxRing = Math.max(40, Math.min(playW, playH) / 2);
+    const others = ids
+      .filter((id) => id !== focus && !positions.has(id))
+      .sort((a, b) => {
+        const da = degreeInfo?.map.get(a) ?? -1;
+        const db = degreeInfo?.map.get(b) ?? -1;
+        return db - da || a.localeCompare(b);
+      });
+    const count = others.length;
+    if (count) {
+      // 单环最多 12 个；更多时两环（内圈 8、外圈其余）；偶数角度避免“一根竖线”
+      const twoRings = count > 12;
+      const innerCount = twoRings ? Math.min(8, Math.ceil(count / 2)) : count;
+      const ring0 = twoRings ? maxRing * 0.55 : maxRing * 0.92;
+      others.forEach((id, i) => {
+        const onInner = i < innerCount;
+        const n = onInner ? innerCount : Math.max(1, count - innerCount);
+        const j = onInner ? i : i - innerCount;
+        const angle = angleOffset + (j * TAU) / n + (onInner ? 0 : Math.PI / Math.max(3, n));
+        positions.set(id, { x: cx + Math.cos(angle) * (onInner ? ring0 : maxRing), y: cy + Math.sin(angle) * (onInner ? ring0 : maxRing) });
+      });
+    }
+    if (!focus) {
+      // 无显式 focus：旧的确定性 radial（兼容未 setFocus 的调用）
+      ids.forEach((id, index) => {
+        if (positions.has(id)) return;
+        const t = (index + 1) / Math.max(1, ids.length);
+        const r = Math.max(60, Math.min(playW, playH) / 2) * Math.sqrt(t) * 0.92;
+        const angle = angleOffset + index * GOLDEN_ANGLE;
+        positions.set(id, { x: cx + Math.cos(angle) * r, y: cy + Math.sin(angle) * r });
+      });
+    }
     return { positions, radiusById, shown, width, height };
   }
 
@@ -343,8 +393,7 @@
         const canvas = doc.createElement("canvas");
         canvas.width = Math.max(1, Math.round(width));
         canvas.height = Math.max(1, Math.round(height));
-        canvas.style.width = "100%";
-        canvas.style.height = "100%";
+        canvas.style.display = "block";
         canvas.setAttribute("role", "img");
         canvas.setAttribute("aria-label", "多层次图谱（2D）");
         const ctx = canvas.getContext("2d");
@@ -391,6 +440,21 @@
       this._seed = Number.isFinite(options.layoutSeed) ? options.layoutSeed >>> 0 : null;
       this._presentation = options.presentation || null;
       this._degreeInfo = normalizedDegrees(this._presentation && this._presentation.degrees);
+      this._focusNodeId = null;
+      this._layoutFocusId = null;
+      this._groups = normalizeGroups(this._presentation);
+      this._collapsedGroups = new Set();
+      this._groupHit = [];
+      this._lastVm = null;
+      this._pendingVm = null;
+      this._deferredScheduled = false;
+      this._resizeObserver = null;
+      this._resizeTimer = null;
+      this._raf = typeof options.requestAnimationFrame === "function"
+        ? options.requestAnimationFrame
+        : (typeof global.requestAnimationFrame === "function"
+          ? global.requestAnimationFrame.bind(global)
+          : (cb) => setTimeout(cb, 16));
       this._hoverId = null;
       this._selection = null;
       this._disposed = false;
@@ -427,6 +491,7 @@
     setPresentation(presentation) {
       this._presentation = presentation || null;
       this._degreeInfo = normalizedDegrees(this._presentation && this._presentation.degrees);
+      this._groups = normalizeGroups(this._presentation);
       if (this._nodeById && this._nodeById.size) {
         const shown = { nodes: [...this._nodeById.values()], edges: this._edgeList };
         const degreeInfo = this._degreeInfo;
@@ -440,6 +505,59 @@
 
     getPresentation() {
       return this._presentation;
+    }
+
+    /** task-380：focus 居中布局（由 Presentation 传入；不进 VM）。 */
+    setFocusNode(nodeId) {
+      const next = nodeId ? String(nodeId) : null;
+      if (this._focusNodeId !== next) this._focusNodeId = next;
+      return this._focusNodeId;
+    }
+
+    getFocusNode() {
+      return this._focusNodeId;
+    }
+
+    /** Presentation-only 分组（文件/section；不是 S2 cluster，不进 VM）。 */
+    getGroups() {
+      return this._groups.map((g) => ({ ...g, member_ids: g.member_ids.slice() }));
+    }
+
+    toggleGroup(groupId) {
+      const id = String(groupId || "");
+      if (!this._groups.some((g) => g.group_id === id)) return false;
+      if (this._collapsedGroups.has(id)) this._collapsedGroups.delete(id);
+      else this._collapsedGroups.add(id);
+      if (this._ctx) this._draw();
+      return true;
+    }
+
+    isGroupCollapsed(groupId) {
+      return this._collapsedGroups.has(String(groupId || ""));
+    }
+
+    _syncGroups() {
+      const shown = new Set(
+        [...this._nodeById.values()].filter((n) => n.presence === "shown").map((n) => n.id)
+      );
+      this._groups = normalizeGroups(this._presentation).map((g) => ({
+        ...g,
+        member_ids: g.member_ids.filter((id) => shown.has(id)),
+      })).filter((g) => g.member_ids.length);
+      for (const id of [...this._collapsedGroups]) {
+        if (!this._groups.some((g) => g.group_id === id)) this._collapsedGroups.delete(id);
+      }
+      return this._groups;
+    }
+
+    /** 当前被折叠组隐藏的成员（边/标签/节点都跳过）。 */
+    _hiddenMemberIds() {
+      const hidden = new Set();
+      for (const g of this._groups) {
+        if (!this._collapsedGroups.has(g.group_id)) continue;
+        for (const id of g.member_ids) hidden.add(id);
+      }
+      return hidden;
     }
 
     /** 渲染器不得读 `data_edge_ids`：输入只按白名单读取节点/边字段（源码静态检查）。 */
@@ -473,15 +591,24 @@
       if (this._disposed) fail("GRAPH_INTERNAL", "Renderer 已 dispose");
       if (container) this.container = container;
       if (!this.container) fail("GRAPH_INTERNAL", "缺少容器");
+      this._lastVm = vm;
+      this._ensureResizeObserver();
       const model = this._project(vm);
       assertBudget(vm);
+      if (!this._hasLayout()) {
+        // 首帧等 rAF/真实布局；绝不用 800 回退尺寸画第一帧
+        this._scheduleDeferredRender(vm, { update: false });
+        return this._deferredSummary("render");
+      }
       const width = this._measureWidth();
       const height = this._measureHeight();
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
       this._seed = seed;
-      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, null, this._degreeInfo);
+      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, null, this._degreeInfo, this._focusNodeId);
+      this._layoutFocusId = this._focusNodeId;
       this._applyLayout(layout, model);
+      this._syncGroups();
       this._bindPointer();
       this._draw();
       return this._summary("render");
@@ -490,16 +617,26 @@
     update(vm, opts) {
       opts = opts || {};
       if (this._disposed) fail("GRAPH_INTERNAL", "Renderer 已 dispose");
+      this._lastVm = vm;
+      this._ensureResizeObserver();
       const model = this._project(vm);
       assertBudget(vm);
-      const keep = opts.relayout === true ? null : this._positions;
+      if (!this._hasLayout()) {
+        this._scheduleDeferredRender(vm, { ...opts, update: true });
+        return this._deferredSummary("update");
+      }
+      // focus 变化必须重排（否则旧位置让邻居塌成一列）；普通 update 保位
+      const focusChanged = this._layoutFocusId !== this._focusNodeId;
+      const keep = (opts.relayout === true || focusChanged) ? null : this._positions;
       const width = this._measureWidth();
       const height = this._measureHeight();
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
-      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo);
+      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo, this._focusNodeId);
       const before = new Map(this._positions);
       this._applyLayout(layout, model);
+      this._layoutFocusId = this._focusNodeId;
+      this._syncGroups();
       let moved = 0;
       for (const [id, p] of this._positions) {
         const old = before.get(id);
@@ -516,6 +653,14 @@
       if (this._disposed) return { status: "ok", already: true };
       for (const [target, type, handler] of this._bound) this.host && this.host.off && this.host.off(target, type, handler);
       this._bound = [];
+      if (this._resizeObserver) {
+        try { this._resizeObserver.disconnect(); } catch (_) { /* noop */ }
+        this._resizeObserver = null;
+      }
+      if (this._resizeTimer) {
+        clearTimeout(this._resizeTimer);
+        this._resizeTimer = null;
+      }
       if (this.host && this.host.remove && this._canvas) this.host.remove(this.container, this._canvas);
       this._canvas = null;
       this._ctx = null;
@@ -550,26 +695,106 @@
 
     _measureWidth() {
       const c = this.container;
-      return Math.max(1, Number(c?.clientWidth) || Number(c?.width) || 800);
+      const rect = c && typeof c.getBoundingClientRect === "function" ? c.getBoundingClientRect() : null;
+      return Math.max(0, Number(rect?.width) || Number(c?.clientWidth) || Number(c?.width) || 0);
     }
 
     _measureHeight() {
       const c = this.container;
-      return Math.max(1, Number(c?.clientHeight) || Number(c?.height) || 600);
+      const rect = c && typeof c.getBoundingClientRect === "function" ? c.getBoundingClientRect() : null;
+      return Math.max(0, Number(rect?.height) || Number(c?.clientHeight) || Number(c?.height) || 0);
+    }
+
+    _hasLayout() {
+      return this._measureWidth() >= 2 && this._measureHeight() >= 2;
+    }
+
+    /**
+     * task-380 P0：首帧必须等容器布局稳定，禁止用 800×600 回退尺寸先画
+     * （否则 backing/CSS aspect 不一致 ⇒ 横轴压扁）。
+     * 用 rAF 轮询到有尺寸；有 ResizeObserver 时再挂尺寸变化重排。
+     */
+    _scheduleDeferredRender(vm, opts) {
+      if (this._deferredScheduled) return;
+      this._deferredScheduled = true;
+      this._pendingVm = vm;
+      this._pendingOpts = opts || {};
+      let tries = 0;
+      const tick = () => {
+        this._deferredScheduled = false;
+        if (this._disposed) return;
+        if (this._hasLayout()) {
+          const nextVm = this._pendingVm;
+          const nextOpts = this._pendingOpts || {};
+          this._pendingVm = null;
+          this._pendingOpts = null;
+          if (nextVm) {
+            if (nextOpts.update) this.update(nextVm, nextOpts);
+            else this.render(this.container, nextVm);
+          }
+          return;
+        }
+        tries += 1;
+        if (tries <= 60) this._raf(tick);
+      };
+      this._raf(tick);
+    }
+
+    _ensureResizeObserver() {
+      if (this._resizeObserver || !global.ResizeObserver || !this.container) return;
+      try {
+        this._resizeObserver = new global.ResizeObserver(() => this._onContainerResize());
+        this._resizeObserver.observe(this.container);
+      } catch (_) {
+        this._resizeObserver = null;
+      }
+    }
+
+    _onContainerResize() {
+      if (this._resizeTimer) clearTimeout(this._resizeTimer);
+      this._resizeTimer = setTimeout(() => {
+        this._resizeTimer = null;
+        if (this._disposed || !this._lastVm) return;
+        const w = this._measureWidth();
+        const h = this._measureHeight();
+        if (w < 2 || h < 2) return;
+        if (Math.abs(w - this._view.width) < 1 && Math.abs(h - this._view.height) < 1) return;
+        // 尺寸变化必须重新布局，不能只改 canvas.width/height
+        this.update(this._lastVm, { relayout: true });
+      }, 80);
+    }
+
+    _deferredSummary(op) {
+      return {
+        status: "deferred",
+        op,
+        backend: this.backend,
+        reason: "CONTAINER_NOT_LAID_OUT",
+        nodeCount: this._nodeById ? this._nodeById.size : 0,
+        edgeCount: this._edgeList ? this._edgeList.length : 0,
+        positions: this._positions ? this._positions.size : 0,
+        layoutSeed: this._seed,
+        drawCalls: null,
+        caps: this.getCapabilities(),
+      };
     }
 
     _ensureCanvas(width, height) {
+      const dpr = this.host && this.host.dpr ? this.host.dpr() : 1;
       if (this._canvas) {
-        const dpr = this.host && this.host.dpr ? this.host.dpr() : 1;
         const w = Math.max(1, Math.round(width * dpr));
         const h = Math.max(1, Math.round(height * dpr));
         if (this._canvas.width !== w) this._canvas.width = w;
         if (this._canvas.height !== h) this._canvas.height = h;
+        // CSS 用实测 px（不再 100% 非等比拉伸）
+        if (this._canvas.style) {
+          this._canvas.style.width = `${Math.max(1, Math.round(width))}px`;
+          this._canvas.style.height = `${Math.max(1, Math.round(height))}px`;
+        }
         this._bindPointer();
         return;
       }
       if (!this.host) fail("GRAPH_INTERNAL", "无 host（需要 document 或注入 host）");
-      const dpr = this.host.dpr ? this.host.dpr() : 1;
       const made = this.host.createCanvas(width * dpr, height * dpr);
       this._canvas = made.canvas;
       this._ctx = made.ctx;
@@ -577,6 +802,10 @@
       if (this._canvas) {
         this._canvas.width = Math.max(1, Math.round(width * dpr));
         this._canvas.height = Math.max(1, Math.round(height * dpr));
+        if (this._canvas.style) {
+          this._canvas.style.width = `${Math.max(1, Math.round(width))}px`;
+          this._canvas.style.height = `${Math.max(1, Math.round(height))}px`;
+        }
       }
       if (this.host.append) this.host.append(this.container, this._canvas);
       this._bindPointer();
@@ -615,11 +844,14 @@
       this.host.on(this._canvas, "mousemove", move);
       this.host.on(this._canvas, "click", click);
       this.host.on(this._canvas, "mouseup", up);
+      const dbl = (event) => this._onPointerDblClick(event);
+      this.host.on(this._canvas, "dblclick", dbl);
       this._bound.push(
         [this._canvas, "pointermove", move],
         [this._canvas, "mousemove", move],
         [this._canvas, "click", click],
-        [this._canvas, "mouseup", up]
+        [this._canvas, "mouseup", up],
+        [this._canvas, "dblclick", dbl]
       );
     }
 
@@ -638,7 +870,9 @@
 
     _pickNode(x, y) {
       let best = null;
+      const hidden = this._hiddenMemberIds ? this._hiddenMemberIds() : new Set();
       for (const [id, p] of this._positions) {
+        if (hidden.has(id)) continue;
         const r = (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
         const d2 = (p.x - x) ** 2 + (p.y - y) ** 2;
         if (d2 <= r * r && (!best || d2 < best.d2)) best = { id, d2 };
@@ -676,7 +910,26 @@
       this.handlePointClick(x, y, event?.shiftKey ? { shift: true } : {});
     }
 
+    _onPointerDblClick(event) {
+      const { x, y } = this._point(event);
+      const node = this._pickNode(x, y);
+      if (!node) return;
+      const payload = { node_id: node.id, kind: node.kind };
+      this._emit("nodeDblClick", payload);
+    }
+
     /** 供 host/tests 直接驱动点击（屏幕坐标）；事件 payload 白名单无导航字段。 */
+    _pickGroup(x, y) {
+      for (const hit of this._groupHit || []) {
+        if (hit.kind === "circle") {
+          if ((x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r) return hit;
+        } else if (hit.kind === "rect") {
+          if (x >= hit.x0 && x <= hit.x1 && y >= hit.y0 && y <= hit.y1) return hit;
+        }
+      }
+      return null;
+    }
+
     handlePointClick(x, y, extra = {}) {
       const node = this._pickNode(x, y);
       if (node) {
@@ -684,11 +937,27 @@
         this._emit("nodeClick", payload);
         return { type: "nodeClick", payload };
       }
+      // 折叠组节点优先于边（组中心可能与 focus 点/边重叠）
+      const circleHit = (this._groupHit || []).find((hit) => hit.kind === "circle"
+        && (x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r);
+      if (circleHit) {
+        const payload = { group_id: circleHit.group.group_id, kind: "presentation-group", ...extra };
+        this.toggleGroup(circleHit.group.group_id);
+        this._emit("groupClick", payload);
+        return { type: "groupClick", payload };
+      }
       const edge = this._pickEdge(x, y);
       if (edge) {
         const payload = { edge_id: edge.id, ...extra };
         this._emit("edgeClick", payload);
         return { type: "edgeClick", payload };
+      }
+      const groupHit = this._pickGroup(x, y);
+      if (groupHit) {
+        const payload = { group_id: groupHit.group.group_id, kind: "presentation-group", ...extra };
+        this.toggleGroup(groupHit.group.group_id);
+        this._emit("groupClick", payload);
+        return { type: "groupClick", payload };
       }
       this._emit("backgroundClick", { ...extra });
       return { type: "backgroundClick", payload: { ...extra } };
@@ -729,11 +998,57 @@
 
       const focusId = this._hoverId || this._highlightId || null;
       const radiusOf = (id) => (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
+      // Presentation-only 文件/section 分组：先画展开组包络；折叠组成员后续跳过
+      const hidden = this._hiddenMemberIds();
+      this._groupHit = [];
+      const groupGeom = new Map();
+      for (const group of this._groups) {
+        const members = group.member_ids
+          .map((id) => ({ id, p: this._positions.get(id) }))
+          .filter((m) => m.p);
+        if (!members.length) continue;
+        const xs = members.map((m) => m.p.x);
+        const ys = members.map((m) => m.p.y);
+        groupGeom.set(group.group_id, {
+          minX: Math.min(...xs), maxX: Math.max(...xs),
+          minY: Math.min(...ys), maxY: Math.max(...ys),
+          cx: xs.reduce((a, b) => a + b, 0) / xs.length,
+          cy: ys.reduce((a, b) => a + b, 0) / ys.length,
+        });
+        if (this._collapsedGroups.has(group.group_id)) continue;
+        const g = groupGeom.get(group.group_id);
+        const pad = 14;
+        const x0 = g.minX - pad, y0 = g.minY - pad, x1 = g.maxX + pad, y1 = g.maxY + pad;
+        if (ctx.beginPath && ctx.rect) {
+          ctx.beginPath();
+          ctx.rect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
+          ctx.fillStyle = "rgba(88,166,255,0.05)";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = "rgba(88,166,255,0.28)";
+          ctx.lineWidth = 1;
+          if (ctx.setLineDash) ctx.setLineDash([4, 3]);
+          if (ctx.stroke) ctx.stroke();
+          if (ctx.setLineDash) ctx.setLineDash([]);
+        }
+        this._groupHit.push({ kind: "rect", x0, y0, x1, y1, group });
+        if (ctx.fillText) {
+          ctx.font = VISUAL.labelFont;
+          ctx.textAlign = "left";
+          ctx.textBaseline = "bottom";
+          ctx.lineWidth = VISUAL.labelHaloWidth;
+          ctx.strokeStyle = VISUAL.halo;
+          if (ctx.strokeText) ctx.strokeText(groupLabel(group), x0 + 2, y0 - 2);
+          ctx.fillStyle = VISUAL.nodeMuted || "#8b949e";
+          ctx.fillText(groupLabel(group), x0 + 2, y0 - 2);
+          calls.labels += 1;
+        }
+      }
 
-      // 边：只画 shown；旧线宽/透明度 + 箭头；hover/highlight 关联边高亮，其余变暗
+      // 边：只画 shown；折叠组成员隐藏；旧线宽/透明度 + 箭头
       for (const edge of this._edgeList) {
         const ends = edgeEndpoints(edge.id);
         if (!ends) continue;
+        if (hidden.has(ends.source) || hidden.has(ends.target)) continue;
         const a = this._positions.get(ends.source);
         const b = this._positions.get(ends.target);
         if (!a || !b) continue;
@@ -755,6 +1070,7 @@
         : 0;
       for (const node of this._nodeById.values()) {
         if (node.presence !== "shown") continue;
+        if (hidden.has(node.id)) continue;
         const p = this._positions.get(node.id);
         if (!p) continue;
         const baseR = radiusOf(node.id);
@@ -810,10 +1126,44 @@
         calls.nodes += 1;
       }
 
+      // 折叠组：画组节点（成员数），点击展开
+      for (const group of this._groups) {
+        if (!this._collapsedGroups.has(group.group_id)) continue;
+        const g = groupGeom.get(group.group_id);
+        if (!g) continue;
+        const n = group.member_ids.length;
+        const radius = Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1)));
+        if (ctx.beginPath && ctx.arc) {
+          ctx.beginPath();
+          ctx.arc(g.cx, g.cy, radius, 0, TAU);
+          ctx.fillStyle = "rgba(88,166,255,0.16)";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = "rgba(88,166,255,0.55)";
+          ctx.lineWidth = 1.4;
+          if (ctx.setLineDash) ctx.setLineDash([3, 2]);
+          if (ctx.stroke) ctx.stroke();
+          if (ctx.setLineDash) ctx.setLineDash([]);
+        }
+        this._groupHit.push({ kind: "circle", x: g.cx, y: g.cy, r: radius + 4, group });
+        calls.nodes += 1;
+        if (ctx.fillText) {
+          ctx.font = VISUAL.labelFont;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "middle";
+          ctx.fillStyle = VISUAL.node || "#c9d1d9";
+          ctx.fillText(String(n), g.cx, g.cy);
+          ctx.textBaseline = "top";
+          ctx.fillStyle = VISUAL.nodeMuted || "#8b949e";
+          ctx.fillText(groupLabel(group), g.cx, g.cy + radius + 4);
+          calls.labels += 1;
+        }
+      }
+
       // 标签：旧 KGviz LOD/避让 + 10px/halo（A3-1）
       const labelItems = [];
       for (const node of this._nodeById.values()) {
         if (node.presence !== "shown") continue;
+        if (hidden.has(node.id)) continue;
         const p = this._positions.get(node.id);
         if (!p) continue;
         const baseR = radiusOf(node.id);
@@ -868,6 +1218,10 @@
         positions: this._positions.size,
         shownNodes: [...this._nodeById.values()].filter((n) => n.presence === "shown").length,
         shownEdges: this._edgeList.length,
+        groups: this._groups.length,
+        collapsedGroups: [...this._collapsedGroups],
+        focusNode: this._focusNodeId,
+        hiddenMembers: hidden.size,
         visual: {
           bg: VISUAL.bg,
           labelFont: VISUAL.labelFont,

@@ -201,6 +201,31 @@
       return Canonical.canonicalSha(spec);
     }
 
+    /**
+     * task-380 P0：图表内点击节点 / 默认 hub 的“切换 focus”。
+     * 只改当前 frame 的 focus（hop 归 1），不改变 S5 的 FOCUS_NODE 语义（那条事件仍不改 frame）；
+     * 供 UI 的“点节点重取景”使用，栈/维度/mode 保持不变。
+     */
+    setFocusFrame(focus) {
+      if (!this.frame) return { ok: false, code: ERR.GUARD, message: "尚无 frame" };
+      const nextFocus = String(focus || "");
+      if (!nextFocus) return { ok: false, code: ERR.GUARD, message: "setFocusFrame 缺 focus" };
+      const previousState = this.state;
+      this.frame = this._newFrame({
+        focus: nextFocus,
+        hop: 1,
+        new_hop: false,
+        origin: null,
+        mode: this.mode,
+        budget: { ...this.budget },
+      });
+      this.state = "Focused";
+      this.originState = DISPLAY_STATES.includes(previousState) ? previousState : "Overview";
+      this.uiFocus = nextFocus;
+      this._emit("nav", { event: "SET_FOCUS_FRAME", state: this.state, focus: nextFocus, frameId: this.frame.frame_id });
+      return { ok: true, previousState, frameId: this.frame.frame_id, focus: nextFocus };
+    }
+
     /** 规范快照（事务 diff 口径；可机检）。 */
     snapshot() {
       return {
