@@ -38,6 +38,24 @@ function makeHost() {
     append() {}, remove() {}, on() {}, off() {}, rect: () => ({ left: 0, top: 0, width: 325, height: 520 }), dpr: () => 1,
   };
 }
+function makeRafQueue() {
+  const queue = [];
+  let nextId = 0;
+  return {
+    raf: (cb) => { queue.push(cb); nextId += 1; return nextId; },
+    cancel: () => {},
+    drain(n = 10000) {
+      let count = 0;
+      while (queue.length && count < n) {
+        const cb = queue.shift();
+        cb(performance.now());
+        count += 1;
+      }
+      return count;
+    },
+    pending: () => queue.length,
+  };
+}
 function hubId(presentation, vm) {
   const degrees = presentation.degrees || {};
   const shown = vm.nodes.filter((n) => (n.presence || "shown") === "shown" && n.kind === "kp").map((n) => String(n.id));
@@ -294,6 +312,65 @@ async function runAsync(ctx) {
     assert.strictEqual(reset.scale, 1);
     assert.strictEqual(reset.x, 0);
     r.dispose();
+  });
+
+  check("rAF_force_animation_no_teleport_and_focus_transition", () => {
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const raf = makeRafQueue();
+    const r = new Adapter.Renderer2D(container, {
+      host, presentation, animateForce: true,
+      requestAnimationFrame: raf.raf, cancelAnimationFrame: raf.cancel,
+    });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    assert.strictEqual(r._simulating, true, "动画模式未启动 rAF 模拟");
+    raf.drain();
+    assert.strictEqual(r._simulating, false, "模拟未收敛停止");
+    const initialLog = r.getForceFrameLog();
+    assert.ok(initialLog.length > 10, "帧日志太少");
+    assert.ok(initialLog.every((f) => f.maxDisp <= 12), `存在单帧 >12px：${JSON.stringify(initialLog.filter((f) => f.maxDisp > 12).slice(0, 3))}`);
+
+    // focus 过渡：以当前坐标为初值，不整图瞬移
+    const before = new Map([...r._positions].map(([id, p]) => [id, { ...p }]));
+    const other = shown.find((id) => id !== hub);
+    r.setFocusNode(other);
+    r.update(vm, {});
+    let maxImmediate = 0;
+    for (const [id, p] of r._positions) {
+      const old = before.get(id);
+      if (old) maxImmediate = Math.max(maxImmediate, Math.hypot(p.x - old.x, p.y - old.y));
+    }
+    assert.ok(maxImmediate < 1, `focus 切换初值发生瞬移：${maxImmediate}`);
+    assert.strictEqual(r._simulating, true, "focus 过渡未启动动画");
+    raf.drain();
+    const focusLog = r.getForceFrameLog();
+    assert.ok(focusLog.length > 5);
+    assert.ok(focusLog.every((f) => f.maxDisp <= 12), "focus 过渡单帧 >12px");
+    r.dispose();
+  });
+
+  check("animation_is_deterministic_two_runs", () => {
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    function makeAnimated() {
+      const raf = makeRafQueue();
+      const r = new Adapter.Renderer2D(container, {
+        host: makeHost(), presentation, animateForce: true,
+        requestAnimationFrame: raf.raf, cancelAnimationFrame: raf.cancel,
+      });
+      r.setFocusNode(hub);
+      r.render(container, vm);
+      return { r, raf };
+    }
+    const a = makeAnimated();
+    const b = makeAnimated();
+    for (let i = 0; i < 120; i++) { a.raf.drain(1); b.raf.drain(1); }
+    for (const id of [...a.r._positions.keys()].sort()) {
+      const pa = a.r._positions.get(id);
+      const pb = b.r._positions.get(id);
+      assert.ok(Math.abs(pa.x - pb.x) < 1e-9 && Math.abs(pa.y - pb.y) < 1e-9, `2× 动画结果不一致：${id}`);
+    }
+    a.r.dispose(); b.r.dispose();
   });
 }
 

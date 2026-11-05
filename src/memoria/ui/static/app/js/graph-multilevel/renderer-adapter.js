@@ -363,6 +363,8 @@
     ticks: 140,
     dragTicks: 70,
     maxVelocity: 18,
+    maxStep: 8,
+    maxFrames: 420,
   });
 
   // ── 确定性布局（种子来自 VM id；focus 居中 + 邻居多臂环形；update 保位）────
@@ -420,15 +422,13 @@
   }
 
   /**
-   * task-381：确定性力导向（旧 KGviz 的“自由作用力”观感）。
-   * - repulsion（全对斥力）+ link attraction（shown 边）+ center + 圆碰撞；
-   * - 固定 tick/alpha 衰减，无随机数 ⇒ 同输入 2× 结果一致；
-   * - focus 初始固定在面板中心（保留可读性），邻居自由展开；
-   * - pinned 节点保持当前位置（拖拽 pin）。
+   * task-381/382：确定性力导向单步状态机。
+   * - repulsion + link attraction + center + 圆碰撞；
+   * - task-382：动画循环每帧只调用 stepForceState 一次；禁止同步 settle 后瞬移。
+   * - pinned 节点保持当前位置（拖拽 pin / focus 初始锚点）。
    */
-  function runForceLayout(positions, radiusById, links, focusId, width, height, opts = {}) {
+  function buildForceState(positions, radiusById, links, focusId, width, height, opts = {}) {
     const ids = [...positions.keys()].sort();
-    if (!ids.length) return positions;
     const pinned = new Set(opts.pinned || []);
     const pinFocusCenter = opts.pinFocusCenter !== false;
     if (focusId && positions.has(focusId) && pinFocusCenter) {
@@ -438,71 +438,101 @@
     const cx = width / 2;
     const cy = height / 2;
     const pad = Math.max(24, Math.max(...ids.map((id) => radiusById.get(id) || KP_BASE_RADIUS)) + 8);
-    const vx = new Map(ids.map((id) => [id, 0]));
-    const vy = new Map(ids.map((id) => [id, 0]));
     const linkList = links.filter((l) => positions.has(l.source) && positions.has(l.target));
-    let alpha = Number.isFinite(opts.alpha) ? opts.alpha : 1;
-    const ticks = Math.max(1, Number(opts.ticks) || FORCE.ticks);
-    for (let tick = 0; tick < ticks; tick++) {
-      const fx = new Map(ids.map((id) => [id, 0]));
-      const fy = new Map(ids.map((id) => [id, 0]));
-      for (let i = 0; i < ids.length; i++) {
-        const a = ids[i];
-        const pa = positions.get(a);
-        const ra = radiusById.get(a) || KP_BASE_RADIUS;
-        for (let j = i + 1; j < ids.length; j++) {
-          const b = ids[j];
-          const pb = positions.get(b);
-          const rb = radiusById.get(b) || KP_BASE_RADIUS;
-          let dx = pb.x - pa.x;
-          let dy = pb.y - pa.y;
-          let dist = Math.hypot(dx, dy);
-          if (dist < 1e-6) {
-            // 完全重合时用确定性 id 顺序轻微错开，避免 NaN/堆叠
-            dx = (a < b ? 1 : -1) * 0.5;
-            dy = 0.5;
-            dist = Math.hypot(dx, dy);
-          }
-          const ux = dx / dist;
-          const uy = dy / dist;
-          const minDist = ra + rb + FORCE.collisionPad;
-          if (dist < minDist) {
-            const push = (minDist - dist) * 0.5;
-            if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * push); fy.set(a, fy.get(a) - uy * push); }
-            if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * push); fy.set(b, fy.get(b) + uy * push); }
-          }
-          const rep = FORCE.repulsion / Math.max(64, dist * dist);
-          if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * rep); fy.set(a, fy.get(a) - uy * rep); }
-          if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
-        }
-      }
-      for (const link of linkList) {
-        const a = positions.get(link.source);
-        const b = positions.get(link.target);
-        let dx = b.x - a.x;
-        let dy = b.y - a.y;
+    return {
+      ids, positions, radiusById, pinned, cx, cy, pad, width, height,
+      linkList,
+      focusId: focusId && positions.has(focusId) && !pinned.has(focusId) ? String(focusId) : null,
+      vx: new Map(ids.map((id) => [id, 0])),
+      vy: new Map(ids.map((id) => [id, 0])),
+      alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
+      ticks: 0,
+      maxDisp: 0,
+    };
+  }
+
+  /** 单个动画帧/单个 tick；返回本帧最大节点位移（px），用于 teleport 证据。 */
+  function stepForceState(state) {
+    const { ids, positions, radiusById, pinned, cx, cy, pad, width, height, linkList } = state;
+    if (!ids.length) return 0;
+    const alpha = state.alpha;
+    const fx = new Map(ids.map((id) => [id, 0]));
+    const fy = new Map(ids.map((id) => [id, 0]));
+    for (let i = 0; i < ids.length; i++) {
+      const a = ids[i];
+      const pa = positions.get(a);
+      const ra = radiusById.get(a) || KP_BASE_RADIUS;
+      for (let j = i + 1; j < ids.length; j++) {
+        const b = ids[j];
+        const pb = positions.get(b);
+        const rb = radiusById.get(b) || KP_BASE_RADIUS;
+        let dx = pb.x - pa.x;
+        let dy = pb.y - pa.y;
         let dist = Math.hypot(dx, dy);
-        if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
+        if (dist < 1e-6) {
+          dx = (a < b ? 1 : -1) * 0.5;
+          dy = 0.5;
+          dist = Math.hypot(dx, dy);
+        }
         const ux = dx / dist;
         const uy = dy / dist;
-        const f = (dist - (link.distance || FORCE.linkDistance)) * (link.strength || FORCE.linkStrength) * alpha;
-        if (!pinned.has(link.source)) { fx.set(link.source, fx.get(link.source) + ux * f); fy.set(link.source, fy.get(link.source) + uy * f); }
-        if (!pinned.has(link.target)) { fx.set(link.target, fx.get(link.target) - ux * f); fy.set(link.target, fy.get(link.target) - uy * f); }
+        const minDist = ra + rb + FORCE.collisionPad;
+        if (dist < minDist) {
+          const push = (minDist - dist) * 0.5;
+          if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * push); fy.set(a, fy.get(a) - uy * push); }
+          if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * push); fy.set(b, fy.get(b) + uy * push); }
+        }
+        const rep = FORCE.repulsion / Math.max(64, dist * dist);
+        if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * rep); fy.set(a, fy.get(a) - uy * rep); }
+        if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
       }
-      for (const id of ids) {
-        if (pinned.has(id)) continue;
-        const p = positions.get(id);
-        fx.set(id, fx.get(id) + (cx - p.x) * FORCE.centerStrength * alpha);
-        fy.set(id, fy.get(id) + (cy - p.y) * FORCE.centerStrength * alpha);
-        const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (vx.get(id) + fx.get(id) * alpha) * FORCE.velocityDecay));
-        const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (vy.get(id) + fy.get(id) * alpha) * FORCE.velocityDecay));
-        vx.set(id, nvx);
-        vy.set(id, nvy);
-        p.x = Math.max(pad, Math.min(width - pad, p.x + nvx));
-        p.y = Math.max(pad, Math.min(height - pad, p.y + nvy));
-      }
-      alpha = Math.max(FORCE.alphaMin, alpha * FORCE.alphaDecay);
     }
+    for (const link of linkList) {
+      const a = positions.get(link.source);
+      const b = positions.get(link.target);
+      let dx = b.x - a.x;
+      let dy = b.y - a.y;
+      let dist = Math.hypot(dx, dy);
+      if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
+      const ux = dx / dist;
+      const uy = dy / dist;
+      const f = (dist - (link.distance || FORCE.linkDistance)) * (link.strength || FORCE.linkStrength) * alpha;
+      if (!pinned.has(link.source)) { fx.set(link.source, fx.get(link.source) + ux * f); fy.set(link.source, fy.get(link.source) + uy * f); }
+      if (!pinned.has(link.target)) { fx.set(link.target, fx.get(link.target) - ux * f); fy.set(link.target, fy.get(link.target) - uy * f); }
+    }
+    let maxDisp = 0;
+    for (const id of ids) {
+      if (pinned.has(id)) continue;
+      const p = positions.get(id);
+      fx.set(id, fx.get(id) + (cx - p.x) * FORCE.centerStrength * alpha);
+      fy.set(id, fy.get(id) + (cy - p.y) * FORCE.centerStrength * alpha);
+      if (state.focusId === id) {
+        // task-382：focus 平滑回到中心（不瞬移；每帧仍受 maxStep 限制）
+        fx.set(id, fx.get(id) + (cx - p.x) * 0.22 * alpha);
+        fy.set(id, fy.get(id) + (cy - p.y) * 0.22 * alpha);
+      }
+      const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (state.vx.get(id) + fx.get(id) * alpha) * FORCE.velocityDecay));
+      const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (state.vy.get(id) + fy.get(id) * alpha) * FORCE.velocityDecay));
+      state.vx.set(id, nvx);
+      state.vy.set(id, nvy);
+      // 单帧位移硬上限：防止初始/重排一帧 teleport（正常力导向每帧远小于此值）
+      const stepX = Math.max(-FORCE.maxStep, Math.min(FORCE.maxStep, nvx));
+      const stepY = Math.max(-FORCE.maxStep, Math.min(FORCE.maxStep, nvy));
+      p.x = Math.max(pad, Math.min(width - pad, p.x + stepX));
+      p.y = Math.max(pad, Math.min(height - pad, p.y + stepY));
+      maxDisp = Math.max(maxDisp, Math.hypot(stepX, stepY));
+    }
+    state.alpha = Math.max(FORCE.alphaMin, alpha * FORCE.alphaDecay);
+    state.ticks += 1;
+    state.maxDisp = maxDisp;
+    return maxDisp;
+  }
+
+  /** 同步 warmup（仅测试/无 rAF 环境）；真实浏览器走 rAF 循环。 */
+  function runForceLayout(positions, radiusById, links, focusId, width, height, opts = {}) {
+    const state = buildForceState(positions, radiusById, links, focusId, width, height, opts);
+    const ticks = Math.max(1, Number(opts.ticks) || FORCE.ticks);
+    for (let tick = 0; tick < ticks; tick++) stepForceState(state);
     return positions;
   }
 
@@ -547,25 +577,27 @@
     const maxRing = Math.max(60, Math.min(width - 2 * maxR - 40, height - 2 * maxR - 56) / 2);
     // 固定 seed + id 排序 → 初始散点确定；力导向把散点收敛成自由布局（不是环形）
     const rand = makeSeededRandom((fnv1a(`${seed}|${ids.join("|")}`) ^ 0x9e3779b9) >>> 0);
-    const others = ids.filter((id) => id !== focus);
-    if (focus) positions.set(focus, { x: cx, y: cy });
-    for (const id of others) {
-      const angle = rand() * TAU;
-      const radius = maxRing * (0.30 + rand() * 0.70);
-      positions.set(id, { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius });
-    }
-    const pinned = new Set(opts.pinned || []);
-    if (opts.prevPositions) {
-      for (const id of pinned) {
-        if (opts.prevPositions.has(id) && positions.has(id)) positions.set(id, { ...opts.prevPositions.get(id) });
+    const prev = opts.prevPositions || null;
+    const smoothFocus = opts.smoothFocus === true;
+    for (const id of ids) {
+      if (prev && prev.has(id)) {
+        positions.set(id, { ...prev.get(id) });
+      } else {
+        const angle = rand() * TAU;
+        const radius = maxRing * (0.30 + rand() * 0.70);
+        positions.set(id, { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius });
       }
     }
+    if (focus && !(smoothFocus && prev && prev.has(focus))) positions.set(focus, { x: cx, y: cy });
+    const pinned = new Set(opts.pinned || []);
     const links = forceLinksFor(shown.edges);
-    runForceLayout(positions, radiusById, links, focus, width, height, {
-      pinned,
-      pinFocusCenter: true,
-      ticks: opts.ticks || FORCE.ticks,
-    });
+    if (opts.animate !== true) {
+      runForceLayout(positions, radiusById, links, focus, width, height, {
+        pinned,
+        pinFocusCenter: !smoothFocus,
+        ticks: opts.ticks || FORCE.ticks,
+      });
+    }
     return { positions, radiusById, shown, width, height };
   }
 
@@ -637,6 +669,20 @@
         : (typeof global.requestAnimationFrame === "function"
           ? global.requestAnimationFrame.bind(global)
           : (cb) => setTimeout(cb, 16));
+      this._cancelRaf = typeof options.cancelAnimationFrame === "function"
+        ? options.cancelAnimationFrame
+        : (typeof global.cancelAnimationFrame === "function"
+          ? global.cancelAnimationFrame.bind(global)
+          : (id) => clearTimeout(id));
+      // 真实浏览器走 rAF 连续动画；Node 测试默认同步 warmup（可用 animateForce:true 注入 rAF 测试）
+      this._animateForce = options.animateForce === true
+        || (options.animateForce !== false && typeof global.requestAnimationFrame === "function");
+      this._forceState = null;
+      this._forceAnimationRaf = null;
+      this._forceFrames = 0;
+      this._forceFrameLog = [];
+      this._simulating = false;
+      this._lastForceTicks = 0;
       this._hoverId = null;
       this._selection = null;
       this._disposed = false;
@@ -858,6 +904,70 @@
       return { nodes, edges };
     }
 
+    // ── task-382：rAF 连续力导向动画 ─────────────────────────────────────
+    _stopForceAnimation() {
+      this._simulating = false;
+      if (this._forceAnimationRaf != null) {
+        try { this._cancelRaf(this._forceAnimationRaf); } catch (_) { /* noop */ }
+        this._forceAnimationRaf = null;
+      }
+      this._forceState = null;
+    }
+
+    /**
+     * 从当前坐标启动/重加热连续动画；每帧只走一个 tick。
+     * - focus 初始（pinFocusCenter=true）锚定中心；
+     * - focus 切换/拖拽时 pinFocusCenter=false，保留当前位置平滑过渡。
+     */
+    _startForceAnimation(opts = {}) {
+      if (!this._animateForce || !this._positions.size) return false;
+      this._stopForceAnimation();
+      const links = forceLinksFor(this._edgeList);
+      const state = buildForceState(
+        this._positions, this._radiusById, links, opts.focusId || null,
+        this._view.width, this._view.height,
+        {
+          pinned: opts.pinned || this._pinned,
+          pinFocusCenter: opts.pinFocusCenter === true,
+          alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
+        }
+      );
+      this._forceState = state;
+      this._forceFrames = 0;
+      this._forceFrameLog = [];
+      this._simulating = true;
+      let quiet = 0;
+      const tick = () => {
+        if (!this._simulating || this._disposed || this._forceState !== state) return;
+        const maxDisp = stepForceState(state);
+        this._forceFrames += 1;
+        this._forceFrameLog.push({
+          frame: this._forceFrames,
+          alpha: Math.round(state.alpha * 10000) / 10000,
+          maxDisp: Math.round(maxDisp * 100) / 100,
+        });
+        if (this._forceFrameLog.length > 600) this._forceFrameLog.shift();
+        quiet = maxDisp < 0.02 ? quiet + 1 : 0;
+        if (this._ctx) this._draw();
+        const done = this._forceFrames >= FORCE.maxFrames
+          || state.alpha <= FORCE.alphaMin
+          || (this._forceFrames > 30 && quiet >= 30);
+        if (done) {
+          this._simulating = false;
+          this._forceAnimationRaf = null;
+          this._lastForceTicks = this._forceFrames;
+          return;
+        }
+        this._forceAnimationRaf = this._raf(tick);
+      };
+      this._forceAnimationRaf = this._raf(tick);
+      return true;
+    }
+
+    getForceFrameLog() {
+      return this._forceFrameLog.slice();
+    }
+
     render(container, vm) {
       if (this._disposed) fail("GRAPH_INTERNAL", "Renderer 已 dispose");
       if (container) this.container = container;
@@ -879,13 +989,16 @@
       const layout = computeForceLayout(
         { nodes: model.nodes, edges: model.edges }, seed, width, height,
         this._degreeInfo, this._focusNodeId,
-        { pinned: this._pinned, prevPositions: this._positions }
+        { pinned: this._pinned, prevPositions: null, animate: this._animateForce }
       );
       this._layoutFocusId = this._focusNodeId;
       this._applyLayout(layout, model);
       this._syncGroups();
       this._bindPointer();
       this._draw();
+      if (this._animateForce) {
+        this._startForceAnimation({ focusId: this._focusNodeId, pinFocusCenter: true, alpha: 1 });
+      }
       return this._summary("render");
     }
 
@@ -900,6 +1013,7 @@
         this._scheduleDeferredRender(vm, { ...opts, update: true });
         return this._deferredSummary("update");
       }
+      this._stopForceAnimation();
       // focus 变化必须重排（否则旧位置让邻居塌成一列）；普通 update 保位
       const focusChanged = this._layoutFocusId !== this._focusNodeId;
       const keep = (opts.relayout === true || focusChanged) ? null : this._positions;
@@ -907,11 +1021,17 @@
       const height = this._measureHeight();
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
-      const layout = (opts.relayout === true || focusChanged)
+      const relayout = opts.relayout === true || focusChanged;
+      const layout = relayout
         ? computeForceLayout(
           { nodes: model.nodes, edges: model.edges }, seed, width, height,
           this._degreeInfo, this._focusNodeId,
-          { pinned: this._pinned, prevPositions: this._positions }
+          {
+            pinned: this._pinned,
+            prevPositions: this._positions,
+            smoothFocus: this._animateForce,
+            animate: this._animateForce,
+          }
         )
         : computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo, this._focusNodeId);
       const before = new Map(this._positions);
@@ -924,6 +1044,10 @@
         if (!old || old.x !== p.x || old.y !== p.y) moved += 1;
       }
       this._draw();
+      if (relayout && this._animateForce) {
+        // task-382：focus 过渡以当前坐标为初值，rAF 逐帧收敛（不整图从零重排）
+        this._startForceAnimation({ focusId: this._focusNodeId, pinFocusCenter: false, alpha: 1 });
+      }
       const summary = this._summary("update");
       summary.moved = moved;
       summary.reheat = opts.relayout === true;
@@ -932,6 +1056,7 @@
 
     dispose() {
       if (this._disposed) return { status: "ok", already: true };
+      this._stopForceAnimation();
       for (const [target, type, handler] of this._bound) this.host && this.host.off && this.host.off(target, type, handler);
       this._bound = [];
       if (this._resizeObserver) {
@@ -1045,8 +1170,7 @@
       }, 80);
     }
 
-    _deferredSummary(op) {
-      return {
+    _deferredSummary(op) {      return {
         status: "deferred",
         op,
         backend: this.backend,
@@ -1226,13 +1350,16 @@
             y: drag.startWorld.y + dy / scale,
           });
           this._pinned.add(drag.nodeId);
-        } else if (drag.mode === "pan") {
-          this._camera.x = drag.startCamera.x + dx;
+        } else if (drag.mode === "pan") {          this._camera.x = drag.startCamera.x + dx;
           this._camera.y = drag.startCamera.y + dy;
           this._userAdjusted = true;
         }
         drag.lastX = screen.x;
         drag.lastY = screen.y;
+        if (drag.mode === "node" && this._animateForce && !this._simulating) {
+          // 拖拽期间重加热：邻居逐帧受力（拖拽节点已 pin）；pan 不得触发模拟
+          this._startForceAnimation({ pinFocusCenter: false, alpha: 1 });
+        }
         if (this._ctx) this._draw();
         return;
       }
@@ -1254,7 +1381,14 @@
         // 拖拽超过阈值：抑制随后的 click（不触发 focus/选中）
         this._suppressClick = true;
         setTimeout(() => { this._suppressClick = false; }, 300);
-        if (drag.mode === "node") this._settleForceAfterDrag();
+        if (drag.mode === "node") {
+          if (this._animateForce) {
+            // task-382：松手继续 rAF 收敛，不同步 settle 瞬移
+            this._startForceAnimation({ pinFocusCenter: false, alpha: 1 });
+          } else {
+            this._settleForceAfterDrag();
+          }
+        }
       }
       if (this._canvas && typeof this._canvas.releasePointerCapture === "function" && drag.pointerId != null) {
         try { this._canvas.releasePointerCapture(drag.pointerId); } catch (_) { /* noop */ }
@@ -1619,6 +1753,9 @@
         camera: { ...this._camera },
         userAdjusted: this._userAdjusted,
         pinned: [...this._pinned],
+        simulating: !!this._simulating,
+        forceFrames: this._forceFrames || 0,
+        forceMaxDisp: this._forceFrameLog.length ? this._forceFrameLog[this._forceFrameLog.length - 1].maxDisp : 0,
         layoutMode: "force",
         forceTicks: this._lastForceTicks || FORCE.ticks,
         visual: {
