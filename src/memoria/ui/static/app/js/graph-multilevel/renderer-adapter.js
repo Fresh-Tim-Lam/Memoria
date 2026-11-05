@@ -688,6 +688,7 @@
       this._simulating = false;
       this._lastForceTicks = 0;
       this._drawScheduled = false;
+      this._forceHold = false;
       this._hoverId = null;
       this._selection = null;
       this._disposed = false;
@@ -944,6 +945,8 @@
       let quiet = 0;
       const tick = () => {
         if (!this._simulating || this._disposed || this._forceState !== state) return;
+        // task-385：拖拽期间模拟常驻；alpha 低时重加热，不因 quiet/alpha 停止
+        if (this._forceHold && state.alpha < 0.12) state.alpha = 0.35;
         const maxDisp = stepForceState(state);
         this._forceFrames += 1;
         this._forceFrameLog.push({
@@ -954,9 +957,11 @@
         if (this._forceFrameLog.length > 600) this._forceFrameLog.shift();
         quiet = maxDisp < 0.05 ? quiet + 1 : 0;
         if (this._ctx) this._draw();
-        const done = this._forceFrames >= FORCE.maxFrames
+        const done = !this._forceHold && (
+          this._forceFrames >= FORCE.maxFrames
           || state.alpha <= FORCE.alphaMin
-          || quiet >= 10;
+          || quiet >= 10
+        );
         if (done) {
           this._simulating = false;
           this._forceAnimationRaf = null;
@@ -1352,6 +1357,11 @@
         // task-384：pointerdown 命中节点立即 pin，不等第一次 move
         this._hoverId = node.id;
         this._pinned.add(node.id);
+        // task-385：拖拽期间模拟常驻（参考 3D：pointerdown setDragNode + 持续模拟）
+        this._forceHold = true;
+        if (this._animateForce && !this._simulating) {
+          this._startForceAnimation({ pinFocusCenter: false, alpha: 0.85 });
+        }
       }
     }
 
@@ -1373,10 +1383,10 @@
           drag.moved = drag.moved || distance >= DRAG_THRESHOLD_PX;
           drag.lastX = screen.x;
           drag.lastY = screen.y;
-          if (this._animateForce && !this._simulating && !drag.forceStarted) {
-            // 只在拖拽第一次 move 启动一次，不在每个 move 重建 force state
+          if (this._animateForce && !this._simulating) {
+            // 异常停止时由下一次 move 重启一次；正常运行只更新 pin，不重建 state
             drag.forceStarted = true;
-            this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
+            this._startForceAnimation({ pinFocusCenter: false, alpha: 0.85 });
           }
           this._requestDraw();
           return;
@@ -1408,13 +1418,18 @@
       const drag = this._drag;
       if (!drag) return;
       this._drag = null;
+      this._forceHold = false;
+      if (drag.mode === "node" && drag.nodeId) {
+        // task-385：松手解除拖拽 pin，让节点回到力导向
+        this._pinned.delete(drag.nodeId);
+      }
       if (drag.moved) {
         // 拖拽超过阈值：抑制随后的 click（不触发 focus/选中）
         this._suppressClick = true;
         setTimeout(() => { this._suppressClick = false; }, 300);
         if (drag.mode === "node") {
           if (this._animateForce) {
-            // task-382/384：松手继续 rAF；若已在模拟则不重启（不重建 force state）
+            // task-382/385：松手继续 rAF；拖拽模拟常驻时直接接力，不重建 state
             if (!this._simulating) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
           } else {
             this._settleForceAfterDrag();

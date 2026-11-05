@@ -269,11 +269,11 @@ async function runAsync(ctx) {
     assert.deepStrictEqual(r._camera, beforeCamera, "节点拖拽不应改变 camera");
     r._onPointerUp(base);
     assert.strictEqual(r._drag, null);
-    // 拖拽松手后力导向重加热：其它节点继续收敛，dragged 节点保持 pin
+    // task-385：松手解除拖拽 pin；邻居继续收敛
+    assert.ok(!r._pinned.has(hub), "松手未解除拖拽 pin");
+    // 拖拽松手后力导向重加热：其它节点继续收敛
     const otherAfter = r._positions.get(otherId);
     assert.ok(Math.hypot(otherAfter.x - otherBefore.x, otherAfter.y - otherBefore.y) > 0.01, "松手后邻居未继续力导向收敛");
-    const draggedAfter = r._positions.get(hub);
-    assert.ok(Math.hypot(draggedAfter.x - moved.x, draggedAfter.y - moved.y) < 1e-6, "拖拽节点 pin 未保持");
     // 拖拽后的 click 被抑制，不触发 focus
     let clicks = 0;
     r.on("nodeClick", () => { clicks += 1; });
@@ -416,10 +416,50 @@ async function runAsync(ctx) {
       }
     }
     assert.ok(errors.every((e) => e <= 2), `跟手误差：${errors}`);
-    assert.strictEqual(r._drag.forceStarted, true);
+    assert.strictEqual(r._simulating, true, "pointerdown 未启动拖拽常驻模拟");
     assert.strictEqual(r._forceFrames, 0, "未 drain 时 forceFrames 被 move 重置/推进");
     r._onPointerUp({ ...base, clientX: start.x + 30, clientY: start.y + 20 });
     assert.strictEqual(r._drag, null);
+    assert.ok(!r._pinned.has(id), "松手未解除拖拽 pin");
+    r.dispose();
+  });
+
+  check("drag_hold_keeps_neighbors_moving_no_rebuild", () => {
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const raf = makeRafQueue();
+    const r = new Adapter.Renderer2D(container, {
+      host: makeHost(), presentation, animateForce: true,
+      requestAnimationFrame: raf.raf, cancelAnimationFrame: raf.cancel,
+    });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    raf.drain();
+    const id = shown.find((x) => x !== hub);
+    const neighborId = shown.find((x) => x !== hub && x !== id);
+    const start = { ...r._positions.get(id) };
+    const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 11, preventDefault() {} };
+    r._onPointerDown(base);
+    assert.strictEqual(r._simulating, true, "pointerdown 未启动拖拽模拟");
+    assert.strictEqual(r._forceHold, true, "拖拽期间未保持模拟");
+    const stateRef = r._forceState;
+    const neighborBefore = { ...r._positions.get(neighborId) };
+    // 不动指针，等 ≥10 帧：邻居应持续受力
+    for (let i = 0; i < 12; i++) raf.drain(1);
+    const neighborAfter = r._positions.get(neighborId);
+    assert.ok(Math.hypot(neighborAfter.x - neighborBefore.x, neighborAfter.y - neighborBefore.y) > 0.01,
+      "拖拽保持期间邻居没有受力移动");
+    const holdLog = r.getForceFrameLog();
+    assert.ok(holdLog.every((f) => f.maxDisp <= 4), "拖拽期间单帧位移 >4px");
+    assert.strictEqual(r._forceState, stateRef, "拖拽期间 move 重建了 force state");
+    // 继续移动 pointer：state 不重建
+    for (let i = 1; i <= 5; i++) r._onPointerMove({ ...base, clientX: start.x + i * 2, clientY: start.y + i });
+    assert.strictEqual(r._forceState, stateRef, "拖拽 move 重建了 force state");
+    assert.strictEqual(r._forceHold, true);
+    r._onPointerUp({ ...base, clientX: start.x + 10, clientY: start.y + 5 });
+    assert.strictEqual(r._forceHold, false);
+    assert.ok(!r._pinned.has(id), "松手未解除拖拽 pin");
+    raf.drain();
+    assert.strictEqual(r._simulating, false, "松手后模拟未收敛停止");
     r.dispose();
   });
 }
