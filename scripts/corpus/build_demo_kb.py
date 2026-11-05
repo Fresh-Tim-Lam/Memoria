@@ -70,8 +70,9 @@ def main() -> int:
     md_path.write_text(md, encoding="utf-8")
 
     def snippet(text: str) -> str:
-        text = " ".join(text.split())
-        return text if len(text) <= 80 else text[:77].rstrip() + "â€¦"
+        # Must be an exact substring of the Markdown; never collapse whitespace.
+        text = (text or "").strip()
+        return text if len(text) <= 80 else text[:80]
 
     kp_rows = []
     id_to_kp = {}
@@ -109,10 +110,18 @@ def main() -> int:
             "source_id": src,
         })
 
+    # Put a connected hub first so the graph's initial focus shows a neighborhood
+    # instead of an isolated node (dev demo only; ids/links unchanged).
+    degree = {row["id"]: 0 for row in kp_rows}
+    for link in links:
+        degree[link["source_id"]] = degree.get(link["source_id"], 0) + 1
+        for tgt in link.get("targets", []):
+            degree[tgt] = degree.get(tgt, 0) + 1
+    ordered_kp_rows = sorted(kp_rows, key=lambda r: (-degree.get(r["id"], 0), r["id"]))
     sidecar = {
         "schema_version": 1,
         "file": "chapter1.md",
-        "knowledge_points": kp_rows,
+        "knowledge_points": ordered_kp_rows,
         "links": links,
     }
     sidecar_path = sidecars / "chapter1.memoria.yaml"
