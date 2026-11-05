@@ -1,0 +1,356 @@
+{
+  "dev_test_note": "pilot 仅 1 章，dev/test 无法按章隔离；按 query id 预分 dev/test，仅用于流程演练，不作为统计推断（主集按章隔离）。",
+  "edge_file": "artifacts/corpus/pilot/annotations/edges.single.jsonl",
+  "kp_file": "artifacts/corpus/pilot/annotations/kps.single.jsonl",
+  "manual_version": "v1.0",
+  "queries": [
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [
+        "edge-003"
+      ],
+      "expected_kp_ids": [
+        "kp-005",
+        "kp-009"
+      ],
+      "id": "q-grf-01",
+      "manual_version": "v1.0",
+      "query": "Which factor of production do entrepreneurs represent in the factors-of-production taxonomy?",
+      "query_type": "graph",
+      "rationale": "需要沿 factors-of-production 包含边从 entrepreneurs 走到整体概念。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [
+        "edge-026"
+      ],
+      "expected_kp_ids": [
+        "kp-035",
+        "kp-036"
+      ],
+      "id": "q-grf-02",
+      "manual_version": "v1.0",
+      "query": "What path links government spending above tax revenue to the accumulated national debt?",
+      "query_type": "graph",
+      "rationale": "需要 deficit -> national debt 的 extend 边。",
+      "split": "test",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [
+        "edge-017",
+        "edge-018"
+      ],
+      "expected_kp_ids": [
+        "kp-043",
+        "kp-044",
+        "kp-045"
+      ],
+      "id": "q-grf-03",
+      "manual_version": "v1.0",
+      "query": "Which single concept contains both perfect competition and pure monopoly?",
+      "query_type": "graph",
+      "rationale": "两条 contain 边汇聚到 market structure。",
+      "split": "test",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "hard",
+      "expected_edge_ids": [
+        "edge-024"
+      ],
+      "expected_kp_ids": [
+        "kp-032",
+        "kp-029"
+      ],
+      "id": "q-grf-04",
+      "manual_version": "v1.0",
+      "query": "How does monetary policy influence the general price level?",
+      "query_type": "graph",
+      "rationale": "需要 monetary policy -> inflation 的 extend 边。",
+      "split": "test",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [
+        "edge-013",
+        "edge-014"
+      ],
+      "expected_kp_ids": [
+        "kp-029",
+        "kp-030",
+        "kp-031"
+      ],
+      "id": "q-grf-05",
+      "manual_version": "v1.0",
+      "query": "Which two subtypes of inflation sit under the general inflation concept?",
+      "query_type": "graph",
+      "rationale": "两条 contain 边构成 inflation 的子类型集合。",
+      "split": "test",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-043",
+        "kp-047"
+      ],
+      "id": "q-hyb-01",
+      "manual_version": "v1.0",
+      "query": "market structure with few firms and large capital requirements",
+      "query_type": "hybrid",
+      "rationale": "需要类型列表（kp-043）与具体类型定义（kp-047）联合命中。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-016",
+        "kp-019"
+      ],
+      "id": "q-hyb-02",
+      "manual_version": "v1.0",
+      "query": "economic system where government owns all resources and controls markets",
+      "query_type": "hybrid",
+      "rationale": "上位概念 + 子类型联合命中。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "hard",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-029"
+      ],
+      "id": "q-hyb-03",
+      "manual_version": "v1.0",
+      "query": "how inflation is measured using a market basket of consumer goods",
+      "query_type": "hybrid",
+      "rationale": "CPI 不是 KP（未纳入 50 KP），golden 只要求命中通胀概念；记录为部分命中案例。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-005",
+        "kp-006",
+        "kp-008",
+        "kp-010"
+      ],
+      "id": "q-hyb-04",
+      "manual_version": "v1.0",
+      "query": "the five inputs used to produce goods and services",
+      "query_type": "hybrid",
+      "rationale": "要素总述 + 部分要素定义联合命中。",
+      "split": "test",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-033",
+        "kp-035"
+      ],
+      "id": "q-hyb-05",
+      "manual_version": "v1.0",
+      "query": "government tax and spending tools and the budget shortfall they can create",
+      "query_type": "hybrid",
+      "rationale": "政策工具 + 结果概念联合命中。",
+      "split": "test",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": true,
+      "control_kind": "semantic_edges_not_required",
+      "difficulty": "easy",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-005"
+      ],
+      "id": "q-kw-01",
+      "manual_version": "v1.0",
+      "query": "factors of production",
+      "query_type": "keyword",
+      "rationale": "精确术语查询；不依赖语义边即可命中定义段。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "easy",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-030"
+      ],
+      "id": "q-kw-02",
+      "manual_version": "v1.0",
+      "query": "demand-pull inflation",
+      "query_type": "keyword",
+      "rationale": "精确术语查询，KW 型应直接命中。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": true,
+      "control_kind": "semantic_edges_not_required",
+      "difficulty": "easy",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-036"
+      ],
+      "id": "q-kw-03",
+      "manual_version": "v1.0",
+      "query": "national debt",
+      "query_type": "keyword",
+      "rationale": "精确术语查询，用于 no-semantic 对照组。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "easy",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-046"
+      ],
+      "id": "q-kw-04",
+      "manual_version": "v1.0",
+      "query": "monopolistic competition",
+      "query_type": "keyword",
+      "rationale": "精确术语查询。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "easy",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-026"
+      ],
+      "id": "q-kw-05",
+      "manual_version": "v1.0",
+      "query": "business cycle",
+      "query_type": "keyword",
+      "rationale": "术语单复数差异考验关键词归一化。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-025"
+      ],
+      "id": "q-vec-01",
+      "manual_version": "v1.0",
+      "query": "the total market value of all final goods and services a country produces each year",
+      "query_type": "vector",
+      "rationale": "释义改写定位 GDP 定义。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-009"
+      ],
+      "id": "q-vec-02",
+      "manual_version": "v1.0",
+      "query": "people who combine resources and accept risk to start a venture",
+      "query_type": "vector",
+      "rationale": "释义改写定位 entrepreneurs。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": true,
+      "control_kind": "semantic_edges_not_required",
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-045"
+      ],
+      "id": "q-vec-03",
+      "manual_version": "v1.0",
+      "query": "a market with a single seller protected by barriers to entry",
+      "query_type": "vector",
+      "rationale": "单跳释义查询，语义边非必需，作为 no-semantic 对照。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-031"
+      ],
+      "id": "q-vec-04",
+      "manual_version": "v1.0",
+      "query": "prices rising because materials and wages cost more",
+      "query_type": "vector",
+      "rationale": "释义改写定位 cost-push inflation，与 demand-pull 构成易混对。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    },
+    {
+      "control": false,
+      "control_kind": null,
+      "difficulty": "medium",
+      "expected_edge_ids": [],
+      "expected_kp_ids": [
+        "kp-035"
+      ],
+      "id": "q-vec-05",
+      "manual_version": "v1.0",
+      "query": "what happens when the government spends more than it collects in taxes",
+      "query_type": "vector",
+      "rationale": "释义改写定位 federal budget deficit。",
+      "split": "dev",
+      "status": "single_annotator_draft"
+    }
+  ],
+  "schema": "corpus-pilot-queries/v1",
+  "source_edition": "51b513371907fccc184870e009b7f5317a8fa470b0d5feb0ffae02e61917a40e",
+  "status": "single_annotator_draft"
+}
