@@ -1,197 +1,427 @@
-# ANNOTATION-MANUAL — pilot 标注手册 v1.0（单标注草案）
+# ANNOTATION-MANUAL — pilot 标注手册 v1.1（第二标注者可用版）
 
-> **状态**：`single_annotator_draft`；IAA 未做。手册版本 `v1.0`（与 `annotations-manifest.json.manual_version` 一致）。
-> **适用范围**：`artifacts/corpus/pilot/source/chapter.txt`（OpenStax《Introduction to Business》Chapter 1, CC BY 4.0，Tier A）上的 KP span 与 S0 语义边标注。
-> **规则变更**：改本手册必须重标受影响样本（C5），并更新 `manual_version` 与 edition。
+> **状态**：A 为 `single_annotator_draft`（单标注草案）；**IAA 未做**；0.5 HOLD。手册版本 **v1.1**；pilot 语料 edition 的重算与 `annotations-manifest.manual_version` 更新列为本轮写域外的 P1（见 `MANUAL-REVISION.md`）。
+> **修订依据**：task-369 agent 干跑（`artifacts/agent/verify/corpus/pilot/IAA-DRY-RUN.md`）+ task-370 P0 修订。
+> **适用语料**：`artifacts/corpus/pilot/source/chapter.txt`（OpenStax《Introduction to Business》Chapter 1, CC BY 4.0, Tier A）。
+> **重要（防泄漏）**：本手册**不含**本语料 A 标注者的任何 unitization（哪 50 个 span、取几句、边怎么连）。若你拿到/看到 `artifacts/corpus/pilot/annotations/kps.single.jsonl`、`edges.single.jsonl` 或 `pilot-spec.json`，说明流程被污染，请立即退回并通知复核人。本手册中的示例均为**合成教学示例**（非本语料、非原书内容），仅用于说明判据。
 
-## 0. 标注单位 / 上下文 / 坐标 / 导出
+---
+
+## 0. 使用说明、标注单位与提交格式
+
+### 0.1 你的角色与独立性
 
 | 项 | 规定 |
 |---|---|
-| 标注单位 | **KP**（单文件连续 span）；**语义边**（两个 KP + 断言证据 span） |
-| 上下文 | 所在 section（section 标题 + 当前段）；跨 section 的 KP 一律禁止 |
-| 坐标 | `chapter.txt` 解码后 **Unicode code point** 偏移，左闭右开；UTF-8 无 BOM、LF |
-| 导出 | JSONL（KP/边/负例各一文件）；字段固定，不新增字段即兴发挥（新字段走 C 系列修订） |
-| 阶段 | **先 KP 后边**；KP 集冻结后才标边 |
-| 状态 | 全部记录 `status=single_annotator_draft`；第二标注者完成后才可能升级 |
-| 语言 | 源为英文；`name` 用英文术语，`name_zh` 给中文术语；`description` 用英文短释义（避免未复核翻译引入语义漂移） |
+| 角色 | **B：独立第二标注者**（不是 A，也不是复核人）；A 的 KP/边/负例标签在本阶段对你不可见 |
+| 独立要求 | 先独立完成 KP span（第 1 节）与候选对判定（第 3 节），**不得参考 A 的产物**；A/B 只在裁决阶段（第 4 节）由复核人合并 |
+| 可看 | `chapter.txt`（正文快照）、本手册、`iaa/edge-candidate-pool.jsonl`（无标签候选对）、`iaa/README.md` |
+| 不可看 | A 的 `kps.single.jsonl` / `edges.single.jsonl` / `pilot-spec.json` / `edges.negative.single.jsonl` |
+| 产出 | 两个 JSONL 文件，放在 **`artifacts/corpus/pilot/annotations/annotator-b/`**（路径协议见 §0.4） |
 
-## 1. KP 判定（C4）
+### 0.2 标注单位 / 上下文 / 坐标
 
-**是 KP**：一个概念/术语/机制 + 1–3 句解释；span 连续；落在单 section；可独立引用/断言。
-**不是 KP**：标题/导语/练习/图表/引用/网址/单句碎片/多概念大段/跨 section 合并/重复定义（Key Terms 与正文重复时取正文）。
+| 项 | 规定 |
+|---|---|
+| 标注单位 | **KP** = 单文件连续 span；**语义边** = 两个 KP + 断言证据 span（候选池协议见 §3） |
+| 上下文 | 所在 section（section 标题 + 当前段 + 相邻段落）；**跨 section 一律禁止** |
+| 坐标 | `chapter.txt` 解码后的 **Unicode code point** 偏移，左闭右开 `[start,end)`；UTF-8 无 BOM、LF |
+| 语言 | 源为英文；`name` 用英文术语，`concept_type` 用英文枚举（§1.6），`rationale` 中英均可 |
+| 禁止 | 改正文、改 A 产物、把模型预标当自己的答案、边标边改手册 |
 
-### 1.1 正例（30+，全部来自本包 50 KP）
+### 0.3 提交格式（两个文件）
 
-- P1 `kp-001` business：句 1 定义 "A business is an organization that strives for a profit…"，概念+1 句，单 section，span 精确。
-- P2 `kp-002` goods：定义句 "Goods are tangible items manufactured by businesses…"。
-- P3 `kp-003` services：定义句 "Services are intangible offerings…"。
-- P4 `kp-004` not-for-profit organization：定义句 "exists to achieve some goal other than the usual business goal of profit"。
-- P5 `kp-005` factors of production：定义 + 四要素枚举（2 句）同段连续。
-- P6 `kp-006` natural resources：定义 + 举例（2 句），例子属解释，纳入 span。
-- P7 `kp-007` labor (human resources)：两句定义（"Labor, or human resources, refers to…"）。
-- P8 `kp-008` capital：定义句 + 排除说明在后续句；本 KP 只取定义句（"does not include money" 留给边界例 B6）。
-- P9 `kp-009` entrepreneurs：一句定义（combine inputs → profit/not-for-profit goal）。
-- P10 `kp-010` knowledge：第五要素定义句 "Knowledge refers to the combined talents and skills…"。
-- P11 `kp-011` external business environment：一句列举七个 subenvironments，概念完整。
-- P12 `kp-012` internal environment：一句定义（day-to-day decisions within control）。
-- P13 `kp-013` demography：定义句（vital statistics）。
-- P14 `kp-014` social factors：定义句（attitudes/values/ethics/lifestyles → purchase behavior）。
-- P15 `kp-015` technology：定义句（application of science/engineering to solve problems）。
-- P16 `kp-016` economic system：定义句（policies/laws/choices → what/how allocated）。
-- P17 `kp-017` economics：定义句（study of scarce resource use）。
-- P18 `kp-018` capitalism：定义 + 竞争市场说明（2 句）。
-- P19 `kp-019` communism：定义句（government owns resources/controls markets）。
-- P20 `kp-020` socialism：定义句（basic industries government/private under control）。
-- P21 `kp-021` mixed economy：定义句（use more than one economic system）。
-- P22 `kp-022` macroeconomics：定义 + 聚合数据说明（2 句）。
-- P23 `kp-023` microeconomics：定义句（individual parts: households/firms）。
-- P24 `kp-024` economic growth：定义句（increase in output）。
-- P25 `kp-025` GDP：定义句（total market value of final goods/services within borders）。
-- P26 `kp-026` business cycles：定义 + 变化维度（2 句）。
-- P27 `kp-027` full employment：定义句（jobs for all who want and can work）。
-- P28 `kp-028` unemployment rate：定义 + 统计口径（2 句）。
-- P29 `kp-029` inflation：定义句（average of all prices rising）。
-- P30 `kp-030` demand-pull inflation：定义 + "too much money chasing too few goods"（2 句）。
-- P31 `kp-031` cost-push inflation：定义 + 传导（2 句）。
-- P32 `kp-032` monetary policy：定义 + 对 activity/inflation 的影响（2 句）。
-- P33 `kp-033` fiscal policy：定义句（taxation and spending）。
-- P34 `kp-034` crowding out：定义句（government takes more from private sector → displaces private spending）。
-- P35 `kp-035` federal budget deficit：定义句（spends more than collects）。
-- P36 `kp-036` national debt：定义句（accumulated deficits）。
-- P37 `kp-037` demand：定义 + 价格-数量关系（2 句）。
-- P38 `kp-038` demand curve：定义句（graph of relationship）。
-- P39 `kp-039` supply：定义 + 价格-数量关系（2 句）。
-- P40 `kp-040` supply curve：定义句（graph）。
-- P41 `kp-041` equilibrium：两句（quantity demanded equals supplied → equilibrium）。
-- P42 `kp-042` surplus：三句（价格高于均衡 → 供大于求 → 价格下行），因果完整。
-- P43 `kp-043` market structure：定义 + 四类型枚举（2 句）。
-- P44 `kp-044` perfect competition：导语 + 四条特征（相邻 block 组，连续 span）。
-- P45 `kp-045` pure monopoly：定义 + 单一厂商 + barriers to entry（3 句）。
-- P46 `kp-046` monopolistic competition：导语 + 三条特征（block 组）。
-- P47 `kp-047` oligopoly：导语 + 两条特征（block 组）。
-- P48 `kp-048` global energy demand：三句（需求上升 → 压力 → 供需规律）。
-- P49 `kp-049` relationship management：导语 + 定义 + 组成（3 句）。
-- P50 `kp-050` strategic alliances：定义 + 趋势（2 句）。
+**文件 1：`kps.annotator-b.jsonl`**（你的 KP；一行一个 KP）
 
-> 合计 50 条；本包全部 KP 即上表。若第二标注者独立标注，不以此为 seed（KP span 必须独立标）。
+```json
+{"id":"b-kp-001","spans":[{"start":100,"end":180}],"section_key":"ch1-s1","concept_type":"concept","type_uncertain":false,"name":"<英文术语>","note":"<可选，你为何这样切>"}
+```
 
-### 1.2 负例（30+，明确“不是 KP”）
+- `id` 自起（`b-kp-001`…），**不要求与 A 对应**；`spans` 只允许 1 段；`section_key` 用 `chapter.txt` 所在 page id（`ch1-intro`/`ch1-s1`…/`ch1-key-terms`/`ch1-summary`）。
+- `concept_type` ∈ `{concept, term, formula, mechanism, procedure, example}`（§1.6）；**不确定就填 `concept` 且 `type_uncertain=true`**（该对不计入 κ 分母，但计入 raw agreement）。
+- 建议附 `evidence`（与你 span 相同的 `{file,start,end,quote,quote_sha256}`），便于复核；不强制。
 
-- N1 标题 "1.1 The Nature of Business"：标题是容器，不是可独立断言的概念+解释。
-- N2 导语 "Characteristics of perfect (pure) competition include:"：只有冒号引出，无解释；必须与列表项组成 span 才是 KP（见 P44）。
-- N3 Section 标题 "Factors of Production: The Building Blocks of Business"：标题，不是 KP。
-- N4 单独的列表项 "A large number of small firms are in the market."：碎片；必须与导语+其余特征合并（P44）。
-- N5 `Concept Check` 问题 "What are the five factors of production?"：练习问句，不是断言性知识。
-- N6 `Concept Check` 问题 "Explain the concepts of revenue, costs, and profit."：祈使句，非 KP。
-- N7 "Sources: … accessed May 29, 2017"：出处/URL 行，不是知识。
-- N8 图表 caption 整段（如 "Exhibit 1.3 Rescue boat … (Credit: …)"）：图片说明，作证据可以，作 KP 不行。
-- N9 表格行 "Ownership of Business | Businesses are privately owned … | Government owns …"：表格单元拼接，跨概念；作为证据 span 可以（见 B12），不单独成 KP。
-- N10 表格标题 "The Basic Economic Systems of the World"：表格标题，非 KP。
-- N11 案例段 "Team Rubicon: Disaster Relief…"（chapter intro）：案例叙事，不是概念定义；intro 不产 KP。
-- N12 "Take Sony, for example."：单独例子句，无概念定义；不能成 KP。
-- N13 "It may come as a surprise that not one of the world’s top cities is in the United States: …"：数据趣闻，不是概念。
-- N14 跨 section 合并（如把 "business" 句与 1.3 的 "economic system" 句拼成一个 span）：违反单 section。
-- N15 把整段 14 句（含 quality of life/risk/revenue/costs/profit/loss 多概念）整段作 1 个 KP：粒度过粗，一 KP 多概念。
-- N16 代词句 "This provided an incentive to supply more jackets at every price."：主语不独立，离开上文不可断言。
-- N17 "In other words, government spending is crowding out private spending."：重复句；定义已由前句给出，取定义句为宜（避免重复 KP）。
-- N18 "For example, in 2017, the top individual tax rate in France was 45 percent…"：示例数据，非概念。
-- N19 "The U.S. economy leans toward pure capitalism, but it uses government policies…"：国别描述，非概念定义（可作为 mixed economy 的证据/背景）。
-- N20 Key Terms 页的 "barriers to entry / Factors, such as technological or legal conditions…"：与正文重复；**若正文已有 KP，Key Terms 不再重复产 KP**（本包 Key Terms 不产 KP）。
-- N21 Key Terms 页的 term 块（只有术语，无定义）：单独术语不成 KP。
-- N22 Summary 页的 "1.1 The Nature of Business" 总结句：与正文重复，不重复产 KP。
-- N23 脚注编号粘连句（如 "…$438 billion.25 The U.S. government has run budget deficits…"）：句子边界含脚注标记；不要用该处做 span 起点/终点（本包避开）。
-- N24 参考文献/链接行 "https://www.stickergiant.com, accessed May 29, 2017"：URL 不是知识。
-- N25 整章 intro 的 "Learning Outcomes" 列表项：目标陈述（"How do businesses…?"），问句/目标，不是知识。
-- N26 "Ethics Activity" 场景文本：活动材料，不是概念解释。
-- N27 "Working the Net" 任务说明：操作指令，非 KP。
-- N28 "Critical Thinking Case" 案例问题：练习，非 KP。
-- N29 "Preparing for Tomorrow's Workplace Skills" 清单：技能清单，非概念解释。
-- N30 "Hot Links Address Book" 链接列表：链接集合，非 KP。
-- N31 数字/公式式句子 "GDP is …" 若只有缩写展开而无解释（本包取定义句，不是只取缩写行）：只取缩写行不成 KP。
-- N32 单个形容词/副词限定短语（如 "…purchased by typical urban consumers"）：从句碎片，非 KP。
-- N33 "I’m lovin’ it" 之类的标语引用（若出现在正文）：引语数据，非 KP。
-- N34 "Table 1.1 summarizes key factors of the world’s economic systems."：指表句，非概念解释（可作证据）。
-- N35 "See Exhibit 1.6."：指图句，非 KP。
-- N36 章末 "Key Terms" 标题：标题，非 KP。
+**文件 2：`pool-judgments.annotator-b.jsonl`**（候选池 60 对，一行一对）
 
-### 1.3 边界例（20+）与裁决
+```json
+{"pair_id":"pair-001","source":"<池内 source>","target":"<池内 target>","label":"edge","type":"contain","direction":"source->target","confidence":"high","rationale":"<引用断言句>","assertion_span":{"start":1000,"end":1080,"quote":"<逐字断言句>","quote_sha256":"<hex>"}}
+```
 
-- B1 段落含 6 句但只有前 2 句是定义：`kp-020` 只取 s1（定义），其余为展开/示例 → 允许截取句区间，**不要求整段**。
-- B2 段落含定义 + 排除性澄清（capital 与 money）：`kp-008` 只取定义句，排除句留给边界（若"capital 不含金钱"很重要，可另立命题级 KP，但本轮不做）。
-- B3 定义跨相邻 block（lead-in + 列表项）：`kp-044/046/047` 用 `blocks=[start,end]` 组 span；**连续 span 包含块间空行**，仍合规；不可跨 section。
-- B4 同一段内 2 个相关概念（inflation 与 purchasing power 同段）：拆为两个不重叠 KP（本包只取 inflation，purchasing power 未纳入 50 KP；若纳入必须另立 span，不可重叠）。
-- B5 一个概念在正文与 Key Terms 各出现一次：**取正文**（解释更完整、语境更强）；Key Terms 不进 KP，避免重复。裁决：C 级（Lead 前置规则）。
-- B6 图表 caption 内含 "Attribution: … CC-BY 4.0"：caption 可作**证据 span**（如"图 X 的来源"），但不作 KP；图许可信息写入 `SOURCE-LICENSE.md`。
-- B7 段落是"例子驱动"（Sony/StickerGiant/EY）：例子不单独成 KP；概念定义在别的段落。
-- B8 定义句在列表项中（如 "Many firms are in the market."）：单独列表项不做 KP；与导语组成 block 组才做（P44/P46/P47）。
-- B9 段落以 "Thus,"/"In other words," 开头：若只是复述前文，取前一定义句，不重复建 KP（N17）。
-- B10 定义句含括号内补充（如 "(the Fed)"）：括号内容属定义，span 可包含；不因括号拆 span。
-- B11 句界遇到缩写 "U.S."：本包句切脚本识别缩写；若人工标注，**不要把 "U.S." 后当句界**（B23）。
-- B12 表格行可作断言证据（如"四种经济体制对比"），但**不作为 KP**；若某边断言只存在表格里，置信降为 medium 并注明。
-- B13 跨页但同 section？本快照每页即一个 section；跨页必然跨 section → 禁止。
-- B14 过短段落（1 句且非定义，如 "The firm is the industry."）：作定义补句而非独立 KP（本包并入 `kp-045` 的相邻句）。
-- B15 过长段落（>3 句但同段围绕一个概念）：允许取 1–3 句核心，**优先定义 + 关键限定**。
-- B16 段落含问句（修辞问句）：问句不单独成 KP；若问句后有回答，取回答句。
-- B17 含引号的俗语（"too much money chasing too few goods"）：引语属解释，可纳入定义 span（`kp-030`）。
-- B18 含 em-dash 的插入语（"—the factors of production—"）：span 可包含，不因标点拆。
-- B19 数字/年份变化（数据句）：数据不单独成 KP；若需 KP，取概念句（例如 CPI 概念句可作 KP，本轮未纳入）。
-- B20 "相同概念不同措辞"（business vs for-profit business）：按术语定义选一个（`kp-001`），不建同义重复 KP；别名写 `name_zh`/描述里。
-- B21 定义句前有 "There are two types of inflation."：类型枚举句可作为子类型边的**断言证据**（edge-013），也可作为父概念 KP 的一部分；不要与子类型 KP 重叠。
-- B22 定义后紧跟 "For example," 示例：若示例在同一段，span 可含（示例是解释的一部分）；若示例在下一段，不跨段合并。
-- B23 脚注标记（"…billion.25 The U.S."）导致句切异常：标注时人工确认句界；避开以脚注标记结尾的切片。
-- B24 同一段出现两个并列定义（revenue/costs/profit）：若要建 KP，必须拆成互不重叠的句区间；本包未纳入（留作命题级变体候选）。
-- B25 图片文件本身：**不进语料包**；只保留 caption 文本；不因"图也是知识"而把图当 KP。
+- 逐行对应 `iaa/edge-candidate-pool.jsonl`：`label` ∈ `{edge, no_edge}`；`no_edge` 时 `type/direction/confidence/assertion_span` 留空。
+- **`direction` 相对池内列出的 `source`/`target` 顺序**：`source->target` 或 `target->source`；`both` 表示双向均有独立断言（见 §2.7）。
+- `label=edge` 时 `type` ∈ `{contain, reference, extend}`（§2），`confidence` ∈ `{high, medium, low}`，`rationale` 必须说明依据；`assertion_span` 必须给（无断言证据 → 应判 `no_edge` 或 `confidence=low` 并说明，但**不得**给 `high`）。
+- 池外若发现强边：单独追加一行 `pair_id: "extra-001"`，`source/target` 用 A 的 KP id，其余同上；报告会单列（池外 recall 不可估）。
 
-## 2. 语义边判定（C6）
+### 0.4 路径协议（唯一）
 
-**只允许** S0：`contain`（需 `contain_kind ∈ {structural,semantic}`，E_sem 要求 semantic）、`reference`、`extend`，且 `label=semantic` 才进 E_sem。
-**判定顺序**：① 能否找到**断言 span**（一句话明确断言关系）？不能 → 不建边（N3/N8）。② 端点是否真的是两个 KP（不是同 KP/不是跨级泛化）？③ 类型是否 S0 且方向可由断言 span 确定？④ 双端证据是否都能定位？
-**方向**：默认 `source→target`；`both` 必须双向证据并物化两条有向边。本 pilot **0 条 both**（见 B26）。
-**置信**：high = 断言 span 直接写明（"contains/refers to/is the result of"）；medium = 需一步推理或表格支撑；low = 仅暗示（本包不收录 low 边，留作第二标注者对照）。
+```
+artifacts/corpus/pilot/annotations/annotator-b/
+├── kps.annotator-b.jsonl            # 必交
+├── pool-judgments.annotator-b.jsonl # 必交
+└── adjudication-log.jsonl           # 裁决阶段由复核人维护（模板见 iaa/）
+```
 
-## 3. A/B/C 三级裁决
+- 起始模板：`artifacts/corpus/pilot/iaa/annotator-b/kps.annotator-b.template.jsonl` 与 `pool-judgments.annotator-b.template.jsonl`（复制后删掉 `_template` 行）。
+- 其它任何路径/文件名（旧版 `iaa/kps-second-annotator.jsonl`、`iaa/edges-second-annotator.jsonl`）**已废弃**，不再读取。
+
+---
+
+## 1. KP 判定（方法版，不含本语料答案）
+
+### 1.1 判定流程（按顺序做，任一步失败 → 不是 KP）
+
+1. **找概念**：这一步讲的是一个可命名的概念/术语/机制/步骤/公式吗？只有例子/数据/背景 → 不是 KP。
+2. **找断言句**：文本里有"X is / X refers to / X means / X is called / X is defined as"或用一句完整陈述给出 X 的实质吗？没有 → 不是 KP（标题、导语、练习、图注、URL、表格标题都不是）。
+3. **定边界**（§1.2）：取定义句；是否再纳入紧邻的**机制/解释句**（至多 2 句）？所选范围必须**连续**、**自洽**（描述里提到引语就必须在 span 内）。
+4. **守容器规则**：span 必须落在**一个 section** 内；与同一标注者的其它 KP **不重叠**；不跨到下一个概念。
+5. **过六问自检**（§1.7）：脱离上下文仍可断言？单一概念？引语在 span 内？块间空行包含在连续 span 内？可复核（写出 quote/offset）？
+
+> 第 3 步的"定义句 vs 定义句+机制句"规则见 §1.2；这是本版为修 P30 类矛盾新增的硬规则。
+
+### 1.2 粒度与边界规则（v1.1 新增/修订）
+
+**R1 默认粒度**：**1 个概念/术语/机制 + 1–3 句解释**；上限 1 段。超过 3 句仍只有 1 个概念时，优先取「定义句 + 直接解释它的 1–2 句」，不必整段照抄。
+
+**R2 定义句 vs 定义句+机制句**：
+- 纯定义（"X is Y"）→ 取定义句（1 句）。
+- 若紧邻 1–2 句解释 **X 如何运作/为何成立**（机制），可一并纳入；纳入后仍须是**同一概念**。
+- 机制句如果实际在讲**另一个概念**（例：定义句后突然讲"另一个要素/另一个指标"）→ 截断在定义句。
+
+**R3 引语自洽（修 P30 类矛盾）**：**若你打算在 `note` 或描述里引用某句原文，该引语必须落在你的 span 内。** 不允许写"取 2 句 + 引语"而引语实际在第 3 句之后；要么把 span 连续扩到引语，要么不引用该引语、只写 span 内内容。
+- 反面写法：`"取定义句 + 2 句机制（含 'too much money…' 引语）"` 但 span 只到第 2 句 → **禁止**。
+- 正确写法：`"span = 定义句 + 机制句 1–2（连续 3 句），引语在第 3 句内"` 或 `"span = 定义句（1 句），不引用 span 外句"`。
+
+**R4 连续 span 可以跨相邻 block（含空行）**：若一个概念的表达由"导语 + 其列表项/紧随段落"组成（例如"以下三类定义是……" + 三条列表），可以把 `start` 放在导语首、`end` 放在最后一条列表项末，**中间的空行与块边界算在 span 内**；仍然必须单 section、不重叠。
+
+**R5 不重叠/不嵌套**：同一标注者的 KP 之间不得重叠；嵌套留待 future（本轮不做）。
+
+**R6 同概念重复**：同一概念在正文与 Summary/Key Terms 各出现一次时，**优先取正文**（解释更完整）；不要为同一概念建两个 KP（会与 §N 重复定义负例冲突）。Summary/Key Terms 能否作证据见 §2.6。
+
+### 1.3 正例（32 条；**合成教学示例，非本语料**）
+
+> 每条给出"合成短文 → 判定"。所有引文均为虚构教学内容，与 pilot 源文件无关；只示范"什么算 KP/为什么切在这里"。
+
+- P1 海洋学："**潮汐**是海水在月球与太阳引力作用下产生的周期性涨落。大潮出现在朔望，小潮出现在上下弦。" → 是 KP：1 概念 + 2 句解释，连续，单段。
+- P2 天文学："**光年**是天文学中表示距离的单位，指光在真空中一年走过的距离。" → 是 KP：术语 + 定义 1 句。
+- P3 烹饪："**乳化**是让两种原本不相溶的液体稳定混合的过程。蛋黄中的卵磷脂充当乳化剂，把油滴包裹成微小颗粒。" → 是 KP：定义 + 1 句机制。
+- P4 编程："**哈希表**用哈希函数把键映射到桶，从而在平均 O(1) 时间内完成查找。冲突通常用链地址法或开放寻址处理。" → 是 KP：定义 + 机制，连续 2 句。
+- P5 地理："**季风**是由海陆热力差异引起的、随季节反向变化的大尺度风系。" → 是 KP：1 句定义。
+- P6 统计："**中位数**是把数据排序后位于中间位置的值；当样本量为偶数时取中间两个值的平均。" → 是 KP：定义 + 边界说明，同一概念。
+- P7 历史："**工业革命**指 18 世纪中后期起，机器生产逐步取代手工劳动、工厂制度兴起的社会经济转型。" → 是 KP。
+- P8 医学："**灭活疫苗**使用被杀死的病原体刺激免疫系统，因此不会造成感染，但通常需要多次接种。" → 是 KP：定义 + 1 句机制/限制。
+- P9 音乐："**五度圈**是按纯五度关系排列的十二个调的顺序图，常用于分析和声进行。" → 是 KP。
+- P10 气象："**露点**是空气在水汽含量不变的条件下冷却到饱和时的温度。" → 是 KP。
+- P11 海洋学："**盐度**指海水中溶解盐类的质量分数，通常用千分比表示。" → 是 KP（术语级定义）。
+- P12 天文："**视星等**是肉眼看到的天体亮度等级；数值越小表示越亮。" → 是 KP（定义 + 反直觉说明，同一概念）。
+- P13 编程："**递归**是函数直接或间接调用自身的求解方式。它必须有基线条件，否则会无限调用。" → 是 KP（定义 + 必要条件）。
+- P14 烹饪："**美拉德反应**是氨基酸与还原糖在加热时产生褐色物质和香气的化学反应。" → 是 KP。
+- P15 地理："**板块构造**认为岩石圈被分成若干板块，板块在软流圈上移动并相互作用。" → 是 KP。
+- P16 统计："**标准差**衡量数据偏离均值的平均程度，单位与原数据相同。" → 是 KP。
+- P17 历史："**城邦**是以一个城市为中心、连同周边乡村构成的政治共同体。" → 是 KP。
+- P18 医学："**抗生素耐药性**指细菌在抗生素压力下存活并繁殖的能力，常由滥用抗生素加速。" → 是 KP。
+- P19 音乐："**切分音**指重音落在弱拍或弱位上的节奏写法。" → 是 KP。
+- P20 气象："**锋面**是冷暖气团交界处的过渡带，常伴随云雨天气。" → 是 KP。
+- P21 海洋学："**洋流**是大尺度、相对稳定的海水流动；表层洋流主要受风驱动。" → 是 KP（定义 + 机制方向）。
+- P22 编程："**闭包**是能访问其定义时词法环境的函数。" → 是 KP（1 句定义）。
+- P23 烹饪："**发酵**是微生物分解有机物并产生新产物的过程；面包发酵产生二氧化碳使面团膨胀。" → 是 KP（定义 + 机制）。
+- P24 地理："**时区**是按经度划分、采用统一标准时间的区域。" → 是 KP。
+- P25 统计："**显著性水平**是在原假设为真时错误拒绝它的概率上限。" → 是 KP。
+- P26 历史："**行会**是中世纪城市中同一行业的手工业者组成的自治组织。" → 是 KP。
+- P27 医学："**安慰剂效应**是患者因期望而出现的症状改善，与治疗的真实药理作用无关。" → 是 KP。
+- P28 天文："**潮汐锁定**是自转周期与公转周期相同、因而总以同一面朝向行星的状态。" → 是 KP。
+- P29 编程："**死锁**是两个或多个线程互相等待对方释放资源而永久阻塞的状态。" → 是 KP。
+- P30 海洋学："**上升流**是深层富营养海水上升到表层的现象，常形成渔场。" → 是 KP（定义 + 结果，同一概念；注意这里"结果"仍解释该概念，不是另一概念）。
+- P31 气象："**逆温**是气温随高度升高而升高的异常层结，会抑制对流。" → 是 KP。
+- P32 统计："**置信区间**是依据样本给出的、以一定置信水平覆盖总体参数的区间。" → 是 KP。
+
+### 1.4 负例（32 条；不是 KP）
+
+- N1 章节标题："第三章 海洋环流" → 标题，不是断言。
+- N2 导语："下列三种因素会影响结果：" → 只有冒号引出，无解释；不能单独成 KP（若与列表组成连续 span 见 §1.2 R4）。
+- N3 单独列表项："第一，温度升高。" → 碎片；必须与导语/其余项组成 span 才是 KP。
+- N4 练习问句："洋流为什么会弯曲？" → 问句，不是知识断言。
+- N5 祈使句："请列出三种云。" → 指令，不是 KP。
+- N6 图注："图 3.2 全球洋流示意（来源：……）" → 图注/署名，非 KP（可作证据见 §2.6）。
+- N7 表格行："项目 | 温度 | 盐度" → 表格单元拼接，非 KP。
+- N8 表格标题："表 3.1 海水主要成分" → 标题，非 KP。
+- N9 出处行："来源：https://example.org，访问于 2020-01-01" → URL/出处，非知识。
+- N10 案例开场："小明第一次出海时遇到了风暴。" → 案例叙事，非概念。
+- N11 单独例子句："例如，地中海蒸发强烈。" → 例子句，无概念定义。
+- N12 代词句："这导致了更强的对流。" → 主语依赖上文，不能独立断言。
+- N13 重复句："换言之，盐度就是含盐量。" → 复述，取前面的定义句即可，不重复建 KP。
+- N14 数据句："2019 年该海域盐度为 3.8%。" → 单个数据，不是概念。
+- N15 跨 section 拼接（把第 1 节定义与第 2 节解释拼成一个 span）→ 违反单 section。
+- N16 整段多概念大段（一段里同时定义温度、盐度、密度）→ 粒度过粗；应拆成互不重叠的多 KP 或只取其一。
+- N17 Summary 页重复句：与正文重复，不重复建 KP（§1.2 R6）。
+- N18 Key Terms 页单独的术语行（只有术语无定义）→ 不是 KP。
+- N19 脚注/尾注行："1 见附录 A。" → 注释，不是知识。
+- N20 引用标语："‘水是生命之源’。" → 引语/口号，无解释。
+- N21 标题+冒号："洋流：概述" → 标题式，不是 KP。
+- N22 目录项："第一节 潮汐" → 目录，不是断言。
+- N23 只含缩写的行："SST 是重要的。" → 缩写未定义，不能独立断言。
+- N24 图表链接行："见彩色图版 3。" → 指图句，非 KP。
+- N25 本章目标列表："学完本章你将能够……" → 目标陈述，不是知识。
+- N26 活动任务："小组讨论：比较两种洋流。" → 活动指令，非 KP。
+- N27 参考文献条目："Smith, J. (2019). Ocean currents. Journal of…" → 文献条目，非知识。
+- N28 页眉/页脚："第 3 章 · 海洋环流 · 25" → 版面元素。
+- N29 只有一句的过渡段："接下来我们讨论密度。" → 过渡句，非概念。
+- N30 公式符号堆砌："ρ = m / V" 无解释 → 无定义的符号串（若"密度是质量与体积之比"成句则可以是 KP）。
+- N31 图表中的坐标轴标签："温度（°C）" → 标签，非 KP。
+- N32 "注：本图未按比例绘制。" → 图注免责，非知识。
+
+### 1.5 边界例（22 条；含裁决）
+
+- B1 段落含定义 + 2 句机制：纳入机制句（§1.2 R2）→ 是 KP；若机制句实际在解释另一个概念 → 截断。
+- B2 段落含定义 + 排除性澄清（"X 不包含 Y"）：定义句是核心；澄清句若帮助界定边界，可纳入；若引入新概念（Y）→ 截断或另立（不重叠）。
+- B3 定义跨相邻 block（导语 + 列表项）：允许连续 span（§1.2 R4）；跨 section 不允许。
+- B4 同段 2 个相关概念：拆为两个不重叠 span；若只能取一个，取本 section 主概念，另一个留给别的 KP 或不做。
+- B5 正文与 Key Terms 重复：取正文（§1.2 R6），Key Terms 不重复建 KP。
+- B6 图注含许可信息（"…CC BY 4.0"）：图注可作**证据 span**，不作 KP；许可信息进来源文档。
+- B7 例子驱动段（"例如某公司…"）：例子不单独成 KP；概念定义在别处。
+- B8 列表项本身是定义（"——大潮：……"）：与导语组成 block-group span 可成 KP；单个列表项不单独成 KP。
+- B9 以"因此/换言之"开头的复述句：取前一定义，不重复（§1.2 R6）。
+- B10 定义句含括号补充（缩写/别名）：括号属定义，span 可含；不因括号拆 span。
+- B11 句界遇到缩写（U.S./e.g./Inc.）：句切工具可能误切；**人工确认句界**，不要把缩写后当句界。
+- B12 表格可作证据（§2.6）：表格行可支撑"类型枚举"类断言，但表格本身不作 KP。
+- B13 跨页但同 section：本快照一页即一个 section；跨页 = 跨 section → 禁止。
+- B14 过短句（"该值称为阈值。"）：作定义补句，不单独成 KP。
+- B15 过长段（>3 句同一概念）：取定义 + 直接解释的 1–2 句（§1.2 R1/R2）。
+- B16 修辞问句后紧跟回答：取回答句成 KP，问句不单独成 KP。
+- B17 含引号俗语（"水往低处流"）：引语属解释，可纳入定义 span；引语必须在 span 内（§1.2 R3）。
+- B18 em-dash 插入语：span 可包含，不因标点拆。
+- B19 公式：若"定义句 + 符号说明"成段 → 可为 formula 类型 KP；只有符号不算。
+- B20 同义术语（"盐度/含盐量"）：按术语定义选一个主术语；别名写 note，不重复 KP。
+- B21 类型枚举句（"有两种：X 与 Y。"）：可作父概念 KP 的一部分，也可作子类型边的断言证据（§2.5）；不要与子类型 KP 重叠。
+- B22 定义后另起一段举例：例段不并入定义 span（跨段且引入例子），除非例段仍在同一概念内且连续（谨慎，默认不并）。
+
+### 1.6 concept_type 判定表（v1.1 新增）
+
+| 类型 | 判据（首选问题） | 典型例子 | 不该用它的情形 |
+|---|---|---|---|
+| `concept` | 抽象概念/范畴/分类，回答"它是什么" | 潮汐、通胀、市场结构 | 纯名称缩写（→ term）、步骤（→ procedure） |
+| `term` | 名称/术语/单位（可替换同义词、无机制） | 光年、露点、GDP | 有因果/机制解释（→ concept/mechanism） |
+| `mechanism` | 主要讲"如何运作/因果链/过程" | 乳化、美拉德反应、需求拉动 | 只给定义（→ concept） |
+| `procedure` | 可执行步骤/操作流程 | 滴定步骤、标注流程 | 只解释概念（→ concept） |
+| `formula` | 数学表达 + 符号说明 | 密度 ρ=m/V、复利公式 | 只给结论文字（→ concept） |
+| `example` | 以具体实例为主、不是概念定义 | "例如地中海……" | 例子只是解释的一部分（归主概念类型） |
+
+**判定顺序（避免分歧）**：① 有公式表达 → `formula`；② 提供可执行步骤 → `procedure`；③ 主要解释机制/因果 → `mechanism`；④ 是名称/单位/缩写且定义极短 → `term`；⑤ 以具体实例为主 → `example`；⑥ 其余 → `concept`。
+**不确定**：填 `concept` + `type_uncertain: true`；该对**不计入 κ 分母**，但计入 raw agreement（报告同时给两者，见 §6）。
+
+**试标 10 项（培训用，含答案；不计入 IAA）**：
+
+- CT1 "**光年**是天文学中表示距离的单位。" → `term`
+- CT2 "**乳化**是让两种不相溶液体稳定混合的过程；卵磷脂把油滴包裹成微粒。" → `mechanism`
+- CT3 "**哈希表**用哈希函数把键映射到桶，平均 O(1) 完成查找。" → `mechanism`（按顺序③"主要解释机制"）
+- CT4 "**滴定**的步骤：润洗→装液→记录初读数→滴加→记录终读数。" → `procedure`
+- CT5 "**密度** ρ 等于质量 m 除以体积 V：ρ = m / V。" → `formula`
+- CT6 "**中位数**是排序后位于中间的值。" → `concept`（统计概念，不是名称缩写）
+- CT7 "**例如**，2019 年该海域盐度升至 3.8%。" → `example`
+- CT8 "**季风**是由海陆热力差异引起的季节反向风系。" → `mechanism`（因果）
+- CT9 "**GDP** 指国内生产总值。" → `term`（缩写/名称）
+- CT10 "**板块构造**认为岩石圈分为若干板块并在软流圈上运动。" → `mechanism`（主要解释机制；若不确定请标 `type_uncertain`）
+
+### 1.7 KP 六问自检
+
+1. 能脱离上下文独立断言吗？ 2. 只有一个概念吗？ 3. 引语都在 span 内吗（§1.2 R3）？ 4. 单 section、不重叠吗？ 5. 连续 span 是否包含块间空行（若是 block-group）？ 6. `note` 是否写清取舍理由？
+
+---
+
+## 2. S0 语义边操作定义（v1.1 新增）
+
+> 只允许 S0 三类型：`contain` / `reference` / `extend`。**每条边必须能指出"断言 span"**（§2.5），并且 `label=semantic`（本 pilot 全部为语义边）。结构/句法相邻不是边。
+
+### 2.0 三类型总表
+
+| 类型 | 一句话判据 | 方向 | 典型断言动词/句式 | 不应标成它 |
+|---|---|---|---|---|
+| `contain` | **整体-部分 / 一般-特殊（分类学）**：A 是 B 的组成部分或子类型/实例 | 一般→特殊、整体→部分（`source`=整体/一般） | "A is a type of B" / "B includes A" / "B 分为 A1、A2" / "A is one of the …" | 度量/表示（→reference）、因果（→extend）、并列对比（→no_edge） |
+| `reference` | **度量-表示 / 指涉 / 影响-关联**：A 是 B 的表示、度量、指标，或 A 的论述直接指涉 B；两者**无层级、无因果派生** | 指涉者→被指涉者（A 提到 B，则 A→B） | "A is a graph/measure/index of B" / "A refers to B" / "A affects B"（仅关联无因果机制时） | 整体-部分（→contain）、因果派生（→extend） |
+| `extend` | **因果-结果 / 派生-扩展**：A 导致/产生 B，或 B 由 A 派生/扩展而来（含"政策→结果"、"存量-流量累积"） | 因→果、基础→派生 | "A causes/leads to/produces/results in B" / "B is the accumulated total of A" | 仅度量/表示（→reference）、分类（→contain） |
+
+### 2.1 `contain`（整体-部分 / 子类型）操作定义
+
+**判据（同时满足）**：① 存在分类/组成断言（枚举、is-a、one of、分为）；② 两个端点处于不同层级（整体 vs 部分；一般 vs 特殊）；③ 断言句可定位。
+**方向**：`source` = 整体/一般；`target` = 部分/特殊。若原文只给出"部分属于整体"的语序，仍按此方向归一化记录。
+**正例（合成）**：
+
+- T-CONTAIN-P1 "潮汐分为大潮与小潮。" → 潮汐→大潮（子类型）。
+- T-CONTAIN-P2 "季风系统包括东亚季风与南亚季风。" → 季风系统→东亚季风。
+- T-CONTAIN-P3 "生产要素包括土地、劳动、资本与企业家才能。" → 生产要素→土地（整体-部分）。
+- T-CONTAIN-P4 "市场结构分为完全竞争、垄断、垄断竞争与寡头。" → 市场结构→寡头。
+- T-CONTAIN-P5 "疫苗可分为灭活疫苗、减毒活疫苗与 mRNA 疫苗。" → 疫苗→灭活疫苗。
+- T-CONTAIN-P6 "一个函数由参数、函数体与返回值组成。" → 函数→参数（组成）。
+
+**负例（不应标 contain）**：
+
+- T-CONTAIN-N1 "盐度影响密度。" → 影响，不是层级。
+- T-CONTAIN-N2 "潮汐与洋流都是海水运动。" → 并列/共同上位未枚举，不能凭空造整体。
+- T-CONTAIN-N3 "露点是湿度的度量。" → 度量-表示（→reference）。
+- T-CONTAIN-N4 "加息导致通胀下降。" → 因果（→extend）。
+- T-CONTAIN-N5 "第一章讨论潮汐，第二章讨论洋流。" → 章节结构，不是语义包含。
+- T-CONTAIN-N6 "A 和 B 出现在同一段。" → 共现不是包含。
+
+**边界例（含裁决）**：
+
+- T-CONTAIN-B1 "企业家才能是生产要素之一。" → contain（子类型/组成），但端点若是"企业家（人）"而非"企业家才能（职能）"则层级不同 → **no_edge 或改端点**；以断言名词为准。
+- T-CONTAIN-B2 "股票市场是资本市场的一部分。" → contain，方向 资本市场→股票市场。
+- T-CONTAIN-B3 "该指标由三个分项加权得到。" → 组成但属**度量构造**：若三分项是独立概念 → contain（组成）；若只是计算式 → 不建边。
+- T-CONTAIN-B4 "A 包含 B 的定义"（元文本）→ 不是语义包含，no_edge。
+
+### 2.2 `reference`（度量-表示 / 指涉 / 影响-关联）操作定义
+
+**判据（同时满足）**：① 断言句表明 A **表示/度量/指涉** B，或 A 与 B 存在**非因果的关联/影响**；② 不存在整体-部分或因果派生；③ 断言句可定位。
+**方向**：指涉者/度量者 → 被指涉/被度量者；"A 影响 B"（无因果机制说明）→ A→B。
+**正例**：
+
+- T-REFERENCE-P1 "需求曲线是需求关系的图形表示。" → 需求曲线→需求。
+- T-REFERENCE-P2 "CPI 衡量一篮子消费品价格的变化。" → CPI→价格水平（度量）。
+- T-REFERENCE-P3 "露点反映空气湿度。" → 露点→湿度。
+- T-REFERENCE-P4 "这一指标与失业率高度相关。" → 指标→失业率（关联；若明确因果则改 extend）。
+- T-REFERENCE-P5 "收入水平影响消费支出。"（无机制说明）→ 收入→消费支出（关联）。
+- T-REFERENCE-P6 "地图上的等高线表示海拔。" → 等高线→海拔（表示）。
+
+**负例**：
+
+- T-REFERENCE-N1 "潮汐分为大潮与小潮。" → 分类（→contain）。
+- T-REFERENCE-N2 "加息导致通胀下降。" → 因果（→extend）。
+- T-REFERENCE-N3 "A 与 B 是同类概念。" → 并列，不是指涉。
+- T-REFERENCE-N4 "A 出现在 B 之前。" → 顺序，不是指涉。
+- T-REFERENCE-N5 "A 和 B 都重要。" → 共现评价，不是边。
+- T-REFERENCE-N6 "本章后面会讲 B。" → 教材结构指路，不是语义 reference。
+
+**边界例**：
+
+- T-REFERENCE-B1 "A 是 B 的代理指标。" → reference；若 B 是 A 的组成部分则 contain。
+- T-REFERENCE-B2 "A 会影响 B，并通过 B 影响 C。" → A→B 与 B→C 各一条（按是否有因果机制定 reference/extend）。
+- T-REFERENCE-B3 "A 与 B 互为镜像。" → 若表示-被表示 → reference；若只是相似 → no_edge。
+- T-REFERENCE-B4 "A 指 A 的上一级概念" → 看断言：is-a → contain；is-measure → reference。
+
+### 2.3 `extend`（因果-结果 / 派生-扩展）操作定义
+
+**判据（同时满足）**：① 断言句表明 A **导致/产生/促成** B，或 B **由 A 派生/累积/扩展**而来；② 不是单纯分类或度量；③ 断言句可定位。
+**方向**：因→果、基础→派生。
+**正例**：
+
+- T-EXTEND-P1 "温室气体增加导致全球升温。" → 温室气体→升温。
+- T-EXTEND-P2 "政府支出超过税收会形成预算赤字。" → 支出超过税收→赤字。
+- T-EXTEND-P3 "历年赤字累积成国家债务。" → 赤字→债务。
+- T-EXTEND-P4 "技术应用可以刺激经济增长。" → 技术→增长。
+- T-EXTEND-P5 "供给过剩推动价格下行。" → 过剩→价格下行。
+- T-EXTEND-P6 "过度使用抗生素加速耐药性。" → 滥用→耐药性。
+
+**负例**：
+
+- T-EXTEND-N1 "A 是 B 的一种。" → contain。
+- T-EXTEND-N2 "A 衡量 B。" → reference。
+- T-EXTEND-N3 "A 与 B 同时出现。" → 共现不是因果。
+- T-EXTEND-N4 "A 在 B 之后发生。" → 时序不等于因果（除非断言"因此/导致"）。
+- T-EXTEND-N5 "A 是 B 的别名。" → 同义，不建边。
+- T-EXTEND-N6 "A 与 B 都是宏观目标。" → 并列。
+
+**边界例**：
+
+- T-EXTEND-B1 "A 与 B 相关。" → 仅关联无机制：reference（低置信）/ no_edge；不得标 extend。
+- T-EXTEND-B2 "A 增加，B 随之增加。" 有伴随变化但无因果词 → reference（medium）或 no_edge；有"推动/导致" → extend。
+- T-EXTEND-B3 "A 是 B 的结果之一。" → extend，但需确认 B 不是 A 的组成。
+- T-EXTEND-B4 "A 先于 B，且 B 由 A 派生。" → extend（A→B），不以时间先后决定方向。
+
+### 2.4 类型判别决策树（按顺序，命中即停）
+
+1. 断言是"分类/组成/枚举/is-a"？→ **contain**（整体→部分）。
+2. 断言是"导致/产生/累积/派生/推动"？→ **extend**（因→果）。
+3. 断言是"表示/度量/反映/指涉/相关联（无机制）"？→ **reference**（指涉者→被指涉者）。
+4. 只有并列/共现/时序/相似 → **no_edge**。
+5. 需要**两步以上**推理才能得到关系 → **no_edge**（默认不收）。
+
+### 2.5 断言 span 最低证据规则
+
+- **high**：`assertion_span` 是**一句直接断言**，句中出现关系词（is a type of / includes / causes / results in / is a measure of / refers to），无需推理。
+- **medium**：允许**一步推理**（断言句给出两个事实、需一次蕴含），或断言来自表格（§2.6）。`rationale` 必须写明"一步推理"依据。
+- **low**：仅作待裁决候选，不进入正式 E_sem 统计（本轮建议 low 直接判 no_edge）。
+- **禁止**：两步及以上推理、仅共现（co-mention）、仅主题相关 → 一律 `no_edge`。
+- **没有断言 span 就没有边**（`assertion_span` 的 `quote` 必须逐字）。
+
+### 2.6 证据来源范围（表格 / Summary / Key Terms）
+
+| 来源 | 可否作 `assertion_span` | 限制 |
+|---|---|---|
+| 正文段落/列表句 | **可以（默认）** | 首选；high 仅限直接断言句 |
+| 表格（table row / 表头） | **仅作辅助断言** | 只用于分类枚举类 contain；置信 ≤ medium；rationale 注明"表格 X 行"；表格不作 KP |
+| Summary of Learning Outcomes | **仅作 corroboration（佐证）** | 不得作为唯一断言 span；主断言须来自正文；正文无断言 → no_edge |
+| Key Terms（术语+定义） | **不作 edge 断言**（避免循环/重复） | 可用于核对术语，边的断言必须来自正文 |
+| 图注 / 出处 / 目录 | **不可以** | 非断言性内容 |
+
+### 2.7 方向规则（含反向端点对与 `both`）
+
+- 默认 `direction = source->target`；`source`/`target` 按 §2.0 的类型方向规则填（不是按句子里谁先出现）。
+- **候选池中的反向端点对**（池内列 `source=A,target=B`，但你判断真正方向是 B→A）：
+  - B→A 成立 → `label: "edge"`, `direction: "target->source"`；**不要**因为方向反了就填 `no_edge`（否则方向错误被吞）；
+  - 两个方向都不成立 → `no_edge`；
+  - 两个方向都有独立断言 → `direction: "both"`，`rationale` 分别引用两条断言；IAA 统计时 `both` 物化为两条有向 tuple。
+- **反向负例**：池内若出现"反向端点对"（例如 A 认为只有 X→Y，Y→X 不成立），你判 `no_edge`；报告主指标是**有向**一致率（§6），无向 legacy 仅作对照。
+
+### 2.8 置信三档与边自检
+
+- `high`：直接断言句；`medium`：一步推理/表格佐证；`low`：仅待裁决（默认 no_edge）。
+- 边六问：① 类型判据是哪条？② 方向按 §2.7 对吗？③ 断言 span 是哪一句（能逐字引用）？④ 是否只有共现？⑤ 需要几步推理？⑥ 端点是否同 section 且都是 KP？
+
+---
+
+## 3. 候选池标注流程（B）
+
+1. 打开 `artifacts/corpus/pilot/iaa/edge-candidate-pool.jsonl`（60 对，无标签；含 A 正例对 + A 负例对 + 同 section 干扰对；**不含任何类型/方向答案**）。
+2. 逐对用 `chapter.txt` 找**断言句**；按 §2 判 `no_edge` / `edge(type,direction,confidence,rationale,assertion_span)`。
+3. 反向端点对按 §2.7 记 `direction: "target->source"`；池外强边用 `pair_id: "extra-*"` 追加。
+4. 每行填 `pair_id/source/target` 与判定；`source/target` 原样照抄池内字段（不要交换字段顺序，方向只写在 `direction`）。
+5. 完成后跑 `python scripts/corpus/iaa_runner.py report ...`；若报 `missing_judgments` 或 `direction_reversals`，逐条核对（缺失 = 漏标；反转 = 方向错误或需裁决）。
+
+---
+
+## 4. A/B/C 裁决与抽检
 
 | 级 | 谁裁 | 适用 |
 |---|---|---|
-| **A** | 标注者自决 | 手册已覆盖（正/负/边界例）；句界明确；类型/方向由断言 span 直接确定 |
-| **B** | 复核人（第二标注者或资深标注者） | 两个合理 span/类型的取舍；跨段上下文；图表证据；置信档位 |
-| **C** | Lead 终裁 | 规则冲突/手册未覆盖/许可或 Tier 疑问/S0 类型边界；C 级裁决必须写入 `iaa/adjudication-log.template.jsonl` 并回写手册（改手册则重标受影响样本） |
+| **A** | 标注者自决 | 手册已覆盖（正/负/边界例）；类型/方向由直接断言决定 |
+| **B** | 复核人（资深标注者） | 两个合理 span/类型的取舍；一步推理是否够；表格/Summary 佐证；medium 档位 |
+| **C** | Lead 终裁 | 规则冲突/手册未覆盖/许可或 Tier 疑问/S0 类型边界；C 级必须写裁决日志并回写手册 |
 
-**裁决记录字段**：`item_id / level(A|B|C) / question / options / decision / rationale / reviewer / date / affected_items`。
-**抽检**：C8 要求 10% 抽检；抽检发现系统性错误 → 扩大复核并重标。
+- 裁决记录模板：`iaa/adjudication-log.template.jsonl`（字段 `item_id/level/question/options/decision/rationale/reviewer/date/affected_items`）。
+- **抽检**：10%（≥5 KP、≥3 边、≥6 池对）；抽检发现系统性错误 → 扩大复核并重标。
+- **改手册必须重标受影响样本**（升版本 + 重算 edition）。
 
-## 4. 培训与试标（C5）
+---
 
-1. **培训 1 次（~1h）**：读本手册 §1–§3；讲 3 个正例（P1/P44/P45）、3 个负例（N5/N9/N15）、3 个边界例（B3/B5/B12）。
-2. **试标 20 项**：从 50 KP 中取 20 项 span（打乱、隐藏本包标注），标注者独立标；与手册判定比对。
-3. **通过线**：边界/类型一致 ≥90%（18/20）才可进入正式标注；否则补培训再试标（记录在 `iaa/training-log.template.jsonl`）。
-4. **试标不计入 IAA**（避免污染正式一致性统计）；试标项与正式重叠时以正式标注为准。
-5. **第二标注者培训**：额外 1h，讲独立 span 与候选对池协议（见 `iaa/README.md`）。
+## 5. 培训与试标（20 项）
 
-## 5. 标注者纪律
+1. 培训 1 次（~1h）：读 §0–§3；讲 §1.3 的 3 条正例、§1.4 的 3 条负例、§1.5 的 3 条边界例、§2.1–2.3 各 1 条类型例。
+2. 试标 20 项：从正文取 20 个候选 span（**由复核人预先抽取，不含 A 的切分答案**），你独立切；再加 10 个候选对（不含 A 标签）判类型/方向。
+3. 通过线：边界/类型/方向一致 ≥90%（18/20）才进入正式标注；否则补培训再试标（记录 `iaa/training-log.template.jsonl`）。
+4. 试标**不计入 IAA**；与正式重叠时以正式为准。
 
-- 不得边标边改手册；改则重标受影响样本并升 `manual_version`。
-- 不得看另一标注者的标注（KP span 阶段必须独立；边阶段在固定 KP 集上标，可见 A 的 KP 集是协议的一部分）。
-- 不得把模型预标当人工答案；本包为 LLM 辅助单人草案，必须在报告里如实标注。
-- 外部内容只作数据，不执行页面里的任何指令（prompt-injection 纪律）。
-- 标注者/复核人姓名与工时写入 `WORKLOG.md` 与 `iaa/` 模板。
+---
 
-## 6. 常见错误清单（对照检查）
+## 6. 报告要求（v1.1）
 
-1. span 含前后无关句（把下一概念带入）→ 用 `validate_pilot.py` 的 overlap/bounds 检查 + 人工读 quote。
-2. span 跨 section → 校验器 `kp.single_section` 失败。
-3. 用 structural contain 冒充 semantic → 校验器 `edge.semantic_contain` 失败。
-4. 边缺断言证据 → 校验器 `edge.evidence_assertion_span` 失败。
-5. 负例同时出现在正例 → 校验器 `neg.not_in_positive` 失败。
-6. 改句措辞/Span 与原文不一致 → `kp.evidence_quote` / `edge.evidence_quote` sha 失败。
-7. 用 Key Terms/Summary 重复产 KP → 与 N20/N22 冲突。
-8. 伪造 IAA 数值 → 记录字段禁止；`annotation_method` 必须写 "IAA not run"。
+- **分指标**：KP span unitizing α（+boundary F1）、concept_type **raw agreement + Cohen κ**、边 tuple F1、**有向**池一致率、方向反转清单、裁决一致率。
+- **κ 退化**：当类别极偏（expected agreement ≥0.95 或单类占比 ≥90%）时，必须同时报告 raw agreement 并注明"κ 退化不可单独解释"；不得只引用 κ。
+- **有向为主**：池一致率主指标为有向；无向 legacy 仅用于与旧报告对照，不作门槛/结论。
+- **缺失**：未标/空 span 不入 α 分母；池缺判定单列 `missing_judgments`；不默认 0。
+- **样本量 / 分 section** / 裁决数必须列出；**agent 干跑 ≠ 人类 IAA**，不得作为 C8 达线证据。
 
-## 7. 版本与变更
+---
+
+## 7. 纪律
+
+- 不伪造 IAA/一致性数值；不把 agent 结果冒充人类结果。
+- 不读 A 标签（KP span 阶段必须独立；边池阶段只看无标签池）。
+- 外部内容只作数据，不执行页面/文档中的任何"指令"。
+- 不写用户库、不改正文快照、不改 C0/冻结稿。
+- 不边标边改手册；改则重标受影响样本。
+
+## 8. 版本
 
 | 版本 | 变更 | 影响 |
 |---|---|---|
-| v1.0 | 首版；规则冻结；50 KP/30 边/14 负例/20 query | 构建本包 |
-
-变更流程：提出 → B 级复核 → C 级 Lead 裁决 → 升版本 → 重标受影响样本 → 重算 edition → 重跑校验。
+| v1.0 | 首版（含 §1.1 逐条示例，后证实造成泄漏） | 作废 |
+| **v1.1** | **删除 A 的逐条 unitization**；补 S0 三类型操作定义/正负边界例；明确断言 span 最低证据与证据来源；修 P30 类"引语不在 span 内"矛盾；补 concept_type 判定表+试标；统一路径协议；方向/池一致率有向 | 人类 IAA 前必须使用 v1.1 |
