@@ -76,7 +76,7 @@
 
 ## 3. C0a 待定（SE 校核）
 
-- **URL 全量核验**：核心证据已核（HTTP 200+标题）；补充 pending 需验证或删除，不冒充；产 `C0-URL-VERIFY.json`。
+- **URL 核验（核心证据政策）**：核心证据每 C 项 ≥2 条 HTTP 200+标题；`C0-URL-VERIFY.json` 保留 30 PASS / 5 FAIL / 3 BLOCKED；8 个失败/阻断项按 `C0-URL-DISPOSITION.md` 删除或降级为“未核验背景”，**不得冒充 200**；不再要求“提案中每个 URL 都 200”（反爬环境不可控）。
 - **GATE-RET 可执行契约**：合并 A 三层/B 命令，冻结唯一脚本/产物/JSON sha/exit；graph 阈值 soft 直至 pilot。
 - **unitizing α 实现**：脚本/成熟库 + 单测；INCEpTION 导出 UTF-8 offset 后跑，报告 α/observed/expected/缺失。
 - **标注 schema/工具状态图**：ER（Concept/KP/Relation/EvidenceSpan/Annotation/Curation/Quality）；状态 `draft/annotating/review/conflict/adjudicated/frozen`；`PARSE_OK`。

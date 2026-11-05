@@ -1171,6 +1171,63 @@ erDiagram
 
 ---
 
+### 1.18 C0 增量（ER-12 草案：来源/许可/概念/KP/关系/证据/标注/裁决/金标准/质量）
+
+```mermaid
+erDiagram
+    SOURCE_DOCUMENT ||--o{ EVIDENCE_SPAN : contains
+    SOURCE_DOCUMENT ||--o{ LICENSE : governed_by
+    CONCEPT ||--o{ KNOWLEDGE_POINT : realizes
+    KNOWLEDGE_POINT ||--o{ ANNOTATION : annotated
+    ANNOTATION ||--o{ EVIDENCE_SPAN : cites
+    KNOWLEDGE_POINT ||--o{ RELATION : source
+    KNOWLEDGE_POINT ||--o{ RELATION : target
+    ANNOTATION ||--o{ ADJUDICATION : resolved_by
+    GOLDEN_ITEM ||--o{ KNOWLEDGE_POINT : expects
+    QUALITY_REPORT ||--o{ ANNOTATION : measures
+    SOURCE_DOCUMENT { string source_id PK
+        string license_id
+        string sha256
+        bool redistributable
+        bool pii }
+    KNOWLEDGE_POINT { string kp_id PK
+        string concept_id
+        string granularity
+        string range
+        string edition }
+    RELATION { string relation_id PK
+        string source_kp
+        string target_kp
+        string relation_type
+        string direction
+        string evidence_span
+        float confidence }
+    EVIDENCE_SPAN { string span_id PK
+        string source_id
+        int line_start
+        int line_end
+        string quote_sha256 }
+    ANNOTATION { string annotation_id PK
+        string kp_id
+        string annotator
+        string status
+        string evidence_span }
+    ADJUDICATION { string adjudication_id PK
+        string conflict_id
+        string adjudicator
+        string decision }
+    GOLDEN_ITEM { string item_id PK
+        string query
+        string query_type
+        string expected_refs }
+    QUALITY_REPORT { string report_id PK
+        string kappa
+        float agreement
+        int sample_size }
+```
+
+---
+
 ## 2. DFD v0 草案 —— 「草案-待 S9a 裁决（存储段与 S6a 联签）」
 
 ### 2.1 设计立场
@@ -1714,6 +1771,33 @@ flowchart LR
 
 ---
 
+
+> **C0a 草案（待 A/B/裁决输入）**：pilot 建议 1 章 / 50 KP / 30 边 / 双人标注 / IAA κ≥0.6（目标 0.7）、抽检 20%；来源许可逐项登记、不可再分发不入发布资产；标注只写隔离副本/独立 corpus 仓，不写用户 sidecar；S10 仍只 propose_write，人工确认后走 curation writer，edition 变化触发 0.5 分型 GATE-RET 重跑（graph 只有 semantic_edges>0 才评估）。
+
+### 2.17 C0 增量（DF-12 草案：来源→许可→标注→双人复核/IAA→裁决→金标准→评测→S10→0.5）
+
+```mermaid
+flowchart LR
+    SRC[("来源（教材/公开语料；只读）")]
+    LIC["许可/隐私检查（可再分发/PII）"]
+    ISO[("隔离副本（不写用户 sidecar）")]
+    ANN["标注（双人独立；KP/关系/证据 span）"]
+    IAA["IAA（Cohen/Fleiss κ）"]
+    ADJ["冲突裁决"]
+    GOLD[("golden（edition-pinned；dev/test 隔离）")]
+    EVAL["评测（GATE-RET 分型；消融/人判）"]
+    PROP["S10 agent 提案（propose_write）"]
+    HUMAN["人工确认"]
+    CUR["S10 curation（产品 writer；backup/apply/undo）"]
+    ED[("edition")]
+    RE[("0.5 重跑 GATE-RET")]
+    SRC --> LIC --> ISO --> ANN --> IAA --> ADJ --> GOLD --> EVAL
+    EVAL --> PROP --> HUMAN --> CUR --> ED --> RE
+    ANN -- 失败/不可分发 --> LIC
+```
+
+---
+
 ## 3. 状态图 v0 草案 —— 「草案-待 S5a 裁决」
 
 ### 3.1 设计立场
@@ -2225,6 +2309,25 @@ stateDiagram-v2
         Merged --> Applied : APPLY
         Rejected --> [*]
         RolledBack --> [*]
+    }
+```
+
+---
+
+### 3.15 C0 增量（ST-12 草案：标注工具/批次生命周期）
+
+```mermaid
+stateDiagram-v2
+    state AnnotationBatch {
+        [*] --> Draft
+        Draft --> Annotating : START
+        Annotating --> Review : SUBMIT
+        Review --> Conflict : IAA_LOW_OR_DISAGREE
+        Review --> Adjudicated : IAA_OK
+        Conflict --> Adjudicated : ADJUDICATE
+        Adjudicated --> Frozen : FREEZE
+        Frozen --> [*]
+        Annotating --> Draft : WITHDRAW
     }
 ```
 
