@@ -23,6 +23,9 @@
       button.primary { background: #1f6feb; border-color: #1f6feb; color: #fff; }
       button.danger { color: #ff7b72; }
       .panel { margin-top: 8px; width: 360px; max-width: calc(100vw - 36px); background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.45); display: none; }
+      .exportbox { margin-top: 8px; width: 420px; max-width: calc(100vw - 36px); background: #0d1117; border: 1px solid #30363d; border-radius: 10px; padding: 12px; box-shadow: 0 8px 28px rgba(0,0,0,.45); display: none; }
+      .exportbox.open { display: block; }
+      .exportbox textarea { min-height: 140px; font-family: ui-monospace, Consolas, monospace; font-size: 11px; }
       .panel.open { display: block; }
       .meta { font-size: 11px; color: #8b949e; word-break: break-all; margin-bottom: 8px; }
       label { display: block; font-size: 12px; color: #adbac7; margin: 8px 0 4px; }
@@ -42,6 +45,15 @@
         <button id="toggle" class="primary">开始点选</button>
         <button id="export">导出 JSONL</button>
         <button id="close" title="关闭">×</button>
+      </div>
+      <div class="exportbox" id="exportbox">
+        <div class="meta">导出内容（可全选复制；若下载无反应就用复制）</div>
+        <textarea id="exporttext" readonly></textarea>
+        <div class="row">
+          <button id="copyexport" class="primary">复制到剪贴板</button>
+          <button id="downloadexport">下载</button>
+          <button id="closeexport">关闭</button>
+        </div>
       </div>
       <div class="panel" id="panel">
         <div class="meta" id="meta"></div>
@@ -106,7 +118,7 @@
   function beginCapture(e) {
     if (!state.active) return;
     const el = e.target;
-    if (!el || host.contains(el)) return;
+    if (!el || e.composedPath().includes(host)) return;
     e.preventDefault();
     e.stopPropagation();
     state.pending = { el, selector: selectorOf(el), text: (el.innerText || el.textContent || '').trim().slice(0, 500), rect: el.getBoundingClientRect().toJSON(), url: location.href };
@@ -137,14 +149,39 @@
     showOutline(null);
     renderList();
   }
-  function exportJsonl() {
-    const body = state.items.map((x) => JSON.stringify(x)).join('\n') + (state.items.length ? '\n' : '');
+  function exportBody() {
+    return state.items.map((x) => JSON.stringify(x)).join('\n') + (state.items.length ? '\n' : '');
+  }
+  function showExport() {
+    $('#exporttext').value = exportBody() || '# no annotations yet\n';
+    $('#exportbox').classList.add('open');
+    $('#exporttext').focus();
+    $('#exporttext').select();
+  }
+  function downloadExport() {
+    const body = exportBody();
     const blob = new Blob([body], { type: 'application/x-ndjson' });
     const a = document.createElement('a');
     a.href = URL.createObjectURL(blob);
     a.download = 'memoria-annotations.jsonl';
+    document.body.appendChild(a);
     a.click();
+    a.remove();
     setTimeout(() => URL.revokeObjectURL(a.href), 2000);
+  }
+  async function copyExport() {
+    const text = $('#exporttext').value;
+    try {
+      await navigator.clipboard.writeText(text);
+      $('#copyexport').textContent = '已复制 ✓';
+      setTimeout(() => { $('#copyexport').textContent = '复制到剪贴板'; }, 1500);
+    } catch (e) {
+      $('#exporttext').focus();
+      $('#exporttext').select();
+      document.execCommand('copy');
+      $('#copyexport').textContent = '已复制 ✓';
+      setTimeout(() => { $('#copyexport').textContent = '复制到剪贴板'; }, 1500);
+    }
   }
   document.addEventListener('click', beginCapture, true);
   document.addEventListener('mousemove', (e) => { if (state.active) showOutline(e.target); }, true);
@@ -153,7 +190,10 @@
     if (e.key === 'Escape') { setActive(false); panel.classList.remove('open'); showOutline(null); }
   }, true);
   $('#toggle').addEventListener('click', () => setActive(!state.active));
-  $('#export').addEventListener('click', exportJsonl);
+  $('#export').addEventListener('click', showExport);
+  $('#copyexport').addEventListener('click', copyExport);
+  $('#downloadexport').addEventListener('click', downloadExport);
+  $('#closeexport').addEventListener('click', () => $('#exportbox').classList.remove('open'));
   $('#close').addEventListener('click', () => host.remove());
   $('#cancel').addEventListener('click', () => { state.pending = null; panel.classList.remove('open'); showOutline(null); });
   $('#save').addEventListener('click', save);
