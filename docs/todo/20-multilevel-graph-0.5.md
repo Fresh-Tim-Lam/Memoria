@@ -178,3 +178,11 @@ docs/conventions/version.md:11-12（版本路线）
 docs/releases/0.4.11-notes.md:3,33,46（上一版已带走/未带走）
 docs/todo.md §13 统计行；docs/todo/04-graph.md；docs/todo/12-build-table.md
 ```
+
+## 9. 状态：HOLD（2026-11-05，`dec-20261105-cb24f93e`）
+
+- 0.5 代码/验收已完成（P0 + 门禁 PASS），但真实库 0 semantic edge，graph 检索 0/4 只能 `NOT_APPLICABLE`。
+- **人裁：不发布 0.5.0-beta**；真实语料库需要精细设计 + 联网取证 + 专门研讨，已开 **C 系列（`docs/design/corpus-seminar/CHARTER.md`，C1–C12）**。
+- 0.5 发布门槛：C 系列冻结 + 至少一个小规模 pilot（KP/语义边/IAA）后重跑 GATE-RET；此前 0.5 保持 HOLD。
+- 本文件其余条款（B1–B6、门禁、风险）仍有效，作为 0.5 恢复发布时的验收依据。
+
