@@ -56,6 +56,15 @@ function makeRafQueue() {
     pending: () => queue.length,
   };
 }
+function hasThreeFramePlateau(log) {
+  for (let i = 2; i < log.length; i++) {
+    const a = log[i - 2].maxDisp;
+    const b = log[i - 1].maxDisp;
+    const c = log[i].maxDisp;
+    if (Math.abs(a - b) < 1e-9 && Math.abs(b - c) < 1e-9) return true;
+  }
+  return false;
+}
 function hubId(presentation, vm) {
   const degrees = presentation.degrees || {};
   const shown = vm.nodes.filter((n) => (n.presence || "shown") === "shown" && n.kind === "kp").map((n) => String(n.id));
@@ -329,7 +338,8 @@ async function runAsync(ctx) {
     assert.strictEqual(r._simulating, false, "模拟未收敛停止");
     const initialLog = r.getForceFrameLog();
     assert.ok(initialLog.length > 10, "帧日志太少");
-    assert.ok(initialLog.every((f) => f.maxDisp <= 12), `存在单帧 >12px：${JSON.stringify(initialLog.filter((f) => f.maxDisp > 12).slice(0, 3))}`);
+    assert.ok(initialLog.every((f) => f.maxDisp <= 4), `存在单帧 >4px：${JSON.stringify(initialLog.filter((f) => f.maxDisp > 4).slice(0, 3))}`);
+    assert.strictEqual(hasThreeFramePlateau(initialLog), false, "存在连续 3 帧相同 maxDisp 平台");
 
     // focus 过渡：以当前坐标为初值，不整图瞬移
     const before = new Map([...r._positions].map(([id, p]) => [id, { ...p }]));
@@ -346,7 +356,8 @@ async function runAsync(ctx) {
     raf.drain();
     const focusLog = r.getForceFrameLog();
     assert.ok(focusLog.length > 5);
-    assert.ok(focusLog.every((f) => f.maxDisp <= 12), "focus 过渡单帧 >12px");
+    assert.ok(focusLog.every((f) => f.maxDisp <= 4), "focus 过渡单帧 >4px");
+    assert.strictEqual(hasThreeFramePlateau(focusLog), false, "focus 过渡存在连续 3 帧相同 maxDisp 平台");
     r.dispose();
   });
 
