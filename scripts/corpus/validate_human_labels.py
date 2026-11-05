@@ -1,8 +1,9 @@
 #!/usr/bin/env python
-"""人类标注者文件校验器（human-kit）：schema / span 越界 / 重叠 / section / 端点 / quote sha / 数量。
+"""标注者文件校验器：schema / span 越界 / 重叠 / section / 端点 / quote sha / 数量。
 
-用途：人类标注者 A/B 提交前，由协调人（或标注者自查）运行；**不合规必须红**（exit 1）。
-本脚本只读人类文件与语料快照，不生成任何标签、不改 A 草案。
+用途：human-kit 或 protocol v2 的 agent 标注者提交前运行；**不合规必须红**（exit 1）。
+`--annotator-type human|agent` 决定角色标记：human→annotator-a/b，agent→agent-a/b。
+本脚本只读标注文件与语料快照，**不生成任何标签**、不生成 IAA 数值。
 
 检查范围：
 - KP 文件：行 JSON、必填字段、id 唯一、单 span、越界、单 section、两两不重叠、
@@ -26,7 +27,12 @@ CONFIDENCE = {"high", "medium", "low"}
 DIRECTIONS = {"source->target", "target->source", "both"}
 KP_TYPES = {"concept", "term", "formula", "mechanism", "procedure", "example"}
 HUMAN_STATUS = "human_annotator_draft"
-ROLE_ANNOTATOR = {"a": "annotator-a", "b": "annotator-b"}
+AGENT_STATUS = "agent_annotator_draft"
+ANNOTATOR_TYPE_ROLES = {
+    "human": {"a": "annotator-a", "b": "annotator-b"},
+    "agent": {"a": "agent-a", "b": "agent-b"},
+}
+ROLE_ANNOTATOR = ANNOTATOR_TYPE_ROLES["human"]
 
 
 class Checker:
@@ -89,8 +95,10 @@ def _as_span(row: dict) -> tuple[int, int] | None:
 
 
 def validate_kps(c: Checker, rows: list[dict], *, role: str, chapter: str,
-                 sections: list[dict], min_kps: int, max_kps: int) -> None:
-    expected_annotator = ROLE_ANNOTATOR[role]
+                 sections: list[dict], min_kps: int, max_kps: int,
+                 annotator_type: str = "human") -> None:
+    expected_annotator = ANNOTATOR_TYPE_ROLES[annotator_type][role]
+    expected_status = HUMAN_STATUS if annotator_type == "human" else AGENT_STATUS
     c.check("kps.count", min_kps <= len(rows) <= max_kps,
             f"KP 数 {len(rows)} 不在 [{min_kps},{max_kps}]")
     if not rows:
@@ -106,8 +114,8 @@ def validate_kps(c: Checker, rows: list[dict], *, role: str, chapter: str,
         c.check(f"kp.annotator:{cid}", row.get("annotator") == expected_annotator,
                 f"annotator={row.get('annotator')!r} != {expected_annotator!r}")
         if "status" in row:
-            c.check(f"kp.status:{cid}", row.get("status") == HUMAN_STATUS,
-                    f"status={row.get('status')!r} 应为 {HUMAN_STATUS!r}")
+            c.check(f"kp.status:{cid}", row.get("status") == expected_status,
+                    f"status={row.get('status')!r} 应为 {expected_status!r}")
         c.check(f"kp.id_unique:{cid}", isinstance(rid, str) and rid not in ids, "id 唯一且非空")
         if isinstance(rid, str):
             ids.add(rid)
@@ -136,8 +144,8 @@ def validate_kps(c: Checker, rows: list[dict], *, role: str, chapter: str,
 
 def validate_pool(c: Checker, rows: list[dict], *, role: str, chapter: str,
                   pool: list[dict], a_kp_ids: set[str], expected_pool: int,
-                  allow_extra: bool) -> None:
-    expected_annotator = ROLE_ANNOTATOR[role]
+                  allow_extra: bool, annotator_type: str = "human") -> None:
+    expected_annotator = ANNOTATOR_TYPE_ROLES[annotator_type][role]
     pool_by_id = {p["pair_id"]: p for p in pool}
     c.check("pool.count", len(rows) >= expected_pool,
             f"池判定 {len(rows)} 行 < 期望 {expected_pool}")
@@ -216,7 +224,7 @@ def validate_pool(c: Checker, rows: list[dict], *, role: str, chapter: str,
 def run(role: str, kps_path: Path, pool_path: Path, chapter_path: Path,
         sections_path: Path, pool_file: Path, a_kps_path: Path,
         min_kps: int = 45, max_kps: int = 55, expected_pool: int = 60,
-        allow_extra: bool = True) -> dict:
+        allow_extra: bool = True, annotator_type: str = "human") -> dict:
     missing = [str(p) for p in (kps_path, pool_path, chapter_path, sections_path,
                                 pool_file, a_kps_path) if not p.exists()]
     if missing:
@@ -228,6 +236,8 @@ def run(role: str, kps_path: Path, pool_path: Path, chapter_path: Path,
     a_kp_ids = {k["id"] for k in read_jsonl(a_kps_path)}
     c = Checker()
     c.check("role", role in ("a", "b"), f"role={role!r}")
+    c.check("annotator_type", annotator_type in ANNOTATOR_TYPE_ROLES,
+            f"annotator_type={annotator_type!r}")
     c.check("chapter_no_crlf_no_bom",
             "\r" not in chapter and not chapter_path.read_bytes().startswith(b"\xef\xbb\xbf"),
             "chapter.txt 为 LF/UTF-8 无 BOM")
@@ -239,15 +249,16 @@ def run(role: str, kps_path: Path, pool_path: Path, chapter_path: Path,
         return {"schema": "human-label-validation/v1", "ok": False, "status": "invalid",
                 "checks": c.checks, "failed": c.failures()}
     validate_kps(c, kps_rows, role=role, chapter=chapter, sections=sections,
-                 min_kps=min_kps, max_kps=max_kps)
+                 min_kps=min_kps, max_kps=max_kps, annotator_type=annotator_type)
     validate_pool(c, pool_rows, role=role, chapter=chapter, pool=pool,
                   a_kp_ids=a_kp_ids, expected_pool=expected_pool,
-                  allow_extra=allow_extra)
+                  allow_extra=allow_extra, annotator_type=annotator_type)
     return {
         "schema": "human-label-validation/v1",
         "ok": c.ok,
         "status": "pass" if c.ok else "fail",
         "role": role,
+        "annotator_type": annotator_type,
         "inputs": {"kps": str(kps_path), "pool_judgments": str(pool_path),
                    "kps_sha256": sha256_file(kps_path),
                    "pool_judgments_sha256": sha256_file(pool_path)},
@@ -261,6 +272,8 @@ def run(role: str, kps_path: Path, pool_path: Path, chapter_path: Path,
 def main(argv: list[str] | None = None) -> int:
     ap = argparse.ArgumentParser(description="Validate human annotator labels (KPs + pool judgments)")
     ap.add_argument("--role", required=True, choices=["a", "b"])
+    ap.add_argument("--annotator-type", choices=["human", "agent"], default="human",
+                    help="标注来源：human=human-kit（annotator-a/b）；agent=protocol v2（agent-a/b）")
     ap.add_argument("--kps", required=True)
     ap.add_argument("--pool-judgments", required=True)
     ap.add_argument("--chapter", default="artifacts/corpus/pilot/source/chapter.txt")
@@ -277,7 +290,8 @@ def main(argv: list[str] | None = None) -> int:
     report = run(args.role, Path(args.kps), Path(args.pool_judgments), Path(args.chapter),
                  Path(args.sections), Path(args.pool), Path(args.a_kps),
                  min_kps=args.min_kps, max_kps=args.max_kps,
-                 expected_pool=args.expected_pool, allow_extra=not args.no_extra_pairs)
+                 expected_pool=args.expected_pool, allow_extra=not args.no_extra_pairs,
+                 annotator_type=args.annotator_type)
     if args.json_out:
         out = Path(args.json_out)
         out.parent.mkdir(parents=True, exist_ok=True)

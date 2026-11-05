@@ -1,4 +1,8 @@
-# HUMAN-ANNOTATION-KIT — 人类双标注执行包（pilot）
+# HUMAN-ANNOTATION-KIT — 人类双标注执行包（pilot；**可选 full-human**）
+
+> ⛔ **本文件对应的“人类双标全量”路线已降级为可选（Mode C），默认不再执行。**
+> 默认方案是 **protocol v2：agent bulk + 人类只裁决/抽检（1–2 h）**，见 `PILOT-PROTOCOL-V2.md`。
+> 仅当 Lead/人明确要求“两名真人全量独立标注 50 KP/60 对”时才按本文件执行（13–21 人类工时）。
 
 > **状态**：执行包已就绪，**等待两名人类标注者**；本包**不生成任何人类标签/IAA**。
 > **依据**：C0 冻结稿 + R-C0-1/3；`ANNOTATION-MANUAL.md` **v1.1**；task-369 agent 干跑（`IAA-DRY-RUN.md`）；task-370 P0 修订；人 2026-11-05 选“方案 1：两名真人独立标注”。

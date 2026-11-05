@@ -3,7 +3,8 @@
 > **状态**：`single_annotator_draft`；**IAA 未做**（需独立第二标注者）；**0.5 保持 HOLD**；本包不发布、不写产品代码、不写用户库、不 commit。
 > **手册版本**：**v1.1**（task-370 P0 修订；修订记录见 `MANUAL-REVISION.md`）。**注意**：A 的 50 KP/30 边按 v1.0 规则产出，v1.1 规则下 A 需复核/重标（P1，见 §7 U-10）。
 > **依据**：`docs/design/corpus-seminar/C0-corpus-v1.md`（C1–C12 + R-C0-1..6）、`C0-RULINGS.md`、`C0-engineering-check.md`、`C0-URL-DISPOSITION.md`、C0-FREEZE-RECORD；task-369 agent 干跑 `artifacts/agent/verify/corpus/pilot/IAA-DRY-RUN.md`。
-> **任务**：`task-368`（建包）+ `task-370`（P0 手册修订）+ `task-371`（人类双标注执行包）；写域见对应任务。
+> **任务**：`task-368`（建包）+ `task-370`（P0 手册修订）+ `task-371`（人类双标注执行包）+ `task-373`（协议 v2：agent bulk + 人类裁决/抽检）；写域见对应任务。
+> **默认路线（v2）**：agent bulk + 人类 1–2 h 裁决/抽检（`PILOT-PROTOCOL-V2.md`）；v1 全人类双标降级为可选（Mode C）。
 > **日期**：2026-11-05（Asia/Shanghai）。
 
 ## 0. 一句话
@@ -33,7 +34,9 @@
 | 17 | 工时/成本 | `artifacts/corpus/pilot/WORKLOG.md` | 实测机器工时 + 待填人工工时 |
 | 18 | 验证产物 | `artifacts/agent/verify/corpus/pilot/**` | 2× 校验报告、pytest、sha 清单、agent 干跑报告 |
 | 19 | **人类双标注执行包** | `docs/design/corpus-seminar/pilot/HUMAN-ANNOTATION-KIT.md`、`ADJUDICATION-SHEET.md`、`artifacts/corpus/pilot/human-kit/**` | task-371：两名真人按 v1.1 独立标注；模板/教练/试标/校验/裁决/IAA 命令；**不含任何人类标签** |
-| 20 | 人类执行包就绪报告 | `artifacts/agent/verify/corpus/pilot/HUMAN-KIT-READY.md` | 清单/命令/预计工时/退回条件/防泄漏证据 |
+| 20 | 人类执行包就绪报告（**可选 full-human**） | `artifacts/agent/verify/corpus/pilot/HUMAN-KIT-READY.md` | v1 降级为 Mode C；默认不做 |
+| 21 | **协议 v2**（默认） | `docs/design/corpus-seminar/pilot/PILOT-PROTOCOL-V2.md` | agent bulk + 人类 1–2 h 裁决/抽检；纯 agent 备选标 `human_unvalidated`；v1 降级可选 |
+| 22 | 协议 v2 工具/报告 | `scripts/corpus/{make_spotcheck_pack,make_iaa_report_v2}.py`、`artifacts/corpus/pilot/spotcheck/**`、`PROTOCOL-V2-READY.md` | spotcheck 包/模式报告/agent 校验 |
 
 ## 2. 范围与规则
 
@@ -154,7 +157,7 @@ python -m pytest tests/corpus -q
 | U-2 | Presidio 正式 PII 扫描未运行 | 装依赖后补跑，结果入 `artifacts/agent/verify/corpus/pilot/` |
 | U-3 | CC 官方许可页本环境不可达 | 已用 SPDX/ChooseALicense/仓库 LICENSE 替代；未冒充 200 |
 | U-4 | 中文语料/中文 UTF-8 偏移未验证 | 主集前补中文 pilot（C0 O-C0-2） |
-| U-5 | IAA / 10% 抽检 / 裁决 | **人类执行包已就绪（task-371）**，等待两名人类标注者（预计 13–21 人时，C7 预算内）；agent 干跑值不可复用；命令/模板见 `HUMAN-ANNOTATION-KIT.md` 与 `human-kit/` |
+| U-5 | IAA / 抽检 / 裁决 | **v2 默认路线（task-373）**：两个独立 agent bulk 标注 + 人类只裁决/抽检（1–2 h）；报告分开 `agent_vs_agent` 与 `human_adjudication_agreement`；纯 agent 备选标 `human_unvalidated`、0.5 不解禁；v1 全人类双标（13–21 h）降级为可选 Mode C |
 | U-6 | 命题级变体（C4）未做 | pilot 下一轮补 20 项命题级子集，由 IAA 比较两种粒度 |
 | U-7 | Datasheet / Croissant / Data Statement 未产出 | C12 交付包，发布前补 |
 | U-8 | GATE-RET 未跑、graph 分型未评估 | 0.5 HOLD；IAA 达线后按 C0-GATE-RET 跑 |
@@ -168,4 +171,5 @@ python -m pytest tests/corpus -q
 
 | 日期 | 变更 | 影响 |
 |---|---|---|
+| 2026-11-05 | 新增 **protocol v2**（task-373）：默认改 agent bulk + 人类 1–2 h 裁决/抽检；spotcheck 包只含分歧+5 KP/5 对上下文；IAA 报告分 `agent_vs_agent` / `human_adjudication_agreement`；纯 agent 标 `human_unvalidated=true`、`not_c8_conclusion=true`；v1 全人类双标降级可选 | 人类成本 13–21 h → 1–2 h；C8 口径不变 |
 | 2026-11-05 | 手册 v1.0 → **v1.1**：删除 §1.1 中 A 的 50 条逐条答案（防 α 泄漏）；补 S0 三类型操作定义与正/负/边界例；补断言 span 最低证据/证据来源/方向（含 both 与反向对）规则；修 P30 类"引语不在 span 内"矛盾；补 concept_type 判定表 + 试标 10 项；统一 B 路径协议为 `annotations/annotator-b/`；`iaa_runner.py` 池一致率改**有向**（+无向 legacy 对照 + 方向反转清单 + raw agreement/κ 退化标记） | 人类 IAA 前必须使用 v1.1；A 标签未改（P1 复核）；见 `MANUAL-REVISION.md` |

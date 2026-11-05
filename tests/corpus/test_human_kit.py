@@ -43,7 +43,15 @@ def test_human_kit_has_no_symlinks():
 def test_human_kit_has_no_a_label_files_or_references():
     names = {p.name for p in HUMAN_KIT.rglob("*")}
     assert not ({"kps.single.jsonl", "edges.single.jsonl"} & names), "human-kit 不得含 A 标签文件"
-    for p in HUMAN_KIT.rglob("*"):
+    # 人类执行过程中会在 human-kit 里写记录（G0/试标等），可能提到文件名作为“不可见”说明；
+    # 这里只扫描 kit 自身提供的模板/说明，确保没有 A 标签内容/编号/机器标记。
+    audit_files = list(HUMAN_KIT.glob("annotator-*/*.template.jsonl")) + [
+        HUMAN_KIT / "START-HERE.md",
+        HUMAN_KIT / "coordinator/TRAINING-20.md",
+        HUMAN_KIT / "coordinator/COORDINATOR-CHECKLIST.md",
+        HUMAN_KIT / "coordinator/trial/TRIAL-10.md",
+    ]
+    for p in audit_files:
         if not p.is_file():
             continue
         text = p.read_text(encoding="utf-8", errors="replace")
@@ -55,7 +63,7 @@ def test_human_kit_has_no_a_label_files_or_references():
 
 
 def test_human_kit_templates_are_placeholders_only():
-    templates = list(HUMAN_KIT.glob("annotator-*/[!R]*.jsonl"))
+    templates = list(HUMAN_KIT.glob("annotator-*/*.template.jsonl"))
     assert len(templates) >= 8, f"模板数量不足: {len(templates)}"
     for path in templates:
         rows = _jsonl_rows(path)
@@ -83,7 +91,8 @@ def test_human_docs_and_time_log_exist():
     for rel in ("HUMAN-ANNOTATION-KIT.md", "ADJUDICATION-SHEET.md", "ANNOTATION-MANUAL.md"):
         assert (DOCS / rel).exists(), f"缺少 {rel}"
     assert (HUMAN_KIT / "START-HERE.md").exists()
-    time_log = (HUMAN_KIT / "TIME-LOG.csv").read_text(encoding="utf-8")
+    # 人类执行期会追加数据行；容忍 UTF-8 BOM 与已填行，只校验表头契约。
+    time_log = (HUMAN_KIT / "TIME-LOG.csv").read_text(encoding="utf-8-sig")
     assert time_log.startswith("date,annotator,role,stage,items,minutes,notes")
 
 

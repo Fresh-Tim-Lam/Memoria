@@ -1,4 +1,6 @@
-# ADJUDICATION-SHEET — 人类双标注差异裁决表
+# ADJUDICATION-SHEET — 人类双标注差异裁决表（full-human 可选）
+
+> ℹ️ **v2 默认不使用本表**：protocol v2 的人类参与是“分歧+5 KP/5 对抽检”，见 `PILOT-PROTOCOL-V2.md` 与 `make_spotcheck_pack.py`；本表仅用于可选 full-human（两名真人全量）路线。
 
 > **状态**：模板/生成器已就绪；等待人类标注者文件；**不生成任何标签**。
 > **输入**：**只读两位人类标注者**的 `kps.annotator-<a|b>.jsonl` 与 `pool-judgments.annotator-<a|b>.jsonl`。
