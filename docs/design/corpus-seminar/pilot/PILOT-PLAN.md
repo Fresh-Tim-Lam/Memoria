@@ -3,7 +3,7 @@
 > **状态**：`single_annotator_draft`；**IAA 未做**（需独立第二标注者）；**0.5 保持 HOLD**；本包不发布、不写产品代码、不写用户库、不 commit。
 > **手册版本**：**v1.1**（task-370 P0 修订；修订记录见 `MANUAL-REVISION.md`）。**注意**：A 的 50 KP/30 边按 v1.0 规则产出，v1.1 规则下 A 需复核/重标（P1，见 §7 U-10）。
 > **依据**：`docs/design/corpus-seminar/C0-corpus-v1.md`（C1–C12 + R-C0-1..6）、`C0-RULINGS.md`、`C0-engineering-check.md`、`C0-URL-DISPOSITION.md`、C0-FREEZE-RECORD；task-369 agent 干跑 `artifacts/agent/verify/corpus/pilot/IAA-DRY-RUN.md`。
-> **任务**：`task-368`（建包）+ `task-370`（P0 手册修订）；写域见对应任务。
+> **任务**：`task-368`（建包）+ `task-370`（P0 手册修订）+ `task-371`（人类双标注执行包）；写域见对应任务。
 > **日期**：2026-11-05（Asia/Shanghai）。
 
 ## 0. 一句话
@@ -32,6 +32,8 @@
 | 16 | 单测 | `tests/corpus/test_pilot_package.py`、`tests/corpus/test_manual_revision.py` | pytest（含负向破坏用例 + 手册 v1.1 防泄漏/规则检查） |
 | 17 | 工时/成本 | `artifacts/corpus/pilot/WORKLOG.md` | 实测机器工时 + 待填人工工时 |
 | 18 | 验证产物 | `artifacts/agent/verify/corpus/pilot/**` | 2× 校验报告、pytest、sha 清单、agent 干跑报告 |
+| 19 | **人类双标注执行包** | `docs/design/corpus-seminar/pilot/HUMAN-ANNOTATION-KIT.md`、`ADJUDICATION-SHEET.md`、`artifacts/corpus/pilot/human-kit/**` | task-371：两名真人按 v1.1 独立标注；模板/教练/试标/校验/裁决/IAA 命令；**不含任何人类标签** |
+| 20 | 人类执行包就绪报告 | `artifacts/agent/verify/corpus/pilot/HUMAN-KIT-READY.md` | 清单/命令/预计工时/退回条件/防泄漏证据 |
 
 ## 2. 范围与规则
 
@@ -152,7 +154,7 @@ python -m pytest tests/corpus -q
 | U-2 | Presidio 正式 PII 扫描未运行 | 装依赖后补跑，结果入 `artifacts/agent/verify/corpus/pilot/` |
 | U-3 | CC 官方许可页本环境不可达 | 已用 SPDX/ChooseALicense/仓库 LICENSE 替代；未冒充 200 |
 | U-4 | 中文语料/中文 UTF-8 偏移未验证 | 主集前补中文 pilot（C0 O-C0-2） |
-| U-5 | IAA / 10% 抽检 / 裁决 | 需独立第二标注者（≥2 天成本，C7 预算内） |
+| U-5 | IAA / 10% 抽检 / 裁决 | **人类执行包已就绪（task-371）**，等待两名人类标注者（预计 13–21 人时，C7 预算内）；agent 干跑值不可复用；命令/模板见 `HUMAN-ANNOTATION-KIT.md` 与 `human-kit/` |
 | U-6 | 命题级变体（C4）未做 | pilot 下一轮补 20 项命题级子集，由 IAA 比较两种粒度 |
 | U-7 | Datasheet / Croissant / Data Statement 未产出 | C12 交付包，发布前补 |
 | U-8 | GATE-RET 未跑、graph 分型未评估 | 0.5 HOLD；IAA 达线后按 C0-GATE-RET 跑 |
