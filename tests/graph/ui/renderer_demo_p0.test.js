@@ -383,6 +383,45 @@ async function runAsync(ctx) {
     }
     a.r.dispose(); b.r.dispose();
   });
+
+  check("pointermove_follows_without_4px_dead_zone", () => {
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const raf = makeRafQueue();
+    const r = new Adapter.Renderer2D(container, {
+      host: makeHost(), presentation, animateForce: true,
+      requestAnimationFrame: raf.raf, cancelAnimationFrame: raf.cancel,
+    });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    raf.drain();
+    const id = shown.find((x) => x !== hub);
+    const start = { ...r._positions.get(id) };
+    const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 7, preventDefault() {} };
+    r._onPointerDown(base);
+    assert.ok(r._pinned.has(id), "pointerdown 未立即 pin");
+    const errors = [];
+    let forceState = null;
+    for (let i = 1; i <= 10; i++) {
+      r._onPointerMove({ ...base, clientX: start.x + i * 3, clientY: start.y + i * 2 });
+      const p = r._positions.get(id);
+      const err = Math.hypot(p.x - (start.x + i * 3), p.y - (start.y + i * 2));
+      errors.push(err);
+      if (i === 1) {
+        assert.ok(err <= 2, `首次 3px move 未跟手（死区）：${err}`);
+        forceState = r._forceState;
+        assert.ok(forceState, "首次 node move 未启动 force state");
+      } else {
+        assert.ok(err <= 2, `第 ${i} 次 move 跟手误差 >2px：${err}`);
+        assert.strictEqual(r._forceState, forceState, "反复 move 重建了 force state");
+      }
+    }
+    assert.ok(errors.every((e) => e <= 2), `跟手误差：${errors}`);
+    assert.strictEqual(r._drag.forceStarted, true);
+    assert.strictEqual(r._forceFrames, 0, "未 drain 时 forceFrames 被 move 重置/推进");
+    r._onPointerUp({ ...base, clientX: start.x + 30, clientY: start.y + 20 });
+    assert.strictEqual(r._drag, null);
+    r.dispose();
+  });
 }
 
 (async () => {

@@ -687,6 +687,7 @@
       this._forceFrameLog = [];
       this._simulating = false;
       this._lastForceTicks = 0;
+      this._drawScheduled = false;
       this._hoverId = null;
       this._selection = null;
       this._disposed = false;
@@ -970,6 +971,16 @@
 
     getForceFrameLog() {
       return this._forceFrameLog.slice();
+    }
+
+    /** task-384：pointermove 更新坐标后请求一次 rAF 重绘（与动画帧合并）。 */
+    _requestDraw() {
+      if (this._drawScheduled) return;
+      this._drawScheduled = true;
+      this._raf(() => {
+        this._drawScheduled = false;
+        if (!this._disposed && this._ctx) this._draw();
+      });
     }
 
     render(container, vm) {
@@ -1334,9 +1345,14 @@
         startWorld: p ? { x: p.x, y: p.y } : null,
         startCamera: { ...this._camera },
         moved: false,
+        forceStarted: false,
         pointerId: event && event.pointerId != null ? event.pointerId : null,
       };
-      if (node) this._hoverId = node.id;
+      if (node) {
+        // task-384：pointerdown 命中节点立即 pin，不等第一次 move
+        this._hoverId = node.id;
+        this._pinned.add(node.id);
+      }
     }
 
     _onPointerMove(event) {
@@ -1345,26 +1361,37 @@
       if (drag) {
         const dx = screen.x - drag.startX;
         const dy = screen.y - drag.startY;
-        if (!drag.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return;
-        drag.moved = true;
+        const distance = Math.hypot(dx, dy);
         if (drag.mode === "node" && drag.nodeId && drag.startWorld) {
+          // task-384：无论移动多少都立即更新 pinned 节点（4px 只决定是否 click）
           const scale = this._camera.scale || 1;
           this._positions.set(drag.nodeId, {
             x: drag.startWorld.x + dx / scale,
             y: drag.startWorld.y + dy / scale,
           });
           this._pinned.add(drag.nodeId);
-        } else if (drag.mode === "pan") {          this._camera.x = drag.startCamera.x + dx;
+          drag.moved = drag.moved || distance >= DRAG_THRESHOLD_PX;
+          drag.lastX = screen.x;
+          drag.lastY = screen.y;
+          if (this._animateForce && !this._simulating && !drag.forceStarted) {
+            // 只在拖拽第一次 move 启动一次，不在每个 move 重建 force state
+            drag.forceStarted = true;
+            this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
+          }
+          this._requestDraw();
+          return;
+        }
+        if (drag.mode === "pan") {
+          if (!drag.moved && distance < DRAG_THRESHOLD_PX) return;
+          drag.moved = true;
+          this._camera.x = drag.startCamera.x + dx;
           this._camera.y = drag.startCamera.y + dy;
           this._userAdjusted = true;
+          drag.lastX = screen.x;
+          drag.lastY = screen.y;
+          this._requestDraw();
+          return;
         }
-        drag.lastX = screen.x;
-        drag.lastY = screen.y;
-        if (drag.mode === "node" && this._animateForce && !this._simulating) {
-          // 拖拽期间重加热：邻居逐帧受力（拖拽节点已 pin）；pan 不得触发模拟
-          this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
-        }
-        if (this._ctx) this._draw();
         return;
       }
       const world = this._screenToWorld(screen.x, screen.y);
@@ -1372,7 +1399,7 @@
       const id = node ? node.id : null;
       if (id !== this._hoverId) {
         this._hoverId = id;
-        this._draw();
+        this._requestDraw();
         this._emit("hover", id ? { node_id: id, kind: node.kind } : { node_id: null, kind: null });
       }
     }
@@ -1387,8 +1414,8 @@
         setTimeout(() => { this._suppressClick = false; }, 300);
         if (drag.mode === "node") {
           if (this._animateForce) {
-            // task-382：松手继续 rAF 收敛，不同步 settle 瞬移
-            this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
+            // task-382/384：松手继续 rAF；若已在模拟则不重启（不重建 force state）
+            if (!this._simulating) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
           } else {
             this._settleForceAfterDrag();
           }
@@ -1397,7 +1424,7 @@
       if (this._canvas && typeof this._canvas.releasePointerCapture === "function" && drag.pointerId != null) {
         try { this._canvas.releasePointerCapture(drag.pointerId); } catch (_) { /* noop */ }
       }
-      if (this._ctx) this._draw();
+      this._requestDraw();
       if (event && typeof event.preventDefault === "function" && drag.moved) event.preventDefault();
     }
 

@@ -36,6 +36,7 @@ def test_demo_renderer_node_suite() -> None:
         "wheel_zoom_about_pointer_and_fit_reset",
         "rAF_force_animation_no_teleport_and_focus_transition",
         "animation_is_deterministic_two_runs",
+        "pointermove_follows_without_4px_dead_zone",
     ):
         assert required in names
 
