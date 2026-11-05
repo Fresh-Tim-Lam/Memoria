@@ -8,7 +8,10 @@
  *   - S3-11 / S8-4 冻结预算：`max_nodes=200`、`max_edges=400`、动画 ≤180ms；
  *     VM 超硬上限 ⇒ `RENDER_BUDGET_EXCEEDED` fail-visible（Renderer 不静默裁剪）。
  *   - S3-ADDENDUM-1/2：节点/边 `presence?/rule_id?` 只作为 view-status；`data_edge_ids` Renderer 禁读。
- *   - S3-2/S3-3：cluster 半径 `clamp(8+2.2·log2(member_count+1),12,28)`；KP **固定半径 8px**（screen-space）。
+ *   - S3-2/S3-3（视觉值由 S3-ADDENDUM-3 修订）：cluster 半径 `clamp(8+2.2·log2(member_count+1),12,28)`；
+ *     KP 半径 = 旧 KGviz 连续分位映射 `radiusForDegree(degree, distinctSorted, 6)`（≈4.5–9.9px，
+ *     degree 来自 Presentation 元数据、**不进 VM**）；节点/标签/边/背景/光晕取旧 KGviz 视觉值。
+ *     S3-ADDENDUM-3 只改元素外观，不改 kind/presence/白名单/data_edge_ids 禁读。
  *   - B4 工程口径：**只做 2D**；3D 仅同签名接口 + `capability=false`，不实现、不阻断。
  *
  * 复用：布局种子/会话内保位沿用 KGviz v0 的确定性思路（本模块自含确定性布局；
@@ -22,11 +25,41 @@
   const MAX_NODES = 200;
   const MAX_EDGES = 400;
   const ANIMATION_MAX_MS = 180;
-  const KP_RADIUS = 8;
+  // S3-ADDENDUM-3 A3-1：视觉基线 = 0.4.10 旧 KGviz 2D
+  const KP_BASE_RADIUS = 6;
+  const SIZE_RATIO_MIN = 0.75;
+  const SIZE_RATIO_MAX = 1.65;
+  const HOVER_EXTRA_RADIUS = 3;
+  const TARGET_EXTRA_RADIUS = 2;
   const CLUSTER_MIN_RADIUS = 12;
   const CLUSTER_MAX_RADIUS = 28;
   const TAU = Math.PI * 2;
   const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+
+  const VISUAL = Object.freeze({
+    bg: "#0a0d13",
+    containerBg: "#161b22",
+    node: "#c9d1d9",
+    nodeHover: "#f0f6fc",
+    nodeTarget: "#79c0ff",
+    nodeDim: "#3d4350",
+    nodeInvalid: "#3a4152",
+    label: "#adbac7",
+    labelInvalid: "#6e7681",
+    halo: "rgba(13,17,23,0.92)",
+    focus: "#58a6ff",
+    galaxyDim: "rgb(139,148,158)",
+    galaxyBright: "rgb(240,246,252)",
+    labelFont: "10px system-ui, sans-serif",
+    labelHaloWidth: 3,
+    edgeAlpha: 0.45,
+    edgeAlphaActive: 0.95,
+    edgeAlphaDim: 0.14,
+    edgeWidth: 1.2,
+    edgeWidthActive: 2.2,
+    arrowSize: 7,
+    glow: 0.6,
+  });
 
   const MAIN_STATES = ["Idle", "Loading", "Degraded"]; // 仅用于说明本模块不持有导航态
   void MAIN_STATES;
@@ -44,12 +77,12 @@
     "capabilities", "clusters", "run_id", "dendrogram", "metrics", "candidates",
   ]);
   const EDGE_COLORS = Object.freeze({
-    semantic: "#e06c75",
-    structural: "#61afef",
-    navigation: "#e5c07b",
-    reference: "#8b949e",
-    extend: "#c678dd",
-    contain: "#61afef",
+    contain: "#3fb950",
+    reference: "#58a6ff",
+    extend: "#d29922",
+    semantic: "#e06c75", // A3-1 additive：旧 KGviz 无此类型，唯一新增色
+    structural: "#58a6ff",
+    navigation: "#58a6ff",
   });
   const EVENT_TYPES = Object.freeze(["nodeClick", "edgeClick", "backgroundClick", "hover"]);
 
@@ -81,9 +114,140 @@
     return Math.min(CLUSTER_MAX_RADIUS, Math.max(CLUSTER_MIN_RADIUS, 8 + 2.2 * Math.log2(n + 1)));
   }
 
-  function nodeRadius(node) {
+  // ── 连续 degree 分位映射（逐字复刻旧 graph-engine.js，不改旧文件）────────────
+  function sizingRangeForBase(baseRadius) {
+    const b = Number.isFinite(baseRadius) && baseRadius > 0 ? baseRadius : KP_BASE_RADIUS;
+    return { min: b * SIZE_RATIO_MIN, max: b * SIZE_RATIO_MAX };
+  }
+
+  /** t(d) = (#distinct degree < d) / (K-1)；单调、连续、非分桶。 */
+  function normalizedRankT(degree, distinctSorted) {
+    const arr = distinctSorted || [];
+    const k = arr.length;
+    if (k <= 1) return 0;
+    const d = Number(degree) || 0;
+    let lo = 0;
+    let hi = k - 1;
+    while (lo < hi) {
+      const mid = (lo + hi) >> 1;
+      if (arr[mid] < d) lo = mid + 1;
+      else hi = mid;
+    }
+    return lo / (k - 1);
+  }
+
+  function radiusForDegree(degree, distinctSorted, baseRadius) {
+    const range = sizingRangeForBase(baseRadius);
+    const t = normalizedRankT(degree, distinctSorted);
+    return range.min + (range.max - range.min) * t;
+  }
+
+  function normalizedDegrees(degrees) {
+    const map = new Map();
+    for (const [id, value] of Object.entries(degrees || {})) {
+      const num = Number(value);
+      if (Number.isFinite(num)) map.set(String(id), Math.max(0, num));
+    }
+    const distinct = [...new Set([...map.values()])].sort((a, b) => a - b);
+    return { map, distinct };
+  }
+
+  function degreeRatio(degreeInfo, degree) {
+    if (!degreeInfo || !degreeInfo.map.size) return null;
+    const max = degreeInfo.distinct.length ? degreeInfo.distinct[degreeInfo.distinct.length - 1] : 0;
+    if (!max) return 0;
+    return Math.max(0, Math.min(1, (Number(degree) || 0) / max));
+  }
+
+  function galaxyColor(ratio) {
+    const k = Math.max(0, Math.min(1, Number(ratio) || 0));
+    const dim = [139, 148, 158];
+    const bright = [240, 246, 252];
+    const r = Math.round(dim[0] + (bright[0] - dim[0]) * k);
+    const g = Math.round(dim[1] + (bright[1] - dim[1]) * k);
+    const b = Math.round(dim[2] + (bright[2] - dim[2]) * k);
+    return `rgb(${r},${g},${b})`;
+  }
+
+  function withAlpha(color, alpha) {
+    const a = Math.max(0, Math.min(1, Number(alpha) || 0));
+    if (typeof color === "string" && color.charAt(0) === "#" && color.length === 7) {
+      const n = parseInt(color.slice(1), 16);
+      return `rgba(${(n >> 16) & 255},${(n >> 8) & 255},${n & 255},${a})`;
+    }
+    const m = /rgba?\(([\d.]+),([\d.]+),([\d.]+)/.exec(String(color || ""));
+    if (m) return `rgba(${m[1]},${m[2]},${m[3]},${a})`;
+    return color;
+  }
+
+  /** 旧 galaxy 星点：径向渐变光晕 + 实心核心。 */
+  function drawStar(ctx, x, y, r, color, halo, glow) {
+    if (!ctx || !ctx.createRadialGradient || !ctx.arc) return;
+    const gr = r * (1.6 + Math.max(0, Number(glow) || 0) * 2.4);
+    const grad = ctx.createRadialGradient(x, y, r * 0.1, x, y, gr);
+    grad.addColorStop(0, withAlpha(color, halo));
+    grad.addColorStop(0.55, withAlpha(color, halo * 0.45));
+    grad.addColorStop(1, withAlpha(color, 0));
+    ctx.fillStyle = grad;
+    ctx.beginPath();
+    ctx.arc(x, y, gr, 0, TAU);
+    if (ctx.fill) ctx.fill();
+    ctx.fillStyle = color;
+    ctx.beginPath();
+    ctx.arc(x, y, r, 0, TAU);
+    if (ctx.fill) ctx.fill();
+  }
+
+  /** 旧 drawDirectedEdge：线 + 箭头（端点按两端半径让位）。 */
+  function drawDirectedEdge(ctx, sx, sy, tx, ty, nodeRadius, color, lineWidth, alpha, arrowSize) {
+    if (!ctx || !ctx.beginPath) return;
+    const dx = tx - sx;
+    const dy = ty - sy;
+    const dist = Math.sqrt(dx * dx + dy * dy);
+    if (dist < 1) return;
+    const ux = dx / dist;
+    const uy = dy / dist;
+    const pad = nodeRadius + 3;
+    const head = arrowSize;
+    const x1 = sx + ux * pad;
+    const y1 = sy + uy * pad;
+    const tipX = tx - ux * pad;
+    const tipY = ty - uy * pad;
+    const x2 = tipX - ux * head;
+    const y2 = tipY - uy * head;
+    ctx.save && ctx.save();
+    ctx.globalAlpha = alpha;
+    ctx.strokeStyle = color;
+    ctx.fillStyle = color;
+    ctx.lineWidth = lineWidth;
+    if ("lineCap" in ctx) ctx.lineCap = "round";
+    ctx.beginPath();
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x2, y2);
+    if (ctx.stroke) ctx.stroke();
+    const angle = Math.atan2(dy, dx);
+    ctx.beginPath();
+    ctx.moveTo(tipX, tipY);
+    ctx.lineTo(tipX - head * Math.cos(angle - Math.PI / 7), tipY - head * Math.sin(angle - Math.PI / 7));
+    ctx.lineTo(tipX - head * 0.72 * Math.cos(angle), tipY - head * 0.72 * Math.sin(angle));
+    ctx.lineTo(tipX - head * Math.cos(angle + Math.PI / 7), tipY - head * Math.sin(angle + Math.PI / 7));
+    ctx.closePath && ctx.closePath();
+    if (ctx.fill) ctx.fill();
+    ctx.restore && ctx.restore();
+    ctx.globalAlpha = 1;
+  }
+
+  function nodeRadius(node, degreeInfo) {
     if (node.kind === "cluster") return clusterRadius(node.member_count || node.aggregate_count || 1);
-    return KP_RADIUS; // KP 固定 8px screen-space（R-S3-7）
+    if (!degreeInfo || !degreeInfo.map.size) return KP_BASE_RADIUS;
+    const degree = degreeInfo.map.get(node.id);
+    return radiusForDegree(Number.isFinite(degree) ? degree : 0, degreeInfo.distinct, KP_BASE_RADIUS);
+  }
+
+  /** 视觉半径 = 数据映射 + 交互态加成（A3-1：hover +3 / target +2）。 */
+  function visualRadius(node, degreeInfo, hovered, highlighted) {
+    const base = nodeRadius(node, degreeInfo);
+    return base + (hovered ? HOVER_EXTRA_RADIUS : highlighted ? TARGET_EXTRA_RADIUS : 0);
   }
 
   function labelText(node) {
@@ -149,12 +313,12 @@
   }
 
   // ── 确定性布局（种子来自 VM id；update 保位、不 reheat）────────────────────
-  function computeLayout(vm, seed, width, height, prevPositions) {
+  function computeLayout(vm, seed, width, height, prevPositions, degreeInfo) {
     const shown = shownModel(vm);
     const ids = shown.nodes.map((n) => n.id).sort();
     const positions = new Map();
-    const radiusById = new Map(shown.nodes.map((n) => [n.id, nodeRadius(n)]));
-    const maxR = ids.reduce((m, id) => Math.max(m, radiusById.get(id) || KP_RADIUS), KP_RADIUS);
+    const radiusById = new Map(shown.nodes.map((n) => [n.id, nodeRadius(n, degreeInfo)]));
+    const maxR = ids.reduce((m, id) => Math.max(m, radiusById.get(id) || KP_BASE_RADIUS), KP_BASE_RADIUS);
     const cx = width / 2;
     const cy = height / 2;
     const count = Math.max(1, ids.length);
@@ -225,6 +389,8 @@
       this._edgeList = [];
       this._view = { width: 1, height: 1 };
       this._seed = Number.isFinite(options.layoutSeed) ? options.layoutSeed >>> 0 : null;
+      this._presentation = options.presentation || null;
+      this._degreeInfo = normalizedDegrees(this._presentation && this._presentation.degrees);
       this._hoverId = null;
       this._selection = null;
       this._disposed = false;
@@ -252,6 +418,28 @@
         reducedMotion: true,
         statusLabels: true,
       };
+    }
+
+    /**
+     * Presentation 元数据（degree 原值等）——**不进 VM**（S3-12 / A3-1）。
+     * 只用于视觉映射（连续半径/渐变/光晕），不参与 presence/裁剪。
+     */
+    setPresentation(presentation) {
+      this._presentation = presentation || null;
+      this._degreeInfo = normalizedDegrees(this._presentation && this._presentation.degrees);
+      if (this._nodeById && this._nodeById.size) {
+        const shown = { nodes: [...this._nodeById.values()], edges: this._edgeList };
+        const degreeInfo = this._degreeInfo;
+        const radiusById = new Map(shown.nodes.map((n) => [n.id, nodeRadius(n, degreeInfo)]));
+        this._radiusById = radiusById;
+        // 半径变化也更新布局间距的最小留白（位置本身保持以维持会话内保位）
+        if (this._ctx) this._draw();
+      }
+      return this._degreeInfo;
+    }
+
+    getPresentation() {
+      return this._presentation;
     }
 
     /** 渲染器不得读 `data_edge_ids`：输入只按白名单读取节点/边字段（源码静态检查）。 */
@@ -292,7 +480,7 @@
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
       this._seed = seed;
-      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, null);
+      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, null, this._degreeInfo);
       this._applyLayout(layout, model);
       this._bindPointer();
       this._draw();
@@ -309,7 +497,7 @@
       const height = this._measureHeight();
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
-      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep);
+      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo);
       const before = new Map(this._positions);
       this._applyLayout(layout, model);
       let moved = 0;
@@ -451,7 +639,7 @@
     _pickNode(x, y) {
       let best = null;
       for (const [id, p] of this._positions) {
-        const r = (this._radiusById && this._radiusById.get(id)) || KP_RADIUS;
+        const r = (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
         const d2 = (p.x - x) ** 2 + (p.y - y) ** 2;
         if (d2 <= r * r && (!best || d2 < best.d2)) best = { id, d2 };
       }
@@ -533,75 +721,112 @@
         ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
       }
       if (ctx.clearRect) { ctx.clearRect(0, 0, width, height); calls.clear += 1; }
-      // 边：只画 shown；suppressed/unknown 无视觉
+      // 旧 KGviz 画布背景 #0a0d13（A3-1）
+      if (ctx.fillRect) {
+        ctx.fillStyle = VISUAL.bg;
+        ctx.fillRect(0, 0, width, height);
+      }
+
+      const focusId = this._hoverId || this._highlightId || null;
+      const radiusOf = (id) => (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
+
+      // 边：只画 shown；旧线宽/透明度 + 箭头；hover/highlight 关联边高亮，其余变暗
       for (const edge of this._edgeList) {
         const ends = edgeEndpoints(edge.id);
         if (!ends) continue;
         const a = this._positions.get(ends.source);
         const b = this._positions.get(ends.target);
         if (!a || !b) continue;
-        const incident = this._hoverId && (ends.source === this._hoverId || ends.target === this._hoverId);
-        if (ctx.beginPath) {
-          ctx.beginPath();
-          ctx.moveTo(a.x, a.y);
-          ctx.lineTo(b.x, b.y);
-          ctx.strokeStyle = EDGE_COLORS[edge.type] || EDGE_COLORS.reference;
-          ctx.globalAlpha = incident ? 0.95 : 0.5;
-          ctx.lineWidth = incident ? 2.2 : 1.2;
-          if (ctx.stroke) ctx.stroke();
-          ctx.globalAlpha = 1;
-          calls.edges += 1;
-        }
+        const incident = !!focusId && (ends.source === focusId || ends.target === focusId);
+        const alpha = focusId ? (incident ? VISUAL.edgeAlphaActive : VISUAL.edgeAlphaDim) : VISUAL.edgeAlpha;
+        const lineWidth = incident ? VISUAL.edgeWidthActive : VISUAL.edgeWidth;
+        const padR = Math.max(radiusOf(ends.source), radiusOf(ends.target)) + (incident ? 2 : 0);
+        drawDirectedEdge(
+          ctx, a.x, a.y, b.x, b.y, padR,
+          EDGE_COLORS[edge.type] || EDGE_COLORS.reference,
+          lineWidth, alpha, VISUAL.arrowSize
+        );
+        calls.edges += 1;
       }
-      // 节点：S3 token；只画 shown
+
+      // 节点：旧 galaxy 星点（degree ratio → 颜色/光晕/半径加成）；只画 shown
+      const degreeMax = this._degreeInfo && this._degreeInfo.distinct.length
+        ? this._degreeInfo.distinct[this._degreeInfo.distinct.length - 1]
+        : 0;
       for (const node of this._nodeById.values()) {
         if (node.presence !== "shown") continue;
         const p = this._positions.get(node.id);
         if (!p) continue;
-        const r = (this._radiusById && this._radiusById.get(node.id)) || nodeRadius(node);
+        const baseR = radiusOf(node.id);
         const hovered = this._hoverId === node.id;
         const highlighted = this._highlightId === node.id;
-        if (ctx.beginPath) {
+        const dim = !!focusId && !hovered && !highlighted;
+        const r = visualRadius(node, this._degreeInfo, hovered, highlighted);
+        const degree = node.kind === "kp" ? this._degreeInfo?.map.get(node.id) : null;
+        const ratio = degreeMax && Number.isFinite(degree) ? Math.max(0, Math.min(1, degree / degreeMax)) : null;
+        let fill;
+        if (hovered) fill = VISUAL.nodeHover;
+        else if (highlighted) fill = VISUAL.nodeTarget;
+        else if (dim) fill = VISUAL.nodeDim;
+        else if (node.range_ok === false) fill = VISUAL.nodeInvalid;
+        else if (node.kind === "kp" && ratio != null) fill = galaxyColor(ratio);
+        else fill = VISUAL.node;
+        let halo = 0;
+        if (hovered) halo = 0.6;
+        else if (highlighted) halo = 0.4;
+        else if (dim) halo = 0.1;
+        else if (ratio != null) halo = 0.14 + ratio * 0.3;
+        else halo = 0.12;
+        if (node.kind === "kp") {
+          drawStar(ctx, p.x, p.y, r, fill, halo, VISUAL.glow);
+        } else if (ctx.beginPath) {
           ctx.beginPath();
           if (ctx.arc) ctx.arc(p.x, p.y, r, 0, TAU);
-          ctx.fillStyle = node.kind === "cluster" ? "#3d6ea8" : "#88a9c9";
-          if (node.range_ok === false) ctx.fillStyle = "#6b6b6b";
+          ctx.fillStyle = fill;
           if (ctx.fill) ctx.fill();
-          if ((hovered || highlighted) && ctx.stroke) {
-            ctx.strokeStyle = highlighted ? "#e5c07b" : "#ffffff";
-            ctx.lineWidth = highlighted ? 2.6 : 2;
-            ctx.stroke();
-          }
-          if (node.kind === "cluster" && ctx.stroke) {
-            ctx.strokeStyle = node.root_exempt ? "#e5c07b" : "#9cc4e6";
+          if (ctx.stroke && !dim) {
+            ctx.strokeStyle = node.root_exempt ? "#e5c07b" : withAlpha(VISUAL.node, 0.35);
             ctx.lineWidth = node.root_exempt ? 2.2 : 1.2;
             if (ctx.setLineDash && node.root_exempt) ctx.setLineDash([3, 2]);
             ctx.stroke();
             if (ctx.setLineDash) ctx.setLineDash([]);
           }
-          calls.nodes += 1;
+        }
+        if ((hovered || highlighted) && ctx.beginPath && ctx.arc && ctx.stroke) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r, 0, TAU);
+          ctx.strokeStyle = VISUAL.focus;
+          ctx.lineWidth = 2;
+          ctx.stroke();
         }
         if (node.kind === "cluster" && node.member_count != null && ctx.fillText) {
-          ctx.fillStyle = "#ffffff";
+          ctx.fillStyle = VISUAL.node;
           ctx.textAlign = "center";
           ctx.textBaseline = "middle";
-          ctx.font = "10px system-ui, sans-serif";
-          if (ctx.fillText) { ctx.fillText(String(node.member_count), p.x, p.y); calls.text += 1; }
+          ctx.font = VISUAL.labelFont;
+          ctx.fillText(String(node.member_count), p.x, p.y);
+          calls.text += 1;
         }
+        calls.nodes += 1;
       }
-      // 标签：复用旧 KGviz label LOD/避让（存在则用；否则全部显示）
+
+      // 标签：旧 KGviz LOD/避让 + 10px/halo（A3-1）
       const labelItems = [];
       for (const node of this._nodeById.values()) {
         if (node.presence !== "shown") continue;
         const p = this._positions.get(node.id);
         if (!p) continue;
+        const baseR = radiusOf(node.id);
+        const extra = node.id === this._hoverId ? HOVER_EXTRA_RADIUS : node.id === this._highlightId ? TARGET_EXTRA_RADIUS : 0;
         labelItems.push({
           id: node.id,
           text: labelText(node),
           x: p.x,
-          y: p.y + ((this._radiusById && this._radiusById.get(node.id)) || KP_RADIUS) + 4,
+          y: p.y + baseR + extra + 4,
           r: 0,
-          degree: node.kind === "cluster" ? Number(node.member_count) || 0 : 0,
+          degree: node.kind === "cluster"
+            ? Number(node.member_count) || 0
+            : Number(this._degreeInfo?.map.get(node.id)) || 0,
         });
       }
       let visible = labelItems;
@@ -612,12 +837,22 @@
         visible = labelItems.filter((it) => layout.visibleIds.has(it.id));
       }
       if (ctx.font && ctx.fillText) {
-        ctx.font = "10px system-ui, sans-serif";
+        ctx.font = VISUAL.labelFont;
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         for (const it of visible) {
-          ctx.fillStyle = "#d7e3f0";
-          if (ctx.fillText) { ctx.fillText(it.text, it.x, it.y); calls.labels += 1; }
+          const node = this._nodeById.get(it.id);
+          const hovered = it.id === this._hoverId;
+          const highlighted = it.id === this._highlightId;
+          ctx.lineWidth = VISUAL.labelHaloWidth;
+          ctx.strokeStyle = VISUAL.halo;
+          if (ctx.strokeText) ctx.strokeText(it.text, it.x, it.y);
+          if (hovered) ctx.fillStyle = VISUAL.nodeHover;
+          else if (highlighted) ctx.fillStyle = VISUAL.nodeTarget;
+          else if (node && node.range_ok === false) ctx.fillStyle = VISUAL.labelInvalid;
+          else ctx.fillStyle = VISUAL.label;
+          ctx.fillText(it.text, it.x, it.y);
+          calls.labels += 1;
         }
       }
       this.lastRender = {
@@ -633,6 +868,17 @@
         positions: this._positions.size,
         shownNodes: [...this._nodeById.values()].filter((n) => n.presence === "shown").length,
         shownEdges: this._edgeList.length,
+        visual: {
+          bg: VISUAL.bg,
+          labelFont: VISUAL.labelFont,
+          label: VISUAL.label,
+          halo: VISUAL.halo,
+          edgeColors: { ...EDGE_COLORS },
+          baseRadius: KP_BASE_RADIUS,
+          radiusMin: sizingRangeForBase(KP_BASE_RADIUS).min,
+          radiusMax: sizingRangeForBase(KP_BASE_RADIUS).max,
+          degrees: this._degreeInfo ? this._degreeInfo.map.size : 0,
+        },
       };
       this._drawCalls = calls;
     }
@@ -748,9 +994,12 @@
     MAX_NODES,
     MAX_EDGES,
     ANIMATION_MAX_MS,
-    KP_RADIUS,
+    KP_BASE_RADIUS,
+    HOVER_EXTRA_RADIUS,
+    TARGET_EXTRA_RADIUS,
     CLUSTER_MIN_RADIUS,
     CLUSTER_MAX_RADIUS,
+    VISUAL,
     EVENT_TYPES,
     VM_TOP_FIELDS,
     assertVm,
@@ -758,6 +1007,12 @@
     shownModel,
     clusterRadius,
     nodeRadius,
+    visualRadius,
+    radiusForDegree,
+    normalizedRankT,
+    sizingRangeForBase,
+    galaxyColor,
+    normalizedDegrees,
     computeLayout,
     fnv1a,
     EDGE_COLORS,

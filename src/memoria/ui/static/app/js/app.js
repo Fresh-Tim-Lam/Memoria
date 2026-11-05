@@ -2064,12 +2064,15 @@ async function call(fn, ...args) {
         container: host,
         backend: "2d",
         nav,
+        presentation: state.graphMultilevel.presentation,
         resolveFile: (nodeId) => multilevelPresentation().files?.[nodeId] || null,
       });
       state.graphMultilevel.mounted.renderer.on("hover", ({ node_id }) => updateMultilevelHint(node_id));
     }
     const vm = payload.vm;
     try {
+      // S3-ADDENDUM-3：degree 原值只经 Presentation 元数据喂给 Renderer（不进 VM）
+      state.graphMultilevel.mounted.setPresentation?.(state.graphMultilevel.presentation);
       if (opts.replace === true) state.graphMultilevel.mounted.renderer.render(host, vm);
       else state.graphMultilevel.mounted.update(vm, {});
     } catch (err) {

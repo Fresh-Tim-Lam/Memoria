@@ -62,6 +62,14 @@
       update(vm, opts) {
         return renderer.update(vm, opts);
       },
+      /** Presentation 元数据（degree 原值，不进 VM；S3-12/A3-1）转发给 Renderer。 */
+      setPresentation(presentation) {
+        if (typeof renderer.setPresentation === "function") return renderer.setPresentation(presentation);
+        return null;
+      },
+      getPresentation() {
+        return typeof renderer.getPresentation === "function" ? renderer.getPresentation() : null;
+      },
       destroy() {
         for (const off of unsubscribers) {
           try { off(); } catch (_) { /* noop */ }
