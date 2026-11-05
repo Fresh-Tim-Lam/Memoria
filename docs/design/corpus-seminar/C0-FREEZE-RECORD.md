@@ -50,3 +50,11 @@ O-C0-1 被删 URL 若需要再验；O-C0-2 真实 IAA/INCEpTION UTF-8；O-C0-3 �
 1. **pilot**：1 章 / 50 KP / 30 边 / 20 query，双人标注 + IAA + 裁决；
 2. 达线后：0.5 重跑 GATE-RET（graph 分型适用且 recall@5≥0.80）→ 再讨论 0.5 发布；
 3. 未达线：修订 C 系列/pilot 设计，0.5 继续 HOLD。
+
+## 6. 修订：C0-AMENDMENT-1（evaluation-first，2026-11-05）
+
+- C4/C5/C8/C9/C11 已由 `C0-AMENDMENT-1.md`（sha `1fc31cdc…`）替代；C0 v1 其余条款继续有效。
+- 原因：人裁定人类 KP 切分不可靠/培训成本巨大；改为候选生成 + 问题证据 judge + 呈现/任务指标；不再要求 gold KP/人类 IAA。
+- 语义边：仅在隔离 Tier-A 副本用 pilot-only harness；不写用户库/产品路径；0.5 仍 HOLD。
+- 记录：`C0-AMENDMENT-1-FREEZE-RECORD.md`、`C0-AMENDMENT-1-RULINGS.md`、决策 `dec-20261105-d3030e4c`。
+
