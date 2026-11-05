@@ -3248,16 +3248,19 @@ def _mlvm_presentation(datasource, vm) -> dict:
     S3-12：这些是 Presentation 侧信息，**不得进 VM**（VM 只放渲染所需白名单字段）。
     degree = 该 KP 在 DataSource 边集中出现的次数（作为 source 或 target 各计 1）。
     task-380：额外返回 Presentation-only `groups`（按文件/section 的 shown KP 分组）。
+    task-381：额外返回只读 `names`（kp_id → KP.name，fallback id），供 Renderer 标签。
     """
     vm_node_ids = {str(n["id"]) for n in (vm.get("nodes") or [])}
     degrees: dict[str, int] = {}
     files: dict[str, str] = {}
+    names: dict[str, str] = {}
 
     for kp in (getattr(datasource, "kps", ()) or ()):
         kp_id = str(kp.get("id") or "")
         if not kp_id or kp_id not in vm_node_ids:
             continue
         degrees[kp_id] = 0
+        names[kp_id] = str(kp.get("name") or kp.get("label") or kp_id)
         file_rel = kp.get("file")
         if file_rel:
             files[kp_id] = str(file_rel)
@@ -3274,6 +3277,7 @@ def _mlvm_presentation(datasource, vm) -> dict:
     return {
         "degrees": dict(sorted(degrees.items())),
         "files": dict(sorted(files.items())),
+        "names": dict(sorted(names.items())),
         "groups": _mlvm_groups(vm, files),
     }
 

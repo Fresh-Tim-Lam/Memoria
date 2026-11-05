@@ -98,7 +98,8 @@ def test_rpc_returns_exact_contract_shape(tmp_path: Path) -> None:
         "status", "vm", "presentation", "edition_sha", "frame_id",
         "rule_histogram", "suppressed_summary",
     }
-    assert set(result["presentation"]) == {"degrees", "files", "groups"}
+    # task-380：Presentation-only groups；task-381：只读 names（顶层契约仍 7 字段）
+    assert set(result["presentation"]) == {"degrees", "files", "names", "groups"}
 
 
 def test_vm_whitelist_strict(tmp_path: Path) -> None:

@@ -35,6 +35,11 @@
   const CLUSTER_MAX_RADIUS = 28;
   const TAU = Math.PI * 2;
   const GOLDEN_ANGLE = Math.PI * (3 - Math.sqrt(5));
+  // task-381：拖拽/平移/缩放
+  const DRAG_THRESHOLD_PX = 4;
+  const ZOOM_MIN = 0.35;
+  const ZOOM_MAX = 2.5;
+  const LABEL_MAX_CHARS = 18;
 
   const VISUAL = Object.freeze({
     bg: "#0a0d13",
@@ -271,8 +276,20 @@
     return base + (hovered ? HOVER_EXTRA_RADIUS : highlighted ? TARGET_EXTRA_RADIUS : 0);
   }
 
-  function labelText(node) {
-    return String(node.label == null ? node.id : node.label);
+  function truncateLabel(text, maxChars) {
+    const s = String(text == null ? "" : text).trim();
+    const max = Math.max(1, Number(maxChars) || LABEL_MAX_CHARS);
+    if (s.length <= max) return s;
+    return s.slice(0, Math.max(1, max - 1)) + "…";
+  }
+
+  function labelText(node, names) {
+    // task-381：Presentation.names 优先（只读），fallback node.label/id；超长截断。
+    const name = names && typeof names === "object" ? names[String(node.id)] : null;
+    const raw = (typeof name === "string" && name.trim())
+      ? name
+      : (node.label != null && String(node.label) !== String(node.id) ? node.label : node.id);
+    return truncateLabel(raw, LABEL_MAX_CHARS);
   }
 
   function assertVm(vm) {
@@ -333,6 +350,21 @@
     }
   }
 
+  // task-381：确定性力导向（repulsion + link + center + collision；固定 seed/tick）
+  const FORCE = Object.freeze({
+    repulsion: 5200,
+    linkDistance: 96,
+    linkStrength: 0.22,
+    centerStrength: 0.008,
+    collisionPad: 10,
+    velocityDecay: 0.82,
+    alphaMin: 0.012,
+    alphaDecay: 0.955,
+    ticks: 140,
+    dragTicks: 70,
+    maxVelocity: 18,
+  });
+
   // ── 确定性布局（种子来自 VM id；focus 居中 + 邻居多臂环形；update 保位）────
   function computeLayout(vm, seed, width, height, prevPositions, degreeInfo, focusId) {
     const shown = shownModel(vm);
@@ -387,6 +419,156 @@
     return { positions, radiusById, shown, width, height };
   }
 
+  /**
+   * task-381：确定性力导向（旧 KGviz 的“自由作用力”观感）。
+   * - repulsion（全对斥力）+ link attraction（shown 边）+ center + 圆碰撞；
+   * - 固定 tick/alpha 衰减，无随机数 ⇒ 同输入 2× 结果一致；
+   * - focus 初始固定在面板中心（保留可读性），邻居自由展开；
+   * - pinned 节点保持当前位置（拖拽 pin）。
+   */
+  function runForceLayout(positions, radiusById, links, focusId, width, height, opts = {}) {
+    const ids = [...positions.keys()].sort();
+    if (!ids.length) return positions;
+    const pinned = new Set(opts.pinned || []);
+    const pinFocusCenter = opts.pinFocusCenter !== false;
+    if (focusId && positions.has(focusId) && pinFocusCenter) {
+      pinned.add(focusId);
+      positions.set(focusId, { x: width / 2, y: height / 2 });
+    }
+    const cx = width / 2;
+    const cy = height / 2;
+    const pad = Math.max(24, Math.max(...ids.map((id) => radiusById.get(id) || KP_BASE_RADIUS)) + 8);
+    const vx = new Map(ids.map((id) => [id, 0]));
+    const vy = new Map(ids.map((id) => [id, 0]));
+    const linkList = links.filter((l) => positions.has(l.source) && positions.has(l.target));
+    let alpha = Number.isFinite(opts.alpha) ? opts.alpha : 1;
+    const ticks = Math.max(1, Number(opts.ticks) || FORCE.ticks);
+    for (let tick = 0; tick < ticks; tick++) {
+      const fx = new Map(ids.map((id) => [id, 0]));
+      const fy = new Map(ids.map((id) => [id, 0]));
+      for (let i = 0; i < ids.length; i++) {
+        const a = ids[i];
+        const pa = positions.get(a);
+        const ra = radiusById.get(a) || KP_BASE_RADIUS;
+        for (let j = i + 1; j < ids.length; j++) {
+          const b = ids[j];
+          const pb = positions.get(b);
+          const rb = radiusById.get(b) || KP_BASE_RADIUS;
+          let dx = pb.x - pa.x;
+          let dy = pb.y - pa.y;
+          let dist = Math.hypot(dx, dy);
+          if (dist < 1e-6) {
+            // 完全重合时用确定性 id 顺序轻微错开，避免 NaN/堆叠
+            dx = (a < b ? 1 : -1) * 0.5;
+            dy = 0.5;
+            dist = Math.hypot(dx, dy);
+          }
+          const ux = dx / dist;
+          const uy = dy / dist;
+          const minDist = ra + rb + FORCE.collisionPad;
+          if (dist < minDist) {
+            const push = (minDist - dist) * 0.5;
+            if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * push); fy.set(a, fy.get(a) - uy * push); }
+            if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * push); fy.set(b, fy.get(b) + uy * push); }
+          }
+          const rep = FORCE.repulsion / Math.max(64, dist * dist);
+          if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * rep); fy.set(a, fy.get(a) - uy * rep); }
+          if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
+        }
+      }
+      for (const link of linkList) {
+        const a = positions.get(link.source);
+        const b = positions.get(link.target);
+        let dx = b.x - a.x;
+        let dy = b.y - a.y;
+        let dist = Math.hypot(dx, dy);
+        if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
+        const ux = dx / dist;
+        const uy = dy / dist;
+        const f = (dist - (link.distance || FORCE.linkDistance)) * (link.strength || FORCE.linkStrength) * alpha;
+        if (!pinned.has(link.source)) { fx.set(link.source, fx.get(link.source) + ux * f); fy.set(link.source, fy.get(link.source) + uy * f); }
+        if (!pinned.has(link.target)) { fx.set(link.target, fx.get(link.target) - ux * f); fy.set(link.target, fy.get(link.target) - uy * f); }
+      }
+      for (const id of ids) {
+        if (pinned.has(id)) continue;
+        const p = positions.get(id);
+        fx.set(id, fx.get(id) + (cx - p.x) * FORCE.centerStrength * alpha);
+        fy.set(id, fy.get(id) + (cy - p.y) * FORCE.centerStrength * alpha);
+        const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (vx.get(id) + fx.get(id) * alpha) * FORCE.velocityDecay));
+        const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (vy.get(id) + fy.get(id) * alpha) * FORCE.velocityDecay));
+        vx.set(id, nvx);
+        vy.set(id, nvy);
+        p.x = Math.max(pad, Math.min(width - pad, p.x + nvx));
+        p.y = Math.max(pad, Math.min(height - pad, p.y + nvy));
+      }
+      alpha = Math.max(FORCE.alphaMin, alpha * FORCE.alphaDecay);
+    }
+    return positions;
+  }
+
+  function forceLinksFor(shownEdges) {
+    const links = [];
+    for (const edge of shownEdges) {
+      const ends = edgeEndpoints(edge.id);
+      if (!ends) continue;
+      // task-381：不同边给不同目标距/强度（仍由 edge id 确定性派生），
+      // 避免 hub-star 语料收敛成完美圆环，保留旧 KGviz 的“自由作用力”非对称观感。
+      const h = fnv1a(String(edge.id));
+      links.push({
+        source: ends.source,
+        target: ends.target,
+        distance: FORCE.linkDistance + ((h % 72) - 36),
+        strength: FORCE.linkStrength * (0.75 + ((h >>> 8) % 50) / 100),
+      });
+    }
+    links.sort((a, b) => `${a.source}|${a.target}`.localeCompare(`${b.source}|${b.target}`));
+    return links;
+  }
+
+  function makeSeededRandom(seed) {
+    let a = seed >>> 0;
+    return function seededRandom() {
+      a = (a + 0x6d2b79f5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+
+  function computeForceLayout(vm, seed, width, height, degreeInfo, focusId, opts = {}) {
+    const shown = shownModel(vm);
+    const ids = shown.nodes.map((n) => n.id).sort();
+    const radiusById = new Map(shown.nodes.map((n) => [n.id, nodeRadius(n, degreeInfo)]));
+    const positions = new Map();
+    const focus = focusId && ids.includes(String(focusId)) ? String(focusId) : null;
+    const maxR = ids.reduce((m, id) => Math.max(m, radiusById.get(id) || KP_BASE_RADIUS), KP_BASE_RADIUS);
+    const cx = width / 2;
+    const cy = height / 2;
+    const maxRing = Math.max(60, Math.min(width - 2 * maxR - 40, height - 2 * maxR - 56) / 2);
+    // 固定 seed + id 排序 → 初始散点确定；力导向把散点收敛成自由布局（不是环形）
+    const rand = makeSeededRandom((fnv1a(`${seed}|${ids.join("|")}`) ^ 0x9e3779b9) >>> 0);
+    const others = ids.filter((id) => id !== focus);
+    if (focus) positions.set(focus, { x: cx, y: cy });
+    for (const id of others) {
+      const angle = rand() * TAU;
+      const radius = maxRing * (0.30 + rand() * 0.70);
+      positions.set(id, { x: cx + Math.cos(angle) * radius, y: cy + Math.sin(angle) * radius });
+    }
+    const pinned = new Set(opts.pinned || []);
+    if (opts.prevPositions) {
+      for (const id of pinned) {
+        if (opts.prevPositions.has(id) && positions.has(id)) positions.set(id, { ...opts.prevPositions.get(id) });
+      }
+    }
+    const links = forceLinksFor(shown.edges);
+    runForceLayout(positions, radiusById, links, focus, width, height, {
+      pinned,
+      pinFocusCenter: true,
+      ticks: opts.ticks || FORCE.ticks,
+    });
+    return { positions, radiusById, shown, width, height };
+  }
+
   function defaultHost(doc) {
     return {
       createCanvas(width, height) {
@@ -407,8 +589,8 @@
           try { container.removeChild(canvas); } catch (_) { /* noop */ }
         }
       },
-      on(canvas, type, handler) {
-        if (canvas && typeof canvas.addEventListener === "function") canvas.addEventListener(type, handler);
+      on(canvas, type, handler, options) {
+        if (canvas && typeof canvas.addEventListener === "function") canvas.addEventListener(type, handler, options);
       },
       off(canvas, type, handler) {
         if (canvas && typeof canvas.removeEventListener === "function") canvas.removeEventListener(type, handler);
@@ -459,6 +641,12 @@
       this._selection = null;
       this._disposed = false;
       this._bound = [];
+      // task-381：camera + 本视图 pin/拖拽状态
+      this._camera = { x: 0, y: 0, scale: 1 };
+      this._userAdjusted = false;
+      this._drag = null;
+      this._suppressClick = false;
+      this._pinned = new Set();
       this.lastRender = null;
       this.lastError = null;
     }
@@ -560,13 +748,96 @@
       return hidden;
     }
 
+    // ── task-381：camera / pan / zoom / fit ───────────────────────────────
+    _screenToWorld(x, y) {
+      const c = this._camera;
+      const s = c.scale || 1;
+      return { x: (x - c.x) / s, y: (y - c.y) / s };
+    }
+
+    _worldToScreen(x, y) {
+      const c = this._camera;
+      const s = c.scale || 1;
+      return { x: x * s + c.x, y: y * s + c.y };
+    }
+
+    getViewState() {
+      return {
+        x: this._camera.x,
+        y: this._camera.y,
+        scale: this._camera.scale,
+        userAdjusted: this._userAdjusted,
+        pinned: [...this._pinned],
+      };
+    }
+
+    /** 显式 reset（不清 pinned；双击空白/外部按钮可调用）。 */
+    resetView() {
+      this._camera = { x: 0, y: 0, scale: 1 };
+      this._userAdjusted = false;
+      if (this._ctx) this._draw();
+      return this.getViewState();
+    }
+
+    /** 显式 fit：按 shown 节点 bbox 适配容器；手动操作后不再自动调用。 */
+    fitView(padding) {
+      if (!this._positions.size || !this._view.width || !this._view.height) return this.getViewState();
+      const pad = Number.isFinite(padding) ? padding : 28;
+      const xs = [];
+      const ys = [];
+      for (const [id, p] of this._positions) {
+        if (this._hiddenMemberIds().has(id)) continue;
+        xs.push(p.x);
+        ys.push(p.y);
+      }
+      if (!xs.length) return this.getViewState();
+      const minX = Math.min(...xs);
+      const maxX = Math.max(...xs);
+      const minY = Math.min(...ys);
+      const maxY = Math.max(...ys);
+      const bw = Math.max(1, maxX - minX);
+      const bh = Math.max(1, maxY - minY);
+      const scale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, Math.min(
+        (this._view.width - 2 * pad) / bw,
+        (this._view.height - 2 * pad) / bh,
+        1.0
+      )));
+      const cx = (minX + maxX) / 2;
+      const cy = (minY + maxY) / 2;
+      this._camera = {
+        x: this._view.width / 2 - cx * scale,
+        y: this._view.height / 2 - cy * scale,
+        scale,
+      };
+      this._userAdjusted = false;
+      if (this._ctx) this._draw();
+      return this.getViewState();
+    }
+
+    /** task-381：滚轮以指针为中心缩放；手动后 userAdjusted=true，后续不自动 fit。 */
+    _onWheel(event) {
+      if (!event) return;
+      if (typeof event.preventDefault === "function") event.preventDefault();
+      const { x, y } = this._point(event);
+      const world = this._screenToWorld(x, y);
+      const delta = Number(event.deltaY) || 0;
+      const factor = Math.exp(-delta * 0.0015);
+      const scale = Math.max(ZOOM_MIN, Math.min(ZOOM_MAX, this._camera.scale * factor));
+      if (scale === this._camera.scale) return;
+      this._camera.scale = scale;
+      this._camera.x = x - world.x * scale;
+      this._camera.y = y - world.y * scale;
+      this._userAdjusted = true;
+      if (this._ctx) this._draw();
+    }
+
     /** 渲染器不得读 `data_edge_ids`：输入只按白名单读取节点/边字段（源码静态检查）。 */
     _project(vm) {
       assertVm(vm);
       const nodes = vm.nodes.map((n) => ({
         id: String(n.id),
         kind: n.kind,
-        label: labelText(n),
+        label: labelText(n, this._presentation && this._presentation.names),
         role: n.role,
         member_count: n.member_count,
         aggregate_count: n.aggregate_count,
@@ -605,7 +876,11 @@
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
       this._seed = seed;
-      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, null, this._degreeInfo, this._focusNodeId);
+      const layout = computeForceLayout(
+        { nodes: model.nodes, edges: model.edges }, seed, width, height,
+        this._degreeInfo, this._focusNodeId,
+        { pinned: this._pinned, prevPositions: this._positions }
+      );
       this._layoutFocusId = this._focusNodeId;
       this._applyLayout(layout, model);
       this._syncGroups();
@@ -632,7 +907,13 @@
       const height = this._measureHeight();
       this._ensureCanvas(width, height);
       const seed = this._seed == null ? fnv1a(vm.view_model_id || "vm") : this._seed;
-      const layout = computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo, this._focusNodeId);
+      const layout = (opts.relayout === true || focusChanged)
+        ? computeForceLayout(
+          { nodes: model.nodes, edges: model.edges }, seed, width, height,
+          this._degreeInfo, this._focusNodeId,
+          { pinned: this._pinned, prevPositions: this._positions }
+        )
+        : computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo, this._focusNodeId);
       const before = new Map(this._positions);
       this._applyLayout(layout, model);
       this._layoutFocusId = this._focusNodeId;
@@ -822,37 +1103,46 @@
     _bindPointer() {
       if (!this.host || !this._canvas || !this.host.on) return;
       if (this._bound.length) return;
+      const down = (event) => this._onPointerDown(event);
       const move = (event) => this._onPointerMove(event);
+      const up = (event) => this._onPointerUp(event);
+      const cancel = (event) => this._onPointerUp(event);
+      const wheel = (event) => this._onWheel(event);
       const click = (event) => {
-        // 真实浏览器 click 优先；CDP/无 click 环境由 mouseup 兜底（见下方 up）
         this._clickSeenAt = Date.now();
         this._onPointerClick(event);
       };
-      const up = (event) => {
-        const { x, y } = this._point(event);
-        const mark = `${x},${y}`;
-        if (this._pendingUp === mark) return;
-        this._pendingUp = mark;
-        // click 通常在 mouseup 同步随后到达；若未到达则兜底触发一次
-        setTimeout(() => {
-          this._pendingUp = null;
-          if (this._clickSeenAt && Date.now() - this._clickSeenAt < 300) return;
-          this._onPointerClick(event);
-        }, 0);
-      };
-      this.host.on(this._canvas, "pointermove", move);
-      this.host.on(this._canvas, "mousemove", move);
-      this.host.on(this._canvas, "click", click);
-      this.host.on(this._canvas, "mouseup", up);
       const dbl = (event) => this._onPointerDblClick(event);
+      this.host.on(this._canvas, "pointerdown", down);
+      this.host.on(this._canvas, "pointermove", move);
+      this.host.on(this._canvas, "pointerup", up);
+      this.host.on(this._canvas, "pointercancel", cancel);
+      this.host.on(this._canvas, "wheel", wheel, { passive: false });
+      this.host.on(this._canvas, "click", click);
       this.host.on(this._canvas, "dblclick", dbl);
       this._bound.push(
+        [this._canvas, "pointerdown", down],
         [this._canvas, "pointermove", move],
-        [this._canvas, "mousemove", move],
+        [this._canvas, "pointerup", up],
+        [this._canvas, "pointercancel", cancel],
+        [this._canvas, "wheel", wheel],
         [this._canvas, "click", click],
-        [this._canvas, "mouseup", up],
         [this._canvas, "dblclick", dbl]
       );
+      // 旧环境无 PointerEvent 时提供 mouse 兜底（真实 Chromium 只走 pointer）
+      if (!global.PointerEvent && this.host.on) {
+        const mdown = (event) => this._onPointerDown(event);
+        const mmove = (event) => this._onPointerMove(event);
+        const mup = (event) => this._onPointerUp(event);
+        this.host.on(this._canvas, "mousedown", mdown);
+        this.host.on(this._canvas, "mousemove", mmove);
+        this.host.on(this._canvas, "mouseup", mup);
+        this._bound.push(
+          [this._canvas, "mousedown", mdown],
+          [this._canvas, "mousemove", mmove],
+          [this._canvas, "mouseup", mup]
+        );
+      }
     }
 
     _point(event) {
@@ -894,9 +1184,60 @@
       return best ? best.edge : null;
     }
 
+    _onPointerDown(event) {
+      if (!this._ctx) return;
+      if (event && event.button != null && event.button !== 0) return;
+      const screen = this._point(event);
+      const world = this._screenToWorld(screen.x, screen.y);
+      const node = this._pickNode(world.x, world.y);
+      const p = node ? this._positions.get(node.id) : null;
+      if (!node && !this._hasLayout()) return;
+      if (event && typeof event.preventDefault === "function") event.preventDefault();
+      if (node && this._canvas && typeof this._canvas.setPointerCapture === "function" && event && event.pointerId != null) {
+        try { this._canvas.setPointerCapture(event.pointerId); } catch (_) { /* noop */ }
+      }
+      this._drag = {
+        mode: node ? "node" : "pan",
+        nodeId: node ? node.id : null,
+        startX: screen.x,
+        startY: screen.y,
+        lastX: screen.x,
+        lastY: screen.y,
+        startWorld: p ? { x: p.x, y: p.y } : null,
+        startCamera: { ...this._camera },
+        moved: false,
+        pointerId: event && event.pointerId != null ? event.pointerId : null,
+      };
+      if (node) this._hoverId = node.id;
+    }
+
     _onPointerMove(event) {
-      const { x, y } = this._point(event);
-      const node = this._pickNode(x, y);
+      const screen = this._point(event);
+      const drag = this._drag;
+      if (drag) {
+        const dx = screen.x - drag.startX;
+        const dy = screen.y - drag.startY;
+        if (!drag.moved && Math.hypot(dx, dy) < DRAG_THRESHOLD_PX) return;
+        drag.moved = true;
+        if (drag.mode === "node" && drag.nodeId && drag.startWorld) {
+          const scale = this._camera.scale || 1;
+          this._positions.set(drag.nodeId, {
+            x: drag.startWorld.x + dx / scale,
+            y: drag.startWorld.y + dy / scale,
+          });
+          this._pinned.add(drag.nodeId);
+        } else if (drag.mode === "pan") {
+          this._camera.x = drag.startCamera.x + dx;
+          this._camera.y = drag.startCamera.y + dy;
+          this._userAdjusted = true;
+        }
+        drag.lastX = screen.x;
+        drag.lastY = screen.y;
+        if (this._ctx) this._draw();
+        return;
+      }
+      const world = this._screenToWorld(screen.x, screen.y);
+      const node = this._pickNode(world.x, world.y);
       const id = node ? node.id : null;
       if (id !== this._hoverId) {
         this._hoverId = id;
@@ -905,15 +1246,54 @@
       }
     }
 
+    _onPointerUp(event) {
+      const drag = this._drag;
+      if (!drag) return;
+      this._drag = null;
+      if (drag.moved) {
+        // 拖拽超过阈值：抑制随后的 click（不触发 focus/选中）
+        this._suppressClick = true;
+        setTimeout(() => { this._suppressClick = false; }, 300);
+        if (drag.mode === "node") this._settleForceAfterDrag();
+      }
+      if (this._canvas && typeof this._canvas.releasePointerCapture === "function" && drag.pointerId != null) {
+        try { this._canvas.releasePointerCapture(drag.pointerId); } catch (_) { /* noop */ }
+      }
+      if (this._ctx) this._draw();
+      if (event && typeof event.preventDefault === "function" && drag.moved) event.preventDefault();
+    }
+
+    /** task-381：拖拽 pin 后重加热力导向，让邻居继续收敛（不是拖完就死）。 */
+    _settleForceAfterDrag() {
+      if (!this._positions.size || !this._radiusById) return;
+      const links = forceLinksFor(this._edgeList);
+      runForceLayout(
+        this._positions, this._radiusById, links, null,
+        this._view.width, this._view.height,
+        { pinned: this._pinned, pinFocusCenter: false, ticks: FORCE.dragTicks, alpha: 1 }
+      );
+      this._lastForceTicks = FORCE.dragTicks;
+      if (this._ctx) this._draw();
+    }
+
     _onPointerClick(event) {
+      if (this._suppressClick) {
+        this._suppressClick = false;
+        return;
+      }
       const { x, y } = this._point(event);
       this.handlePointClick(x, y, event?.shiftKey ? { shift: true } : {});
     }
 
     _onPointerDblClick(event) {
       const { x, y } = this._point(event);
-      const node = this._pickNode(x, y);
-      if (!node) return;
+      const world = this._screenToWorld(x, y);
+      const node = this._pickNode(world.x, world.y);
+      if (!node) {
+        // 双击空白 = fit（显式操作；符合 userAdjusted 门控）
+        this.fitView();
+        return;
+      }
       const payload = { node_id: node.id, kind: node.kind };
       this._emit("nodeDblClick", payload);
     }
@@ -931,6 +1311,10 @@
     }
 
     handlePointClick(x, y, extra = {}) {
+      // 公开入口接收屏幕坐标；内部命中一律世界坐标（camera 变换）
+      const world = this._screenToWorld(x, y);
+      x = world.x;
+      y = world.y;
       const node = this._pickNode(x, y);
       if (node) {
         const payload = { node_id: node.id, kind: node.kind, ...extra };
@@ -994,6 +1378,15 @@
       if (ctx.fillRect) {
         ctx.fillStyle = VISUAL.bg;
         ctx.fillRect(0, 0, width, height);
+      }
+      // task-381：camera（pan/zoom）只影响世界层；背景/命中坐标单独换算
+      const cam = this._camera;
+      const applyCamera = typeof ctx.translate === "function" && typeof ctx.scale === "function"
+        && (cam.x !== 0 || cam.y !== 0 || cam.scale !== 1);
+      if (applyCamera) {
+        ctx.save();
+        ctx.translate(cam.x, cam.y);
+        ctx.scale(cam.scale, cam.scale);
       }
 
       const focusId = this._hoverId || this._highlightId || null;
@@ -1205,6 +1598,7 @@
           calls.labels += 1;
         }
       }
+      if (applyCamera && ctx.restore) ctx.restore();
       this.lastRender = {
         nodes: calls.nodes,
         edges: calls.edges,
@@ -1222,6 +1616,11 @@
         collapsedGroups: [...this._collapsedGroups],
         focusNode: this._focusNodeId,
         hiddenMembers: hidden.size,
+        camera: { ...this._camera },
+        userAdjusted: this._userAdjusted,
+        pinned: [...this._pinned],
+        layoutMode: "force",
+        forceTicks: this._lastForceTicks || FORCE.ticks,
         visual: {
           bg: VISUAL.bg,
           labelFont: VISUAL.labelFont,

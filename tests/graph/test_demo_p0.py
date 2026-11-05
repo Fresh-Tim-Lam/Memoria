@@ -75,7 +75,12 @@ def test_presentation_groups_only_and_cover_shown() -> None:
     assert {n.get("kind") for n in vm["nodes"]} == {"kp"}
     assert all("group" not in n and "groups" not in n for n in vm["nodes"])
     # 其它 Pres 字段照旧
-    assert set(pres) >= {"degrees", "files", "groups"}
+    assert set(pres) >= {"degrees", "files", "names", "groups"}
+    # task-381：只读 names 覆盖 VM 内 KP；不回写 VM
+    names = pres.get("names") or {}
+    assert names and set(names) == {str(n["id"]) for n in vm["nodes"] if n.get("kind") == "kp"}
+    assert all(isinstance(v, str) and v.strip() for v in names.values())
+    assert all("name" not in n for n in vm["nodes"]), "names 不得进 VM"
 
 
 def test_explicit_focus_still_wins_and_changes_frame() -> None:

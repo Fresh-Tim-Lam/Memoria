@@ -29,6 +29,11 @@ def test_demo_renderer_node_suite() -> None:
         "focus_switch_recenters_and_relayouts",
         "deferred_first_render_waits_for_layout_not_800_fallback",
         "resize_recomputes_layout_and_canvas_px",
+        "force_layout_is_not_radial_ring_and_deterministic",
+        "labels_use_presentation_names_and_truncate",
+        "node_drag_pins_position_without_relayout",
+        "blank_pan_moves_camera_only",
+        "wheel_zoom_about_pointer_and_fit_reset",
     ):
         assert required in names
 
@@ -63,5 +68,12 @@ def test_renderer_presentation_groups_are_not_vm_fields() -> None:
     assert "ResizeObserver" in src
     assert 'style.width = `${' in src
     assert "_onContainerResize" in src
+    # task-381：力导向 + 指针拖拽/平移/缩放 + names 标签
+    assert "computeForceLayout" in src and "runForceLayout" in src
+    assert "FORCE" in src and "pinFocusCenter" in src
+    assert "pointerdown" in src and "wheel" in src
+    assert "setPointerCapture" in src or "pointerId" in src
+    assert "presentation.names" in src or "this._presentation && this._presentation.names" in src
+    assert "truncateLabel" in src
     # 不把 group 写成 VM cluster kind
     assert "kind: \"cluster\"" not in src[src.find("function normalizeGroups"): src.find("function normalizeGroups") + 1200]

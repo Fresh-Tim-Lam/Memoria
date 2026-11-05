@@ -23,7 +23,7 @@ function makeCtx() {
     moveTo() {}, lineTo() {}, arc() {}, rect() {}, stroke() { this.strokeStyles.push(this.strokeStyle); this.strokeAlphas.push(this.globalAlpha); },
     fill() { this.fillStyles.push(this.fillStyle); }, fillText() { this.fonts.push(this.font); this.fillStyles.push(this.fillStyle); },
     strokeText() { this.fonts.push(this.font); this.strokeStyles.push(this.strokeStyle); },
-    save() {}, restore() {}, setLineDash() {}, measureText(t) { return { width: String(t).length * 6 }; },
+    save() {}, restore() {}, translate() {}, scale() {}, setLineDash() {}, measureText(t) { return { width: String(t).length * 6 }; },
     createRadialGradient() { return { addColorStop() {} }; },
   };
 }
@@ -125,7 +125,7 @@ function run() {
 }
 
 async function runAsync(ctx) {
-  const { vm, presentation, hub } = ctx;
+  const { vm, presentation, hub, shown } = ctx;
   await checkAsync("deferred_first_render_waits_for_layout_not_800_fallback", async () => {
     const host = makeHost();
     // 首帧容器尚未布局（0×0），稍后变成真实 325×583
@@ -179,6 +179,120 @@ async function runAsync(ctx) {
     assert.strictEqual(r._canvas.style.height, "500px", "尺寸变化后 CSS 高未更新");
     const focusPos = r._positions.get(hub);
     assert.ok(Math.abs(focusPos.x - 120) < 1 && Math.abs(focusPos.y - 250) < 1, `resize 后未重新居中：${JSON.stringify(focusPos)}`);
+    r.dispose();
+  });
+
+  check("labels_use_presentation_names_and_truncate", () => {
+    const host = makeHost();
+    const r = new Adapter.Renderer2D({ clientWidth: 325, clientHeight: 520 }, { host, presentation });
+    r.setFocusNode(hub);
+    r.render({ clientWidth: 325, clientHeight: 520 }, vm);
+    assert.strictEqual(r._nodeById.get("kp-022").label, "macroeconomics", "标签未优先使用 presentation.names");
+    const longNode = [...r._nodeById.values()].find((n) => presentation.names[n.id] && presentation.names[n.id].length > 18);
+    assert.ok(longNode, "fixture 缺超长名称样例");
+    assert.ok(longNode.label.length <= 18, `超长标签未截断：${longNode.label}`);
+    assert.ok(longNode.label.endsWith("…"), "截断未加省略号");
+    assert.strictEqual(r._nodeById.get(hub).label.includes("kp-022"), false, "标签仍显示 id");
+    r.dispose();
+  });
+
+  check("force_layout_is_not_radial_ring_and_deterministic", () => {
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const r1 = new Adapter.Renderer2D(container, { host, presentation });
+    r1.setFocusNode(hub);
+    r1.render(container, vm);
+    const ctr = r1._positions.get(hub);
+    const radii = [...r1._positions.entries()]
+      .filter(([id]) => id !== hub)
+      .map(([, p]) => Math.hypot(p.x - ctr.x, p.y - ctr.y));
+    const spreadR = Math.max(...radii) - Math.min(...radii);
+    assert.ok(spreadR > 10, `力导向仍近似等半径环：radii=${radii.map((x) => x.toFixed(1))}`);
+    assert.ok(new Set(radii.map((x) => Math.round(x))).size >= 3, "邻居半径缺乏自由度");
+
+    const host2 = makeHost();
+    const r2 = new Adapter.Renderer2D(container, { host: host2, presentation });
+    r2.setFocusNode(hub);
+    r2.render(container, vm);
+    for (const id of [...r1._positions.keys()].sort()) {
+      const a = r1._positions.get(id);
+      const b = r2._positions.get(id);
+      assert.ok(Math.abs(a.x - b.x) < 1e-9 && Math.abs(a.y - b.y) < 1e-9, `2× 力导向结果不一致：${id}`);
+    }
+    assert.strictEqual(r1.lastRender.layoutMode, "force");
+    r1.dispose(); r2.dispose();
+  });
+
+  check("node_drag_pins_position_without_relayout", () => {
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const r = new Adapter.Renderer2D(container, { host, presentation });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    const start = { ...r._positions.get(hub) };
+    const beforeCamera = { ...r._camera };
+    const otherId = shown.find((id) => id !== hub);
+    const otherBefore = { ...r._positions.get(otherId) };
+    const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 1, preventDefault() {} };
+    r._onPointerDown(base);
+    r._onPointerMove({ ...base, clientX: start.x + 40, clientY: start.y + 22 });
+    const moved = r._positions.get(hub);
+    assert.ok(Math.abs(moved.x - (start.x + 40)) < 0.01 && Math.abs(moved.y - (start.y + 22)) < 0.01, "节点拖拽未更新位置");
+    assert.ok(r._pinned.has(hub), "拖拽后未 pin");
+    assert.deepStrictEqual(r._camera, beforeCamera, "节点拖拽不应改变 camera");
+    r._onPointerUp(base);
+    assert.strictEqual(r._drag, null);
+    // 拖拽松手后力导向重加热：其它节点继续收敛，dragged 节点保持 pin
+    const otherAfter = r._positions.get(otherId);
+    assert.ok(Math.hypot(otherAfter.x - otherBefore.x, otherAfter.y - otherBefore.y) > 0.01, "松手后邻居未继续力导向收敛");
+    const draggedAfter = r._positions.get(hub);
+    assert.ok(Math.hypot(draggedAfter.x - moved.x, draggedAfter.y - moved.y) < 1e-6, "拖拽节点 pin 未保持");
+    // 拖拽后的 click 被抑制，不触发 focus
+    let clicks = 0;
+    r.on("nodeClick", () => { clicks += 1; });
+    r._onPointerClick({ ...base, clientX: moved.x, clientY: moved.y });
+    assert.strictEqual(clicks, 0, "拖拽后 click 未抑制");
+    r.dispose();
+  });
+
+  check("blank_pan_moves_camera_only", () => {
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const r = new Adapter.Renderer2D(container, { host, presentation });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    const posBefore = new Map([...r._positions].map(([id, p]) => [id, { ...p }]));
+    const base = { clientX: 6, clientY: 6, button: 0, pointerId: 2, preventDefault() {} };
+    r._onPointerDown(base);
+    r._onPointerMove({ ...base, clientX: 46, clientY: 26 });
+    assert.strictEqual(r._camera.x, 40);
+    assert.strictEqual(r._camera.y, 20);
+    assert.strictEqual(r._userAdjusted, true);
+    for (const [id, p] of r._positions) {
+      assert.ok(Math.abs(p.x - posBefore.get(id).x) < 1e-9 && Math.abs(p.y - posBefore.get(id).y) < 1e-9, "pan 不应移动节点坐标");
+    }
+    r._onPointerUp(base);
+    r.dispose();
+  });
+
+  check("wheel_zoom_about_pointer_and_fit_reset", () => {
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const r = new Adapter.Renderer2D(container, { host, presentation });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    const beforeWorld = r._screenToWorld(100, 120);
+    r._onWheel({ clientX: 100, clientY: 120, deltaY: -240, preventDefault() {} });
+    assert.ok(r._camera.scale > 1, "滚轮未放大");
+    assert.strictEqual(r._userAdjusted, true);
+    const afterWorld = r._screenToWorld(100, 120);
+    assert.ok(Math.abs(afterWorld.x - beforeWorld.x) < 0.01 && Math.abs(afterWorld.y - beforeWorld.y) < 0.01, "缩放未以指针为中心");
+    const fitted = r.fitView();
+    assert.ok(fitted.scale > 0);
+    assert.strictEqual(r._userAdjusted, false);
+    const reset = r.resetView();
+    assert.strictEqual(reset.scale, 1);
+    assert.strictEqual(reset.x, 0);
     r.dispose();
   });
 }
