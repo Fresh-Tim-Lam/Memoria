@@ -2007,13 +2007,22 @@ async function call(fn, ...args) {
     current.snapshot = mounted.renderer.captureViewState();
     // 同一画布不是硬切：父层这个 A 以幽灵节点留在画布上，连到子图入口
     const posMap = new Map((current.snapshot.positions || []).map(([id, p]) => [String(id), p]));
+    // task-391 回归修复：父视图把该组折叠时，成员是 hidden（RenderScene 正确过滤，不写快照），
+    // 快照里只有折叠组节点 `group:<gid>`。此时幽灵位置取该组节点坐标；只有父视图确实
+    // 展开了组、存在成员位置时，才退回成员质心（旧行为）。
+    const groupNodePos = posMap.get(`group:${String(groupId)}`);
     const memberPositions = (group.member_ids || [])
       .map((id) => posMap.get(String(id)))
       .filter(Boolean);
-    const ghost = memberPositions.length ? {
+    const ghostAnchor = groupNodePos || (memberPositions.length ? {
       x: memberPositions.reduce((a, p) => a + p.x, 0) / memberPositions.length,
       y: memberPositions.reduce((a, p) => a + p.y, 0) / memberPositions.length,
-      radius: Math.min(26, Math.max(12, 10 + 2 * Math.log2(memberPositions.length + 1))),
+    } : null);
+    const ghostMemberCount = memberPositions.length || (group.member_ids || []).length;
+    const ghost = ghostAnchor ? {
+      x: ghostAnchor.x,
+      y: ghostAnchor.y,
+      radius: Math.min(26, Math.max(12, 10 + 2 * Math.log2(ghostMemberCount + 1))),
       label: title,
       targetId: multilevelHighestDegreeNode(childVm, childPresentation),
     } : null;
