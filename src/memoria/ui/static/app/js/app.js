@@ -1906,6 +1906,10 @@ async function call(fn, ...args) {
     return g.drill;
   }
 
+  /**
+   * task-391 rev17（人的裁决）：drillbar 只保留面包屑；**返回唯一入口 = 画布上的节点 A（幽灵）**，
+   * 不再生成第二个「← 返回」按钮（`backMultilevelView()` 仍保留，供节点 A / 面包屑使用）。
+   */
   function ensureMultilevelDrillbar(host) {
     if (!host) return null;
     let bar = host.querySelector(".graph-multilevel-drillbar");
@@ -1915,8 +1919,6 @@ async function call(fn, ...args) {
       bar.setAttribute("role", "navigation");
       bar.setAttribute("aria-label", T("graph.multilevel.legendTitle"));
       bar.innerHTML =
-        `<button type="button" class="graph-multilevel-back" aria-label="${esc(T("toolbar.back.title"))}">` +
-        `<span aria-hidden="true">←</span><span class="graph-multilevel-back-text">${esc(T("toolbar.back.title"))}</span></button>` +
         `<nav class="graph-multilevel-crumbs" aria-label="${esc(T("graph.multilevel.legendTitle"))}"></nav>`;
       host.appendChild(bar);
     }
@@ -1930,12 +1932,7 @@ async function call(fn, ...args) {
     const drill = state.graphMultilevel?.drill;
     const stack = drill?.stack || [];
     const depth = Math.max(0, stack.length - 1);
-    const back = bar.querySelector(".graph-multilevel-back");
-    if (back) {
-      back.hidden = depth <= 0;
-      back.disabled = depth <= 0;
-      back.onclick = () => backMultilevelView();
-    }
+    // task-391 rev17：不再有「← 返回」按钮；返回唯一入口 = 节点 A（幽灵）。
     const crumbs = bar.querySelector(".graph-multilevel-crumbs");
     if (crumbs) {
       crumbs.innerHTML = stack.map((entry, i) =>

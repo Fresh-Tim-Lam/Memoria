@@ -1,13 +1,13 @@
 /**
- * L0_1 折叠容器 → 进入子图 → backgroundGhost 回归（task-391 rev12）。
+ * L0_1 æŠ˜å å®¹å™¨ â†’ è¿›å…¥å­å›¾ â†’ backgroundGhost å›žå½’ï¼ˆtask-391 rev12ï¼‰ã€‚
  *
- * 真实应用页面 + 真实 Edge，CDP `Input` 域受信任拖拽：
- *   1) 父视图把 container 组折叠成簇节点（`group:demo:L0_1`），成员 node-001 隐藏；
- *   2) 真实点击簇节点进入子图；
- *   3) 断言 child view `getPositions()` 同时有 node-001 与 ghost:A（修复前 ghost=null）；
- *   4) 拖 KP → ghost 位移>0；拖 ghost → KP 位移>0；全程单画布。
+ * çœŸå®žåº”ç”¨é¡µé¢ + çœŸå®ž Edgeï¼ŒCDP `Input` åŸŸå—ä¿¡ä»»æ‹–æ‹½ï¼š
+ *   1) çˆ¶è§†å›¾æŠŠ container ç»„æŠ˜å æˆç°‡èŠ‚ç‚¹ï¼ˆ`group:demo:L0_1`ï¼‰ï¼Œæˆå‘˜ node-001 éšè—ï¼›
+ *   2) çœŸå®žç‚¹å‡»ç°‡èŠ‚ç‚¹è¿›å…¥å­å›¾ï¼›
+ *   3) æ–­è¨€ child view `getPositions()` åŒæ—¶æœ‰ node-001 ä¸Ž ghost:Aï¼ˆä¿®å¤å‰ ghost=nullï¼‰ï¼›
+ *   4) æ‹– KP â†’ ghost ä½ç§»>0ï¼›æ‹– ghost â†’ KP ä½ç§»>0ï¼›å…¨ç¨‹å•ç”»å¸ƒã€‚
  *
- * 由 `tests/graph/ui/test_l0_1_ghost_enter.py` 起 harness 后调用：
+ * ç”± `tests/graph/ui/test_l0_1_ghost_enter.py` èµ· harness åŽè°ƒç”¨ï¼š
  *   node l0_1_ghost_enter.test.mjs --url http://127.0.0.1:<port>/ --out <json>
  */
 import fs from "node:fs";
@@ -57,7 +57,7 @@ function toScreen(snap, p) {
 }
 function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
 
-/** 在两个圆可能重叠时，取离另一节点更远的圆周点，保证 pointerdown 命中目标节点。 */
+/** åœ¨ä¸¤ä¸ªåœ†å¯èƒ½é‡å æ—¶ï¼Œå–ç¦»å¦ä¸€èŠ‚ç‚¹æ›´è¿œçš„åœ†å‘¨ç‚¹ï¼Œä¿è¯ pointerdown å‘½ä¸­ç›®æ ‡èŠ‚ç‚¹ã€‚ */
 function pickTarget(snap, targetId, otherId) {
   const t = snap.positions[targetId];
   const o = snap.positions[otherId];
@@ -82,10 +82,10 @@ try {
   await withBrowser(URL, async (cdp, ix) => {
     await cdp.waitFor("!!window.MemoriaApp", { timeout: 90000, label: "MemoriaApp" });
     await cdp.waitFor(`(() => { const s=window.MemoriaApp.state; return !!(s && s.kbPath); })()`, { timeout: 90000, label: "kbPath" }).catch(() => null);
-    // 侧栏若自动折叠：真实点击展开（否则图谱宿主宽 0，画布不布局）
+    // ä¾§æ è‹¥è‡ªåŠ¨æŠ˜å ï¼šçœŸå®žç‚¹å‡»å±•å¼€ï¼ˆå¦åˆ™å›¾è°±å®¿ä¸»å®½ 0ï¼Œç”»å¸ƒä¸å¸ƒå±€ï¼‰
     const side = await cdp.evalJS(`(() => { const el=document.querySelector('#-sidebar'); const r=el?el.getBoundingClientRect():null; const btn=document.querySelector('#btn-toggle-sidebar'); const br=btn?btn.getBoundingClientRect():null; return { w:r?Math.round(r.width):null, toggle: br&&br.width>1?{x:br.left+br.width/2,y:br.top+br.height/2}:null }; })()`);
     if (side.w != null && side.w < 10 && side.toggle) { await ix.click(side.toggle.x, side.toggle.y); await sleep(500); }
-    // 切换到 2D 图谱并加载数据（等价用户打开图谱）
+    // åˆ‡æ¢åˆ° 2D å›¾è°±å¹¶åŠ è½½æ•°æ®ï¼ˆç­‰ä»·ç”¨æˆ·æ‰“å¼€å›¾è°±ï¼‰
     await cdp.evalJS(`(() => { document.querySelector('[data-sidebar-tab="graph2d"]').click(); return true; })()`);
     await sleep(400);
     const load = await cdp.evalJS(`(async () => { try { await window.MemoriaApp.loadGraphData(); return { ok: true }; } catch (e) { return { ok: false, reason: String((e && e.message) || e) }; } })()`);
@@ -97,12 +97,12 @@ try {
     await sleep(900);
     await stopAnim(cdp);
 
-    // 父视图：container 组应已折叠成簇节点，成员不在 scene（可以点簇进入子图）
+    // çˆ¶è§†å›¾ï¼šcontainer ç»„åº”å·²æŠ˜å æˆç°‡èŠ‚ç‚¹ï¼Œæˆå‘˜ä¸åœ¨ sceneï¼ˆå¯ä»¥ç‚¹ç°‡è¿›å…¥å­å›¾ï¼‰
     let parent = await cdp.evalJS(SNAP);
     const parentHasCluster = !!(parent && parent.positions[GROUP_NODE]);
     const parentHasKp = !!(parent && parent.positions[KP_ID]);
     if (!parentHasCluster) {
-      // 兜底（正常 container 组会自动折叠）：显式折叠，仍走真实 pointerdown 进入
+      // å…œåº•ï¼ˆæ­£å¸¸ container ç»„ä¼šè‡ªåŠ¨æŠ˜å ï¼‰ï¼šæ˜¾å¼æŠ˜å ï¼Œä»èµ°çœŸå®ž pointerdown è¿›å…¥
       await cdp.evalJS(`(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; if (!r.isGroupCollapsed || !r.isGroupCollapsed(${JSON.stringify(GROUP_ID)})) r.toggleGroup(${JSON.stringify(GROUP_ID)}); return true; })()`);
       await sleep(500);
       await stopAnim(cdp);
@@ -116,9 +116,9 @@ try {
       canvasCount: parent ? parent.canvasCount : null,
       groupNode: parent && parent.positions[GROUP_NODE] ? parent.positions[GROUP_NODE] : null,
     });
-    if (!parent.positions[GROUP_NODE]) throw new Error("父视图缺折叠簇节点 " + GROUP_NODE);
+    if (!parent.positions[GROUP_NODE]) throw new Error("çˆ¶è§†å›¾ç¼ºæŠ˜å ç°‡èŠ‚ç‚¹ " + GROUP_NODE);
 
-    // 真实点击簇 → app 内 groupClick → enterMultilevelGroup（160ms 后切子图）
+    // çœŸå®žç‚¹å‡»ç°‡ â†’ app å†… groupClick â†’ enterMultilevelGroupï¼ˆ160ms åŽåˆ‡å­å›¾ï¼‰
     const clusterPoint = toScreen(parent, parent.positions[GROUP_NODE]);
     await ix.click(clusterPoint.x, clusterPoint.y);
     await cdp.waitFor(
@@ -139,10 +139,44 @@ try {
       canvasCount: child ? child.canvasCount : null,
       parentGroupNode: parent.positions[GROUP_NODE],
     });
-    if (!childHasKp || !childHasGhost) throw new Error("进入子图后未同时存在 node-001 与 ghost:A");
+    if (!childHasKp || !childHasGhost) throw new Error("è¿›å…¥å­å›¾åŽæœªåŒæ—¶å­˜åœ¨ node-001 ä¸Ž ghost:A");
 
-    // ③ 跨层虚线（本轮回归）：ghost → 子图入口节点，必须真实画出一条 dashed connector；
-    //    且它不是数据边（edge 统计/edge 列表不变）。
+    // â‘¢ drillbarï¼ˆrev17 äººçš„è£å†³ï¼‰ï¼šåªä¿ç•™é¢åŒ…å±‘ï¼Œä¸å¾—å†æœ‰ã€Œâ† è¿”å›žã€æŒ‰é’®ï¼›è¿”å›žå”¯ä¸€å…¥å£ = èŠ‚ç‚¹ Aã€‚
+    const drillbar = await cdp.evalJS(`(() => {
+      const bar = document.querySelector('#graph-2d-multilevel-root .graph-multilevel-drillbar');
+      if (!bar) return { ok: false, reason: 'no drillbar' };
+      const crumbs = [...bar.querySelectorAll('.graph-multilevel-crumb')].map((b) => (b.textContent || '').trim());
+      const buttons = [...bar.querySelectorAll('button')].map((b) => (b.textContent || '').trim());
+      return {
+        ok: true,
+        hidden: !!bar.hidden,
+        crumbs,
+        buttons,
+        hasBackClass: !!bar.querySelector('.graph-multilevel-back'),
+        hasArrow: buttons.some((t) => t.includes('â†')),
+        text: (bar.textContent || '').trim(),
+      };
+    })()`);
+    const shotPath = arg("shot", "");
+    let screenshot = null;
+    if (shotPath) {
+      try {
+        await cdp.send("Page.enable", {});
+        const shot = await cdp.send("Page.captureScreenshot", { format: "png" });
+        fs.mkdirSync(path.dirname(shotPath), { recursive: true });
+        fs.writeFileSync(shotPath, Buffer.from(shot.data, "base64"));
+        screenshot = shotPath;
+      } catch (e) {
+        screenshot = "ERROR: " + String((e && e.message) || e);
+      }
+    }
+    evidence.steps.push({ step: "drillbar-no-back", ...drillbar, screenshot });
+    const drillbarOk = !!(drillbar && drillbar.ok && !drillbar.hidden
+      && drillbar.crumbs.some((t) => String(t).startsWith("L0_1"))
+      && !drillbar.hasBackClass && !drillbar.hasArrow);
+
+    // â‘¢ è·¨å±‚è™šçº¿ï¼ˆæœ¬è½®å›žå½’ï¼‰ï¼šghost â†’ å­å›¾å…¥å£èŠ‚ç‚¹ï¼Œå¿…é¡»çœŸå®žç”»å‡ºä¸€æ¡ dashed connectorï¼›
+    //    ä¸”å®ƒä¸æ˜¯æ•°æ®è¾¹ï¼ˆedge ç»Ÿè®¡/edge åˆ—è¡¨ä¸å˜ï¼‰ã€‚
     const conn = await cdp.evalJS(`(() => {
       const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
       const ctx = r._ctx;
@@ -197,7 +231,7 @@ try {
       connectorOk,
     });
 
-    // ① 拖 KP → ghost 位移 > 0
+    // â‘  æ‹– KP â†’ ghost ä½ç§» > 0
     const kpFrom = pickTarget(child, KP_ID, "ghost:A");
     const kpTo = { x: kpFrom.x + 64, y: kpFrom.y + 34 };
     await ix.drag(kpFrom, kpTo, { steps: 14, settleMs: 16 });
@@ -214,7 +248,7 @@ try {
       ghostFrom: child.positions["ghost:A"], ghostTo: afterKp.positions["ghost:A"],
     });
 
-    // ② 拖 ghost → KP 位移 > 0
+    // â‘¡ æ‹– ghost â†’ KP ä½ç§» > 0
     const gFrom = pickTarget(afterKp, "ghost:A", KP_ID);
     const gTo = { x: gFrom.x - 72, y: gFrom.y - 30 };
     await ix.drag(gFrom, gTo, { steps: 14, settleMs: 16 });
@@ -235,6 +269,7 @@ try {
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
       ghostConnectorDrawn: connectorOk,
+      drillbarOnlyCrumbsNoBack: drillbarOk,
       dragKpMovedGhost: ghostMoved > 0.01,
       dragGhostMovedKp: kpMoved2 > 0.01,
       singleCanvas: afterGhost.canvasCount === 1 && parent.canvasCount === 1 && child.canvasCount === 1,

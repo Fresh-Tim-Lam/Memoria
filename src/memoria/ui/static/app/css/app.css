@@ -8279,18 +8279,8 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
     border-radius: 4px;
 }
 .graph-multilevel-drillbar[hidden] { display: none; }
-.graph-multilevel-back {
-    font: 10px system-ui, sans-serif;
-    color: #f0f6fc;
-    background: rgba(88, 166, 255, 0.16);
-    border: 1px solid rgba(88, 166, 255, 0.45);
-    border-radius: 3px;
-    padding: 1px 4px;
-    cursor: pointer;
-}
-.graph-multilevel-back[hidden] { display: none; }
-.graph-multilevel-back-text { display: none; }
-.graph-multilevel-back:focus-visible, .graph-multilevel-crumb:focus-visible {
+/* task-391 rev17：drillbar 只保留面包屑（返回唯一入口 = 节点 A 幽灵），不再有「← 返回」按钮样式。 */
+.graph-multilevel-crumb:focus-visible {
     outline: 2px solid #58a6ff;
     outline-offset: 1px;
 }

@@ -77,13 +77,17 @@ def test_drilldown_and_back_controls() -> None:
         "goToMultilevelDepth",
         "captureViewState",
         "restoreViewState",
-        "graph-multilevel-back",
         "graph-multilevel-crumb",
+        "graph-multilevel-crumbs",
     ):
         assert token in app, f"缺少下钻/返回实现：{token}"
-    assert 'aria-label="${esc(T("toolbar.back.title"))}"' in app, "返回按钮缺少可访问名称"
+    # task-391 rev17（人的裁决）：drillbar 不再有「← 返回」按钮；返回唯一入口 = 节点 A（幽灵）。
+    assert "graph-multilevel-back" not in app, "drillbar 仍生成返回按钮（应只有节点 A 作为返回入口）"
+    assert "backMultilevelView" in app, "backMultilevelView 必须保留（节点 A / 面包屑使用）"
+    assert 'aria-label="${esc(T("toolbar.back.title"))}"' not in app, "返回按钮可访问名称仍残留"
     css = (APP / "css/app.css").read_text(encoding="utf-8")
-    assert ".graph-multilevel-back[hidden]" in css
+    assert ".graph-multilevel-back" not in css, "返回按钮 CSS 仍残留"
+    assert ".graph-multilevel-crumb:focus-visible" in css
     assert ":focus-visible" in css
     assert "setFocusNode?.(focusId)" in app, "Renderer 未拿到 focus（布局不居中）"
     assert 'graph.multilevel' in app
