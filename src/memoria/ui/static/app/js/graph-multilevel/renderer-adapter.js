@@ -1756,11 +1756,25 @@
       const y = Number(ghost.y);
       if (!Number.isFinite(x) || !Number.isFinite(y)) return;
       const radius = Number(ghost.radius) || 20;
+      let gx = Number(ghost.x);
+      let gy = Number(ghost.y);
+      // 父层幽灵与子图入口如果落到同一坐标，会看起来像“两个节点重合”。
+      // 保持连接线语义，但把幽灵移开一个稳定偏移，确保两个节点可同时辨认。
+      if (target && ctx.arc) {
+        const targetRadius = (this._radiusById && this._radiusById.get(String(ghost.targetId))) || 8;
+        const dx = gx - target.x;
+        const dy = gy - target.y;
+        const minDist = radius + targetRadius + 36;
+        if (Math.hypot(dx, dy) < minDist) {
+          gx = target.x - 120;
+          gy = target.y - 100;
+        }
+      }
       // 跨层连接线（不进入 _edgeList，不参与数据边统计）
       if (target && ctx.beginPath && ctx.moveTo && ctx.lineTo && ctx.stroke) {
         ctx.save?.();
         ctx.beginPath();
-        ctx.moveTo(x, y);
+        ctx.moveTo(gx, gy);
         ctx.lineTo(target.x, target.y);
         ctx.strokeStyle = "rgba(88,166,255,0.55)";
         ctx.lineWidth = 1.4;
@@ -1772,7 +1786,7 @@
       // 背景幽灵：半透明六边形，表示上一站入口
       ctx.save?.();
       if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
-      drawHexagon(ctx, x, y, radius);
+      drawHexagon(ctx, gx, gy, radius);
       ctx.fillStyle = "rgba(240,246,252,0.16)";
       if (ctx.fill) ctx.fill();
       ctx.strokeStyle = "rgba(240,246,252,0.85)";
@@ -1786,7 +1800,7 @@
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillStyle = "#f0f6fc";
-        ctx.fillText(String(ghost.label || ""), x, y + radius + 4);
+        ctx.fillText(String(ghost.label || ""), gx, gy + radius + 4);
       }
     }
 
