@@ -179,7 +179,8 @@
   function normalizeGroups(presentation) {
     const raw = Array.isArray(presentation && presentation.groups) ? presentation.groups : [];
     // 单组且仅 1 个成员 ⇒ 它就是这唯一节点，不应再画“组节点 + 成员”两个东西。
-    const singleMemberOnly = raw.length === 1 && (raw[0].member_ids || []).length === 1;
+    // 显式 container（demo L0_1）例外：容器即使只有 1 个成员也要显示。
+    const singleMemberOnly = raw.length === 1 && (raw[0].member_ids || []).length === 1 && !raw[0].container;
     return raw
       .map((g) => ({
         group_id: String(g.group_id || ""),
@@ -189,8 +190,10 @@
         member_ids: Array.isArray(g.member_ids) ? g.member_ids.map(String) : [],
         count: Number(g.count) || (Array.isArray(g.member_ids) ? g.member_ids.length : 0),
         presentation_only: true,
+        container: g.container === true,
+        empty_container: g.empty_container === true,
       }))
-      .filter((g) => g.group_id && g.member_ids.length >= (singleMemberOnly ? 2 : 1))
+      .filter((g) => g.group_id && (g.container || g.member_ids.length >= (singleMemberOnly ? 2 : 1)))
       .sort((a, b) => (a.file || a.group_id).localeCompare(b.file || b.group_id));
   }
 
@@ -843,6 +846,10 @@
         ...g,
         member_ids: g.member_ids.filter((id) => shown.has(id)),
       })).filter((g) => g.member_ids.length);
+      // 显式 demo 容器（如 L0_1）默认折叠：当前层只显示容器节点，成员进入子图后才显示
+      for (const g of this._groups) {
+        if (g.container) this._collapsedGroups.add(g.group_id);
+      }
       for (const id of [...this._collapsedGroups]) {
         if (!this._groups.some((g) => g.group_id === id)) this._collapsedGroups.delete(id);
       }

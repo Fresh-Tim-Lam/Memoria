@@ -3205,13 +3205,15 @@ def _mlvm_default_focus(datasource, kp_ids: tuple[str, ...]) -> str:
     return sorted(degree.items(), key=lambda kv: (-kv[1], kv[0]))[0][0]
 
 
-def _mlvm_groups(vm, files: dict[str, str]) -> list[dict]:
+def _mlvm_groups(vm, files: dict[str, str], kb_path: str = "") -> list[dict]:
     """**Presentation-only** 文件/section 分组（task-380 裁决 ②）。
 
     - 只对 VM 内 `presence=shown` 的 KP 分组（不伪造 cluster kind、不进 VM、不写 sidecar）；
     - `file`/`section` 来自 DataSource 的 KP.file（只读）；
-    - `presentation_only=true`：UI 可折叠展示，但**不是 S2 cluster**。
+    - `presentation_only=true`：UI 可折叠展示，但**不是 S2 cluster**；
+    - `.memoria/demo-groups.json`（仅 dev demo）可覆盖为显式容器组，如 L0_1。
     """
+    import json as _json
     import os as _os
 
     shown_ids = []
@@ -3221,6 +3223,29 @@ def _mlvm_groups(vm, files: dict[str, str]) -> list[dict]:
         if (node.get("presence") or "shown") != "shown":
             continue
         shown_ids.append(str(node["id"]))
+    if kb_path:
+        demo_path = _os.path.join(kb_path, ".memoria", "demo-groups.json")
+        if _os.path.isfile(demo_path):
+            try:
+                raw = _json.loads(open(demo_path, encoding="utf-8").read())
+            except Exception:
+                raw = {}
+            groups = []
+            for item in (raw.get("groups") or []):
+                members = [str(x) for x in (item.get("member_ids") or []) if str(x) in set(shown_ids)]
+                groups.append({
+                    "group_id": str(item.get("group_id") or ""),
+                    "file": str(item.get("file") or ""),
+                    "section": str(item.get("section") or item.get("label") or item.get("group_id") or ""),
+                    "member_ids": members,
+                    "count": len(members),
+                    "presentation_only": True,
+                    "container": True,
+                    "empty_container": bool(item.get("empty_container")),
+                })
+            groups = [g for g in groups if g["group_id"]]
+            if groups:
+                return groups
     by_file: dict[str, list[str]] = {}
     for kid in sorted(shown_ids):
         file_rel = str(files.get(kid) or "")
@@ -3242,7 +3267,7 @@ def _mlvm_groups(vm, files: dict[str, str]) -> list[dict]:
     return groups
 
 
-def _mlvm_presentation(datasource, vm) -> dict:
+def _mlvm_presentation(datasource, vm, kb_path: str = "") -> dict:
     """从**同一只读 DataSource** 算 `degrees`/`files`；只返回 VM 内 KP 节点的子集。
 
     S3-12：这些是 Presentation 侧信息，**不得进 VM**（VM 只放渲染所需白名单字段）。
@@ -3278,7 +3303,7 @@ def _mlvm_presentation(datasource, vm) -> dict:
         "degrees": dict(sorted(degrees.items())),
         "files": dict(sorted(files.items())),
         "names": dict(sorted(names.items())),
-        "groups": _mlvm_groups(vm, files),
+        "groups": _mlvm_groups(vm, files, kb_path),
     }
 
 
@@ -3393,7 +3418,7 @@ def _mlvm_build(kb_path: str, params: dict) -> dict:
     return {
         "status": "ok",
         "vm": vm,
-        "presentation": _mlvm_presentation(datasource, vm),
+        "presentation": _mlvm_presentation(datasource, vm, kb_path),
         "edition_sha": _mlvm_edition_sha(kb_path, datasource),
         "frame_id": frame_spec.canonical_sha(),     # = sha256(canonical(S4_FRAME_SPEC))
         "rule_histogram": dict(admission.rule_histogram),
