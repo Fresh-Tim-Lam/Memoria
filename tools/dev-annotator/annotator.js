@@ -2,7 +2,10 @@
 // Injected through WebView2 CDP; not part of the product build.
 // Multi-annotation: every saved annotation gets a numbered marker and an editable row.
 (() => {
-  if (window.__MEMORIA_ANNOTATOR__) return;
+  if (window.__MEMORIA_ANNOTATOR__) {
+    window.__MEMORIA_ANNOTATOR__.ensureMounted?.();
+    return;
+  }
   const KEY = 'memoria.dev.annotations.v1';
   const state = {
     active: false,
@@ -95,6 +98,16 @@
   outline.className = 'outline';
   outline.style.display = 'none';
   (document.body || document.documentElement).appendChild(outline);
+
+  // 自愈：若页面框架重写 body/documentElement 把宿主摘掉，自动挂回。
+  function ensureMounted() {
+    if (!host.isConnected) (document.body || document.documentElement).appendChild(host);
+    if (!outline.isConnected) (document.body || document.documentElement).appendChild(outline);
+  }
+  try {
+    new MutationObserver(ensureMounted).observe(document.documentElement, { childList: true, subtree: true });
+  } catch (_) { /* noop */ }
+  setInterval(ensureMounted, 1500);
 
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   function selectorOf(el) {
@@ -292,5 +305,6 @@
   window.__MEMORIA_ANNOTATOR__ = {
     toggle: () => setActive(!state.active),
     items: () => state.items.slice(),
+    ensureMounted,
   };
 })();

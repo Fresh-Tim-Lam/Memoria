@@ -7,6 +7,7 @@ from __future__ import annotations
 
 import json
 import os
+import socket
 import sys
 import threading
 import time
@@ -17,23 +18,57 @@ sys.path.insert(0, str(ROOT / "src"))
 
 import webview  # noqa: E402
 
-WEBVIEW_PORT = int(os.environ.get("MEMORIA_CDP_PORT", "9222"))
+
+def _pick_port() -> int:
+    """Prefer an explicit port; otherwise take a fresh free port.
+
+    A fixed 9222/9223-style port is the usual reason the board attaches to a stale
+    WebView2 target or fails to attach at all.
+    """
+    raw = os.environ.get("MEMORIA_CDP_PORT", "").strip()
+    if raw:
+        return int(raw)
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.bind(("127.0.0.1", 0))
+        return int(s.getsockname()[1])
+    finally:
+        s.close()
+
+
+WEBVIEW_PORT = _pick_port()
 webview.settings.data["REMOTE_DEBUGGING_PORT"] = WEBVIEW_PORT
+PORT_PATH = ROOT / "artifacts" / "dev-cdp-port.txt"
+LOG_PATH = ROOT / "artifacts" / "dev-annotator-inject.log"
+
+
+def _log(message: str) -> None:
+    try:
+        LOG_PATH.parent.mkdir(parents=True, exist_ok=True)
+        with LOG_PATH.open("a", encoding="utf-8") as fh:
+            fh.write(time.strftime("[%Y-%m-%d %H:%M:%S] ") + message + "\n")
+    except Exception:
+        pass
 
 
 def _auto_inject_annotator() -> None:
     if os.environ.get("MEMORIA_NO_ANNOTATOR") == "1":
+        _log("disabled by MEMORIA_NO_ANNOTATOR=1")
         return
     try:
         import requests
         import websocket
-    except Exception:
+    except Exception as exc:
+        _log(f"missing dependency: {exc!r}")
         return
     js_path = Path(__file__).with_name("annotator.js")
     if not js_path.is_file():
+        _log("annotator.js missing")
         return
     js = js_path.read_text(encoding="utf-8")
     url = f"http://127.0.0.1:{WEBVIEW_PORT}/json"
+    last_error = ""
+    _log(f"waiting for CDP port {WEBVIEW_PORT}")
     for _ in range(160):
         try:
             targets = requests.get(url, timeout=1).json()
@@ -47,7 +82,8 @@ def _auto_inject_annotator() -> None:
             if not pages:
                 pages = [t for t in targets if t.get("type") == "page" and t.get("webSocketDebuggerUrl")]
             if pages:
-                ws = websocket.create_connection(pages[0]["webSocketDebuggerUrl"], timeout=5)
+                target = pages[0]
+                ws = websocket.create_connection(target["webSocketDebuggerUrl"], timeout=5)
                 expr = "(() => { " + js + " })()"
                 ws.send(json.dumps({"id": 1, "method": "Runtime.evaluate", "params": {"expression": expr, "awaitPromise": False}}))
                 ws.recv()
@@ -63,16 +99,24 @@ def _auto_inject_annotator() -> None:
                 ws.send(json.dumps({"id": 3, "method": "Page.addScriptToEvaluateOnNewDocument", "params": {"source": src}}))
                 ws.recv()
                 ws.close()
+                _log(f"injected into {target.get('url')}")
                 return
-        except Exception:
-            pass
+        except Exception as exc:
+            last_error = repr(exc)
         time.sleep(0.5)
+    _log(f"injection failed after retries: {last_error}")
 
 
 if __name__ == "__main__":
     os.environ.setdefault("MEMORIA_MODE", "dev")
     os.environ.setdefault("MEMORIA_SHELL", "pywebview")
     os.environ.setdefault("MEMORIA_DEBUG", "1")
+    try:
+        PORT_PATH.parent.mkdir(parents=True, exist_ok=True)
+        PORT_PATH.write_text(str(WEBVIEW_PORT), encoding="utf-8")
+    except Exception:
+        pass
+    _log(f"launch KB={os.environ.get('MEMORIA_KB', '')} CDP={WEBVIEW_PORT}")
     threading.Thread(target=_auto_inject_annotator, daemon=True).start()
     from memoria.app.desktop import main
 
