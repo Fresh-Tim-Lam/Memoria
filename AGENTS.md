@@ -20,6 +20,9 @@
 
 ## 0.5 Lead 派发不变量（**每次对话强制注入，违反即返工**）
 
+> **规范总索引（M0–M7）**：[docs/conventions/norm-index.md](docs/conventions/norm-index.md)。
+> 本清单只是 L1–L10 摘要，不替代原文；**上下文压缩/换 Agent 后先读索引第 0 节**，再按触发条件读原文。
+>
 > 设计依据（2026-10-24 复盘）：**写在文档里靠"记住"的规范，遵守率就是随机数**；
 > 只有"让违规在物理上做不到"的规则才稳定生效。
 > 完整规范按触发条件分节读：**[lead-dispatch-rules.md](docs/guides/lead-dispatch-rules.md)**

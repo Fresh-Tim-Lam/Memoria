@@ -4,7 +4,7 @@
 
 > **Purpose**: `conventions/` holds **binding conventions** — rules that both humans and machines must follow (syntax, formatting, directory layout, versioning, logging, documentation management, meta-rules). File names are lowercase kebab-case.
 > **Target readers**: Project owner (the user) and AI Agents (consult the relevant convention before creating or modifying code or documentation).
-> **Related docs**: [meta-rules.md](./meta-rules.md) (meta-rules for writing conventions); [docs-management.md](./docs-management.md) (rules for organizing docs).
+> **Related docs**: [norm-index.md](./norm-index.md) (M0–M7 top-level norm index); [meta-rules.md](./meta-rules.md) (meta-rules for writing conventions); [docs-management.md](./docs-management.md) (rules for organizing docs).
 
 ---
 
@@ -12,6 +12,7 @@
 
 | Convention | Content | Who must follow |
 |------|------|---------|
+| [norm-index.md](./norm-index.md) | **Meta-norm index (M0–M7)**: hierarchy, trigger map, context-compaction reload order, change process | Project owner, Lead, every teammate/Agent |
 | [meta-rules.md](./meta-rules.md) | Meta-rules for how to discuss and author conventions | All convention authors |
 | [docs-management.md](./docs-management.md) | Rules for organizing docs/ (subdirectory responsibilities, registration, lifecycle) | Everyone (including AI Agents) |
 | [directory-organization.md](./directory-organization.md) | Top-level directory responsibilities and placement of temporary files | Everyone (including AI Agents) |

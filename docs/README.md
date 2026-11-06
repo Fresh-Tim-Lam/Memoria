@@ -46,6 +46,7 @@ All other documents must go into one of the subdirectories in the table above; a
 
 | I want to… | Look here |
 |-------|--------|
+| Find the top-level rules / recover norms after context compaction | [conventions/norm-index.md](conventions/norm-index.md) |
 | Check the current version / bump the version | [conventions/version.md](conventions/version.md) |
 | Decide where a file goes | [conventions/directory-organization.md](conventions/directory-organization.md) |
 | Add a new docs subdirectory | [conventions/docs-management.md](conventions/docs-management.md#4-自维护机制) |

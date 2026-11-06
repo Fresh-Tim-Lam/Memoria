@@ -4,7 +4,7 @@
 
 > **Purpose**: `guides/` holds **how-to guides** — steps and methods for completing specific workflows (collaboration practices, the knowledge-base production pipeline, development/release operations). Aimed at those carrying out the work.
 > **Target readers**: Project owner (the user) and AI Agents (read the relevant guide before running a specific workflow).
-> **Related docs**: [docs-management.md](../conventions/docs-management.md) (rules for organizing docs); [meta-rules.md](../conventions/meta-rules.md) (meta-rules for writing conventions).
+> **Related docs**: [norm-index.md](../conventions/norm-index.md) (M0–M7 top-level norm index + compaction reload order); [docs-management.md](../conventions/docs-management.md) (rules for organizing docs); [meta-rules.md](../conventions/meta-rules.md) (meta-rules for writing conventions).
 
 ---
 

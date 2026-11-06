@@ -4,7 +4,7 @@
 
 > **用途**：`conventions/` 存放**契约性规范**——人机都必须遵守的规则（语法、格式、目录、版本、日志、文档管理、元规范）。命名 kebab-case 小写。
 > **目标读者**：项目负责人（用户）与 AI Agent（创建/修改代码或文档前先查对应规范）。
-> **关联文档**：[meta-rules.md](./meta-rules.md)（规范书写元规则）；[docs-management.md](./docs-management.md)（docs 组织规则）。
+> **关联文档**：[norm-index.md](./norm-index.md)（M0–M7 元规范索引）；[meta-rules.md](./meta-rules.md)（规范书写元规则）；[docs-management.md](./docs-management.md)（docs 组织规则）。
 
 ---
 
@@ -12,6 +12,7 @@
 
 | 规范 | 内容 | 谁要遵守 |
 |------|------|---------|
+| [norm-index.md](./norm-index.md) | **元规范索引（M0–M7）**：层级、触发索引、上下文压缩后的重载顺序、规范变更流程 | 项目负责人、Lead、所有 teammate/Agent |
 | [meta-rules.md](./meta-rules.md) | 如何讨论/制定规范的元规则 | 所有规范制定者 |
 | [docs-management.md](./docs-management.md) | docs/ 组织规则（子目录职责、登记、生命周期） | 任何人（含 AI Agent） |
 | [directory-organization.md](./directory-organization.md) | 仓库顶层目录职责与临时文件归置 | 任何人（含 AI Agent） |

@@ -4,7 +4,7 @@
 
 > **用途**：`guides/` 存放**操作指引（how-to）**——完成特定工作流的步骤与方法（协作方式、知识库生产流水线、开发/发布操作）。面向执行者。
 > **目标读者**：项目负责人（用户）与 AI Agent（执行具体工作流前先读对应指引）。
-> **关联文档**：[docs-management.md](../conventions/docs-management.md)（docs 组织规则）；[meta-rules.md](../conventions/meta-rules.md)（规范书写元规则）。
+> **关联文档**：[norm-index.md](../conventions/norm-index.md)（M0–M7 元规范索引 + 压缩后重载顺序）；[docs-management.md](../conventions/docs-management.md)（docs 组织规则）；[meta-rules.md](../conventions/meta-rules.md)（规范书写元规则）。
 
 ---
 

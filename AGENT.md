@@ -2,6 +2,7 @@
 
 > 本文件是 AI Agent（及新维护者）进入本项目的第一站：快速建立角色认知、掌握技术栈、获取常用命令、理解架构、遵守规范、明确边界。
 > 详细规则不在此重复，一律指向 `docs/` 对应文档（单一事实源）。
+> **规范入口**：[docs/conventions/norm-index.md](docs/conventions/norm-index.md)（M0–M7 元规范索引；上下文压缩后先读其 §0）。
 
 ## 1. Role（角色）
 

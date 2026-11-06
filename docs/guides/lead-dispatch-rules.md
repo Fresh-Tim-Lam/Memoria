@@ -19,10 +19,11 @@
 压缩摘要能保留事实，但**不保留约束**。所以压缩后立刻做这 4 件：
 
 ```
-1. 读 AGENTS.md §0.5 六条不变量（会被宿主自动注入，确认它还在）
-2. 跑 team_audit.py —— 拿到当前 FAIL/WARN（这是唯一可信的现状）
-3. team_task_list 未完成任务（确认 owner 与写域，别凭摘要干）
-4. 确认是否有 in-flight 的后台任务（job_list）—— 摘要有可能会漏
+1. 读 AGENTS.md §0.5 不变量（L1–L10，会被宿主自动注入，确认它还在）
+2. 读 docs/conventions/norm-index.md §0（M0–M7 层级与恢复顺序）
+3. 跑 team_audit.py —— 拿到当前 FAIL/WARN（这是唯一可信的现状）
+4. team_task_list 未完成任务（确认 owner 与写域，别凭摘要干）
+5. 确认是否有 in-flight 的后台任务（job_list）—— 摘要有可能会漏
 ```
 
 **判据**：压缩后**不凭记忆回答"还剩什么要做"**，一律重新查任务板 + 机检。

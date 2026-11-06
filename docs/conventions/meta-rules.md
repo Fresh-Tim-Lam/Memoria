@@ -2,7 +2,7 @@
 
 > **用途**：定义"如何讨论和制定项目规范"的元规则。确保规范讨论有结论、可验证、不空洞。
 > **目标读者**：项目负责人（用户）与 AI Agent（执行者）。
-> **关联文档**：[collaboration.md](../guides/collaboration.md) — 本规范的下游，定义具体开发场景的规则。
+> **关联文档**：[norm-index.md](./norm-index.md) — 规范体系总索引（M0–M7，含压缩后重载顺序）；[collaboration.md](../guides/collaboration.md) — 本规范的下游，定义具体开发场景的规则。
 
 ---
 
