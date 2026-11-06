@@ -1961,21 +1961,40 @@
         const n = group.member_ids.length;
         const radius = Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1)));
         const selectedGroup = selectedGroupId === group.group_id;
-        // 折叠组：六边形 + 双环 + 成员数徽标（与 KP 圆形明显区分）
-        drawHexagon(ctx, g.cx, g.cy, radius);
-        ctx.fillStyle = selectedGroup ? "rgba(240,246,252,0.20)" : "rgba(88,166,255,0.16)";
-        if (ctx.fill) ctx.fill();
-        ctx.strokeStyle = selectedGroup ? "#f0f6fc" : "rgba(88,166,255,0.75)";
-        ctx.lineWidth = selectedGroup ? 2.2 : 1.6;
-        if (ctx.setLineDash) ctx.setLineDash([4, 2]);
-        if (ctx.stroke) ctx.stroke();
-        if (ctx.setLineDash) ctx.setLineDash([]);
-        drawHexagon(ctx, g.cx, g.cy, radius + 3);
-        ctx.strokeStyle = selectedGroup ? "rgba(240,246,252,0.55)" : "rgba(88,166,255,0.35)";
-        ctx.lineWidth = 1;
-        if (ctx.stroke) ctx.stroke();
+        // 默认：实心白色发光六边形；点击进入后：样式 B（蓝色双环虚线六边形）
+        if (selectedGroup) {
+          drawHexagon(ctx, g.cx, g.cy, radius);
+          ctx.fillStyle = "rgba(88,166,255,0.16)";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = "#58a6ff";
+          ctx.lineWidth = 2.2;
+          if (ctx.setLineDash) ctx.setLineDash([4, 2]);
+          if (ctx.stroke) ctx.stroke();
+          if (ctx.setLineDash) ctx.setLineDash([]);
+          drawHexagon(ctx, g.cx, g.cy, radius + 3);
+          ctx.strokeStyle = "rgba(88,166,255,0.35)";
+          ctx.lineWidth = 1;
+          if (ctx.stroke) ctx.stroke();
+        } else {
+          ctx.save?.();
+          if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
+          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
+          drawHexagon(ctx, g.cx, g.cy, radius);
+          ctx.fillStyle = "#f0f6fc";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = "#f0f6fc";
+          ctx.lineWidth = 1.6;
+          if (ctx.stroke) ctx.stroke();
+          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
+          if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
+          ctx.restore?.();
+          drawHexagon(ctx, g.cx, g.cy, radius + 3);
+          ctx.strokeStyle = "rgba(240,246,252,0.28)";
+          ctx.lineWidth = 1;
+          if (ctx.stroke) ctx.stroke();
+        }
         this._groupHit.push({ kind: "circle", x: g.cx, y: g.cy, r: radius + 4, group, selected: selectedGroup });
-        drawGroupBadge(ctx, g.cx + radius * 0.7, g.cy - radius * 0.7, n, selectedGroup ? "#f0f6fc" : "#58a6ff");
+        drawGroupBadge(ctx, g.cx + radius * 0.7, g.cy - radius * 0.7, n, selectedGroup ? "#58a6ff" : "#0d1117");
         calls.nodes += 1;
         if (ctx.fillText) {
           ctx.font = VISUAL.labelFont;

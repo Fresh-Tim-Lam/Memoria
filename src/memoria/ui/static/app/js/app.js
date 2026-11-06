@@ -2498,7 +2498,10 @@ async function call(fn, ...args) {
       });
       // task-389：group 单击 = 进入子图视图（不是原位展开）
       state.graphMultilevel.mounted.renderer.on("groupClick", ({ group_id }) => {
-        if (group_id) enterMultilevelGroup(group_id);
+        if (!group_id) return;
+        // 点击瞬间先切成样式 B，再进入子图；让“点击 → 进入”有可见的状态变化
+        state.graphMultilevel.mounted.renderer.selectGroup?.(group_id);
+        window.setTimeout(() => enterMultilevelGroup(group_id), 160);
       });
       // task-380：双击保留为无操作，避免与单击小窗重复/关闭
       state.graphMultilevel.mounted.renderer.on("nodeDblClick", () => {});
