@@ -1735,7 +1735,8 @@ async function call(fn, ...args) {
       legend.innerHTML =
         `<span class="graph-multilevel-legend-title">${esc(T("graph.multilevel.legendTitle"))}</span>` +
         item("ml-swatch ml-swatch--kp", T("graph.multilevel.legendKp")) +
-        item("ml-swatch ml-swatch--cluster", T("graph.multilevel.legendCluster")) +
+        item("ml-swatch ml-swatch--group", T("graph.multilevel.legendGroup")) +
+        item("ml-swatch ml-swatch--collapsed", T("graph.multilevel.legendCollapsed")) +
         item("ml-line ml-line--semantic", T("graph.multilevel.legendEdgeSemantic")) +
         item("ml-line ml-line--structural", T("graph.multilevel.legendEdgeStructural")) +
         item("ml-line ml-line--reference", T("graph.multilevel.legendEdgeReference"));
@@ -2015,7 +2016,14 @@ async function call(fn, ...args) {
     if (!nav || nav.__wired) return;
     nav.__wired = true;
     nav.on("editorJump", ({ node_id }) => {
-      // task-380：单击节点 = 切换 focus（不再直接跳编辑器；跳转保留为双击/提示条入口）
+      // task-387：单击 KP 已在 renderer 内选中/高亮（selectedId=node），此时不跳转/不切 focus；
+      // 其它来源（键盘/S5 FOCUS_NODE）仍保留原聚焦行为；双击由 nodeDblClick → jumpToTarget。
+      const renderer = state.graphMultilevel?.mounted?.renderer;
+      const fromGraphClick = node_id && String(renderer?._selectedId || "") === String(node_id);
+      if (fromGraphClick) {
+        updateMultilevelHint(node_id);
+        return;
+      }
       if (node_id) multilevelFocusNode(node_id);
     });
     nav.on("transition", (transition) => {

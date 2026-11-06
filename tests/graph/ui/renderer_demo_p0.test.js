@@ -510,6 +510,52 @@ async function runAsync(ctx) {
     assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "松手后动画单帧 >4px");
     r.dispose();
   });
+
+  check("semantics_edge_dash_selection_group_and_dblclick", () => {
+    assert.deepStrictEqual(Adapter.EDGE_DASH.contain, []);
+    assert.deepStrictEqual(Adapter.EDGE_DASH.structural, []);
+    assert.deepStrictEqual(Adapter.EDGE_DASH.reference, [5, 4]);
+    assert.deepStrictEqual(Adapter.EDGE_DASH.semantic, [2, 3]);
+    assert.deepStrictEqual(Adapter.EDGE_DASH.extend, [5, 4]);
+
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const r = new Adapter.Renderer2D(container, { host, presentation, animateForce: false });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    const selected = shown.find((id) => id !== hub);
+    const p = r._positions.get(selected);
+    const res = r.handlePointClick(p.x, p.y);
+    assert.strictEqual(res.type, "nodeClick");
+    assert.strictEqual(r._selectedId, selected, "单击 KP 未选中");
+    assert.strictEqual(r._focusNodeId, hub, "单击 KP 不应改变 focus");
+    assert.strictEqual(r._selection.kind, "node");
+    assert.ok(r._selectedNeighbors.size >= 1, "未计算一跳邻居");
+    assert.ok(r._ctx.strokeStyles.includes("#f0f6fc"), "选中节点描边未绘制");
+    // 双击节点仍发 nodeDblClick（app 负责 jumpToTarget）
+    let dbl = null;
+    r.on("nodeDblClick", (payload) => { dbl = payload; });
+    r._onPointerDblClick({ clientX: p.x, clientY: p.y });
+    assert.ok(dbl && dbl.node_id === selected, "双击未发 nodeDblClick");
+    // 空白点击清除选中
+    const bg = r.handlePointClick(2, 2);
+    assert.strictEqual(bg.type, "backgroundClick");
+    assert.strictEqual(r._selectedId, null, "空白点击未清除选中");
+    // 组点击：折叠/展开 + 选中组
+    const rectHit = (r._groupHit || []).find((h) => h.kind === "rect");
+    assert.ok(rectHit, "缺少展开组包络");
+    const gid = rectHit.group.group_id;
+    r.handlePointClick(rectHit.x0 + 2, (rectHit.y0 + rectHit.y1) / 2);
+    assert.ok(r._collapsedGroups.has(gid), "组点击未折叠");
+    assert.strictEqual(r._selectedGroupId, gid, "组点击未选中组");
+    const circleHit = (r._groupHit || []).find((h) => h.kind === "circle" && h.group.group_id === gid);
+    assert.ok(circleHit, "折叠组未渲染六边形/组节点");
+    r.handlePointClick(circleHit.x, circleHit.y);
+    assert.ok(!r._collapsedGroups.has(gid), "再次点击未展开");
+    assert.strictEqual(r._selectedGroupId, gid);
+    assert.ok(r._selectedNeighbors.size >= 1);
+    r.dispose();
+  });
 }
 
 (async () => {

@@ -1184,6 +1184,8 @@
         legendTitle: "Legend",
         legendKp: "Knowledge point",
         legendCluster: "Cluster",
+        legendGroup: "Group / subgraph",
+        legendCollapsed: "Collapsed members",
         legendEdgeSemantic: "Semantic edge",
         legendEdgeStructural: "Structural edge",
         legendEdgeReference: "Reference edge",

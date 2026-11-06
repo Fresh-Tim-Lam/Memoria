@@ -39,6 +39,7 @@ def test_demo_renderer_node_suite() -> None:
         "pointermove_follows_without_4px_dead_zone",
         "drag_hold_keeps_neighbors_moving_no_rebuild",
         "idle_motion_initial_focus_and_release_each_at_least_30_frames",
+        "semantics_edge_dash_selection_group_and_dblclick",
     ):
         assert required in names
 
@@ -49,6 +50,16 @@ def test_app_wires_click_focus_and_dblclick_jump() -> None:
     assert "multilevelFocusNode(node_id)" in app
     assert 'renderer.on("nodeDblClick"' in app, "双击跳编辑器入口缺失"
     assert "jumpToTarget(" in app
+
+
+def test_legend_distinguishes_kp_group_collapsed_and_edge_dash() -> None:
+    app = (APP / "js/app.js").read_text(encoding="utf-8")
+    assert "ml-swatch--kp" in app and "ml-swatch--group" in app and "ml-swatch--collapsed" in app
+    assert "legendGroup" in app and "legendCollapsed" in app
+    css = (APP / "css/app.css").read_text(encoding="utf-8")
+    assert ".ml-line--reference" in css and "dashed" in css
+    assert ".ml-line--structural" in css and "solid" in css
+    assert ".ml-swatch--group" in css and "clip-path" in css
     assert "setFocusNode?.(focusId)" in app, "Renderer 未拿到 focus（布局不居中）"
     assert 'graph.multilevel' in app
 
@@ -79,6 +90,10 @@ def test_renderer_presentation_groups_are_not_vm_fields() -> None:
     assert "pointerdown" in src and "wheel" in src
     assert "setPointerCapture" in src or "pointerId" in src
     assert "presentation.names" in src or "this._presentation && this._presentation.names" in src
+    # task-387：KP/group 形状、关联边虚线、选中/组/背景语义
+    assert "EDGE_DASH" in src and "drawHexagon" in src and "drawGroupBadge" in src
+    assert "selectNode(" in src and "clearSelection(" in src and "selectGroup(" in src
+    assert 'reference: [5, 4]' in src and 'semantic: [2, 3]' in src
     assert "truncateLabel" in src
     # 不把 group 写成 VM cluster kind
     assert "kind: \"cluster\"" not in src[src.find("function normalizeGroups"): src.find("function normalizeGroups") + 1200]

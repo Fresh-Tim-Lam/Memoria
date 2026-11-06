@@ -90,6 +90,16 @@
     structural: "#58a6ff",
     navigation: "#58a6ff",
   });
+  // task-387：关联/引用/语义关系虚线；结构/层级实线（图例同步）
+  const EDGE_DASH = Object.freeze({
+    contain: [],
+    structural: [],
+    navigation: [],
+    reference: [5, 4],
+    semantic: [2, 3],
+    extend: [5, 4],
+    association: [5, 4],
+  });
   const EVENT_TYPES = Object.freeze(["nodeClick", "edgeClick", "backgroundClick", "hover", "nodeDblClick", "groupClick"]);
 
   class RendererError extends Error {
@@ -171,6 +181,7 @@
     return raw
       .map((g) => ({
         group_id: String(g.group_id || ""),
+        parent_id: String(g.parent_id || g.parent_group_id || ""),
         file: String(g.file || ""),
         section: String(g.section || ""),
         member_ids: Array.isArray(g.member_ids) ? g.member_ids.map(String) : [],
@@ -224,8 +235,36 @@
     if (ctx.fill) ctx.fill();
   }
 
+  function drawHexagon(ctx, x, y, r) {
+    if (!ctx || !ctx.beginPath || !ctx.moveTo || !ctx.lineTo) return;
+    ctx.beginPath();
+    for (let i = 0; i < 6; i++) {
+      const a = -Math.PI / 2 + (i * TAU) / 6;
+      const px = x + Math.cos(a) * r;
+      const py = y + Math.sin(a) * r;
+      if (i === 0) ctx.moveTo(px, py); else ctx.lineTo(px, py);
+    }
+    ctx.closePath && ctx.closePath();
+  }
+
+  function drawGroupBadge(ctx, x, y, count, color) {
+    if (!ctx || !ctx.arc || !ctx.fillText) return;
+    ctx.beginPath();
+    ctx.arc(x, y, 8, 0, TAU);
+    ctx.fillStyle = "rgba(13,17,23,0.95)";
+    if (ctx.fill) ctx.fill();
+    ctx.strokeStyle = color;
+    ctx.lineWidth = 1.2;
+    if (ctx.stroke) ctx.stroke();
+    ctx.fillStyle = "#f0f6fc";
+    ctx.font = "9px system-ui, sans-serif";
+    ctx.textAlign = "center";
+    ctx.textBaseline = "middle";
+    ctx.fillText(String(count), x, y + 0.5);
+  }
+
   /** 旧 drawDirectedEdge：线 + 箭头（端点按两端半径让位）。 */
-  function drawDirectedEdge(ctx, sx, sy, tx, ty, nodeRadius, color, lineWidth, alpha, arrowSize) {
+  function drawDirectedEdge(ctx, sx, sy, tx, ty, nodeRadius, color, lineWidth, alpha, arrowSize, dash) {
     if (!ctx || !ctx.beginPath) return;
     const dx = tx - sx;
     const dy = ty - sy;
@@ -247,10 +286,12 @@
     ctx.fillStyle = color;
     ctx.lineWidth = lineWidth;
     if ("lineCap" in ctx) ctx.lineCap = "round";
+    if (ctx.setLineDash) ctx.setLineDash(Array.isArray(dash) ? dash : []);
     ctx.beginPath();
     ctx.moveTo(x1, y1);
     ctx.lineTo(x2, y2);
     if (ctx.stroke) ctx.stroke();
+    if (ctx.setLineDash) ctx.setLineDash([]);
     const angle = Math.atan2(dy, dx);
     ctx.beginPath();
     ctx.moveTo(tipX, tipY);
@@ -694,6 +735,9 @@
       this._forceHold = false;
       this._hoverId = null;
       this._selection = null;
+      this._selectedId = null;
+      this._selectedGroupId = null;
+      this._selectedNeighbors = new Set();
       this._disposed = false;
       this._bound = [];
       // task-381：camera + 本视图 pin/拖拽状态
@@ -793,14 +837,45 @@
       return this._groups;
     }
 
-    /** 当前被折叠组隐藏的成员（边/标签/节点都跳过）。 */
+    /** 当前被折叠组隐藏的成员（边/标签/节点都跳过）；支持 parent/child 多级组。 */
     _hiddenMemberIds() {
       const hidden = new Set();
-      for (const g of this._groups) {
-        if (!this._collapsedGroups.has(g.group_id)) continue;
+      const byId = new Map(this._groups.map((g) => [g.group_id, g]));
+      const addDescendants = (groupId) => {
+        const g = byId.get(groupId);
+        if (!g) return;
         for (const id of g.member_ids) hidden.add(id);
+        for (const child of this._groups) {
+          if (child.parent_id === groupId) addDescendants(child.group_id);
+        }
+      };
+      for (const g of this._groups) {
+        if (this._collapsedGroups.has(g.group_id)) addDescendants(g.group_id);
       }
       return hidden;
+    }
+
+    _groupHasCollapsedAncestor(groupId) {
+      let cur = (this._groups || []).find((g) => g.group_id === groupId);
+      const seen = new Set();
+      while (cur && cur.parent_id && !seen.has(cur.group_id)) {
+        seen.add(cur.group_id);
+        if (this._collapsedGroups.has(cur.parent_id)) return true;
+        cur = (this._groups || []).find((g) => g.group_id === cur.parent_id);
+      }
+      return false;
+    }
+
+    _groupAllMemberIds(groupId) {
+      const out = new Set();
+      const add = (id) => {
+        const g = (this._groups || []).find((x) => x.group_id === id);
+        if (!g) return;
+        for (const m of g.member_ids) out.add(m);
+        for (const child of this._groups) if (child.parent_id === id) add(child.group_id);
+      };
+      add(groupId);
+      return out;
     }
 
     // ── task-381：camera / pan / zoom / fit ───────────────────────────────
@@ -1503,6 +1578,9 @@
       y = world.y;
       const node = this._pickNode(x, y);
       if (node) {
+        // task-387：单击 = 选中/高亮（KP + 一跳邻居），不触发跳转或 focus
+        if (node.kind === "kp") this.selectNode(node.id);
+        else this.clearSelection();
         const payload = { node_id: node.id, kind: node.kind, ...extra };
         this._emit("nodeClick", payload);
         return { type: "nodeClick", payload };
@@ -1511,8 +1589,9 @@
       const circleHit = (this._groupHit || []).find((hit) => hit.kind === "circle"
         && (x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r);
       if (circleHit) {
-        const payload = { group_id: circleHit.group.group_id, kind: "presentation-group", ...extra };
         this.toggleGroup(circleHit.group.group_id);
+        this.selectGroup(circleHit.group.group_id);
+        const payload = { group_id: circleHit.group.group_id, kind: "presentation-group", ...extra };
         this._emit("groupClick", payload);
         return { type: "groupClick", payload };
       }
@@ -1524,11 +1603,14 @@
       }
       const groupHit = this._pickGroup(x, y);
       if (groupHit) {
-        const payload = { group_id: groupHit.group.group_id, kind: "presentation-group", ...extra };
         this.toggleGroup(groupHit.group.group_id);
+        this.selectGroup(groupHit.group.group_id);
+        const payload = { group_id: groupHit.group.group_id, kind: "presentation-group", ...extra };
         this._emit("groupClick", payload);
         return { type: "groupClick", payload };
       }
+      // task-387：空白点击清除选中，不改 focus
+      this.clearSelection();
       this._emit("backgroundClick", { ...extra });
       return { type: "backgroundClick", payload: { ...extra } };
     }
@@ -1536,6 +1618,51 @@
     setSelection(selection) {
       this._selection = selection || null;
       if (this._active !== false) this._draw();
+    }
+
+    /** task-387：单击 KP = 选中节点 + 一跳邻居 + 相关边（不改 focus / 不跳转）。 */
+    selectNode(nodeId) {
+      const id = nodeId ? String(nodeId) : null;
+      this._selectedGroupId = null;
+      this._selectedId = id;
+      this._selection = id ? { kind: "node", node_id: id } : null;
+      this._selectedNeighbors = new Set();
+      if (id) {
+        for (const edge of this._edgeList) {
+          const ends = edgeEndpoints(edge.id);
+          if (!ends) continue;
+          if (ends.source === id) this._selectedNeighbors.add(ends.target);
+          else if (ends.target === id) this._selectedNeighbors.add(ends.source);
+        }
+        this._highlightId = id;
+      } else {
+        this._highlightId = null;
+      }
+      if (this._ctx) this._draw();
+      return { selected: id, neighbors: [...this._selectedNeighbors] };
+    }
+
+    clearSelection() {
+      this._selectedId = null;
+      this._selectedGroupId = null;
+      this._selectedNeighbors = new Set();
+      this._selection = null;
+      this._highlightId = null;
+      if (this._ctx) this._draw();
+      return { selected: null };
+    }
+
+    /** task-387：点击组 → 选中组并高亮成员（展开/折叠由 toggleGroup 完成）。 */
+    selectGroup(groupId) {
+      const id = groupId ? String(groupId) : null;
+      const group = (this._groups || []).find((g) => g.group_id === id);
+      this._selectedId = null;
+      this._selectedGroupId = group ? id : null;
+      this._selectedNeighbors = group ? this._groupAllMemberIds(id) : new Set();
+      this._selection = group ? { kind: "group", group_id: id } : null;
+      this._highlightId = null;
+      if (this._ctx) this._draw();
+      return group ? { group_id: id, members: group.member_ids.slice() } : null;
     }
 
     /** 搜索定位/正文链接 hover 的高亮（Presentation 瞬态；不进 VM）。 */
@@ -1581,7 +1708,9 @@
       const hidden = this._hiddenMemberIds();
       this._groupHit = [];
       const groupGeom = new Map();
+      const selectedGroupId = this._selectedGroupId;
       for (const group of this._groups) {
+        if (this._groupHasCollapsedAncestor(group.group_id)) continue;
         const members = group.member_ids
           .map((id) => ({ id, p: this._positions.get(id) }))
           .filter((m) => m.p);
@@ -1595,35 +1724,65 @@
           cy: ys.reduce((a, b) => a + b, 0) / ys.length,
         });
         if (this._collapsedGroups.has(group.group_id)) continue;
+        if (this._collapsedGroups.has(group.group_id)) continue;
         const g = groupGeom.get(group.group_id);
         const pad = 14;
         const x0 = g.minX - pad, y0 = g.minY - pad, x1 = g.maxX + pad, y1 = g.maxY + pad;
-        if (ctx.beginPath && ctx.rect) {
-          ctx.beginPath();
-          ctx.rect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
-          ctx.fillStyle = "rgba(88,166,255,0.05)";
+        const selectedGroup = selectedGroupId === group.group_id;
+        // 组—成员从属细线（不只靠标签）
+        if (ctx.beginPath && ctx.moveTo && ctx.lineTo && ctx.stroke) {
+          for (const m of members) {
+            ctx.beginPath();
+            ctx.moveTo(g.cx, g.cy);
+            ctx.lineTo(m.p.x, m.p.y);
+            ctx.strokeStyle = selectedGroup ? "rgba(210,153,34,0.34)" : "rgba(88,166,255,0.14)";
+            ctx.lineWidth = 1;
+            if (ctx.setLineDash) ctx.setLineDash([2, 5]);
+            ctx.stroke();
+            if (ctx.setLineDash) ctx.setLineDash([]);
+          }
+        }
+        if (ctx.beginPath) {
+          if (ctx.roundRect) {
+            ctx.beginPath();
+            ctx.roundRect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0), 10);
+          } else if (ctx.rect) {
+            ctx.beginPath();
+            ctx.rect(x0, y0, Math.max(1, x1 - x0), Math.max(1, y1 - y0));
+          }
+          ctx.fillStyle = selectedGroup ? "rgba(210,153,34,0.10)" : "rgba(88,166,255,0.05)";
           if (ctx.fill) ctx.fill();
-          ctx.strokeStyle = "rgba(88,166,255,0.28)";
-          ctx.lineWidth = 1;
-          if (ctx.setLineDash) ctx.setLineDash([4, 3]);
+          ctx.strokeStyle = selectedGroup ? "rgba(210,153,34,0.95)" : "rgba(88,166,255,0.38)";
+          ctx.lineWidth = selectedGroup ? 2 : 1;
+          if (ctx.setLineDash) ctx.setLineDash([5, 4]);
           if (ctx.stroke) ctx.stroke();
           if (ctx.setLineDash) ctx.setLineDash([]);
+          // 组标识：六边形图标 + 成员数徽标，区别于 KP 圆形
+          drawHexagon(ctx, x0 + 8, y0 - 8, 5.5);
+          ctx.fillStyle = selectedGroup ? "rgba(210,153,34,0.20)" : "rgba(88,166,255,0.18)";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = selectedGroup ? "#d29922" : "#58a6ff";
+          ctx.lineWidth = 1.2;
+          if (ctx.stroke) ctx.stroke();
+          drawGroupBadge(ctx, x0 + 20, y0 - 8, group.member_ids.length, selectedGroup ? "#d29922" : "#58a6ff");
         }
-        this._groupHit.push({ kind: "rect", x0, y0, x1, y1, group });
+        this._groupHit.push({ kind: "rect", x0, y0, x1, y1, group, selected: selectedGroup });
         if (ctx.fillText) {
           ctx.font = VISUAL.labelFont;
           ctx.textAlign = "left";
           ctx.textBaseline = "bottom";
           ctx.lineWidth = VISUAL.labelHaloWidth;
           ctx.strokeStyle = VISUAL.halo;
-          if (ctx.strokeText) ctx.strokeText(groupLabel(group), x0 + 2, y0 - 2);
-          ctx.fillStyle = VISUAL.nodeMuted || "#8b949e";
-          ctx.fillText(groupLabel(group), x0 + 2, y0 - 2);
+          if (ctx.strokeText) ctx.strokeText(groupLabel(group), x0 + 30, y0 - 3);
+          ctx.fillStyle = selectedGroup ? "#d29922" : VISUAL.nodeMuted || "#8b949e";
+          ctx.fillText(groupLabel(group), x0 + 30, y0 - 3);
           calls.labels += 1;
         }
       }
 
-      // 边：只画 shown；折叠组成员隐藏；旧线宽/透明度 + 箭头
+      // 边：只画 shown；折叠组成员隐藏；关系类型用线型/颜色区分
+      const selectedId = this._selectedId;
+      const selectionActive = !!(selectedId || selectedGroupId);
       for (const edge of this._edgeList) {
         const ends = edgeEndpoints(edge.id);
         if (!ends) continue;
@@ -1631,14 +1790,20 @@
         const a = this._positions.get(ends.source);
         const b = this._positions.get(ends.target);
         if (!a || !b) continue;
+        const selectionIncident = !!selectedId
+          && (ends.source === selectedId || ends.target === selectedId);
+        const groupIncident = !!selectedGroupId
+          && this._selectedNeighbors.has(ends.source) && this._selectedNeighbors.has(ends.target);
         const incident = !!focusId && (ends.source === focusId || ends.target === focusId);
-        const alpha = focusId ? (incident ? VISUAL.edgeAlphaActive : VISUAL.edgeAlphaDim) : VISUAL.edgeAlpha;
-        const lineWidth = incident ? VISUAL.edgeWidthActive : VISUAL.edgeWidth;
-        const padR = Math.max(radiusOf(ends.source), radiusOf(ends.target)) + (incident ? 2 : 0);
+        const dim = selectionActive ? !(selectionIncident || groupIncident) : !!focusId && !incident;
+        const alpha = dim ? VISUAL.edgeAlphaDim : (focusId || selectionActive ? VISUAL.edgeAlphaActive : VISUAL.edgeAlpha);
+        const lineWidth = (incident || selectionIncident || groupIncident) ? VISUAL.edgeWidthActive : VISUAL.edgeWidth;
+        const padR = Math.max(radiusOf(ends.source), radiusOf(ends.target)) + (incident || selectionIncident ? 2 : 0);
         drawDirectedEdge(
           ctx, a.x, a.y, b.x, b.y, padR,
           EDGE_COLORS[edge.type] || EDGE_COLORS.reference,
-          lineWidth, alpha, VISUAL.arrowSize
+          lineWidth, alpha, VISUAL.arrowSize,
+          EDGE_DASH[edge.type] || []
         );
         calls.edges += 1;
       }
@@ -1655,19 +1820,23 @@
         const baseR = radiusOf(node.id);
         const hovered = this._hoverId === node.id;
         const highlighted = this._highlightId === node.id;
-        const dim = !!focusId && !hovered && !highlighted;
+        const selected = selectedId === node.id;
+        const inSelection = selectionActive && (selected || this._selectedNeighbors.has(node.id));
+        const dim = selectionActive ? !inSelection : (!!focusId && !hovered && !highlighted);
         const r = visualRadius(node, this._degreeInfo, hovered, highlighted);
         const degree = node.kind === "kp" ? this._degreeInfo?.map.get(node.id) : null;
         const ratio = degreeMax && Number.isFinite(degree) ? Math.max(0, Math.min(1, degree / degreeMax)) : null;
         let fill;
-        if (hovered) fill = VISUAL.nodeHover;
+        if (selected) fill = "#d29922";
+        else if (hovered) fill = VISUAL.nodeHover;
         else if (highlighted) fill = VISUAL.nodeTarget;
         else if (dim) fill = VISUAL.nodeDim;
         else if (node.range_ok === false) fill = VISUAL.nodeInvalid;
         else if (node.kind === "kp" && ratio != null) fill = galaxyColor(ratio);
         else fill = VISUAL.node;
         let halo = 0;
-        if (hovered) halo = 0.6;
+        if (selected) halo = 0.55;
+        else if (hovered) halo = 0.6;
         else if (highlighted) halo = 0.4;
         else if (dim) halo = 0.1;
         else if (ratio != null) halo = 0.14 + ratio * 0.3;
@@ -1687,12 +1856,22 @@
             if (ctx.setLineDash) ctx.setLineDash([]);
           }
         }
-        if ((hovered || highlighted) && ctx.beginPath && ctx.arc && ctx.stroke) {
+        if ((selected || inSelection || hovered || highlighted) && ctx.beginPath && ctx.arc && ctx.stroke) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, r, 0, TAU);
-          ctx.strokeStyle = VISUAL.focus;
-          ctx.lineWidth = 2;
+          ctx.arc(p.x, p.y, r + (selected ? 3 : 1.5), 0, TAU);
+          ctx.strokeStyle = selected ? "#f0f6fc" : (inSelection ? "rgba(210,153,34,0.62)" : VISUAL.focus);
+          ctx.lineWidth = selected ? 2.4 : (inSelection ? 1.2 : 2);
           ctx.stroke();
+        }
+        // focus 是布局中心（蓝环）；选中是白色/金色高亮，二者可区分
+        if (node.id === this._focusNodeId && ctx.beginPath && ctx.arc && ctx.stroke) {
+          ctx.beginPath();
+          ctx.arc(p.x, p.y, r + (selected ? 5 : 3), 0, TAU);
+          ctx.strokeStyle = selected ? "rgba(88,166,255,0.9)" : "rgba(88,166,255,0.55)";
+          ctx.lineWidth = selected ? 1.4 : 1;
+          if (ctx.setLineDash) ctx.setLineDash([2, 3]);
+          ctx.stroke();
+          if (ctx.setLineDash) ctx.setLineDash([]);
         }
         if (node.kind === "cluster" && node.member_count != null && ctx.fillText) {
           ctx.fillStyle = VISUAL.node;
@@ -1707,32 +1886,34 @@
 
       // 折叠组：画组节点（成员数），点击展开
       for (const group of this._groups) {
+        if (this._groupHasCollapsedAncestor(group.group_id)) continue;
         if (!this._collapsedGroups.has(group.group_id)) continue;
         const g = groupGeom.get(group.group_id);
         if (!g) continue;
         const n = group.member_ids.length;
         const radius = Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1)));
-        if (ctx.beginPath && ctx.arc) {
-          ctx.beginPath();
-          ctx.arc(g.cx, g.cy, radius, 0, TAU);
-          ctx.fillStyle = "rgba(88,166,255,0.16)";
-          if (ctx.fill) ctx.fill();
-          ctx.strokeStyle = "rgba(88,166,255,0.55)";
-          ctx.lineWidth = 1.4;
-          if (ctx.setLineDash) ctx.setLineDash([3, 2]);
-          if (ctx.stroke) ctx.stroke();
-          if (ctx.setLineDash) ctx.setLineDash([]);
-        }
-        this._groupHit.push({ kind: "circle", x: g.cx, y: g.cy, r: radius + 4, group });
+        const selectedGroup = selectedGroupId === group.group_id;
+        // 折叠组：六边形 + 双环 + 成员数徽标（与 KP 圆形明显区分）
+        drawHexagon(ctx, g.cx, g.cy, radius);
+        ctx.fillStyle = selectedGroup ? "rgba(210,153,34,0.22)" : "rgba(88,166,255,0.16)";
+        if (ctx.fill) ctx.fill();
+        ctx.strokeStyle = selectedGroup ? "#d29922" : "rgba(88,166,255,0.75)";
+        ctx.lineWidth = selectedGroup ? 2.2 : 1.6;
+        if (ctx.setLineDash) ctx.setLineDash([4, 2]);
+        if (ctx.stroke) ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+        drawHexagon(ctx, g.cx, g.cy, radius + 3);
+        ctx.strokeStyle = selectedGroup ? "rgba(210,153,34,0.5)" : "rgba(88,166,255,0.35)";
+        ctx.lineWidth = 1;
+        if (ctx.stroke) ctx.stroke();
+        this._groupHit.push({ kind: "circle", x: g.cx, y: g.cy, r: radius + 4, group, selected: selectedGroup });
+        drawGroupBadge(ctx, g.cx + radius * 0.7, g.cy - radius * 0.7, n, selectedGroup ? "#d29922" : "#58a6ff");
         calls.nodes += 1;
         if (ctx.fillText) {
           ctx.font = VISUAL.labelFont;
           ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.fillStyle = VISUAL.node || "#c9d1d9";
-          ctx.fillText(String(n), g.cx, g.cy);
           ctx.textBaseline = "top";
-          ctx.fillStyle = VISUAL.nodeMuted || "#8b949e";
+          ctx.fillStyle = selectedGroup ? "#d29922" : (VISUAL.nodeMuted || "#8b949e");
           ctx.fillText(groupLabel(group), g.cx, g.cy + radius + 4);
           calls.labels += 1;
         }
@@ -1958,6 +2139,7 @@
     computeLayout,
     fnv1a,
     EDGE_COLORS,
+    EDGE_DASH,
   };
   global.MemoriaGraphRendererAdapter = api;
   if (typeof module !== "undefined" && module.exports) module.exports = api;

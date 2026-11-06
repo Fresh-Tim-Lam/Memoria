@@ -1100,6 +1100,8 @@
         legendTitle: "图例",
         legendKp: "知识点",
         legendCluster: "簇",
+        legendGroup: "组 / 子图",
+        legendCollapsed: "未展开成员",
         legendEdgeSemantic: "语义边",
         legendEdgeStructural: "结构边",
         legendEdgeReference: "引用边",

@@ -8254,13 +8254,15 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
 }
 .graph-multilevel-legend-title { font-weight: 400; }
 .graph-multilevel-legend-item { display: inline-flex; align-items: center; gap: 3px; white-space: nowrap; }
-.ml-swatch { display: inline-block; width: 6px; height: 6px; border-radius: 50%; }
-.ml-swatch--kp { background: #c9d1d9; }
+.ml-swatch { display: inline-block; width: 7px; height: 7px; border-radius: 50%; }
+.ml-swatch--kp { background: #c9d1d9; border-radius: 50%; }
+.ml-swatch--group { background: rgba(88,166,255,0.22); border: 1px solid #58a6ff; border-radius: 1px; clip-path: polygon(25% 0, 75% 0, 100% 50%, 75% 100%, 25% 100%, 0 50%); }
+.ml-swatch--collapsed { background: transparent; border: 1px dashed #58a6ff; border-radius: 50%; }
 .ml-swatch--cluster { background: #8b949e; }
-.ml-line { display: inline-block; width: 10px; height: 1px; border-radius: 0; }
-.ml-line--semantic { background: #e06c75; }
-.ml-line--structural { background: #58a6ff; }
-.ml-line--reference { background: #58a6ff; }
+.ml-line { display: inline-block; width: 12px; height: 0; border-top: 1px solid #58a6ff; }
+.ml-line--semantic { border-top: 1px dashed #e06c75; background: none; }
+.ml-line--structural { border-top: 1px solid #58a6ff; background: none; }
+.ml-line--reference { border-top: 1px dashed #58a6ff; background: none; }
 .graph-multilevel-suppressed { opacity: 0.8; }
 
 
