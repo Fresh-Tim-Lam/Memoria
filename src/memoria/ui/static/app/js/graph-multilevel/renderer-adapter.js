@@ -1616,8 +1616,9 @@
       if (event && event.button != null && event.button !== 0) return;
       const screen = this._point(event);
       const world = this._screenToWorld(screen.x, screen.y);
-      const node = this._pickNode(world.x, world.y);
-      const p = node ? this._positions.get(node.id) : null;
+      const rn = this._pickRenderNode(world.x, world.y);
+      const node = rn ? { id: rn.id, kind: rn.kind, x: rn.x, y: rn.y } : null;
+      const p = node ? { x: node.x, y: node.y } : null;
       if (!node && !this._hasLayout()) return;
       if (event && typeof event.preventDefault === "function") event.preventDefault();
       if (node && this._canvas && typeof this._canvas.setPointerCapture === "function" && event && event.pointerId != null) {
@@ -1626,6 +1627,7 @@
       this._drag = {
         mode: node ? "node" : "pan",
         nodeId: node ? node.id : null,
+        nodeKind: node ? node.kind : null,
         startX: screen.x,
         startY: screen.y,
         lastX: screen.x,
@@ -1639,11 +1641,25 @@
       if (node) {
         // task-384：pointerdown 命中节点立即 pin，不等第一次 move
         this._hoverId = node.id;
-        this._pinned.add(node.id);
+        if (node.kind === "kp") this._pinned.add(node.id);
+        else this._setBodyFixed(node.id, true);
         // task-385：拖拽期间模拟常驻（参考 3D：pointerdown setDragNode + 持续模拟）
         this._forceHold = true;
         if (this._animateForce && !this._simulating) {
           this._startForceAnimation({ pinFocusCenter: false, alpha: 0.85 });
+        }
+      }
+    }
+
+    _setBodyFixed(id, fixed) {
+      for (const body of this._forceState?.extraBodies || []) {
+        if (String(body.id) !== String(id)) continue;
+        body.fixed = fixed === true;
+        if (body.fixed) {
+          body.anchorX = body.x;
+          body.anchorY = body.y;
+          body.vx = 0;
+          body.vy = 0;
         }
       }
     }
@@ -1658,11 +1674,24 @@
         if (drag.mode === "node" && drag.nodeId && drag.startWorld) {
           // task-384：无论移动多少都立即更新 pinned 节点（4px 只决定是否 click）
           const scale = this._camera.scale || 1;
-          this._positions.set(drag.nodeId, {
+          const next = {
             x: drag.startWorld.x + dx / scale,
             y: drag.startWorld.y + dy / scale,
-          });
-          this._pinned.add(drag.nodeId);
+          };
+          if (drag.nodeKind === "kp") {
+            this._positions.set(drag.nodeId, next);
+            this._pinned.add(drag.nodeId);
+          } else {
+            this._auxPositions.set(drag.nodeId, next);
+            for (const body of this._forceState?.extraBodies || []) {
+              if (String(body.id) !== String(drag.nodeId)) continue;
+              body.x = next.x;
+              body.y = next.y;
+              body.fixed = true;
+              body.vx = 0;
+              body.vy = 0;
+            }
+          }
           drag.moved = drag.moved || distance >= DRAG_THRESHOLD_PX;
           drag.lastX = screen.x;
           drag.lastY = screen.y;
@@ -1688,12 +1717,12 @@
         return;
       }
       const world = this._screenToWorld(screen.x, screen.y);
-      const node = this._pickNode(world.x, world.y);
-      const id = node ? node.id : null;
+      const rn = this._pickRenderNode(world.x, world.y);
+      const id = rn ? rn.id : null;
       if (id !== this._hoverId) {
         this._hoverId = id;
         this._requestDraw();
-        this._emit("hover", id ? { node_id: id, kind: node.kind } : { node_id: null, kind: null });
+        this._emit("hover", id ? { node_id: id, kind: rn.kind } : { node_id: null, kind: null });
       }
     }
 
@@ -1704,7 +1733,8 @@
       this._forceHold = false;
       if (drag.mode === "node" && drag.nodeId) {
         // task-385：松手解除拖拽 pin，让节点回到力导向
-        this._pinned.delete(drag.nodeId);
+        if (drag.nodeKind === "kp") this._pinned.delete(drag.nodeId);
+        else this._setBodyFixed(drag.nodeId, false);
       }
       if (drag.moved) {
         // 拖拽超过阈值：抑制随后的 click（不触发 focus/选中）
