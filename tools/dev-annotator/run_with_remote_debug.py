@@ -80,7 +80,8 @@ def _auto_inject_annotator() -> None:
                 and "127.0.0.1" in str(t.get("url", ""))
             ]
             if not pages:
-                pages = [t for t in targets if t.get("type") == "page" and t.get("webSocketDebuggerUrl")]
+                time.sleep(0.5)
+                continue
             if pages:
                 target = pages[0]
                 ws = websocket.create_connection(target["webSocketDebuggerUrl"], timeout=5)
