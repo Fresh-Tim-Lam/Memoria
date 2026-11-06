@@ -1798,6 +1798,28 @@ async function call(fn, ...args) {
     }
   }
 
+  /**
+   * 2026-11-06 裁决：图谱节点 → 编辑器是“编辑器落点”跳转，先过小窗。
+   * 单击仍只做选中/focus；只有双击进入这里。小窗里点“拉到编辑区”才 jumpToTarget。
+   */
+  function openGraphEditorJumpPreview(nodeId) {
+    const id = String(nodeId || "");
+    const pres = state.graphMultilevel?.presentation || {};
+    const file = pres.files?.[id] || null;
+    if (!file) return false;
+    const name = pres.names?.[id] || id;
+    const anchor = $("#graph-2d-multilevel-root") || $("#graph-2d-root") || document.body;
+    showLinkPanel(anchor, name, [{
+      requested_id: id,
+      kp_id: id,
+      file,
+      name,
+      range_ok: false,
+      source: "graph",
+    }]);
+    return true;
+  }
+
   // ── task-389：group 下钻视图 + 返回上一位置 ─────────────────────────────
   function multilevelGroupMembers(presentation, groupId) {
     const groups = Array.isArray(presentation?.groups) ? presentation.groups : [];
@@ -2473,10 +2495,9 @@ async function call(fn, ...args) {
         if (group_id) enterMultilevelGroup(group_id);
       });
       // task-380：双击节点保留旧编辑器跳转入口（单击改为 focus）
+      // 2026-11-06 裁决：所有“编辑器落点”的跳转先经小窗预览，用户确认后才真正拉编辑器。
       state.graphMultilevel.mounted.renderer.on("nodeDblClick", ({ node_id }) => {
-        const file = multilevelPresentation().files?.[node_id];
-        if (!file) return;
-        jumpToTarget({ file, kp_id: node_id, name: node_id }, { source: "graph" });
+        openGraphEditorJumpPreview(node_id);
       });
     }
     const vm = payload.vm;

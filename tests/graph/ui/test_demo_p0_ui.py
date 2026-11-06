@@ -50,6 +50,8 @@ def test_app_wires_click_focus_and_dblclick_jump() -> None:
     assert "setFocusFrame" in app, "点击节点未接 Nav setFocusFrame"
     assert "multilevelFocusNode(node_id)" in app
     assert 'renderer.on("nodeDblClick"' in app, "双击跳编辑器入口缺失"
+    assert "openGraphEditorJumpPreview" in app, "双击未先走小窗预览"
+    assert "showLinkPanel(" in app
     assert "jumpToTarget(" in app
 
 
