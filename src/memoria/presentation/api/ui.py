@@ -3233,15 +3233,25 @@ def _mlvm_groups(vm, files: dict[str, str], kb_path: str = "") -> list[dict]:
             groups = []
             for item in (raw.get("groups") or []):
                 members = [str(x) for x in (item.get("member_ids") or []) if str(x) in set(shown_ids)]
+
+                def _num_or_none(key):
+                    val = item.get(key)
+                    return float(val) if isinstance(val, (int, float)) and not isinstance(val, bool) else None
+
                 groups.append({
                     "group_id": str(item.get("group_id") or ""),
                     "file": str(item.get("file") or ""),
                     "section": str(item.get("section") or item.get("label") or item.get("group_id") or ""),
+                    # task-391 rev26：demo 容器标签只显示 L0_x（不追加成员数后缀），由 adapter 优先消费。
+                    "label": str(item.get("label") or item.get("section") or item.get("group_id") or ""),
                     "member_ids": members,
                     "count": len(members),
                     "presentation_only": True,
                     "container": True,
                     "empty_container": bool(item.get("empty_container")),
+                    # 空容器/固定排布：presentation 初值（渲染后可被力移动）
+                    "x": _num_or_none("x"),
+                    "y": _num_or_none("y"),
                 })
             groups = [g for g in groups if g["group_id"]]
             if groups:
@@ -3265,6 +3275,42 @@ def _mlvm_groups(vm, files: dict[str, str], kb_path: str = "") -> list[dict]:
             "presentation_only": True,
         })
     return groups
+
+
+def _mlvm_demo_links(kb_path: str = "") -> list[dict]:
+    """task-391 rev26：**presentation-only** demo 连线（容器↔容器 / 容器↔KP）。
+
+    - 只来自 `.memoria/demo-groups.json` 的 `links[]`（dev demo）；
+    - 纯展示连接：**不进 VM、不入数据边、不进 `_edgeList`/edge 统计**，由 Renderer 单独绘制；
+    - 端点身份：组用 `group:<group_id>`，KP 用裸 id。
+    """
+    import json as _json
+    import os as _os
+
+    if not kb_path:
+        return []
+    demo_path = _os.path.join(kb_path, ".memoria", "demo-groups.json")
+    if not _os.path.isfile(demo_path):
+        return []
+    try:
+        raw = _json.loads(open(demo_path, encoding="utf-8").read())
+    except Exception:
+        return []
+    out: list[dict] = []
+    for item in (raw.get("links") or []):
+        if not isinstance(item, dict):
+            continue
+        src = str(item.get("source") or item.get("from") or "")
+        tgt = str(item.get("target") or item.get("to") or "")
+        if not src or not tgt:
+            continue
+        out.append({
+            "source": src,
+            "target": tgt,
+            "kind": str(item.get("kind") or "structure"),
+            "presentation_only": True,
+        })
+    return out
 
 
 def _mlvm_presentation(datasource, vm, kb_path: str = "") -> dict:
@@ -3304,6 +3350,8 @@ def _mlvm_presentation(datasource, vm, kb_path: str = "") -> dict:
         "files": dict(sorted(files.items())),
         "names": dict(sorted(names.items())),
         "groups": _mlvm_groups(vm, files, kb_path),
+        # task-391 rev26：presentation-only demo 连线（容器链 / 容器→KP），不参与数据边。
+        "links": _mlvm_demo_links(kb_path),
     }
 
 

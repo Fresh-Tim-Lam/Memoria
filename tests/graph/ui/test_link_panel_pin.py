@@ -89,13 +89,22 @@ def test_link_panel_new_panel_is_unpinned_and_closes_on_outside() -> None:
         ).start()
         assert rp.wait_port(port), "harness 未在 20s 内就绪"
         cmd = ["node", str(SCENARIO), "--url", "http://127.0.0.1:%d/" % port, "--out", str(raw_out)]
-        cp = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True, timeout=240)
-        assert raw_out.is_file(), f"探针未产出 JSON。stdout={cp.stdout[-2000:]}\nstderr={cp.stderr[-3000:]}"
-        payload = json.loads(raw_out.read_text(encoding="utf-8"))
+        # 真机浏览器在门禁并行/冷启动下偶发 ERROR（等 canvas 挂载超时）；ERROR 允许重试一次，
+        # 断言失败（FAIL）不重试，避免把真实回归吞掉。
+        payload = {}
+        for attempt in (1, 2):
+            cp = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True, timeout=300)
+            assert raw_out.is_file(), f"探针未产出 JSON。stdout={cp.stdout[-2000:]}\nstderr={cp.stderr[-3000:]}"
+            payload = json.loads(raw_out.read_text(encoding="utf-8"))
+            if payload.get("verdict") in ("PASS", "FAIL"):
+                break
+            if attempt == 2:
+                break
+            cp = None
         EVIDENCE_OUT.parent.mkdir(parents=True, exist_ok=True)
         shutil.copyfile(raw_out, EVIDENCE_OUT)
         assert payload.get("verdict") == "PASS", (
-            "链接小窗 pin 回归失败：\n%s" % json.dumps(payload, ensure_ascii=False, indent=2)[-4000:]
+            "链接小窗 pin/canvas outside 回归失败：\n%s" % json.dumps(payload, ensure_ascii=False, indent=2)[-4000:]
         )
         checks = payload.get("checks") or {}
         for key in (

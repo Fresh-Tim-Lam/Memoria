@@ -1,0 +1,58 @@
+{
+  "schema": "memoria-demo-groups/v1",
+  "groups": [
+    {
+      "group_id": "demo:L0_1",
+      "label": "L0_1",
+      "section": "L0_1",
+      "file": "one-node.md",
+      "member_ids": ["node-001"],
+      "count": 1,
+      "container": true,
+      "x": 62,
+      "y": 120
+    },
+    {
+      "group_id": "demo:L0_2",
+      "label": "L0_2",
+      "section": "L0_2",
+      "file": "one-node.md",
+      "member_ids": [],
+      "count": 0,
+      "container": true,
+      "empty_container": true,
+      "x": 214,
+      "y": 152
+    },
+    {
+      "group_id": "demo:L0_3",
+      "label": "L0_3",
+      "section": "L0_3",
+      "file": "one-node.md",
+      "member_ids": [],
+      "count": 0,
+      "container": true,
+      "empty_container": true,
+      "x": 48,
+      "y": 404
+    },
+    {
+      "group_id": "demo:L0_4",
+      "label": "L0_4",
+      "section": "L0_4",
+      "file": "one-node.md",
+      "member_ids": [],
+      "count": 0,
+      "container": true,
+      "empty_container": true,
+      "x": 222,
+      "y": 462
+    }
+  ],
+  "links": [
+    { "source": "group:demo:L0_1", "target": "group:demo:L0_2", "kind": "structure" },
+    { "source": "group:demo:L0_2", "target": "group:demo:L0_3", "kind": "structure" },
+    { "source": "group:demo:L0_3", "target": "group:demo:L0_4", "kind": "structure" },
+    { "source": "group:demo:L0_4", "target": "node-002", "kind": "structure" }
+  ]
+}

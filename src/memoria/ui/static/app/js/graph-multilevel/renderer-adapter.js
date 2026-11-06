@@ -193,17 +193,25 @@
         parent_id: String(g.parent_id || g.parent_group_id || ""),
         file: String(g.file || ""),
         section: String(g.section || ""),
+        // task-391 rev26：demo 容器标签（L0_x）由 presentation 提供；有 label 时不追加成员数。
+        label: String(g.label || ""),
         member_ids: Array.isArray(g.member_ids) ? g.member_ids.map(String) : [],
         count: Number(g.count) || (Array.isArray(g.member_ids) ? g.member_ids.length : 0),
         presentation_only: true,
         container: g.container === true,
         empty_container: g.empty_container === true,
+        // task-391 rev26：presentation 固定初值（空容器排布）；渲染后仍可被力/拖拽移动。
+        x: Number.isFinite(Number(g.x)) ? Number(g.x) : null,
+        y: Number.isFinite(Number(g.y)) ? Number(g.y) : null,
       }))
       .filter((g) => g.group_id && (g.container || g.member_ids.length >= (singleMemberOnly ? 2 : 1)))
       .sort((a, b) => (a.file || a.group_id).localeCompare(b.file || b.group_id));
   }
 
   function groupLabel(group) {
+    // task-391 rev26：explicit label（demo 容器）原样显示，不追加 (n)；
+    // 其余按旧语义 “章节/文件名 (成员数)”。
+    if (group && group.label) return String(group.label);
     const raw = String(group.section || group.file || group.group_id || "");
     const chapter = raw.match(/第\s*\d+\s*章/);
     const base = chapter ? chapter[0] : raw;
@@ -828,7 +836,8 @@
       this._groups = normalizeGroups(this._presentation).map((g) => ({
         ...g,
         member_ids: g.member_ids.filter((id) => shown.has(id)),
-      })).filter((g) => g.member_ids.length);
+        // task-391 rev26：空容器（L0_2..L0_4）没有成员也必须保留（否则 demo 簇节点消失）
+      })).filter((g) => g.member_ids.length > 0 || g.container);
       // 显式 demo 容器（如 L0_1）默认折叠：当前层只显示容器节点，成员进入子图后才显示
       for (const g of this._groups) {
         if (g.container) this._collapsedGroups.add(g.group_id);
@@ -1835,7 +1844,10 @@
         ctx.lineWidth = 1;
         if (ctx.stroke) ctx.stroke();
       }
-      drawGroupBadge(ctx, node.x + radius * 0.7, node.y - radius * 0.7, group.member_ids.length, selectedGroup ? "#58a6ff" : "#0d1117");
+      // task-391 rev26：空容器（L0_2..L0_4）没有成员，不画 “0” 成员数徽标（名字已统一 L0_x）。
+      if (!group.empty_container) {
+        drawGroupBadge(ctx, node.x + radius * 0.7, node.y - radius * 0.7, group.member_ids.length, selectedGroup ? "#58a6ff" : "#0d1117");
+      }
       if (view.groupHit) view.groupHit.push({ kind: "circle", x: node.x, y: node.y, r: radius + 4, group, selected: selectedGroup });
       if (ctx.fillText) {
         ctx.font = VISUAL.labelFont;
@@ -1934,6 +1946,36 @@
       calls.nodes += 1;
     }
 
+    /**
+     * task-391 rev26：**presentation-only** demo 连线（容器链 / 容器→KP）。
+     * 从 `presentation.links` 解析已建场景节点（`group:<gid>` 或裸 KP id）后画结构色虚线；
+     * 不新增边、不进 VM/`_edgeList`/edge 统计，纯展示连接。返回本次绘制条数（诊断用）。
+     */
+    _drawPresentationLinks(ctx) {
+      const links = this._presentation && Array.isArray(this._presentation.links)
+        ? this._presentation.links : [];
+      if (!links.length || !ctx.beginPath) return 0;
+      let drawn = 0;
+      ctx.save?.();
+      ctx.strokeStyle = "rgba(139,148,158,0.55)";
+      ctx.lineWidth = 1.2;
+      if (ctx.setLineDash) ctx.setLineDash([4, 4]);
+      for (const link of links) {
+        if (!link) continue;
+        const source = this._scene.get(String(link.source || link.source_id || ""));
+        const target = this._scene.get(String(link.target || link.target_id || ""));
+        if (!source || !target) continue;
+        ctx.beginPath();
+        ctx.moveTo(source.x, source.y);
+        ctx.lineTo(target.x, target.y);
+        ctx.stroke();
+        drawn += 1;
+      }
+      if (ctx.setLineDash) ctx.setLineDash([]);
+      ctx.restore?.();
+      return drawn;
+    }
+
     _draw() {
       const ctx = this._ctx;
       if (!ctx) return;
@@ -1962,6 +2004,8 @@
 
       // task-391：绘制前统一 reconcile 节点集合（折叠/展开/幽灵/VM 变化都只走这一处）
       this._syncScene();
+      // task-391 rev26：presentation-only demo 连线（容器链 / 容器→KP），先于节点绘制（在底层）。
+      this._presentationLinkDraws = this._drawPresentationLinks(ctx);
       const drawView = {
         calls,
         painters: this._scene.painters,

@@ -1,0 +1,35 @@
+﻿schema_version: 1
+file: one-node.md
+knowledge_points:
+- id: node-001
+  name: 示例知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是一个只有一个知识点的示例段落。
+      line_hint: 3
+    end:
+      snippet: 这是一个只有一个知识点的示例段落。
+      line_hint: 3
+- id: node-002
+  name: 第二个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第二个知识点：它不属于任何容器组，由 L0_4 簇节点直接连接（demo）。
+      line_hint: 5
+    end:
+      snippet: 这是第二个知识点：它不属于任何容器组，由 L0_4 簇节点直接连接（demo）。
+      line_hint: 5
+links:
+- anchor_text: 第二个知识点
+  targets: [node-002]
+  edge_type: reference
+  source_id: node-001
+  instances:
+  - line: 3
+    wrapped: false

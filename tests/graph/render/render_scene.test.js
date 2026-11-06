@@ -523,6 +523,59 @@ function run() {
     r.dispose();
   });
 
+
+  // ── 14. task-391 rev26：presentation-only 空容器簇 / 组标签 / demo 连线 ─────────
+  check("presentation_empty_containers_labels_and_links_are_not_data_edges", () => {
+    const host = makeHost();
+    const box = container();
+    const hub = "kp-022";
+    const presentation = {
+      degrees: DEMO.presentation.degrees,
+      names: DEMO.presentation.names,
+      groups: [
+        { group_id: "demo:L0_1", label: "L0_1", section: "L0_1", file: "demo.md", member_ids: [hub], container: true, x: 60, y: 120 },
+        { group_id: "demo:L0_2", label: "L0_2", section: "L0_2", file: "demo.md", member_ids: [], container: true, empty_container: true, x: 220, y: 150 },
+        { group_id: "demo:L0_3", label: "L0_3", section: "L0_3", file: "demo.md", member_ids: [], container: true, empty_container: true, x: 50, y: 400 },
+      ],
+      links: [
+        { source: "group:demo:L0_1", target: "group:demo:L0_2" },
+        { source: "group:demo:L0_2", target: "group:demo:L0_3" },
+        { source: "group:demo:L0_3", target: hub },
+      ],
+    };
+    const r = new Adapter.Renderer2D(box, { host, presentation, animateForce: false });
+    r.render(box, DEMO.vm);
+    const groups = r.getGroups();
+    assert.strictEqual(groups.length, 3, "空容器也必须保留为 presentation 组");
+    for (const gid of ["group:demo:L0_1", "group:demo:L0_2", "group:demo:L0_3"]) {
+      const node = r.getNode(gid);
+      assert.ok(node, `容器簇节点必须存在：${gid}`);
+      assert.ok(!/\(\d+\)/.test(String(node.label)), `容器标签不得带 (n) 后缀：${node.label}`);
+    }
+    // 容器 L0_1 折叠后其成员 KP 隐藏；第 3 条连线改指一个仍可见的 KP（模拟 demo 的 node-002）
+    const visibleKp = [...r.getPositions().keys()]
+      .map((id) => r.getNode(id))
+      .find((n) => n && n.kind === "kp");
+    assert.ok(visibleKp, "缺少可见 KP 作为连线端点");
+    r.setPresentation({
+      ...presentation,
+      links: [...presentation.links, { source: "group:demo:L0_3", target: visibleKp.id }],
+    });
+    assert.strictEqual(r.lastRender.edges, 0, "presentation 连线不得改变 edge 统计");
+    const edgesBefore = r.lastRender.edges;
+    const edgeListBefore = r._edgeList.length;
+    const ctx = r._ctx;
+    ctx.strokes.length = 0;
+    r._draw();
+    const connectors = ctx.strokes.filter((s) => s.dash.length === 2 && s.dash[0] === 4 && s.dash[1] === 4
+      && String(s.strokeStyle).replace(/\s+/g, "") === "rgba(139,148,158,0.55)"
+      && Math.abs(s.lineWidth - 1.2) < 0.01);
+    assert.strictEqual(connectors.length, 3, `presentation 连线数量应为 3（第 4 条端点被折叠隐藏），实际 ${connectors.length}`);
+    assert.strictEqual(r.lastRender.edges, edgesBefore, "presentation 连线不得改变 edge 统计");
+    assert.strictEqual(r._edgeList.length, edgeListBefore, "presentation 连线不得写入 _edgeList");
+    r.dispose();
+  });
+
   console.log(JSON.stringify({
     suite: "render_scene",
     results,

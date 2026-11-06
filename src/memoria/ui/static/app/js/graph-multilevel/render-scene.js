@@ -324,6 +324,13 @@
           }
           if (n) center = { x: sx / n, y: sy / n };
         }
+        // task-391 rev26：空容器（无成员）或固定排布组可用 presentation 初值 x/y；
+        // 首帧落位后仍进入同一力循环，可被力/拖拽移动（仅作为初始 anchor，不是第二份位置存储）。
+        if (!center) {
+          const gx = num(group.x, NaN);
+          const gy = num(group.y, NaN);
+          if (Number.isFinite(gx) && Number.isFinite(gy)) center = { x: gx, y: gy };
+        }
         if (!center && !this.nodes.has(id)) continue;
         specs.push({
           id, kind: "cluster", drawKind: "group", shape: "hexagon", layer: "foreground",

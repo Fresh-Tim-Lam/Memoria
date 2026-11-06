@@ -83,6 +83,7 @@ def test_render_scene_node_suite() -> None:
         "app_js_uses_apply_overview_layout_and_no_positions_alias",
         "renderer_apply_overview_layout_writes_grid_positions",
         "ghost_draws_cross_layer_connector_to_target",
+        "presentation_empty_containers_labels_and_links_are_not_data_edges",
     ):
         assert required in names, f"RenderScene 套件缺用例：{required}"
 

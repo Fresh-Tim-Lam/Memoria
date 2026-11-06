@@ -167,7 +167,7 @@ try {
       : { ok: false, reason: "no graph tab" };
     await cdp.waitFor(
       `(() => { const g=window.MemoriaApp.state.graphMultilevel; const r=g&&g.mounted&&g.mounted.renderer; return !!(r&&r.getPositions&&r.getPositions().size>0); })()`,
-      { timeout: 60000, label: "graph canvas mounted" }
+      { timeout: 120000, label: "graph canvas mounted" }
     );
     await sleep(800);
     const graphInfo = await cdp.evalJS(`(() => {

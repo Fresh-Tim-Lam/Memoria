@@ -1,9 +1,9 @@
 /**
  * L0_1 æŠ˜å å®¹å™¨ â†’ è¿›å…¥å­å›¾ â†’ backgroundGhost å›žå½’ï¼ˆtask-391 rev12ï¼‰ã€‚
  *
- * çœŸå®žåº”ç”¨é¡µé¢ + çœŸå®ž Edgeï¼ŒCDP `Input` åŸŸå—ä¿¡ä»»æ‹–æ‹½ï¼š
+ * 真实应用页面 + 真实 Edge，CDP Input 受信任拖拽：
  *   1) çˆ¶è§†å›¾æŠŠ container ç»„æŠ˜å æˆç°‡èŠ‚ç‚¹ï¼ˆ`group:demo:L0_1`ï¼‰ï¼Œæˆå‘˜ node-001 éšè—ï¼›
- *   2) çœŸå®žç‚¹å‡»ç°‡èŠ‚ç‚¹è¿›å…¥å­å›¾ï¼›
+ *   2) 真实点击簇节点进入子图；
  *   3) æ–­è¨€ child view `getPositions()` åŒæ—¶æœ‰ node-001 ä¸Ž ghost:Aï¼ˆä¿®å¤å‰ ghost=nullï¼‰ï¼›
  *   4) æ‹– KP â†’ ghost ä½ç§»>0ï¼›æ‹– ghost â†’ KP ä½ç§»>0ï¼›å…¨ç¨‹å•ç”»å¸ƒã€‚
  *
@@ -42,7 +42,7 @@ const SNAP = `(() => {
   const positions = {};
   for (const [id, p] of r.getPositions()) {
     const node = r.getNode ? r.getNode(id) : null;
-    positions[id] = { x: p.x, y: p.y, radius: node ? node.radius : null, kind: node ? node.kind : null, layer: node ? node.layer : null };
+    positions[id] = { x: p.x, y: p.y, radius: node ? node.radius : null, kind: node ? node.kind : null, layer: node ? node.layer : null, label: node ? node.label : null };
   }
   return {
     canvasCount: cvs.length,
@@ -82,7 +82,7 @@ try {
   await withBrowser(URL, async (cdp, ix) => {
     await cdp.waitFor("!!window.MemoriaApp", { timeout: 90000, label: "MemoriaApp" });
     await cdp.waitFor(`(() => { const s=window.MemoriaApp.state; return !!(s && s.kbPath); })()`, { timeout: 90000, label: "kbPath" }).catch(() => null);
-    // ä¾§æ è‹¥è‡ªåŠ¨æŠ˜å ï¼šçœŸå®žç‚¹å‡»å±•å¼€ï¼ˆå¦åˆ™å›¾è°±å®¿ä¸»å®½ 0ï¼Œç”»å¸ƒä¸å¸ƒå±€ï¼‰
+    // 侧栏若自动折叠：真实点击展开（否则图谱宿主宽 0，画布不布局）
     const side = await cdp.evalJS(`(() => { const el=document.querySelector('#-sidebar'); const r=el?el.getBoundingClientRect():null; const btn=document.querySelector('#btn-toggle-sidebar'); const br=btn?btn.getBoundingClientRect():null; return { w:r?Math.round(r.width):null, toggle: br&&br.width>1?{x:br.left+br.width/2,y:br.top+br.height/2}:null }; })()`);
     if (side.w != null && side.w < 10 && side.toggle) { await ix.click(side.toggle.x, side.toggle.y); await sleep(500); }
     // åˆ‡æ¢åˆ° 2D å›¾è°±å¹¶åŠ è½½æ•°æ®ï¼ˆç­‰ä»·ç”¨æˆ·æ‰“å¼€å›¾è°±ï¼‰
@@ -102,7 +102,7 @@ try {
     const parentHasCluster = !!(parent && parent.positions[GROUP_NODE]);
     const parentHasKp = !!(parent && parent.positions[KP_ID]);
     if (!parentHasCluster) {
-      // å…œåº•ï¼ˆæ­£å¸¸ container ç»„ä¼šè‡ªåŠ¨æŠ˜å ï¼‰ï¼šæ˜¾å¼æŠ˜å ï¼Œä»èµ°çœŸå®ž pointerdown è¿›å…¥
+      // 兜底（正常 container 组会自动折叠）：显式折叠，仍走真实 pointerdown 进入
       await cdp.evalJS(`(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; if (!r.isGroupCollapsed || !r.isGroupCollapsed(${JSON.stringify(GROUP_ID)})) r.toggleGroup(${JSON.stringify(GROUP_ID)}); return true; })()`);
       await sleep(500);
       await stopAnim(cdp);
@@ -118,7 +118,85 @@ try {
     });
     if (!parent.positions[GROUP_NODE]) throw new Error("çˆ¶è§†å›¾ç¼ºæŠ˜å ç°‡èŠ‚ç‚¹ " + GROUP_NODE);
 
-    // çœŸå®žç‚¹å‡»ç°‡ â†’ app å†… groupClick â†’ enterMultilevelGroupï¼ˆ160ms åŽåˆ‡å­å›¾ï¼‰
+    // 真实点击簇 → app 内 groupClick → enterMultilevelGroup（160ms 后切子图）
+    // ② rev26 demo：4 个容器簇 + 1 个独立知识点 + presentation-only 连线（不进数据边）。
+    const demo = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const ctx = r._ctx;
+      const groupIds = ['group:demo:L0_1', 'group:demo:L0_2', 'group:demo:L0_3', 'group:demo:L0_4'];
+      const labels = {};
+      const missing = [];
+      for (const gid of groupIds) {
+        const node = r.getNode(gid);
+        if (!node) { missing.push(gid); continue; }
+        labels[gid] = node.label;
+      }
+      const kp = r.getNode('node-002');
+      let links = [];
+      let linkStats = null;
+      if (ctx) {
+        const strokes = [];
+        let mx = 0, my = 0, dash = [], lx = null, ly = null;
+        const o = { beginPath: ctx.beginPath, moveTo: ctx.moveTo, lineTo: ctx.lineTo, setLineDash: ctx.setLineDash, stroke: ctx.stroke };
+        ctx.beginPath = function () { lx = null; ly = null; return o.beginPath.call(this); };
+        ctx.moveTo = function (x, y) { mx = x; my = y; return o.moveTo.call(this, x, y); };
+        ctx.lineTo = function (x, y) { lx = x; ly = y; return o.lineTo.call(this, x, y); };
+        ctx.setLineDash = function (a) { dash = Array.isArray(a) ? a.slice() : []; return o.setLineDash.call(this, a); };
+        ctx.stroke = function () {
+          strokes.push({ dash: dash.slice(), style: String(this.strokeStyle || '').replace(/\\s+/g, ''), w: this.lineWidth, from: { x: mx, y: my }, to: lx == null ? null : { x: lx, y: ly } });
+          return o.stroke.call(this);
+        };
+        const edgesBefore = r.lastRender ? r.lastRender.edges : null;
+        const edgeListBefore = r._edgeList.length;
+        r._draw();
+        ctx.beginPath = o.beginPath; ctx.moveTo = o.moveTo; ctx.lineTo = o.lineTo; ctx.setLineDash = o.setLineDash; ctx.stroke = o.stroke;
+        links = strokes.filter((s) => s.to && s.dash.length === 2 && s.dash[0] === 4 && s.dash[1] === 4
+          && s.style === 'rgba(139,148,158,0.55)' && Math.abs(s.w - 1.2) < 0.01);
+        linkStats = { edgesBefore, edgesAfter: r.lastRender ? r.lastRender.edges : null, edgeListBefore, edgeListAfter: r._edgeList.length };
+      }
+      const g = window.MemoriaApp.state.graphMultilevel || {};
+      const pres = g.presentation || {};
+      const vm = g.vm || { nodes: [] };
+      return {
+        ok: true,
+        sceneIds: [...r.getPositions().keys()].sort(),
+        missing,
+        labels,
+        hasKp002: !!kp,
+        kp002: kp ? { x: kp.x, y: kp.y } : null,
+        linkCount: links.length,
+        linkEndpoints: links.map((l) => ({ from: l.from, to: l.to })),
+        noEdgeStats: linkStats,
+        presentationGroups: (pres.groups || []).map((x) => ({ id: x.group_id, label: x.label, members: (x.member_ids || []).length, x: x.x, y: x.y, container: x.container, empty: x.empty_container })),
+        presentationLinks: pres.links || null,
+        vmNodes: (vm.nodes || []).map((n) => ({ id: n.id, kind: n.kind, presence: n.presence })),
+        rendererGroups: (r.getGroups() || []).map((x) => ({ id: x.group_id, members: (x.member_ids || []).length })),
+        collapsedGroups: [...(r._collapsedGroups || [])],
+      };
+    })()`);
+    evidence.steps.push({ step: "demo-l0-clusters", ...demo });
+    const labelsOk = !!(demo && !demo.missing.length
+      && ["L0_1", "L0_2", "L0_3", "L0_4"].every((lab) => Object.values(demo.labels).includes(lab))
+      && Object.values(demo.labels).every((lab) => !/\(\d+\)/.test(String(lab || ""))));
+    const linksOk = !!(demo && demo.linkCount >= 4
+      && demo.noEdgeStats && demo.noEdgeStats.edgesBefore === demo.noEdgeStats.edgesAfter
+      && demo.noEdgeStats.edgeListBefore === demo.noEdgeStats.edgeListAfter);
+    const kp002Ok = !!(demo && demo.hasKp002);
+    const shotParent = arg("shot-parent", "");
+    let parentScreenshot = null;
+    if (shotParent) {
+      try {
+        await cdp.send("Page.enable", {});
+        const shot = await cdp.send("Page.captureScreenshot", { format: "png" });
+        fs.mkdirSync(path.dirname(shotParent), { recursive: true });
+        fs.writeFileSync(shotParent, Buffer.from(shot.data, "base64"));
+        parentScreenshot = shotParent;
+      } catch (e) {
+        parentScreenshot = "ERROR: " + String((e && e.message) || e);
+      }
+    }
+    evidence.steps.push({ step: "demo-screenshot", parentScreenshot });
+
     const clusterPoint = toScreen(parent, parent.positions[GROUP_NODE]);
     await ix.click(clusterPoint.x, clusterPoint.y);
     await cdp.waitFor(
@@ -224,8 +302,8 @@ try {
     child = await cdp.evalJS(SNAP);
 
 
-    // â‘¢ è·¨å±‚è™šçº¿ï¼ˆæœ¬è½®å›žå½’ï¼‰ï¼šghost â†’ å­å›¾å…¥å£èŠ‚ç‚¹ï¼Œå¿…é¡»çœŸå®žç”»å‡ºä¸€æ¡ dashed connectorï¼›
-    //    ä¸”å®ƒä¸æ˜¯æ•°æ®è¾¹ï¼ˆedge ç»Ÿè®¡/edge åˆ—è¡¨ä¸å˜ï¼‰ã€‚
+    // ③ 跨层虚线（本轮回归）：ghost → 子图入口节点，必须真实画出一条 dashed connector；
+    //    且它不是数据边（edge 统计/edge 列表不变）。
     const conn = await cdp.evalJS(`(() => {
       const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
       const ctx = r._ctx;
@@ -315,6 +393,10 @@ try {
     });
 
     evidence.checks = {
+      demoFourClusters: !!(demo && !demo.missing.length),
+      demoClusterLabelsClean: labelsOk,
+      demoKp002Visible: kp002Ok,
+      demoPresentationLinks: linksOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
       ghostConnectorDrawn: connectorOk,
