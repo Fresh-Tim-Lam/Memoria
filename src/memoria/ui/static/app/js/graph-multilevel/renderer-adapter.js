@@ -204,6 +204,23 @@
     return `${base} (${group.member_ids.length})`;
   }
 
+  /** 统一呈现节点：KP / 折叠簇 / 背景幽灵只在这一个模型里参与力、命中与绘制。 */
+  function makeRenderNode(spec) {
+    return {
+      id: String(spec.id || ""),
+      kind: spec.kind || "kp",
+      shape: spec.shape || (spec.kind === "kp" ? "circle" : "hexagon"),
+      layer: spec.layer || "foreground",
+      x: Number(spec.x),
+      y: Number(spec.y),
+      radius: Number(spec.radius) || KP_BASE_RADIUS,
+      label: String(spec.label || ""),
+      hit: spec.hit || "select",
+      fixed: spec.fixed === true,
+      group: spec.group || null,
+    };
+  }
+
   function truncateTextWidth(ctx, text, maxWidth) {
     if (!ctx.measureText || ctx.measureText(text).width <= maxWidth) return text;
     let out = text;
@@ -505,7 +522,7 @@
       focusId: focusId && positions.has(focusId) && !pinned.has(focusId) ? String(focusId) : null,
       vx: new Map(ids.map((id) => [id, 0])),
       vy: new Map(ids.map((id) => [id, 0])),
-      bgGhost: opts.bgGhost || null,
+      extraBodies: Array.isArray(opts.extraBodies) ? opts.extraBodies : [],
       alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
       ticks: 0,
       maxDisp: 0,
@@ -548,16 +565,16 @@
         if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
       }
     }
-    // 同画布背景簇节点也参与力：把前景节点从幽灵 A 推开（幽灵固定，不反向移动）
-    const ghost = state.bgGhost;
-    if (ghost && Number.isFinite(ghost.x) && Number.isFinite(ghost.y)) {
-      const gr = Number(ghost.radius) || 20;
+    // 统一固定体（折叠簇节点、背景幽灵）：参与力，但自身不移动
+    for (const body of state.extraBodies || []) {
+      if (!Number.isFinite(body.x) || !Number.isFinite(body.y)) continue;
+      const gr = Number(body.radius) || 20;
       for (const id of ids) {
         if (pinned.has(id)) continue;
         const p = positions.get(id);
         const r = radiusById.get(id) || KP_BASE_RADIUS;
-        let dx = p.x - ghost.x;
-        let dy = p.y - ghost.y;
+        let dx = p.x - body.x;
+        let dy = p.y - body.y;
         let dist = Math.hypot(dx, dy);
         if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
         const ux = dx / dist;
@@ -747,6 +764,7 @@
       this._layoutFocusId = null;
       this._groups = normalizeGroups(this._presentation);
       this._collapsedGroups = new Set();
+      this._groupGeom = new Map();
       this._groupHit = [];
       this._lastVm = null;
       this._pendingVm = null;
@@ -862,6 +880,78 @@
 
     isGroupCollapsed(groupId) {
       return this._collapsedGroups.has(String(groupId || ""));
+    }
+
+    _groupCenter(group) {
+      const pts = (group.member_ids || [])
+        .map((id) => this._positions.get(String(id)))
+        .filter(Boolean);
+      if (!pts.length) return null;
+      return {
+        x: pts.reduce((a, p) => a + p.x, 0) / pts.length,
+        y: pts.reduce((a, p) => a + p.y, 0) / pts.length,
+      };
+    }
+
+    /**
+     * 统一呈现节点模型：KP、折叠簇、背景幽灵都投影成同一 RenderNode。
+     * VM 仍只含 kp/cluster；这里只是 renderer 内部的呈现/力/命中视图。
+     */
+    _composeRenderNodes() {
+      const out = [];
+      const hidden = this._hiddenMemberIds();
+      for (const node of this._nodeById.values()) {
+        if (node.presence !== "shown") continue;
+        if (hidden.has(node.id)) continue;
+        const p = this._positions.get(node.id);
+        if (!p) continue;
+        out.push(makeRenderNode({
+          id: node.id, kind: node.kind, shape: "circle", layer: "foreground",
+          x: p.x, y: p.y,
+          radius: (this._radiusById && this._radiusById.get(node.id)) || KP_BASE_RADIUS,
+          label: (this._presentation && this._presentation.names && this._presentation.names[node.id]) || node.label || node.id,
+          hit: "select", fixed: false,
+        }));
+      }
+      for (const group of this._groups) {
+        if (!this._collapsedGroups.has(group.group_id)) continue;
+        if (this._groupHasCollapsedAncestor(group.group_id)) continue;
+        const c = this._groupCenter(group);
+        if (!c) continue;
+        const n = group.member_ids.length;
+        out.push(makeRenderNode({
+          id: `group:${group.group_id}`, kind: "cluster", shape: "hexagon", layer: "foreground",
+          x: c.x, y: c.y,
+          radius: Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1))),
+          label: groupLabel(group),
+          hit: "drill", fixed: true, group,
+        }));
+      }
+      const gp = this._bgGhostPos();
+      if (gp) {
+        out.push(makeRenderNode({
+          id: "ghost:A", kind: "ghost", shape: "hexagon", layer: "background",
+          x: gp.x, y: gp.y, radius: gp.radius, label: gp.label,
+          hit: "return", fixed: true,
+        }));
+      }
+      return out;
+    }
+
+    _forceBodies() {
+      return this._composeRenderNodes()
+        .filter((n) => n.fixed && n.kind !== "kp")
+        .map((n) => ({ x: n.x, y: n.y, radius: n.radius, kind: n.kind }));
+    }
+
+    _pickRenderNode(x, y) {
+      const nodes = this._composeRenderNodes();
+      for (let i = nodes.length - 1; i >= 0; i--) {
+        const n = nodes[i];
+        if (!Number.isFinite(n.x) || !Number.isFinite(n.y)) continue;
+        if (Math.hypot(x - n.x, y - n.y) <= n.radius + 6) return n;
+      }
+      return null;
     }
 
     _syncGroups() {
@@ -1059,7 +1149,7 @@
           pinned: opts.pinned || this._pinned,
           pinFocusCenter: opts.pinFocusCenter === true,
           alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
-          bgGhost: this._bgGhostPos(),
+          extraBodies: this._forceBodies(),
         }
       );
       this._forceState = state;
@@ -1629,29 +1719,24 @@
       const world = this._screenToWorld(x, y);
       x = world.x;
       y = world.y;
-      // 背景幽灵 A 是“返回上一站”的点击目标，优先于普通节点命中
-      const ghostPos = this._bgGhostPos();
-      if (ghostPos && Math.hypot(x - ghostPos.x, y - ghostPos.y) <= ghostPos.radius + 8) {
-        const payload = { kind: "background-ghost", label: ghostPos.label, ...extra };
-        this._emit("backgroundGhostClick", payload);
-        return { type: "backgroundGhostClick", payload };
-      }
-      const node = this._pickNode(x, y);
-      if (node) {
-        // task-387：单击 = 选中/高亮（KP + 一跳邻居），不触发跳转或 focus
-        if (node.kind === "kp") this.selectNode(node.id);
-        else this.clearSelection();
-        const payload = { node_id: node.id, kind: node.kind, ...extra };
+      // 统一命中：同一 RenderNode 列表，按 hit 策略分派返回/下钻/选中
+      const rn = this._pickRenderNode(x, y);
+      if (rn) {
+        if (rn.hit === "return") {
+          const payload = { kind: "background-ghost", label: rn.label, ...extra };
+          this._emit("backgroundGhostClick", payload);
+          return { type: "backgroundGhostClick", payload };
+        }
+        if (rn.hit === "drill" && rn.group) {
+          this.selectGroup(rn.group.group_id);
+          const payload = { group_id: rn.group.group_id, kind: "presentation-group", ...extra };
+          this._emit("groupClick", payload);
+          return { type: "groupClick", payload };
+        }
+        this.selectNode(rn.id);
+        const payload = { node_id: rn.id, kind: rn.kind, ...extra };
         this._emit("nodeClick", payload);
         return { type: "nodeClick", payload };
-      }
-      // 折叠组节点优先于边（组中心可能与 focus 点/边重叠）
-      const circleHit = (this._groupHit || []).find((hit) => hit.kind === "circle"
-        && (x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r);
-      if (circleHit) {
-        const payload = { group_id: circleHit.group.group_id, kind: "presentation-group", ...extra };
-        this._emit("groupClick", payload);
-        return { type: "groupClick", payload };
       }
       const edge = this._pickEdge(x, y);
       if (edge) {
