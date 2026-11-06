@@ -13,11 +13,16 @@
   const host = document.createElement('div');
   host.id = '__memoria_annotator_host__';
   host.style.all = 'initial';
+  // 不能留在普通文档流里：否则 html 末尾会多一个行盒，点选面板一开整个应用会下移。
+  host.style.position = 'fixed';
+  host.style.inset = '0';
+  host.style.zIndex = '2147483000';
+  host.style.pointerEvents = 'none';
   const root = host.attachShadow({ mode: 'open' });
   root.innerHTML = `
     <style>
       :host, * { box-sizing: border-box; }
-      .wrap { position: fixed; right: 18px; bottom: 18px; z-index: 2147483000; font: 13px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; color: #e6edf3; }
+      .wrap { position: fixed; right: 18px; bottom: 18px; z-index: 2147483000; pointer-events: auto; font: 13px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; color: #e6edf3; }
       .bar { display: flex; gap: 8px; align-items: center; background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 8px 10px; box-shadow: 0 8px 28px rgba(0,0,0,.45); }
       .bar b { font-weight: 650; font-size: 12px; color: #adbac7; }
       .bar #count { color: #58a6ff; }
@@ -83,13 +88,13 @@
     </div>
     <div class="markers" id="markers"></div>
   `;
-  document.documentElement.appendChild(host);
+  (document.body || document.documentElement).appendChild(host);
   const $ = (s) => root.querySelector(s);
   const panel = $('#panel');
   const outline = document.createElement('div');
   outline.className = 'outline';
   outline.style.display = 'none';
-  document.documentElement.appendChild(outline);
+  (document.body || document.documentElement).appendChild(outline);
 
   const esc = (s) => String(s == null ? '' : s).replace(/[&<>"']/g, (c) => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]));
   function selectorOf(el) {
