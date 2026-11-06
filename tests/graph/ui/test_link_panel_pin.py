@@ -105,6 +105,7 @@ def test_link_panel_new_panel_is_unpinned_and_closes_on_outside() -> None:
             "pinToggleWorks",
             "pinnedSurvivesOutside",
             "persistOmitsPinned",
+            "canvasOutsideClosesUnpinned",
         ):
             assert checks.get(key) is True, f"链接小窗 pin check 失败：{key}"
     finally:

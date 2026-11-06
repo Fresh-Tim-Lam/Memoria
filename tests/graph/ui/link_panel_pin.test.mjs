@@ -143,6 +143,80 @@ try {
     })()`);
     evidence.steps.push({ step: "persisted-settings", ...persisted });
 
+    // ⑥ rev23 回归：未 pin 时点「图谱画布非节点区域」→ 面板关闭。
+    //    根因：Renderer `_onPointerDown` 对 canvas 调 preventDefault，抑制兼容性 mousedown；
+    //    只监听 mousedown 时 canvas 上的 outside 永远不触发。修复后 pointerdown capture 覆盖。
+    //    路径：关掉当前 pinned 面板 → 切 2D 图谱 → 双击节点开小窗（真实 UI）→ 点 canvas 空白。
+    const closeBtn = await cdp.evalJS(rectExpr("#link-panel [data-panel-close]"));
+    if (closeBtn) {
+      await ix.click(closeBtn.x, closeBtn.y);
+      await sleep(200);
+    }
+    const side = await cdp.evalJS(`(() => { const el=document.querySelector('#-sidebar'); const r=el?el.getBoundingClientRect():null; const btn=document.querySelector('#btn-toggle-sidebar'); const br=btn?btn.getBoundingClientRect():null; return { w:r?Math.round(r.width):null, toggle: br&&br.width>1?{x:br.left+br.width/2,y:br.top+br.height/2}:null }; })()`);
+    if (side.w != null && side.w < 10 && side.toggle) {
+      await ix.click(side.toggle.x, side.toggle.y);
+      await sleep(500);
+    }
+    const graphTab = await cdp.evalJS(rectExpr('[data-sidebar-tab="graph2d"]'));
+    const load = graphTab
+      ? await (async () => {
+        await ix.click(graphTab.x, graphTab.y);
+        await sleep(600);
+        return cdp.evalJS(`(async () => { try { await window.MemoriaApp.loadGraphData(); return { ok: true }; } catch (e) { return { ok: false, reason: String((e && e.message) || e) }; } })()`);
+      })()
+      : { ok: false, reason: "no graph tab" };
+    await cdp.waitFor(
+      `(() => { const g=window.MemoriaApp.state.graphMultilevel; const r=g&&g.mounted&&g.mounted.renderer; return !!(r&&r.getPositions&&r.getPositions().size>0); })()`,
+      { timeout: 60000, label: "graph canvas mounted" }
+    );
+    await sleep(800);
+    const graphInfo = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const cv = document.querySelector('#graph-2d-multilevel-root canvas');
+      if (!cv) return { ok: false, reason: 'no canvas' };
+      const rect = cv.getBoundingClientRect();
+      const cam = r._camera || { x: 0, y: 0, scale: 1 };
+      const toScreen = (p) => ({ x: rect.left + p.x * cam.scale + cam.x, y: rect.top + p.y * cam.scale + cam.y });
+      let nodePoint = null;
+      for (const [id, p] of r.getPositions()) {
+        const n = r.getNode(id);
+        if (n && n.kind === 'kp') { nodePoint = toScreen(p); break; }
+      }
+      let blank = null;
+      for (let gx = 12; gx < rect.width - 12 && !blank; gx += 24) {
+        for (let gy = 12; gy < rect.height - 12 && !blank; gy += 24) {
+          const wx = (rect.left + gx - rect.left - cam.x) / cam.scale;
+          const wy = (rect.top + gy - rect.top - cam.y) / cam.scale;
+          if (!r._scene.pick(wx, wy)) blank = { x: rect.left + gx, y: rect.top + gy };
+        }
+      }
+      return { ok: !!nodePoint && !!blank, nodePoint, blank, positions: r.getPositions().size, canvas: { left: rect.left, top: rect.top, width: rect.width, height: rect.height } };
+    })()`);
+    let canvasOpened = false;
+    if (graphInfo && graphInfo.ok) {
+      await ix.doubleClick(graphInfo.nodePoint.x, graphInfo.nodePoint.y);
+      canvasOpened = await cdp
+        .waitFor(`!!document.querySelector('#link-panel')`, { timeout: 20000, label: "link panel from graph node" })
+        .then(() => true)
+        .catch(() => false);
+    }
+    let canvasPanel = null;
+    let canvasClosed = null;
+    if (canvasOpened) {
+      canvasPanel = await panelState(cdp);
+      await ix.click(graphInfo.blank.x, graphInfo.blank.y);
+      await sleep(400);
+      canvasClosed = await panelState(cdp);
+    }
+    evidence.steps.push({
+      step: "canvas-outside-close",
+      load,
+      graphInfo,
+      canvasOpened,
+      panelOnCanvas: canvasPanel,
+      afterCanvasClick: canvasClosed,
+    });
+
     evidence.checks = {
       prefsSeededPinnedTrue: prefsLoaded.filePinned === true,
       defaultUnpinnedWithPrefsPinned: s1.hasPanel && s1.statePinned === false && s1.ariaPressed === "false",
@@ -150,6 +224,9 @@ try {
       pinToggleWorks: s3.hasPanel && s3.statePinned === true && s3.ariaPressed === "true",
       pinnedSurvivesOutside: s4.hasPanel && s4.statePinned === true && s4.ariaPressed === "true",
       persistOmitsPinned: persisted.pinnedStored === false,
+      canvasOutsideClosesUnpinned:
+        !!(canvasOpened && canvasPanel && canvasPanel.statePinned === false
+          && canvasClosed && !canvasClosed.hasPanel && canvasClosed.statePinned === null),
     };
     evidence.verdict = Object.values(evidence.checks).every(Boolean) ? "PASS" : "FAIL";
   });

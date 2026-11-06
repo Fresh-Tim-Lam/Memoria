@@ -8289,6 +8289,14 @@ async function call(fn, ...args) {
     )).filter((n) => n.offsetParent !== null || n === el);
   }
 
+  /**
+   * task-391 rev23：outside 关闭。
+   *
+   * 关键：Renderer 的 `_onPointerDown` 对 canvas 调了 `event.preventDefault()`；按 Pointer Events
+   * 规范，取消 pointerdown 会抑制兼容性 mousedown ⇒ 只监听 mousedown 时，**点图谱画布**永远收不到
+   * outside 事件（点侧栏/编辑器正常）。因此同时监听 `pointerdown` capture，`mousedown` 仅作旧环境兜底。
+   * 两个监听可能对同一次交互先后触发：函数本身幂等（panel 已关 / 已 pin 直接返回），二次调用安全。
+   */
   function _linkPanelOutside(e) {
     const pop = state.linkPanel;
     if (!pop || pop.pinned) return;   // 已钉住：主界面交互不关闭（Esc/× 仍可关）
@@ -8784,6 +8792,7 @@ async function call(fn, ...args) {
     _linkPanelPersist({ x: pop.x, y: pop.y, w: pop.w, h: pop.h, mode: pop.mode });
     if (pop.el && pop.el.parentNode) pop.el.parentNode.removeChild(pop.el);
     if (pop.anchorEl && pop.anchorEl.setAttribute) pop.anchorEl.setAttribute("aria-expanded", "false");
+    document.removeEventListener("pointerdown", _linkPanelOutside, true);
     document.removeEventListener("mousedown", _linkPanelOutside, true);
     document.removeEventListener("keydown", _linkPanelKeydown, true);
     state.linkPanel = null;
@@ -8924,6 +8933,9 @@ async function call(fn, ...args) {
       if (to) closeLinkPanel();
     });
     if (anchorEl.setAttribute) anchorEl.setAttribute("aria-expanded", "true");
+    // task-391 rev23：pointerdown capture 覆盖 canvas（Renderer preventDefault 会抑制 mousedown），
+    // mousedown 保留作旧环境兜底；_linkPanelOutside 幂等，同一次交互两次触发安全。
+    document.addEventListener("pointerdown", _linkPanelOutside, true);
     document.addEventListener("mousedown", _linkPanelOutside, true);
     document.addEventListener("keydown", _linkPanelKeydown, true);
 

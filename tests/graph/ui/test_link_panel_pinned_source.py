@@ -58,6 +58,18 @@ def test_unpinned_panel_closes_on_outside_and_pin_toggle_kept() -> None:
     src = _read()
     outside_fn = _fn_body(src, "function _linkPanelOutside(e)")
     assert "pop.pinned" in outside_fn and "closeLinkPanel" in outside_fn, "outside 关闭逻辑缺失"
+    # task-391 rev23：Renderer 对 canvas preventDefault 会抑制兼容性 mousedown，
+    # 必须同时监听 pointerdown capture（mousedown 仅旧环境兜底），关闭时两个都移除。
+    assert 'document.addEventListener("pointerdown", _linkPanelOutside, true)' in src, (
+        "outside 未监听 pointerdown（点图谱画布不会关闭小窗的回归）"
+    )
+    assert 'document.addEventListener("mousedown", _linkPanelOutside, true)' in src, "mousedown 兜底缺失"
+    assert 'document.removeEventListener("pointerdown", _linkPanelOutside, true)' in src, (
+        "关闭时未移除 pointerdown 监听（泄漏）"
+    )
+    assert 'document.removeEventListener("mousedown", _linkPanelOutside, true)' in src, (
+        "关闭时未移除 mousedown 监听（泄漏）"
+    )
     toggle_fn = _fn_body(src, "function _linkPanelTogglePin(pop)")
     assert "pop.pinned = !pop.pinned" in toggle_fn, "面板内 pin toggle 被误删"
     assert "_linkPanelUpdatePin(pop)" in toggle_fn, "pin 图标状态未更新"
