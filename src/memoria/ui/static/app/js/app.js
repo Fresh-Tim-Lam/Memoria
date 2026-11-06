@@ -2326,14 +2326,16 @@ async function call(fn, ...args) {
     }
   }
 
-  /** task-390：H 首屏把顶层 chapter 组排成清晰网格（折叠组中心互不重叠）。 */
+  /**
+   * task-390：H 首屏把顶层 chapter 组排成清晰网格（折叠组中心互不重叠）。
+   * task-391：位置只经 `renderer.applyOverviewLayout()` 写入（RenderScene 唯一事实源；
+   * 不再直接操作 renderer 内部的任何位置表）。
+   */
   function multilevelLayoutOverviewClusters() {
     const renderer = state.graphMultilevel?.mounted?.renderer;
-    if (!renderer?._positions) return;
+    if (!renderer?.applyOverviewLayout) return;
     const groups = (renderer.getGroups?.() || []).filter((g) => !g.parent_id);
     if (groups.length < 2) return;
-    renderer._stopForceAnimation?.();
-    renderer._forceHold = false;
     const width = renderer._measureWidth?.() || 279;
     const height = renderer._measureHeight?.() || 580;
     const cols = width >= 240 ? 2 : 1;
@@ -2352,17 +2354,17 @@ async function call(fn, ...args) {
         const angle = (Math.PI * 2 * i) / Math.max(1, members.length) - Math.PI / 2;
         positions.set(String(id), { x: cx + Math.cos(angle) * rr, y: cy + Math.sin(angle) * rr });
       });
+      // 折叠组的簇节点落在该网格单元中心（未折叠时该 id 只是待建位置，无副作用）
+      positions.set(`group:${g.group_id}`, { x: cx, y: cy });
     });
-    for (const id of renderer._positions.keys()) {
+    // 未归入任何顶层组的既有节点保持在底部中央（与原行为一致）
+    const existing = renderer.getPositions ? renderer.getPositions() : new Map();
+    for (const id of existing.keys()) {
       if (!positions.has(String(id))) {
         positions.set(String(id), { x: width / 2, y: height - 50 });
       }
     }
-    renderer._positions.clear();
-    for (const [id, p] of positions) renderer._positions.set(id, p);
-    renderer._camera = { x: 0, y: 0, scale: 1 };
-    renderer._userAdjusted = false;
-    renderer._draw?.();
+    renderer.applyOverviewLayout(positions);
   }
 
   function multilevelFirstChapterId(vm) {

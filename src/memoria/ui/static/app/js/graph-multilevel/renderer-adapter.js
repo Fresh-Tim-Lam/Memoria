@@ -21,6 +21,12 @@
   "use strict";
 
   const Canonical = global.MemoriaGraphCanonical || (typeof require === "function" ? require("./canonical.js") : null);
+  // task-391：唯一节点/位置事实源（RenderScene）与节点多态模型（RenderNode）。
+  // 浏览器由 index.html 在 renderer-adapter.js 之前加载 render-scene.js。
+  const SceneModule = global.MemoriaGraphRenderScene
+    || (typeof require === "function" ? require("./render-scene.js") : null);
+  const RenderNode = SceneModule ? SceneModule.RenderNode : null;
+  const RenderScene = SceneModule ? SceneModule.RenderScene : null;
 
   const MAX_NODES = 200;
   const MAX_EDGES = 400;
@@ -202,24 +208,6 @@
     const chapter = raw.match(/第\s*\d+\s*章/);
     const base = chapter ? chapter[0] : raw;
     return `${base} (${group.member_ids.length})`;
-  }
-
-  /** 统一呈现节点：KP / 折叠簇 / 背景幽灵只在这一个模型里参与力、命中与绘制。 */
-  function makeRenderNode(spec) {
-    return {
-      id: String(spec.id || ""),
-      kind: spec.kind || "kp",
-      shape: spec.shape || (spec.kind === "kp" ? "circle" : "hexagon"),
-      layer: spec.layer || "foreground",
-      x: Number(spec.x),
-      y: Number(spec.y),
-      radius: Number(spec.radius) || KP_BASE_RADIUS,
-      label: String(spec.label || ""),
-      hit: spec.hit || "select",
-      fixed: spec.fixed === true,
-      group: spec.group || null,
-      data: spec.data || null,
-    };
   }
 
   function truncateTextWidth(ctx, text, maxWidth) {
@@ -499,200 +487,9 @@
     return { positions, radiusById, shown, width, height };
   }
 
-  /**
-   * task-381/382：确定性力导向单步状态机。
-   * - repulsion + link attraction + center + 圆碰撞；
-   * - task-382：动画循环每帧只调用 stepForceState 一次；禁止同步 settle 后瞬移。
-   * - pinned 节点保持当前位置（拖拽 pin / focus 初始锚点）。
-   */
-  function buildForceState(positions, radiusById, links, focusId, width, height, opts = {}) {
-    const ids = [...positions.keys()].sort();
-    const pinned = new Set(opts.pinned || []);
-    const pinFocusCenter = opts.pinFocusCenter !== false;
-    if (focusId && positions.has(focusId) && pinFocusCenter) {
-      pinned.add(focusId);
-      positions.set(focusId, { x: width / 2, y: height / 2 });
-    }
-    const cx = width / 2;
-    const cy = height / 2;
-    const pad = Math.max(24, Math.max(...ids.map((id) => radiusById.get(id) || KP_BASE_RADIUS)) + 8);
-    const linkList = links.filter((l) => positions.has(l.source) && positions.has(l.target));
-    return {
-      ids, positions, radiusById, pinned, cx, cy, pad, width, height,
-      linkList,
-      focusId: focusId && positions.has(focusId) && !pinned.has(focusId) ? String(focusId) : null,
-      vx: new Map(ids.map((id) => [id, 0])),
-      vy: new Map(ids.map((id) => [id, 0])),
-      extraBodies: Array.isArray(opts.extraBodies) ? opts.extraBodies : [],
-      alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
-      ticks: 0,
-      maxDisp: 0,
-    };
-  }
-
-  /** 单个动画帧/单个 tick；返回本帧最大节点位移（px），用于 teleport 证据。 */
-  function stepForceState(state) {
-    const { ids, positions, radiusById, pinned, cx, cy, pad, width, height, linkList } = state;
-    if (!ids.length) return 0;
-    const alpha = state.alpha;
-    const fx = new Map(ids.map((id) => [id, 0]));
-    const fy = new Map(ids.map((id) => [id, 0]));
-    for (let i = 0; i < ids.length; i++) {
-      const a = ids[i];
-      const pa = positions.get(a);
-      const ra = radiusById.get(a) || KP_BASE_RADIUS;
-      for (let j = i + 1; j < ids.length; j++) {
-        const b = ids[j];
-        const pb = positions.get(b);
-        const rb = radiusById.get(b) || KP_BASE_RADIUS;
-        let dx = pb.x - pa.x;
-        let dy = pb.y - pa.y;
-        let dist = Math.hypot(dx, dy);
-        if (dist < 1e-6) {
-          dx = (a < b ? 1 : -1) * 0.5;
-          dy = 0.5;
-          dist = Math.hypot(dx, dy);
-        }
-        const ux = dx / dist;
-        const uy = dy / dist;
-        const minDist = ra + rb + FORCE.collisionPad;
-        if (dist < minDist) {
-          const push = (minDist - dist) * 0.5;
-          if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * push); fy.set(a, fy.get(a) - uy * push); }
-          if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * push); fy.set(b, fy.get(b) + uy * push); }
-        }
-        const rep = FORCE.repulsion / Math.max(64, dist * dist);
-        if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * rep); fy.set(a, fy.get(a) - uy * rep); }
-        if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
-      }
-    }
-    // 统一自由体（折叠簇节点、背景幽灵）：与前景节点双向受力，自身也会移动
-    const bodies = state.extraBodies || [];
-    for (let bi = 0; bi < bodies.length; bi++) {
-      const body = bodies[bi];
-      if (!Number.isFinite(body.x) || !Number.isFinite(body.y)) continue;
-      const bodyFixed = body.fixed === true;
-      let bfx = 0;
-      let bfy = 0;
-      const gr = Number(body.radius) || 20;
-      for (const id of ids) {
-        if (pinned.has(id)) continue;
-        const p = positions.get(id);
-        const r = radiusById.get(id) || KP_BASE_RADIUS;
-        let dx = p.x - body.x;
-        let dy = p.y - body.y;
-        let dist = Math.hypot(dx, dy);
-        if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
-        const ux = dx / dist;
-        const uy = dy / dist;
-        const minDist = r + gr + FORCE.collisionPad;
-        if (dist < minDist) {
-          const push = (minDist - dist) * 0.5;
-          fx.set(id, fx.get(id) + ux * push);
-          fy.set(id, fy.get(id) + uy * push);
-          if (!bodyFixed) { bfx -= ux * push; bfy -= uy * push; }
-        }
-        const rep = FORCE.repulsion / Math.max(64, dist * dist);
-        fx.set(id, fx.get(id) + ux * rep);
-        fy.set(id, fy.get(id) + uy * rep);
-        if (!bodyFixed) { bfx -= ux * rep; bfy -= uy * rep; }
-      }
-      // 自由体之间也互相作用
-      for (let bj = bi + 1; bj < bodies.length; bj++) {
-        const other = bodies[bj];
-        if (!Number.isFinite(other.x) || !Number.isFinite(other.y)) continue;
-        let dx = body.x - other.x;
-        let dy = body.y - other.y;
-        let dist = Math.hypot(dx, dy);
-        if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
-        const ux = dx / dist;
-        const uy = dy / dist;
-        const minDist = gr + (Number(other.radius) || 20) + FORCE.collisionPad;
-        let force = FORCE.repulsion / Math.max(64, dist * dist);
-        if (dist < minDist) force += (minDist - dist) * 0.5;
-        bfx += ux * force;
-        bfy += uy * force;
-        if (other.fixed !== true) {
-          const ofx = other._fx || 0;
-          const ofy = other._fy || 0;
-          other._fx = ofx - ux * force;
-          other._fy = ofy - uy * force;
-        }
-      }
-      if (!bodyFixed) {
-        const anchorX = Number.isFinite(body.anchorX) ? body.anchorX : body.x;
-        const anchorY = Number.isFinite(body.anchorY) ? body.anchorY : body.y;
-        bfx += (anchorX - body.x) * 0.012 * alpha;
-        bfy += (anchorY - body.y) * 0.012 * alpha;
-        const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vx || 0) + bfx * alpha * FORCE.forceScale) * FORCE.velocityDecay));
-        const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vy || 0) + bfy * alpha * FORCE.forceScale) * FORCE.velocityDecay));
-        body.vx = nvx;
-        body.vy = nvy;
-        body.x = Math.max(pad, Math.min(width - pad, body.x + nvx));
-        body.y = Math.max(pad, Math.min(height - pad, body.y + nvy));
-      }
-    }
-    // 第二遍把其它自由体给当前体累积的力消费掉
-    for (const body of bodies) {
-      if (body.fixed === true) { body._fx = 0; body._fy = 0; continue; }
-      if (body._fx || body._fy) {
-        const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vx || 0) + body._fx * alpha * FORCE.forceScale) * FORCE.velocityDecay));
-        const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vy || 0) + body._fy * alpha * FORCE.forceScale) * FORCE.velocityDecay));
-        body.vx = nvx;
-        body.vy = nvy;
-        body.x = Math.max(pad, Math.min(width - pad, body.x + nvx));
-        body.y = Math.max(pad, Math.min(height - pad, body.y + nvy));
-      }
-      body._fx = 0;
-      body._fy = 0;
-    }
-    for (const link of linkList) {
-      const a = positions.get(link.source);
-      const b = positions.get(link.target);
-      let dx = b.x - a.x;
-      let dy = b.y - a.y;
-      let dist = Math.hypot(dx, dy);
-      if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
-      const ux = dx / dist;
-      const uy = dy / dist;
-      const f = (dist - (link.distance || FORCE.linkDistance)) * (link.strength || FORCE.linkStrength) * alpha;
-      if (!pinned.has(link.source)) { fx.set(link.source, fx.get(link.source) + ux * f); fy.set(link.source, fy.get(link.source) + uy * f); }
-      if (!pinned.has(link.target)) { fx.set(link.target, fx.get(link.target) - ux * f); fy.set(link.target, fy.get(link.target) - uy * f); }
-    }
-    let maxDisp = 0;
-    for (const id of ids) {
-      if (pinned.has(id)) continue;
-      const p = positions.get(id);
-      fx.set(id, fx.get(id) + (cx - p.x) * FORCE.centerStrength * alpha);
-      fy.set(id, fy.get(id) + (cy - p.y) * FORCE.centerStrength * alpha);
-      if (state.focusId === id) {
-        // task-382：focus 平滑回到中心（不瞬移；每帧仍受 maxStep 限制）
-        fx.set(id, fx.get(id) + (cx - p.x) * 0.22 * alpha);
-        fy.set(id, fy.get(id) + (cy - p.y) * 0.22 * alpha);
-      }
-      const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (state.vx.get(id) + fx.get(id) * alpha * FORCE.forceScale) * FORCE.velocityDecay));
-      const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, (state.vy.get(id) + fy.get(id) * alpha * FORCE.forceScale) * FORCE.velocityDecay));
-      state.vx.set(id, nvx);
-      state.vy.set(id, nvy);
-      // task-383：不再把位移硬 clamp 到固定步长（会形成 11.31px 平台）。
-      // 正常帧由力场自然步进；仅用 maxDisp 记录/证据。
-      p.x = Math.max(pad, Math.min(width - pad, p.x + nvx));
-      p.y = Math.max(pad, Math.min(height - pad, p.y + nvy));
-      maxDisp = Math.max(maxDisp, Math.hypot(nvx, nvy));
-    }
-    state.alpha = Math.max(FORCE.alphaMin, alpha * FORCE.alphaDecay);
-    state.ticks += 1;
-    state.maxDisp = maxDisp;
-    return maxDisp;
-  }
-
-  /** 同步 warmup（仅测试/无 rAF 环境）；真实浏览器走 rAF 循环。 */
-  function runForceLayout(positions, radiusById, links, focusId, width, height, opts = {}) {
-    const state = buildForceState(positions, radiusById, links, focusId, width, height, opts);
-    const ticks = Math.max(1, Number(opts.ticks) || FORCE.ticks);
-    for (let tick = 0; tick < ticks; tick++) stepForceState(state);
-    return positions;
-  }
+  // task-391：力循环只有一份实现 —— `RenderScene.stepForce()`（见 render-scene.js）。
+  // 旧的 buildForceState/stepForceState/runForceLayout 与 extraBodies 外挂环已删除：
+  // KP / 折叠簇 / 背景幽灵现在同属一个 nodes Map、同一个 stepForce 循环。
 
   function forceLinksFor(shownEdges) {
     const links = [];
@@ -753,14 +550,9 @@
     if (focus && !(smoothFocus && prev && prev.has(focus))) positions.set(focus, { x: cx, y: cy });
     const pinned = new Set(opts.pinned || []);
     const links = forceLinksFor(shown.edges);
-    if (opts.animate !== true) {
-      runForceLayout(positions, radiusById, links, focus, width, height, {
-        pinned,
-        pinFocusCenter: !smoothFocus,
-        ticks: opts.ticks || FORCE.ticks,
-      });
-    }
-    return { positions, radiusById, shown, width, height };
+    // task-391：warmup 也走 RenderScene.stepForce（由 Renderer 在 sync 后调用 relax），
+    // 这里只返回确定性初值，不再保留第二套力实现。
+    return { positions, radiusById, shown, width, height, links, focus, pinned };
   }
 
   function defaultHost(doc) {
@@ -801,6 +593,9 @@
 
   class Renderer2D {
     constructor(container, options = {}) {
+      if (!RenderScene || !RenderNode) {
+        fail("GRAPH_INTERNAL", "缺少 render-scene.js（browser 需在 renderer-adapter.js 之前加载）");
+      }
       this.backend = "2d";
       this.container = container || null;
       this.options = options || {};
@@ -809,8 +604,9 @@
       this._listeners = Object.create(null);
       this._canvas = null;
       this._ctx = null;
-      this._positions = new Map();
-      this._auxPositions = new Map();
+      // task-391：唯一节点与位置事实源（RenderScene.nodes；不再有第二张位置表）。
+      this._scene = new RenderScene({ force: FORCE });
+      this._installScenePainters();
       this._nodeById = new Map();
       this._edgeList = [];
       this._view = { width: 1, height: 1 };
@@ -823,6 +619,8 @@
       this._collapsedGroups = new Set();
       this._groupGeom = new Map();
       this._groupHit = [];
+      this._groupLabelBoxes = [];
+      this._bgGhost = null;
       this._lastVm = null;
       this._pendingVm = null;
       this._deferredScheduled = false;
@@ -861,9 +659,86 @@
       this._userAdjusted = false;
       this._drag = null;
       this._suppressClick = false;
-      this._pinned = new Set();
       this.lastRender = null;
       this.lastError = null;
+    }
+
+    /** task-391：节点绘制策略（按 drawKind 分派；唯一绘制入口在 RenderScene.draw）。 */
+    _installScenePainters() {
+      this._scene.setPainters({
+        kp: (ctx, node, view) => this._paintKp(ctx, node, view),
+        cluster: (ctx, node, view) => this._paintVmCluster(ctx, node, view),
+        group: (ctx, node, view) => this._paintGroupCluster(ctx, node, view),
+        ghost: (ctx, node, view) => this._paintGhost(ctx, node, view),
+      });
+    }
+
+    /** 当前 pin 的节点 id（由 RenderNode.fixed 派生，不是第二份状态）。 */
+    get _pinned() {
+      const out = new Set();
+      for (const node of this._scene.nodes.values()) if (node.fixed) out.add(node.id);
+      return out;
+    }
+
+    /** 只读位置快照（测试/宿主调试）；唯一事实源仍是 RenderScene。 */
+    getPositions() {
+      const out = new Map();
+      for (const node of this._scene.nodes.values()) out.set(node.id, { x: node.x, y: node.y });
+      return out;
+    }
+
+    /** 只读节点访问（半径/velocity/fixed 等；唯一事实源仍是 RenderScene）。 */
+    getNode(id) {
+      return this._scene.get(id);
+    }
+
+    /**
+     * 批量设置节点位置（首屏网格/快照恢复的公开入口）。
+     * 未建节点先登记为待建位置，由下一次 sync 消费；不产生第二份位置存储。
+     */
+    applyPositions(positions) {
+      this._scene.applyPositions(positions);
+      if (this._ctx) this._draw();
+      return this.getPositions();
+    }
+
+    /** app.js H 首屏 chapter 网格布局的渲染器侧入口（位置只写 RenderNode）。 */
+    applyOverviewLayout(positions, opts = {}) {
+      this._stopForceAnimation();
+      this._forceHold = false;
+      this.applyPositions(positions);
+      if (opts.resetCamera !== false) {
+        this._camera = { x: 0, y: 0, scale: 1 };
+        this._userAdjusted = false;
+      }
+      if (this._ctx) this._draw();
+      return this.getPositions();
+    }
+
+    /**
+     * task-391：把 VM/presentation/background 投影进唯一 RenderScene。
+     * 位置/半径/名字映射在这里一次算清，之后所有消费者（命中/力/绘制/快照）只读 scene。
+     */
+    _syncScene(layout) {
+      const radiusOf = (node) => {
+        if (node && node.group) return clusterRadius((node.group.member_ids || []).length);
+        if (node && node.kind === "cluster") return nodeRadius(node, this._degreeInfo);
+        const id = node && node.id != null ? String(node.id) : "";
+        if (layout && layout.radiusById && layout.radiusById.has(id)) return layout.radiusById.get(id);
+        return nodeRadius(node || { kind: "kp" }, this._degreeInfo);
+      };
+      return this._scene.sync({
+        vm: this._lastVm || { nodes: [] },
+        groups: this._groups,
+        collapsedGroups: this._collapsedGroups,
+        hiddenIds: this._hiddenMemberIds(),
+        layout: layout || null,
+        background: this._bgGhost,
+        groupLabelOf: (group) => groupLabel(group),
+        labelOf: (node) => labelText(node, this._presentation && this._presentation.names),
+        radiusOf,
+        hasCollapsedAncestor: (groupId) => this._groupHasCollapsedAncestor(groupId),
+      });
     }
 
     getCapabilities() {
@@ -896,11 +771,8 @@
       this._degreeInfo = normalizedDegrees(this._presentation && this._presentation.degrees);
       this._groups = normalizeGroups(this._presentation);
       if (this._nodeById && this._nodeById.size) {
-        const shown = { nodes: [...this._nodeById.values()], edges: this._edgeList };
-        const degreeInfo = this._degreeInfo;
-        const radiusById = new Map(shown.nodes.map((n) => [n.id, nodeRadius(n, degreeInfo)]));
-        this._radiusById = radiusById;
-        // 半径变化也更新布局间距的最小留白（位置本身保持以维持会话内保位）
+        // 半径/标签变化只更新节点属性，位置本身保持（会话内保位）
+        this._syncScene();
         if (this._ctx) this._draw();
       }
       return this._degreeInfo;
@@ -940,81 +812,11 @@
     }
 
     _groupCenter(group) {
-      const pts = (group.member_ids || [])
-        .map((id) => this._positions.get(String(id)))
-        .filter(Boolean);
-      if (!pts.length) return null;
-      return {
-        x: pts.reduce((a, p) => a + p.x, 0) / pts.length,
-        y: pts.reduce((a, p) => a + p.y, 0) / pts.length,
-      };
+      return this._scene.groupCenter(group && group.member_ids);
     }
 
-    /**
-     * 统一呈现节点模型：KP、折叠簇、背景幽灵都投影成同一 RenderNode。
-     * VM 仍只含 kp/cluster；这里只是 renderer 内部的呈现/力/命中视图。
-     */
-    _composeRenderNodes() {
-      const out = [];
-      const hidden = this._hiddenMemberIds();
-      for (const node of this._nodeById.values()) {
-        if (node.presence !== "shown") continue;
-        if (hidden.has(node.id)) continue;
-        const p = this._positions.get(node.id);
-        if (!p) continue;
-        out.push(makeRenderNode({
-          id: node.id, kind: node.kind, shape: "circle", layer: "foreground",
-          x: p.x, y: p.y,
-          radius: (this._radiusById && this._radiusById.get(node.id)) || KP_BASE_RADIUS,
-          label: (this._presentation && this._presentation.names && this._presentation.names[node.id]) || node.label || node.id,
-          hit: "select", fixed: false, data: node,
-        }));
-      }
-      for (const group of this._groups) {
-        if (!this._collapsedGroups.has(group.group_id)) continue;
-        if (this._groupHasCollapsedAncestor(group.group_id)) continue;
-        const key = `group:${group.group_id}`;
-        let c = this._auxPositions.get(key) || this._groupCenter(group);
-        if (!c) continue;
-        if (!this._auxPositions.has(key)) this._auxPositions.set(key, { x: c.x, y: c.y });
-        const n = group.member_ids.length;
-        out.push(makeRenderNode({
-          id: key, kind: "cluster", shape: "hexagon", layer: "foreground",
-          x: c.x, y: c.y,
-          radius: Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1))),
-          label: groupLabel(group),
-          hit: "drill", fixed: false, group,
-        }));
-      }
-      const gp = this._bgGhostPos();
-      if (gp) {
-        out.push(makeRenderNode({
-          id: "ghost:A", kind: "ghost", shape: "hexagon", layer: "background",
-          x: gp.x, y: gp.y, radius: gp.radius, label: gp.label,
-          hit: "return", fixed: false,
-        }));
-      }
-      return out;
-    }
-
-    _forceBodies() {
-      return this._composeRenderNodes()
-        .filter((n) => n.kind === "cluster" || n.kind === "ghost")
-        .map((n) => ({
-          id: n.id, x: n.x, y: n.y, radius: n.radius, kind: n.kind,
-          vx: 0, vy: 0, anchorX: n.x, anchorY: n.y, fixed: false,
-        }));
-    }
-
-    _pickRenderNode(x, y) {
-      const nodes = this._composeRenderNodes();
-      for (let i = nodes.length - 1; i >= 0; i--) {
-        const n = nodes[i];
-        if (!Number.isFinite(n.x) || !Number.isFinite(n.y)) continue;
-        if (Math.hypot(x - n.x, y - n.y) <= n.radius + 6) return n;
-      }
-      return null;
-    }
+    // task-391：`_composeRenderNodes` / `_forceBodies` / `_pickRenderNode` 已删除。
+    // 节点集合由 `_syncScene()` 一次投影进 RenderScene；命中统一走 `this._scene.pick()`。
 
     _syncGroups() {
       const shown = new Set(
@@ -1108,14 +910,15 @@
 
     /** 显式 fit：按 shown 节点 bbox 适配容器；手动操作后不再自动调用。 */
     fitView(padding) {
-      if (!this._positions.size || !this._view.width || !this._view.height) return this.getViewState();
+      if (!this._scene.size() || !this._view.width || !this._view.height) return this.getViewState();
       const pad = Number.isFinite(padding) ? padding : 28;
+      const hidden = this._hiddenMemberIds();
       const xs = [];
       const ys = [];
-      for (const [id, p] of this._positions) {
-        if (this._hiddenMemberIds().has(id)) continue;
-        xs.push(p.x);
-        ys.push(p.y);
+      for (const node of this._scene.nodes.values()) {
+        if (hidden.has(node.id)) continue;
+        xs.push(node.x);
+        ys.push(node.y);
       }
       if (!xs.length) return this.getViewState();
       const minX = Math.min(...xs);
@@ -1201,19 +1004,19 @@
      * - focus 切换/拖拽时 pinFocusCenter=false，保留当前位置平滑过渡。
      */
     _startForceAnimation(opts = {}) {
-      if (!this._animateForce || !this._positions.size) return false;
+      if (!this._animateForce || !this._scene.size()) return false;
       this._stopForceAnimation();
       const links = forceLinksFor(this._edgeList);
-      const state = buildForceState(
-        this._positions, this._radiusById, links, opts.focusId || null,
-        this._view.width, this._view.height,
-        {
-          pinned: opts.pinned || this._pinned,
-          pinFocusCenter: opts.pinFocusCenter === true,
-          alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
-          extraBodies: this._forceBodies(),
-        }
-      );
+      // task-391：动画每一帧只调用 RenderScene.stepForce（唯一力循环）。
+      const state = this._scene.buildForceState({
+        links,
+        focusId: opts.focusId || null,
+        width: this._view.width,
+        height: this._view.height,
+        pinned: opts.pinned || this._pinned,
+        pinFocusCenter: opts.pinFocusCenter === true,
+        alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
+      });
       this._forceState = state;
       this._forceFrames = 0;
       this._forceFrameLog = [];
@@ -1223,10 +1026,7 @@
         if (!this._simulating || this._disposed || this._forceState !== state) return;
         // task-385：拖拽期间模拟常驻；alpha 低时重加热，不因 quiet/alpha 停止
         if (this._forceHold && state.alpha < 0.12) state.alpha = 0.35;
-        const maxDisp = stepForceState(state);
-        for (const body of state.extraBodies || []) {
-          this._auxPositions.set(body.id, { x: body.x, y: body.y });
-        }
+        const maxDisp = this._scene.stepForce(state);
         this._forceFrames += 1;
         this._forceFrameLog.push({
           frame: this._forceFrames,
@@ -1275,7 +1075,6 @@
       if (container) this.container = container;
       if (!this.container) fail("GRAPH_INTERNAL", "缺少容器");
       this._lastVm = vm;
-      this._auxPositions.clear();
       this._ensureResizeObserver();
       const model = this._project(vm);
       assertBudget(vm);
@@ -1297,6 +1096,14 @@
       this._layoutFocusId = this._focusNodeId;
       this._applyLayout(layout, model);
       this._syncGroups();
+      // 唯一位置写入点：frame layout → RenderScene 节点（新节点取布局坐标，老节点保位）
+      this._syncScene(layout);
+      // task-391：无 rAF 环境（测试/降级）用 RenderScene.relax 做确定性 warmup
+      if (!this._animateForce) {
+        this._scene.relax(layout.links, FORCE.ticks, {
+          width, height, focusId: this._focusNodeId, pinFocusCenter: true, pinned: layout.pinned,
+        });
+      }
       this._bindPointer();
       this._draw();
       if (this._animateForce) {
@@ -1319,7 +1126,8 @@
       this._stopForceAnimation();
       // focus 变化必须重排（否则旧位置让邻居塌成一列）；普通 update 保位
       const focusChanged = this._layoutFocusId !== this._focusNodeId;
-      const keep = (opts.relayout === true || focusChanged) ? null : this._positions;
+      const before = this.getPositions();
+      const keep = (opts.relayout === true || focusChanged) ? null : before;
       const width = this._measureWidth();
       const height = this._measureHeight();
       this._ensureCanvas(width, height);
@@ -1331,18 +1139,24 @@
           this._degreeInfo, this._focusNodeId,
           {
             pinned: this._pinned,
-            prevPositions: this._positions,
+            prevPositions: before,
             smoothFocus: this._animateForce,
             animate: this._animateForce,
           }
         )
         : computeLayout({ nodes: model.nodes, edges: model.edges }, seed, width, height, keep, this._degreeInfo, this._focusNodeId);
-      const before = new Map(this._positions);
-      this._applyLayout(layout, model);
       this._layoutFocusId = this._focusNodeId;
+      this._applyLayout(layout, model);
       this._syncGroups();
+      this._syncScene(layout);
+      if (relayout && !this._animateForce) {
+        this._scene.relax(layout.links, FORCE.ticks, {
+          width, height, focusId: this._focusNodeId, pinFocusCenter: true, pinned: layout.pinned, smoothFocus: true,
+        });
+      }
       let moved = 0;
-      for (const [id, p] of this._positions) {
+      const after = this.getPositions();
+      for (const [id, p] of after) {
         const old = before.get(id);
         if (!old || old.x !== p.x || old.y !== p.y) moved += 1;
       }
@@ -1373,7 +1187,7 @@
       if (this.host && this.host.remove && this._canvas) this.host.remove(this.container, this._canvas);
       this._canvas = null;
       this._ctx = null;
-      this._positions.clear();
+      this._scene.clear();
       this._nodeById.clear();
       this._edgeList = [];
       this._disposed = true;
@@ -1480,7 +1294,7 @@
         reason: "CONTAINER_NOT_LAID_OUT",
         nodeCount: this._nodeById ? this._nodeById.size : 0,
         edgeCount: this._edgeList ? this._edgeList.length : 0,
-        positions: this._positions ? this._positions.size : 0,
+        positions: this._scene.size(),
         layoutSeed: this._seed,
         drawCalls: null,
         caps: this.getCapabilities(),
@@ -1520,11 +1334,10 @@
     }
 
     _applyLayout(layout, model) {
-      this._positions = layout.positions;
       this._nodeById = new Map(model.nodes.map((n) => [n.id, n]));
       this._edgeList = model.edges.filter((e) => e.presence === "shown");
-      this._radiusById = layout.radiusById;
       this._view = { width: layout.width, height: layout.height };
+      return layout;
     }
 
     _bindPointer() {
@@ -1585,25 +1398,16 @@
       return { x: 0, y: 0 };
     }
 
-    _pickNode(x, y) {
-      let best = null;
-      const hidden = this._hiddenMemberIds ? this._hiddenMemberIds() : new Set();
-      for (const [id, p] of this._positions) {
-        if (hidden.has(id)) continue;
-        const r = (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
-        const d2 = (p.x - x) ** 2 + (p.y - y) ** 2;
-        if (d2 <= r * r && (!best || d2 < best.d2)) best = { id, d2 };
-      }
-      return best ? this._nodeById.get(best.id) : null;
-    }
+    // task-391：`_pickNode` 已删除；所有命中（KP/折叠簇/幽灵/双击）统一走
+    // `this._scene.pick()`，节点身份与命中策略由 RenderNode 自己承担。
 
     _pickEdge(x, y) {
       let best = null;
       for (const edge of this._edgeList) {
         const ends = edgeEndpoints(edge.id);
         if (!ends) continue;
-        const a = this._positions.get(ends.source);
-        const b = this._positions.get(ends.target);
+        const a = this._scene.get(ends.source);
+        const b = this._scene.get(ends.target);
         if (!a || !b) continue;
         const d = pointSegmentDistance(x, y, a, b);
         if (d <= 6 && (!best || d < best.d)) best = { edge, d };
@@ -1616,50 +1420,34 @@
       if (event && event.button != null && event.button !== 0) return;
       const screen = this._point(event);
       const world = this._screenToWorld(screen.x, screen.y);
-      const rn = this._pickRenderNode(world.x, world.y);
-      const node = rn ? { id: rn.id, kind: rn.kind, x: rn.x, y: rn.y } : null;
-      const p = node ? { x: node.x, y: node.y } : null;
-      if (!node && !this._hasLayout()) return;
+      const rn = this._scene.pick(world.x, world.y);
+      if (!rn && !this._hasLayout()) return;
       if (event && typeof event.preventDefault === "function") event.preventDefault();
-      if (node && this._canvas && typeof this._canvas.setPointerCapture === "function" && event && event.pointerId != null) {
+      if (rn && this._canvas && typeof this._canvas.setPointerCapture === "function" && event && event.pointerId != null) {
         try { this._canvas.setPointerCapture(event.pointerId); } catch (_) { /* noop */ }
       }
       this._drag = {
-        mode: node ? "node" : "pan",
-        nodeId: node ? node.id : null,
-        nodeKind: node ? node.kind : null,
+        mode: rn ? "node" : "pan",
+        nodeId: rn ? rn.id : null,
+        nodeKind: rn ? rn.kind : null,
         startX: screen.x,
         startY: screen.y,
         lastX: screen.x,
         lastY: screen.y,
-        startWorld: p ? { x: p.x, y: p.y } : null,
+        startWorld: rn ? { x: rn.x, y: rn.y } : null,
         startCamera: { ...this._camera },
         moved: false,
         forceStarted: false,
         pointerId: event && event.pointerId != null ? event.pointerId : null,
       };
-      if (node) {
-        // task-384：pointerdown 命中节点立即 pin，不等第一次 move
-        this._hoverId = node.id;
-        if (node.kind === "kp") this._pinned.add(node.id);
-        else this._setBodyFixed(node.id, true);
+      if (rn) {
+        // task-384/391：pointerdown 命中任何节点立即 pin（统一拖拽入口）
+        this._hoverId = rn.id;
+        this._scene.beginDrag(rn);
         // task-385：拖拽期间模拟常驻（参考 3D：pointerdown setDragNode + 持续模拟）
         this._forceHold = true;
         if (this._animateForce && !this._simulating) {
           this._startForceAnimation({ pinFocusCenter: false, alpha: 0.85 });
-        }
-      }
-    }
-
-    _setBodyFixed(id, fixed) {
-      for (const body of this._forceState?.extraBodies || []) {
-        if (String(body.id) !== String(id)) continue;
-        body.fixed = fixed === true;
-        if (body.fixed) {
-          body.anchorX = body.x;
-          body.anchorY = body.y;
-          body.vx = 0;
-          body.vy = 0;
         }
       }
     }
@@ -1673,25 +1461,13 @@
         const distance = Math.hypot(dx, dy);
         if (drag.mode === "node" && drag.nodeId && drag.startWorld) {
           // task-384：无论移动多少都立即更新 pinned 节点（4px 只决定是否 click）
+          // task-391：KP / 折叠簇 / 幽灵同一条拖拽路径，同一个位置 store。
           const scale = this._camera.scale || 1;
           const next = {
             x: drag.startWorld.x + dx / scale,
             y: drag.startWorld.y + dy / scale,
           };
-          if (drag.nodeKind === "kp") {
-            this._positions.set(drag.nodeId, next);
-            this._pinned.add(drag.nodeId);
-          } else {
-            this._auxPositions.set(drag.nodeId, next);
-            for (const body of this._forceState?.extraBodies || []) {
-              if (String(body.id) !== String(drag.nodeId)) continue;
-              body.x = next.x;
-              body.y = next.y;
-              body.fixed = true;
-              body.vx = 0;
-              body.vy = 0;
-            }
-          }
+          this._scene.dragTo(drag.nodeId, next.x, next.y);
           drag.moved = drag.moved || distance >= DRAG_THRESHOLD_PX;
           drag.lastX = screen.x;
           drag.lastY = screen.y;
@@ -1717,7 +1493,7 @@
         return;
       }
       const world = this._screenToWorld(screen.x, screen.y);
-      const rn = this._pickRenderNode(world.x, world.y);
+      const rn = this._scene.pick(world.x, world.y);
       const id = rn ? rn.id : null;
       if (id !== this._hoverId) {
         this._hoverId = id;
@@ -1732,9 +1508,8 @@
       this._drag = null;
       this._forceHold = false;
       if (drag.mode === "node" && drag.nodeId) {
-        // task-385：松手解除拖拽 pin，让节点回到力导向
-        if (drag.nodeKind === "kp") this._pinned.delete(drag.nodeId);
-        else this._setBodyFixed(drag.nodeId, false);
+        // task-385：松手解除拖拽 pin，让节点回到力导向（统一释放入口）
+        this._scene.endDrag(drag.nodeId);
       }
       if (drag.moved) {
         // 拖拽超过阈值：抑制随后的 click（不触发 focus/选中）
@@ -1758,13 +1533,15 @@
 
     /** task-381：拖拽 pin 后重加热力导向，让邻居继续收敛（不是拖完就死）。 */
     _settleForceAfterDrag() {
-      if (!this._positions.size || !this._radiusById) return;
-      const links = forceLinksFor(this._edgeList);
-      runForceLayout(
-        this._positions, this._radiusById, links, null,
-        this._view.width, this._view.height,
-        { pinned: this._pinned, pinFocusCenter: false, ticks: FORCE.dragTicks, alpha: 1 }
-      );
+      if (!this._scene.size()) return;
+      this._scene.relax(forceLinksFor(this._edgeList), FORCE.dragTicks, {
+        width: this._view.width,
+        height: this._view.height,
+        focusId: null,
+        pinFocusCenter: false,
+        pinned: this._pinned,
+        alpha: 1,
+      });
       this._lastForceTicks = FORCE.dragTicks;
       if (this._ctx) this._draw();
     }
@@ -1781,7 +1558,7 @@
     _onPointerDblClick(event) {
       const { x, y } = this._point(event);
       const world = this._screenToWorld(x, y);
-      const node = this._pickNode(world.x, world.y);
+      const node = this._scene.pick(world.x, world.y);
       if (!node) {
         // 双击空白 = fit（显式操作；符合 userAdjusted 门控）
         this.fitView();
@@ -1815,15 +1592,15 @@
       const world = this._screenToWorld(x, y);
       x = world.x;
       y = world.y;
-      // 统一命中：同一 RenderNode 列表，按 hit 策略分派返回/下钻/选中
-      const rn = this._pickRenderNode(x, y);
+      // 统一命中：唯一 RenderScene.pick()，按节点 hitPolicy 分派返回/下钻/选中
+      const rn = this._scene.pick(x, y);
       if (rn) {
-        if (rn.hit === "return") {
+        if (rn.hitPolicy === "return") {
           const payload = { kind: "background-ghost", label: rn.label, ...extra };
           this._emit("backgroundGhostClick", payload);
           return { type: "backgroundGhostClick", payload };
         }
-        if (rn.hit === "drill" && rn.group) {
+        if (rn.hitPolicy === "drill" && rn.group) {
           this.selectGroup(rn.group.group_id);
           const payload = { group_id: rn.group.group_id, kind: "presentation-group", ...extra };
           this._emit("groupClick", payload);
@@ -1905,7 +1682,7 @@
     /** task-389：视图快照（下钻/返回恢复位置、相机、选中、focus；不重新布局）。 */
     captureViewState() {
       return {
-        positions: [...this._positions.entries()].map(([id, p]) => [id, { x: p.x, y: p.y }]),
+        positions: this._scene.snapshotPositions(),
         camera: { ...this._camera },
         userAdjusted: this._userAdjusted,
         selectedId: this._selectedId,
@@ -1923,8 +1700,7 @@
       if (!snapshot) return false;
       this._stopForceAnimation();
       this._forceHold = false;
-      this._positions.clear();
-      for (const [id, p] of snapshot.positions || []) this._positions.set(id, { ...p });
+      this._scene.restorePositions(snapshot.positions || []);
       this._camera = { ...(snapshot.camera || { x: 0, y: 0, scale: 1 }) };
       this._userAdjusted = !!snapshot.userAdjusted;
       this._selectedId = snapshot.selectedId || null;
@@ -1953,9 +1729,10 @@
     /** 同一画布的背景视图幽灵节点：上一站 A 留在画布上，连到当前视图入口。 */
     setBackgroundGhost(info) {
       this._bgGhost = info || null;
-      this._auxPositions.delete("ghost:A");
+      // 位置由 RenderScene.sync 统一重建（唯一位置 store，无 aux 外挂）
+      this._syncScene();
       if (this._ctx) {
-        if (this._bgGhost && this._positions?.size) {
+        if (this._bgGhost && this._scene.size()) {
           this._startForceAnimation({ pinFocusCenter: false, alpha: 0.45 });
         }
         this._draw();
@@ -1965,115 +1742,106 @@
 
     clearBackgroundGhost() {
       this._bgGhost = null;
-      this._auxPositions.delete("ghost:A");
+      this._syncScene();
       if (this._ctx) {
-        if (this._positions?.size) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.3 });
+        if (this._scene.size()) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.3 });
         this._draw();
       }
       return true;
     }
 
-    _bgGhostPos() {
-      const ghost = this._bgGhost;
-      if (!ghost) return null;
-      const target = this._positions.get(String(ghost.targetId || ""));
-      const stored = this._auxPositions.get("ghost:A");
-      let x = stored ? stored.x : Number(ghost.x);
-      let y = stored ? stored.y : Number(ghost.y);
-      if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
-      const radius = Number(ghost.radius) || 20;
-      // 初始位置若与子图入口重合，先偏移一次；之后由力场自由移动，位置存于 aux。
-      if (!stored && target) {
-        const targetRadius = (this._radiusById && this._radiusById.get(String(ghost.targetId))) || 8;
-        const dx = x - target.x;
-        const dy = y - target.y;
-        const minDist = radius + targetRadius + 36;
-        if (Math.hypot(dx, dy) < minDist) {
-          x = target.x - 120;
-          y = target.y - 100;
-        }
+    // ── 绘制策略（task-391：单绘制入口 RenderScene.draw → RenderNode.draw → painter）──
+    /** 背景幽灵（layer=background）。 */
+    _paintGhost(ctx, node, view) {
+      const calls = view.calls || { nodes: 0, labels: 0, text: 0 };
+      ctx.save?.();
+      if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
+      drawHexagon(ctx, node.x, node.y, node.radius);
+      ctx.fillStyle = "rgba(240,246,252,0.16)";
+      if (ctx.fill) ctx.fill();
+      ctx.strokeStyle = "rgba(240,246,252,0.85)";
+      ctx.lineWidth = 1.6;
+      if (ctx.setLineDash) ctx.setLineDash([4, 2]);
+      if (ctx.stroke) ctx.stroke();
+      if (ctx.setLineDash) ctx.setLineDash([]);
+      ctx.restore?.();
+      if (ctx.fillText) {
+        ctx.font = VISUAL.labelFont;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = "#f0f6fc";
+        ctx.fillText(String(node.label || ""), node.x, node.y + node.radius + 4);
+        calls.labels += 1;
       }
-      if (!stored) this._auxPositions.set("ghost:A", { x, y });
-      return { x, y, radius, target, label: ghost.label };
+      calls.nodes += 1;
     }
 
-    _drawRenderNode(ctx, node, calls) {
-      if (!node) return;
-      if (node.kind === "ghost") {
-        ctx.save?.();
-        if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
-        drawHexagon(ctx, node.x, node.y, node.radius);
-        ctx.fillStyle = "rgba(240,246,252,0.16)";
+    /** 折叠组节点（presentation group → hexagon + 成员数徽标）。 */
+    _paintGroupCluster(ctx, node, view) {
+      const calls = view.calls || { nodes: 0, labels: 0, text: 0 };
+      const group = node.group;
+      if (!group) return;
+      const selectedGroup = this._selectedGroupId === group.group_id;
+      const radius = node.radius;
+      // 默认：实心白色发光六边形；点击进入后：样式 B（蓝色双环虚线六边形）
+      if (selectedGroup) {
+        drawHexagon(ctx, node.x, node.y, radius);
+        ctx.fillStyle = "rgba(88,166,255,0.16)";
         if (ctx.fill) ctx.fill();
-        ctx.strokeStyle = "rgba(240,246,252,0.85)";
-        ctx.lineWidth = 1.6;
+        ctx.strokeStyle = "#58a6ff";
+        ctx.lineWidth = 2.2;
         if (ctx.setLineDash) ctx.setLineDash([4, 2]);
         if (ctx.stroke) ctx.stroke();
         if (ctx.setLineDash) ctx.setLineDash([]);
+        drawHexagon(ctx, node.x, node.y, radius + 3);
+        ctx.strokeStyle = "rgba(88,166,255,0.35)";
+        ctx.lineWidth = 1;
+        if (ctx.stroke) ctx.stroke();
+      } else {
+        ctx.save?.();
+        if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
+        if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
+        drawHexagon(ctx, node.x, node.y, radius);
+        ctx.fillStyle = "#f0f6fc";
+        if (ctx.fill) ctx.fill();
+        ctx.strokeStyle = "#f0f6fc";
+        ctx.lineWidth = 1.6;
+        if (ctx.stroke) ctx.stroke();
+        if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
+        if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
         ctx.restore?.();
-        if (ctx.fillText) {
-          ctx.font = VISUAL.labelFont;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "top";
-          ctx.fillStyle = "#f0f6fc";
-          ctx.fillText(String(node.label || ""), node.x, node.y + node.radius + 4);
-          calls.labels += 1;
-        }
-        calls.nodes += 1;
-        return;
+        drawHexagon(ctx, node.x, node.y, radius + 3);
+        ctx.strokeStyle = "rgba(240,246,252,0.28)";
+        ctx.lineWidth = 1;
+        if (ctx.stroke) ctx.stroke();
       }
-      if (node.kind === "cluster" && node.group) {
-        const selectedGroup = this._selectedGroupId === node.group.group_id;
-        const radius = node.radius;
-        // 默认：实心白色发光六边形；点击进入后：样式 B（蓝色双环虚线六边形）
-        if (selectedGroup) {
-          drawHexagon(ctx, node.x, node.y, radius);
-          ctx.fillStyle = "rgba(88,166,255,0.16)";
-          if (ctx.fill) ctx.fill();
-          ctx.strokeStyle = "#58a6ff";
-          ctx.lineWidth = 2.2;
-          if (ctx.setLineDash) ctx.setLineDash([4, 2]);
-          if (ctx.stroke) ctx.stroke();
-          if (ctx.setLineDash) ctx.setLineDash([]);
-          drawHexagon(ctx, node.x, node.y, radius + 3);
-          ctx.strokeStyle = "rgba(88,166,255,0.35)";
-          ctx.lineWidth = 1;
-          if (ctx.stroke) ctx.stroke();
-        } else {
-          ctx.save?.();
-          if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
-          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
-          drawHexagon(ctx, node.x, node.y, radius);
-          ctx.fillStyle = "#f0f6fc";
-          if (ctx.fill) ctx.fill();
-          ctx.strokeStyle = "#f0f6fc";
-          ctx.lineWidth = 1.6;
-          if (ctx.stroke) ctx.stroke();
-          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
-          if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
-          ctx.restore?.();
-          drawHexagon(ctx, node.x, node.y, radius + 3);
-          ctx.strokeStyle = "rgba(240,246,252,0.28)";
-          ctx.lineWidth = 1;
-          if (ctx.stroke) ctx.stroke();
-        }
-        drawGroupBadge(ctx, node.x + radius * 0.7, node.y - radius * 0.7, node.group.member_ids.length, selectedGroup ? "#58a6ff" : "#0d1117");
-        this._groupHit.push({ kind: "circle", x: node.x, y: node.y, r: radius + 4, group: node.group, selected: selectedGroup });
-        if (ctx.fillText) {
-          ctx.font = VISUAL.labelFont;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "top";
-          const ctext = truncateTextWidth(ctx, String(node.label || ""), Math.max(40, radius * 2 + 8));
-          ctx.fillStyle = selectedGroup ? "#f0f6fc" : (VISUAL.nodeMuted || "#8b949e");
-          ctx.fillText(ctext, node.x, node.y + radius + 4);
-          calls.labels += 1;
-          const cw = ctx.measureText ? ctx.measureText(ctext).width : ctext.length * 6;
-          this._groupLabelBoxes.push({ x: node.x - cw / 2 - 2, y: node.y + radius + 3, w: cw + 4, h: 14 });
-        }
-        calls.nodes += 1;
-        return;
+      drawGroupBadge(ctx, node.x + radius * 0.7, node.y - radius * 0.7, group.member_ids.length, selectedGroup ? "#58a6ff" : "#0d1117");
+      if (view.groupHit) view.groupHit.push({ kind: "circle", x: node.x, y: node.y, r: radius + 4, group, selected: selectedGroup });
+      if (ctx.fillText) {
+        ctx.font = VISUAL.labelFont;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        const ctext = truncateTextWidth(ctx, String(node.label || ""), Math.max(40, radius * 2 + 8));
+        ctx.fillStyle = selectedGroup ? "#f0f6fc" : (VISUAL.nodeMuted || "#8b949e");
+        ctx.fillText(ctext, node.x, node.y + radius + 4);
+        calls.labels += 1;
+        const cw = ctx.measureText ? ctx.measureText(ctext).width : ctext.length * 6;
+        if (view.groupLabelBoxes) view.groupLabelBoxes.push({ x: node.x - cw / 2 - 2, y: node.y + radius + 3, w: cw + 4, h: 14 });
       }
-      // KP / VM cluster：沿用旧 galaxy 星点与选中环
+      calls.nodes += 1;
+    }
+
+    _paintKp(ctx, node, view) {
+      this._paintGalaxyNode(ctx, node, view);
+    }
+
+    _paintVmCluster(ctx, node, view) {
+      this._paintGalaxyNode(ctx, node, view);
+    }
+
+    /** KP / VM cluster：沿用旧 galaxy 星点与选中环（同一绘制实现，按 data.kind 区分外观）。 */
+    _paintGalaxyNode(ctx, node, view) {
+      const calls = view.calls || { nodes: 0, labels: 0, text: 0 };
       const data = node.data;
       if (!data) return;
       const degreeMax = this._degreeInfo && this._degreeInfo.distinct.length
@@ -2172,23 +1940,43 @@
         ctx.scale(cam.scale, cam.scale);
       }
 
-      for (const node of this._composeRenderNodes()) {
-        if (node.layer === "background") this._drawRenderNode(ctx, node, calls);
-      }
+      // task-391：绘制前统一 reconcile 节点集合（折叠/展开/幽灵/VM 变化都只走这一处）
+      this._syncScene();
+      const drawView = {
+        calls,
+        painters: this._scene.painters,
+        hoverId: this._hoverId,
+        highlightId: this._highlightId,
+        selectedId: this._selectedId,
+        selectedGroupId: this._selectedGroupId,
+        selectedNeighbors: this._selectedNeighbors,
+        focusNodeId: this._focusNodeId,
+        groupHit: this._groupHit,
+        groupLabelBoxes: this._groupLabelBoxes,
+        degreeInfo: this._degreeInfo,
+      };
+      // 背景层（幽灵）先画
+      this._scene.draw(ctx, drawView, "background");
 
       const focusId = this._hoverId || this._highlightId || null;
-      const radiusOf = (id) => (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
+      const radiusOf = (id) => {
+        const node = this._scene.get(id);
+        return node ? node.radius : KP_BASE_RADIUS;
+      };
       // Presentation-only 文件/section 分组：先画展开组包络；折叠组成员后续跳过
       const hidden = this._hiddenMemberIds();
       this._groupHit = [];
       this._groupLabelBoxes = [];
+      drawView.groupHit = this._groupHit;
+      drawView.groupLabelBoxes = this._groupLabelBoxes;
       const groupGeom = new Map();
       const selectedGroupId = this._selectedGroupId;
       for (const group of this._groups) {
         if (this._groupHasCollapsedAncestor(group.group_id)) continue;
         const members = group.member_ids
-          .map((id) => ({ id, p: this._positions.get(id) }))
-          .filter((m) => m.p);
+          .map((id) => ({ id, node: this._scene.get(id) }))
+          .filter((m) => m.node)
+          .map((m) => ({ id: m.id, p: { x: m.node.x, y: m.node.y } }));
         if (!members.length) continue;
         const xs = members.map((m) => m.p.x);
         const ys = members.map((m) => m.p.y);
@@ -2270,8 +2058,8 @@
         const ends = edgeEndpoints(edge.id);
         if (!ends) continue;
         if (hidden.has(ends.source) || hidden.has(ends.target)) continue;
-        const a = this._positions.get(ends.source);
-        const b = this._positions.get(ends.target);
+        const a = this._scene.get(ends.source);
+        const b = this._scene.get(ends.target);
         if (!a || !b) continue;
         const selectionIncident = !!selectedId
           && (ends.source === selectedId || ends.target === selectedId);
@@ -2291,19 +2079,18 @@
         calls.edges += 1;
       }
 
-      // 统一呈现节点：KP、折叠簇、背景幽灵共用同一绘制循环
-      for (const node of this._composeRenderNodes()) {
-        if (node.layer === "foreground") this._drawRenderNode(ctx, node, calls);
-      }
+      // 前景节点：唯一绘制入口（KP / 折叠簇 / VM cluster 都走 RenderScene.draw → RenderNode.draw）
+      this._scene.draw(ctx, drawView, "foreground");
 
       // 标签：旧 KGviz LOD/避让 + 10px/halo（A3-1）
       const labelItems = [];
       for (const node of this._nodeById.values()) {
         if (node.presence !== "shown") continue;
         if (hidden.has(node.id)) continue;
-        const p = this._positions.get(node.id);
-        if (!p) continue;
-        const baseR = radiusOf(node.id);
+        const sceneNode = this._scene.get(node.id);
+        if (!sceneNode) continue;
+        const p = { x: sceneNode.x, y: sceneNode.y };
+        const baseR = sceneNode.radius;
         const extra = node.id === this._hoverId ? HOVER_EXTRA_RADIUS : node.id === this._highlightId ? TARGET_EXTRA_RADIUS : 0;
         labelItems.push({
           id: node.id,
@@ -2374,7 +2161,7 @@
         maxEdges: MAX_EDGES,
         animationMaxMs: ANIMATION_MAX_MS,
         layoutSeed: this._seed,
-        positions: this._positions.size,
+        positions: this._scene.size(),
         shownNodes: [...this._nodeById.values()].filter((n) => n.presence === "shown").length,
         shownEdges: this._edgeList.length,
         groups: this._groups.length,
@@ -2423,7 +2210,7 @@
         backend: this.backend,
         nodeCount: this._nodeById.size,
         edgeCount: this._edgeList.length,
-        positions: this._positions.size,
+        positions: this._scene.size(),
         layoutSeed: this._seed,
         drawCalls: this._drawCalls || null,
         caps: this.getCapabilities(),
@@ -2522,6 +2309,8 @@
     Renderer2D,
     Renderer3D,
     RendererError,
+    RenderNode,
+    RenderScene,
     createRendererAdapter,
     getRendererCapabilities,
     MAX_NODES,

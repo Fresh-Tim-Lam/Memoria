@@ -144,7 +144,7 @@ function run() {
     const ctx = host.createCanvas; // noop
     void ctx;
     // 半径按 degree 连续
-    const radii = ["a", "b", "c", "d"].map((id) => r._radiusById.get(id));
+    const radii = ["a", "b", "c", "d"].map((id) => r.getNode(id).radius);
     assert.ok(radii[0] > radii[2] && radii[2] > radii[3] && radii[3] > radii[1], `半径未按 degree 单调：${radii}`);
     // 画布背景
     const c = r._ctx;

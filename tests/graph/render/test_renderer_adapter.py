@@ -13,6 +13,7 @@ from pathlib import Path
 ROOT = Path(__file__).resolve().parents[3]
 JS_DIR = ROOT / "src/memoria/ui/static/app/js/graph-multilevel"
 TEST_JS = Path(__file__).resolve().parent / "renderer_adapter.test.js"
+SCENE_JS = Path(__file__).resolve().parent / "render_scene.test.js"
 ALIGNMENT = Path(__file__).resolve().parent / "legacy-alignment.json"
 NODE = "node"
 
@@ -58,6 +59,31 @@ def test_renderer_node_suite() -> None:
         "mount_wires_events_and_falls_back_to_2d",
     ):
         assert required in names, f"渲染器套件缺用例：{required}"
+
+
+def test_render_scene_node_suite() -> None:
+    """task-391：RenderScene/RenderNode 统一节点·位置·拖拽·力·绘制（唯一事实源）。"""
+    proc = _run_node([str(SCENE_JS)])
+    assert proc.returncode == 0, f"RenderScene Node 套件失败：\n{proc.stdout[-4000:]}\n{proc.stderr[-4000:]}"
+    payload = json.loads(proc.stdout.strip().splitlines()[-1])
+    assert payload["suite"] == "render_scene"
+    assert payload["failed"] == 0, f"RenderScene 套件失败：{payload['failed']}"
+    names = {r["name"] for r in payload["results"]}
+    for required in (
+        "render_node_geometry_pin_hit",
+        "render_node_force_integrate",
+        "scene_sync_single_node_store_and_keeps_positions",
+        "scene_pick_all_node_kinds",
+        "scene_unified_drag_entry_for_all_kinds",
+        "force_is_bilateral_kp_and_cluster",
+        "single_draw_entry_covers_all_kinds",
+        "source_has_no_legacy_position_or_branch_duplicates",
+        "renderer_wires_cluster_and_ghost_through_scene",
+        "renderer_drag_kp_moves_cluster_and_drag_cluster_moves_kp",
+        "app_js_uses_apply_overview_layout_and_no_positions_alias",
+        "renderer_apply_overview_layout_writes_grid_positions",
+    ):
+        assert required in names, f"RenderScene 套件缺用例：{required}"
 
 
 def test_frozen_budget_structure_matches_s8() -> None:

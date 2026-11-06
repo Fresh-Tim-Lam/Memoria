@@ -123,9 +123,9 @@ function run() {
     assert.strictEqual(r.lastRender.edges, 3);
     assert.strictEqual(r.lastRender.bounded, true);
     // suppressed/unknown 节点没有任何绘制位置
-    assert.ok(!r._positions.has("c"));
-    assert.ok(!r._positions.has("d"));
-    assert.ok(r._positions.has("cl_root"));
+    assert.ok(!r.getPositions().has("c"));
+    assert.ok(!r.getPositions().has("d"));
+    assert.ok(r.getPositions().has("cl_root"));
   });
 
   check("label_lod_reuses_legacy_module", () => {
@@ -155,13 +155,13 @@ function run() {
     const b = new Adapter.Renderer2D(container(), { host: hostB });
     a.render(container(), VM);
     b.render(container(), VM);
-    const pa = [...a._positions.entries()].sort(([x], [y]) => x.localeCompare(y));
-    const pb = [...b._positions.entries()].sort(([x], [y]) => x.localeCompare(y));
+    const pa = [...a.getPositions().entries()].sort(([x], [y]) => x.localeCompare(y));
+    const pb = [...b.getPositions().entries()].sort(([x], [y]) => x.localeCompare(y));
     assert.deepStrictEqual(pa, pb, "同 VM 两次 render 布局不一致");
-    const before = JSON.stringify([...a._positions.entries()].sort());
+    const before = JSON.stringify([...a.getPositions().entries()].sort());
     const upd = a.update(VM, {});
     assert.strictEqual(upd.moved, 0, "update 同 VM 不应移动节点（会话内保位）");
-    assert.strictEqual(JSON.stringify([...a._positions.entries()].sort()), before);
+    assert.strictEqual(JSON.stringify([...a.getPositions().entries()].sort()), before);
   });
 
   // ── 4. 事件回传（nodeClick/edgeClick/backgroundClick；payload 无导航）──
@@ -174,9 +174,9 @@ function run() {
     r.on("edgeClick", (e) => events.push(["edgeClick", e]));
     r.on("backgroundClick", (e) => events.push(["backgroundClick", e]));
     r.on("hover", (e) => events.push(["hover", e]));
-    const pos = r._positions.get("cl1");
+    const pos = r.getPositions().get("cl1");
     r.handlePointClick(pos.x, pos.y);
-    const a = r._positions.get("a");
+    const a = r.getPositions().get("a");
     r.handlePointClick(a.x, a.y);
     r.handlePointClick(2, 2);
     const nodeClick = events.find(([t]) => t === "nodeClick");
@@ -186,7 +186,7 @@ function run() {
     assert.ok(back);
     assert.deepStrictEqual(Object.keys(back[1]), []);
     // 边点击：取 a-b 中点
-    const b = r._positions.get("b");
+    const b = r.getPositions().get("b");
     const mid = { x: (a.x + b.x) / 2, y: (a.y + b.y) / 2 };
     const edge = r.handlePointClick(mid.x, mid.y);
     if (edge.type === "edgeClick") {
@@ -309,7 +309,7 @@ function run() {
     assert.strictEqual(mounted.fellBack, false);
     assert.strictEqual(mounted.rendererCapabilities.capable, true);
     assert.strictEqual(seen.length, 0, "render 不应产生事件");
-    const pos = mounted.renderer._positions.get("a");
+    const pos = mounted.renderer.getPositions().get("a");
     mounted.renderer.handlePointClick(pos.x, pos.y);
     assert.strictEqual(seen.length, 1);
     assert.strictEqual(seen[0].type, "nodeClick");
@@ -324,7 +324,7 @@ function run() {
     assert.strictEqual(fallback.fallbackReason, "3D_NOT_IN_0_5");
     assert.strictEqual(fallback.renderer.getCapabilities().backend, "2d");
     assert.strictEqual(fallback.render(VM).status, "ok");
-    const posFallback = fallback.renderer._positions.get("a");
+    const posFallback = fallback.renderer.getPositions().get("a");
     fallback.renderer.handlePointClick(posFallback.x, posFallback.y);
     assert.ok(seen.length >= 2, "回退后的 2D 渲染器仍应回传事件");
     fallback.destroy();

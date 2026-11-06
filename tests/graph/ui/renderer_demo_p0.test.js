@@ -108,10 +108,10 @@ function run() {
     const r = new Adapter.Renderer2D({ clientWidth: 325, clientHeight: 520 }, { host, presentation });
     r.setFocusNode(hub);
     r.render({ clientWidth: 325, clientHeight: 520 }, vm);
-    const p = r._positions.get(hub);
+    const p = r.getPositions().get(hub);
     assert.ok(p, "hub 无位置");
     assert.ok(Math.abs(p.x - 162.5) < 1 && Math.abs(p.y - 260) < 1, `focus 未居中：${JSON.stringify(p)}`);
-    const s = spread(r._positions);
+    const s = spread(r.getPositions());
     assert.ok(s.xSpread > 80 && s.ySpread > 80, `布局塌缩：xSpread=${s.xSpread} ySpread=${s.ySpread}`);
     assert.ok(s.distinctX >= 3 && s.distinctY >= 3, `布局成一条线：distinctX=${s.distinctX} distinctY=${s.distinctY}`);
   });
@@ -142,7 +142,7 @@ function run() {
     const other = shown.find((id) => id !== hub);
     r.setFocusNode(other);
     const upd = r.update(vm, {});
-    const p = r._positions.get(other);
+    const p = r.getPositions().get(other);
     assert.ok(p, "新 focus 无位置");
     assert.ok(Math.abs(p.x - 162.5) < 1 && Math.abs(p.y - 260) < 1, `点击/切换 focus 未重新居中：${JSON.stringify(p)}`);
     assert.ok(upd.moved > 0, "focus 切换后位置未重排");
@@ -177,9 +177,9 @@ async function runAsync(ctx) {
     const cssAspect = 325 / 583;
     const backingAspect = r._canvas.width / r._canvas.height;
     assert.ok(Math.abs(cssAspect - backingAspect) < 1e-6, "CSS/backing 比例不一致（会被非等比拉伸）");
-    const focusPos = r._positions.get(hub);
+    const focusPos = r.getPositions().get(hub);
     assert.ok(Math.abs(focusPos.x - 162.5) < 1 && Math.abs(focusPos.y - 291.5) < 1, `首帧 focus 未居中：${JSON.stringify(focusPos)}`);
-    const s = spread(r._positions);
+    const s = spread(r.getPositions());
     assert.ok(s.xSpread > 100 && s.ySpread > 100, `首帧布局被压扁：${JSON.stringify(s)}`);
     const ratio = s.xSpread / Math.max(1, s.ySpread);
     assert.ok(ratio > 0.65 && ratio < 1.55, `首帧布局横向/纵向比例异常：${ratio}`);
@@ -204,7 +204,7 @@ async function runAsync(ctx) {
     await new Promise((resolve) => setTimeout(resolve, 140));
     assert.strictEqual(r._canvas.style.width, "240px", "尺寸变化后 CSS 宽未更新");
     assert.strictEqual(r._canvas.style.height, "500px", "尺寸变化后 CSS 高未更新");
-    const focusPos = r._positions.get(hub);
+    const focusPos = r.getPositions().get(hub);
     assert.ok(Math.abs(focusPos.x - 120) < 1 && Math.abs(focusPos.y - 250) < 1, `resize 后未重新居中：${JSON.stringify(focusPos)}`);
     r.dispose();
   });
@@ -229,8 +229,8 @@ async function runAsync(ctx) {
     const r1 = new Adapter.Renderer2D(container, { host, presentation });
     r1.setFocusNode(hub);
     r1.render(container, vm);
-    const ctr = r1._positions.get(hub);
-    const radii = [...r1._positions.entries()]
+    const ctr = r1.getPositions().get(hub);
+    const radii = [...r1.getPositions().entries()]
       .filter(([id]) => id !== hub)
       .map(([, p]) => Math.hypot(p.x - ctr.x, p.y - ctr.y));
     const spreadR = Math.max(...radii) - Math.min(...radii);
@@ -241,9 +241,9 @@ async function runAsync(ctx) {
     const r2 = new Adapter.Renderer2D(container, { host: host2, presentation });
     r2.setFocusNode(hub);
     r2.render(container, vm);
-    for (const id of [...r1._positions.keys()].sort()) {
-      const a = r1._positions.get(id);
-      const b = r2._positions.get(id);
+    for (const id of [...r1.getPositions().keys()].sort()) {
+      const a = r1.getPositions().get(id);
+      const b = r2.getPositions().get(id);
       assert.ok(Math.abs(a.x - b.x) < 1e-9 && Math.abs(a.y - b.y) < 1e-9, `2× 力导向结果不一致：${id}`);
     }
     assert.strictEqual(r1.lastRender.layoutMode, "force");
@@ -256,14 +256,14 @@ async function runAsync(ctx) {
     const r = new Adapter.Renderer2D(container, { host, presentation });
     r.setFocusNode(hub);
     r.render(container, vm);
-    const start = { ...r._positions.get(hub) };
+    const start = { ...r.getPositions().get(hub) };
     const beforeCamera = { ...r._camera };
     const otherId = shown.find((id) => id !== hub);
-    const otherBefore = { ...r._positions.get(otherId) };
+    const otherBefore = { ...r.getPositions().get(otherId) };
     const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 1, preventDefault() {} };
     r._onPointerDown(base);
     r._onPointerMove({ ...base, clientX: start.x + 40, clientY: start.y + 22 });
-    const moved = r._positions.get(hub);
+    const moved = r.getPositions().get(hub);
     assert.ok(Math.abs(moved.x - (start.x + 40)) < 0.01 && Math.abs(moved.y - (start.y + 22)) < 0.01, "节点拖拽未更新位置");
     assert.ok(r._pinned.has(hub), "拖拽后未 pin");
     assert.deepStrictEqual(r._camera, beforeCamera, "节点拖拽不应改变 camera");
@@ -272,7 +272,7 @@ async function runAsync(ctx) {
     // task-385：松手解除拖拽 pin；邻居继续收敛
     assert.ok(!r._pinned.has(hub), "松手未解除拖拽 pin");
     // 拖拽松手后力导向重加热：其它节点继续收敛
-    const otherAfter = r._positions.get(otherId);
+    const otherAfter = r.getPositions().get(otherId);
     assert.ok(Math.hypot(otherAfter.x - otherBefore.x, otherAfter.y - otherBefore.y) > 0.01, "松手后邻居未继续力导向收敛");
     // 拖拽后的 click 被抑制，不触发 focus
     let clicks = 0;
@@ -288,14 +288,14 @@ async function runAsync(ctx) {
     const r = new Adapter.Renderer2D(container, { host, presentation });
     r.setFocusNode(hub);
     r.render(container, vm);
-    const posBefore = new Map([...r._positions].map(([id, p]) => [id, { ...p }]));
+    const posBefore = new Map([...r.getPositions()].map(([id, p]) => [id, { ...p }]));
     const base = { clientX: 6, clientY: 6, button: 0, pointerId: 2, preventDefault() {} };
     r._onPointerDown(base);
     r._onPointerMove({ ...base, clientX: 46, clientY: 26 });
     assert.strictEqual(r._camera.x, 40);
     assert.strictEqual(r._camera.y, 20);
     assert.strictEqual(r._userAdjusted, true);
-    for (const [id, p] of r._positions) {
+    for (const [id, p] of r.getPositions()) {
       assert.ok(Math.abs(p.x - posBefore.get(id).x) < 1e-9 && Math.abs(p.y - posBefore.get(id).y) < 1e-9, "pan 不应移动节点坐标");
     }
     r._onPointerUp(base);
@@ -342,12 +342,12 @@ async function runAsync(ctx) {
     assert.strictEqual(hasThreeFramePlateau(initialLog), false, "存在连续 3 帧相同 maxDisp 平台");
 
     // focus 过渡：以当前坐标为初值，不整图瞬移
-    const before = new Map([...r._positions].map(([id, p]) => [id, { ...p }]));
+    const before = new Map([...r.getPositions()].map(([id, p]) => [id, { ...p }]));
     const other = shown.find((id) => id !== hub);
     r.setFocusNode(other);
     r.update(vm, {});
     let maxImmediate = 0;
-    for (const [id, p] of r._positions) {
+    for (const [id, p] of r.getPositions()) {
       const old = before.get(id);
       if (old) maxImmediate = Math.max(maxImmediate, Math.hypot(p.x - old.x, p.y - old.y));
     }
@@ -376,9 +376,9 @@ async function runAsync(ctx) {
     const a = makeAnimated();
     const b = makeAnimated();
     for (let i = 0; i < 120; i++) { a.raf.drain(1); b.raf.drain(1); }
-    for (const id of [...a.r._positions.keys()].sort()) {
-      const pa = a.r._positions.get(id);
-      const pb = b.r._positions.get(id);
+    for (const id of [...a.r.getPositions().keys()].sort()) {
+      const pa = a.r.getPositions().get(id);
+      const pb = b.r.getPositions().get(id);
       assert.ok(Math.abs(pa.x - pb.x) < 1e-9 && Math.abs(pa.y - pb.y) < 1e-9, `2× 动画结果不一致：${id}`);
     }
     a.r.dispose(); b.r.dispose();
@@ -395,7 +395,7 @@ async function runAsync(ctx) {
     r.render(container, vm);
     raf.drain();
     const id = shown.find((x) => x !== hub);
-    const start = { ...r._positions.get(id) };
+    const start = { ...r.getPositions().get(id) };
     const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 7, preventDefault() {} };
     r._onPointerDown(base);
     assert.ok(r._pinned.has(id), "pointerdown 未立即 pin");
@@ -403,7 +403,7 @@ async function runAsync(ctx) {
     let forceState = null;
     for (let i = 1; i <= 10; i++) {
       r._onPointerMove({ ...base, clientX: start.x + i * 3, clientY: start.y + i * 2 });
-      const p = r._positions.get(id);
+      const p = r.getPositions().get(id);
       const err = Math.hypot(p.x - (start.x + i * 3), p.y - (start.y + i * 2));
       errors.push(err);
       if (i === 1) {
@@ -436,16 +436,16 @@ async function runAsync(ctx) {
     raf.drain();
     const id = shown.find((x) => x !== hub);
     const neighborId = shown.find((x) => x !== hub && x !== id);
-    const start = { ...r._positions.get(id) };
+    const start = { ...r.getPositions().get(id) };
     const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 11, preventDefault() {} };
     r._onPointerDown(base);
     assert.strictEqual(r._simulating, true, "pointerdown 未启动拖拽模拟");
     assert.strictEqual(r._forceHold, true, "拖拽期间未保持模拟");
     const stateRef = r._forceState;
-    const neighborBefore = { ...r._positions.get(neighborId) };
+    const neighborBefore = { ...r.getPositions().get(neighborId) };
     // 不动指针，等 ≥10 帧：邻居应持续受力
     for (let i = 0; i < 12; i++) raf.drain(1);
-    const neighborAfter = r._positions.get(neighborId);
+    const neighborAfter = r.getPositions().get(neighborId);
     assert.ok(Math.hypot(neighborAfter.x - neighborBefore.x, neighborAfter.y - neighborBefore.y) > 0.01,
       "拖拽保持期间邻居没有受力移动");
     const holdLog = r.getForceFrameLog();
@@ -473,11 +473,11 @@ async function runAsync(ctx) {
     r.setFocusNode(hub);
     r.render(container, vm);
     const neighborId = shown.find((x) => x !== hub);
-    const initialBefore = { ...r._positions.get(neighborId) };
+    const initialBefore = { ...r.getPositions().get(neighborId) };
     for (let i = 0; i < 120 && r._forceFrames < 30; i++) raf.drain(1);
     assert.strictEqual(r._simulating, true, "初始动画 30 帧内已停");
     assert.ok(r._forceFrames >= 30, "初始动画不足 30 帧");
-    const initialAfter = r._positions.get(neighborId);
+    const initialAfter = r.getPositions().get(neighborId);
     assert.ok(Math.hypot(initialAfter.x - initialBefore.x, initialAfter.y - initialBefore.y) > 0.01, "初始动画邻居未移动");
     assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "初始动画单帧 >4px");
     raf.drain();
@@ -485,27 +485,27 @@ async function runAsync(ctx) {
     const other = shown.find((x) => x !== hub && x !== neighborId);
     r.setFocusNode(other);
     r.update(vm, {});
-    const focusBefore = { ...r._positions.get(neighborId) };
+    const focusBefore = { ...r.getPositions().get(neighborId) };
     for (let i = 0; i < 120 && r._forceFrames < 30; i++) raf.drain(1);
     assert.strictEqual(r._simulating, true, "focus 动画 30 帧内已停");
     assert.ok(r._forceFrames >= 30, "focus 动画不足 30 帧");
-    const focusAfter = r._positions.get(neighborId);
+    const focusAfter = r.getPositions().get(neighborId);
     assert.ok(Math.hypot(focusAfter.x - focusBefore.x, focusAfter.y - focusBefore.y) > 0.01, "focus 动画邻居未移动");
     assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "focus 动画单帧 >4px");
     raf.drain();
 
     const dragId = shown.find((x) => x !== other);
-    const start = { ...r._positions.get(dragId) };
+    const start = { ...r.getPositions().get(dragId) };
     const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 21, preventDefault() {} };
     r._onPointerDown(base);
     r._onPointerMove({ ...base, clientX: start.x + 8, clientY: start.y + 5 });
     r._onPointerUp({ ...base, clientX: start.x + 8, clientY: start.y + 5 });
-    const releaseBefore = { ...r._positions.get(neighborId) };
+    const releaseBefore = { ...r.getPositions().get(neighborId) };
     assert.strictEqual(r._simulating, true, "松手后未启动连续动画");
     for (let i = 0; i < 120 && r._forceFrames < 30; i++) raf.drain(1);
     assert.strictEqual(r._simulating, true, "松手后动画 30 帧内已停");
     assert.ok(r._forceFrames >= 30, "松手后动画不足 30 帧");
-    const releaseAfter = r._positions.get(neighborId);
+    const releaseAfter = r.getPositions().get(neighborId);
     assert.ok(Math.hypot(releaseAfter.x - releaseBefore.x, releaseAfter.y - releaseBefore.y) > 0.01, "松手后邻居未继续移动");
     assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "松手后动画单帧 >4px");
     r.dispose();
@@ -524,7 +524,7 @@ async function runAsync(ctx) {
     r.setFocusNode(hub);
     r.render(container, vm);
     const selected = shown.find((id) => id !== hub);
-    const p = r._positions.get(selected);
+    const p = r.getPositions().get(selected);
     const res = r.handlePointClick(p.x, p.y);
     assert.strictEqual(res.type, "nodeClick");
     assert.strictEqual(r._selectedId, selected, "单击 KP 未选中");
@@ -562,11 +562,11 @@ async function runAsync(ctx) {
     const snap = r.captureViewState();
     r._camera = { x: 0, y: 0, scale: 1 };
     r.clearSelection();
-    r._positions.set(nodeId, { x: 1, y: 2 });
+    r.getPositions().set(nodeId, { x: 1, y: 2 });
     r.restoreViewState(snap);
     assert.deepStrictEqual(r._camera, { x: 30, y: -20, scale: 1.4 });
     assert.strictEqual(r._selectedId, nodeId);
-    assert.deepStrictEqual(r._positions.get(nodeId), snap.positions.find(([id]) => id === nodeId)[1]);
+    assert.deepStrictEqual(r.getPositions().get(nodeId), snap.positions.find(([id]) => id === nodeId)[1]);
     r.dispose();
   });
 }
