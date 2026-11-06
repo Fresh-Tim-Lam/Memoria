@@ -1808,7 +1808,19 @@ async function call(fn, ...args) {
     const file = pres.files?.[id] || null;
     if (!file) return false;
     const name = pres.names?.[id] || id;
-    const anchor = $("#graph-2d-multilevel-root") || $("#graph-2d-root") || document.body;
+    const host = $("#graph-2d-multilevel-root") || $("#graph-2d-root") || document.body;
+    const canvas = host.querySelector("canvas") || host;
+    const rect = canvas.getBoundingClientRect();
+    // 每个节点用独立的虚拟锚点：既避免 linkPanel 把“同一 canvas”误判成同一锚点而
+    // 交替打开/关闭，也让“点小窗外的画布”能按 outside 规则关闭（anchor.contains=false）。
+    const anchor = {
+      getBoundingClientRect: () => rect,
+      setAttribute: () => {},
+      removeAttribute: () => {},
+      contains: () => false,
+      focus: () => {},
+      __graphNodeId: id,
+    };
     showLinkPanel(anchor, name, [{
       requested_id: id,
       kp_id: id,
