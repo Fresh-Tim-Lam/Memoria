@@ -100,7 +100,7 @@
     extend: [5, 4],
     association: [5, 4],
   });
-  const EVENT_TYPES = Object.freeze(["nodeClick", "edgeClick", "backgroundClick", "hover", "nodeDblClick", "groupClick"]);
+  const EVENT_TYPES = Object.freeze(["nodeClick", "edgeClick", "backgroundClick", "hover", "nodeDblClick", "groupClick", "backgroundGhostClick"]);
 
   class RendererError extends Error {
     constructor(code, message, detail) {
@@ -505,6 +505,7 @@
       focusId: focusId && positions.has(focusId) && !pinned.has(focusId) ? String(focusId) : null,
       vx: new Map(ids.map((id) => [id, 0])),
       vy: new Map(ids.map((id) => [id, 0])),
+      bgGhost: opts.bgGhost || null,
       alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
       ticks: 0,
       maxDisp: 0,
@@ -545,6 +546,31 @@
         const rep = FORCE.repulsion / Math.max(64, dist * dist);
         if (!pinned.has(a)) { fx.set(a, fx.get(a) - ux * rep); fy.set(a, fy.get(a) - uy * rep); }
         if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
+      }
+    }
+    // 同画布背景簇节点也参与力：把前景节点从幽灵 A 推开（幽灵固定，不反向移动）
+    const ghost = state.bgGhost;
+    if (ghost && Number.isFinite(ghost.x) && Number.isFinite(ghost.y)) {
+      const gr = Number(ghost.radius) || 20;
+      for (const id of ids) {
+        if (pinned.has(id)) continue;
+        const p = positions.get(id);
+        const r = radiusById.get(id) || KP_BASE_RADIUS;
+        let dx = p.x - ghost.x;
+        let dy = p.y - ghost.y;
+        let dist = Math.hypot(dx, dy);
+        if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
+        const ux = dx / dist;
+        const uy = dy / dist;
+        const minDist = r + gr + FORCE.collisionPad;
+        if (dist < minDist) {
+          const push = (minDist - dist) * 0.5;
+          fx.set(id, fx.get(id) + ux * push);
+          fy.set(id, fy.get(id) + uy * push);
+        }
+        const rep = FORCE.repulsion / Math.max(64, dist * dist);
+        fx.set(id, fx.get(id) + ux * rep);
+        fy.set(id, fy.get(id) + uy * rep);
       }
     }
     for (const link of linkList) {
@@ -1033,6 +1059,7 @@
           pinned: opts.pinned || this._pinned,
           pinFocusCenter: opts.pinFocusCenter === true,
           alpha: Number.isFinite(opts.alpha) ? opts.alpha : 1,
+          bgGhost: this._bgGhostPos(),
         }
       );
       this._forceState = state;
@@ -1602,6 +1629,13 @@
       const world = this._screenToWorld(x, y);
       x = world.x;
       y = world.y;
+      // 背景幽灵 A 是“返回上一站”的点击目标，优先于普通节点命中
+      const ghostPos = this._bgGhostPos();
+      if (ghostPos && Math.hypot(x - ghostPos.x, y - ghostPos.y) <= ghostPos.radius + 8) {
+        const payload = { kind: "background-ghost", label: ghostPos.label, ...extra };
+        this._emit("backgroundGhostClick", payload);
+        return { type: "backgroundGhostClick", payload };
+      }
       const node = this._pickNode(x, y);
       if (node) {
         // task-387：单击 = 选中/高亮（KP + 一跳邻居），不触发跳转或 focus
@@ -1738,38 +1772,51 @@
     /** 同一画布的背景视图幽灵节点：上一站 A 留在画布上，连到当前视图入口。 */
     setBackgroundGhost(info) {
       this._bgGhost = info || null;
-      if (this._ctx) this._draw();
+      if (this._ctx) {
+        if (this._bgGhost && this._positions?.size) {
+          this._startForceAnimation({ pinFocusCenter: false, alpha: 0.45 });
+        }
+        this._draw();
+      }
       return this._bgGhost;
     }
 
     clearBackgroundGhost() {
       this._bgGhost = null;
-      if (this._ctx) this._draw();
+      if (this._ctx) {
+        if (this._positions?.size) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.3 });
+        this._draw();
+      }
       return true;
     }
 
-    _drawBackgroundGhost(ctx) {
+    _bgGhostPos() {
       const ghost = this._bgGhost;
-      if (!ghost) return;
+      if (!ghost) return null;
       const target = this._positions.get(String(ghost.targetId || ""));
-      const x = Number(ghost.x);
-      const y = Number(ghost.y);
-      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      let x = Number(ghost.x);
+      let y = Number(ghost.y);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
       const radius = Number(ghost.radius) || 20;
-      let gx = Number(ghost.x);
-      let gy = Number(ghost.y);
       // 父层幽灵与子图入口如果落到同一坐标，会看起来像“两个节点重合”。
       // 保持连接线语义，但把幽灵移开一个稳定偏移，确保两个节点可同时辨认。
-      if (target && ctx.arc) {
+      if (target) {
         const targetRadius = (this._radiusById && this._radiusById.get(String(ghost.targetId))) || 8;
-        const dx = gx - target.x;
-        const dy = gy - target.y;
+        const dx = x - target.x;
+        const dy = y - target.y;
         const minDist = radius + targetRadius + 36;
         if (Math.hypot(dx, dy) < minDist) {
-          gx = target.x - 120;
-          gy = target.y - 100;
+          x = target.x - 120;
+          y = target.y - 100;
         }
       }
+      return { x, y, radius, target, label: ghost.label };
+    }
+
+    _drawBackgroundGhost(ctx) {
+      const gp = this._bgGhostPos();
+      if (!gp) return;
+      const { x: gx, y: gy, radius, target } = gp;
       // 跨层连接线（不进入 _edgeList，不参与数据边统计）
       if (target && ctx.beginPath && ctx.moveTo && ctx.lineTo && ctx.stroke) {
         ctx.save?.();
@@ -1800,7 +1847,7 @@
         ctx.textAlign = "center";
         ctx.textBaseline = "top";
         ctx.fillStyle = "#f0f6fc";
-        ctx.fillText(String(ghost.label || ""), gx, gy + radius + 4);
+        ctx.fillText(String(gp.label || ""), gx, gy + radius + 4);
       }
     }
 

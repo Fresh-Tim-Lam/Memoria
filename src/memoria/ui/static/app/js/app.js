@@ -2530,6 +2530,10 @@ async function call(fn, ...args) {
         state.graphMultilevel.mounted.renderer.selectGroup?.(group_id);
         window.setTimeout(() => enterMultilevelGroup(group_id), 160);
       });
+      // 同一画布：点击背景幽灵 A = 返回上一站
+      state.graphMultilevel.mounted.renderer.on("backgroundGhostClick", () => {
+        backMultilevelView();
+      });
       // task-380：双击保留为无操作，避免与单击小窗重复/关闭
       state.graphMultilevel.mounted.renderer.on("nodeDblClick", () => {});
     }
