@@ -540,6 +540,14 @@ def run() -> None:
         _post_launch_log("after_ensure_visible")
 
     _start_dev_window_monitor(window)
+    # 开发态常驻批注看板：直接 `python app.py` 启动也必须出现，且不依赖 CDP 端口。
+    try:
+        from memoria.app.dev_annotator import start_watch as _start_annotator_watch
+
+        if _start_annotator_watch(window):
+            _diag("run dev-annotator watchdog started")
+    except Exception as exc:  # noqa: BLE001
+        _diag(f"run dev-annotator watchdog skipped: {exc!r}")
     # 守护线程：native 就绪晚时仍能强制显示窗口（打包态排查/修复用）。
     # 注意该线程与 _post_launch 均不依赖 shown 事件，避免故障态下阻塞。
     _diag("run start watch-thread")
