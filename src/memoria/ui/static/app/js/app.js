@@ -8240,7 +8240,13 @@ async function call(fn, ...args) {
     return _linkPanelClampRect({ x, y, w, h });
   }
 
-  /** 读取持久化（ui-settings 统一入口；缓存一份） */
+  /** 读取持久化（ui-settings 统一入口；缓存一份）。
+   *
+   * task-391 回归修复：**pinned 不再持久化/恢复**。旧实现会把 `linkPanel.pinned` 写盘并在
+   * 下次打开时恢复，导致用户看到“没开 pin 却点画布不关闭”（UI 只有 13px 图标颜色差异）。
+   * 新语义：每次新面板一律 `pinned=false`；pin 只是本次面板内的临时状态（toggle 保留）。
+   * 几何/模式仍可恢复。
+   */
   async function _linkPanelPrefsRead() {
     if (state.linkPanelPrefs) return state.linkPanelPrefs;
     try {
@@ -8253,7 +8259,7 @@ async function call(fn, ...args) {
         w: Number.isFinite(Number(raw.w)) ? Number(raw.w) : null,
         h: Number.isFinite(Number(raw.h)) ? Number(raw.h) : null,
         mode: raw.mode === "source" ? "source" : "preview",
-        pinned: raw.pinned === true,
+        pinned: false,
       };
     } catch (_) {
       state.linkPanelPrefs = { x: null, y: null, w: null, h: null, mode: "preview", pinned: false };
@@ -8261,11 +8267,15 @@ async function call(fn, ...args) {
     return state.linkPanelPrefs;
   }
 
-  /** 持久化（串行 + 300ms 去抖；只写 ui-settings.linkPanel，不碰其它键） */
+  /** 持久化（串行 + 300ms 去抖；只写 ui-settings.linkPanel，不碰其它键）。
+   *  task-391：pinned **不持久化为用户状态**（见 `_linkPanelPrefsRead` 注释）。
+   *  注意 `save_ui_settings` 是「每个 key 浅合并」，历史文件里的 `pinned:true` 不会被省略键清掉，
+   *  所以这里显式写 `pinned:false`，把旧状态一并清干净；读取端也会强制 false。 */
   function _linkPanelPersist(patch) {
     const pop = state.linkPanel;
-    const base = pop ? { x: pop.x, y: pop.y, w: pop.w, h: pop.h, mode: pop.mode, pinned: !!pop.pinned } : {};
+    const base = pop ? { x: pop.x, y: pop.y, w: pop.w, h: pop.h, mode: pop.mode } : {};
     const next = Object.assign(base, patch || {});
+    next.pinned = false;
     state.linkPanelPrefs = Object.assign(state.linkPanelPrefs || {}, next);
     clearTimeout(state._linkPanelSaveTimer);
     state._linkPanelSaveTimer = setTimeout(() => {
@@ -8830,7 +8840,8 @@ async function call(fn, ...args) {
     const pop = {
       anchorEl, title: title || "", candidates: list, index: 0,
       mode: prefs.mode || "preview", collapsed: false,
-      pinned: prefs.pinned === true,
+      // task-391：新面板默认不 pin（prefs 里的历史 pinned 不再恢复，见 _linkPanelPrefsRead）
+      pinned: false,
       x: rect.x, y: rect.y, w: rect.w, h: rect.h,
       docCache: new Map(), el: null, opener: document.activeElement,
     };

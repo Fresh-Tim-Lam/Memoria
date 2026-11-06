@@ -82,6 +82,7 @@ def test_render_scene_node_suite() -> None:
         "renderer_drag_kp_moves_cluster_and_drag_cluster_moves_kp",
         "app_js_uses_apply_overview_layout_and_no_positions_alias",
         "renderer_apply_overview_layout_writes_grid_positions",
+        "ghost_draws_cross_layer_connector_to_target",
     ):
         assert required in names, f"RenderScene 套件缺用例：{required}"
 

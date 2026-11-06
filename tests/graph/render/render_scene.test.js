@@ -40,15 +40,30 @@ function makeCtx() {
     strokeStyles: [],
     fonts: [],
     strokeAlphas: [],
+    lines: [],
+    strokes: [],
     _alpha: 1,
+    _dash: [],
+    _mx: 0,
+    _my: 0,
     font: "10px sans-serif",
     globalAlpha: 1,
     clearRect() { this.calls += 1; },
     fillRect() { this.calls += 1; this.fillStyles.push(this.fillStyle); },
-    beginPath() { this.calls += 1; },
+    beginPath() { this.calls += 1; this._lx = null; this._ly = null; },
     closePath() {},
-    moveTo() {},
-    lineTo() {},
+    moveTo(x, y) { this._mx = x; this._my = y; },
+    lineTo(x, y) {
+      this._lx = x;
+      this._ly = y;
+      this.lines.push({
+        from: { x: this._mx, y: this._my },
+        to: { x, y },
+        dash: this._dash.slice(),
+        strokeStyle: this.strokeStyle,
+        lineWidth: this.lineWidth,
+      });
+    },
     arc() {},
     rect() {},
     roundRect() {},
@@ -56,8 +71,18 @@ function makeCtx() {
     restore() {},
     translate() {},
     scale() {},
-    setLineDash() {},
-    stroke() { this.calls += 1; this.strokeStyles.push(this.strokeStyle); },
+    setLineDash(arr) { this._dash = Array.isArray(arr) ? arr.slice() : []; },
+    stroke() {
+      this.calls += 1;
+      this.strokeStyles.push(this.strokeStyle);
+      this.strokes.push({
+        dash: this._dash.slice(),
+        strokeStyle: this.strokeStyle,
+        lineWidth: this.lineWidth,
+        from: { x: this._mx, y: this._my },
+        to: this._lx == null ? null : { x: this._lx, y: this._ly },
+      });
+    },
     fill() { this.calls += 1; this.fillStyles.push(this.fillStyle); },
     fillText() { this.calls += 1; this.fonts.push(this.font); },
     strokeText() { this.calls += 1; },
@@ -461,6 +486,40 @@ function run() {
     assert.strictEqual(r._userAdjusted, false);
     assert.strictEqual(host.createCount, 1, "applyOverviewLayout 不得新建第二张画布");
     assert.strictEqual(r._positions, undefined, "兼容别名必须已删除");
+    r.dispose();
+  });
+
+  // ── 13. task-391 回归：ghost→target 跨层虚线（旧 _drawBackgroundGhost 样式）──────
+  check("ghost_draws_cross_layer_connector_to_target", () => {
+    const host = makeHost();
+    const box = container();
+    const r = new Adapter.Renderer2D(box, { host, presentation: DEMO.presentation, animateForce: false });
+    r.render(box, DEMO.vm);
+    const ids = [...r.getPositions().keys()];
+    const targetId = ids.find((id) => r.getNode(id).kind === "kp");
+    assert.ok(targetId, "fixture 缺 KP");
+    const edgesBefore = r.lastRender.edges;
+    const edgeListBefore = r._edgeList.length;
+    r.setBackgroundGhost({ targetId, x: 40, y: 60, radius: 20, label: "A" });
+    const ctx = r._ctx;
+    ctx.lines.length = 0;
+    ctx.strokes.length = 0;
+    r._draw();
+    const ghost = r.getNode("ghost:A");
+    const target = r.getNode(targetId);
+    assert.ok(ghost && target, "ghost/target 应同时存在");
+    const connectors = ctx.strokes.filter(
+      (s) => s.dash.length === 2 && s.dash[0] === 5 && s.dash[1] === 4
+        && s.strokeStyle === "rgba(88,166,255,0.55)" && Math.abs(s.lineWidth - 1.4) < 1e-9
+        && s.to
+    );
+    assert.strictEqual(connectors.length, 1, `应有且只有 1 条 ghost→target 虚线，实际 ${connectors.length}`);
+    const c = connectors[0];
+    assert.ok(Math.hypot(c.from.x - ghost.x, c.from.y - ghost.y) < 1e-6, "虚线起点应为 ghost 位置");
+    assert.ok(Math.hypot(c.to.x - target.x, c.to.y - target.y) < 1e-6, "虚线终点应为 target 位置");
+    // 不是数据边：不进 edge 统计、不新增边
+    assert.strictEqual(r.lastRender.edges, edgesBefore, "跨层虚线不得改变 edge 统计");
+    assert.strictEqual(r._edgeList.length, edgeListBefore, "跨层虚线不得写入 _edgeList");
     r.dispose();
   });
 

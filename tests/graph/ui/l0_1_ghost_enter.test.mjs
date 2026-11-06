@@ -141,6 +141,62 @@ try {
     });
     if (!childHasKp || !childHasGhost) throw new Error("进入子图后未同时存在 node-001 与 ghost:A");
 
+    // ③ 跨层虚线（本轮回归）：ghost → 子图入口节点，必须真实画出一条 dashed connector；
+    //    且它不是数据边（edge 统计/edge 列表不变）。
+    const conn = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const ctx = r._ctx;
+      if (!ctx) return { ok: false, reason: "no ctx" };
+      let mx = 0, my = 0, dash = [], lx = null, ly = null;
+      const strokes = [];
+      const o = {
+        beginPath: ctx.beginPath, moveTo: ctx.moveTo, lineTo: ctx.lineTo,
+        setLineDash: ctx.setLineDash, stroke: ctx.stroke,
+      };
+      ctx.beginPath = function () { lx = null; ly = null; return o.beginPath.call(this); };
+      ctx.moveTo = function (x, y) { mx = x; my = y; return o.moveTo.call(this, x, y); };
+      ctx.lineTo = function (x, y) { lx = x; ly = y; return o.lineTo.call(this, x, y); };
+      ctx.setLineDash = function (a) { dash = Array.isArray(a) ? a.slice() : []; return o.setLineDash.call(this, a); };
+      ctx.stroke = function () {
+        strokes.push({
+          dash: dash.slice(), strokeStyle: this.strokeStyle, lineWidth: this.lineWidth,
+          from: { x: mx, y: my }, to: lx == null ? null : { x: lx, y: ly },
+        });
+        return o.stroke.call(this);
+      };
+      const norm = (s) => String(s || "").replace(/\\s+/g, "");
+      const edgesBefore = r.lastRender ? r.lastRender.edges : null;
+      r._draw();
+      const connectors = strokes.filter((s) => s.dash.length === 2 && s.dash[0] === 5 && s.dash[1] === 4
+        && norm(s.strokeStyle) === "rgba(88,166,255,0.55)" && Math.abs(s.lineWidth - 1.4) < 0.01 && s.to);
+      const g = r.getNode("ghost:A");
+      const t = r.getNode(${JSON.stringify(KP_ID)});
+      ctx.beginPath = o.beginPath; ctx.moveTo = o.moveTo; ctx.lineTo = o.lineTo;
+      ctx.setLineDash = o.setLineDash; ctx.stroke = o.stroke;
+      return {
+        ok: true, count: connectors.length,
+        connectorFrom: connectors[0] ? connectors[0].from : null,
+        connectorTo: connectors[0] ? connectors[0].to : null,
+        ghost: g ? { x: g.x, y: g.y } : null,
+        target: t ? { x: t.x, y: t.y } : null,
+        edgesBefore, edgesAfter: r.lastRender ? r.lastRender.edges : null,
+      };    })()`);
+    const eps = conn && conn.ghost && conn.target && conn.connectorFrom && conn.connectorTo
+      ? Math.max(dist(conn.connectorFrom, conn.ghost), dist(conn.connectorTo, conn.target))
+      : null;
+    const connectorOk = !!(conn && conn.ok && conn.count === 1 && eps != null && eps < 0.6
+      && conn.edgesBefore === conn.edgesAfter);
+    evidence.steps.push({
+      step: "ghost-cross-layer-connector",
+      count: conn ? conn.count : null,
+      endpointMaxErrPx: eps == null ? null : Math.round(eps * 100) / 100,
+      ghost: conn ? conn.ghost : null,
+      target: conn ? conn.target : null,
+      edgesBefore: conn ? conn.edgesBefore : null,
+      edgesAfter: conn ? conn.edgesAfter : null,
+      connectorOk,
+    });
+
     // ① 拖 KP → ghost 位移 > 0
     const kpFrom = pickTarget(child, KP_ID, "ghost:A");
     const kpTo = { x: kpFrom.x + 64, y: kpFrom.y + 34 };
@@ -178,6 +234,7 @@ try {
     evidence.checks = {
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
+      ghostConnectorDrawn: connectorOk,
       dragKpMovedGhost: ghostMoved > 0.01,
       dragGhostMovedKp: kpMoved2 > 0.01,
       singleCanvas: afterGhost.canvasCount === 1 && parent.canvasCount === 1 && child.canvasCount === 1,

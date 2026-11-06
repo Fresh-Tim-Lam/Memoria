@@ -103,6 +103,7 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
         for key in (
             "parentOnlyCollapsedCluster",
             "childHasNode001AndGhost",
+            "ghostConnectorDrawn",
             "dragKpMovedGhost",
             "dragGhostMovedKp",
             "singleCanvas",

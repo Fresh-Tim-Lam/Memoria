@@ -1751,9 +1751,26 @@
     }
 
     // ── 绘制策略（task-391：单绘制入口 RenderScene.draw → RenderNode.draw → painter）──
-    /** 背景幽灵（layer=background）。 */
+    /** 背景幽灵（layer=background）。
+     *  task-391 回归修复：旧 `_drawBackgroundGhost()` 的 ghost→target 跨层虚线在重构时丢失，
+     *  这里按原样式补回（rgba(88,166,255,0.55)、1.4px、dash [5,4]）。该线**不是数据边**：
+     *  不新增 edge、不进 VM/`_edgeList`/edge 统计，只是幽灵到子图入口的视觉连接。 */
     _paintGhost(ctx, node, view) {
       const calls = view.calls || { nodes: 0, labels: 0, text: 0 };
+      const targetId = node.data && node.data.targetId != null ? String(node.data.targetId) : "";
+      const target = targetId ? this._scene.get(targetId) : null;
+      if (target && ctx.beginPath && ctx.moveTo && ctx.lineTo && ctx.stroke) {
+        ctx.save?.();
+        ctx.beginPath();
+        ctx.moveTo(node.x, node.y);
+        ctx.lineTo(target.x, target.y);
+        ctx.strokeStyle = "rgba(88,166,255,0.55)";
+        ctx.lineWidth = 1.4;
+        if (ctx.setLineDash) ctx.setLineDash([5, 4]);
+        ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+        ctx.restore?.();
+      }
       ctx.save?.();
       if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
       drawHexagon(ctx, node.x, node.y, node.radius);
