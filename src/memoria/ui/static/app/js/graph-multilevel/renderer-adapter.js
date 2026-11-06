@@ -566,9 +566,14 @@
         if (!pinned.has(b)) { fx.set(b, fx.get(b) + ux * rep); fy.set(b, fy.get(b) + uy * rep); }
       }
     }
-    // 统一固定体（折叠簇节点、背景幽灵）：参与力，但自身不移动
-    for (const body of state.extraBodies || []) {
+    // 统一自由体（折叠簇节点、背景幽灵）：与前景节点双向受力，自身也会移动
+    const bodies = state.extraBodies || [];
+    for (let bi = 0; bi < bodies.length; bi++) {
+      const body = bodies[bi];
       if (!Number.isFinite(body.x) || !Number.isFinite(body.y)) continue;
+      const bodyFixed = body.fixed === true;
+      let bfx = 0;
+      let bfy = 0;
       const gr = Number(body.radius) || 20;
       for (const id of ids) {
         if (pinned.has(id)) continue;
@@ -585,11 +590,61 @@
           const push = (minDist - dist) * 0.5;
           fx.set(id, fx.get(id) + ux * push);
           fy.set(id, fy.get(id) + uy * push);
+          if (!bodyFixed) { bfx -= ux * push; bfy -= uy * push; }
         }
         const rep = FORCE.repulsion / Math.max(64, dist * dist);
         fx.set(id, fx.get(id) + ux * rep);
         fy.set(id, fy.get(id) + uy * rep);
+        if (!bodyFixed) { bfx -= ux * rep; bfy -= uy * rep; }
       }
+      // 自由体之间也互相作用
+      for (let bj = bi + 1; bj < bodies.length; bj++) {
+        const other = bodies[bj];
+        if (!Number.isFinite(other.x) || !Number.isFinite(other.y)) continue;
+        let dx = body.x - other.x;
+        let dy = body.y - other.y;
+        let dist = Math.hypot(dx, dy);
+        if (dist < 1e-6) { dx = 1; dy = 0; dist = 1; }
+        const ux = dx / dist;
+        const uy = dy / dist;
+        const minDist = gr + (Number(other.radius) || 20) + FORCE.collisionPad;
+        let force = FORCE.repulsion / Math.max(64, dist * dist);
+        if (dist < minDist) force += (minDist - dist) * 0.5;
+        bfx += ux * force;
+        bfy += uy * force;
+        if (other.fixed !== true) {
+          const ofx = other._fx || 0;
+          const ofy = other._fy || 0;
+          other._fx = ofx - ux * force;
+          other._fy = ofy - uy * force;
+        }
+      }
+      if (!bodyFixed) {
+        const anchorX = Number.isFinite(body.anchorX) ? body.anchorX : body.x;
+        const anchorY = Number.isFinite(body.anchorY) ? body.anchorY : body.y;
+        bfx += (anchorX - body.x) * 0.012 * alpha;
+        bfy += (anchorY - body.y) * 0.012 * alpha;
+        const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vx || 0) + bfx * alpha * FORCE.forceScale) * FORCE.velocityDecay));
+        const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vy || 0) + bfy * alpha * FORCE.forceScale) * FORCE.velocityDecay));
+        body.vx = nvx;
+        body.vy = nvy;
+        body.x = Math.max(pad, Math.min(width - pad, body.x + nvx));
+        body.y = Math.max(pad, Math.min(height - pad, body.y + nvy));
+      }
+    }
+    // 第二遍把其它自由体给当前体累积的力消费掉
+    for (const body of bodies) {
+      if (body.fixed === true) { body._fx = 0; body._fy = 0; continue; }
+      if (body._fx || body._fy) {
+        const nvx = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vx || 0) + body._fx * alpha * FORCE.forceScale) * FORCE.velocityDecay));
+        const nvy = Math.max(-FORCE.maxVelocity, Math.min(FORCE.maxVelocity, ((body.vy || 0) + body._fy * alpha * FORCE.forceScale) * FORCE.velocityDecay));
+        body.vx = nvx;
+        body.vy = nvy;
+        body.x = Math.max(pad, Math.min(width - pad, body.x + nvx));
+        body.y = Math.max(pad, Math.min(height - pad, body.y + nvy));
+      }
+      body._fx = 0;
+      body._fy = 0;
     }
     for (const link of linkList) {
       const a = positions.get(link.source);
@@ -755,6 +810,7 @@
       this._canvas = null;
       this._ctx = null;
       this._positions = new Map();
+      this._auxPositions = new Map();
       this._nodeById = new Map();
       this._edgeList = [];
       this._view = { width: 1, height: 1 };
@@ -917,15 +973,17 @@
       for (const group of this._groups) {
         if (!this._collapsedGroups.has(group.group_id)) continue;
         if (this._groupHasCollapsedAncestor(group.group_id)) continue;
-        const c = this._groupCenter(group);
+        const key = `group:${group.group_id}`;
+        let c = this._auxPositions.get(key) || this._groupCenter(group);
         if (!c) continue;
+        if (!this._auxPositions.has(key)) this._auxPositions.set(key, { x: c.x, y: c.y });
         const n = group.member_ids.length;
         out.push(makeRenderNode({
-          id: `group:${group.group_id}`, kind: "cluster", shape: "hexagon", layer: "foreground",
+          id: key, kind: "cluster", shape: "hexagon", layer: "foreground",
           x: c.x, y: c.y,
           radius: Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1))),
           label: groupLabel(group),
-          hit: "drill", fixed: true, group,
+          hit: "drill", fixed: false, group,
         }));
       }
       const gp = this._bgGhostPos();
@@ -933,7 +991,7 @@
         out.push(makeRenderNode({
           id: "ghost:A", kind: "ghost", shape: "hexagon", layer: "background",
           x: gp.x, y: gp.y, radius: gp.radius, label: gp.label,
-          hit: "return", fixed: true,
+          hit: "return", fixed: false,
         }));
       }
       return out;
@@ -941,8 +999,11 @@
 
     _forceBodies() {
       return this._composeRenderNodes()
-        .filter((n) => n.fixed && n.kind !== "kp")
-        .map((n) => ({ x: n.x, y: n.y, radius: n.radius, kind: n.kind }));
+        .filter((n) => n.kind === "cluster" || n.kind === "ghost")
+        .map((n) => ({
+          id: n.id, x: n.x, y: n.y, radius: n.radius, kind: n.kind,
+          vx: 0, vy: 0, anchorX: n.x, anchorY: n.y, fixed: false,
+        }));
     }
 
     _pickRenderNode(x, y) {
@@ -1163,6 +1224,9 @@
         // task-385：拖拽期间模拟常驻；alpha 低时重加热，不因 quiet/alpha 停止
         if (this._forceHold && state.alpha < 0.12) state.alpha = 0.35;
         const maxDisp = stepForceState(state);
+        for (const body of state.extraBodies || []) {
+          this._auxPositions.set(body.id, { x: body.x, y: body.y });
+        }
         this._forceFrames += 1;
         this._forceFrameLog.push({
           frame: this._forceFrames,
@@ -1211,6 +1275,7 @@
       if (container) this.container = container;
       if (!this.container) fail("GRAPH_INTERNAL", "缺少容器");
       this._lastVm = vm;
+      this._auxPositions.clear();
       this._ensureResizeObserver();
       const model = this._project(vm);
       assertBudget(vm);
@@ -1858,6 +1923,7 @@
     /** 同一画布的背景视图幽灵节点：上一站 A 留在画布上，连到当前视图入口。 */
     setBackgroundGhost(info) {
       this._bgGhost = info || null;
+      this._auxPositions.delete("ghost:A");
       if (this._ctx) {
         if (this._bgGhost && this._positions?.size) {
           this._startForceAnimation({ pinFocusCenter: false, alpha: 0.45 });
@@ -1869,6 +1935,7 @@
 
     clearBackgroundGhost() {
       this._bgGhost = null;
+      this._auxPositions.delete("ghost:A");
       if (this._ctx) {
         if (this._positions?.size) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.3 });
         this._draw();
@@ -1880,13 +1947,13 @@
       const ghost = this._bgGhost;
       if (!ghost) return null;
       const target = this._positions.get(String(ghost.targetId || ""));
-      let x = Number(ghost.x);
-      let y = Number(ghost.y);
+      const stored = this._auxPositions.get("ghost:A");
+      let x = stored ? stored.x : Number(ghost.x);
+      let y = stored ? stored.y : Number(ghost.y);
       if (!Number.isFinite(x) || !Number.isFinite(y)) return null;
       const radius = Number(ghost.radius) || 20;
-      // 父层幽灵与子图入口如果落到同一坐标，会看起来像“两个节点重合”。
-      // 保持连接线语义，但把幽灵移开一个稳定偏移，确保两个节点可同时辨认。
-      if (target) {
+      // 初始位置若与子图入口重合，先偏移一次；之后由力场自由移动，位置存于 aux。
+      if (!stored && target) {
         const targetRadius = (this._radiusById && this._radiusById.get(String(ghost.targetId))) || 8;
         const dx = x - target.x;
         const dy = y - target.y;
@@ -1896,6 +1963,7 @@
           y = target.y - 100;
         }
       }
+      if (!stored) this._auxPositions.set("ghost:A", { x, y });
       return { x, y, radius, target, label: ghost.label };
     }
 
