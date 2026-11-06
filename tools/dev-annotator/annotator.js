@@ -18,7 +18,10 @@
   host.style.all = 'initial';
   // 不能留在普通文档流里：否则 html 末尾会多一个行盒，点选面板一开整个应用会下移。
   host.style.position = 'fixed';
-  host.style.inset = '0';
+  host.style.top = '0';
+  host.style.left = '0';
+  host.style.width = '0';
+  host.style.height = '0';
   host.style.zIndex = '2147483000';
   host.style.pointerEvents = 'none';
   const root = host.attachShadow({ mode: 'open' });
