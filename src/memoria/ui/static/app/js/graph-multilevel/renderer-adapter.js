@@ -1895,7 +1895,7 @@
         const degree = node.kind === "kp" ? this._degreeInfo?.map.get(node.id) : null;
         const ratio = degreeMax && Number.isFinite(degree) ? Math.max(0, Math.min(1, degree / degreeMax)) : null;
         let fill;
-        if (selected) fill = "#d29922";
+        if (selected) fill = VISUAL.nodeHover;
         else if (hovered) fill = VISUAL.nodeHover;
         else if (highlighted) fill = VISUAL.nodeTarget;
         else if (dim) fill = VISUAL.nodeDim;
@@ -1903,7 +1903,7 @@
         else if (node.kind === "kp" && ratio != null) fill = galaxyColor(ratio);
         else fill = VISUAL.node;
         let halo = 0;
-        if (selected) halo = 0.55;
+        if (selected) halo = 0.6;
         else if (hovered) halo = 0.6;
         else if (highlighted) halo = 0.4;
         else if (dim) halo = 0.1;
@@ -1926,9 +1926,9 @@
         }
         if ((selected || inSelection || hovered || highlighted) && ctx.beginPath && ctx.arc && ctx.stroke) {
           ctx.beginPath();
-          ctx.arc(p.x, p.y, r + (selected ? 3 : 1.5), 0, TAU);
-          ctx.strokeStyle = selected ? "#f0f6fc" : (inSelection ? "rgba(210,153,34,0.62)" : VISUAL.focus);
-          ctx.lineWidth = selected ? 2.4 : (inSelection ? 1.2 : 2);
+          ctx.arc(p.x, p.y, r + (selected ? 2.2 : 1.5), 0, TAU);
+          ctx.strokeStyle = selected ? "#f0f6fc" : (inSelection ? "rgba(88,166,255,0.62)" : VISUAL.focus);
+          ctx.lineWidth = selected ? 2 : (inSelection ? 1.2 : 2);
           ctx.stroke();
         }
         // focus 是布局中心（蓝环）；选中是白色/金色高亮，二者可区分
@@ -1963,26 +1963,26 @@
         const selectedGroup = selectedGroupId === group.group_id;
         // 折叠组：六边形 + 双环 + 成员数徽标（与 KP 圆形明显区分）
         drawHexagon(ctx, g.cx, g.cy, radius);
-        ctx.fillStyle = selectedGroup ? "rgba(210,153,34,0.22)" : "rgba(88,166,255,0.16)";
+        ctx.fillStyle = selectedGroup ? "rgba(240,246,252,0.20)" : "rgba(88,166,255,0.16)";
         if (ctx.fill) ctx.fill();
-        ctx.strokeStyle = selectedGroup ? "#d29922" : "rgba(88,166,255,0.75)";
+        ctx.strokeStyle = selectedGroup ? "#f0f6fc" : "rgba(88,166,255,0.75)";
         ctx.lineWidth = selectedGroup ? 2.2 : 1.6;
         if (ctx.setLineDash) ctx.setLineDash([4, 2]);
         if (ctx.stroke) ctx.stroke();
         if (ctx.setLineDash) ctx.setLineDash([]);
         drawHexagon(ctx, g.cx, g.cy, radius + 3);
-        ctx.strokeStyle = selectedGroup ? "rgba(210,153,34,0.5)" : "rgba(88,166,255,0.35)";
+        ctx.strokeStyle = selectedGroup ? "rgba(240,246,252,0.55)" : "rgba(88,166,255,0.35)";
         ctx.lineWidth = 1;
         if (ctx.stroke) ctx.stroke();
         this._groupHit.push({ kind: "circle", x: g.cx, y: g.cy, r: radius + 4, group, selected: selectedGroup });
-        drawGroupBadge(ctx, g.cx + radius * 0.7, g.cy - radius * 0.7, n, selectedGroup ? "#d29922" : "#58a6ff");
+        drawGroupBadge(ctx, g.cx + radius * 0.7, g.cy - radius * 0.7, n, selectedGroup ? "#f0f6fc" : "#58a6ff");
         calls.nodes += 1;
         if (ctx.fillText) {
           ctx.font = VISUAL.labelFont;
           ctx.textAlign = "center";
           ctx.textBaseline = "top";
           const ctext = truncateTextWidth(ctx, groupLabel(group), Math.max(40, radius * 2 + 8));
-          ctx.fillStyle = selectedGroup ? "#d29922" : (VISUAL.nodeMuted || "#8b949e");
+          ctx.fillStyle = selectedGroup ? "#f0f6fc" : (VISUAL.nodeMuted || "#8b949e");
           ctx.fillText(ctext, g.cx, g.cy + radius + 4);
           calls.labels += 1;
           const cw = ctx.measureText ? ctx.measureText(ctext).width : ctext.length * 6;

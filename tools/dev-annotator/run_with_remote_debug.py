@@ -51,6 +51,17 @@ def _auto_inject_annotator() -> None:
                 expr = "(() => { " + js + " })()"
                 ws.send(json.dumps({"id": 1, "method": "Runtime.evaluate", "params": {"expression": expr, "awaitPromise": False}}))
                 ws.recv()
+                # 让批注板在未来 reload 后仍在：注册到 new-document
+                src = (
+                    "(() => { const run = () => { " + js + " };"
+                    " if (document.readyState === 'loading')"
+                    " document.addEventListener('DOMContentLoaded', run, { once: true });"
+                    " else run(); })()"
+                )
+                ws.send(json.dumps({"id": 2, "method": "Page.enable", "params": {}}))
+                ws.recv()
+                ws.send(json.dumps({"id": 3, "method": "Page.addScriptToEvaluateOnNewDocument", "params": {"source": src}}))
+                ws.recv()
                 ws.close()
                 return
         except Exception:

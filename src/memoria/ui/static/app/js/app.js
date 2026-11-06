@@ -2490,15 +2490,18 @@ async function call(fn, ...args) {
         resolveFile: (nodeId) => multilevelPresentation().files?.[nodeId] || null,
       });
       state.graphMultilevel.mounted.renderer.on("hover", ({ node_id }) => updateMultilevelHint(node_id));
+      // 2026-11-06 裁决：单击知识节点 = 高亮（与悬浮同款）+ 立即打开跳转小窗；
+      // 不再先变黄色、也不需要第二次点击。组节点仍走 groupClick 钻取。
+      state.graphMultilevel.mounted.renderer.on("nodeClick", ({ node_id }) => {
+        if (!node_id) return;
+        openGraphEditorJumpPreview(node_id);
+      });
       // task-389：group 单击 = 进入子图视图（不是原位展开）
       state.graphMultilevel.mounted.renderer.on("groupClick", ({ group_id }) => {
         if (group_id) enterMultilevelGroup(group_id);
       });
-      // task-380：双击节点保留旧编辑器跳转入口（单击改为 focus）
-      // 2026-11-06 裁决：所有“编辑器落点”的跳转先经小窗预览，用户确认后才真正拉编辑器。
-      state.graphMultilevel.mounted.renderer.on("nodeDblClick", ({ node_id }) => {
-        openGraphEditorJumpPreview(node_id);
-      });
+      // task-380：双击保留为无操作，避免与单击小窗重复/关闭
+      state.graphMultilevel.mounted.renderer.on("nodeDblClick", () => {});
     }
     const vm = payload.vm;
     try {
