@@ -1955,6 +1955,8 @@ async function call(fn, ...args) {
     mounted.setFocusNode(entry.focusNodeId || null);
     mounted.renderer.render(host, entry.vm);
     if (entry.snapshot) mounted.renderer.restoreViewState(entry.snapshot);
+    if (entry.backgroundGhost) mounted.renderer.setBackgroundGhost(entry.backgroundGhost);
+    else mounted.renderer.clearBackgroundGhost?.();
     renderMultilevelDrillbar();
     return true;
   }
@@ -1991,6 +1993,18 @@ async function call(fn, ...args) {
     const title = group.section || group.file || String(group.group_id);
     // 进入子图前记录父视图（位置/相机/选中），返回时原样恢复
     current.snapshot = mounted.renderer.captureViewState();
+    // 同一画布不是硬切：父层这个 A 以幽灵节点留在画布上，连到子图入口
+    const posMap = new Map((current.snapshot.positions || []).map(([id, p]) => [String(id), p]));
+    const memberPositions = (group.member_ids || [])
+      .map((id) => posMap.get(String(id)))
+      .filter(Boolean);
+    const ghost = memberPositions.length ? {
+      x: memberPositions.reduce((a, p) => a + p.x, 0) / memberPositions.length,
+      y: memberPositions.reduce((a, p) => a + p.y, 0) / memberPositions.length,
+      radius: Math.min(26, Math.max(12, 10 + 2 * Math.log2(memberPositions.length + 1))),
+      label: title,
+      targetId: multilevelHighestDegreeNode(childVm, childPresentation),
+    } : null;
     const nextEntry = {
       vm: childVm,
       presentation: childPresentation,
@@ -1998,6 +2012,7 @@ async function call(fn, ...args) {
       crumb: multilevelShortCrumb(title),
       path: [...current.path, title],
       snapshot: null,
+      backgroundGhost: ghost,
       groupId: String(groupId),
       crossEdges: crossEdges.length,
       focusNodeId: multilevelHighestDegreeNode(childVm, childPresentation),

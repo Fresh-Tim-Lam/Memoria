@@ -53,6 +53,10 @@ def test_app_wires_click_focus_and_dblclick_jump() -> None:
     assert "openGraphEditorJumpPreview" in app, "双击未先走小窗预览"
     assert "showLinkPanel(" in app
     assert "jumpToTarget(" in app
+    assert "setBackgroundGhost" in app, "进入子图未保留父层 A 的背景幽灵"
+    renderer = (APP / "js/graph-multilevel/renderer-adapter.js").read_text(encoding="utf-8")
+    assert "setBackgroundGhost" in renderer
+    assert "clearBackgroundGhost" in renderer
 
 
 def test_legend_distinguishes_kp_group_collapsed_and_edge_dash() -> None:

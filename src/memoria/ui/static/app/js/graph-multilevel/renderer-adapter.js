@@ -1735,6 +1735,61 @@
       return this._highlightId || null;
     }
 
+    /** 同一画布的背景视图幽灵节点：上一站 A 留在画布上，连到当前视图入口。 */
+    setBackgroundGhost(info) {
+      this._bgGhost = info || null;
+      if (this._ctx) this._draw();
+      return this._bgGhost;
+    }
+
+    clearBackgroundGhost() {
+      this._bgGhost = null;
+      if (this._ctx) this._draw();
+      return true;
+    }
+
+    _drawBackgroundGhost(ctx) {
+      const ghost = this._bgGhost;
+      if (!ghost) return;
+      const target = this._positions.get(String(ghost.targetId || ""));
+      const x = Number(ghost.x);
+      const y = Number(ghost.y);
+      if (!Number.isFinite(x) || !Number.isFinite(y)) return;
+      const radius = Number(ghost.radius) || 20;
+      // 跨层连接线（不进入 _edgeList，不参与数据边统计）
+      if (target && ctx.beginPath && ctx.moveTo && ctx.lineTo && ctx.stroke) {
+        ctx.save?.();
+        ctx.beginPath();
+        ctx.moveTo(x, y);
+        ctx.lineTo(target.x, target.y);
+        ctx.strokeStyle = "rgba(88,166,255,0.55)";
+        ctx.lineWidth = 1.4;
+        if (ctx.setLineDash) ctx.setLineDash([5, 4]);
+        ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+        ctx.restore?.();
+      }
+      // 背景幽灵：半透明六边形，表示上一站入口
+      ctx.save?.();
+      if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
+      drawHexagon(ctx, x, y, radius);
+      ctx.fillStyle = "rgba(240,246,252,0.16)";
+      if (ctx.fill) ctx.fill();
+      ctx.strokeStyle = "rgba(240,246,252,0.85)";
+      ctx.lineWidth = 1.6;
+      if (ctx.setLineDash) ctx.setLineDash([4, 2]);
+      if (ctx.stroke) ctx.stroke();
+      if (ctx.setLineDash) ctx.setLineDash([]);
+      ctx.restore?.();
+      if (ctx.fillText) {
+        ctx.font = VISUAL.labelFont;
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillStyle = "#f0f6fc";
+        ctx.fillText(String(ghost.label || ""), x, y + radius + 4);
+      }
+    }
+
     _draw() {
       const ctx = this._ctx;
       if (!ctx) return;
@@ -1760,6 +1815,8 @@
         ctx.translate(cam.x, cam.y);
         ctx.scale(cam.scale, cam.scale);
       }
+
+      this._drawBackgroundGhost(ctx);
 
       const focusId = this._hoverId || this._highlightId || null;
       const radiusOf = (id) => (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
