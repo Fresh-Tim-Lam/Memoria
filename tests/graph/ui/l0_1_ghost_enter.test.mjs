@@ -175,6 +175,55 @@ try {
       && drillbar.crumbs.some((t) => String(t).startsWith("L0_1"))
       && !drillbar.hasBackClass && !drillbar.hasArrow);
 
+    // ⑤ 图谱内文字不可被拖拽选择（rev20 人的裁决）：样式 + 真机在 legend/badge 文字上拖拽无选区。
+    const noSelect = await cdp.evalJS(`(() => {
+      const host = document.querySelector('#graph-2d-multilevel-root');
+      const canvas = host && host.querySelector('canvas');
+      const badge = host && (host.querySelector('.graph-multilevel-badge') || host.querySelector('.graph-multilevel-drillbar'));
+      if (!host || !canvas) return { ok: false, reason: 'no host/canvas' };
+      const hs = getComputedStyle(host);
+      const cs = getComputedStyle(canvas);
+      const ts = badge ? getComputedStyle(badge) : null;
+      const r = badge ? badge.getBoundingClientRect() : null;
+      const sel = document.querySelector('#preview .-src-block') || document.querySelector('#preview');
+      const ps = sel ? getComputedStyle(sel) : null;
+      return {
+        ok: true,
+        hostUserSelect: hs.userSelect || hs.webkitUserSelect || null,
+        hostWebkitUserSelect: hs.webkitUserSelect || null,
+        badgeUserSelect: ts ? (ts.userSelect || ts.webkitUserSelect || null) : null,
+        canvasUserSelect: cs.userSelect || cs.webkitUserSelect || null,
+        canvasTouchAction: cs.touchAction || null,
+        canvasUserDrag: cs.webkitUserDrag || null,
+        canvasDraggableAttr: canvas.getAttribute('draggable'),
+        previewUserSelect: ps ? (ps.userSelect || ps.webkitUserSelect || null) : null,
+        badgePoint: r && r.width > 4 ? { x1: r.left + 2, x2: r.right - 2, y: r.top + r.height / 2 } : null,
+      };
+    })()`);
+    let selectionAfterTextDrag = null;
+    if (noSelect && noSelect.ok && noSelect.badgePoint) {
+      await cdp.evalJS("(() => { window.getSelection().removeAllRanges(); return true; })()");
+      const bp = noSelect.badgePoint;
+      await ix.drag({ x: bp.x1, y: bp.y }, { x: bp.x2, y: bp.y }, { steps: 10, settleMs: 10 });
+      await sleep(200);
+      selectionAfterTextDrag = await cdp.evalJS("window.getSelection() ? window.getSelection().toString() : 'no-selection-api'");
+    }
+    const noSelectOk = !!(noSelect && noSelect.ok
+      && noSelect.hostUserSelect === "none"
+      && noSelect.badgeUserSelect === "none"
+      && noSelect.canvasUserSelect === "none"
+      && noSelect.canvasTouchAction === "none"
+      && (noSelect.canvasUserDrag === "none" || noSelect.canvasUserDrag === null)
+      && noSelect.canvasDraggableAttr === "false"
+      && noSelect.previewUserSelect !== "none"
+      && selectionAfterTextDrag === "");
+    evidence.steps.push({ step: "text-not-selectable", ...noSelect, selectionAfterTextDrag, noSelectOk });
+
+    // 文字拖拽发生在画布上可能平移相机：重新取快照，保证后续屏幕坐标换算使用当前 camera。
+    await stopAnim(cdp);
+    child = await cdp.evalJS(SNAP);
+
+
     // â‘¢ è·¨å±‚è™šçº¿ï¼ˆæœ¬è½®å›žå½’ï¼‰ï¼šghost â†’ å­å›¾å…¥å£èŠ‚ç‚¹ï¼Œå¿…é¡»çœŸå®žç”»å‡ºä¸€æ¡ dashed connectorï¼›
     //    ä¸”å®ƒä¸æ˜¯æ•°æ®è¾¹ï¼ˆedge ç»Ÿè®¡/edge åˆ—è¡¨ä¸å˜ï¼‰ã€‚
     const conn = await cdp.evalJS(`(() => {
@@ -270,6 +319,7 @@ try {
       childHasNode001AndGhost: childHasKp && childHasGhost,
       ghostConnectorDrawn: connectorOk,
       drillbarOnlyCrumbsNoBack: drillbarOk,
+      textNotSelectable: noSelectOk,
       dragKpMovedGhost: ghostMoved > 0.01,
       dragGhostMovedKp: kpMoved2 > 0.01,
       singleCanvas: afterGhost.canvasCount === 1 && parent.canvasCount === 1 && child.canvasCount === 1,

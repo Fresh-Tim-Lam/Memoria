@@ -142,3 +142,32 @@ def test_course_demo_h_a_routing_and_label_avoidance() -> None:
     assert "topN: 5" in src and "maxLabels: 14" in src
     assert "groupLabelCount" in src and "_groupLabelBoxes" in src
     assert "truncateTextWidth" in src
+
+
+def test_graph_text_not_selectable_and_canvas_no_native_drag() -> None:
+    """task-391 rev20（人的裁决）：图谱内文字不允许被拖拽选择，且不得影响编辑器/预览区。
+
+    文本选区会抢走/干扰图谱拖拽 ⇒ `. -graph-multilevel-host` 及其子元素
+    （legend/badge/drillbar/canvas）统一 `user-select:none`；canvas 另补
+    `touch-action:none`/`-webkit-user-drag:none`，JS 侧 `draggable=false` 兜底。
+    """
+    css = (APP / "css/app.css").read_text(encoding="utf-8")
+
+    def block(selector: str) -> str:
+        i = css.index(selector)
+        return css[i: css.index("}", i) + 1]
+
+    host = block(".-graph-multilevel-host {")
+    assert "user-select: none" in host, "graph host 未禁止文本选择"
+    assert "-webkit-user-select: none" in host, "graph host 缺 -webkit-user-select"
+    # 子元素继承 host 的 user-select；canvas 显式再声明并由 JS draggable=false 兜底
+    canvas = block(".-graph-multilevel-host canvas {")
+    for token in ("touch-action: none", "-webkit-user-drag: none", "user-select: none", "-webkit-user-select: none"):
+        assert token in canvas, f"graph canvas 缺 {token}"
+    # 只限 graph host：编辑器/预览区仍保持可选择文本
+    assert ".-src-block {" in css and "user-select: text" in block(".-src-block {"), (
+        "预览区文本选择被误伤（rev20 必须只限 graph host）"
+    )
+    # JS 兜底：canvas 不得成为原生可拖拽图片
+    adapter = (APP / "js/graph-multilevel/renderer-adapter.js").read_text(encoding="utf-8")
+    assert "canvas.draggable = false" in adapter, "canvas 未禁用原生拖拽（draggable=false）"

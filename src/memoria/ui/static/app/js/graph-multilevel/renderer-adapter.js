@@ -564,6 +564,9 @@
         canvas.style.display = "block";
         canvas.setAttribute("role", "img");
         canvas.setAttribute("aria-label", "多层次图谱（2D）");
+        // task-391 rev20：禁止原生图片拖拽/文本选择抢走图谱拖拽手势（CSS 同步兜底）。
+        canvas.draggable = false;
+        canvas.setAttribute("draggable", "false");
         const ctx = canvas.getContext("2d");
         return { canvas, ctx };
       },

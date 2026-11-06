@@ -8162,10 +8162,19 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
     overflow: hidden;
     z-index: 1;
     background: #161b22;
+    /* task-391 rev20（人的裁决）：图谱内文字不允许被拖拽选择 —— 文本选区会抢走/干扰图谱拖拽。
+       只作用于 graph host（覆盖 legend/badge/drillbar/canvas），不影响编辑器/预览区文本选择。 */
+    user-select: none;
+    -webkit-user-select: none;
 }
 .-graph-multilevel-host canvas {
     display: block;
     background: #0a0d13;
+    /* rev20：画布不参与文本选择/原生图片拖拽/触摸滚动（拖拽手势归 RenderScene）。 */
+    touch-action: none;
+    -webkit-user-drag: none;
+    user-select: none;
+    -webkit-user-select: none;
 }
 /* A3-1：新 chrome 降级为旧提示条风格（10px、muted、半透明、无大卡片） */
 .graph-multilevel-badge {

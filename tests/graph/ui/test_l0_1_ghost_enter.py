@@ -112,6 +112,7 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
             "childHasNode001AndGhost",
             "ghostConnectorDrawn",
             "drillbarOnlyCrumbsNoBack",
+            "textNotSelectable",
             "dragKpMovedGhost",
             "dragGhostMovedKp",
             "singleCanvas",

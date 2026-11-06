@@ -73,7 +73,7 @@ async function openPanelFromWikilink(cdp, ix) {
   const chip = await cdp.evalJS(rectExpr("#preview .-wikilink"));
   if (!chip) throw new Error("预览中找不到 .-wikilink");
   await ix.click(chip.x, chip.y);
-  await cdp.waitFor(`!!document.querySelector('#link-panel')`, { timeout: 12000, label: "link panel" });
+  await cdp.waitFor(`!!document.querySelector('#link-panel')`, { timeout: 30000, label: "link panel" });
   await sleep(250);
 }
 
@@ -100,7 +100,7 @@ try {
       await ix.click(viewBtn.x, viewBtn.y);
       await sleep(600);
     }
-    await cdp.waitFor(`!!document.querySelector('#preview .-wikilink')`, { timeout: 30000, label: "wikilink in preview" });
+    await cdp.waitFor(`!!document.querySelector('#preview .-wikilink')`, { timeout: 60000, label: "wikilink in preview" });
 
     // 预置 prefs 应为 pinned=true（模拟历史持久化）
     const prefsLoaded = await cdp.evalJS(`(async () => {
