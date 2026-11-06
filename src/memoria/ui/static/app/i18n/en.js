@@ -1186,6 +1186,7 @@
         legendCluster: "Cluster",
         legendGroup: "Group / subgraph",
         legendCollapsed: "Collapsed members",
+        drillCrossEdges: "Cross-group edges {n}",
         legendEdgeSemantic: "Semantic edge",
         legendEdgeStructural: "Structural edge",
         legendEdgeReference: "Reference edge",

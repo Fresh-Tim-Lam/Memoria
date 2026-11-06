@@ -40,6 +40,7 @@ def test_demo_renderer_node_suite() -> None:
         "drag_hold_keeps_neighbors_moving_no_rebuild",
         "idle_motion_initial_focus_and_release_each_at_least_30_frames",
         "semantics_edge_dash_selection_group_and_dblclick",
+        "view_snapshot_restores_positions_camera_selection",
     ):
         assert required in names
 
@@ -60,6 +61,24 @@ def test_legend_distinguishes_kp_group_collapsed_and_edge_dash() -> None:
     assert ".ml-line--reference" in css and "dashed" in css
     assert ".ml-line--structural" in css and "solid" in css
     assert ".ml-swatch--group" in css and "clip-path" in css
+
+
+def test_drilldown_and_back_controls() -> None:
+    app = (APP / "js/app.js").read_text(encoding="utf-8")
+    for token in (
+        "enterMultilevelGroup",
+        "backMultilevelView",
+        "goToMultilevelDepth",
+        "captureViewState",
+        "restoreViewState",
+        "graph-multilevel-back",
+        "graph-multilevel-crumb",
+    ):
+        assert token in app, f"缺少下钻/返回实现：{token}"
+    assert 'aria-label="${esc(T("toolbar.back.title"))}"' in app, "返回按钮缺少可访问名称"
+    css = (APP / "css/app.css").read_text(encoding="utf-8")
+    assert ".graph-multilevel-back[hidden]" in css
+    assert ":focus-visible" in css
     assert "setFocusNode?.(focusId)" in app, "Renderer 未拿到 focus（布局不居中）"
     assert 'graph.multilevel' in app
 

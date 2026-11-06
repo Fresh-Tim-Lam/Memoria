@@ -1798,6 +1798,216 @@ async function call(fn, ...args) {
     }
   }
 
+  // ── task-389：group 下钻视图 + 返回上一位置 ─────────────────────────────
+  function multilevelGroupMembers(presentation, groupId) {
+    const groups = Array.isArray(presentation?.groups) ? presentation.groups : [];
+    const out = new Set();
+    const add = (id) => {
+      const g = groups.find((x) => String(x.group_id) === String(id));
+      if (!g) return;
+      for (const m of g.member_ids || []) out.add(String(m));
+      for (const child of groups) {
+        if (String(child.parent_id || "") === String(id)) add(child.group_id);
+      }
+    };
+    add(groupId);
+    return out;
+  }
+
+  function multilevelChildGroups(presentation, groupId) {
+    const groups = Array.isArray(presentation?.groups) ? presentation.groups : [];
+    const ids = new Set();
+    const add = (pid) => {
+      for (const g of groups) {
+        if (String(g.parent_id || "") === String(pid) && !ids.has(String(g.group_id))) {
+          ids.add(String(g.group_id));
+          add(g.group_id);
+        }
+      }
+    };
+    add(groupId);
+    return groups.filter((g) => ids.has(String(g.group_id)));
+  }
+
+  function multilevelHighestDegreeNode(vm, presentation) {
+    const degrees = presentation?.degrees || {};
+    const nodes = (vm?.nodes || []).filter((n) => (n.presence || "shown") === "shown");
+    let best = null;
+    let bestScore = -Infinity;
+    for (const n of nodes) {
+      const id = String(n.id);
+      const score = Number(degrees[id]) || 0;
+      if (score > bestScore) { best = id; bestScore = score; }
+    }
+    return best;
+  }
+
+  function multilevelEdgeEnds(edge) {
+    const parts = String(edge?.id || "").split("|");
+    if (parts.length < 3) return null;
+    return { source: parts[parts.length - 2], target: parts[parts.length - 1] };
+  }
+
+  function ensureMultilevelDrill() {
+    const g = state.graphMultilevel;
+    if (!g) return null;
+    if (!g.drill) g.drill = { stack: [] };
+    if (!g.drill.stack.length && g.vm) {
+      const renderer = g.mounted?.renderer;
+      g.drill.stack.push({
+        vm: g.vm,
+        presentation: g.presentation,
+        title: g.vm.level_label || T("graph.multilevel.beta"),
+        path: [g.vm.level_label || T("graph.multilevel.beta")],
+        snapshot: null,
+        focusNodeId: renderer?._focusNodeId || null,
+        originNodeId: null,
+      });
+    }
+    return g.drill;
+  }
+
+  function ensureMultilevelDrillbar(host) {
+    if (!host) return null;
+    let bar = host.querySelector(".graph-multilevel-drillbar");
+    if (!bar) {
+      bar = document.createElement("div");
+      bar.className = "graph-multilevel-drillbar";
+      bar.setAttribute("role", "navigation");
+      bar.setAttribute("aria-label", T("graph.multilevel.legendTitle"));
+      bar.innerHTML =
+        `<button type="button" class="graph-multilevel-back" aria-label="${esc(T("toolbar.back.title"))}">` +
+        `<span aria-hidden="true">←</span><span class="graph-multilevel-back-text">${esc(T("toolbar.back.title"))}</span></button>` +
+        `<nav class="graph-multilevel-crumbs" aria-label="${esc(T("graph.multilevel.legendTitle"))}"></nav>`;
+      host.appendChild(bar);
+    }
+    return bar;
+  }
+
+  function renderMultilevelDrillbar() {
+    const host = $("#graph-2d-multilevel-root");
+    const bar = ensureMultilevelDrillbar(host);
+    if (!bar) return;
+    const drill = state.graphMultilevel?.drill;
+    const stack = drill?.stack || [];
+    const depth = Math.max(0, stack.length - 1);
+    const back = bar.querySelector(".graph-multilevel-back");
+    if (back) {
+      back.hidden = depth <= 0;
+      back.disabled = depth <= 0;
+      back.onclick = () => backMultilevelView();
+    }
+    const crumbs = bar.querySelector(".graph-multilevel-crumbs");
+    if (crumbs) {
+      crumbs.innerHTML = stack.map((entry, i) =>
+        `<button type="button" class="graph-multilevel-crumb${i === depth ? " is-current" : ""}" data-depth="${i}"` +
+        `${i === depth ? ' aria-current="page"' : ""}>${esc(entry.title || `L${i}`)}</button>`
+      ).join('<span class="graph-multilevel-crumb-sep" aria-hidden="true">/</span>');
+      crumbs.querySelectorAll(".graph-multilevel-crumb").forEach((btn) => {
+        btn.onclick = () => goToMultilevelDepth(Number(btn.dataset.depth) || 0);
+      });
+      const cross = stack[depth]?.crossEdges || 0;
+      if (cross > 0) {
+        const span = document.createElement("span");
+        span.className = "graph-multilevel-cross";
+        span.textContent = T("graph.multilevel.drillCrossEdges", { n: cross });
+        crumbs.appendChild(span);
+      }
+    }
+    bar.hidden = stack.length === 0;
+  }
+
+  function applyMultilevelView(entry) {
+    const g = state.graphMultilevel;
+    const host = $("#graph-2d-multilevel-root");
+    const mounted = g?.mounted;
+    if (!g || !host || !mounted?.renderer) return false;
+    g.vm = entry.vm;
+    g.presentation = entry.presentation;
+    mounted.setPresentation(entry.presentation);
+    mounted.setFocusNode(entry.focusNodeId || null);
+    mounted.renderer.render(host, entry.vm);
+    if (entry.snapshot) mounted.renderer.restoreViewState(entry.snapshot);
+    renderMultilevelDrillbar();
+    return true;
+  }
+
+  function enterMultilevelGroup(groupId) {
+    const g = state.graphMultilevel;
+    const mounted = g?.mounted;
+    const host = $("#graph-2d-multilevel-root");
+    const drill = ensureMultilevelDrill();
+    if (!drill || !mounted?.renderer || !host) return false;
+    const current = drill.stack[drill.stack.length - 1];
+    if (!current) return false;
+    const groups = Array.isArray(current.presentation?.groups) ? current.presentation.groups : [];
+    const group = groups.find((x) => String(x.group_id) === String(groupId));
+    if (!group) return false;
+    const members = multilevelGroupMembers(current.presentation, groupId);
+    const nodes = (current.vm?.nodes || []).filter((n) => members.has(String(n.id)));
+    if (!nodes.length) return false;
+    const edges = [];
+    const crossEdges = [];
+    for (const e of current.vm?.edges || []) {
+      const ends = multilevelEdgeEnds(e);
+      if (!ends) continue;
+      const a = members.has(String(ends.source));
+      const b = members.has(String(ends.target));
+      if (a && b) edges.push(e);
+      else if (a || b) crossEdges.push(e);
+    }
+    const childGroups = multilevelChildGroups(current.presentation, groupId)
+      .map((cg) => ({ ...cg, member_ids: (cg.member_ids || []).filter((id) => members.has(String(id))) }))
+      .filter((cg) => cg.member_ids.length);
+    const childPresentation = { ...current.presentation, groups: childGroups };
+    const childVm = { ...current.vm, nodes, edges };
+    const title = group.section || group.file || String(group.group_id);
+    // 进入子图前记录父视图（位置/相机/选中），返回时原样恢复
+    current.snapshot = mounted.renderer.captureViewState();
+    const nextEntry = {
+      vm: childVm,
+      presentation: childPresentation,
+      title,
+      path: [...current.path, title],
+      snapshot: null,
+      groupId: String(groupId),
+      crossEdges: crossEdges.length,
+      focusNodeId: multilevelHighestDegreeNode(childVm, childPresentation),
+      originNodeId: mounted.renderer._selectedId || null,
+    };
+    drill.stack.push(nextEntry);
+    applyMultilevelView(nextEntry);
+    return true;
+  }
+
+  function backMultilevelView() {
+    const drill = state.graphMultilevel?.drill;
+    if (!drill || drill.stack.length <= 1) return false;
+    const childSelected = state.graphMultilevel?.mounted?.renderer?._selectedId || null;
+    drill.stack.pop();
+    const parent = drill.stack[drill.stack.length - 1];
+    applyMultilevelView(parent);
+    const ids = new Set((parent.vm.nodes || []).map((n) => String(n.id)));
+    let target = childSelected && ids.has(String(childSelected)) ? String(childSelected) : null;
+    if (!target) target = multilevelHighestDegreeNode(parent.vm, parent.presentation);
+    if (target) {
+      state.graphMultilevel?.mounted?.renderer?.selectNode?.(target);
+      updateMultilevelHint(target);
+    }
+    renderMultilevelDrillbar();
+    return true;
+  }
+
+  function goToMultilevelDepth(targetDepth) {
+    const drill = state.graphMultilevel?.drill;
+    if (!drill) return false;
+    const idx = Math.max(0, Math.min(drill.stack.length - 1, Number(targetDepth) || 0));
+    while (drill.stack.length - 1 > idx) drill.stack.pop();
+    const entry = drill.stack[drill.stack.length - 1];
+    applyMultilevelView(entry);
+    return true;
+  }
+
   function ensureMultilevelHost(root2d) {
     const root = root2d || $("#graph-2d-root");
     if (!root) return null;
@@ -1816,6 +2026,7 @@ async function call(fn, ...args) {
       badge.dataset.role = "status";
       host.appendChild(badge);
     }
+    ensureMultilevelDrillbar(host);
     return host;
   }
 
@@ -2078,6 +2289,10 @@ async function call(fn, ...args) {
         resolveFile: (nodeId) => multilevelPresentation().files?.[nodeId] || null,
       });
       state.graphMultilevel.mounted.renderer.on("hover", ({ node_id }) => updateMultilevelHint(node_id));
+      // task-389：group 单击 = 进入子图视图（不是原位展开）
+      state.graphMultilevel.mounted.renderer.on("groupClick", ({ group_id }) => {
+        if (group_id) enterMultilevelGroup(group_id);
+      });
       // task-380：双击节点保留旧编辑器跳转入口（单击改为 focus）
       state.graphMultilevel.mounted.renderer.on("nodeDblClick", ({ node_id }) => {
         const file = multilevelPresentation().files?.[node_id];
@@ -2105,6 +2320,8 @@ async function call(fn, ...args) {
       setMultilevelBadge(T("graph.multilevel.empty"), "warn");
     }
     syncMultilevelChrome(payload);
+    ensureMultilevelDrill();
+    renderMultilevelDrillbar();
   }
 
   /** 需要整体重布局（resetSimulation）的力导向参数 */

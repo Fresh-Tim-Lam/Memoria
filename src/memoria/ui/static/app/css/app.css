@@ -8264,5 +8264,47 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
 .ml-line--structural { border-top: 1px solid #58a6ff; background: none; }
 .ml-line--reference { border-top: 1px dashed #58a6ff; background: none; }
 .graph-multilevel-suppressed { opacity: 0.8; }
+.graph-multilevel-drillbar {
+    position: absolute;
+    left: 8px;
+    top: 46px;
+    z-index: 6;
+    display: flex;
+    align-items: center;
+    gap: 4px;
+    max-width: calc(100% - 16px);
+    padding: 2px 4px;
+    background: rgba(13, 17, 23, 0.82);
+    border: 1px solid rgba(88, 166, 255, 0.25);
+    border-radius: 4px;
+}
+.graph-multilevel-drillbar[hidden] { display: none; }
+.graph-multilevel-back {
+    font: 10px system-ui, sans-serif;
+    color: #f0f6fc;
+    background: rgba(88, 166, 255, 0.16);
+    border: 1px solid rgba(88, 166, 255, 0.45);
+    border-radius: 3px;
+    padding: 1px 4px;
+    cursor: pointer;
+}
+.graph-multilevel-back[hidden] { display: none; }
+.graph-multilevel-back:focus-visible, .graph-multilevel-crumb:focus-visible {
+    outline: 2px solid #58a6ff;
+    outline-offset: 1px;
+}
+.graph-multilevel-crumbs { display: inline-flex; align-items: center; gap: 2px; overflow: hidden; }
+.graph-multilevel-crumb {
+    font: 10px system-ui, sans-serif;
+    color: #adbac7;
+    background: transparent;
+    border: 0;
+    padding: 0 1px;
+    cursor: pointer;
+    white-space: nowrap;
+}
+.graph-multilevel-crumb.is-current { color: #f0f6fc; font-weight: 600; }
+.graph-multilevel-crumb-sep { color: #6e7681; font-size: 10px; }
+.graph-multilevel-cross { font: 10px system-ui, sans-serif; color: #d29922; margin-left: 3px; white-space: nowrap; }
 
 

@@ -1589,8 +1589,6 @@
       const circleHit = (this._groupHit || []).find((hit) => hit.kind === "circle"
         && (x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r);
       if (circleHit) {
-        this.toggleGroup(circleHit.group.group_id);
-        this.selectGroup(circleHit.group.group_id);
         const payload = { group_id: circleHit.group.group_id, kind: "presentation-group", ...extra };
         this._emit("groupClick", payload);
         return { type: "groupClick", payload };
@@ -1603,8 +1601,6 @@
       }
       const groupHit = this._pickGroup(x, y);
       if (groupHit) {
-        this.toggleGroup(groupHit.group.group_id);
-        this.selectGroup(groupHit.group.group_id);
         const payload = { group_id: groupHit.group.group_id, kind: "presentation-group", ...extra };
         this._emit("groupClick", payload);
         return { type: "groupClick", payload };
@@ -1663,6 +1659,41 @@
       this._highlightId = null;
       if (this._ctx) this._draw();
       return group ? { group_id: id, members: group.member_ids.slice() } : null;
+    }
+
+    /** task-389：视图快照（下钻/返回恢复位置、相机、选中、focus；不重新布局）。 */
+    captureViewState() {
+      return {
+        positions: [...this._positions.entries()].map(([id, p]) => [id, { x: p.x, y: p.y }]),
+        camera: { ...this._camera },
+        userAdjusted: this._userAdjusted,
+        selectedId: this._selectedId,
+        selectedGroupId: this._selectedGroupId,
+        selectedNeighbors: [...this._selectedNeighbors],
+        selection: this._selection ? JSON.parse(JSON.stringify(this._selection)) : null,
+        highlightId: this._highlightId,
+        focusNodeId: this._focusNodeId,
+        layoutFocusId: this._layoutFocusId,
+      };
+    }
+
+    restoreViewState(snapshot) {
+      if (!snapshot) return false;
+      this._stopForceAnimation();
+      this._forceHold = false;
+      this._positions.clear();
+      for (const [id, p] of snapshot.positions || []) this._positions.set(id, { ...p });
+      this._camera = { ...(snapshot.camera || { x: 0, y: 0, scale: 1 }) };
+      this._userAdjusted = !!snapshot.userAdjusted;
+      this._selectedId = snapshot.selectedId || null;
+      this._selectedGroupId = snapshot.selectedGroupId || null;
+      this._selectedNeighbors = new Set(snapshot.selectedNeighbors || []);
+      this._selection = snapshot.selection || null;
+      this._highlightId = snapshot.highlightId || null;
+      this._focusNodeId = snapshot.focusNodeId || null;
+      this._layoutFocusId = snapshot.layoutFocusId || null;
+      if (this._ctx) this._draw();
+      return true;
     }
 
     /** 搜索定位/正文链接 hover 的高亮（Presentation 瞬态；不进 VM）。 */

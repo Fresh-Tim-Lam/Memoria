@@ -532,28 +532,41 @@ async function runAsync(ctx) {
     assert.strictEqual(r._selection.kind, "node");
     assert.ok(r._selectedNeighbors.size >= 1, "未计算一跳邻居");
     assert.ok(r._ctx.strokeStyles.includes("#f0f6fc"), "选中节点描边未绘制");
-    // 双击节点仍发 nodeDblClick（app 负责 jumpToTarget）
     let dbl = null;
     r.on("nodeDblClick", (payload) => { dbl = payload; });
     r._onPointerDblClick({ clientX: p.x, clientY: p.y });
     assert.ok(dbl && dbl.node_id === selected, "双击未发 nodeDblClick");
-    // 空白点击清除选中
     const bg = r.handlePointClick(2, 2);
     assert.strictEqual(bg.type, "backgroundClick");
     assert.strictEqual(r._selectedId, null, "空白点击未清除选中");
-    // 组点击：折叠/展开 + 选中组
     const rectHit = (r._groupHit || []).find((h) => h.kind === "rect");
     assert.ok(rectHit, "缺少展开组包络");
     const gid = rectHit.group.group_id;
+    let clickedGroup = null;
+    r.on("groupClick", (payload) => { clickedGroup = payload.group_id; });
     r.handlePointClick(rectHit.x0 + 2, (rectHit.y0 + rectHit.y1) / 2);
-    assert.ok(r._collapsedGroups.has(gid), "组点击未折叠");
-    assert.strictEqual(r._selectedGroupId, gid, "组点击未选中组");
-    const circleHit = (r._groupHit || []).find((h) => h.kind === "circle" && h.group.group_id === gid);
-    assert.ok(circleHit, "折叠组未渲染六边形/组节点");
-    r.handlePointClick(circleHit.x, circleHit.y);
-    assert.ok(!r._collapsedGroups.has(gid), "再次点击未展开");
-    assert.strictEqual(r._selectedGroupId, gid);
-    assert.ok(r._selectedNeighbors.size >= 1);
+    assert.strictEqual(clickedGroup, gid, "组点击未发 groupClick");
+    assert.ok(!r._collapsedGroups.has(gid), "组点击不应原位 toggle");
+    r.dispose();
+  });
+
+  check("view_snapshot_restores_positions_camera_selection", () => {
+    const host = makeHost();
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const r = new Adapter.Renderer2D(container, { host, presentation, animateForce: false });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    const nodeId = shown.find((id) => id !== hub);
+    r.selectNode(nodeId);
+    r._camera = { x: 30, y: -20, scale: 1.4 };
+    const snap = r.captureViewState();
+    r._camera = { x: 0, y: 0, scale: 1 };
+    r.clearSelection();
+    r._positions.set(nodeId, { x: 1, y: 2 });
+    r.restoreViewState(snap);
+    assert.deepStrictEqual(r._camera, { x: 30, y: -20, scale: 1.4 });
+    assert.strictEqual(r._selectedId, nodeId);
+    assert.deepStrictEqual(r._positions.get(nodeId), snap.positions.find(([id]) => id === nodeId)[1]);
     r.dispose();
   });
 }
