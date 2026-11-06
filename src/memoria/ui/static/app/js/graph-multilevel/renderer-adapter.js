@@ -218,6 +218,7 @@
       hit: spec.hit || "select",
       fixed: spec.fixed === true,
       group: spec.group || null,
+      data: spec.data || null,
     };
   }
 
@@ -910,7 +911,7 @@
           x: p.x, y: p.y,
           radius: (this._radiusById && this._radiusById.get(node.id)) || KP_BASE_RADIUS,
           label: (this._presentation && this._presentation.names && this._presentation.names[node.id]) || node.label || node.id,
-          hit: "select", fixed: false,
+          hit: "select", fixed: false, data: node,
         }));
       }
       for (const group of this._groups) {
@@ -1898,42 +1899,153 @@
       return { x, y, radius, target, label: ghost.label };
     }
 
-    _drawBackgroundGhost(ctx) {
-      const gp = this._bgGhostPos();
-      if (!gp) return;
-      const { x: gx, y: gy, radius, target } = gp;
-      // 跨层连接线（不进入 _edgeList，不参与数据边统计）
-      if (target && ctx.beginPath && ctx.moveTo && ctx.lineTo && ctx.stroke) {
+    _drawRenderNode(ctx, node, calls) {
+      if (!node) return;
+      if (node.kind === "ghost") {
         ctx.save?.();
-        ctx.beginPath();
-        ctx.moveTo(gx, gy);
-        ctx.lineTo(target.x, target.y);
-        ctx.strokeStyle = "rgba(88,166,255,0.55)";
-        ctx.lineWidth = 1.4;
-        if (ctx.setLineDash) ctx.setLineDash([5, 4]);
-        ctx.stroke();
+        if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
+        drawHexagon(ctx, node.x, node.y, node.radius);
+        ctx.fillStyle = "rgba(240,246,252,0.16)";
+        if (ctx.fill) ctx.fill();
+        ctx.strokeStyle = "rgba(240,246,252,0.85)";
+        ctx.lineWidth = 1.6;
+        if (ctx.setLineDash) ctx.setLineDash([4, 2]);
+        if (ctx.stroke) ctx.stroke();
         if (ctx.setLineDash) ctx.setLineDash([]);
         ctx.restore?.();
+        if (ctx.fillText) {
+          ctx.font = VISUAL.labelFont;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "top";
+          ctx.fillStyle = "#f0f6fc";
+          ctx.fillText(String(node.label || ""), node.x, node.y + node.radius + 4);
+          calls.labels += 1;
+        }
+        calls.nodes += 1;
+        return;
       }
-      // 背景幽灵：半透明六边形，表示上一站入口
-      ctx.save?.();
-      if (ctx.globalAlpha !== undefined) ctx.globalAlpha = 0.75;
-      drawHexagon(ctx, gx, gy, radius);
-      ctx.fillStyle = "rgba(240,246,252,0.16)";
-      if (ctx.fill) ctx.fill();
-      ctx.strokeStyle = "rgba(240,246,252,0.85)";
-      ctx.lineWidth = 1.6;
-      if (ctx.setLineDash) ctx.setLineDash([4, 2]);
-      if (ctx.stroke) ctx.stroke();
-      if (ctx.setLineDash) ctx.setLineDash([]);
-      ctx.restore?.();
-      if (ctx.fillText) {
-        ctx.font = VISUAL.labelFont;
+      if (node.kind === "cluster" && node.group) {
+        const selectedGroup = this._selectedGroupId === node.group.group_id;
+        const radius = node.radius;
+        // 默认：实心白色发光六边形；点击进入后：样式 B（蓝色双环虚线六边形）
+        if (selectedGroup) {
+          drawHexagon(ctx, node.x, node.y, radius);
+          ctx.fillStyle = "rgba(88,166,255,0.16)";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = "#58a6ff";
+          ctx.lineWidth = 2.2;
+          if (ctx.setLineDash) ctx.setLineDash([4, 2]);
+          if (ctx.stroke) ctx.stroke();
+          if (ctx.setLineDash) ctx.setLineDash([]);
+          drawHexagon(ctx, node.x, node.y, radius + 3);
+          ctx.strokeStyle = "rgba(88,166,255,0.35)";
+          ctx.lineWidth = 1;
+          if (ctx.stroke) ctx.stroke();
+        } else {
+          ctx.save?.();
+          if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
+          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
+          drawHexagon(ctx, node.x, node.y, radius);
+          ctx.fillStyle = "#f0f6fc";
+          if (ctx.fill) ctx.fill();
+          ctx.strokeStyle = "#f0f6fc";
+          ctx.lineWidth = 1.6;
+          if (ctx.stroke) ctx.stroke();
+          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
+          if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
+          ctx.restore?.();
+          drawHexagon(ctx, node.x, node.y, radius + 3);
+          ctx.strokeStyle = "rgba(240,246,252,0.28)";
+          ctx.lineWidth = 1;
+          if (ctx.stroke) ctx.stroke();
+        }
+        drawGroupBadge(ctx, node.x + radius * 0.7, node.y - radius * 0.7, node.group.member_ids.length, selectedGroup ? "#58a6ff" : "#0d1117");
+        this._groupHit.push({ kind: "circle", x: node.x, y: node.y, r: radius + 4, group: node.group, selected: selectedGroup });
+        if (ctx.fillText) {
+          ctx.font = VISUAL.labelFont;
+          ctx.textAlign = "center";
+          ctx.textBaseline = "top";
+          const ctext = truncateTextWidth(ctx, String(node.label || ""), Math.max(40, radius * 2 + 8));
+          ctx.fillStyle = selectedGroup ? "#f0f6fc" : (VISUAL.nodeMuted || "#8b949e");
+          ctx.fillText(ctext, node.x, node.y + radius + 4);
+          calls.labels += 1;
+          const cw = ctx.measureText ? ctx.measureText(ctext).width : ctext.length * 6;
+          this._groupLabelBoxes.push({ x: node.x - cw / 2 - 2, y: node.y + radius + 3, w: cw + 4, h: 14 });
+        }
+        calls.nodes += 1;
+        return;
+      }
+      // KP / VM cluster：沿用旧 galaxy 星点与选中环
+      const data = node.data;
+      if (!data) return;
+      const degreeMax = this._degreeInfo && this._degreeInfo.distinct.length
+        ? this._degreeInfo.distinct[this._degreeInfo.distinct.length - 1]
+        : 0;
+      const hovered = this._hoverId === data.id;
+      const highlighted = this._highlightId === data.id;
+      const selected = this._selectedId === data.id;
+      const selectionActive = !!(this._selectedId || this._selectedGroupId);
+      const inSelection = selectionActive && (selected || this._selectedNeighbors.has(data.id));
+      const focusId = this._hoverId || this._highlightId || null;
+      const dim = selectionActive ? !inSelection : (!!focusId && !hovered && !highlighted);
+      const r = visualRadius(data, this._degreeInfo, hovered, highlighted);
+      const degree = data.kind === "kp" ? this._degreeInfo?.map.get(data.id) : null;
+      const ratio = degreeMax && Number.isFinite(degree) ? Math.max(0, Math.min(1, degree / degreeMax)) : null;
+      let fill;
+      if (selected) fill = VISUAL.nodeHover;
+      else if (hovered) fill = VISUAL.nodeHover;
+      else if (highlighted) fill = VISUAL.nodeTarget;
+      else if (dim) fill = VISUAL.nodeDim;
+      else if (data.range_ok === false) fill = VISUAL.nodeInvalid;
+      else if (data.kind === "kp" && ratio != null) fill = galaxyColor(ratio);
+      else fill = VISUAL.node;
+      let halo = 0;
+      if (selected) halo = 0.6;
+      else if (hovered) halo = 0.6;
+      else if (highlighted) halo = 0.4;
+      else if (dim) halo = 0.1;
+      else if (ratio != null) halo = 0.14 + ratio * 0.3;
+      else halo = 0.12;
+      if (data.kind === "kp") {
+        drawStar(ctx, node.x, node.y, r, fill, halo, VISUAL.glow);
+      } else if (ctx.beginPath) {
+        ctx.beginPath();
+        if (ctx.arc) ctx.arc(node.x, node.y, r, 0, TAU);
+        ctx.fillStyle = fill;
+        if (ctx.fill) ctx.fill();
+        if (ctx.stroke && !dim) {
+          ctx.strokeStyle = data.root_exempt ? "#e5c07b" : withAlpha(VISUAL.node, 0.35);
+          ctx.lineWidth = data.root_exempt ? 2.2 : 1.2;
+          if (ctx.setLineDash && data.root_exempt) ctx.setLineDash([3, 2]);
+          ctx.stroke();
+          if (ctx.setLineDash) ctx.setLineDash([]);
+        }
+      }
+      if ((selected || inSelection || hovered || highlighted) && ctx.beginPath && ctx.arc && ctx.stroke) {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, r + (selected ? 2.2 : 1.5), 0, TAU);
+        ctx.strokeStyle = selected ? "#f0f6fc" : (inSelection ? "rgba(88,166,255,0.62)" : VISUAL.focus);
+        ctx.lineWidth = selected ? 2 : (inSelection ? 1.2 : 2);
+        ctx.stroke();
+      }
+      if (data.id === this._focusNodeId && ctx.beginPath && ctx.arc && ctx.stroke) {
+        ctx.beginPath();
+        ctx.arc(node.x, node.y, r + (selected ? 5 : 3), 0, TAU);
+        ctx.strokeStyle = selected ? "rgba(88,166,255,0.9)" : "rgba(88,166,255,0.55)";
+        ctx.lineWidth = selected ? 1.4 : 1;
+        if (ctx.setLineDash) ctx.setLineDash([2, 3]);
+        ctx.stroke();
+        if (ctx.setLineDash) ctx.setLineDash([]);
+      }
+      if (data.kind === "cluster" && data.member_count != null && ctx.fillText) {
+        ctx.fillStyle = VISUAL.node;
         ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillStyle = "#f0f6fc";
-        ctx.fillText(String(gp.label || ""), gx, gy + radius + 4);
+        ctx.textBaseline = "middle";
+        ctx.font = VISUAL.labelFont;
+        ctx.fillText(String(data.member_count), node.x, node.y);
+        calls.text += 1;
       }
+      calls.nodes += 1;
     }
 
     _draw() {
@@ -1962,7 +2074,9 @@
         ctx.scale(cam.scale, cam.scale);
       }
 
-      this._drawBackgroundGhost(ctx);
+      for (const node of this._composeRenderNodes()) {
+        if (node.layer === "background") this._drawRenderNode(ctx, node, calls);
+      }
 
       const focusId = this._hoverId || this._highlightId || null;
       const radiusOf = (id) => (this._radiusById && this._radiusById.get(id)) || KP_BASE_RADIUS;
@@ -2079,137 +2193,9 @@
         calls.edges += 1;
       }
 
-      // 节点：旧 galaxy 星点（degree ratio → 颜色/光晕/半径加成）；只画 shown
-      const degreeMax = this._degreeInfo && this._degreeInfo.distinct.length
-        ? this._degreeInfo.distinct[this._degreeInfo.distinct.length - 1]
-        : 0;
-      for (const node of this._nodeById.values()) {
-        if (node.presence !== "shown") continue;
-        if (hidden.has(node.id)) continue;
-        const p = this._positions.get(node.id);
-        if (!p) continue;
-        const baseR = radiusOf(node.id);
-        const hovered = this._hoverId === node.id;
-        const highlighted = this._highlightId === node.id;
-        const selected = selectedId === node.id;
-        const inSelection = selectionActive && (selected || this._selectedNeighbors.has(node.id));
-        const dim = selectionActive ? !inSelection : (!!focusId && !hovered && !highlighted);
-        const r = visualRadius(node, this._degreeInfo, hovered, highlighted);
-        const degree = node.kind === "kp" ? this._degreeInfo?.map.get(node.id) : null;
-        const ratio = degreeMax && Number.isFinite(degree) ? Math.max(0, Math.min(1, degree / degreeMax)) : null;
-        let fill;
-        if (selected) fill = VISUAL.nodeHover;
-        else if (hovered) fill = VISUAL.nodeHover;
-        else if (highlighted) fill = VISUAL.nodeTarget;
-        else if (dim) fill = VISUAL.nodeDim;
-        else if (node.range_ok === false) fill = VISUAL.nodeInvalid;
-        else if (node.kind === "kp" && ratio != null) fill = galaxyColor(ratio);
-        else fill = VISUAL.node;
-        let halo = 0;
-        if (selected) halo = 0.6;
-        else if (hovered) halo = 0.6;
-        else if (highlighted) halo = 0.4;
-        else if (dim) halo = 0.1;
-        else if (ratio != null) halo = 0.14 + ratio * 0.3;
-        else halo = 0.12;
-        if (node.kind === "kp") {
-          drawStar(ctx, p.x, p.y, r, fill, halo, VISUAL.glow);
-        } else if (ctx.beginPath) {
-          ctx.beginPath();
-          if (ctx.arc) ctx.arc(p.x, p.y, r, 0, TAU);
-          ctx.fillStyle = fill;
-          if (ctx.fill) ctx.fill();
-          if (ctx.stroke && !dim) {
-            ctx.strokeStyle = node.root_exempt ? "#e5c07b" : withAlpha(VISUAL.node, 0.35);
-            ctx.lineWidth = node.root_exempt ? 2.2 : 1.2;
-            if (ctx.setLineDash && node.root_exempt) ctx.setLineDash([3, 2]);
-            ctx.stroke();
-            if (ctx.setLineDash) ctx.setLineDash([]);
-          }
-        }
-        if ((selected || inSelection || hovered || highlighted) && ctx.beginPath && ctx.arc && ctx.stroke) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, r + (selected ? 2.2 : 1.5), 0, TAU);
-          ctx.strokeStyle = selected ? "#f0f6fc" : (inSelection ? "rgba(88,166,255,0.62)" : VISUAL.focus);
-          ctx.lineWidth = selected ? 2 : (inSelection ? 1.2 : 2);
-          ctx.stroke();
-        }
-        // focus 是布局中心（蓝环）；选中是白色/金色高亮，二者可区分
-        if (node.id === this._focusNodeId && ctx.beginPath && ctx.arc && ctx.stroke) {
-          ctx.beginPath();
-          ctx.arc(p.x, p.y, r + (selected ? 5 : 3), 0, TAU);
-          ctx.strokeStyle = selected ? "rgba(88,166,255,0.9)" : "rgba(88,166,255,0.55)";
-          ctx.lineWidth = selected ? 1.4 : 1;
-          if (ctx.setLineDash) ctx.setLineDash([2, 3]);
-          ctx.stroke();
-          if (ctx.setLineDash) ctx.setLineDash([]);
-        }
-        if (node.kind === "cluster" && node.member_count != null && ctx.fillText) {
-          ctx.fillStyle = VISUAL.node;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "middle";
-          ctx.font = VISUAL.labelFont;
-          ctx.fillText(String(node.member_count), p.x, p.y);
-          calls.text += 1;
-        }
-        calls.nodes += 1;
-      }
-
-      // 折叠组：画组节点（成员数），点击展开
-      for (const group of this._groups) {
-        if (this._groupHasCollapsedAncestor(group.group_id)) continue;
-        if (!this._collapsedGroups.has(group.group_id)) continue;
-        const g = groupGeom.get(group.group_id);
-        if (!g) continue;
-        const n = group.member_ids.length;
-        const radius = Math.min(26, Math.max(12, 10 + 2 * Math.log2(n + 1)));
-        const selectedGroup = selectedGroupId === group.group_id;
-        // 默认：实心白色发光六边形；点击进入后：样式 B（蓝色双环虚线六边形）
-        if (selectedGroup) {
-          drawHexagon(ctx, g.cx, g.cy, radius);
-          ctx.fillStyle = "rgba(88,166,255,0.16)";
-          if (ctx.fill) ctx.fill();
-          ctx.strokeStyle = "#58a6ff";
-          ctx.lineWidth = 2.2;
-          if (ctx.setLineDash) ctx.setLineDash([4, 2]);
-          if (ctx.stroke) ctx.stroke();
-          if (ctx.setLineDash) ctx.setLineDash([]);
-          drawHexagon(ctx, g.cx, g.cy, radius + 3);
-          ctx.strokeStyle = "rgba(88,166,255,0.35)";
-          ctx.lineWidth = 1;
-          if (ctx.stroke) ctx.stroke();
-        } else {
-          ctx.save?.();
-          if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
-          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
-          drawHexagon(ctx, g.cx, g.cy, radius);
-          ctx.fillStyle = "#f0f6fc";
-          if (ctx.fill) ctx.fill();
-          ctx.strokeStyle = "#f0f6fc";
-          ctx.lineWidth = 1.6;
-          if (ctx.stroke) ctx.stroke();
-          if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
-          if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
-          ctx.restore?.();
-          drawHexagon(ctx, g.cx, g.cy, radius + 3);
-          ctx.strokeStyle = "rgba(240,246,252,0.28)";
-          ctx.lineWidth = 1;
-          if (ctx.stroke) ctx.stroke();
-        }
-        this._groupHit.push({ kind: "circle", x: g.cx, y: g.cy, r: radius + 4, group, selected: selectedGroup });
-        drawGroupBadge(ctx, g.cx + radius * 0.7, g.cy - radius * 0.7, n, selectedGroup ? "#58a6ff" : "#0d1117");
-        calls.nodes += 1;
-        if (ctx.fillText) {
-          ctx.font = VISUAL.labelFont;
-          ctx.textAlign = "center";
-          ctx.textBaseline = "top";
-          const ctext = truncateTextWidth(ctx, groupLabel(group), Math.max(40, radius * 2 + 8));
-          ctx.fillStyle = selectedGroup ? "#f0f6fc" : (VISUAL.nodeMuted || "#8b949e");
-          ctx.fillText(ctext, g.cx, g.cy + radius + 4);
-          calls.labels += 1;
-          const cw = ctx.measureText ? ctx.measureText(ctext).width : ctext.length * 6;
-          this._groupLabelBoxes.push({ x: g.cx - cw / 2 - 2, y: g.cy + radius + 3, w: cw + 4, h: 14 });
-        }
+      // 统一呈现节点：KP、折叠簇、背景幽灵共用同一绘制循环
+      for (const node of this._composeRenderNodes()) {
+        if (node.layer === "foreground") this._drawRenderNode(ctx, node, calls);
       }
 
       // 标签：旧 KGviz LOD/避让 + 10px/halo（A3-1）
