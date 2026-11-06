@@ -1854,11 +1854,16 @@ async function call(fn, ...args) {
     if (!g.drill) g.drill = { stack: [] };
     if (!g.drill.stack.length && g.vm) {
       const renderer = g.mounted?.renderer;
+      const chapter = g.hChapterFocus && g.vm.dimension_id === "H" ? multilevelNodeName(g.hChapterFocus) : null;
+      const rootTitle = g.hOverview
+        ? T("graph.multilevel.drillRootCourse")
+        : (chapter || g.vm.level_label || T("graph.multilevel.beta"));
       g.drill.stack.push({
         vm: g.vm,
         presentation: g.presentation,
-        title: g.vm.level_label || T("graph.multilevel.beta"),
-        path: [g.vm.level_label || T("graph.multilevel.beta")],
+        title: rootTitle,
+        crumb: rootTitle,
+        path: [rootTitle],
         snapshot: null,
         focusNodeId: renderer?._focusNodeId || null,
         originNodeId: null,
@@ -1901,7 +1906,7 @@ async function call(fn, ...args) {
     if (crumbs) {
       crumbs.innerHTML = stack.map((entry, i) =>
         `<button type="button" class="graph-multilevel-crumb${i === depth ? " is-current" : ""}" data-depth="${i}"` +
-        `${i === depth ? ' aria-current="page"' : ""}>${esc(entry.title || `L${i}`)}</button>`
+        `${i === depth ? ' aria-current="page"' : ""}>${esc(entry.crumb || entry.title || `L${i}`)}</button>`
       ).join('<span class="graph-multilevel-crumb-sep" aria-hidden="true">/</span>');
       crumbs.querySelectorAll(".graph-multilevel-crumb").forEach((btn) => {
         btn.onclick = () => goToMultilevelDepth(Number(btn.dataset.depth) || 0);
@@ -1968,6 +1973,7 @@ async function call(fn, ...args) {
       vm: childVm,
       presentation: childPresentation,
       title,
+      crumb: multilevelShortCrumb(title),
       path: [...current.path, title],
       snapshot: null,
       groupId: String(groupId),
@@ -2188,6 +2194,152 @@ async function call(fn, ...args) {
     return state.graphMultilevel?.presentation || { degrees: {}, files: {}, names: {} };
   }
 
+  function multilevelHierarchyPresentation(vm, basePresentation) {
+    const nodes = (vm?.nodes || []).filter((n) => (n.presence || "shown") === "shown");
+    const ids = new Set(nodes.map((n) => String(n.id)));
+    const children = new Map();
+    for (const e of vm?.edges || []) {
+      if (String(e.type) !== "contain") continue;
+      const parts = String(e.id || "").split("|");
+      const src = parts.length >= 3 ? parts[parts.length - 2] : null;
+      const dst = parts.length >= 3 ? parts[parts.length - 1] : null;
+      if (!src || !dst || !ids.has(src) || !ids.has(dst)) continue;
+      if (!children.has(src)) children.set(src, []);
+      children.get(src).push(dst);
+    }
+    const memo = new Map();
+    const descendants = (id) => {
+      if (memo.has(id)) return memo.get(id);
+      const out = new Set([id]);
+      for (const c of children.get(id) || []) {
+        for (const x of descendants(c)) out.add(x);
+      }
+      memo.set(id, out);
+      return out;
+    };
+    const names = basePresentation?.names || {};
+    const groups = [];
+    const chapterGroup = new Map();
+    const sectionGroup = new Map();
+    for (const n of nodes) {
+      const id = String(n.id);
+      if (/-c\d+-ch$/.test(id)) {
+        const gid = `hier:chapter:${id}`;
+        chapterGroup.set(id, gid);
+        const chapterPrefix = id.replace(/-ch$/, "");
+        const allChapterNodes = nodes
+          .map((n) => String(n.id))
+          .filter((nid) => nid === id || nid.startsWith(`${chapterPrefix}-`));
+        groups.push({
+          group_id: gid, parent_id: "", file: "", section: names[id] || n.label || id,
+          member_ids: allChapterNodes, presentation_only: true,
+        });
+      }
+    }
+    for (const n of nodes) {
+      const id = String(n.id);
+      const m = id.match(/^(.*)-c(\d+)-s(\d+)$/);
+      if (!m || /-ss\d+$/.test(id)) continue;
+      const ch = `${m[1]}-c${m[2]}-ch`;
+      const parent = chapterGroup.get(ch);
+      if (!parent) continue;
+      const gid = `hier:section:${id}`;
+      sectionGroup.set(id, gid);
+      groups.push({
+        group_id: gid, parent_id: parent, file: "", section: names[id] || n.label || id,
+        member_ids: [...descendants(id)], presentation_only: true,
+      });
+    }
+    for (const n of nodes) {
+      const id = String(n.id);
+      if (!/-c\d+-ss\d+$/.test(id)) continue;
+      const parts = id.split("-");
+      const sec = parts.slice(0, -1).join("-").replace(/-ss\d+$/, "");
+      // section ids are -sNN; subsection id prefix contains chapter but not section; use contain parent
+      let parent = null;
+      for (const [sid, gid] of sectionGroup) {
+        if ((children.get(sid) || []).includes(id)) { parent = gid; break; }
+      }
+      if (!parent) continue;
+      groups.push({
+        group_id: `hier:subsection:${id}`, parent_id: parent, file: "", section: names[id] || n.label || id,
+        member_ids: [...descendants(id)], presentation_only: true,
+      });
+    }
+    return groups.length ? { ...basePresentation, groups } : basePresentation;
+  }
+
+  function multilevelCollapseTopGroups() {
+    const renderer = state.graphMultilevel?.mounted?.renderer;
+    if (!renderer) return;
+    for (const g of renderer.getGroups?.() || []) {
+      if (!g.parent_id) renderer.toggleGroup(g.group_id);
+    }
+  }
+
+  /** task-390：H 首屏把顶层 chapter 组排成清晰网格（折叠组中心互不重叠）。 */
+  function multilevelLayoutOverviewClusters() {
+    const renderer = state.graphMultilevel?.mounted?.renderer;
+    if (!renderer?._positions) return;
+    const groups = (renderer.getGroups?.() || []).filter((g) => !g.parent_id);
+    if (groups.length < 2) return;
+    renderer._stopForceAnimation?.();
+    renderer._forceHold = false;
+    const width = renderer._measureWidth?.() || 279;
+    const height = renderer._measureHeight?.() || 580;
+    const cols = width >= 240 ? 2 : 1;
+    const rows = Math.ceil(groups.length / cols);
+    const cw = width / cols;
+    const ch = Math.min(100, (height - 100) / rows);
+    const positions = new Map();
+    groups.forEach((g, gi) => {
+      const col = gi % cols;
+      const row = Math.floor(gi / cols);
+      const cx = cw * (col + 0.5);
+      const cy = 90 + ch * (row + 0.5);
+      const members = g.member_ids || [];
+      const rr = Math.max(14, Math.min(34, 8 + members.length * 0.7));
+      members.forEach((id, i) => {
+        const angle = (Math.PI * 2 * i) / Math.max(1, members.length) - Math.PI / 2;
+        positions.set(String(id), { x: cx + Math.cos(angle) * rr, y: cy + Math.sin(angle) * rr });
+      });
+    });
+    for (const id of renderer._positions.keys()) {
+      if (!positions.has(String(id))) {
+        positions.set(String(id), { x: width / 2, y: height - 50 });
+      }
+    }
+    renderer._positions.clear();
+    for (const [id, p] of positions) renderer._positions.set(id, p);
+    renderer._camera = { x: 0, y: 0, scale: 1 };
+    renderer._userAdjusted = false;
+    renderer._draw?.();
+  }
+
+  function multilevelFirstChapterId(vm) {
+    const ids = (vm?.nodes || [])
+      .map((n) => String(n.id))
+      .filter((id) => /-c\d+-ch$/.test(id))
+      .sort((a, b) => a.localeCompare(b));
+    return ids[0] || null;
+  }
+
+  function multilevelNodeName(nodeId) {
+    const name = multilevelPresentation().names?.[nodeId];
+    if (name) return name;
+    const node = state.graphMultilevel?.vm?.nodes?.find((n) => String(n.id) === String(nodeId));
+    return node?.label || nodeId;
+  }
+
+  function multilevelShortCrumb(raw) {
+    const text = String(raw || "");
+    const chapter = text.match(/第\s*\d+\s*章/);
+    if (chapter) return chapter[0].replace(/\s+/g, "");
+    const section = text.match(/^\d+(?:\.\d+)*/);
+    if (section) return section[0];
+    return text.slice(0, 12);
+  }
+
   function multilevelNodeForHint(nodeId) {
     const vm = state.graphMultilevel?.vm;
     const node = vm?.nodes?.find((n) => n.id === nodeId);
@@ -2240,6 +2392,28 @@ async function call(fn, ...args) {
     nav.on("transition", (transition) => {
       if (!transition || !MULTILEVEL_REFRAME_EVENTS.has(transition.event)) return;
       const spec = nav.getFrameSpec();
+      // task-390：H 维度默认从 chapter 入口进入（A 仍 hub）。首次 SELECT_DIMENSION→H 时
+      // 从当前 A 视图的 chapter id 派生，显式以 chapter 为 focus 请求，避免首屏散乱关联网。
+      if (transition.event === "SELECT_DIMENSION" && spec.dimension_id === "H") {
+        const chapter = multilevelFirstChapterId(state.graphMultilevel?.vm);
+        state.graphMultilevel.drill = null;
+        if (chapter) {
+          state.graphMultilevel.hChapterFocus = chapter;
+          state.graphMultilevel.hOverview = true;
+          loadMultilevelGraphData(
+            { ...spec, focus: chapter, hop: 2, budget: { max_nodes: 200, max_edges: 400 } },
+            { reason: "nav:H-chapter" },
+          ).catch(() => {});
+          return;
+        }
+      }
+      if (spec.dimension_id !== "H") {
+        state.graphMultilevel.hChapterFocus = null;
+        state.graphMultilevel.hOverview = false;
+      } else if (transition.event === "SELECT_DIMENSION") {
+        state.graphMultilevel.hChapterFocus = null;
+      }
+      state.graphMultilevel.drill = null;
       loadMultilevelGraphData(spec, { reason: `nav:${transition.event}` }).catch(() => {});
     });
   }
@@ -2252,6 +2426,11 @@ async function call(fn, ...args) {
     state.graphMultilevel.payload = payload;
     state.graphMultilevel.vm = payload.vm;
     state.graphMultilevel.presentation = payload.presentation || { degrees: {}, files: {}, names: {} };
+    if (payload.vm?.dimension_id === "H" && state.graphMultilevel.hOverview) {
+      const hierarchy = multilevelHierarchyPresentation(payload.vm, state.graphMultilevel.presentation);
+      payload.presentation = hierarchy;
+      state.graphMultilevel.presentation = hierarchy;
+    }
     state.graphMultilevel.editionSha = payload.edition_sha || state.graphMultilevel.editionSha || null;
 
     if (!state.graphMultilevel.mounted) {
@@ -2304,11 +2483,17 @@ async function call(fn, ...args) {
     try {
       // S3-ADDENDUM-3：degree 原值只经 Presentation 元数据喂给 Renderer（不进 VM）
       state.graphMultilevel.mounted.setPresentation?.(state.graphMultilevel.presentation);
-      // task-380：focus 居中布局；focus 来自 Nav frame（默认 hub / 点击后重取景）
-      const focusId = state.graphMultilevel.nav?.getFrame?.()?.focus || null;
+      // task-380：focus 居中布局；task-390：H 维度默认章节 focus
+      const navFocusId = state.graphMultilevel.nav?.getFrame?.()?.focus || null;
+      const hChapterFocus = state.graphMultilevel.hChapterFocus;
+      const focusId = (payload.vm?.dimension_id === "H" && hChapterFocus) ? hChapterFocus : navFocusId;
       if (focusId) state.graphMultilevel.mounted.setFocusNode?.(focusId);
       if (opts.replace === true) state.graphMultilevel.mounted.renderer.render(host, vm);
       else state.graphMultilevel.mounted.update(vm, {});
+      if (state.graphMultilevel.hOverview && payload.vm?.dimension_id === "H") {
+        multilevelCollapseTopGroups();
+        multilevelLayoutOverviewClusters();
+      }
     } catch (err) {
       multilevelFallbackLegacy(err?.code || err?.message || "multilevel_render_failed");
       return;

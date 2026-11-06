@@ -193,7 +193,17 @@
   }
 
   function groupLabel(group) {
-    return `${group.section || group.file || group.group_id} (${group.member_ids.length})`;
+    const raw = String(group.section || group.file || group.group_id || "");
+    const chapter = raw.match(/第\s*\d+\s*章/);
+    const base = chapter ? chapter[0] : raw;
+    return `${base} (${group.member_ids.length})`;
+  }
+
+  function truncateTextWidth(ctx, text, maxWidth) {
+    if (!ctx.measureText || ctx.measureText(text).width <= maxWidth) return text;
+    let out = text;
+    while (out.length > 1 && ctx.measureText(`${out}…`).width > maxWidth) out = out.slice(0, -1);
+    return `${out}…`;
   }
 
   function galaxyColor(ratio) {
@@ -1561,14 +1571,21 @@
 
     /** 供 host/tests 直接驱动点击（屏幕坐标）；事件 payload 白名单无导航字段。 */
     _pickGroup(x, y) {
+      const inside = [];
       for (const hit of this._groupHit || []) {
         if (hit.kind === "circle") {
-          if ((x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r) return hit;
+          if ((x - hit.x) ** 2 + (y - hit.y) ** 2 <= hit.r * hit.r) inside.push(hit);
         } else if (hit.kind === "rect") {
-          if (x >= hit.x0 && x <= hit.x1 && y >= hit.y0 && y <= hit.y1) return hit;
+          if (x >= hit.x0 && x <= hit.x1 && y >= hit.y0 && y <= hit.y1) inside.push(hit);
         }
       }
-      return null;
+      if (!inside.length) return null;
+      // 嵌套 group 时选最内层（面积最小/半径最小），否则父包络会吞掉子组点击
+      inside.sort((a, b) => {
+        const area = (h) => h.kind === "circle" ? Math.PI * h.r * h.r : (h.x1 - h.x0) * (h.y1 - h.y0);
+        return area(a) - area(b);
+      });
+      return inside[0];
     }
 
     handlePointClick(x, y, extra = {}) {
@@ -1674,6 +1691,7 @@
         highlightId: this._highlightId,
         focusNodeId: this._focusNodeId,
         layoutFocusId: this._layoutFocusId,
+        collapsedGroups: [...this._collapsedGroups],
       };
     }
 
@@ -1692,6 +1710,7 @@
       this._highlightId = snapshot.highlightId || null;
       this._focusNodeId = snapshot.focusNodeId || null;
       this._layoutFocusId = snapshot.layoutFocusId || null;
+      this._collapsedGroups = new Set(snapshot.collapsedGroups || []);
       if (this._ctx) this._draw();
       return true;
     }
@@ -1738,6 +1757,7 @@
       // Presentation-only 文件/section 分组：先画展开组包络；折叠组成员后续跳过
       const hidden = this._hiddenMemberIds();
       this._groupHit = [];
+      this._groupLabelBoxes = [];
       const groupGeom = new Map();
       const selectedGroupId = this._selectedGroupId;
       for (const group of this._groups) {
@@ -1802,12 +1822,20 @@
           ctx.font = VISUAL.labelFont;
           ctx.textAlign = "left";
           ctx.textBaseline = "bottom";
-          ctx.lineWidth = VISUAL.labelHaloWidth;
-          ctx.strokeStyle = VISUAL.halo;
-          if (ctx.strokeText) ctx.strokeText(groupLabel(group), x0 + 30, y0 - 3);
-          ctx.fillStyle = selectedGroup ? "#d29922" : VISUAL.nodeMuted || "#8b949e";
-          ctx.fillText(groupLabel(group), x0 + 30, y0 - 3);
-          calls.labels += 1;
+          const gtext = truncateTextWidth(ctx, groupLabel(group), Math.max(36, (x1 - x0) - 36));
+          const gw = ctx.measureText ? ctx.measureText(gtext).width : gtext.length * 6;
+          const box = { x: x0 + 28, y: y0 - 18, w: gw + 4, h: 16 };
+          const overlapsPrev = this._groupLabelBoxes.some((b) =>
+            !(box.x + box.w <= b.x || b.x + b.w <= box.x || box.y + box.h <= b.y || b.y + b.h <= box.y));
+          if (!overlapsPrev) {
+            ctx.lineWidth = VISUAL.labelHaloWidth;
+            ctx.strokeStyle = VISUAL.halo;
+            if (ctx.strokeText) ctx.strokeText(gtext, x0 + 30, y0 - 3);
+            ctx.fillStyle = selectedGroup ? "#d29922" : VISUAL.nodeMuted || "#8b949e";
+            ctx.fillText(gtext, x0 + 30, y0 - 3);
+            calls.labels += 1;
+            this._groupLabelBoxes.push(box);
+          }
         }
       }
 
@@ -1944,9 +1972,12 @@
           ctx.font = VISUAL.labelFont;
           ctx.textAlign = "center";
           ctx.textBaseline = "top";
+          const ctext = truncateTextWidth(ctx, groupLabel(group), Math.max(40, radius * 2 + 8));
           ctx.fillStyle = selectedGroup ? "#d29922" : (VISUAL.nodeMuted || "#8b949e");
-          ctx.fillText(groupLabel(group), g.cx, g.cy + radius + 4);
+          ctx.fillText(ctext, g.cx, g.cy + radius + 4);
           calls.labels += 1;
+          const cw = ctx.measureText ? ctx.measureText(ctext).width : ctext.length * 6;
+          this._groupLabelBoxes.push({ x: g.cx - cw / 2 - 2, y: g.cy + radius + 3, w: cw + 4, h: 14 });
         }
       }
 
@@ -1972,11 +2003,29 @@
       }
       let visible = labelItems;
       const Labels = global.MemoriaGraphLabels;
+      let labelLayout = null;
       if (Labels && typeof Labels.layoutNodeLabels === "function") {
-        const layout = Labels.layoutNodeLabels(labelItems, { topN: 10, lod: true });
+        const layout = Labels.layoutNodeLabels(labelItems, {
+          topN: 5,
+          maxLabels: 14,
+          lod: true,
+          measureText: ctx.measureText ? (text) => ctx.measureText(text).width : undefined,
+        });
+        labelLayout = layout;
+        // task-390：组标题占用屏幕空间，KP 标签不得覆盖组标签
+        const groupBoxes = this._groupLabelBoxes || [];
+        const overlapsGroup = (box) => groupBoxes.some((gb) => Labels.boxesOverlap
+          ? Labels.boxesOverlap(box, gb, 1)
+          : !(box.x + box.w <= gb.x || gb.x + gb.w <= box.x || box.y + box.h <= gb.y || gb.y + gb.h <= box.y));
+        visible = labelItems.filter((it) => {
+          if (!layout.visibleIds.has(it.id)) return false;
+          const box = layout.boxes?.get?.(it.id);
+          if (box && overlapsGroup(box)) return false;
+          return true;
+        });
         this._labelLayout = layout;
-        visible = labelItems.filter((it) => layout.visibleIds.has(it.id));
       }
+      const textCtx = ctx;
       if (ctx.font && ctx.fillText) {
         ctx.font = VISUAL.labelFont;
         ctx.textAlign = "center";
@@ -1985,14 +2034,17 @@
           const node = this._nodeById.get(it.id);
           const hovered = it.id === this._hoverId;
           const highlighted = it.id === this._highlightId;
+          const box = labelLayout?.boxes?.get(it.id);
+          const tx = box ? box.cx : it.x;
+          const ty = box ? box.y + 1 : it.y;
           ctx.lineWidth = VISUAL.labelHaloWidth;
           ctx.strokeStyle = VISUAL.halo;
-          if (ctx.strokeText) ctx.strokeText(it.text, it.x, it.y);
+          if (ctx.strokeText) ctx.strokeText(it.text, tx, ty);
           if (hovered) ctx.fillStyle = VISUAL.nodeHover;
           else if (highlighted) ctx.fillStyle = VISUAL.nodeTarget;
           else if (node && node.range_ok === false) ctx.fillStyle = VISUAL.labelInvalid;
           else ctx.fillStyle = VISUAL.label;
-          ctx.fillText(it.text, it.x, it.y);
+          ctx.fillText(it.text, tx, ty);
           calls.labels += 1;
         }
       }
@@ -2014,6 +2066,18 @@
         collapsedGroups: [...this._collapsedGroups],
         focusNode: this._focusNodeId,
         hiddenMembers: hidden.size,
+        groupLabelCount: (this._groupLabelBoxes || []).length,
+        labelLayout: this._labelLayout ? {
+          visibleCount: this._labelLayout.visibleCount,
+          allCount: this._labelLayout.allCount,
+          hiddenCount: this._labelLayout.hiddenIds.length,
+          overlapCount: this._labelLayout.overlapCount,
+          overlapRate: this._labelLayout.allCount
+            ? Math.round((this._labelLayout.overlapCount / Math.max(1, this._labelLayout.visibleCount)) * 1000) / 1000
+            : 0,
+          topIds: this._labelLayout.topIds,
+          groupLabelCount: (this._groupLabelBoxes || []).length,
+        } : null,
         camera: { ...this._camera },
         userAdjusted: this._userAdjusted,
         pinned: [...this._pinned],

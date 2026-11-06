@@ -116,3 +116,19 @@ def test_renderer_presentation_groups_are_not_vm_fields() -> None:
     assert "truncateLabel" in src
     # 不把 group 写成 VM cluster kind
     assert "kind: \"cluster\"" not in src[src.find("function normalizeGroups"): src.find("function normalizeGroups") + 1200]
+
+
+def test_course_demo_h_a_routing_and_label_avoidance() -> None:
+    app = (APP / "js/app.js").read_text(encoding="utf-8")
+    for token in (
+        "hOverview",
+        "hChapterFocus",
+        "multilevelHierarchyPresentation",
+        "multilevelLayoutOverviewClusters",
+        "drillRootCourse",
+    ):
+        assert token in app, f"缺少课程 H/A 分流/层级实现：{token}"
+    src = (APP / "js/graph-multilevel/renderer-adapter.js").read_text(encoding="utf-8")
+    assert "topN: 5" in src and "maxLabels: 14" in src
+    assert "groupLabelCount" in src and "_groupLabelBoxes" in src
+    assert "truncateTextWidth" in src
