@@ -38,6 +38,7 @@ def test_demo_renderer_node_suite() -> None:
         "animation_is_deterministic_two_runs",
         "pointermove_follows_without_4px_dead_zone",
         "drag_hold_keeps_neighbors_moving_no_rebuild",
+        "idle_motion_initial_focus_and_release_each_at_least_30_frames",
     ):
         assert required in names
 

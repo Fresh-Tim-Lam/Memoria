@@ -362,6 +362,9 @@
     alphaDecay: 0.955,
     ticks: 140,
     dragTicks: 70,
+    minFrames: 45,
+    quietFrames: 10,
+    doneAlpha: 0.2,
     maxVelocity: 30,
     forceScale: 0.14,
     maxStep: 8, // 仅用于诊断历史，正常帧不再使用固定位移 clamp
@@ -957,10 +960,13 @@
         if (this._forceFrameLog.length > 600) this._forceFrameLog.shift();
         quiet = maxDisp < 0.05 ? quiet + 1 : 0;
         if (this._ctx) this._draw();
+        // task-386：非拖拽也必须有可见连续动画；停止必须同时满足
+        // 最小帧数 + quiet 连续 + alpha 低（拖拽期 _forceHold 完全跳过）。
         const done = !this._forceHold && (
           this._forceFrames >= FORCE.maxFrames
-          || state.alpha <= FORCE.alphaMin
-          || quiet >= 10
+          || (this._forceFrames >= FORCE.minFrames
+            && quiet >= FORCE.quietFrames
+            && state.alpha <= FORCE.doneAlpha)
         );
         if (done) {
           this._simulating = false;
@@ -1429,8 +1435,8 @@
         setTimeout(() => { this._suppressClick = false; }, 300);
         if (drag.mode === "node") {
           if (this._animateForce) {
-            // task-382/385：松手继续 rAF；拖拽模拟常驻时直接接力，不重建 state
-            if (!this._simulating) this._startForceAnimation({ pinFocusCenter: false, alpha: 0.65 });
+            // task-386：松手 alpha≥0.45 重加热，保证至少 30–60 帧继续可见收敛
+            this._startForceAnimation({ pinFocusCenter: false, alpha: 0.5 });
           } else {
             this._settleForceAfterDrag();
           }

@@ -462,6 +462,54 @@ async function runAsync(ctx) {
     assert.strictEqual(r._simulating, false, "松手后模拟未收敛停止");
     r.dispose();
   });
+
+  check("idle_motion_initial_focus_and_release_each_at_least_30_frames", () => {
+    const container = { clientWidth: 325, clientHeight: 520, getBoundingClientRect: () => ({ left: 0, top: 0, width: 325, height: 520 }) };
+    const raf = makeRafQueue();
+    const r = new Adapter.Renderer2D(container, {
+      host: makeHost(), presentation, animateForce: true,
+      requestAnimationFrame: raf.raf, cancelAnimationFrame: raf.cancel,
+    });
+    r.setFocusNode(hub);
+    r.render(container, vm);
+    const neighborId = shown.find((x) => x !== hub);
+    const initialBefore = { ...r._positions.get(neighborId) };
+    for (let i = 0; i < 120 && r._forceFrames < 30; i++) raf.drain(1);
+    assert.strictEqual(r._simulating, true, "初始动画 30 帧内已停");
+    assert.ok(r._forceFrames >= 30, "初始动画不足 30 帧");
+    const initialAfter = r._positions.get(neighborId);
+    assert.ok(Math.hypot(initialAfter.x - initialBefore.x, initialAfter.y - initialBefore.y) > 0.01, "初始动画邻居未移动");
+    assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "初始动画单帧 >4px");
+    raf.drain();
+
+    const other = shown.find((x) => x !== hub && x !== neighborId);
+    r.setFocusNode(other);
+    r.update(vm, {});
+    const focusBefore = { ...r._positions.get(neighborId) };
+    for (let i = 0; i < 120 && r._forceFrames < 30; i++) raf.drain(1);
+    assert.strictEqual(r._simulating, true, "focus 动画 30 帧内已停");
+    assert.ok(r._forceFrames >= 30, "focus 动画不足 30 帧");
+    const focusAfter = r._positions.get(neighborId);
+    assert.ok(Math.hypot(focusAfter.x - focusBefore.x, focusAfter.y - focusBefore.y) > 0.01, "focus 动画邻居未移动");
+    assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "focus 动画单帧 >4px");
+    raf.drain();
+
+    const dragId = shown.find((x) => x !== other);
+    const start = { ...r._positions.get(dragId) };
+    const base = { clientX: start.x, clientY: start.y, button: 0, pointerId: 21, preventDefault() {} };
+    r._onPointerDown(base);
+    r._onPointerMove({ ...base, clientX: start.x + 8, clientY: start.y + 5 });
+    r._onPointerUp({ ...base, clientX: start.x + 8, clientY: start.y + 5 });
+    const releaseBefore = { ...r._positions.get(neighborId) };
+    assert.strictEqual(r._simulating, true, "松手后未启动连续动画");
+    for (let i = 0; i < 120 && r._forceFrames < 30; i++) raf.drain(1);
+    assert.strictEqual(r._simulating, true, "松手后动画 30 帧内已停");
+    assert.ok(r._forceFrames >= 30, "松手后动画不足 30 帧");
+    const releaseAfter = r._positions.get(neighborId);
+    assert.ok(Math.hypot(releaseAfter.x - releaseBefore.x, releaseAfter.y - releaseBefore.y) > 0.01, "松手后邻居未继续移动");
+    assert.ok(r.getForceFrameLog().every((f) => f.maxDisp <= 4), "松手后动画单帧 >4px");
+    r.dispose();
+  });
 }
 
 (async () => {
