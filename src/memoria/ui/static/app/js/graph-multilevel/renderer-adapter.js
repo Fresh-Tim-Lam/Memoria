@@ -178,6 +178,8 @@
   // ── Presentation-only 文件/section 分组（task-380；不是 S2 cluster）────────
   function normalizeGroups(presentation) {
     const raw = Array.isArray(presentation && presentation.groups) ? presentation.groups : [];
+    // 单组且仅 1 个成员 ⇒ 它就是这唯一节点，不应再画“组节点 + 成员”两个东西。
+    const singleMemberOnly = raw.length === 1 && (raw[0].member_ids || []).length === 1;
     return raw
       .map((g) => ({
         group_id: String(g.group_id || ""),
@@ -188,7 +190,7 @@
         count: Number(g.count) || (Array.isArray(g.member_ids) ? g.member_ids.length : 0),
         presentation_only: true,
       }))
-      .filter((g) => g.group_id && g.member_ids.length)
+      .filter((g) => g.group_id && g.member_ids.length >= (singleMemberOnly ? 2 : 1))
       .sort((a, b) => (a.file || a.group_id).localeCompare(b.file || b.group_id));
   }
 
