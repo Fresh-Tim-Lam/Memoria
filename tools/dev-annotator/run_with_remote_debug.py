@@ -108,6 +108,40 @@ def _auto_inject_annotator() -> None:
     _log(f"injection failed after retries: {last_error}")
 
 
+def _watch_webview_board() -> None:
+    """Last-resort in-process watchdog: re-inject the board via pywebview JS.
+
+    This does not depend on CDP, a free port, DevTools targets or a reload hook.
+    It keeps polling the live pywebview window so the board comes back even if the
+    page rewrites its DOM or the user reloads the app.
+    """
+    if os.environ.get("MEMORIA_NO_ANNOTATOR") == "1":
+        return
+    js_path = Path(__file__).with_name("annotator.js")
+    if not js_path.is_file():
+        return
+    js = js_path.read_text(encoding="utf-8")
+    expr = "(() => { " + js + " })()"
+    probe = "(() => !!document.getElementById('__memoria_annotator_host__'))()"
+    ensure = "(() => { window.__MEMORIA_ANNOTATOR__?.ensureMounted?.(); return true; })()"
+    _log("webview watchdog started")
+    while True:
+        try:
+            for win in list(getattr(webview, "windows", []) or []):
+                try:
+                    present = win.evaluate_js(probe)
+                    if not present:
+                        win.evaluate_js(expr)
+                        _log("injected via pywebview watchdog")
+                    else:
+                        win.evaluate_js(ensure)
+                except Exception:
+                    pass
+        except Exception:
+            pass
+        time.sleep(1.5)
+
+
 if __name__ == "__main__":
     os.environ.setdefault("MEMORIA_MODE", "dev")
     os.environ.setdefault("MEMORIA_SHELL", "pywebview")
@@ -119,6 +153,7 @@ if __name__ == "__main__":
         pass
     _log(f"launch KB={os.environ.get('MEMORIA_KB', '')} CDP={WEBVIEW_PORT}")
     threading.Thread(target=_auto_inject_annotator, daemon=True).start()
+    threading.Thread(target=_watch_webview_board, daemon=True).start()
     from memoria.app.desktop import main
 
     main()
