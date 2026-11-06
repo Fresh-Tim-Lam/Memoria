@@ -20,7 +20,15 @@ def main() -> int:
     for _ in range(40):
         try:
             targets = requests.get(url, timeout=1).json()
-            pages = [t for t in targets if t.get("type") == "page" and t.get("webSocketDebuggerUrl")]
+            pages = [
+                t for t in targets
+                if t.get("type") == "page"
+                and t.get("webSocketDebuggerUrl")
+                and not str(t.get("url", "")).startswith("devtools://")
+                and "127.0.0.1" in str(t.get("url", ""))
+            ]
+            if not pages:
+                pages = [t for t in targets if t.get("type") == "page" and t.get("webSocketDebuggerUrl")]
             if pages:
                 target = pages[0]
                 print(json.dumps({"target": target.get("url"), "title": target.get("title")}, ensure_ascii=False))
