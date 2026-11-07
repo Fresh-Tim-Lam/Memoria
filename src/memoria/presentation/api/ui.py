@@ -3240,6 +3240,8 @@ def _mlvm_groups(vm, files: dict[str, str], kb_path: str = "") -> list[dict]:
 
                 groups.append({
                     "group_id": str(item.get("group_id") or ""),
+                    # task-391 rev47：子簇（如 L0_1_C1）用 parent_id 表达层级；父站不显示子簇
+                    "parent_id": str(item.get("parent_id") or ""),
                     "file": str(item.get("file") or ""),
                     "section": str(item.get("section") or item.get("label") or item.get("group_id") or ""),
                     # task-391 rev26：demo 容器标签只显示 L0_x（不追加成员数后缀），由 adapter 优先消费。

@@ -10,9 +10,11 @@
         "node-001",
         "node-006",
         "node-007",
-        "node-008"
+        "node-008",
+        "node-009",
+        "node-010"
       ],
-      "count": 4,
+      "count": 6,
       "container": true,
       "x": 62,
       "y": 120
@@ -52,6 +54,20 @@
       "empty_container": true,
       "x": 222,
       "y": 462
+    },
+    {
+      "group_id": "demo:L0_1_C1",
+      "label": "L0_1_C1",
+      "section": "L0_1_C1",
+      "file": "one-node.md",
+      "member_ids": [
+        "node-009"
+      ],
+      "count": 1,
+      "container": true,
+      "x": 120,
+      "y": 240,
+      "parent_id": "demo:L0_1"
     }
   ],
   "links": [
@@ -88,6 +104,11 @@
     {
       "source": "group:demo:L0_1",
       "target": "node-005",
+      "kind": "structure"
+    },
+    {
+      "source": "node-001",
+      "target": "group:demo:L0_1_C1",
       "kind": "structure"
     }
   ]

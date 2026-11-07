@@ -980,6 +980,8 @@
       for (const id of [...this._collapsedGroups]) {
         if (!this._groups.some((g) => g.group_id === id)) this._collapsedGroups.delete(id);
       }
+      // task-391 rev47：父容器折叠时，子簇（如 L0_1_C1）不在父站散落；进入其父组子站后再显示。
+      this._groups = this._groups.filter((g) => !this._groupHasCollapsedAncestor(g.group_id));
       return this._groups;
     }
 

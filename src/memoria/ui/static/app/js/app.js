@@ -1739,7 +1739,8 @@ async function call(fn, ...args) {
         item("ml-swatch ml-swatch--collapsed", T("graph.multilevel.legendCollapsed")) +
         item("ml-line ml-line--semantic", T("graph.multilevel.legendEdgeSemantic")) +
         item("ml-line ml-line--structural", T("graph.multilevel.legendEdgeStructural")) +
-        item("ml-line ml-line--reference", T("graph.multilevel.legendEdgeReference"));
+        item("ml-line ml-line--reference", T("graph.multilevel.legendEdgeReference")) +
+        item("ml-line ml-line--extend", T("graph.multilevel.legendEdgeExtend"));
       host.appendChild(legend);
     }
   }
@@ -2004,8 +2005,24 @@ async function call(fn, ...args) {
       .map((cg) => ({ ...cg, member_ids: (cg.member_ids || []).filter((id) => members.has(String(id))) }))
       .filter((cg) => cg.member_ids.length);
     const childPresentation = { ...current.presentation, groups: childGroups };
-    // 子站只保留自身组的展示；父站 presentation 连线只属于上一站，不带到子站。
-    childPresentation.links = [];
+    // rev47：子站保留与本站成员/子簇相关的 presentation 连线（如 node-001→子簇 L0_1_C1）；
+    // 父站 L0_1 组身份映射为子站 hub 节点（node-001），其余父站连线不带入。
+    const childIds = new Set(nodes.map((n) => String(n.id)));
+    const childGroupIds = new Set(childGroups.map((g2) => `group:${String(g2.group_id)}`));
+    const childFocusId = multilevelHighestDegreeNode({ ...current.vm, nodes }, childPresentation);
+    const childLinks = (current.presentation?.links || [])
+      .map((ln) => {
+        let source = String(ln.source || "");
+        let target = String(ln.target || "");
+        if (source === `group:${String(groupId)}`) source = String(childFocusId || "");
+        if (target === `group:${String(groupId)}`) target = String(childFocusId || "");
+        return { ...ln, source, target };
+      })
+      .filter((ln) => {
+        const ok = (id) => childIds.has(String(id)) || childGroupIds.has(String(id));
+        return ln.source && ln.target && ok(ln.source) && ok(ln.target);
+      });
+    childPresentation.links = childLinks;
     const childVm = { ...current.vm, nodes, edges };
     const title = group.section || group.file || String(group.group_id);
     // 进入子图前记录父视图（位置/相机/选中），返回时原样恢复

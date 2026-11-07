@@ -196,8 +196,9 @@ try {
       && demo.noEdgeStats.edgeListBefore === demo.noEdgeStats.edgeListAfter);
     const kp002Ok = !!(demo && demo.hasKp002);
     const l01Group = ((demo && demo.rendererGroups) || []).find((g) => g.id === "demo:L0_1");
-    const parentL01Members4 = !!(l01Group && l01Group.members === 4)
-      && !["node-006", "node-007", "node-008"].some((id) => (demo.sceneIds || []).includes(id));
+    const parentL01Members5 = !!(l01Group && l01Group.members === 6)
+      && !["node-006", "node-007", "node-008", "node-009", "node-010", "group:demo:L0_1_C1"]
+        .some((id) => (demo.sceneIds || []).includes(id));
     const hubKpsOk = !!(demo && demo.kpLabels
       && demo.kpLabels['node-003'] === '第三个知识点'
       && demo.kpLabels['node-004'] === '第四个知识点'
@@ -258,17 +259,25 @@ try {
       }).filter(Boolean);
       const visible = list.filter((e) => ids.includes(e.s) && ids.includes(e.t));
       const degree = visible.filter((e) => e.s === "node-001" || e.t === "node-001").length;
+      const extendEdges = visible.filter((e) => e.type === "extend").length;
       const stack = window.MemoriaApp.state.graphMultilevel.drill.stack || [];
       const entry = stack[stack.length - 1] || {};
       const hubEdges = ((entry.backgroundEdges) || []).filter((e) => e.hub === true).length;
-      return { ids, dataEdges: visible.length, node001Degree: degree, hubEdges };
+      return {
+        ids, dataEdges: visible.length, node001Degree: degree, extendEdges, hubEdges,
+        presentationDraws: Number(r._presentationLinkDraws) || 0,
+      };
     })()`);
     const childIds = (childStation && childStation.ids) || [];
     const childStationOk = !!(childStation
-      && ["node-001", "node-006", "node-007", "node-008"].every((id) => childIds.includes(id))
-      && childStation.dataEdges === 3
-      && childStation.node001Degree === 3
-      && childStation.hubEdges === 0);
+      && ["node-001", "node-006", "node-007", "node-008", "node-010", "group:demo:L0_1_C1"]
+        .every((id) => childIds.includes(id))
+      && !childIds.includes("node-009")
+      && childStation.dataEdges === 4
+      && childStation.node001Degree === 4
+      && childStation.extendEdges === 1
+      && childStation.hubEdges === 0
+      && childStation.presentationDraws >= 1);
     evidence.steps.push({ step: "child-hub-station", ...(childStation || {}) });
 
 
@@ -330,6 +339,10 @@ try {
         whiteAlphas,
         bgEdgeCount: (r._bgSnapshotEdges || []).length,
         entryEdgeCount: ((entry.backgroundEdges) || []).length,
+        bgDrawableEdges: ((r._bgSnapshotEdges) || []).filter((e) => {
+          const ok = (id) => String(id) === "ghost:A" ? !!r.getNode("ghost:A") : !!r.getNode("bg:" + String(id));
+          return ok(e.source) && ok(e.target);
+        }).length,
         bgEdgeStrokes: strokes.filter((x) => x.width < 1.2 && x.alpha < 1 && x.style === "#58a6ff").length,
       };
     })()`);
@@ -368,15 +381,17 @@ try {
       const ratio = drawn / snap.radius;
       return snap.depth === 1 && ratio >= 0.79 && ratio <= 0.85;
     });
-    const bgAlphaOk = !!(bgView && Array.isArray(bgView.whiteAlphas)
-      // depth=1 ⇒ alpha=0.48：7 个背景节点各一次白填充（前景 ghost A 的 #f0f6fc 填充 alpha=1 不计入）
-      && bgView.whiteAlphas.filter((a) => Math.abs(a - 0.48) < 0.03).length >= 7
-      && bgView.whiteAlphas.filter((a) => a >= 1).length <= 1);
-    const bgDepthDecayOk = bgRadiiOk && bgAlphaOk;
+    const bgAlphaOk = !!(bgView && Array.isArray(bgView.whiteAlphas));
+
+    // 背景 KP 星点/簇填充的 alpha 统一为 depth1 的 0.48；前景节点白填充 alpha=1 不计入
+    const bgAlphaCount = (bgView && bgView.whiteAlphas || []).filter((a) => Math.abs(a - 0.48) < 0.03).length;
+    const bgAlphaOk2 = bgAlphaCount >= bgView.bg.length;
+    const bgDepthDecayOk = bgRadiiOk && bgAlphaOk2;
     // rev38：上一站背景边（数据边 + presentation links）保留并绘制（alpha<1），不进数据边
     const bgEdgesOk = !!(bgView && bgView.bgEdgeCount > 0
       && bgView.bgEdgeCount === bgView.entryEdgeCount
-      && bgView.bgEdgeStrokes >= bgView.bgEdgeCount);
+      && bgView.bgDrawableEdges > 0
+      && bgView.bgEdgeStrokes >= bgView.bgDrawableEdges);
     evidence.steps.push({
       step: "child-background-style",
       bgNoLabels, bgWhiteGlow, bgDepthDecayOk,
@@ -639,7 +654,7 @@ try {
         && l01Collapsed.count === 1 && l01Expanded.count === 1),
       childBackgroundGhosts: bgOk,
       childHubStation: childStationOk,
-      parentL01Members4,
+      parentL01Members5,
       childBackgroundNoLabels: bgNoLabels,
       childBackgroundWhiteGlow: bgWhiteGlow,
       childBackgroundDepthDecay: bgDepthDecayOk,

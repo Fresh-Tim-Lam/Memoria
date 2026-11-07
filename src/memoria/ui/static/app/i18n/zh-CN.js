@@ -1107,6 +1107,7 @@
         legendEdgeSemantic: "语义边",
         legendEdgeStructural: "结构边",
         legendEdgeReference: "引用边",
+        legendEdgeExtend: "关联/联想边",
         suppressed: "已隐藏 {n}（S4 预算）",
         levelFailed: "该层级不可用：{msg}",
       },

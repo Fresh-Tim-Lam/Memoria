@@ -1191,6 +1191,7 @@
         legendEdgeSemantic: "Semantic edge",
         legendEdgeStructural: "Structural edge",
         legendEdgeReference: "Reference edge",
+        legendEdgeExtend: "Association (extend) edge",
         suppressed: "{n} hidden (S4 budget)",
         levelFailed: "That level is unavailable: {msg}",
       },
