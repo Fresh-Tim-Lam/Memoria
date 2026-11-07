@@ -1966,7 +1966,10 @@ async function call(fn, ...args) {
     mounted.renderer.render(host, entry.vm);
     if (entry.snapshot) mounted.renderer.restoreViewState(entry.snapshot);
     // task-391 rev29 C：先挂上一站背景快照（若有），再设入口幽灵；返回上一站时快照为空 ⇒ 清除。
-    if (mounted.renderer.setBackgroundSnapshot) {
+    // rev50：节点子图谱支持多级背景层（L0_1 站 depth1 + 根站 depth2）；无 layers 时回退单层。
+    if (entry.backgroundLayers && mounted.renderer.setBackgroundLayers) {
+      mounted.renderer.setBackgroundLayers(entry.backgroundLayers);
+    } else if (mounted.renderer.setBackgroundSnapshot) {
       mounted.renderer.setBackgroundSnapshot(entry.backgroundSnapshot || [], entry.backgroundEdges || []);
     }
     if (entry.backgroundGhost) mounted.renderer.setBackgroundGhost(entry.backgroundGhost);
@@ -2109,6 +2112,118 @@ async function call(fn, ...args) {
       crossEdges: crossEdges.length,
       focusNodeId: multilevelHighestDegreeNode(childVm, childPresentation),
       originNodeId: mounted.renderer._selectedId || null,
+    };
+    drill.stack.push(nextEntry);
+    applyMultilevelView(nextEntry);
+    return true;
+  }
+
+  /** task-391 rev50：当前站的 visible 边（数据边 + presentation links），用于节点子图谱的 depth1 背景层。 */
+  function multilevelVisibleStationEdges(entry, mounted) {
+    const groups = Array.isArray(entry.presentation?.groups) ? entry.presentation.groups : [];
+    const hiddenToGroup = new Map();
+    for (const g of groups) {
+      if (!g.container) continue;
+      const collapsed = mounted?.renderer?.isGroupCollapsed
+        ? mounted.renderer.isGroupCollapsed(g.group_id)
+        : true;
+      if (!collapsed) continue;
+      for (const m of g.member_ids || []) hiddenToGroup.set(String(m), `group:${String(g.group_id)}`);
+    }
+    const mapEnd = (id) => hiddenToGroup.get(String(id)) || String(id);
+    const out = [];
+    const seen = new Set();
+    const push = (source, target, type) => {
+      if (!source || !target || source === target) return;
+      const key = `${source}|${target}|${type}`;
+      if (seen.has(key)) return;
+      seen.add(key);
+      out.push({ source, target, type });
+    };
+    for (const e of entry.vm?.edges || []) {
+      const ends = multilevelEdgeEnds(e);
+      if (!ends) continue;
+      push(mapEnd(ends.source), mapEnd(ends.target), String(e.type || e.edge_type || "reference"));
+    }
+    for (const ln of entry.presentation?.links || []) {
+      push(mapEnd(ln.source), mapEnd(ln.target),
+        String(ln.kind === "structure" ? "structural" : (ln.kind || "structural")));
+    }
+    return out;
+  }
+
+  /**
+   * task-391 rev50：通用“节点子图谱”入口（demo 只对 presentation-only `subgraph_nodes` 标记的 KP 启用）。
+   * 前景 = 该 KP + 其 extend 邻居 + 它们之间的真实 extend 边；背景 = 两级：
+   *  layer0（depth=1）= 当前站（L0_1 子站）visible；layer1（depth=2）= 当前站的上一层背景快照（根站）。
+   */
+  function enterMultilevelNode(nodeId) {
+    const g = state.graphMultilevel;
+    const mounted = g?.mounted;
+    const host = $("#graph-2d-multilevel-root");
+    const drill = ensureMultilevelDrill();
+    if (!mounted?.renderer || !drill || !host) return false;
+    const current = drill.stack[drill.stack.length - 1];
+    if (!current) return false;
+    const targetId = String(nodeId);
+    if (String(current.focusNodeId || "") === targetId) return false;
+    const byId = new Map((current.vm?.nodes || []).map((n) => [String(n.id), n]));
+    if (!byId.has(targetId)) return false;
+    const neighborIds = new Set();
+    const edges = [];
+    for (const e of current.vm?.edges || []) {
+      if (String(e.type) !== "extend") continue;
+      const ends = multilevelEdgeEnds(e);
+      if (!ends) continue;
+      if (String(ends.source) === targetId) neighborIds.add(String(ends.target));
+      else if (String(ends.target) === targetId) neighborIds.add(String(ends.source));
+      else continue;
+      edges.push(e);
+    }
+    const fgIds = [targetId, ...neighborIds].filter((id) => byId.has(id));
+    const nodes = fgIds.map((id) => byId.get(id));
+    const visibleEdges = edges.filter((e) => {
+      const ends = multilevelEdgeEnds(e);
+      return ends && fgIds.includes(String(ends.source)) && fgIds.includes(String(ends.target));
+    });
+    if (!nodes.length || !visibleEdges.length) return false;
+    const curNames = current.presentation?.names || {};
+    const names = {};
+    const degrees = {};
+    for (const id of fgIds) {
+      names[id] = String(curNames[id] || id);
+      degrees[id] = Number((current.presentation?.degrees || {})[id] || 0);
+    }
+    const files = {};
+    const curFiles = current.presentation?.files || {};
+    for (const id of fgIds) if (curFiles[id]) files[id] = String(curFiles[id]);
+    const presentation = {
+      degrees, files, names, groups: [], links: [],
+      subgraph_nodes: (current.presentation?.subgraph_nodes || []).slice(),
+    };
+    const layer0Nodes = (mounted.renderer.getVisibleNodes ? mounted.renderer.getVisibleNodes() : [])
+      .map((n) => ({ ...n, depth: 1 }));
+    const layer0Edges = multilevelVisibleStationEdges(current, mounted).map((e) => ({ ...e, depth: 1 }));
+    const layer1Nodes = (current.backgroundSnapshot || []).map((n) => ({ ...n, depth: 2 }));
+    const layer1Edges = (current.backgroundEdges || []).map((e) => ({ ...e, depth: 2 }));
+    const backgroundLayers = [];
+    if (layer0Nodes.length) backgroundLayers.push({ nodes: layer0Nodes, edges: layer0Edges });
+    if (layer1Nodes.length) backgroundLayers.push({ nodes: layer1Nodes, edges: layer1Edges });
+    current.snapshot = mounted.renderer.captureViewState();
+    const title = names[targetId] || targetId;
+    const nextEntry = {
+      vm: { ...current.vm, nodes, edges: visibleEdges },
+      presentation,
+      title, crumb: title,
+      path: [...(current.path || []), title],
+      snapshot: null,
+      focusNodeId: targetId,
+      originNodeId: targetId,
+      // 返回唯一入口仍是 ghost A（保留上一站 L0_1 的幽灵及其跨层线）
+      backgroundGhost: current.backgroundGhost || null,
+      backgroundSnapshot: [],
+      backgroundEdges: [],
+      backgroundLayers,
     };
     drill.stack.push(nextEntry);
     applyMultilevelView(nextEntry);
@@ -2604,6 +2719,14 @@ async function call(fn, ...args) {
       state.graphMultilevel.mounted.renderer.on("nodeClick", ({ node_id }) => {
         if (!node_id) return;
         openGraphEditorJumpPreview(node_id);
+        // rev50：带 presentation-only `subgraph_nodes` 标记的 KP 单击 = 进入其节点子图谱（通用入口）
+        const subgraphIds = (multilevelPresentation().subgraph_nodes || []).map(String);
+        if (subgraphIds.includes(String(node_id))) {
+          const drill = state.graphMultilevel?.drill;
+          if (drill && drill.stack.length >= 2) {
+            window.setTimeout(() => enterMultilevelNode(node_id), 140);
+          }
+        }
       });
       // task-389：group 单击 = 进入子图视图（不是原位展开）
       state.graphMultilevel.mounted.renderer.on("groupClick", ({ group_id }) => {

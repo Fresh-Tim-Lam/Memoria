@@ -3279,6 +3279,31 @@ def _mlvm_groups(vm, files: dict[str, str], kb_path: str = "") -> list[dict]:
     return groups
 
 
+def _mlvm_demo_subgraph_nodes(kb_path: str = "") -> list[str]:
+    """task-391 rev50：**presentation-only** 节点子图谱入口（demo）。
+
+    只来自 `.memoria/demo-groups.json` 的顶层 `subgraph_nodes[]`；纯展示标记，不进 VM/数据边。
+    """
+    import json as _json
+    import os as _os
+
+    if not kb_path:
+        return []
+    demo_path = _os.path.join(kb_path, ".memoria", "demo-groups.json")
+    if not _os.path.isfile(demo_path):
+        return []
+    try:
+        raw = _json.loads(open(demo_path, encoding="utf-8").read())
+    except Exception:
+        return []
+    out: list[str] = []
+    for item in (raw.get("subgraph_nodes") or []):
+        kp_id = str(item or "").strip()
+        if kp_id and kp_id not in out:
+            out.append(kp_id)
+    return out
+
+
 def _mlvm_demo_links(kb_path: str = "") -> list[dict]:
     """task-391 rev26：**presentation-only** demo 连线（容器↔容器 / 容器↔KP）。
 
@@ -3354,6 +3379,8 @@ def _mlvm_presentation(datasource, vm, kb_path: str = "") -> dict:
         "groups": _mlvm_groups(vm, files, kb_path),
         # task-391 rev26：presentation-only demo 连线（容器链 / 容器→KP），不参与数据边。
         "links": _mlvm_demo_links(kb_path),
+        # task-391 rev50：presentation-only 节点子图谱入口标记（demo 只对 node-010 启用）
+        "subgraph_nodes": _mlvm_demo_subgraph_nodes(kb_path),
     }
 
 

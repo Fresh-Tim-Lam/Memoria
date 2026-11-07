@@ -100,8 +100,9 @@ def test_rpc_returns_exact_contract_shape(tmp_path: Path) -> None:
     }
     # task-380：Presentation-only groups；task-381：只读 names；task-391 rev26：presentation-only demo links
     # （顶层契约仍 7 字段；links 是展示连接，不进 VM/数据边）
-    assert set(result["presentation"]) == {"degrees", "files", "names", "groups", "links"}
+    assert set(result["presentation"]) == {"degrees", "files", "names", "groups", "links", "subgraph_nodes"}
     assert isinstance(result["presentation"]["links"], list)
+    assert isinstance(result["presentation"]["subgraph_nodes"], list)
 
 
 def test_vm_whitelist_strict(tmp_path: Path) -> None:

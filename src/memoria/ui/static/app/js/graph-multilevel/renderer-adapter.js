@@ -652,6 +652,8 @@
       this._bgSnapshot = [];
       // task-391 rev38：上一站 visible edges（数据边+presentation links），背景化绘制/入同一力场
       this._bgSnapshotEdges = [];
+      // task-391 rev50：支持多级背景层堆叠（node 子图谱：L0_1 站= depth1，根站= depth2）
+      this._bgLayers = [];
       this._expandAll = false;
       this._containerLabels = new Set(
         this._groups.filter((g) => g.container && g.label).map((g) => String(g.label))
@@ -712,41 +714,57 @@
 
     /** task-391 rev29：进入子站时的“上一站全视图”快照（presentation-only 背景层）。 */
     setBackgroundSnapshot(nodes, edges) {
-      this._bgSnapshot = Array.isArray(nodes) ? nodes : [];
-      // task-391 rev38：background edges（上一站拓扑），不进 _edgeList/数据边统计
-      this._bgSnapshotEdges = Array.isArray(edges) ? edges : [];
+      // 兼容单层调用；空数组=清空（返回上一站时）
+      return this.setBackgroundLayers(
+        Array.isArray(nodes) && nodes.length ? [{ nodes, edges: Array.isArray(edges) ? edges : [] }] : []
+      );
+    }
+
+    /** task-391 rev50：多级背景层（数组顺序=由近到远；第 0 层沿用 bg:<id>，第 N 层 bgN:<id>）。 */
+    setBackgroundLayers(layers) {
+      this._bgLayers = (Array.isArray(layers) ? layers : [])
+        .map((l) => ({ nodes: Array.isArray(l.nodes) ? l.nodes : [], edges: Array.isArray(l.edges) ? l.edges : [] }))
+        .filter((l) => l.nodes.length || l.edges.length);
+      this._bgSnapshot = this._bgLayers.flatMap((l) => l.nodes);
+      this._bgSnapshotEdges = this._bgLayers.flatMap((l) => l.edges);
       this._syncScene();
       if (this._ctx) this._draw();
       return this._bgSnapshot.length;
     }
 
     clearBackgroundSnapshot() {
-      this._bgSnapshot = [];
-      this._bgSnapshotEdges = [];
-      this._syncScene();
-      if (this._ctx) this._draw();
+      this.setBackgroundLayers([]);
     }
 
-    /** task-391 rev38：背景边映射到场景节点 + 作为同一个 stepForce 的 links（节点同池受力）。 */
+    /** 背景层节点 id（第 0 层 bg:<id>，第 N 层 bgN:<id>）。 */
+    _backgroundNodeId(layerIndex, id) {
+      const raw = String(id);
+      return layerIndex === 0 ? `bg:${raw}` : `bg${layerIndex}:${raw}`;
+    }
+
+    /** task-391 rev38：背景边映射到场景节点 + 作为同一个 stepForce 的 links（节点同池受力）。
+     *  rev50：支持多级背景层（每层内解析自己的节点 id 前缀）。 */
     _backgroundForceLinks() {
       const out = [];
-      for (const edge of this._bgSnapshotEdges || []) {
-        const a = edge.source === "ghost:A" ? "ghost:A" : `bg:${String(edge.source)}`;
-        const b = edge.target === "ghost:A" ? "ghost:A" : `bg:${String(edge.target)}`;
-        if (!this._scene.has(a) || !this._scene.has(b) || a === b) continue;
-        out.push({ source: a, target: b, strength: 0.1, distance: 88 });
-      }
+      (this._bgLayers || []).forEach((layer, li) => {
+        for (const edge of layer.edges) {
+          const a = edge.source === "ghost:A" ? "ghost:A" : this._backgroundNodeId(li, edge.source);
+          const b = edge.target === "ghost:A" ? "ghost:A" : this._backgroundNodeId(li, edge.target);
+          if (!this._scene.has(a) || !this._scene.has(b) || a === b) continue;
+          out.push({ source: a, target: b, strength: 0.1, distance: 88 });
+        }
+      });
       return out;
     }
 
     /** task-391 rev38：背景化边——保留原线型/方向语义，但更淡更细（alpha<1，颜色仍按 edge.type）。 */
     _drawBackgroundEdges(ctx) {
-      const edges = this._bgSnapshotEdges || [];
-      if (!edges.length) return 0;
+      const layers = this._bgLayers || [];
+      if (!layers.length) return 0;
       let drawn = 0;
-      for (const edge of edges) {
-        const a = edge.source === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(`bg:${String(edge.source)}`);
-        const b = edge.target === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(`bg:${String(edge.target)}`);
+      for (let li = 0; li < layers.length; li += 1) for (const edge of layers[li].edges) {
+        const a = edge.source === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(this._backgroundNodeId(li, edge.source));
+        const b = edge.target === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(this._backgroundNodeId(li, edge.target));
         if (!a || !b) continue;
         const depth = Math.max(1, Number(edge.depth) || 1);
         const lg = Math.log2(depth + 1);
@@ -852,10 +870,12 @@
         background: this._bgGhost,
         // task-391 rev29 C：上一站全视图背景化快照（presentation-only background layer）
         // task-391 rev35：按 depth 做 log 衰减——绘制半径同步乘 scale（每帧从原始 radius 重算，不叠加）
-        backgroundNodes: (this._bgSnapshot || []).map((n) => ({
+        backgroundNodes: (this._bgLayers || []).flatMap((layer, li) => layer.nodes.map((n) => ({
           ...n,
+          // 第 0 层沿用原 id（bg:<id>）；更深层加层前缀，避免同一节点在多级背景中重复 id
+          id: li === 0 ? String(n.id) : `${li}:${String(n.id)}`,
           radius: Math.max(3, (Number(n.radius) || 8) * backgroundDepthScale(n.depth)),
-        })),
+        }))),
         groupLabelOf: (group) => groupLabel(group),
         labelOf: (node) => labelText(node, this._presentation && this._presentation.names),
         radiusOf,

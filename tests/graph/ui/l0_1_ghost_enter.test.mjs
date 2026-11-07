@@ -597,8 +597,118 @@ try {
       kpFrom: afterKp.positions[KP_ID], kpTo: afterGhost.positions[KP_ID],
     });
 
+    // ⑦ rev50：点击联想知识点 node-010 → 进入它的节点子图谱（两级背景层 + 前景 node-010/node-001 + extend 边）
+    // 先把相机 fit 到当前站，避免前面拖拽后 node-010 落在画布外（真实用户可平移；测试先 fitView）
+    await cdp.evalJS(`(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; r.fitView && r.fitView(50); return true; })()`);
+    await sleep(400);
+    await stopAnim(cdp);
+    const stationBeforeNode010 = await cdp.evalJS(SNAP);
+    const prevFgIds = Object.keys(stationBeforeNode010.positions)
+      .filter((id) => (stationBeforeNode010.positions[id].layer || "foreground") === "foreground");
+    const node010Point = pickTarget(stationBeforeNode010, "node-010", "node-001");
+    const preClick = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const cv = r._canvas; const rect = cv.getBoundingClientRect();
+      const cam = r._camera || { x: 0, y: 0, scale: 1 };
+      const wx = (${node010Point.x} - rect.left - cam.x) / (cam.scale || 1);
+      const wy = (${node010Point.y} - rect.top - cam.y) / (cam.scale || 1);
+      const pick = r._scene.pick(wx, wy);
+      window.__mlClickCount = 0;
+      r.on("nodeClick", () => { window.__mlClickCount += 1; });
+      const el = document.elementFromPoint(${node010Point.x}, ${node010Point.y});
+      return { pickId: pick ? String(pick.id) : null, el: el ? (el.tagName + "." + String(el.className || "")) : null, rect: { l: rect.left, t: rect.top, w: rect.width, h: rect.height } };
+    })()`);
+    evidence.steps.push({ step: "node-010-preclick", point: node010Point, ...(preClick || {}) });
+    await ix.click(node010Point.x, node010Point.y);
+    await sleep(500);
+    const clickCount = await cdp.evalJS(`Number(window.__mlClickCount) || 0`);
+    evidence.steps.push({ step: "node-010-clickcount", clickCount });
+    await cdp.waitFor(
+      `(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; if(!r||!r.getPositions) return false; const p=r.getPositions(); return p.has("node-010") && p.has("node-001") && !p.has("node-006"); })()`,
+      { timeout: 20000, label: "node subgraph node-010/node-001" }
+    ).catch(() => null);
+    await sleep(900);
+    await stopAnim(cdp);
+    const nodeSubgraph = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const ids = [...r.getPositions().keys()].sort();
+      const fg = ids.filter((id) => !id.includes(":") || !id.startsWith("bg"));
+      const list = (r._edgeList || []).map((e) => {
+        const p = String(e.id).split("|");
+        return p.length >= 3 ? { type: p[0], s: p[1], t: p[2] } : null;
+      }).filter(Boolean);
+      const visibleEdges = list.filter((e) => ids.includes(e.s) && ids.includes(e.t));
+      const layers = (r._bgLayers || []).map((l) => ({ nodes: l.nodes.length, edges: l.edges.length }));
+      const depths = [...new Set((r._bgSnapshot || []).map((n) => Number(n.depth)))].sort();
+      const panel = document.querySelector("#link-panel");
+      const panelVisible = !!(panel && panel.getBoundingClientRect().width > 1
+        && panel.getBoundingClientRect().height > 1 && getComputedStyle(panel).display !== "none");
+      return {
+        ids, fg, layers, depths, panelVisible,
+        extendEdges: visibleEdges.filter((e) => e.type === "extend").length,
+        dataEdges: visibleEdges.length,
+        bg0: ids.filter((id) => id.startsWith("bg:") && !id.startsWith("bg:1:")).length,
+        bg1: ids.filter((id) => id.startsWith("bg:1:")).length,
+      };
+    })()`);
+    const nodeClickDiag = await cdp.evalJS(`(() => {
+      const g = window.MemoriaApp.state.graphMultilevel;
+      return {
+        subgraphIds: (g.presentation?.subgraph_nodes || []),
+        files: !!(g.presentation?.files || {})["node-010"],
+        stackLen: (g.drill?.stack || []).length,
+        panelExists: !!document.querySelector("#link-panel"),
+        panelVisible: (() => { const el = document.querySelector("#link-panel"); if (!el) return false; const r = el.getBoundingClientRect(); return r.width > 1 && r.height > 1; })(),
+        topFocus: g.drill?.stack?.[g.drill?.stack?.length - 1]?.focusNodeId || null,
+      };
+    })()`);
+    evidence.steps.push({ step: "node-010-subgraph", ...(nodeSubgraph || {}), diag: nodeClickDiag });
+
+    const shotNodeSub = arg("shot-node-subgraph", "");
+    let nodeSubgraphScreenshot = null;
+    if (shotNodeSub) {
+      try {
+        await cdp.send("Page.enable", {});
+        const shot = await cdp.send("Page.captureScreenshot", { format: "png" });
+        fs.mkdirSync(path.dirname(shotNodeSub), { recursive: true });
+        fs.writeFileSync(shotNodeSub, Buffer.from(shot.data, "base64"));
+        nodeSubgraphScreenshot = shotNodeSub;
+      } catch (e) {
+        nodeSubgraphScreenshot = "ERROR: " + String((e && e.message) || e);
+      }
+    }
+    evidence.steps.push({ step: "node-010-subgraph-screenshot", path: nodeSubgraphScreenshot });
+    const nodeSubgraphOk = !!(nodeSubgraph
+      && nodeSubgraph.fg.includes("node-010") && nodeSubgraph.fg.includes("node-001")
+      && !nodeSubgraph.fg.includes("node-006")
+      && nodeSubgraph.dataEdges === 1
+      && nodeSubgraph.extendEdges === 1);
+    const nodeSubgraphLayersOk = !!(nodeSubgraph
+      && nodeSubgraph.layers.length === 2
+      && JSON.stringify(nodeSubgraph.depths) === JSON.stringify([1, 2])
+      && nodeSubgraph.layers[0].nodes === prevFgIds.length
+      && nodeSubgraph.layers[1].nodes === 7
+      && nodeSubgraph.bg0 > 0 && nodeSubgraph.bg1 > 0);
+    const nodeSubgraphPanelOk = !!(nodeSubgraph && nodeSubgraph.panelVisible);
+    // 返回：点击同一 ghost A（两级背景不应阻断返回）
+    const backFromNode = await cdp.evalJS(SNAP);
+    const backFromNodePoint = pickTarget(backFromNode, "ghost:A", "node-001");
+    await ix.click(backFromNodePoint.x, backFromNodePoint.y);
+    await cdp.waitFor(
+      `(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; if(!r||!r.getPositions) return false; const ids=[...r.getPositions().keys()]; return ids.includes("node-006") && !ids.some((id)=>id.startsWith("bg1:")); })()`,
+      { timeout: 20000, label: "return to L0_1 station" }
+    ).catch(() => null);
+    await sleep(700);
+    await stopAnim(cdp);
+    const afterNodeReturn = await cdp.evalJS(SNAP);
+    const nodeReturnIds = afterNodeReturn ? Object.keys(afterNodeReturn.positions) : [];
+    const nodeSubgraphReturnOk = !!(nodeReturnIds.includes("node-006")
+      && nodeReturnIds.includes("node-001")
+      && !nodeReturnIds.some((id) => id.startsWith("bg1:")));
+    evidence.steps.push({ step: "node-010-subgraph-return", ids: nodeReturnIds });
+
     // ⑥ rev29 C：返回上一站 → 背景 ghost 清除 + 上一站（L0_1..4 + KP）恢复
-    const backPoint = nodePointToward(afterGhost, "ghost:A", KP_ID);
+    const backPoint = nodePointToward(afterNodeReturn, "ghost:A", KP_ID);
     await ix.click(backPoint.x, backPoint.y);
     await sleep(1200);
     await stopAnim(cdp);
@@ -668,6 +778,10 @@ try {
       dragKpMovedGhost: ghostMoved > 0.01,
       bgNodesParticipateInForce: bgMovedMax > 0.05,
       dragGhostMovedKp: kpMoved2 > 0.01,
+      nodeSubgraphScene: nodeSubgraphOk,
+      nodeSubgraphTwoLayers: nodeSubgraphLayersOk,
+      nodeSubgraphLinkPanel: nodeSubgraphPanelOk,
+      nodeSubgraphReturn: nodeSubgraphReturnOk,
       singleCanvas: afterGhost.canvasCount === 1 && parent.canvasCount === 1 && child.canvasCount === 1,
     };
     evidence.verdict = Object.values(evidence.checks).every(Boolean) ? "PASS" : "FAIL";
