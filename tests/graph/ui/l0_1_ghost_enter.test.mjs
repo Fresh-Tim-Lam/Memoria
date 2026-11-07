@@ -195,6 +195,9 @@ try {
       && demo.noEdgeStats && demo.noEdgeStats.edgesBefore === demo.noEdgeStats.edgesAfter
       && demo.noEdgeStats.edgeListBefore === demo.noEdgeStats.edgeListAfter);
     const kp002Ok = !!(demo && demo.hasKp002);
+    const l01Group = ((demo && demo.rendererGroups) || []).find((g) => g.id === "demo:L0_1");
+    const parentL01Members4 = !!(l01Group && l01Group.members === 4)
+      && !["node-006", "node-007", "node-008"].some((id) => (demo.sceneIds || []).includes(id));
     const hubKpsOk = !!(demo && demo.kpLabels
       && demo.kpLabels['node-003'] === '第三个知识点'
       && demo.kpLabels['node-004'] === '第四个知识点'
@@ -244,6 +247,30 @@ try {
       parentGroupNode: parent.positions[GROUP_NODE],
     });
     if (!childHasKp || !childHasGhost) throw new Error("è¿›å…¥å­å›¾åŽæœªåŒæ—¶å­˜åœ¨ node-001 ä¸Ž ghost:A");
+
+    // rev44：子站 hub = node-001 直连本站新增 node-006/007/008（真实数据边，不是 presentation hub）
+    const childStation = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const ids = [...r.getPositions().keys()].sort();
+      const list = (r._edgeList || []).map((e) => {
+        const p = String(e.id).split("|");
+        return p.length >= 3 ? { type: p[0], s: p[1], t: p[2] } : null;
+      }).filter(Boolean);
+      const visible = list.filter((e) => ids.includes(e.s) && ids.includes(e.t));
+      const degree = visible.filter((e) => e.s === "node-001" || e.t === "node-001").length;
+      const stack = window.MemoriaApp.state.graphMultilevel.drill.stack || [];
+      const entry = stack[stack.length - 1] || {};
+      const hubEdges = ((entry.backgroundEdges) || []).filter((e) => e.hub === true).length;
+      return { ids, dataEdges: visible.length, node001Degree: degree, hubEdges };
+    })()`);
+    const childIds = (childStation && childStation.ids) || [];
+    const childStationOk = !!(childStation
+      && ["node-001", "node-006", "node-007", "node-008"].every((id) => childIds.includes(id))
+      && childStation.dataEdges === 3
+      && childStation.node001Degree === 3
+      && childStation.hubEdges === 0);
+    evidence.steps.push({ step: "child-hub-station", ...(childStation || {}) });
+
 
     // ④ rev29 C：进入子站后，上一站全部 visible 节点以 dim ghost 背景层出现（不可命中/不可拖）。
     const bgView = await cdp.evalJS(`(() => {
@@ -303,7 +330,6 @@ try {
         whiteAlphas,
         bgEdgeCount: (r._bgSnapshotEdges || []).length,
         entryEdgeCount: ((entry.backgroundEdges) || []).length,
-        hubEdges: ((entry.backgroundEdges) || []).filter((e) => e.hub === true).map((e) => ({ source: String(e.source), target: String(e.target) })),
         bgEdgeStrokes: strokes.filter((x) => x.width < 1.2 && x.alpha < 1 && x.style === "#58a6ff").length,
       };
     })()`);
@@ -351,14 +377,6 @@ try {
     const bgEdgesOk = !!(bgView && bgView.bgEdgeCount > 0
       && bgView.bgEdgeCount === bgView.entryEdgeCount
       && bgView.bgEdgeStrokes >= bgView.bgEdgeCount);
-    // rev41：demo hub（L0_1）——前景 node-001 直连 3 簇 + 2 KP，共 5 条 presentation-only hub links
-    const hubEdges = (bgView && bgView.hubEdges) || [];
-    const hubTargets = hubEdges.map((e) => e.target).sort();
-    const hubLinksOk = !!(hubEdges.length === 5
-      && hubEdges.every((e) => e.source === "node-001")
-      && JSON.stringify(hubTargets) === JSON.stringify([
-        "group:demo:L0_2", "group:demo:L0_3", "group:demo:L0_4", "node-002", "node-003",
-      ].sort()));
     evidence.steps.push({
       step: "child-background-style",
       bgNoLabels, bgWhiteGlow, bgDepthDecayOk,
@@ -620,11 +638,12 @@ try {
       expandAllSingleL01: !!(l01Collapsed && l01Expanded
         && l01Collapsed.count === 1 && l01Expanded.count === 1),
       childBackgroundGhosts: bgOk,
+      childHubStation: childStationOk,
+      parentL01Members4,
       childBackgroundNoLabels: bgNoLabels,
       childBackgroundWhiteGlow: bgWhiteGlow,
       childBackgroundDepthDecay: bgDepthDecayOk,
       childBackgroundEdges: bgEdgesOk,
-      childHubLinks: hubLinksOk,
       backClearsBackground: backOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,

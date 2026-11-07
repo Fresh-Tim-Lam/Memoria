@@ -61,9 +61,52 @@ knowledge_points:
     end:
       snippet: 这是第五个知识点：由 L0_1 簇节点直连（demo）。
       line_hint: 11
+- id: node-006
+  name: 第六个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第六个知识点：位于 L0_1 子站内，由本站 hub 示例知识点直接连接（demo）。
+      line_hint: 13
+    end:
+      snippet: 这是第六个知识点：位于 L0_1 子站内，由本站 hub 示例知识点直接连接（demo）。
+      line_hint: 13
+- id: node-007
+  name: 第七个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第七个知识点：位于 L0_1 子站内，由本站 hub 示例知识点直接连接（demo）。
+      line_hint: 15
+    end:
+      snippet: 这是第七个知识点：位于 L0_1 子站内，由本站 hub 示例知识点直接连接（demo）。
+      line_hint: 15
+- id: node-008
+  name: 第八个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第八个知识点：位于 L0_1 子站内，由本站 hub 示例知识点直接连接（demo）。
+      line_hint: 17
+    end:
+      snippet: 这是第八个知识点：位于 L0_1 子站内，由本站 hub 示例知识点直接连接（demo）。
+      line_hint: 17
 links:
 - anchor_text: 第二个知识点
   targets: [node-002, node-003, node-004, node-005]
+  edge_type: reference
+  source_id: node-001
+  instances:
+  - line: 3
+    wrapped: false
+- anchor_text: 第六个知识点
+  targets: [node-006, node-007, node-008]
   edge_type: reference
   source_id: node-001
   instances:

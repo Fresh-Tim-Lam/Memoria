@@ -2038,12 +2038,12 @@ async function call(fn, ...args) {
     };
     const backgroundEdges = [];
     const seenEdges = new Set();
-    const pushBgEdge = (source, target, type, hub) => {
+    const pushBgEdge = (source, target, type) => {
       if (!source || !target || source === target) return;
       const key = `${source}|${target}|${type}`;
       if (seenEdges.has(key)) return;
       seenEdges.add(key);
-      backgroundEdges.push({ source, target, type, depth: bgDepth, hub: hub === true });
+      backgroundEdges.push({ source, target, type, depth: bgDepth });
     };
     for (const e of current.vm?.edges || []) {
       const ends = multilevelEdgeEnds(e);
@@ -2054,20 +2054,6 @@ async function call(fn, ...args) {
     for (const link of current.presentation?.links || []) {
       pushBgEdge(mapEdgeEnd(link.source), mapEdgeEnd(link.target),
         String(link.kind === "structure" ? "structural" : (link.kind || "structural")));
-    }
-    // rev41：hub 组（demo L0_1）——子站成员 KP 作为“地位高”的 hub，直连上一站簇/知识点。
-    // presentation-only：从前景 node-001 连到背景 bg:* 节点；只在 group.hub===true 的组启用。
-    if (group.hub === true) {
-      const hubNodeId = multilevelHighestDegreeNode(childVm, childPresentation)
-        || (childVm.nodes || [])[0]?.id;
-      const available = new Set(backgroundSnapshot.map((n) => String(n.id)));
-      const hubTargets = [
-        "group:demo:L0_2", "group:demo:L0_3", "group:demo:L0_4",
-        "node-002", "node-003", "node-004", "node-005",
-      ].filter((id) => available.has(id)).slice(0, 5);
-      for (const target of hubTargets) {
-        pushBgEdge(String(hubNodeId || ""), target, "structural", true);
-      }
     }
     // 同一画布不是硬切：父层这个 A 以幽灵节点留在画布上，连到子图入口
     const posMap = new Map((current.snapshot.positions || []).map(([id, p]) => [String(id), p]));

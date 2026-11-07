@@ -200,8 +200,6 @@
         presentation_only: true,
         container: g.container === true,
         empty_container: g.empty_container === true,
-        // task-391 rev41：hub 组（demo L0_1）标记（presentation-only）
-        hub: g.hub === true,
         // task-391 rev26：presentation 固定初值（空容器排布）；渲染后仍可被力/拖拽移动。
         x: Number.isFinite(Number(g.x)) ? Number(g.x) : null,
         y: Number.isFinite(Number(g.y)) ? Number(g.y) : null,
@@ -729,22 +727,14 @@
       if (this._ctx) this._draw();
     }
 
-    /** task-391 rev41：背景边端点解析——支持 foreground↔bg 混合（hub links 从前景 node-001 连向 bg:*）。 */
-    _backgroundEndpoint(id) {
-      const key = String(id);
-      if (key === "ghost:A") return this._scene.get("ghost:A");
-      if (this._scene.has(key)) return this._scene.get(key);
-      return this._scene.get(`bg:${key}`);
-    }
-
     /** task-391 rev38：背景边映射到场景节点 + 作为同一个 stepForce 的 links（节点同池受力）。 */
     _backgroundForceLinks() {
       const out = [];
       for (const edge of this._bgSnapshotEdges || []) {
-        const a = this._backgroundEndpoint(edge.source);
-        const b = this._backgroundEndpoint(edge.target);
-        if (!a || !b || a === b) continue;
-        out.push({ source: a.id, target: b.id, strength: 0.1, distance: 88 });
+        const a = edge.source === "ghost:A" ? "ghost:A" : `bg:${String(edge.source)}`;
+        const b = edge.target === "ghost:A" ? "ghost:A" : `bg:${String(edge.target)}`;
+        if (!this._scene.has(a) || !this._scene.has(b) || a === b) continue;
+        out.push({ source: a, target: b, strength: 0.1, distance: 88 });
       }
       return out;
     }
@@ -755,8 +745,8 @@
       if (!edges.length) return 0;
       let drawn = 0;
       for (const edge of edges) {
-        const a = this._backgroundEndpoint(edge.source);
-        const b = this._backgroundEndpoint(edge.target);
+        const a = edge.source === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(`bg:${String(edge.source)}`);
+        const b = edge.target === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(`bg:${String(edge.target)}`);
         if (!a || !b) continue;
         const depth = Math.max(1, Number(edge.depth) || 1);
         const lg = Math.log2(depth + 1);
