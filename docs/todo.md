@@ -72,7 +72,7 @@
 
 ## 5. 编辑器 / 富文本
 
-> **索引（2026-10-26）**：本表 21 项（详情 → [todo/05-editor.md](todo/05-editor.md)）；状态事实源 = 本表。
+> **索引（2026-10-26）**：本表 22 项（详情 → [todo/05-editor.md](todo/05-editor.md)）；状态事实源 = 本表。
 
 | 项 | 状态 | 详情 |
 | --- | --- | --- |
@@ -95,6 +95,7 @@
 | E31 | 🔴 K1 | [详](todo/05-editor.md#e31) |
 | E33 | 🔴 K1 | [详](todo/05-editor.md#e33) |
 | E34 | 🔴 K1 | [详](todo/05-editor.md#e34) |
+| E35 | 🔴 K1 | [详](todo/05-editor.md#e35) |
 | DOC02 | — | [详](todo/05-editor.md#doc02) |
 | DOC03 | — | [详](todo/05-editor.md#doc03) |
 
