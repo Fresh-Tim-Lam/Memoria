@@ -573,7 +573,7 @@
     });
     if (focus && !(smoothFocus && prev && prev.has(focus))) positions.set(focus, { x: cx, y: cy });
     const pinned = new Set(opts.pinned || []);
-    const links = forceLinksFor(shown.edges);
+    const links = forceLinksFor(shown.edges).concat(opts.extraLinks || []);
     // task-391：warmup 也走 RenderScene.stepForce（由 Renderer 在 sync 后调用 relax），
     // 这里只返回确定性初值，不再保留第二套力实现。
     return { positions, radiusById, shown, width, height, links, focus, pinned };
@@ -650,6 +650,8 @@
       this._bgGhost = null;
       // task-391 rev29：上一站全视图背景化快照 + 全展开开关 + 容器标签集（去重 VM cluster）
       this._bgSnapshot = [];
+      // task-391 rev38：上一站 visible edges（数据边+presentation links），背景化绘制/入同一力场
+      this._bgSnapshotEdges = [];
       this._expandAll = false;
       this._containerLabels = new Set(
         this._groups.filter((g) => g.container && g.label).map((g) => String(g.label))
@@ -709,8 +711,10 @@
     }
 
     /** task-391 rev29：进入子站时的“上一站全视图”快照（presentation-only 背景层）。 */
-    setBackgroundSnapshot(nodes) {
+    setBackgroundSnapshot(nodes, edges) {
       this._bgSnapshot = Array.isArray(nodes) ? nodes : [];
+      // task-391 rev38：background edges（上一站拓扑），不进 _edgeList/数据边统计
+      this._bgSnapshotEdges = Array.isArray(edges) ? edges : [];
       this._syncScene();
       if (this._ctx) this._draw();
       return this._bgSnapshot.length;
@@ -718,8 +722,46 @@
 
     clearBackgroundSnapshot() {
       this._bgSnapshot = [];
+      this._bgSnapshotEdges = [];
       this._syncScene();
       if (this._ctx) this._draw();
+    }
+
+    /** task-391 rev38：背景边映射到场景节点 + 作为同一个 stepForce 的 links（节点同池受力）。 */
+    _backgroundForceLinks() {
+      const out = [];
+      for (const edge of this._bgSnapshotEdges || []) {
+        const a = edge.source === "ghost:A" ? "ghost:A" : `bg:${String(edge.source)}`;
+        const b = edge.target === "ghost:A" ? "ghost:A" : `bg:${String(edge.target)}`;
+        if (!this._scene.has(a) || !this._scene.has(b)) continue;
+        out.push({ source: a, target: b, strength: 0.1, distance: 88 });
+      }
+      return out;
+    }
+
+    /** task-391 rev38：背景化边——保留原线型/方向语义，但更淡更细（alpha<1，颜色仍按 edge.type）。 */
+    _drawBackgroundEdges(ctx) {
+      const edges = this._bgSnapshotEdges || [];
+      if (!edges.length) return 0;
+      let drawn = 0;
+      for (const edge of edges) {
+        const a = edge.source === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(`bg:${String(edge.source)}`);
+        const b = edge.target === "ghost:A" ? this._scene.get("ghost:A") : this._scene.get(`bg:${String(edge.target)}`);
+        if (!a || !b) continue;
+        const depth = Math.max(1, Number(edge.depth) || 1);
+        const lg = Math.log2(depth + 1);
+        const alpha = Math.max(0.18, 0.5 - 0.1 * lg);
+        const type = String(edge.type || "reference");
+        // 用 drawDirectedEdge 的 alpha 参数直接绘制（保留箭头/线型语义），不再改外层 globalAlpha
+        drawDirectedEdge(
+          ctx, a.x, a.y, b.x, b.y, 0,
+          EDGE_COLORS[type] || EDGE_COLORS.reference,
+          Math.max(0.7, VISUAL.edgeWidth * 0.75), alpha, VISUAL.arrowSize * 0.8,
+          EDGE_DASH[type] || []
+        );
+        drawn += 1;
+      }
+      return drawn;
     }
 
     /** 只读：当前前景层可见节点（供“上一站快照”使用；不是第二份位置存储）。 */
@@ -1111,7 +1153,7 @@
     _startForceAnimation(opts = {}) {
       if (!this._animateForce || !this._scene.size()) return false;
       this._stopForceAnimation();
-      const links = forceLinksFor(this._edgeList);
+      const links = forceLinksFor(this._edgeList).concat(this._backgroundForceLinks());
       // task-391：动画每一帧只调用 RenderScene.stepForce（唯一力循环）。
       const state = this._scene.buildForceState({
         links,
@@ -1196,7 +1238,7 @@
       const layout = computeForceLayout(
         { nodes: model.nodes, edges: model.edges }, seed, width, height,
         this._degreeInfo, this._focusNodeId,
-        { pinned: this._pinned, prevPositions: null, animate: this._animateForce }
+        { pinned: this._pinned, prevPositions: null, animate: this._animateForce, extraLinks: this._backgroundForceLinks() }
       );
       this._layoutFocusId = this._focusNodeId;
       this._applyLayout(layout, model);
@@ -1245,6 +1287,7 @@
           {
             pinned: this._pinned,
             prevPositions: before,
+            extraLinks: this._backgroundForceLinks(),
             smoothFocus: this._animateForce,
             animate: this._animateForce,
           }
@@ -1639,7 +1682,7 @@
     /** task-381：拖拽 pin 后重加热力导向，让邻居继续收敛（不是拖完就死）。 */
     _settleForceAfterDrag() {
       if (!this._scene.size()) return;
-      this._scene.relax(forceLinksFor(this._edgeList), FORCE.dragTicks, {
+      this._scene.relax(forceLinksFor(this._edgeList).concat(this._backgroundForceLinks()), FORCE.dragTicks, {
         width: this._view.width,
         height: this._view.height,
         focusId: null,
@@ -2148,6 +2191,8 @@
         groupLabelBoxes: this._groupLabelBoxes,
         degreeInfo: this._degreeInfo,
       };
+      // task-391 rev38：背景化边（上一站拓扑）先于背景节点，保留原线型/方向语义
+      this._backgroundEdgeDraws = this._drawBackgroundEdges(ctx);
       // 背景层（幽灵）先画
       this._scene.draw(ctx, drawView, "background");
 

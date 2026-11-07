@@ -615,11 +615,10 @@ function run() {
       assert.ok(ctx.fillStyles.includes("#f0f6fc"), "背景节点应使用正常白色发光填充 #f0f6fc");
       assert.ok(!ctx.fillStyles.some((c) => /rgba\(139,\s*148,\s*158/.test(String(c))), "背景节点不得再使用 dim 灰填充");
     }
-    // 不参与力：stepForce 后位置不变
+    // rev38：背景节点与前景同池参与力（互相推挤/响应拖拽），但仍不可 pick
     const before = { x: kp.x, y: kp.y };
     for (let i = 0; i < 10; i += 1) r._scene.stepForce({ width: 800, height: 600, alpha: 0.5 });
-    assert.strictEqual(kp.x, before.x, "背景快照节点不得被力移动");
-    assert.strictEqual(kp.y, before.y, "背景快照节点不得被力移动");
+    assert.ok(Math.hypot(kp.x - before.x, kp.y - before.y) > 1e-3, "背景快照节点必须参与力并发生位移");
     assert.strictEqual(r.lastRender.edges, edgesBefore, "背景快照不得改变数据边统计");
     assert.strictEqual(r._edgeList.length, edgeListBefore, "背景快照不得写入 _edgeList");
     // 清除后节点消失
@@ -705,6 +704,59 @@ function run() {
     assert.ok(alphas.some((a) => Math.abs(a - a4) < 0.02), `depth4 绘制 alpha 应≈${a4.toFixed(3)}，实际 ${JSON.stringify(alphas)}`);
     assert.ok(alphas.every((a) => a < 1), "背景化节点 alpha 必须 < 1");
     assert.ok(a4 < a2, "更深层 alpha 应更小");
+    r.dispose();
+  });
+
+
+  // ── 18. task-391 rev38：上一站背景边（presentation-only）与同一力场 ─────────────
+  check("background_edges_are_drawn_and_joined_to_force", () => {
+    const host = makeHost();
+    const box = container();
+    const r = new Adapter.Renderer2D(box, { host, animateForce: false });
+    r.render(box, DEMO.vm);
+    // ghost A 是上一站入口在子站的表达（边端点 ghost:A 映射到它）
+    r.setBackgroundGhost({ x: 30, y: 30, radius: 16, label: "L0_1", targetId: "kp-022" });
+    r.setBackgroundSnapshot(
+      [
+        { id: "g1", x: 60, y: 90, radius: 10, kind: "cluster", shape: "hexagon", label: "", depth: 1 },
+        { id: "g2", x: 200, y: 90, radius: 10, kind: "cluster", shape: "hexagon", label: "", depth: 1 },
+        { id: "g3", x: 200, y: 220, radius: 8, kind: "kp", shape: "circle", label: "", depth: 1 },
+      ],
+      [
+        { source: "ghost:A", target: "g1", type: "structural", depth: 1 },
+        { source: "g1", target: "g2", type: "structural", depth: 1 },
+        { source: "g2", target: "g3", type: "reference", depth: 1 },
+      ]
+    );
+    assert.strictEqual(r._bgSnapshotEdges.length, 3, "背景边应随快照保存");
+    const edgeListBefore = r._edgeList.length;
+    assert.strictEqual(r._backgroundForceLinks().length, 3, "背景边应映射成同池力 links");
+    // 绘制：背景边更细（lineWidth<1.2）且 alpha<1，且数量≥背景边数
+    const ctx = r._ctx;
+    const strokes = [];
+    const oStroke = ctx.stroke;
+    ctx.stroke = function () {
+      strokes.push({ alpha: this.globalAlpha, style: String(this.strokeStyle), width: this.lineWidth, dash: this._dash.slice() });
+      return oStroke.call(this);
+    };
+    const drawn = r._drawBackgroundEdges(ctx);
+    ctx.stroke = oStroke;
+    assert.strictEqual(drawn, 3, "背景边应全部绘制");
+    const bgStrokes = strokes.filter((s) => s.width < 1.2 && s.alpha < 1);
+    assert.ok(bgStrokes.length >= 3, `背景边绘制票数应≥3，实际 ${bgStrokes.length}`);
+    // 力场：拖 g2 → g1/g3 响应（同一 stepForce，links 生效）
+    r._scene.beginDrag("bg:g2");
+    const g1Before = { x: r.getNode("bg:g1").x, y: r.getNode("bg:g1").y };
+    r._scene.dragTo("bg:g2", r.getNode("bg:g2").x + 80, r.getNode("bg:g2").y);
+    for (let i = 0; i < 30; i += 1) r._scene.stepForce({ width: 800, height: 600, alpha: 0.5, links: r._backgroundForceLinks() });
+    r._scene.endDrag();
+    const moved = Math.hypot(r.getNode("bg:g1").x - g1Before.x, r.getNode("bg:g1").y - g1Before.y);
+    assert.ok(moved > 1e-3, "背景边应把力传给相邻背景节点");
+    // 背景边不得进入数据边统计
+    assert.strictEqual(r._edgeList.length, edgeListBefore, "背景边不得写入 _edgeList");
+    r.clearBackgroundSnapshot();
+    assert.strictEqual(r._bgSnapshotEdges.length, 0);
+    assert.strictEqual(r.getNode("bg:g1"), null);
     r.dispose();
   });
 

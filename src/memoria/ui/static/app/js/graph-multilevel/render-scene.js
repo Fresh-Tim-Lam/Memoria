@@ -508,11 +508,9 @@
      */
     stepForce(state = {}) {
       const force = this.force;
-      // task-391 rev29：background 快照层（hitPolicy=none）不参与力（位置随上一站快照冻结）；
-      // 入口幽灵 A（hitPolicy=return）仍留在同一力池，保持“拖 KP → 幽灵响应”的旧回归。
-      const ids = [...this.nodes.keys()]
-        .filter((id) => { const n = this.nodes.get(id); return n && n.hitPolicy !== "none"; })
-        .sort();
+      // task-391 rev38：background 快照层与前景节点/ghost A 同池参与力（互相推挤、随拖拽响应），
+      // 但仍不可 pick/拖拽（hitPolicy=none 只影响命中，不再排除力）。
+      const ids = [...this.nodes.keys()].sort();
       const count = ids.length;
       if (!count) return 0;
       const alpha = num(state.alpha, 1);

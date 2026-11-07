@@ -260,6 +260,8 @@ try {
       const oFT = ctx.fillText;
       const oGrad = ctx.createRadialGradient;
       const oFill = ctx.fill;
+      const oStroke = ctx.stroke;
+      const strokes = [];
       ctx.fillText = function (t, x, y) { texts.push(String(t)); return oFT.call(this, t, x, y); };
       ctx.createRadialGradient = function (...a) { gradients += 1; return oGrad.apply(this, a); };
       ctx.fill = function () {
@@ -267,10 +269,15 @@ try {
         fills.push({ alpha: Number(this.globalAlpha), style: String(this.fillStyle || "") });
         return oFill.call(this);
       };
+      ctx.stroke = function () {
+        strokes.push({ alpha: Number(this.globalAlpha), style: String(this.strokeStyle || ""), width: Number(this.lineWidth) });
+        return oStroke.call(this);
+      };
       r._draw();
       ctx.fillText = oFT;
       ctx.createRadialGradient = oGrad;
       ctx.fill = oFill;
+      ctx.stroke = oStroke;
       // rev35：快照项的原始半径/深度（用于校验 log 衰减）
       const stack = window.MemoriaApp.state.graphMultilevel.drill.stack || [];
       const entry = stack[stack.length - 1] || {};
@@ -294,6 +301,9 @@ try {
         snapshotMap,
         nodeRadii,
         whiteAlphas,
+        bgEdgeCount: (r._bgSnapshotEdges || []).length,
+        entryEdgeCount: ((entry.backgroundEdges) || []).length,
+        bgEdgeStrokes: strokes.filter((x) => x.width < 1.2 && x.alpha < 1 && x.style === "#58a6ff").length,
       };
     })()`);
     evidence.steps.push({ step: "child-background-snapshot", ...bgView });
@@ -336,6 +346,10 @@ try {
       && bgView.whiteAlphas.filter((a) => Math.abs(a - 0.48) < 0.03).length >= 7
       && bgView.whiteAlphas.filter((a) => a >= 1).length <= 1);
     const bgDepthDecayOk = bgRadiiOk && bgAlphaOk;
+    // rev38：上一站背景边（数据边 + presentation links）保留并绘制（alpha<1），不进数据边
+    const bgEdgesOk = !!(bgView && bgView.bgEdgeCount > 0
+      && bgView.bgEdgeCount === bgView.entryEdgeCount
+      && bgView.bgEdgeStrokes >= bgView.bgEdgeCount);
     evidence.steps.push({
       step: "child-background-style",
       bgNoLabels, bgWhiteGlow, bgDepthDecayOk,
@@ -491,12 +505,15 @@ try {
     await stopAnim(cdp);
     const afterKp = await cdp.evalJS(SNAP);
     const ghostMoved = dist(afterKp.positions["ghost:A"], child.positions["ghost:A"]);
+    const bgIds = Object.keys(child.positions).filter((id) => id.startsWith("bg:"));
+    const bgMovedMax = bgIds.reduce((m, id) => Math.max(m, dist(afterKp.positions[id], child.positions[id])), 0);
     const kpMoved = dist(afterKp.positions[KP_ID], child.positions[KP_ID]);
     evidence.steps.push({
       step: "drag-kp",
       kpFrom, kpTo,
       kpMovedPx: Math.round(kpMoved * 100) / 100,
       ghostMovedPx: Math.round(ghostMoved * 100) / 100,
+      bgMovedMaxPx: Math.round(bgMovedMax * 100) / 100,
       ghostFrom: child.positions["ghost:A"], ghostTo: afterKp.positions["ghost:A"],
     });
 
@@ -597,6 +614,7 @@ try {
       childBackgroundNoLabels: bgNoLabels,
       childBackgroundWhiteGlow: bgWhiteGlow,
       childBackgroundDepthDecay: bgDepthDecayOk,
+      childBackgroundEdges: bgEdgesOk,
       backClearsBackground: backOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
@@ -604,6 +622,7 @@ try {
       drillbarOnlyCrumbsNoBack: drillbarOk,
       textNotSelectable: noSelectOk,
       dragKpMovedGhost: ghostMoved > 0.01,
+      bgNodesParticipateInForce: bgMovedMax > 0.05,
       dragGhostMovedKp: kpMoved2 > 0.01,
       singleCanvas: afterGhost.canvasCount === 1 && parent.canvasCount === 1 && child.canvasCount === 1,
     };

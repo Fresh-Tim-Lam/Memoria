@@ -1966,7 +1966,7 @@ async function call(fn, ...args) {
     if (entry.snapshot) mounted.renderer.restoreViewState(entry.snapshot);
     // task-391 rev29 C：先挂上一站背景快照（若有），再设入口幽灵；返回上一站时快照为空 ⇒ 清除。
     if (mounted.renderer.setBackgroundSnapshot) {
-      mounted.renderer.setBackgroundSnapshot(entry.backgroundSnapshot || []);
+      mounted.renderer.setBackgroundSnapshot(entry.backgroundSnapshot || [], entry.backgroundEdges || []);
     }
     if (entry.backgroundGhost) mounted.renderer.setBackgroundGhost(entry.backgroundGhost);
     else mounted.renderer.clearBackgroundGhost?.();
@@ -2018,6 +2018,43 @@ async function call(fn, ...args) {
     const backgroundSnapshot = (mounted.renderer.getVisibleNodes ? mounted.renderer.getVisibleNodes() : [])
       .filter((n) => String(n.id) !== entrySceneId)
       .map((n) => ({ ...n, depth: bgDepth }));
+    // rev38：同时抓上一站 visible edges（数据边 + presentation links），随快照进入子站背景层。
+    // 端点映射：被折叠进容器的成员 → group:<gid>；入口组 L0_1 → ghost:A（保留 ghost A 的跨层语义）。
+    const hiddenToGroup = new Map();
+    for (const g of groups) {
+      if (!g.container) continue;
+      const collapsed = mounted.renderer && mounted.renderer.isGroupCollapsed
+        ? mounted.renderer.isGroupCollapsed(g.group_id)
+        : true;
+      if (!collapsed) continue;
+      for (const m of g.member_ids || []) hiddenToGroup.set(String(m), `group:${String(g.group_id)}`);
+    }
+    const mapEdgeEnd = (id) => {
+      const s = String(id);
+      if (s === entrySceneId) return "ghost:A";
+      const mapped = hiddenToGroup.get(s) || s;
+      // 被折叠进入口容器（L0_1）的成员，其可见表达就是 ghost:A
+      return mapped === entrySceneId ? "ghost:A" : mapped;
+    };
+    const backgroundEdges = [];
+    const seenEdges = new Set();
+    const pushBgEdge = (source, target, type) => {
+      if (!source || !target || source === target) return;
+      const key = `${source}|${target}|${type}`;
+      if (seenEdges.has(key)) return;
+      seenEdges.add(key);
+      backgroundEdges.push({ source, target, type, depth: bgDepth });
+    };
+    for (const e of current.vm?.edges || []) {
+      const ends = multilevelEdgeEnds(e);
+      if (!ends) continue;
+      pushBgEdge(mapEdgeEnd(ends.source), mapEdgeEnd(ends.target),
+        String(e.type || e.edge_type || "reference"));
+    }
+    for (const link of current.presentation?.links || []) {
+      pushBgEdge(mapEdgeEnd(link.source), mapEdgeEnd(link.target),
+        String(link.kind === "structure" ? "structural" : (link.kind || "structural")));
+    }
     // 同一画布不是硬切：父层这个 A 以幽灵节点留在画布上，连到子图入口
     const posMap = new Map((current.snapshot.positions || []).map(([id, p]) => [String(id), p]));
     // task-391 回归修复：父视图把该组折叠时，成员是 hidden（RenderScene 正确过滤，不写快照），
@@ -2049,6 +2086,8 @@ async function call(fn, ...args) {
       backgroundGhost: ghost,
       // task-391 rev29 C：上一站全视图背景化快照（presentation-only 背景层；返回时清除）
       backgroundSnapshot,
+      // task-391 rev38：上一站 visible edges（数据边 + presentation links）
+      backgroundEdges,
       groupId: String(groupId),
       crossEdges: crossEdges.length,
       focusNodeId: multilevelHighestDegreeNode(childVm, childPresentation),

@@ -86,6 +86,7 @@ def test_render_scene_node_suite() -> None:
         "presentation_empty_containers_labels_and_links_are_not_data_edges",
         "background_snapshot_layer_is_not_pickable_or_forced",
         "background_snapshot_depth_decay_is_log",
+        "background_edges_are_drawn_and_joined_to_force",
         "expand_all_keeps_single_container_representation",
     ):
         assert required in names, f"RenderScene 套件缺用例：{required}"
