@@ -1964,8 +1964,14 @@ async function call(fn, ...args) {
     mounted.setFocusNode(entry.focusNodeId || null);
     mounted.renderer.render(host, entry.vm);
     if (entry.snapshot) mounted.renderer.restoreViewState(entry.snapshot);
+    // task-391 rev29 C：先挂上一站背景快照（若有），再设入口幽灵；返回上一站时快照为空 ⇒ 清除。
+    if (mounted.renderer.setBackgroundSnapshot) {
+      mounted.renderer.setBackgroundSnapshot(entry.backgroundSnapshot || []);
+    }
     if (entry.backgroundGhost) mounted.renderer.setBackgroundGhost(entry.backgroundGhost);
     else mounted.renderer.clearBackgroundGhost?.();
+    // task-391 rev29 B：全展开状态与容器表达保持一致（同一时刻只出现一个 L0_x）。
+    mounted.renderer.setExpandAll?.(state.graphMultilevel?.nav?.getMode?.() === "full");
     renderMultilevelDrillbar();
     return true;
   }
@@ -1998,10 +2004,18 @@ async function call(fn, ...args) {
       .map((cg) => ({ ...cg, member_ids: (cg.member_ids || []).filter((id) => members.has(String(id))) }))
       .filter((cg) => cg.member_ids.length);
     const childPresentation = { ...current.presentation, groups: childGroups };
+    // 子站只保留自身组的展示；父站 presentation 连线只属于上一站，不带到子站。
+    childPresentation.links = [];
     const childVm = { ...current.vm, nodes, edges };
     const title = group.section || group.file || String(group.group_id);
     // 进入子图前记录父视图（位置/相机/选中），返回时原样恢复
     current.snapshot = mounted.renderer.captureViewState();
+    // task-391 rev29 C：抓取上一站当前 visible 节点（簇 + KP + 位置/标签/形状），
+    // 进入子站后作为 background 层 dim ghost 显示；入口组节点仍由 ghost A/跨层线表达，故从快照剔除。
+    const entrySceneId = `group:${String(groupId)}`;
+    const backgroundSnapshot = (mounted.renderer.getVisibleNodes ? mounted.renderer.getVisibleNodes() : [])
+      .filter((n) => String(n.id) !== entrySceneId)
+      .map((n) => ({ ...n }));
     // 同一画布不是硬切：父层这个 A 以幽灵节点留在画布上，连到子图入口
     const posMap = new Map((current.snapshot.positions || []).map(([id, p]) => [String(id), p]));
     // task-391 回归修复：父视图把该组折叠时，成员是 hidden（RenderScene 正确过滤，不写快照），
@@ -2031,6 +2045,8 @@ async function call(fn, ...args) {
       path: [...current.path, title],
       snapshot: null,
       backgroundGhost: ghost,
+      // task-391 rev29 C：上一站全视图背景化快照（presentation-only 背景层；返回时清除）
+      backgroundSnapshot,
       groupId: String(groupId),
       crossEdges: crossEdges.length,
       focusNodeId: multilevelHighestDegreeNode(childVm, childPresentation),
@@ -2556,6 +2572,10 @@ async function call(fn, ...args) {
       if (focusId) state.graphMultilevel.mounted.setFocusNode?.(focusId);
       if (opts.replace === true) state.graphMultilevel.mounted.renderer.render(host, vm);
       else state.graphMultilevel.mounted.update(vm, {});
+      // task-391 rev29 B：全展开（nav mode=full）时容器组展开，避免 L0_x 同时出现簇节点与展开 envelope。
+      state.graphMultilevel.mounted.renderer.setExpandAll?.(
+        state.graphMultilevel.nav?.getMode?.() === "full"
+      );
       if (state.graphMultilevel.hOverview && payload.vm?.dimension_id === "H") {
         multilevelCollapseTopGroups();
         multilevelLayoutOverviewClusters();

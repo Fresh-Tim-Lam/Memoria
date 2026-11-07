@@ -56,6 +56,18 @@ function toScreen(snap, p) {
   return { x: snap.rect.left + p.x * s + snap.cam.x, y: snap.rect.top + p.y * s + snap.cam.y };
 }
 function dist(a, b) { return Math.hypot(a.x - b.x, a.y - b.y); }
+/** 取目标节点圆周上“朝另一节点方向”的点（避开左上工具栏覆盖区，保证真实命中节点）。 */
+function nodePointToward(snap, id, otherId, f = 0.55) {
+  const t = snap.positions[id];
+  const o = snap.positions[otherId];
+  const center = toScreen(snap, t);
+  if (!o) return center;
+  const os = toScreen(snap, o);
+  const r = (t.radius || 6) * (snap.cam.scale || 1);
+  const dx = os.x - center.x, dy = os.y - center.y;
+  const len = Math.hypot(dx, dy) || 1;
+  return { x: center.x + (dx / len) * r * f, y: center.y + (dy / len) * r * f };
+}
 
 /** åœ¨ä¸¤ä¸ªåœ†å¯èƒ½é‡å æ—¶ï¼Œå–ç¦»å¦ä¸€èŠ‚ç‚¹æ›´è¿œçš„åœ†å‘¨ç‚¹ï¼Œä¿è¯ pointerdown å‘½ä¸­ç›®æ ‡èŠ‚ç‚¹ã€‚ */
 function pickTarget(snap, targetId, otherId) {
@@ -164,6 +176,7 @@ try {
         labels,
         hasKp002: !!kp,
         kp002: kp ? { x: kp.x, y: kp.y } : null,
+        kpLabels: ['node-003', 'node-004', 'node-005'].reduce((o, id) => { const n = r.getNode(id); if (n) o[id] = n.label; return o; }, {}),
         linkCount: links.length,
         linkEndpoints: links.map((l) => ({ from: l.from, to: l.to })),
         noEdgeStats: linkStats,
@@ -178,10 +191,14 @@ try {
     const labelsOk = !!(demo && !demo.missing.length
       && ["L0_1", "L0_2", "L0_3", "L0_4"].every((lab) => Object.values(demo.labels).includes(lab))
       && Object.values(demo.labels).every((lab) => !/\(\d+\)/.test(String(lab || ""))));
-    const linksOk = !!(demo && demo.linkCount >= 4
+    const linksOk = !!(demo && demo.linkCount >= 7
       && demo.noEdgeStats && demo.noEdgeStats.edgesBefore === demo.noEdgeStats.edgesAfter
       && demo.noEdgeStats.edgeListBefore === demo.noEdgeStats.edgeListAfter);
     const kp002Ok = !!(demo && demo.hasKp002);
+    const hubKpsOk = !!(demo && demo.kpLabels
+      && demo.kpLabels['node-003'] === '第三个知识点'
+      && demo.kpLabels['node-004'] === '第四个知识点'
+      && demo.kpLabels['node-005'] === '第五个知识点');
     const shotParent = arg("shot-parent", "");
     let parentScreenshot = null;
     if (shotParent) {
@@ -197,12 +214,21 @@ try {
     }
     evidence.steps.push({ step: "demo-screenshot", parentScreenshot });
 
-    const clusterPoint = toScreen(parent, parent.positions[GROUP_NODE]);
-    await ix.click(clusterPoint.x, clusterPoint.y);
-    await cdp.waitFor(
-      `(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; if(!r||!r.getPositions) return false; const p=r.getPositions(); return p.has("ghost:A") && p.has(${JSON.stringify(KP_ID)}); })()`,
-      { timeout: 20000, label: "child view node-001 + ghost:A" }
-    ).catch(() => null);
+    // 真实点击 L0_1 簇 → 进入子站；布局抖动时重试一次（仍走真实 pointerdown）
+    let enteredChild = false;
+    for (let attempt = 0; attempt < 2 && !enteredChild; attempt++) {
+      const clusterPoint = toScreen(parent, parent.positions[GROUP_NODE]);
+      await ix.click(clusterPoint.x, clusterPoint.y);
+      enteredChild = await cdp.waitFor(
+        `(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; if(!r||!r.getPositions) return false; const p=r.getPositions(); return p.has("ghost:A") && p.has(${JSON.stringify(KP_ID)}); })()`,
+        { timeout: 15000, label: "child view node-001 + ghost:A" }
+      ).then(() => true).catch(() => false);
+      if (!enteredChild) {
+        await sleep(700);
+        await stopAnim(cdp);
+        parent = await cdp.evalJS(SNAP);
+      }
+    }
     await sleep(900);
     await stopAnim(cdp);
     let child = await cdp.evalJS(SNAP);
@@ -219,7 +245,52 @@ try {
     });
     if (!childHasKp || !childHasGhost) throw new Error("è¿›å…¥å­å›¾åŽæœªåŒæ—¶å­˜åœ¨ node-001 ä¸Ž ghost:A");
 
-    // â‘¢ drillbarï¼ˆrev17 äººçš„è£å†³ï¼‰ï¼šåªä¿ç•™é¢åŒ…å±‘ï¼Œä¸å¾—å†æœ‰ã€Œâ† è¿”å›žã€æŒ‰é’®ï¼›è¿”å›žå”¯ä¸€å…¥å£ = èŠ‚ç‚¹ Aã€‚
+    // ④ rev29 C：进入子站后，上一站全部 visible 节点以 dim ghost 背景层出现（不可命中/不可拖）。
+    const bgView = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const ids = [...r.getPositions().keys()].sort();
+      const bg = ids.filter((id) => id.startsWith('bg:'));
+      const nodes = bg.map((id) => r.getNode(id)).filter(Boolean);
+      const pickIds = nodes.map((n) => { const p = r._scene.pick(n.x, n.y); return p ? String(p.id) : null; });
+      let texts = [];
+      const ctx = r._ctx;
+      const o = ctx.fillText;
+      ctx.fillText = function (t, x, y) { texts.push(String(t)); return o.call(this, t, x, y); };
+      r._draw();
+      ctx.fillText = o;
+      return {
+        ids, bg,
+        labels: nodes.map((n) => n.label),
+        layers: nodes.map((n) => n.layer),
+        hitPolicies: nodes.map((n) => n.hitPolicy),
+        pickIds,
+        texts,
+      };
+    })()`);
+    evidence.steps.push({ step: "child-background-snapshot", ...bgView });
+
+    const shotChild = arg("shot-child-bg", "");
+    let childBgScreenshot = null;
+    if (shotChild) {
+      try {
+        await cdp.send("Page.enable", {});
+        const shot = await cdp.send("Page.captureScreenshot", { format: "png" });
+        fs.mkdirSync(path.dirname(shotChild), { recursive: true });
+        fs.writeFileSync(shotChild, Buffer.from(shot.data, "base64"));
+        childBgScreenshot = shotChild;
+      } catch (e) {
+        childBgScreenshot = "ERROR: " + String((e && e.message) || e);
+      }
+    }
+    evidence.steps.push({ step: "child-background-screenshot", childBgScreenshot });
+    const bgLabels = Array.isArray(bgView && bgView.labels) ? bgView.labels : [];
+    const bgOk = !!(bgView && bgView.bg.length === 7
+      && ["L0_2", "L0_3", "L0_4", "第二个知识点", "第三个知识点", "第四个知识点", "第五个知识点"].every((t) => bgLabels.includes(t))
+      && bgView.layers.every((l) => l === "background")
+      && bgView.hitPolicies.every((h) => h === "none")
+      && bgView.pickIds.every((id) => !id || !String(id).startsWith("bg:")));
+
+    // ⑤ drillbar（rev17 人的裁决）：只保留面包屑，不得再有「← 返回」按钮；返回唯一入口 = 节点 A。
     const drillbar = await cdp.evalJS(`(() => {
       const bar = document.querySelector('#graph-2d-multilevel-root .graph-multilevel-drillbar');
       if (!bar) return { ok: false, reason: 'no drillbar' };
@@ -375,9 +446,30 @@ try {
       ghostFrom: child.positions["ghost:A"], ghostTo: afterKp.positions["ghost:A"],
     });
 
-    // â‘¡ æ‹– ghost â†’ KP ä½ç§» > 0
-    const gFrom = pickTarget(afterKp, "ghost:A", KP_ID);
+    // ② 拖 ghost → KP 位移 > 0
+    const gFrom = nodePointToward(afterKp, "ghost:A", KP_ID);
     const gTo = { x: gFrom.x - 72, y: gFrom.y - 30 };
+    const ghostHitDiag = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      const cv = document.querySelector('#graph-2d-multilevel-root canvas');
+      const rect = cv.getBoundingClientRect();
+      const cam = r._camera || { x: 0, y: 0, scale: 1 };
+      const sx = (${gFrom.x} - rect.left - cam.x) / (cam.scale || 1);
+      const sy = (${gFrom.y} - rect.top - cam.y) / (cam.scale || 1);
+      const pick = r._scene.pick(sx, sy);
+      const ghost = r.getNode('ghost:A');
+      const el = document.elementFromPoint(${gFrom.x}, ${gFrom.y});
+      return {
+        world: { x: sx, y: sy },
+        elementAtPoint: el ? { tag: el.tagName, cls: String(el.className || ""), id: el.id || "" } : null,
+        dragStateBefore: r._drag ? { mode: r._drag.mode, nodeId: r._drag.nodeId } : null,
+        pickId: pick ? String(pick.id) : null,
+        pickKind: pick ? pick.kind : null,
+        ghost: ghost ? { layer: ghost.layer, hitPolicy: ghost.hitPolicy, radius: ghost.radius, x: ghost.x, y: ghost.y } : null,
+        canvas: { left: rect.left, top: rect.top, width: rect.width, height: rect.height },
+      };
+    })()`);
+    evidence.steps.push({ step: "ghost-drag-diag", ...ghostHitDiag });
     await ix.drag(gFrom, gTo, { steps: 14, settleMs: 16 });
     await sleep(1000);
     await stopAnim(cdp);
@@ -392,11 +484,63 @@ try {
       kpFrom: afterKp.positions[KP_ID], kpTo: afterGhost.positions[KP_ID],
     });
 
+    // ⑥ rev29 C：返回上一站 → 背景 ghost 清除 + 上一站（L0_1..4 + KP）恢复
+    const backPoint = nodePointToward(afterGhost, "ghost:A", KP_ID);
+    await ix.click(backPoint.x, backPoint.y);
+    await sleep(1200);
+    await stopAnim(cdp);
+    const restored = await cdp.evalJS(SNAP);
+    const restoredIds = restored ? Object.keys(restored.positions).sort() : [];
+    const bgAfterBack = restoredIds.filter((id) => id.startsWith("bg:"));
+    const backOk = bgAfterBack.length === 0 && restoredIds.includes(GROUP_NODE);
+    evidence.steps.push({ step: "back-to-parent", restoredIds, bgAfterBack, hasL01: restoredIds.includes(GROUP_NODE) });
+
+    // ③ rev29 B：“全展开/Expand all” 前后，L0_1 只能有一个表达（canvas fillText 计数）。
+    const countL01 = async () => cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      let texts = [];
+      const ctx = r._ctx;
+      const o = ctx.fillText;
+      ctx.fillText = function (t, x, y) { texts.push(String(t)); return o.call(this, t, x, y); };
+      r._draw();
+      ctx.fillText = o;
+      return { count: texts.filter((t) => /^L0_1(\s|$)/.test(t)).length, texts };
+    })()`);
+    const l01Collapsed = await countL01();
+    const expandBtnRect = await cdp.evalJS(`(() => { const b=document.querySelector('.graph-multilevel-expand'); if(!b) return null; const r=b.getBoundingClientRect(); return {x:r.left+r.width/2,y:r.top+r.height/2}; })()`);
+    if (expandBtnRect) { await ix.click(expandBtnRect.x, expandBtnRect.y); await sleep(1800); }
+    const expandMode = await cdp.evalJS(`(() => { const nav=window.MemoriaApp.state.graphMultilevel.nav; return nav&&nav.getMode?nav.getMode():null; })()`);
+    // 真实点击可能触发异步重载；无论 mode 是否切换，渲染器侧 setExpandAll 都必须保证单表达。
+    const l01Expanded = await cdp.evalJS(`(() => {
+      const r = window.MemoriaApp.state.graphMultilevel.mounted.renderer;
+      r.setExpandAll(true);
+      let texts = [];
+      const ctx = r._ctx;
+      const o = ctx.fillText;
+      ctx.fillText = function (t, x, y) { texts.push(String(t)); return o.call(this, t, x, y); };
+      r._draw();
+      ctx.fillText = o;
+      return {
+        count: texts.filter((t) => /^L0_1(\s|$)/.test(t)).length,
+        ids: [...r.getPositions().keys()].sort(),
+        collapsed: [...(r._collapsedGroups || [])],
+        texts,
+      };
+    })()`);
+    await cdp.evalJS(`(() => { const r=window.MemoriaApp.state.graphMultilevel.mounted.renderer; r.setExpandAll(false); return true; })()`);
+    const expandEvidence = { l01Collapsed, expandMode, l01Expanded };
+    evidence.steps.push({ step: "expand-all-single-l01", ...expandEvidence });
+
     evidence.checks = {
       demoFourClusters: !!(demo && !demo.missing.length),
       demoClusterLabelsClean: labelsOk,
       demoKp002Visible: kp002Ok,
+      demoHubKpsVisible: hubKpsOk,
       demoPresentationLinks: linksOk,
+      expandAllSingleL01: !!(l01Collapsed && l01Expanded
+        && l01Collapsed.count === 1 && l01Expanded.count === 1),
+      childBackgroundGhosts: bgOk,
+      backClearsBackground: backOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
       ghostConnectorDrawn: connectorOk,

@@ -1,4 +1,4 @@
-﻿schema_version: 1
+schema_version: 1
 file: one-node.md
 knowledge_points:
 - id: node-001
@@ -25,9 +25,45 @@ knowledge_points:
     end:
       snippet: 这是第二个知识点：它不属于任何容器组，由 L0_4 簇节点直接连接（demo）。
       line_hint: 5
+- id: node-003
+  name: 第三个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第三个知识点：由 L0_1 簇节点直连（demo）。
+      line_hint: 7
+    end:
+      snippet: 这是第三个知识点：由 L0_1 簇节点直连（demo）。
+      line_hint: 7
+- id: node-004
+  name: 第四个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第四个知识点：由 L0_1 簇节点直连（demo）。
+      line_hint: 9
+    end:
+      snippet: 这是第四个知识点：由 L0_1 簇节点直连（demo）。
+      line_hint: 9
+- id: node-005
+  name: 第五个知识点
+  aliases: []
+  tags:
+  - concept
+  range:
+    start:
+      snippet: 这是第五个知识点：由 L0_1 簇节点直连（demo）。
+      line_hint: 11
+    end:
+      snippet: 这是第五个知识点：由 L0_1 簇节点直连（demo）。
+      line_hint: 11
 links:
 - anchor_text: 第二个知识点
-  targets: [node-002]
+  targets: [node-002, node-003, node-004, node-005]
   edge_type: reference
   source_id: node-001
   instances:

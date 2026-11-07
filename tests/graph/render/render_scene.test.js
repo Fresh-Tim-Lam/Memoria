@@ -576,6 +576,83 @@ function run() {
     r.dispose();
   });
 
+
+  // ── 15. task-391 rev29：上一站全视图背景化（presentation-only background layer）─────────
+  check("background_snapshot_layer_is_not_pickable_or_forced", () => {
+    const host = makeHost();
+    const box = container();
+    const r = new Adapter.Renderer2D(box, { host, animateForce: false });
+    r.render(box, DEMO.vm);
+    const edgesBefore = r.lastRender.edges;
+    const edgeListBefore = r._edgeList.length;
+    r.setBackgroundSnapshot([
+      { id: "node-bg-1", x: 40, y: 40, radius: 8, kind: "kp", shape: "circle", label: "上一站KP" },
+      { id: "group:demo:L0_9", x: 70, y: 90, radius: 14, kind: "cluster", shape: "hexagon", label: "L0_9" },
+    ]);
+    const kp = r.getNode("bg:node-bg-1");
+    const cluster = r.getNode("bg:group:demo:L0_9");
+    assert.ok(kp && cluster, "背景快照节点必须进入 RenderScene");
+    assert.strictEqual(kp.layer, "background");
+    assert.strictEqual(kp.hitPolicy, "none");
+    assert.strictEqual(cluster.shape, "hexagon");
+    // 不可命中（点其圆心不应返回背景节点）
+    assert.strictEqual(r._scene.pick(40, 40), null, "背景快照节点不得参与 pick");
+    // 不参与力：stepForce 后位置不变
+    const before = { x: kp.x, y: kp.y };
+    for (let i = 0; i < 10; i += 1) r._scene.stepForce({ width: 800, height: 600, alpha: 0.5 });
+    assert.strictEqual(kp.x, before.x, "背景快照节点不得被力移动");
+    assert.strictEqual(kp.y, before.y, "背景快照节点不得被力移动");
+    assert.strictEqual(r.lastRender.edges, edgesBefore, "背景快照不得改变数据边统计");
+    assert.strictEqual(r._edgeList.length, edgeListBefore, "背景快照不得写入 _edgeList");
+    // 清除后节点消失
+    r.clearBackgroundSnapshot();
+    assert.strictEqual(r.getNode("bg:node-bg-1"), null);
+    r.dispose();
+  });
+
+  // ── 16. task-391 rev29：全展开时容器只保留一个表达（不再出现两个 L0_1）─────────
+  check("expand_all_keeps_single_container_representation", () => {
+    const host = makeHost();
+    const box = container();
+    const presentation = {
+      degrees: DEMO.presentation.degrees,
+      names: DEMO.presentation.names,
+      groups: [
+        { group_id: "demo:L0_1", label: "L0_1", section: "L0_1", file: "demo.md", member_ids: ["kp-022"], container: true, x: 60, y: 120 },
+        { group_id: "demo:L0_2", label: "L0_2", section: "L0_2", file: "demo.md", member_ids: [], container: true, empty_container: true, x: 200, y: 160 },
+      ],
+      links: [],
+    };
+    // 构造一个与容器同名的 VM cluster（模拟全展开 payload），必须被去重
+    const vm = {
+      ...DEMO.vm,
+      nodes: [...DEMO.vm.nodes, { id: "vm-cluster-L0_1", kind: "cluster", label: "L0_1", role: "member", presence: "shown" }],
+    };
+    const r = new Adapter.Renderer2D(box, { host, presentation, animateForce: false });
+    r.render(box, vm);
+    assert.strictEqual(r.getNode("vm-cluster-L0_1"), null, "与容器同名的 VM cluster 必须去重");
+    assert.ok(r.getNode("group:demo:L0_1"), "折叠态应有 L0_1 簇节点");
+    const labelsOf = () => {
+      const out = [];
+      const ctx = r._ctx;
+      const o = ctx.fillText;
+      ctx.fillText = function (t) { out.push(String(t)); return o.call(this, t); };
+      r._draw();
+      ctx.fillText = o;
+      return out.filter((t) => /^L0_1(\s|$)/.test(t)).length;
+    };
+    assert.strictEqual(labelsOf(), 1, "折叠态 L0_1 标签只能出现一次");
+    r.setExpandAll(true);
+    assert.strictEqual(r.getNode("group:demo:L0_1"), null, "展开态不再画 L0_1 簇节点");
+    assert.ok(r.getNode("kp-022"), "展开态应显示成员 KP");
+    assert.strictEqual(r.getNode("group:demo:L0_2") !== null, true, "无成员空容器保持簇节点");
+    assert.strictEqual(labelsOf(), 1, "展开态 L0_1 标签只能出现一次");
+    r.setExpandAll(false);
+    assert.ok(r.getNode("group:demo:L0_1"), "切回折叠态恢复 L0_1 簇节点");
+    assert.strictEqual(labelsOf(), 1);
+    r.dispose();
+  });
+
   console.log(JSON.stringify({
     suite: "render_scene",
     results,

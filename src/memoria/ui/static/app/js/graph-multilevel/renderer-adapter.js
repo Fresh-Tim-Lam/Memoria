@@ -632,6 +632,12 @@
       this._groupHit = [];
       this._groupLabelBoxes = [];
       this._bgGhost = null;
+      // task-391 rev29：上一站全视图背景化快照 + 全展开开关 + 容器标签集（去重 VM cluster）
+      this._bgSnapshot = [];
+      this._expandAll = false;
+      this._containerLabels = new Set(
+        this._groups.filter((g) => g.container && g.label).map((g) => String(g.label))
+      );
       this._lastVm = null;
       this._pendingVm = null;
       this._deferredScheduled = false;
@@ -681,7 +687,37 @@
         cluster: (ctx, node, view) => this._paintVmCluster(ctx, node, view),
         group: (ctx, node, view) => this._paintGroupCluster(ctx, node, view),
         ghost: (ctx, node, view) => this._paintGhost(ctx, node, view),
+        // task-391 rev29：上一站全视图背景化（dim、不可选中/可拖、标签可辨）
+        bgGhost: (ctx, node, view) => this._paintBackgroundSnapshotNode(ctx, node, view),
       });
+    }
+
+    /** task-391 rev29：进入子站时的“上一站全视图”快照（presentation-only 背景层）。 */
+    setBackgroundSnapshot(nodes) {
+      this._bgSnapshot = Array.isArray(nodes) ? nodes : [];
+      this._syncScene();
+      if (this._ctx) this._draw();
+      return this._bgSnapshot.length;
+    }
+
+    clearBackgroundSnapshot() {
+      this._bgSnapshot = [];
+      this._syncScene();
+      if (this._ctx) this._draw();
+    }
+
+    /** 只读：当前前景层可见节点（供“上一站快照”使用；不是第二份位置存储）。 */
+    getVisibleNodes() {
+      const out = [];
+      for (const node of this._scene.nodes.values()) {
+        if (node.layer !== "foreground") continue;
+        out.push({
+          id: String(node.id), x: node.x, y: node.y,
+          radius: node.radius, kind: node.kind, shape: node.shape,
+          label: node.label, drawKind: node.drawKind,
+        });
+      }
+      return out;
     }
 
     /** 当前 pin 的节点 id（由 RenderNode.fixed 派生，不是第二份状态）。 */
@@ -738,18 +774,48 @@
         if (layout && layout.radiusById && layout.radiusById.has(id)) return layout.radiusById.get(id);
         return nodeRadius(node || { kind: "kp" }, this._degreeInfo);
       };
+      // task-391 rev29 B：VM 里的 cluster 节点若与 presentation 容器同名（L0_x），
+      // 只保留容器表达，避免“全展开”出现两个 L0_1 副本。
+      const vm = this._lastVm || { nodes: [] };
+      const dedupVm = {
+        ...vm,
+        nodes: (vm.nodes || []).filter((n) => {
+          if (!n || n.kind !== "cluster") return true;
+          const label = String(n.label || n.name || n.section || n.id || "");
+          return !this._containerLabels || !this._containerLabels.has(label);
+        }),
+      };
       return this._scene.sync({
-        vm: this._lastVm || { nodes: [] },
+        vm: dedupVm,
         groups: this._groups,
         collapsedGroups: this._collapsedGroups,
         hiddenIds: this._hiddenMemberIds(),
         layout: layout || null,
         background: this._bgGhost,
+        // task-391 rev29 C：上一站全视图背景化快照（presentation-only background layer）
+        backgroundNodes: this._bgSnapshot || [],
         groupLabelOf: (group) => groupLabel(group),
         labelOf: (node) => labelText(node, this._presentation && this._presentation.names),
         radiusOf,
         hasCollapsedAncestor: (groupId) => this._groupHasCollapsedAncestor(groupId),
       });
+    }
+
+    /** task-391 rev29 B：“全展开”时容器组展开（成员可见，容器只保留一个 envelope 表达）。 */
+    setExpandAll(flag) {
+      const next = flag === true;
+      if (next === this._expandAll) return this._expandAll;
+      this._expandAll = next;
+      for (const g of this._groups || []) {
+        if (!g.container) continue;
+        const canExpand = (g.member_ids || []).length > 0;
+        if (next && canExpand) this._collapsedGroups.delete(g.group_id);
+        else this._collapsedGroups.add(g.group_id);
+      }
+      this._syncGroups();
+      this._syncScene();
+      if (this._ctx) this._draw();
+      return this._expandAll;
     }
 
     getCapabilities() {
@@ -781,6 +847,9 @@
       this._presentation = presentation || null;
       this._degreeInfo = normalizedDegrees(this._presentation && this._presentation.degrees);
       this._groups = normalizeGroups(this._presentation);
+      this._containerLabels = new Set(
+        this._groups.filter((g) => g.container && g.label).map((g) => String(g.label))
+      );
       if (this._nodeById && this._nodeById.size) {
         // 半径/标签变化只更新节点属性，位置本身保持（会话内保位）
         this._syncScene();
@@ -838,9 +907,13 @@
         member_ids: g.member_ids.filter((id) => shown.has(id)),
         // task-391 rev26：空容器（L0_2..L0_4）没有成员也必须保留（否则 demo 簇节点消失）
       })).filter((g) => g.member_ids.length > 0 || g.container);
-      // 显式 demo 容器（如 L0_1）默认折叠：当前层只显示容器节点，成员进入子图后才显示
+      // 显式 demo 容器（如 L0_1）默认折叠：当前层只显示容器节点，成员进入子图后才显示。
+      // task-391 rev29 B：全展开（setExpandAll(true)）时改为展开，同一时刻只保留一个 L0_x 表达。
       for (const g of this._groups) {
-        if (g.container) this._collapsedGroups.add(g.group_id);
+        if (!g.container) continue;
+        const canExpand = (g.member_ids || []).length > 0;
+        if (!this._expandAll || !canExpand) this._collapsedGroups.add(g.group_id);
+        else this._collapsedGroups.delete(g.group_id);
       }
       for (const id of [...this._collapsedGroups]) {
         if (!this._groups.some((g) => g.group_id === id)) this._collapsedGroups.delete(id);
@@ -1763,6 +1836,44 @@
     }
 
     // ── 绘制策略（task-391：单绘制入口 RenderScene.draw → RenderNode.draw → painter）──
+    /**
+     * task-391 rev29 C：上一站全视图背景化节点（layer=background, hitPolicy=none）。
+     * 只做 dim 绘制（形状/标签保留可辨），不参与命中/拖拽/力；不是第二份位置存储。
+     */
+    _paintBackgroundSnapshotNode(ctx, node) {
+      const cluster = node.shape === "hexagon" || node.kind === "cluster";
+      const prevAlpha = ctx.globalAlpha;
+      if (prevAlpha !== undefined) ctx.globalAlpha = cluster ? 0.26 : 0.34;
+      ctx.beginPath?.();
+      if (cluster) {
+        drawHexagon(ctx, node.x, node.y, node.radius);
+        ctx.fillStyle = "rgba(139,148,158,0.16)";
+        if (ctx.fill) ctx.fill();
+        ctx.strokeStyle = "rgba(139,148,158,0.55)";
+        ctx.lineWidth = 1.1;
+        if (ctx.stroke) ctx.stroke();
+      } else {
+        ctx.arc?.(node.x, node.y, Math.max(4, node.radius), 0, TAU);
+        ctx.fillStyle = "rgba(201,209,217,0.20)";
+        if (ctx.fill) ctx.fill();
+        ctx.strokeStyle = "rgba(201,209,217,0.50)";
+        ctx.lineWidth = 1;
+        if (ctx.stroke) ctx.stroke();
+      }
+      if (prevAlpha !== undefined) ctx.globalAlpha = prevAlpha;
+      // 标签保留可辨（比节点更暗，但可读）
+      if (node.label && ctx.fillText) {
+        const prev = ctx.globalAlpha;
+        if (prev !== undefined) ctx.globalAlpha = 0.55;
+        ctx.font = VISUAL.labelFont;
+        ctx.fillStyle = "#8b949e";
+        ctx.textAlign = "center";
+        ctx.textBaseline = "top";
+        ctx.fillText(String(node.label), node.x, node.y + node.radius + 4);
+        if (prev !== undefined) ctx.globalAlpha = prev;
+      }
+    }
+
     /** 背景幽灵（layer=background）。
      *  task-391 回归修复：旧 `_drawBackgroundGhost()` 的 ghost→target 跨层虚线在重构时丢失，
      *  这里按原样式补回（rgba(88,166,255,0.55)、1.4px、dash [5,4]）。该线**不是数据边**：

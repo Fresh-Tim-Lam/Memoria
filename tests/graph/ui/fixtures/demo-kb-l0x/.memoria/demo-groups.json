@@ -6,7 +6,9 @@
       "label": "L0_1",
       "section": "L0_1",
       "file": "one-node.md",
-      "member_ids": ["node-001"],
+      "member_ids": [
+        "node-001"
+      ],
       "count": 1,
       "container": true,
       "x": 62,
@@ -50,9 +52,40 @@
     }
   ],
   "links": [
-    { "source": "group:demo:L0_1", "target": "group:demo:L0_2", "kind": "structure" },
-    { "source": "group:demo:L0_2", "target": "group:demo:L0_3", "kind": "structure" },
-    { "source": "group:demo:L0_3", "target": "group:demo:L0_4", "kind": "structure" },
-    { "source": "group:demo:L0_4", "target": "node-002", "kind": "structure" }
+    {
+      "source": "group:demo:L0_1",
+      "target": "group:demo:L0_2",
+      "kind": "structure"
+    },
+    {
+      "source": "group:demo:L0_2",
+      "target": "group:demo:L0_3",
+      "kind": "structure"
+    },
+    {
+      "source": "group:demo:L0_3",
+      "target": "group:demo:L0_4",
+      "kind": "structure"
+    },
+    {
+      "source": "group:demo:L0_4",
+      "target": "node-002",
+      "kind": "structure"
+    },
+    {
+      "source": "group:demo:L0_1",
+      "target": "node-003",
+      "kind": "structure"
+    },
+    {
+      "source": "group:demo:L0_1",
+      "target": "node-004",
+      "kind": "structure"
+    },
+    {
+      "source": "group:demo:L0_1",
+      "target": "node-005",
+      "kind": "structure"
+    }
   ]
 }

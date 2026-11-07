@@ -140,6 +140,8 @@
       const decay = num(force.velocityDecay, DEFAULT_FORCE.velocityDecay);
       const maxV = num(force.maxVelocity, DEFAULT_FORCE.maxVelocity);
       const pad = Math.max(0, num(env.pad, 0));
+      // task-391 rev29：顶部预留图谱 chrome（toolbar/drillbar）高度，避免节点被覆盖后不可点。
+      const padTop = Math.max(pad, Math.max(0, num(env.padTop, pad)));
       const width = num(env.width, 0);
       const height = num(env.height, 0);
       let nvx = clamp((this.vx + this._fx * alpha * scale) * decay, -maxV, maxV);
@@ -149,7 +151,7 @@
       this.clearForce();
       if (width > pad * 2) this.x = clamp(this.x + nvx, pad, width - pad);
       else this.x += nvx;
-      if (height > pad * 2) this.y = clamp(this.y + nvy, pad, height - pad);
+      if (height > pad + padTop) this.y = clamp(this.y + nvy, padTop, height - pad);
       else this.y += nvy;
       return Math.hypot(nvx, nvy);
     }
@@ -367,6 +369,27 @@
         }
       }
 
+      // task-391 rev29：上一站全视图背景化快照（presentation-only layer）。
+      // 每项建成 RenderScene 的 background 层节点：不可命中/不参与力；位置/标签/形状随快照冻结。
+      const backgroundNodes = input.backgroundNodes;
+      if (Array.isArray(backgroundNodes)) {
+        for (const item of backgroundNodes) {
+          if (!item) continue;
+          const rawId = String(item.id || "");
+          const bx = num(item.x, NaN);
+          const by = num(item.y, NaN);
+          if (!rawId || !Number.isFinite(bx) || !Number.isFinite(by)) continue;
+          const kind = item.kind === "cluster" ? "cluster" : "kp";
+          specs.push({
+            id: `bg:${rawId}`, kind, drawKind: "bgGhost",
+            shape: item.shape === "hexagon" || kind === "cluster" ? "hexagon" : "circle",
+            layer: "background", hitPolicy: "none",
+            label: String(item.label || ""), radius: num(item.radius, kind === "cluster" ? 14 : 7),
+            data: item, x: bx, y: by,
+          });
+        }
+      }
+
       const keep = new Set(specs.map((s) => s.id));
       let created = 0;
       let updated = 0;
@@ -417,6 +440,9 @@
       for (let i = this._order.length - 1; i >= 0; i -= 1) {
         const node = this.nodes.get(this._order[i]);
         if (!node) continue;
+        // task-391 rev29：背景快照层只是展示（hitPolicy=none，不可选中/不可拖），不参与命中；
+        // 入口幽灵 A（background 层 + hitPolicy=return）仍可点击返回/拖拽，保持旧回归。
+        if (node.hitPolicy === "none") continue;
         if (node.hitTest(x, y)) return node;
       }
       return null;
@@ -468,6 +494,8 @@
         width,
         height,
         pad: Math.max(24, maxRadius + 8),
+        // 顶部 chrome（toolbar/drillbar ~48px）——节点不得漂到其下不可点
+        padTop: Math.max(52, maxRadius + 8),
         ticks: 0,
         maxDisp: 0,
       };
@@ -480,7 +508,11 @@
      */
     stepForce(state = {}) {
       const force = this.force;
-      const ids = [...this.nodes.keys()].sort();
+      // task-391 rev29：background 快照层（hitPolicy=none）不参与力（位置随上一站快照冻结）；
+      // 入口幽灵 A（hitPolicy=return）仍留在同一力池，保持“拖 KP → 幽灵响应”的旧回归。
+      const ids = [...this.nodes.keys()]
+        .filter((id) => { const n = this.nodes.get(id); return n && n.hitPolicy !== "none"; })
+        .sort();
       const count = ids.length;
       if (!count) return 0;
       const alpha = num(state.alpha, 1);

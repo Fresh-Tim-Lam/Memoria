@@ -37,6 +37,7 @@ SCENARIO = HERE / "l0_1_ghost_enter.test.mjs"
 EVIDENCE_OUT = ROOT / "artifacts" / "agent" / "verify" / "graph" / "l0-1-ghost-realapp.json"
 EVIDENCE_SHOT = ROOT / "artifacts" / "agent" / "verify" / "graph" / "l0-1-drillbar-no-back.png"
 EVIDENCE_SHOT_DEMO = ROOT / "artifacts" / "agent" / "verify" / "graph" / "l0-x-clusters-demo.png"
+EVIDENCE_SHOT_CHILD = ROOT / "artifacts" / "agent" / "verify" / "graph" / "l0-1-child-bg-ghosts.png"
 EDGE_CANDIDATES = [
     os.environ.get("MEMORIA_EDGE"),
     r"C:\Program Files (x86)\Microsoft\Edge\Application\msedge.exe",
@@ -94,10 +95,12 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
         assert rp.wait_port(port), "harness 未在 20s 内就绪"
         raw_shot = raw_out.with_suffix(".png")
         raw_shot_parent = raw_out.with_name(raw_out.stem + "-demo.png")
+        raw_shot_child = raw_out.with_name(raw_out.stem + "-child-bg.png")
         cmd = [
             "node", str(SCENARIO), "--url", "http://127.0.0.1:%d/" % port,
             "--out", str(raw_out), "--shot", str(raw_shot),
             "--shot-parent", str(raw_shot_parent),
+            "--shot-child-bg", str(raw_shot_child),
         ]
         cp = subprocess.run(cmd, cwd=str(ROOT), capture_output=True, text=True, timeout=240)
         assert raw_out.is_file(), f"探针未产出 JSON。stdout={cp.stdout[-2000:]}\nstderr={cp.stderr[-3000:]}"
@@ -108,6 +111,8 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
             shutil.copyfile(raw_shot, EVIDENCE_SHOT)
         if raw_shot_parent.is_file():
             shutil.copyfile(raw_shot_parent, EVIDENCE_SHOT_DEMO)
+        if raw_shot_child.is_file():
+            shutil.copyfile(raw_shot_child, EVIDENCE_SHOT_CHILD)
         assert payload.get("verdict") == "PASS", (
             "L0_1 demo/子图回归失败：\n%s" % json.dumps(payload, ensure_ascii=False, indent=2)[-4000:]
         )
@@ -116,7 +121,11 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
             "demoFourClusters",
             "demoClusterLabelsClean",
             "demoKp002Visible",
+            "demoHubKpsVisible",
             "demoPresentationLinks",
+            "expandAllSingleL01",
+            "childBackgroundGhosts",
+            "backClearsBackground",
             "parentOnlyCollapsedCluster",
             "childHasNode001AndGhost",
             "ghostConnectorDrawn",

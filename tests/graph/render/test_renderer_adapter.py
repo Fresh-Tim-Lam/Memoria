@@ -84,6 +84,8 @@ def test_render_scene_node_suite() -> None:
         "renderer_apply_overview_layout_writes_grid_positions",
         "ghost_draws_cross_layer_connector_to_target",
         "presentation_empty_containers_labels_and_links_are_not_data_edges",
+        "background_snapshot_layer_is_not_pickable_or_forced",
+        "expand_all_keeps_single_container_representation",
     ):
         assert required in names, f"RenderScene 套件缺用例：{required}"
 
