@@ -1841,36 +1841,29 @@
      * 只做 dim 绘制（形状/标签保留可辨），不参与命中/拖拽/力；不是第二份位置存储。
      */
     _paintBackgroundSnapshotNode(ctx, node) {
+      // task-391 rev32（人的视觉裁决）：背景化节点保持**正常白色发光**，但不绘制任何标签。
+      // 簇/空容器=与折叠簇正常态一致的实心 #f0f6fc 六边形 + 白发光 + 外环；
+      // 知识点=正常白色发光星点（不按 degree 上色、不压暗）。
       const cluster = node.shape === "hexagon" || node.kind === "cluster";
-      const prevAlpha = ctx.globalAlpha;
-      if (prevAlpha !== undefined) ctx.globalAlpha = cluster ? 0.26 : 0.34;
-      ctx.beginPath?.();
       if (cluster) {
+        ctx.save?.();
+        if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
+        if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
         drawHexagon(ctx, node.x, node.y, node.radius);
-        ctx.fillStyle = "rgba(139,148,158,0.16)";
+        ctx.fillStyle = "#f0f6fc";
         if (ctx.fill) ctx.fill();
-        ctx.strokeStyle = "rgba(139,148,158,0.55)";
-        ctx.lineWidth = 1.1;
+        ctx.strokeStyle = "#f0f6fc";
+        ctx.lineWidth = 1.6;
         if (ctx.stroke) ctx.stroke();
-      } else {
-        ctx.arc?.(node.x, node.y, Math.max(4, node.radius), 0, TAU);
-        ctx.fillStyle = "rgba(201,209,217,0.20)";
-        if (ctx.fill) ctx.fill();
-        ctx.strokeStyle = "rgba(201,209,217,0.50)";
+        if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
+        if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
+        ctx.restore?.();
+        drawHexagon(ctx, node.x, node.y, node.radius + 3);
+        ctx.strokeStyle = "rgba(240,246,252,0.28)";
         ctx.lineWidth = 1;
         if (ctx.stroke) ctx.stroke();
-      }
-      if (prevAlpha !== undefined) ctx.globalAlpha = prevAlpha;
-      // 标签保留可辨（比节点更暗，但可读）
-      if (node.label && ctx.fillText) {
-        const prev = ctx.globalAlpha;
-        if (prev !== undefined) ctx.globalAlpha = 0.55;
-        ctx.font = VISUAL.labelFont;
-        ctx.fillStyle = "#8b949e";
-        ctx.textAlign = "center";
-        ctx.textBaseline = "top";
-        ctx.fillText(String(node.label), node.x, node.y + node.radius + 4);
-        if (prev !== undefined) ctx.globalAlpha = prev;
+      } else {
+        drawStar(ctx, node.x, node.y, Math.max(4, node.radius), "#f0f6fc", 0.28, VISUAL.glow);
       }
     }
 

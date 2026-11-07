@@ -597,6 +597,24 @@ function run() {
     assert.strictEqual(cluster.shape, "hexagon");
     // 不可命中（点其圆心不应返回背景节点）
     assert.strictEqual(r._scene.pick(40, 40), null, "背景快照节点不得参与 pick");
+    // rev32：正常白色发光但不画任何标签
+    {
+      const ctx = r._ctx;
+      const texts = [];
+      let gradCalls = 0;
+      const origFT = ctx.fillText;
+      const origGrad = ctx.createRadialGradient;
+      ctx.fillText = function (s, ...a) { texts.push(String(s)); return origFT.call(this, s, ...a); };
+      ctx.createRadialGradient = function (...a) { gradCalls += 1; return origGrad.apply(this, a); };
+      ctx.fillStyles.length = 0;
+      r._draw();
+      ctx.fillText = origFT;
+      ctx.createRadialGradient = origGrad;
+      assert.ok(!texts.includes("上一站KP") && !texts.includes("L0_9"), "背景化节点不得绘制任何标签");
+      assert.ok(gradCalls >= 1, "知识点背景节点应使用正常发光（radial gradient）");
+      assert.ok(ctx.fillStyles.includes("#f0f6fc"), "背景节点应使用正常白色发光填充 #f0f6fc");
+      assert.ok(!ctx.fillStyles.some((c) => /rgba\(139,\s*148,\s*158/.test(String(c))), "背景节点不得再使用 dim 灰填充");
+    }
     // 不参与力：stepForce 后位置不变
     const before = { x: kp.x, y: kp.y };
     for (let i = 0; i < 10; i += 1) r._scene.stepForce({ width: 800, height: 600, alpha: 0.5 });

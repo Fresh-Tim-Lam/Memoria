@@ -125,6 +125,8 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
             "demoPresentationLinks",
             "expandAllSingleL01",
             "childBackgroundGhosts",
+            "childBackgroundNoLabels",
+            "childBackgroundWhiteGlow",
             "backClearsBackground",
             "parentOnlyCollapsedCluster",
             "childHasNode001AndGhost",

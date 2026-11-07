@@ -252,12 +252,20 @@ try {
       const bg = ids.filter((id) => id.startsWith('bg:'));
       const nodes = bg.map((id) => r.getNode(id)).filter(Boolean);
       const pickIds = nodes.map((n) => { const p = r._scene.pick(n.x, n.y); return p ? String(p.id) : null; });
-      let texts = [];
       const ctx = r._ctx;
-      const o = ctx.fillText;
-      ctx.fillText = function (t, x, y) { texts.push(String(t)); return o.call(this, t, x, y); };
+      let texts = [];
+      let gradients = 0;
+      const fillStyles = [];
+      const oFT = ctx.fillText;
+      const oGrad = ctx.createRadialGradient;
+      const oFill = ctx.fill;
+      ctx.fillText = function (t, x, y) { texts.push(String(t)); return oFT.call(this, t, x, y); };
+      ctx.createRadialGradient = function (...a) { gradients += 1; return oGrad.apply(this, a); };
+      ctx.fill = function () { fillStyles.push(String(this.fillStyle || "")); return oFill.call(this); };
       r._draw();
-      ctx.fillText = o;
+      ctx.fillText = oFT;
+      ctx.createRadialGradient = oGrad;
+      ctx.fill = oFill;
       return {
         ids, bg,
         labels: nodes.map((n) => n.label),
@@ -265,6 +273,9 @@ try {
         hitPolicies: nodes.map((n) => n.hitPolicy),
         pickIds,
         texts,
+        gradients,
+        whiteFill: fillStyles.includes("#f0f6fc"),
+        dimFill: fillStyles.some((c) => String(c).includes("rgba(139") || String(c).includes("rgba(201,209,217")),
       };
     })()`);
     evidence.steps.push({ step: "child-background-snapshot", ...bgView });
@@ -285,10 +296,15 @@ try {
     evidence.steps.push({ step: "child-background-screenshot", childBgScreenshot });
     const bgLabels = Array.isArray(bgView && bgView.labels) ? bgView.labels : [];
     const bgOk = !!(bgView && bgView.bg.length === 7
-      && ["L0_2", "L0_3", "L0_4", "第二个知识点", "第三个知识点", "第四个知识点", "第五个知识点"].every((t) => bgLabels.includes(t))
       && bgView.layers.every((l) => l === "background")
       && bgView.hitPolicies.every((h) => h === "none")
       && bgView.pickIds.every((id) => !id || !String(id).startsWith("bg:")));
+    // rev32：背景化节点=正常白色发光、不得绘制任何标签，也不得仍是 dim 灰
+    const bgNoLabels = !!(bgView && Array.isArray(bgView.texts)
+      && !["L0_2", "L0_3", "L0_4", "第二个知识点", "第三个知识点", "第四个知识点", "第五个知识点"]
+        .some((t) => bgView.texts.includes(t)));
+    const bgWhiteGlow = !!(bgView && bgView.whiteFill === true && bgView.gradients >= 4 && bgView.dimFill === false);
+    evidence.steps.push({ step: "child-background-style", bgNoLabels, bgWhiteGlow });
 
     // ⑤ drillbar（rev17 人的裁决）：只保留面包屑，不得再有「← 返回」按钮；返回唯一入口 = 节点 A。
     const drillbar = await cdp.evalJS(`(() => {
@@ -540,6 +556,8 @@ try {
       expandAllSingleL01: !!(l01Collapsed && l01Expanded
         && l01Collapsed.count === 1 && l01Expanded.count === 1),
       childBackgroundGhosts: bgOk,
+      childBackgroundNoLabels: bgNoLabels,
+      childBackgroundWhiteGlow: bgWhiteGlow,
       backClearsBackground: backOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
