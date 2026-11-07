@@ -726,11 +726,15 @@ function run() {
         { source: "ghost:A", target: "g1", type: "structural", depth: 1 },
         { source: "g1", target: "g2", type: "structural", depth: 1 },
         { source: "g2", target: "g3", type: "reference", depth: 1 },
+        // rev41：前景 hub（node-001）→ 背景节点，端点混合
+        { source: "kp-022", target: "g1", type: "structural", depth: 1, hub: true },
       ]
     );
-    assert.strictEqual(r._bgSnapshotEdges.length, 3, "背景边应随快照保存");
+    assert.strictEqual(r._bgSnapshotEdges.length, 4, "背景边应随快照保存");
+    assert.strictEqual(r._backgroundEndpoint("kp-022").id, "kp-022", "hub 端点应解析到前景节点");
+    assert.strictEqual(r._backgroundEndpoint("g1").id, "bg:g1", "普通端点应解析到 bg:*");
     const edgeListBefore = r._edgeList.length;
-    assert.strictEqual(r._backgroundForceLinks().length, 3, "背景边应映射成同池力 links");
+    assert.strictEqual(r._backgroundForceLinks().length, 4, "背景边/hub 边应映射成同池力 links");
     // 绘制：背景边更细（lineWidth<1.2）且 alpha<1，且数量≥背景边数
     const ctx = r._ctx;
     const strokes = [];
@@ -741,9 +745,9 @@ function run() {
     };
     const drawn = r._drawBackgroundEdges(ctx);
     ctx.stroke = oStroke;
-    assert.strictEqual(drawn, 3, "背景边应全部绘制");
+    assert.strictEqual(drawn, 4, "背景边/hub 边应全部绘制");
     const bgStrokes = strokes.filter((s) => s.width < 1.2 && s.alpha < 1);
-    assert.ok(bgStrokes.length >= 3, `背景边绘制票数应≥3，实际 ${bgStrokes.length}`);
+    assert.ok(bgStrokes.length >= 4, `背景边绘制票数应≥4，实际 ${bgStrokes.length}`);
     // 力场：拖 g2 → g1/g3 响应（同一 stepForce，links 生效）
     r._scene.beginDrag("bg:g2");
     const g1Before = { x: r.getNode("bg:g1").x, y: r.getNode("bg:g1").y };

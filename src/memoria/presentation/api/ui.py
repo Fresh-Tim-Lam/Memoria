@@ -3249,6 +3249,8 @@ def _mlvm_groups(vm, files: dict[str, str], kb_path: str = "") -> list[dict]:
                     "presentation_only": True,
                     "container": True,
                     "empty_container": bool(item.get("empty_container")),
+                    # task-391 rev41：demo hub（L0_1）——子站成员 KP 作为 hub 直连上一站节点
+                    "hub": bool(item.get("hub")),
                     # 空容器/固定排布：presentation 初值（渲染后可被力移动）
                     "x": _num_or_none("x"),
                     "y": _num_or_none("y"),

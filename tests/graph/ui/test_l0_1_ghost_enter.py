@@ -129,6 +129,7 @@ def test_l0_1_enter_group_keeps_background_ghost() -> None:
             "childBackgroundWhiteGlow",
             "childBackgroundDepthDecay",
             "childBackgroundEdges",
+            "childHubLinks",
             "bgNodesParticipateInForce",
             "backClearsBackground",
             "parentOnlyCollapsedCluster",

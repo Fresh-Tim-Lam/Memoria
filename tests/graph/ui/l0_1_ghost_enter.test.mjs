@@ -303,6 +303,7 @@ try {
         whiteAlphas,
         bgEdgeCount: (r._bgSnapshotEdges || []).length,
         entryEdgeCount: ((entry.backgroundEdges) || []).length,
+        hubEdges: ((entry.backgroundEdges) || []).filter((e) => e.hub === true).map((e) => ({ source: String(e.source), target: String(e.target) })),
         bgEdgeStrokes: strokes.filter((x) => x.width < 1.2 && x.alpha < 1 && x.style === "#58a6ff").length,
       };
     })()`);
@@ -350,6 +351,14 @@ try {
     const bgEdgesOk = !!(bgView && bgView.bgEdgeCount > 0
       && bgView.bgEdgeCount === bgView.entryEdgeCount
       && bgView.bgEdgeStrokes >= bgView.bgEdgeCount);
+    // rev41：demo hub（L0_1）——前景 node-001 直连 3 簇 + 2 KP，共 5 条 presentation-only hub links
+    const hubEdges = (bgView && bgView.hubEdges) || [];
+    const hubTargets = hubEdges.map((e) => e.target).sort();
+    const hubLinksOk = !!(hubEdges.length === 5
+      && hubEdges.every((e) => e.source === "node-001")
+      && JSON.stringify(hubTargets) === JSON.stringify([
+        "group:demo:L0_2", "group:demo:L0_3", "group:demo:L0_4", "node-002", "node-003",
+      ].sort()));
     evidence.steps.push({
       step: "child-background-style",
       bgNoLabels, bgWhiteGlow, bgDepthDecayOk,
@@ -615,6 +624,7 @@ try {
       childBackgroundWhiteGlow: bgWhiteGlow,
       childBackgroundDepthDecay: bgDepthDecayOk,
       childBackgroundEdges: bgEdgesOk,
+      childHubLinks: hubLinksOk,
       backClearsBackground: backOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,
