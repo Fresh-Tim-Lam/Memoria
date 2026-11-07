@@ -671,6 +671,43 @@ function run() {
     r.dispose();
   });
 
+
+  // ── 17. task-391 rev35：背景化节点的 log 深度衰减 ─────────────────────────────
+  check("background_snapshot_depth_decay_is_log", () => {
+    const host = makeHost();
+    const box = container();
+    const r = new Adapter.Renderer2D(box, { host, animateForce: false });
+    r.render(box, DEMO.vm);
+    r.setBackgroundSnapshot([
+      { id: "bg-d2", x: 40, y: 40, radius: 10, kind: "kp", shape: "circle", label: "d2", depth: 2 },
+      { id: "bg-d4", x: 90, y: 40, radius: 10, kind: "kp", shape: "circle", label: "d4", depth: 4 },
+    ]);
+    const r2 = r.getNode("bg:bg-d2");
+    const r4 = r.getNode("bg:bg-d4");
+    const s2 = Math.max(0.55, 1 - 0.18 * Math.log2(3));
+    const s4 = Math.max(0.55, 1 - 0.18 * Math.log2(5));
+    assert.ok(Math.abs(r2.radius - 10 * s2) < 1e-6, `depth2 半径应为 10*${s2}`);
+    assert.ok(Math.abs(r4.radius - 10 * s4) < 1e-6, `depth4 半径应为 10*${s4}`);
+    assert.ok(r4.radius < r2.radius && r2.radius < 10, "更深层应更小");
+    // 绘制期 globalAlpha 按 depth 变小、且 < 1
+    const ctx = r._ctx;
+    const alphas = [];
+    const oFill = ctx.fill;
+    ctx.fill = function () {
+      if (String(this.fillStyle) === "#f0f6fc") alphas.push(this.globalAlpha);
+      return oFill.call(this);
+    };
+    r._draw();
+    ctx.fill = oFill;
+    const a2 = Math.max(0.28, 0.62 - 0.14 * Math.log2(3));
+    const a4 = Math.max(0.28, 0.62 - 0.14 * Math.log2(5));
+    assert.ok(alphas.some((a) => Math.abs(a - a2) < 0.02), `depth2 绘制 alpha 应≈${a2.toFixed(3)}，实际 ${JSON.stringify(alphas)}`);
+    assert.ok(alphas.some((a) => Math.abs(a - a4) < 0.02), `depth4 绘制 alpha 应≈${a4.toFixed(3)}，实际 ${JSON.stringify(alphas)}`);
+    assert.ok(alphas.every((a) => a < 1), "背景化节点 alpha 必须 < 1");
+    assert.ok(a4 < a2, "更深层 alpha 应更小");
+    r.dispose();
+  });
+
   console.log(JSON.stringify({
     suite: "render_scene",
     results,

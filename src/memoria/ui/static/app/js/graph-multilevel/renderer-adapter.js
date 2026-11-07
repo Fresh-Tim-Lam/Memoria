@@ -208,6 +208,22 @@
       .sort((a, b) => (a.file || a.group_id).localeCompare(b.file || b.group_id));
   }
 
+  // ── task-391 rev35：上一站背景化的 log 深度衰减（人的视觉裁决）────────────
+  // depth = 进入子站前的站深（根站=1，子站=2…）；lg = log2(depth+1)；
+  // scale = max(0.55, 1 - 0.18*lg)；alpha = max(0.28, 0.62 - 0.14*lg)。
+  // 立即上一站（depth=1）≈ 0.82 大小 / 0.48 alpha；更深层更小更淡。
+  function backgroundDepthScale(depth) {
+    const d = Math.max(1, Number(depth) || 1);
+    const lg = Math.log2(d + 1);
+    return Math.max(0.55, 1 - 0.18 * lg);
+  }
+
+  function backgroundDepthAlpha(depth) {
+    const d = Math.max(1, Number(depth) || 1);
+    const lg = Math.log2(d + 1);
+    return Math.max(0.28, 0.62 - 0.14 * lg);
+  }
+
   function groupLabel(group) {
     // task-391 rev26：explicit label（demo 容器）原样显示，不追加 (n)；
     // 其余按旧语义 “章节/文件名 (成员数)”。
@@ -793,7 +809,11 @@
         layout: layout || null,
         background: this._bgGhost,
         // task-391 rev29 C：上一站全视图背景化快照（presentation-only background layer）
-        backgroundNodes: this._bgSnapshot || [],
+        // task-391 rev35：按 depth 做 log 衰减——绘制半径同步乘 scale（每帧从原始 radius 重算，不叠加）
+        backgroundNodes: (this._bgSnapshot || []).map((n) => ({
+          ...n,
+          radius: Math.max(3, (Number(n.radius) || 8) * backgroundDepthScale(n.depth)),
+        })),
         groupLabelOf: (group) => groupLabel(group),
         labelOf: (node) => labelText(node, this._presentation && this._presentation.names),
         radiusOf,
@@ -1841,30 +1861,35 @@
      * 只做 dim 绘制（形状/标签保留可辨），不参与命中/拖拽/力；不是第二份位置存储。
      */
     _paintBackgroundSnapshotNode(ctx, node) {
-      // task-391 rev32（人的视觉裁决）：背景化节点保持**正常白色发光**，但不绘制任何标签。
-      // 簇/空容器=与折叠簇正常态一致的实心 #f0f6fc 六边形 + 白发光 + 外环；
-      // 知识点=正常白色发光星点（不按 degree 上色、不压暗）。
+      // task-391 rev35（人的视觉裁决）：背景化节点仍为白色发光、不绘制任何标签，
+      // 但按 log 深度衰减：半径/发光 blur 同步乘 scale，亮度用 alpha 降低。
+      const depth = node.data && node.data.depth != null ? Number(node.data.depth) : 1;
+      const scale = backgroundDepthScale(depth);
+      const alpha = backgroundDepthAlpha(depth);
       const cluster = node.shape === "hexagon" || node.kind === "cluster";
+      const prevAlpha = ctx.globalAlpha;
+      if (ctx.globalAlpha !== undefined) ctx.globalAlpha = alpha;
       if (cluster) {
         ctx.save?.();
         if (ctx.shadowColor !== undefined) ctx.shadowColor = "rgba(240,246,252,0.95)";
-        if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14;
+        if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 14 * scale;
         drawHexagon(ctx, node.x, node.y, node.radius);
         ctx.fillStyle = "#f0f6fc";
         if (ctx.fill) ctx.fill();
         ctx.strokeStyle = "#f0f6fc";
-        ctx.lineWidth = 1.6;
+        ctx.lineWidth = 1.6 * scale;
         if (ctx.stroke) ctx.stroke();
         if (ctx.shadowBlur !== undefined) ctx.shadowBlur = 0;
         if (ctx.shadowColor !== undefined) ctx.shadowColor = "transparent";
         ctx.restore?.();
-        drawHexagon(ctx, node.x, node.y, node.radius + 3);
+        drawHexagon(ctx, node.x, node.y, node.radius + 3 * scale);
         ctx.strokeStyle = "rgba(240,246,252,0.28)";
         ctx.lineWidth = 1;
         if (ctx.stroke) ctx.stroke();
       } else {
-        drawStar(ctx, node.x, node.y, Math.max(4, node.radius), "#f0f6fc", 0.28, VISUAL.glow);
+        drawStar(ctx, node.x, node.y, Math.max(3, node.radius), "#f0f6fc", 0.28 * scale, VISUAL.glow * scale);
       }
+      if (ctx.globalAlpha !== undefined) ctx.globalAlpha = prevAlpha === undefined ? 1 : prevAlpha;
     }
 
     /** 背景幽灵（layer=background）。

@@ -256,16 +256,31 @@ try {
       let texts = [];
       let gradients = 0;
       const fillStyles = [];
+      const fills = [];
       const oFT = ctx.fillText;
       const oGrad = ctx.createRadialGradient;
       const oFill = ctx.fill;
       ctx.fillText = function (t, x, y) { texts.push(String(t)); return oFT.call(this, t, x, y); };
       ctx.createRadialGradient = function (...a) { gradients += 1; return oGrad.apply(this, a); };
-      ctx.fill = function () { fillStyles.push(String(this.fillStyle || "")); return oFill.call(this); };
+      ctx.fill = function () {
+        fillStyles.push(String(this.fillStyle || ""));
+        fills.push({ alpha: Number(this.globalAlpha), style: String(this.fillStyle || "") });
+        return oFill.call(this);
+      };
       r._draw();
       ctx.fillText = oFT;
       ctx.createRadialGradient = oGrad;
       ctx.fill = oFill;
+      // rev35：快照项的原始半径/深度（用于校验 log 衰减）
+      const stack = window.MemoriaApp.state.graphMultilevel.drill.stack || [];
+      const entry = stack[stack.length - 1] || {};
+      const snapshotMap = {};
+      for (const item of (entry.backgroundSnapshot || [])) {
+        snapshotMap[String(item.id)] = { radius: Number(item.radius), depth: Number(item.depth) };
+      }
+      const nodeRadii = {};
+      for (const n of nodes) nodeRadii[String(n.id)] = Number(n.radius);
+      const whiteAlphas = fills.filter((f) => f.style === "#f0f6fc").map((f) => f.alpha);
       return {
         ids, bg,
         labels: nodes.map((n) => n.label),
@@ -276,6 +291,9 @@ try {
         gradients,
         whiteFill: fillStyles.includes("#f0f6fc"),
         dimFill: fillStyles.some((c) => String(c).includes("rgba(139") || String(c).includes("rgba(201,209,217")),
+        snapshotMap,
+        nodeRadii,
+        whiteAlphas,
       };
     })()`);
     evidence.steps.push({ step: "child-background-snapshot", ...bgView });
@@ -304,7 +322,27 @@ try {
       && !["L0_2", "L0_3", "L0_4", "第二个知识点", "第三个知识点", "第四个知识点", "第五个知识点"]
         .some((t) => bgView.texts.includes(t)));
     const bgWhiteGlow = !!(bgView && bgView.whiteFill === true && bgView.gradients >= 4 && bgView.dimFill === false);
-    evidence.steps.push({ step: "child-background-style", bgNoLabels, bgWhiteGlow });
+    // rev35：log 深度衰减——立即上一站 depth=1 ⇒ scale=0.82、alpha=0.48（±0.02），且 alpha < 1
+    const bgSnapIds = Object.keys((bgView && bgView.snapshotMap) || {});
+    const bgRadiiOk = bgSnapIds.length === 7 && bgSnapIds.every((id) => {
+      const snap = bgView.snapshotMap[id];
+      const drawn = bgView.nodeRadii[`bg:${id}`];
+      if (!snap || !Number.isFinite(drawn) || !Number.isFinite(snap.radius) || snap.radius <= 0) return false;
+      const ratio = drawn / snap.radius;
+      return snap.depth === 1 && ratio >= 0.79 && ratio <= 0.85;
+    });
+    const bgAlphaOk = !!(bgView && Array.isArray(bgView.whiteAlphas)
+      // depth=1 ⇒ alpha=0.48：7 个背景节点各一次白填充（前景 ghost A 的 #f0f6fc 填充 alpha=1 不计入）
+      && bgView.whiteAlphas.filter((a) => Math.abs(a - 0.48) < 0.03).length >= 7
+      && bgView.whiteAlphas.filter((a) => a >= 1).length <= 1);
+    const bgDepthDecayOk = bgRadiiOk && bgAlphaOk;
+    evidence.steps.push({
+      step: "child-background-style",
+      bgNoLabels, bgWhiteGlow, bgDepthDecayOk,
+      snapshotMap: bgView && bgView.snapshotMap,
+      nodeRadii: bgView && bgView.nodeRadii,
+      whiteAlphas: bgView && bgView.whiteAlphas,
+    });
 
     // ⑤ drillbar（rev17 人的裁决）：只保留面包屑，不得再有「← 返回」按钮；返回唯一入口 = 节点 A。
     const drillbar = await cdp.evalJS(`(() => {
@@ -558,6 +596,7 @@ try {
       childBackgroundGhosts: bgOk,
       childBackgroundNoLabels: bgNoLabels,
       childBackgroundWhiteGlow: bgWhiteGlow,
+      childBackgroundDepthDecay: bgDepthDecayOk,
       backClearsBackground: backOk,
       parentOnlyCollapsedCluster: parentHasCluster && !parentHasKp,
       childHasNode001AndGhost: childHasKp && childHasGhost,

@@ -2013,9 +2013,11 @@ async function call(fn, ...args) {
     // task-391 rev29 C：抓取上一站当前 visible 节点（簇 + KP + 位置/标签/形状），
     // 进入子站后作为 background 层 dim ghost 显示；入口组节点仍由 ghost A/跨层线表达，故从快照剔除。
     const entrySceneId = `group:${String(groupId)}`;
+    // rev35：每个快照项带站深 depth（= 当前站 drill.stack.length；根站=1），供背景层做 log 深度衰减。
+    const bgDepth = Array.isArray(drill.stack) ? drill.stack.length : 1;
     const backgroundSnapshot = (mounted.renderer.getVisibleNodes ? mounted.renderer.getVisibleNodes() : [])
       .filter((n) => String(n.id) !== entrySceneId)
-      .map((n) => ({ ...n }));
+      .map((n) => ({ ...n, depth: bgDepth }));
     // 同一画布不是硬切：父层这个 A 以幽灵节点留在画布上，连到子图入口
     const posMap = new Map((current.snapshot.positions || []).map(([id, p]) => [String(id), p]));
     // task-391 回归修复：父视图把该组折叠时，成员是 hidden（RenderScene 正确过滤，不写快照），
