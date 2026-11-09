@@ -237,12 +237,14 @@ def test_the_view_anchor_is_taken_before_the_rerender_and_only_native_typing_def
           "渲染态归一"；其余入口**先画预览、再同步源码面板**。"""
     js = _js()
     # A · 锚点/滚动位置先采、后重渲（顺序是本用例的核心）
-    cap = "const body = collectEditorBody();   var _viewAnchorBeforeRerender = _getViewTopSrcLine(prevMode); _saveCurrentViewScroll(prevMode);"
+    # E36（2026-11-09）：锚点从「裸行号」升级为 `_captureViewAnchor`（行号 + 块内像素偏移）；
+    #   采锚点的时机与位置不变，仍是重渲染之前。
+    cap = 'var _viewAnchorBeforeRerender = _captureViewAnchor(prevMode === "split" ? mode : prevMode); _saveCurrentViewScroll(prevMode);'
     assert cap in js, "重渲染**之前**就要采锚点与滚动位置"
     assert js.index(cap) < js.index("renderEditor(state.doc);\n      await renderPreview(state.doc);"), (
         "锚点必须在 `renderEditor()`/`renderPreview()` **之前**采 —— 否则量到的是被刷回顶部后的第一行"
     )
-    assert "anchorLine = _viewAnchorBeforeRerender;" in js
+    assert "_scrollToViewAnchor(_viewAnchorBeforeRerender" in js
     assert "anchorLine = _getViewTopSrcLine(prevMode);" not in js, "不许再在重渲染之后现量锚点（那正是漂移的来源）"
     assert "// 2026-09-25 AG105：`_saveCurrentViewScroll(prevMode)` 已**上移到重渲染之前**" in js, (
         "滚动位置同理：重渲染之后再存，存到的是 0"
