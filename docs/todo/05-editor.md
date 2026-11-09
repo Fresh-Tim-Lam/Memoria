@@ -62,3 +62,5 @@
 > 来源：用户 2026-11-07 原话「记入todo" 切换预览/源码到分栏模式，定位漂移或者错误“」。本条只登记用户可感知缺陷；未定位根因，不预判是滚动同步、选区映射还是分栏布局重算问题。复现时需记录：起始模式（预览/源码）、切换到的模式（分栏）、当前块/选区在源码中的行号、切换前后 `scrollTop` 与可见块，并优先用现有锚点/滚动同步测试补 case；与 E09 分开跟踪，不重复计数。
 
 > 来源：用户 2026-11-07 原话「bug: markdown 原文没法直接写$或者转义?」。本条只登记用户可感知缺陷；未定位根因，不预判是 MathJax/KaTeX、parser/source-gen 还是输入法转义问题。复现时需记录：输入位置（源码/分栏）、输入内容、保存前后 sidecar/源码字节、预览结果，并优先在 `tests/graph` 之外补 parser 往返用例。
+
+> **部分修复（2026-11-09，Lead）**：`a1810ce9` 修了 preview math 保护层 + lexer 货币配对（保留 `$ n $` 带空格公式；`tests/test_markdown_preview_dollar.py` 17、`tests/test_dollar_math_ast.py` 4、`tests/test_math_inline_lexer.py` 16）。**仍未收口**：主预览的 `render-core` 字面 `$` 元素边界尚缺浏览器级真机证明（MathJax 后处理可能再次配对/吞掉），故 index 保持 🔴 K1，不得写成已修。
