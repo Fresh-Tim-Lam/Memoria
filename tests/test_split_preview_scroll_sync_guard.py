@@ -53,3 +53,15 @@ def test_programmatic_preview_scroll_is_marked_as_echo() -> None:
     assert 'try { _markSplitEcho("preview", pane); }' in src, "锚点恢复后必须标记 split 回声"
     # 漂移收敛（80/260/700/1500ms 的补偏移）也要标记
     assert 'try { _markSplitEcho("preview", pp); }' in src, "漂移补偿后必须标记 split 回声"
+
+
+def test_switch_to_split_restore_is_locked_and_marked_as_echo() -> None:
+    """E36：切到分栏时两侧的程序化滚动不得被 split 同步监听反向顶回。"""
+    src = _src()
+    start = src.index("async function setViewMode(")
+    end = src.index("function _getViewTopSrcLine(", start)
+    body = src[start:end]
+    assert "splitSyncLock = true;" in body, "切分栏恢复前必须加 split 同步锁"
+    assert '_markSplitEcho("source", $("#editor-pane"));' in body, "源码侧恢复后必须标回声"
+    assert '_markSplitEcho("preview", $("#preview-pane"));' in body, "预览侧恢复后必须标回声"
+    assert "setTimeout(() => { splitSyncLock = false; }, 0);" in body, "恢复后必须解锁"

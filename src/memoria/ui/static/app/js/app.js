@@ -3639,13 +3639,22 @@ async function call(fn, ...args) {
     // Restore scroll position of the incoming view after render
     if (prevMode !== mode) {
       if (mode === "split") {
-        // 分栏模式：两边都同步到锚点位置
-        if (anchorLine != null) {
-          _scrollToSrcLine("source", anchorLine);
-          _scrollToSrcLine("preview", anchorLine);
-        } else {
-          _restoreCurrentViewScroll("source");
-          _restoreCurrentViewScroll("preview");
+        // 分栏模式：两边都同步到锚点位置。
+        // E36：这两个程序化 scrollTop 会触发 split 滚动同步监听；若不加锁/不标回声，
+        // 监听会反向把另一侧再顶到“块顶边”，表现为切到分栏后定位漂移/被弹回。
+        splitSyncLock = true;
+        try {
+          if (anchorLine != null) {
+            _scrollToSrcLine("source", anchorLine);
+            _scrollToSrcLine("preview", anchorLine);
+          } else {
+            _restoreCurrentViewScroll("source");
+            _restoreCurrentViewScroll("preview");
+          }
+        } finally {
+          _markSplitEcho("source", $("#editor-pane"));
+          _markSplitEcho("preview", $("#preview-pane"));
+          setTimeout(() => { splitSyncLock = false; }, 0);
         }
       } else if (anchorLine != null && _scrollToSrcLine(mode, anchorLine)) {
         // 锚点恢复成功，跳过 scrollTop 数值恢复
