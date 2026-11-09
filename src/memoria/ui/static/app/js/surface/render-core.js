@@ -110,12 +110,32 @@ window.MemoriaRenderCore = (function () {
     }
   }
 
+  /** E35：字面 `$` 必须落在元素边界内，否则 MathJax 会把同一元素里的相邻文本节点拼起来再配对。 */
+  function literalDollar() {
+    var el = document.createElement("span");
+    el.className = "-md-literal-dollar";
+    el.textContent = "$";
+    el.setAttribute("aria-hidden", "false");
+    return el;
+  }
+
+  function textNodeWithLiteralDollars(content) {
+    if (!content || content.indexOf("$") === -1) return document.createTextNode(content);
+    var frag = document.createDocumentFragment();
+    var parts = content.split("$");
+    for (var k = 0; k < parts.length; k++) {
+      if (parts[k]) frag.appendChild(document.createTextNode(parts[k]));
+      if (k < parts.length - 1) frag.appendChild(literalDollar());
+    }
+    return frag;
+  }
+
   function renderInline(node) {
     if (!node) return document.createTextNode("");
 
     switch (node.type) {
       case T.TEXT:
-        return document.createTextNode(node.content);
+        return textNodeWithLiteralDollars(node.content);
 
       case T.BOLD:
         var bEl = document.createElement("strong");
@@ -240,7 +260,7 @@ window.MemoriaRenderCore = (function () {
         return mEl;
 
       case T.ESCAPE:
-        return document.createTextNode(node.char);
+        return node.char === "$" ? literalDollar() : document.createTextNode(node.char);
 
       default:
         // 与 legacy 一致的兜底（空文本节点）——但**块级**未实现绝不走这里，见 renderBlock。

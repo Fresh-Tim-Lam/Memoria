@@ -109,7 +109,7 @@ window.MemoriaMarkdownPreview = (function () {
     return `${INLINE_START}MI${idx}${INLINE_END}`;
   }
 
-  function protectMath(text) {
+  function protectMath(text, opts) {
     const allBlocks = [];
     let out = protectDisplayBlocks(text, allBlocks);
 
@@ -129,14 +129,15 @@ window.MemoriaMarkdownPreview = (function () {
     );
     out = out.replace(/\\\[([\s\S]+?)\\\]/g, (m) => stashBlock(allBlocks, m));
     out = out.replace(/\\\(([\s\S]+?)\\\)/g, (m) => stashInline(allBlocks, m));
-    // Inline math: $...$ where the $ is not part of $$ (block).
-    // Escape-aware + currency-aware (E35): a literal "$5" / "a $5 b $10" must
-    // stay text, not be paired into math. Require a non-space after the opening
-    // delimiter and a non-space before the closing one, and never start/end on
-    // a backslash-escaped dollar.
-    out = out.replace(/(?<!\\)\$(?![\s$])((?:\\.|[^\$\n\\])+?)(?<!\s)(?<!\\)\$/g, (m) =>
-      stashInline(allBlocks, m)
-    );
+    // Inline math: $...$ where the $ is not part of $$ (block). Escape-aware +
+    // currency-aware (E35): a literal "$5" / "a $5 b $10" must stay text, while
+    // the space-padded real math this repo's KBs use heavily ("$ n $") keeps
+    // working. A plain "no space after $" rule is not enough for that reason.
+    // Rejected openers are re-tried as text (they must not steal a later
+    // formula's opener), and literal "$" chars are isolated so MathJax, which
+    // pairs dollars across adjacent text nodes in one element, cannot re-pair
+    // them into math.
+    out = protectInlineMath(out, allBlocks, { dollars: !opts || opts.dollars !== false });
 
     return { text: out, blocks: allBlocks };
   }
@@ -155,8 +156,8 @@ window.MemoriaMarkdownPreview = (function () {
   function fixLoneInlineMathParagraphs(html) {
     return html.replace(
       /<p(\s[^>]*)?>(\s*)(?<!\\)\$(?![\s$])((?:\\.|[^$\n\\])+?)(?<!\s)(?<!\\)\$(\s*)<\/p>/g,
-      (_, attrs, pre, inner, post) =>
-        `<p${attrs || ""}>${pre}\\(${inner}\\)${post}</p>`
+      (m, attrs, pre, inner, post) => looksLikeInlineMath(inner)
+        ? `<p${attrs || ""}>${pre}\\(${inner}\\)${post}</p>` : m
     );
   }
 
@@ -176,7 +177,7 @@ window.MemoriaMarkdownPreview = (function () {
         return b.kind === "inline" ? toInlineDelimiters(b.tex) : b.tex;
       }
     );
-    return fixLoneInlineMathParagraphs(html);
+    return fixLoneInlineMathParagraphs(restoreLiteralDollars(html));
   }
 
   // ── Mermaid rendering ──
@@ -1470,7 +1471,7 @@ window.MemoriaMarkdownPreview = (function () {
 
   function renderMarkdownBlock(block, knownTargets, linkOverrides, sidecarLinks) {
     let markdown = injectSidecarPlainLinks(block.markdown, sidecarLinks);
-    const { text, blocks } = protectMath(markdown);
+    const { text, blocks } = block.kind === "fence" ? { text: markdown, blocks: [] } : protectMath(markdown);
     let html = marked.parse(text, { gfm: true, breaks: true });
     html = restoreMath(html, blocks);
     html = renderHighlightSyntax(html);
@@ -2447,5 +2448,97 @@ window.MemoriaMarkdownPreview = (function () {
     container.addEventListener("dblclick", function (e) {
       if (container._mmdDraggedAt && (Date.now() - container._mmdDraggedAt) < 500) { e.preventDefault(); e.stopPropagation(); }
     }, true);
+  }
+
+  // ── E35：字面 `$` / `\$` 不得被当成行内公式 ────────────────────────────────
+  // protectMath() 原来用一个行内正则配对 `$...$`，有两个正则表达不了的缺陷：
+  //   ① 拒绝一个配对后必须从开符的下一个字符继续扫描，否则货币对的闭符会被
+  //      当成后面真公式的开符（实测 `矩阵 $ X $（$ n \times d $）` 被拆成
+  //      `$ X \(（\) n \times d $）`）；
+  //   ② 只改输出（不再生成 \(...\)）不足以阻止 MathJax：vendor/mathjax 的
+  //      HTMLDomStrings 会把同一元素内**相邻文本节点**拼成一个字符串再找定界
+  //      符（pushString 只在元素边界切分）⇒ 两个裸 `$` 仍会被排版成公式。
+  // 规则：`\$` 与代码内的 `$` 不是定界符；行内公式不跨行；闭符紧跟数字 ⇒
+  // 货币（`$5 ... $10`）；内容以数字开头、闭前有空格且无 TeX 记号 ⇒ 货币/
+  // 散文。**带空格的真公式（`$ n $`）保留**——仓库 KB 大量使用这种写法，故
+  // 不能采用 Pandoc 的“开符后不得有空格”规则。判定为字面 `$` 的字符先换成
+  // 占位符，restoreMath() 输出时再包成 span：元素边界让 MathJax 无法把两个
+  // 裸 `$` 配成公式。
+  function looksLikeInlineMath(tex, afterChar) {
+    if (!tex) return false;
+    if (afterChar && /[0-9]/.test(afterChar)) return false;              // $5 … $10
+    if (/^[0-9]/.test(tex) && /[\u4e00-\u9fff]/.test(tex) && !/\\/.test(tex)) return false;   // $5元…$
+    // 数字开头：数字之后不是字母/运算符/TeX 记号（或余下部分没有 TeX 记号）⇒ 货币/散文。
+    // `5 | ` 里的竖线按表格分隔符处理（去掉两侧空白后再判断），真正量 `$|x|$` 不以数字开头。
+    var num = /^[0-9](?:[0-9.,]*[0-9])?/.exec(tex);
+    if (num) {
+      var rest = tex.slice(num[0].length);
+      if (rest && !/^[A-Za-z\\^_=+*/(){}\[\]<>-]/.test(rest)) {
+        if (!/[\\=+\-*/^_<>(){}[\]&]/.test(rest.replace(/\s*\|\s*/g, " "))) return false;
+      }
+    }
+    return true;
+  }
+
+  /** 从 from 起找同一行内未被转义的闭符 `$`（跳过 `$$` 与 `\$`）；没有返回 -1。 */
+  function findInlineMathClose(text, from) {
+    for (let i = from; i < text.length; i++) {
+      const ch = text[i];
+      if (ch === "\n") return -1;
+      if (ch === "\\") { i += 1; continue; }
+      if (ch === "$") {
+        if (text[i + 1] === "$") { i += 1; continue; }
+        return i;
+      }
+    }
+    return -1;
+  }
+
+  /**
+   * 行内 `$...$` 保护（替代旧正则）。opts.dollars === false 时（围栏代码块）
+   * 不做字面 `$` 隔离，保留代码里的 `\$` 原文。
+   */
+  function protectInlineMath(text, allBlocks, opts) {
+    const ph = "\uE002";
+    const dollars = !opts || opts.dollars !== false;
+    let out = "";
+    let i = 0;
+    let inCode = false;
+    while (i < text.length) {
+      const ch = text[i];
+      if (ch === "\\" && i + 1 < text.length) {
+        if (text[i + 1] === "$" && !inCode && dollars) { out += ph; i += 2; continue; }
+        out += text.slice(i, i + 2);
+        i += 2;
+        continue;
+      }
+      if (ch === "`") { inCode = !inCode; out += ch; i += 1; continue; }
+      if (ch === "$") {
+        if (inCode) { out += ch; i += 1; continue; }
+        if (text[i + 1] === "$") { out += "$$"; i += 2; continue; }
+        const close = findInlineMathClose(text, i + 1);
+        if (close !== -1 && looksLikeInlineMath(text.slice(i + 1, close), text[close + 1])) {
+          out += stashInline(allBlocks, text.slice(i, close + 1));
+          i = close + 1;
+          continue;
+        }
+        out += (dollars && !inCode) ? ph : "$";
+        i += 1;
+        continue;
+      }
+      out += ch;
+      i += 1;
+    }
+    return out;
+  }
+
+  /** 把字面 `$` 占位符还原成「元素边界内的 $」，属性里的占位符还原成裸 `$`。 */
+  function restoreLiteralDollars(html) {
+    const ph = "\uE002";
+    if (html.indexOf(ph) === -1) return html;
+    const span = '<span class="-md-literal-dollar">$</span>';
+    return html.replace(/<[^>]*>|[^<]+/g, function (seg) {
+      return seg.charAt(0) === "<" ? seg.split(ph).join("$") : seg.split(ph).join(span);
+    });
   }
 })();

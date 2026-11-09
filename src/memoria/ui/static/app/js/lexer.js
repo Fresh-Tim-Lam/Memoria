@@ -48,6 +48,35 @@ window.MemoriaLexer = (function () {
   }
 
   /**
+   * 从 from 起找同一行内下一个未转义的 `$`；没有返回 -1。
+   * E35：货币/散文里的孤立 `$` 不能被误配对成行内公式。
+   */
+  function _findInlineMathClose(sourceLine, from) {
+    for (var i = from; i < sourceLine.length; i++) {
+      if (sourceLine[i] === "\\") { i += 1; continue; }
+      if (sourceLine[i] === "$") return i;
+    }
+    return -1;
+  }
+
+  /** E35：判断 `$...$` 是否像真正的行内公式（保留 `$ n $` 这类带空格公式）。 */
+  function _looksLikeInlineMath(tex, afterChar) {
+    if (!tex) return false;
+    if (afterChar && /[0-9]/.test(afterChar)) return false;
+    if (/^[0-9]/.test(tex) && /[\u4e00-\u9fff]/.test(tex) && !/\\/.test(tex)) return false;
+    // 数字开头：数字之后不是字母/运算符/TeX 记号（或余下部分没有 TeX 记号）⇒ 货币/散文。
+    // `5 | ` 里的竖线按表格分隔符处理（去掉两侧空白后再判断），真正量 `$|x|$` 不以数字开头。
+    var num = /^[0-9](?:[0-9.,]*[0-9])?/.exec(tex);
+    if (num) {
+      var rest = tex.slice(num[0].length);
+      if (rest && !/^[A-Za-z\\^_=+*/(){}\[\]<>-]/.test(rest)) {
+        if (!/[\\=+\-*/^_<>(){}[\]&]/.test(rest.replace(/\s*\|\s*/g, " "))) return false;
+      }
+    }
+    return true;
+  }
+
+  /**
    * 将单行源码解析为 Token 数组
    * @param {string} sourceLine — 一行源码
    * @param {number} [srcOffset=0] — 该行第一个字符在整个文档中的列偏移
@@ -249,6 +278,16 @@ window.MemoriaLexer = (function () {
 
       // ── 行内数学 $...$ ──
       if (ch === "$") {
+        // E35：先看后面是否有合法闭符；货币对（$5 … $10）或散文里的孤立 $
+        // 必须是 text，不能进入 math_inline（否则主预览 AST 会把它排版成公式）。
+        if (sourceLine[i + 1] !== "$") {
+          var mathClose = _findInlineMathClose(sourceLine, i + 1);
+          if (mathClose !== -1 && !_looksLikeInlineMath(sourceLine.slice(i + 1, mathClose), sourceLine[mathClose + 1])) {
+            tokens.push(make("text", "$", i, srcOffset));
+            i += 1;
+            continue;
+          }
+        }
         var mType = _hasUnmatched(tokens, "math_inline_open") ? "math_inline_close" : "math_inline_open";
         tokens.push(make(mType, "$", i, srcOffset));
         i += 1;
