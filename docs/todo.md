@@ -96,7 +96,7 @@
 | E33 | 🔴 K1 | [详](todo/05-editor.md#e33) |
 | E34 | 🔴 K1 | [详](todo/05-editor.md#e34) |
 | E35 | 🔴 K1 | [详](todo/05-editor.md#e35) |
-| E36 | ✅ 已收口 | [详](todo/05-editor.md#e36) |
+| E36 | 🔴 K1 | [详](todo/05-editor.md#e36) |
 | DOC02 | — | [详](todo/05-editor.md#doc02) |
 | DOC03 | — | [详](todo/05-editor.md#doc03) |
 
