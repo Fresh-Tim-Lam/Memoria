@@ -120,7 +120,7 @@ window.MemoriaMarkdownPreview = (function () {
     // (which would insert newlines that break the single-line $$ regex).
     // Also must come before inline $...$ to prevent inner $ from being
     // matched as inline math and wrongly converted to \(...\).
-    out = out.replace(/\$\$((?:\\.|[^\$\n\\])+?)\$\$/g, (m) =>
+    out = out.replace(/(?<!\\)\$\$(?:(?:\\.|[^\$\n\\])+?)(?<!\\)\$\$/g, (m) =>
       stashBlock(allBlocks, m)
     );
     // Standalone \begin{...}...\end{...} environments NOT inside $$...$$
@@ -130,10 +130,11 @@ window.MemoriaMarkdownPreview = (function () {
     out = out.replace(/\\\[([\s\S]+?)\\\]/g, (m) => stashBlock(allBlocks, m));
     out = out.replace(/\\\(([\s\S]+?)\\\)/g, (m) => stashInline(allBlocks, m));
     // Inline math: $...$ where the $ is not part of $$ (block).
-    // Match only within a single line to prevent swallowing ** or other
-    // markdown delimiters across lines when stray $ signs exist in the text.
-    // Multi-line math should use $$...$$ block delimiters instead.
-    out = out.replace(/\$(?!\$)((?:\\.|[^\$\n\\])+?)\$/g, (m) =>
+    // Escape-aware + currency-aware (E35): a literal "$5" / "a $5 b $10" must
+    // stay text, not be paired into math. Require a non-space after the opening
+    // delimiter and a non-space before the closing one, and never start/end on
+    // a backslash-escaped dollar.
+    out = out.replace(/(?<!\\)\$(?![\s$])((?:\\.|[^\$\n\\])+?)(?<!\s)(?<!\\)\$/g, (m) =>
       stashInline(allBlocks, m)
     );
 
@@ -153,7 +154,7 @@ window.MemoriaMarkdownPreview = (function () {
 
   function fixLoneInlineMathParagraphs(html) {
     return html.replace(
-      /<p(\s[^>]*)?>(\s*)\$(?!\$)((?:\\.|[^$\n\\])+?)\$(\s*)<\/p>/g,
+      /<p(\s[^>]*)?>(\s*)(?<!\\)\$(?![\s$])((?:\\.|[^$\n\\])+?)(?<!\s)(?<!\\)\$(\s*)<\/p>/g,
       (_, attrs, pre, inner, post) =>
         `<p${attrs || ""}>${pre}\\(${inner}\\)${post}</p>`
     );
