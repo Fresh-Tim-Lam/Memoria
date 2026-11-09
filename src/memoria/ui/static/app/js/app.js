@@ -3515,20 +3515,23 @@ async function call(fn, ...args) {
   // 反向同步回来，就会出现"滚动被弹回"——因为反向对齐是把块**顶边**对到容器顶边，
   // 比用户原来的位置更高，每次来回都往上弹一截。块越高越明显（$$ 公式块/图片/代码块）。
   // 记下程序化滚动的落点，消费掉那一侧的下一次同位置 scroll 事件即可断开环。
-  let splitEcho = null;
+  // E36：切到分栏时 source 与 preview 会在同一拍各归位一次，单槽会被后一次覆盖
+  //   ⇒ 按 mode 分槽（source / preview 各记一条）。
+  let splitEcho = { source: null, preview: null };
 
   function _markSplitEcho(mode, pane) {
     if (!pane) return;
     // 读回浏览器实际落点（目标可能被 clamp 到 max），保证回声判定能对上；
     // 300ms 内的同侧事件一并视为回声（Chromium 偶发对一次程序化滚动发多个 scroll）
-    splitEcho = { mode: mode, top: pane.scrollTop, until: performance.now() + 300 };
+    splitEcho[mode] = { top: pane.scrollTop, until: performance.now() + 300 };
   }
 
   function _consumeSplitEcho(mode, pane) {
-    if (!splitEcho || splitEcho.mode !== mode) return false;
-    const near = Math.abs(pane.scrollTop - splitEcho.top) <= 2;
-    const fresh = performance.now() <= splitEcho.until;
-    splitEcho = null;
+    const echo = splitEcho[mode];
+    if (!echo) return false;
+    splitEcho[mode] = null;
+    const near = Math.abs(pane.scrollTop - echo.top) <= 2;
+    const fresh = performance.now() <= echo.until;
     return near || fresh;
   }
 
@@ -3565,6 +3568,7 @@ async function call(fn, ...args) {
   }
 
   function renderEditor(doc) {
+    if (!doc) return;   // E36：响应式重排可能在文档打开前触发 setViewMode；不得对 null 文档取 sidecar
     const desc = (doc.sidecar && doc.sidecar.description) || "";
     $("#file-meta").textContent = desc;
 
@@ -3593,6 +3597,8 @@ async function call(fn, ...args) {
     const prevMode = state.viewMode;
     let alreadyRendered = false;
     state.viewMode = mode;
+    // E36：离开分栏 ⇒ 作废尚未执行的“切换后补锚点”定时器，避免旧锚点在别的模式里再滚一次。
+    if (mode !== "split") _viewAnchorSeq++;
     if (!opts?.skipSave) {
       localStorage.setItem("-view", mode);
     }
@@ -3602,7 +3608,12 @@ async function call(fn, ...args) {
       _renderTimer = null;
       syncLog("setViewMode:", prevMode, "→", mode, "| dirty=", _dirty);
       // 始终从源码编辑器收集（它是 markdown 源，不会丢失格式）
-      const body = collectEditorBody();   var _viewAnchorBeforeRerender = _getViewTopSrcLine(prevMode); _saveCurrentViewScroll(prevMode);   // 2026-09-25 AG105：**锚点与滚动位置必须在重渲染之前采** —— 下面的 `renderEditor()`/`renderPreview()` 会把两个视图都刷回顶部，之后再量到的"顶部行"永远是第一行（人：「从预览区域切换分栏等其他模式仍有位置漂移」的根因）
+      // 2026-09-25 AG105：**锚点与滚动位置必须在重渲染之前采** —— 下面的 `renderEditor()`/`renderPreview()` 会把两个视图都刷回顶部，之后再量到的"顶部行"永远是第一行（人：「从预览区域切换分栏等其他模式仍有位置漂移」的根因）
+      // 2026-11-09 E36：不再只记「块起始行」；`_captureViewAnchor` 同时记顶部行在块内的像素偏移，
+      //   否则在长代码块中间切换会被 `_scrollToSrcLine` 顶回块首（真机实测 400px 跳动）。
+      //   从分栏切回单视图时，锚点取**即将保留的那一侧**（回预览取 preview、回源码取 source），
+      //   这样回切不会拿另一侧（分栏块首）的位置去覆盖用户看到的这一侧。
+      const body = collectEditorBody();   var _viewAnchorBeforeRerender = _captureViewAnchor(prevMode === "split" ? mode : prevMode); _saveCurrentViewScroll(prevMode);
       if (body !== null) {
         state.doc.body = body;
         state.doc.lines = _linesFromBody(body);
@@ -3619,11 +3630,6 @@ async function call(fn, ...args) {
       if (_dirty) { clearTimeout(_saveTimer); _saveTimer = null; syncToDisk(); }
       // 2026-09-25 AG105：`_saveCurrentViewScroll(prevMode)` 已**上移到重渲染之前**（此处再存会存到"被刷回顶部"后的位置）—— 本行原地保留以维持行号
     }
-    // 记录源码行号锚点：用于跨视图（源码↔预览）的文本位置映射
-    let anchorLine = null;
-    if (prevMode !== mode) {
-      anchorLine = _viewAnchorBeforeRerender;   // 2026-09-25 AG105：用重渲染**之前**采到的锚点（原来在这里现量 ⇒ 量到的已是刷回顶部后的那一屏）
-    }
     const split = $("#editor-split");
     split.classList.remove("view-source", "view-preview", "view-split");
     split.classList.add(`view-${mode}`);
@@ -3639,14 +3645,15 @@ async function call(fn, ...args) {
     // Restore scroll position of the incoming view after render
     if (prevMode !== mode) {
       if (mode === "split") {
-        // 分栏模式：两边都同步到锚点位置。
-        // E36：这两个程序化 scrollTop 会触发 split 滚动同步监听；若不加锁/不标回声，
-        // 监听会反向把另一侧再顶到“块顶边”，表现为切到分栏后定位漂移/被弹回。
+        // 分栏模式：两边都恢复到**同一源码行**（E36）。
+        // 1) 程序化 scrollTop 会触发 split 滚动同步监听；若不加锁/不标回声，
+        //    监听会反向把另一侧再顶到“块顶边”，表现为切到分栏后定位漂移/被弹回。
+        // 2) 只按“块起始行”恢复会在长块中间丢掉块内偏移（真机实测 400px 跳动）
+        //    ⇒ `_scrollToViewAnchor` 保留来源侧的精确像素/块内位置。
         splitSyncLock = true;
         try {
-          if (anchorLine != null) {
-            _scrollToSrcLine("source", anchorLine);
-            _scrollToSrcLine("preview", anchorLine);
+          if (_viewAnchorBeforeRerender) {
+            _scrollToViewAnchor(_viewAnchorBeforeRerender, "split");
           } else {
             _restoreCurrentViewScroll("source");
             _restoreCurrentViewScroll("preview");
@@ -3656,8 +3663,13 @@ async function call(fn, ...args) {
           _markSplitEcho("preview", $("#preview-pane"));
           setTimeout(() => { splitSyncLock = false; }, 0);
         }
-      } else if (anchorLine != null && _scrollToSrcLine(mode, anchorLine)) {
-        // 锚点恢复成功，跳过 scrollTop 数值恢复
+        // 3) 分栏宽度变化 / 惰性物化 / MathJax 排版会在随后几拍继续改高度
+        //    ⇒ 在稳定点只补差值，把“同一源码行”重新对到视口顶（不重设落点）。
+        if (_viewAnchorBeforeRerender) _scheduleViewAnchorReanchor(_viewAnchorBeforeRerender, "split");
+      } else if (_viewAnchorBeforeRerender && _scrollToViewAnchor(_viewAnchorBeforeRerender, mode)) {
+        // 精确锚点恢复成功，跳过 scrollTop 数值恢复。
+        // E36：切回单预览时同样是整篇重渲 + 惰性物化，晚几拍还会改高度 ⇒ 也要补锚点。
+        if (mode === "preview") _scheduleViewAnchorReanchor(_viewAnchorBeforeRerender, "preview");
       } else {
         _restoreCurrentViewScroll(mode);
       }
@@ -3673,7 +3685,9 @@ async function call(fn, ...args) {
       const lines = editorPane.querySelectorAll(".-line");
       for (const line of lines) {
         const r = line.getBoundingClientRect();
-        if (r.bottom >= containerTop) {
+        // E36：`>=` 会把「下边缘恰好贴视口顶」的上一行也算成可见（源码行 125 顶部对齐时返回 124），
+        //   分栏同步因此每次少 1 行。改用 > 且留 0.5px 亚像素余量。
+        if (r.bottom > containerTop + 0.5) {
           return +(line.dataset.line || 0) || null;
         }
       }
@@ -3683,7 +3697,7 @@ async function call(fn, ...args) {
       const blocks = previewPane.querySelectorAll("[data--src-line]");
       for (const block of blocks) {
         const r = block.getBoundingClientRect();
-        if (r.bottom >= containerTop) {
+        if (r.bottom > containerTop + 0.5) {
           return +(block.dataset.SrcLine || 0) || null;
         }
       }
@@ -3720,6 +3734,150 @@ async function call(fn, ...args) {
       }
     }
     return false;
+  }
+
+  // ── E36：切视图的精确锚点（源码行 + 行内/块内像素偏移）────────────────────
+  // 旧的 `_getViewTopSrcLine` 只返回「顶部块/行的**起始**行号」，恢复时 `_scrollToSrcLine`
+  // 把该块**顶边**对到视口顶 ⇒ 在长代码块（32 行 ≈850px）中间切换会整块跳回块首
+  // （真机 CDP 实测 preview→split 跳动 399.9px，source→split 两侧相差 15 行）。
+  // 锚点分两种来源：
+  //   source  : 顶部可见 `.-line` 的行号 + 该行 top 相对 pane top 的偏移；
+  //   preview : 顶部可见 `[data--src-line]` 块的块下标 + 块 top 相对 pane top 的偏移，
+  //             并把块内像素位置按块行区间比例折算成源码行（供另一侧对齐）。
+  // 恢复时：来源侧精确回位；另一侧按同一源码行做比例映射（行 → 块内 y），
+  // 使分栏两侧显示同一行，而不是「同一块、不同位置」。
+  var _viewAnchorSeq = 0;
+  var _viewAnchorGuard = null;
+
+  function _captureViewAnchor(mode) {
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    if ((mode === "source" || mode === "split") && editorPane) {
+      const containerTop = editorPane.getBoundingClientRect().top;
+      const lines = editorPane.querySelectorAll(".-line");
+      for (const line of lines) {
+        const r = line.getBoundingClientRect();
+        if (r.bottom <= containerTop + 0.5) continue;   // 完全在视口上方（含恰好贴边）
+        const n = +(line.dataset.line || 0) || 0;
+        if (!n) continue;
+        return { origin: "source", line: n, offset: r.top - containerTop };
+      }
+    }
+    if ((mode === "preview" || mode === "split") && previewPane) {
+      const containerTop = previewPane.getBoundingClientRect().top;
+      const blocks = previewPane.querySelectorAll("[data--src-line]");
+      for (const block of blocks) {
+        if (block.closest("[data--src-line]") !== block) continue;   // 只取最外层块
+        const r = block.getBoundingClientRect();
+        if (r.bottom <= containerTop + 0.5) continue;
+        const s = +(block.dataset.SrcLine || 0) || 0;
+        const e = +(block.dataset.SrcLineEnd || s) || s;
+        if (!s) continue;
+        const h = Math.max(1, r.height);
+        const off = r.top - containerTop;
+        const frac = Math.min(1, Math.max(0, -off / h));
+        const line = s + Math.min(e - s, Math.floor(frac * (e - s + 1)));
+        return {
+          origin: "preview", line: line, offset: off,
+          blockIndex: block.getAttribute("data--block-index"),
+          blockStart: s, blockEnd: e,
+        };
+      }
+    }
+    return null;
+  }
+
+  /** 找锚点源码行所在的预览块：优先用块下标（同文档重渲后下标稳定），否则按行区间。 */
+  function _previewBlockForAnchor(previewPane, anchor) {
+    if (!previewPane || !anchor) return null;
+    if (anchor.origin === "preview" && anchor.blockIndex != null) {
+      const bi = parseInt(anchor.blockIndex, 10);
+      if (Number.isFinite(bi) && bi >= 0) {
+        const direct = previewPane.querySelector('.-src-block[data--block-index="' + bi + '"]');
+        if (direct && direct.hasAttribute("data--src-line")) return direct;
+      }
+    }
+    let fallback = null;
+    const blocks = previewPane.querySelectorAll("[data--src-line]");
+    for (const block of blocks) {
+      if (block.closest("[data--src-line]") !== block) continue;
+      const s = +(block.dataset.SrcLine || 0) || 0;
+      const e = +(block.dataset.SrcLineEnd || s) || s;
+      if (!s) continue;
+      if (s <= anchor.line && anchor.line <= e) return block;
+      if (s >= anchor.line && !fallback) fallback = block;
+    }
+    return fallback;
+  }
+
+  /** 按精确锚点恢复视口位置；成功返回 true。来源侧精确回位，另一侧按同一源码行比例对齐。 */
+  function _scrollToViewAnchor(anchor, mode) {
+    if (!anchor || !anchor.line) return false;
+    const editorPane = $("#editor-pane");
+    const previewPane = $("#preview-pane");
+    let applied = false;
+    if ((mode === "source" || mode === "split") && editorPane) {
+      const el = document.getElementById("line-" + anchor.line);
+      if (el) {
+        const paneTop = editorPane.getBoundingClientRect().top;
+        const targetTop = anchor.origin === "source" ? (anchor.offset || 0) : 0;
+        const delta = el.getBoundingClientRect().top - paneTop - targetTop;
+        if (Math.abs(delta) >= 0.5) editorPane.scrollTop += delta;
+        if (state.viewMode === "split") _markSplitEcho("source", editorPane);
+        applied = true;
+      }
+    }
+    if ((mode === "preview" || mode === "split") && previewPane) {
+      const block = _previewBlockForAnchor(previewPane, anchor);
+      if (block) {
+        const paneTop = previewPane.getBoundingClientRect().top;
+        const r = block.getBoundingClientRect();
+        const s = +(block.dataset.SrcLine || 0) || anchor.line;
+        const e = +(block.dataset.SrcLineEnd || s) || s;
+        const sameBlock = anchor.origin === "preview" && anchor.blockStart != null && s === anchor.blockStart;
+        let targetTop;
+        if (sameBlock) {
+          targetTop = anchor.offset || 0;   // 块 top 相对 pane top（负 = 块首已滚出视口）
+        } else if (anchor.line <= 1 && editorPane && editorPane.scrollTop <= 0) {
+          // 源文档顶部：预览的 `#preview` 有 1.5rem 上内边距，按“行贴视口顶”会把这段
+          // 内边距滚出视野（回切后 scrollTop 从 0 变 26px）。顶部应保持自然 scrollTop=0。
+          targetTop = (previewPane.scrollTop || 0) + (r.top - paneTop);
+        } else {
+          const frac = Math.min(1, Math.max(0, (anchor.line - s) / Math.max(1, e - s + 1)));
+          targetTop = -frac * r.height;     // 让同一源码行落在视口顶 ⇒ 块 top 必须在视口上方
+        }
+        const delta = r.top - paneTop - targetTop;
+        if (Math.abs(delta) >= 0.5) previewPane.scrollTop += delta;
+        if (state.viewMode === "split") _markSplitEcho("preview", previewPane);
+        applied = true;
+      }
+    }
+    return applied;
+  }
+
+  /** 分栏/预览切换后的漂移收敛：宽度重排/惰性物化/MathJax 会晚几拍改高度 ⇒ 只补差值，不重设落点。
+   *  用户一旦自己滚动（wheel/mousedown/touchstart）或再次切视图 ⇒ 立即放弃。 */
+  function _scheduleViewAnchorReanchor(anchor, mode) {
+    if (!anchor) return;
+    const targetMode = mode || "split";
+    const seq = ++_viewAnchorSeq;
+    if (_viewAnchorGuard) _viewAnchorGuard.cancelled = true;
+    const g = { cancelled: false };
+    _viewAnchorGuard = g;
+    const cancel = () => { g.cancelled = true; };
+    [$("#editor-pane"), $("#preview-pane")].forEach((pane) => {
+      if (!pane) return;
+      ["wheel", "mousedown", "touchstart"].forEach((ev) => {
+        pane.addEventListener(ev, cancel, { once: true, passive: true });
+      });
+    });
+    [80, 260, 700, 1500].forEach((ms) => {
+      window.setTimeout(() => {
+        if (g.cancelled || _viewAnchorGuard !== g || seq !== _viewAnchorSeq) return;
+        if (state.viewMode !== targetMode) return;
+        _scrollToViewAnchor(anchor, targetMode);
+      }, ms);
+    });
   }
 
   // ── E26：编辑后保持光标可见（源码区 / 预览区共用）──────────────────────────
