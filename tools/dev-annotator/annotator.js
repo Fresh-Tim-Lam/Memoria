@@ -29,7 +29,9 @@
     <style>
       :host, * { box-sizing: border-box; }
       .wrap { position: fixed; right: 18px; bottom: 18px; z-index: 2147483000; pointer-events: auto; font: 13px/1.45 system-ui, -apple-system, Segoe UI, sans-serif; color: #e6edf3; }
-      .bar { display: flex; gap: 8px; align-items: center; background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 8px 10px; box-shadow: 0 8px 28px rgba(0,0,0,.45); }
+      .bar { display: flex; gap: 8px; align-items: center; background: #161b22; border: 1px solid #30363d; border-radius: 10px; padding: 8px 10px; box-shadow: 0 8px 28px rgba(0,0,0,.45); cursor: grab; touch-action: none; user-select: none; }
+      .wrap.is-dragging .bar { cursor: grabbing; }
+      .wrap.is-dragging { user-select: none; }
       .bar b { font-weight: 650; font-size: 12px; color: #adbac7; }
       .bar #count { color: #58a6ff; }
       button { all: unset; cursor: pointer; padding: 5px 9px; border-radius: 7px; background: #21262d; border: 1px solid #30363d; color: #e6edf3; font: inherit; }
@@ -97,6 +99,79 @@
   (document.body || document.documentElement).appendChild(host);
   const $ = (s) => root.querySelector(s);
   const panel = $('#panel');
+  const wrapEl = $('.wrap');
+  const barEl = $('.bar');
+
+  // 2026-11-10：批注板可拖动，便于查看/操作被它遮住的 UI。位置存 localStorage；
+  // 双击标题栏复位到右下角。只从标题栏起拖，按钮点击不触发。
+  const POS_KEY = 'memoria.dev.annotator.pos.v1';
+  function clampPos(left, top) {
+    const w = wrapEl.offsetWidth || 380;
+    const h = wrapEl.offsetHeight || 48;
+    return {
+      left: Math.max(4, Math.min(Math.max(4, window.innerWidth - w - 4), left)),
+      top: Math.max(4, Math.min(Math.max(4, window.innerHeight - h - 4), top)),
+    };
+  }
+  function applyPos(pos) {
+    if (!pos) {
+      wrapEl.style.left = '';
+      wrapEl.style.top = '';
+      wrapEl.style.right = '18px';
+      wrapEl.style.bottom = '18px';
+      return;
+    }
+    const p = clampPos(Number(pos.left) || 0, Number(pos.top) || 0);
+    wrapEl.style.right = 'auto';
+    wrapEl.style.bottom = 'auto';
+    wrapEl.style.left = p.left + 'px';
+    wrapEl.style.top = p.top + 'px';
+  }
+  try { applyPos(JSON.parse(localStorage.getItem(POS_KEY) || 'null')); } catch (_) { /* ignore */ }
+  let boardDrag = null;
+  barEl.addEventListener('pointerdown', (e) => {
+    if (e.button !== undefined && e.button !== 0) return;
+    if (e.target.closest('button')) return;
+    const r = wrapEl.getBoundingClientRect();
+    boardDrag = { dx: e.clientX - r.left, dy: e.clientY - r.top };
+    wrapEl.classList.add('is-dragging');
+    try { barEl.setPointerCapture(e.pointerId); } catch (_) { /* noop */ }
+    e.preventDefault();
+  });
+  barEl.addEventListener('pointermove', (e) => {
+    if (!boardDrag) return;
+    const p = clampPos(e.clientX - boardDrag.dx, e.clientY - boardDrag.dy);
+    wrapEl.style.right = 'auto';
+    wrapEl.style.bottom = 'auto';
+    wrapEl.style.left = p.left + 'px';
+    wrapEl.style.top = p.top + 'px';
+  });
+  function endBoardDrag(e) {
+    if (!boardDrag) return;
+    boardDrag = null;
+    wrapEl.classList.remove('is-dragging');
+    try { barEl.releasePointerCapture(e.pointerId); } catch (_) { /* noop */ }
+    try {
+      localStorage.setItem(POS_KEY, JSON.stringify({
+        left: parseInt(wrapEl.style.left, 10) || 0,
+        top: parseInt(wrapEl.style.top, 10) || 0,
+      }));
+    } catch (_) { /* ignore */ }
+  }
+  barEl.addEventListener('pointerup', endBoardDrag);
+  barEl.addEventListener('pointercancel', endBoardDrag);
+  barEl.addEventListener('dblclick', (e) => {
+    if (e.target.closest('button')) return;
+    try { localStorage.removeItem(POS_KEY); } catch (_) { /* ignore */ }
+    applyPos(null);
+  });
+  window.addEventListener('resize', () => {
+    if (wrapEl.style.left || wrapEl.style.top) {
+      applyPos({ left: parseInt(wrapEl.style.left, 10), top: parseInt(wrapEl.style.top, 10) });
+    }
+  });
+  barEl.title = '拖动标题栏移动批注板；双击复位到右下角';
+
   const outline = document.createElement('div');
   outline.className = 'outline';
   outline.style.display = 'none';
