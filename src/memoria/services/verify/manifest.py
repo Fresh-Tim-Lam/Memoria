@@ -61,6 +61,7 @@ OPTIONAL_TOP_LEVEL: tuple[str, ...] = (
     "hf/",
     "README.txt",
     "Memoria.exe.config",
+    "LICENSE",
     MANIFEST_NAME,
 )
 
