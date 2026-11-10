@@ -120,7 +120,21 @@ def test_picker_scrollbar_mirrors_the_global_thin_scrollbar() -> None:
     （标准属性一非 `auto`，Chromium 就整块忽略 `::-webkit-scrollbar`）。
     """
     css = _CSS.read_text(encoding="utf-8")
-    block = css.split("@supports (appearance: base-select)", 1)[1]
+    # 只取这个 @supports 的块体：后面的图谱/会话样式允许有自己的 scrollbar-width，
+    # 不属于 picker 规则，不能把它们也算进来（旧写法 split 到全文尾部会误报）。
+    start = css.index("@supports (appearance: base-select)")
+    brace = css.index("{", start)
+    depth = 0
+    end = len(css)
+    for index in range(brace, len(css)):
+        if css[index] == "{":
+            depth += 1
+        elif css[index] == "}":
+            depth -= 1
+            if depth == 0:
+                end = index + 1
+                break
+    block = css[start:end]
     assert "select[data-display-font-lang]::picker(select)::-webkit-scrollbar," in block
     bar = block.split("::-webkit-scrollbar {", 1)[1].split("}", 1)[0]
     assert "width: var(--scrollbar-hit);" in bar, "命中区要复用全局令牌（10px）"

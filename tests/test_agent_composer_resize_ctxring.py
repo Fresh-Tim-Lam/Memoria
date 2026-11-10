@@ -51,7 +51,7 @@ def test_composer_resize_is_wired_and_persisted_via_ui_settings():
     # 接线：init 里调用；把手惰性创建；只调高（宽度不写）
     assert "setupComposerResize();" in src
     assert 'handle.id = "agent-input-resize";' in src
-    assert "composer.insertBefore(handle, input.nextSibling);" in src
+    assert "composer.insertBefore(handle, input);" in src
     # 拖拽跟手（指针移出/出窗口仍继续）
     assert "setPointerCapture(e.pointerId)" in src
     # 只写 height，且夹在 min-height ~ 60% 视口
@@ -67,10 +67,10 @@ def test_composer_resize_is_wired_and_persisted_via_ui_settings():
 def test_context_ring_moves_under_input_not_status_bar():
     src = _panel()
     block = src[src.index("function renderContextRing"): src.index("function systemRowText")]
-    # 宿主 = composer 内、输入框下方的一行
-    assert 'document.querySelector(".-agent-composer")' in block
+    # 宿主 = 会话栏底栏（不是全局底栏，也不再是 composer 内）
+    assert 'document.getElementById("agent-session-footer")' in block
     assert 'document.getElementById("agent-ctx-ring-row")' in block
-    assert 'composer.insertBefore(row, actions)' in block
+    assert 'footer.appendChild(row)' in block
     # 不再挂到 #status-bar；旧 id 只用于“移除残留”，绝不用于创建
     assert "bar.appendChild(host)" not in block
     assert 'host.id = "status-ctx-ring"' not in block
