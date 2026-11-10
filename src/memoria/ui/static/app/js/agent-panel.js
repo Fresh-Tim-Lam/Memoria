@@ -895,6 +895,107 @@ window.MemoriaAgentPanel = (function () {
     if (statusAgent && statusAgent.parentElement !== footer) footer.appendChild(statusAgent);
     const ctxRow = document.getElementById("agent-ctx-ring-row");
     if (ctxRow && ctxRow.parentElement !== footer) footer.appendChild(ctxRow);
+    ensureContextPanel();
+  }
+
+  /** DSH ContextMeter 式面板：把上下文字符预算、压缩、本轮/本会话用量放到可展开的结构化面板。 */
+  function ensureContextPanel() {
+    const footer = document.getElementById("agent-session-footer");
+    if (!footer) return null;
+    let panel = document.getElementById("agent-ctx-panel");
+    if (!panel) {
+      panel = document.createElement("div");
+      panel.id = "agent-ctx-panel";
+      panel.className = "-agent-ctx-panel";
+      panel.hidden = true;
+      panel.setAttribute("role", "dialog");
+      panel.setAttribute("aria-label", T("agent.stats.title"));
+      footer.appendChild(panel);
+      document.addEventListener("pointerdown", function (e) {
+        if (panel.hidden) return;
+        if (panel.contains(e.target) || (e.target.closest && e.target.closest("#agent-ctx-ring"))) return;
+        closeContextPanel();
+      }, true);
+      document.addEventListener("keydown", function (e) {
+        if (e.key === "Escape") closeContextPanel();
+      });
+    }
+    return panel;
+  }
+
+  function closeContextPanel() {
+    const panel = document.getElementById("agent-ctx-panel");
+    const ring = document.getElementById("agent-ctx-ring");
+    if (panel) panel.hidden = true;
+    if (ring) ring.setAttribute("aria-expanded", "false");
+  }
+
+  function openContextPanel() {
+    const panel = ensureContextPanel();
+    const ring = document.getElementById("agent-ctx-ring");
+    if (!panel) return;
+    if (!panel.hidden) { closeContextPanel(); return; }
+    const view = contextUsageView();
+    const u = lastUsage;
+    const su = sessionUsage;
+    const rows = [];
+    if (view) {
+      const percent = Math.max(0, Math.min(100, view.percent));
+      rows.push([T("agent.stats.context"), fmtTokens(view.chars) + " / " + fmtTokens(view.max)]);
+      rows.push([T("agent.stats.thresholdLabel"), view.thresholdPercent + "%"]);
+      rows.push([T("agent.stats.compactedLabel"), String(view.times)]);
+      panel.innerHTML =
+        '<div class="-agent-ctx-panel-title"><span>' + esc(T("agent.stats.title")) +
+        '</span><span class="-agent-ctx-panel-percent">' + esc(T("agent.stats.used", { percent: view.percent })) + "</span></div>" +
+        '<div class="-agent-ctx-bar"><i style="width:' + percent + '%"></i></div>';
+    } else {
+      panel.innerHTML = '<div class="-agent-ctx-panel-title"><span>' + esc(T("agent.stats.title")) + "</span></div>";
+    }
+    if (u && u.total_tokens) {
+      rows.push([
+        T("agent.stats.turnLabel"),
+        "↑" + fmtTokens(u.prompt_tokens || 0) + " ↓" + fmtTokens(u.completion_tokens || 0),
+      ]);
+      const hit = usageInt(u.cache_read_tokens);
+      const miss = usageInt(u.cache_miss_tokens);
+      if (hit !== null) {
+        rows.push([
+          T("agent.stats.cacheLabel"),
+          "hit " + fmtTokens(hit) + " / miss " + (miss === null ? "—" : fmtTokens(miss)) +
+            " (" + (hitRateText(hit, u.prompt_tokens || 0) || "—") + ")",
+        ]);
+      }
+    } else {
+      rows.push([T("agent.stats.noUsage"), ""]);
+    }
+    if (su && su.turns > 0) {
+      rows.push([
+        T("agent.stats.sessionLabel"),
+        su.turns + " · ↑" + fmtTokens(su.prompt) + " ↓" + fmtTokens(su.completion),
+      ]);
+    }
+    if (rows.length) {
+      panel.insertAdjacentHTML("beforeend", "<dl>" + rows.map(function (pair) {
+        return "<dt>" + esc(pair[0]) + "</dt><dd>" + esc(pair[1]) + "</dd>";
+      }).join("") + "</dl>");
+    }
+    panel.insertAdjacentHTML("beforeend", '<div class="-agent-ctx-panel-note">' + esc(T("agent.stats.close")) + " · Esc</div>");
+    panel.hidden = false;
+    if (ring) ring.setAttribute("aria-expanded", "true");
+  }
+
+  function bindContextRing(host) {
+    if (!host || host.dataset.ctxPanelBound) return;
+    host.dataset.ctxPanelBound = "1";
+    host.setAttribute("aria-haspopup", "dialog");
+    host.setAttribute("aria-expanded", "false");
+    host.addEventListener("click", openContextPanel);
+    host.addEventListener("keydown", function (e) {
+      if (e.key === "Enter" || e.key === " ") {
+        e.preventDefault();
+        openContextPanel();
+      }
+    });
   }
 
   /** DSH 气泡框的动作键：发送 = 上箭头，停止 = 暂停方块；去掉原文字按钮的 label 覆盖。 */
@@ -7640,6 +7741,7 @@ window.MemoriaAgentPanel = (function () {
     // 旧版环若残留（底栏 #status-ctx-ring）⇒ 移除，避免双环/底栏残留空壳
     const legacy = document.getElementById("status-ctx-ring");
     if (legacy && legacy.parentNode) legacy.parentNode.removeChild(legacy);
+    bindContextRing(host);
     const R = 7;
     const C = 2 * Math.PI * R;
     const svgOpen = '<svg viewBox="0 0 20 20" aria-hidden="true">';

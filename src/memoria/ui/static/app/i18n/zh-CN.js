@@ -2102,4 +2102,25 @@
       expanded: "展开待发送队列",
     },
   });
+  // ═════ 2026-11-10：DSH ContextMeter 式结构化上下文面板 ═════
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    stats: {
+      title: "上下文与用量",
+      context: "上下文",
+      thresholdLabel: "压缩阈值",
+      compactedLabel: "已压缩",
+      turnLabel: "本轮用量",
+      cacheLabel: "缓存",
+      sessionLabel: "本会话",
+      used: "上下文已用 {percent}%",
+      chars: "{chars} / {max} 字符",
+      threshold: "压缩阈值 {percent}%",
+      compacted: "已压缩 {n} 次",
+      turnUsage: "本轮 ↑{prompt} ↓{completion}",
+      session: "本会话 {turns} 轮 · ↑{prompt} ↓{completion}",
+      cache: "缓存命中 {hit} / 未命中 {miss}（{rate}）",
+      noUsage: "本轮用量尚未上报",
+      close: "关闭",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

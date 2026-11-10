@@ -92,3 +92,21 @@ def test_dsh_composer_bubble_and_session_footer_are_wired() -> None:
     assert "spanCache" not in status_usage
     assert "agent-session-footer" in src
     assert "renderContextRing" in src
+
+
+def test_context_meter_opens_structured_panel() -> None:
+    src = _panel()
+    css = CSS.read_text(encoding="utf-8")
+    assert "function openContextPanel(" in src
+    assert "function closeContextPanel(" in src
+    assert "function bindContextRing(" in src
+    assert 'id = "agent-ctx-panel"' in src
+    assert "aria-haspopup" in src
+    assert "agent.stats.title" in src
+    assert "agent.stats.turnLabel" in src
+    assert "agent.stats.sessionLabel" in src
+    assert ".-agent-ctx-panel" in css
+    zh = (APP / "i18n" / "zh-CN.js").read_text(encoding="utf-8")
+    en = (APP / "i18n" / "en.js").read_text(encoding="utf-8")
+    assert "stats: {" in zh and "stats: {" in en
+    assert "上下文与用量" in zh

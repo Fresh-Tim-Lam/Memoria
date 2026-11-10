@@ -8620,3 +8620,62 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
 .-agent-composer .-agent-input-resize {
     margin: 0 0 -3px;
 }
+
+/* 2026-11-10：DSH ContextMeter 式结构化上下文面板（点圆环展开） */
+.-agent-session-footer {
+    position: relative;
+}
+.-agent-ctx-panel {
+    position: absolute;
+    right: 10px;
+    bottom: calc(100% + 8px);
+    z-index: 20;
+    box-sizing: border-box;
+    width: min(280px, calc(100vw - 32px));
+    padding: 10px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg-secondary);
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.24);
+    color: var(--text-primary);
+    font-size: 0.6875rem;
+    line-height: 1.45;
+}
+.-agent-ctx-panel[hidden] { display: none; }
+.-agent-ctx-panel-title {
+    display: flex;
+    align-items: baseline;
+    justify-content: space-between;
+    gap: 8px;
+    margin-bottom: 6px;
+    font-size: 0.75rem;
+    font-weight: 600;
+}
+.-agent-ctx-panel-percent { color: var(--theme-color); font-variant-numeric: tabular-nums; }
+.-agent-ctx-bar {
+    display: flex;
+    width: 100%;
+    height: 5px;
+    margin: 2px 0 8px;
+    overflow: hidden;
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+}
+.-agent-ctx-bar > i {
+    display: block;
+    height: 100%;
+    background: var(--theme-color);
+}
+.-agent-ctx-panel dl {
+    display: grid;
+    grid-template-columns: auto 1fr;
+    gap: 3px 10px;
+    margin: 0;
+}
+.-agent-ctx-panel dt { color: var(--text-secondary); }
+.-agent-ctx-panel dd { margin: 0; text-align: right; font-variant-numeric: tabular-nums; }
+.-agent-ctx-panel-note {
+    margin-top: 8px;
+    color: var(--text-secondary);
+    font-size: 0.625rem;
+}

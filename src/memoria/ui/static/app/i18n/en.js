@@ -2208,4 +2208,25 @@
       expanded: "Expand pending queue",
     },
   });
+  // ═════ appended 2026-11-10: DSH ContextMeter-style structured context panel ═════
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    stats: {
+      title: "Context and usage",
+      context: "Context",
+      thresholdLabel: "Compact threshold",
+      compactedLabel: "Compacted",
+      turnLabel: "This turn",
+      cacheLabel: "Cache",
+      sessionLabel: "This session",
+      used: "{percent}% of context used",
+      chars: "{chars} / {max} chars",
+      threshold: "Compact threshold {percent}%",
+      compacted: "Compacted {n} times",
+      turnUsage: "This turn ↑{prompt} ↓{completion}",
+      session: "This session {turns} turns · ↑{prompt} ↓{completion}",
+      cache: "Cache hit {hit} / miss {miss} ({rate})",
+      noUsage: "No usage reported for this turn yet",
+      close: "Close",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);
