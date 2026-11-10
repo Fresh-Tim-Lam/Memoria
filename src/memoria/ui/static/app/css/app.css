@@ -8503,3 +8503,115 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
 @media (max-width: 720px) {
     .-agent-turn-rail { display: none; }
 }
+
+/* ===== 2026-11-10：DSH 气泡输入框 + 会话区域底栏 ===== */
+.-agent-composer {
+    margin: 6px 8px 2px;
+    padding: 6px 9px 4px;
+    gap: 2px;
+    border: 0.5px solid var(--border);
+    border-top: 0.5px solid var(--border);
+    border-radius: 16px;
+    background: var(--bg-secondary);
+    transition: border-color 140ms ease, box-shadow 140ms ease;
+}
+.-agent-composer:focus-within {
+    border-color: var(--theme-color);
+    box-shadow: 0 0 0 1px color-mix(in srgb, var(--theme-color) 28%, transparent);
+}
+.-agent-composer .-agent-input {
+    min-height: 2.5rem;
+    padding: 6px 6px 2px;
+    border: 0;
+    border-radius: 12px;
+    background: transparent;
+}
+.-agent-composer .-agent-input:focus {
+    border: 0;
+    outline: none;
+    box-shadow: none;
+}
+.-agent-composer .-agent-attachments {
+    padding: 0 4px;
+}
+.-agent-composer-actions {
+    justify-content: flex-end;
+    gap: 8px;
+    padding: 0 1px 1px;
+}
+#agent-send.-agent-send-btn,
+#agent-stop.-agent-stop-btn {
+    display: grid;
+    place-items: center;
+    width: 30px;
+    height: 30px;
+    padding: 0;
+    border-radius: 999px;
+    line-height: 1;
+    cursor: pointer;
+}
+#agent-send.-agent-send-btn {
+    border: 0;
+    background: var(--theme-color);
+    color: #fff;
+}
+#agent-send.-agent-send-btn:hover:not(:disabled) {
+    filter: brightness(1.08);
+}
+#agent-send.-agent-send-btn:disabled {
+    cursor: default;
+    opacity: 0.45;
+}
+#agent-stop.-agent-stop-btn {
+    border: 0.5px solid var(--border);
+    background: var(--bg-tertiary);
+    color: var(--text-primary);
+}
+#agent-stop.-agent-stop-btn:hover {
+    background: var(--bg-hover);
+}
+#agent-send.-agent-send-btn svg,
+#agent-stop.-agent-stop-btn svg {
+    display: block;
+}
+.-agent-session-footer {
+    flex: none;
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    gap: 2px 8px;
+    padding: 0 10px 6px;
+    min-height: 24px;
+}
+.-agent-session-footer .-agent-statusbar {
+    flex: 1 1 100%;
+    width: 100%;
+    font-size: 0.6875rem;
+}
+.-agent-session-footer #status-agent {
+    flex: 1 1 auto;
+    min-width: 0;
+    margin-left: 0;
+    overflow: hidden;
+    color: var(--text-secondary);
+    font-size: 0.6875rem;
+    line-height: 1.4;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    cursor: default;
+    opacity: 0.92;
+}
+.-agent-session-footer #status-agent:empty {
+    display: none;
+}
+.-agent-session-footer #status-agent:hover {
+    text-decoration: none;
+}
+.-agent-session-footer .-agent-ctx-ring-row {
+    flex: 0 0 auto;
+    width: auto;
+    min-height: 0;
+}
+.-agent-session-footer .-agent-cache-hit {
+    font-size: 0.6875rem;
+}

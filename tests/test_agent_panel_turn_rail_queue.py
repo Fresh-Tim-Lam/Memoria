@@ -1,4 +1,4 @@
-﻿"""Agent 面板：侧边轮次导航（DSH TurnNavigator）+ 待发送队列（DSH QueueDock）的回归钉子。
+"""Agent 面板：侧边轮次导航（DSH TurnNavigator）+ 待发送队列（DSH QueueDock）的回归钉子。
 
 移植范围（2026-11-10）：
 - 右侧固定刻度栏：每个用户轮次一个 mark；点击滚到该轮；悬停/聚焦出 prompt+回答预览；
@@ -63,6 +63,9 @@ def test_turn_rail_and_queue_styles_and_i18n_exist() -> None:
         ".-agent-turn-preview",
         ".-agent-queue",
         ".-agent-queue-row",
+        ".-agent-session-footer",
+        "#agent-send.-agent-send-btn",
+        "#agent-stop.-agent-stop-btn",
     ):
         assert selector in css, f"缺少样式 {selector}"
     zh = (APP / "i18n" / "zh-CN.js").read_text(encoding="utf-8")
@@ -72,3 +75,18 @@ def test_turn_rail_and_queue_styles_and_i18n_exist() -> None:
         assert f"    {key}:" in en, f"en 缺少 agent.{key}"
     assert "label: \"对话轮次导航\"" in zh
     assert "count: \"{n} 条待发送\"" in zh
+
+
+def test_dsh_composer_bubble_and_session_footer_are_wired() -> None:
+    src = _panel()
+    assert "function ensureDshComposer(" in src
+    assert "function ensureAgentSessionFooter(" in src
+    assert 'id = "agent-session-footer"' in src
+    assert 'footer.appendChild(statusbar)' in src
+    assert 'footer.appendChild(statusAgent)' in src
+    assert "M8.3125 0.980183" in src
+    assert 'rect x="4" y="3"' in src and 'rect x="9" y="3"' in src
+    status_usage = src.split("function renderStatusUsage(", 1)[1].split("\n  }", 1)[0]
+    assert "spanCache" not in status_usage
+    assert "agent-session-footer" in src
+    assert "renderContextRing" in src

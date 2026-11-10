@@ -872,6 +872,51 @@ window.MemoriaAgentPanel = (function () {
       queueEl = queue;
       renderQueue();
     }
+    ensureAgentSessionFooter();
+    ensureDshComposer();
+  }
+
+  /** DSH 会话区域底栏：把模型/网络/余额/用量/上下文/缓存统一收进对话栏内部。 */
+  function ensureAgentSessionFooter() {
+    const dock = $("#-agent-dock");
+    if (!dock) return;
+    let footer = document.getElementById("agent-session-footer");
+    if (!footer) {
+      footer = document.createElement("div");
+      footer.id = "agent-session-footer";
+      footer.className = "-agent-session-footer";
+      const composer = dock.querySelector(".-agent-composer");
+      if (composer && composer.parentNode === dock) composer.insertAdjacentElement("afterend", footer);
+      else dock.appendChild(footer);
+    }
+    const statusbar = document.getElementById("agent-statusbar");
+    if (statusbar && statusbar.parentElement !== footer) footer.appendChild(statusbar);
+    const statusAgent = document.getElementById("status-agent");
+    if (statusAgent && statusAgent.parentElement !== footer) footer.appendChild(statusAgent);
+    const ctxRow = document.getElementById("agent-ctx-ring-row");
+    if (ctxRow && ctxRow.parentElement !== footer) footer.appendChild(ctxRow);
+  }
+
+  /** DSH 气泡框的动作键：发送 = 上箭头，停止 = 暂停方块；去掉原文字按钮的 label 覆盖。 */
+  function ensureDshComposer() {
+    const send = $("#agent-send");
+    if (send) {
+      send.classList.remove("btn", "primary", "-btn", "-btn--sm");
+      send.classList.add("-agent-send-btn");
+      send.removeAttribute("data-i18n");
+      send.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><path d="M8.3125 0.980183C8.66767 1.0531 8.97902 1.20418 9.2627 1.43233C9.48724 1.61297 9.73029 1.85793 9.97949 2.10714L14.707 6.83468L13.293 8.24874L9 3.95577V15.0417H7V3.95577L2.70703 8.24874L1.29297 6.83468L6.02051 2.10714C6.26971 1.85793 6.51277 1.61297 6.7373 1.43233C6.97662 1.23986 7.28445 1.04402 7.6875 0.980183C7.8973 0.947006 8.1031 0.95516 8.3125 0.980183Z" fill="currentColor"/></svg>';
+      send.setAttribute("aria-label", T("agent.send"));
+      send.title = T("agent.send");
+    }
+    const stop = $("#agent-stop");
+    if (stop) {
+      stop.classList.remove("btn", "secondary", "-btn", "-btn--sm");
+      stop.classList.add("-agent-stop-btn");
+      stop.removeAttribute("data-i18n-attr");
+      stop.innerHTML = '<svg viewBox="0 0 16 16" width="16" height="16" aria-hidden="true"><rect x="4" y="3" width="3" height="10" rx="1" fill="currentColor"/><rect x="9" y="3" width="3" height="10" rx="1" fill="currentColor"/></svg>';
+      stop.setAttribute("aria-label", T("agent.stopTitle"));
+      stop.title = T("agent.stopTitle");
+    }
   }
 
   /** 当前 messages 按「用户消息 = 一轮」切出的轮次。 */
@@ -1357,9 +1402,7 @@ window.MemoriaAgentPanel = (function () {
     const miss = usageInt(u.cache_miss_tokens);
     const rate = hitRateText(hit, prompt);
 
-    el.textContent =
-      T("agent.statusBar.span", { prompt: fmtTokens(prompt), completion: fmtTokens(completion) }) +
-      (rate ? T("agent.statusBar.spanCache", { rate: rate }) : "");
+    el.textContent = T("agent.statusBar.span", { prompt: fmtTokens(prompt), completion: fmtTokens(completion) });
 
     const lines = [T("agent.statusBar.line", { prompt: prompt, completion: completion, total: total })];
     lines.push(
@@ -7573,16 +7616,17 @@ window.MemoriaAgentPanel = (function () {
    *   不再挂 `#status-bar`；底栏 token 口径由 base renderStatusUsage 原样保留。
    */
   function renderContextRing(view, detailLines) {
+    const footer = document.getElementById("agent-session-footer");
     const composer = document.querySelector(".-agent-composer");
-    if (!composer) return;
+    if (!footer && !composer) return;
     let row = document.getElementById("agent-ctx-ring-row");
     if (!row) {
       row = document.createElement("div");
       row.id = "agent-ctx-ring-row";
       row.className = "-agent-ctx-ring-row";
-      const actions = composer.querySelector(".-agent-composer-actions");
-      if (actions && actions.parentNode === composer) composer.insertBefore(row, actions);
-      else composer.appendChild(row);
+      (footer || composer).appendChild(row);
+    } else if (footer && row.parentElement !== footer) {
+      footer.appendChild(row);
     }
     let host = document.getElementById("agent-ctx-ring");
     if (!host) {
