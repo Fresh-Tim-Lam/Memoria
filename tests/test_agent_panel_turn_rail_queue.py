@@ -33,8 +33,8 @@ def test_turn_rail_is_wired_to_messages_and_user_turns() -> None:
     # 当前轮高亮必须在滚动事件上更新，不能只画一次
     assert 'box.addEventListener("scroll", updateTurnRailActive' in src
     assert "function updateTurnRailActive(" in src
-    # 至少两轮才显示（单轮没有导航价值）
-    assert "turns.length < 2" in src
+    # 单轮也应显示（DSH rail 对每个已知 turn 都保留 tick）
+    assert "turns.length < 1" in src
 
 
 def test_queue_queues_while_busy_and_drains_after_finish() -> None:

@@ -1075,8 +1075,9 @@ window.MemoriaAgentPanel = (function () {
     if (!turnRailEl) return;
     const dock = $("#-agent-dock");
     const turns = conversationTurns();
-    const narrow = dock ? dock.getBoundingClientRect().width < 280 : false;
-    turnRailEl.hidden = turns.length < 2 || narrow;
+    const narrow = dock ? dock.getBoundingClientRect().width < 240 : false;
+    // DSH 的 rail 对每个已知 turn 都保留一个 tick；单轮也应可见（人 2026-11-11 要求迁移该控件）。
+    turnRailEl.hidden = turns.length < 1 || narrow;
   }
 
   function updateTurnRailActive() {
@@ -1088,7 +1089,12 @@ window.MemoriaAgentPanel = (function () {
       const target = box.querySelector('[data-agent-turn="' + mark.dataset.turn + '"]');
       if (target && target.getBoundingClientRect().top <= top) active = mark;
     });
-    turnMarks.forEach(function (mark) { mark.classList.toggle("-is-active", mark === active); });
+    turnMarks.forEach(function (mark) {
+      const on = mark === active;
+      mark.classList.toggle("-is-active", on);
+      if (on) mark.setAttribute("aria-current", "true");
+      else mark.removeAttribute("aria-current");
+    });
   }
 
   function scrollToTurn(turn) {
@@ -1145,6 +1151,7 @@ window.MemoriaAgentPanel = (function () {
       mark.addEventListener("pointerleave", hideTurnPreview);
       mark.addEventListener("blur", hideTurnPreview);
       turnRailScroller.appendChild(mark);
+      if (busy && item.turn === turns.length) mark.classList.add("-is-busy");
       turnMarks.push(mark);
     });
     const active = turnMarks.length ? turnMarks[0] : null;

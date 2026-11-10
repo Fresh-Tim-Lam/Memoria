@@ -8679,3 +8679,47 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
     color: var(--text-secondary);
     font-size: 0.625rem;
 }
+
+/* 2026-11-11：DSH TurnNavigator 的视觉/几何对齐（单会话用户轮次定位 rail） */
+.-agent-turn-rail {
+    top: 50%;
+    bottom: auto;
+    transform: translateY(-50%);
+    width: 28px;
+    max-height: min(420px, calc(100% - 32px));
+}
+.-agent-turn-scroll {
+    width: 100%;
+    max-height: inherit;
+}
+.-agent-turn-mark {
+    width: 28px;
+    height: 10px;
+}
+.-agent-turn-mark::before {
+    width: 20px;
+    height: 2px;
+    background: var(--border);
+    opacity: 1;
+}
+.-agent-turn-mark:hover::before,
+.-agent-turn-mark:focus-visible::before {
+    background: var(--text-secondary);
+}
+.-agent-turn-mark.-is-active::before {
+    background: var(--text-primary);
+}
+.-agent-turn-mark.-is-busy::before {
+    animation: -agent-turn-mark-busy 1s ease-in-out infinite;
+}
+@keyframes -agent-turn-mark-busy {
+    0%, 100% { opacity: 1; }
+    50% { opacity: 0.35; }
+}
+.-agent-turn-preview {
+    width: min(300px, calc(100% - 40px));
+    max-height: 100px;
+    padding: 9px 11px;
+}
+.-agent-turn-preview-prompt { -webkit-line-clamp: 1; }
+.-agent-turn-preview-response { -webkit-line-clamp: 3; }
