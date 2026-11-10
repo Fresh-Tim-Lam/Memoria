@@ -3540,3 +3540,35 @@ UIAPI.get_multilevel_graph_vm = _get_multilevel_graph_vm
 
 
 
+
+# ── 2026-11-10：会话上下文结构化拆分（DSH ContextMeter breakdown 的只读 RPC）─────────
+# 落点纪律：整段追加在文件末尾（所有既有 `ui.py:<行号>` 锚点之后）⇒ 文档锚点零漂移。
+# 口径：字符是真实预算（`history.MAX_HISTORY_CHARS`），token 是 `chars/4` 估算，
+# 响应里显式带 `estimate.tokens_are_estimated=true`，前端绝不把估算值冒充当计费值。
+def _agent_context_breakdown(
+    self,
+    kb_path: str | None = None,
+    session_id: str | None = None,
+    model: str | None = None,
+) -> dict:
+    """只读 RPC：返回 system / tools / messages 三段字符与估算 token。
+
+    参数：`kb_path` 省略 ⇒ 当前库；`session_id` 为空 ⇒ `{status:"error",code:"no_session"}`；
+    `model` 省略 ⇒ 由前端传入当前配置模型（仅用于 system prompt 中模型相关文案）。
+    失败不抛裸异常：`{status:"error", code, message}`。
+    """
+    kb = self._agent_kb(kb_path)
+    if kb is None:
+        return {"status": "error", "code": "no_kb", "message": "请先打开知识库"}
+    sid = str(session_id or "").strip()
+    if not sid:
+        return {"status": "error", "code": "no_session", "message": "当前没有可分析的会话"}
+    try:
+        from memoria.services.agent.context_breakdown import build_context_breakdown
+
+        return build_context_breakdown(kb, sid, model or "")
+    except Exception as exc:  # noqa: BLE001 — RPC 边界：任何异常都转结构化错误
+        return {"status": "error", "code": "context_breakdown_failed", "message": str(exc)}
+
+
+UIAPI.agent_context_breakdown = _agent_context_breakdown

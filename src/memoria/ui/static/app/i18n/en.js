@@ -1,4 +1,4 @@
-// English language pack —— Memoria i18n.
+﻿// English language pack —— Memoria i18n.
 // Managed by docs/conventions/i18n.md. Fallback to "zh-CN" for any missing key.
 (function (g) {
   "use strict";
@@ -2226,6 +2226,11 @@
       session: "This session {turns} turns · ↑{prompt} ↓{completion}",
       cache: "Cache hit {hit} / miss {miss} ({rate})",
       noUsage: "No usage reported for this turn yet",
+      segmentSystem: "System prompt",
+      segmentTools: "Tool schemas",
+      segmentMessages: "Message history",
+      segmentTotal: "Total",
+      estimate: "tokens estimated as chars / 4",
       close: "Close",
     },
   });

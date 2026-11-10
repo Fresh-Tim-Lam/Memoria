@@ -1,4 +1,4 @@
-// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
+﻿// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
 // 由 docs/conventions/i18n.md 管理；界面文案必须走 MemoriaI18n.t('key')。
 (function (g) {
   "use strict";
@@ -2120,6 +2120,11 @@
       session: "本会话 {turns} 轮 · ↑{prompt} ↓{completion}",
       cache: "缓存命中 {hit} / 未命中 {miss}（{rate}）",
       noUsage: "本轮用量尚未上报",
+      segmentSystem: "系统提示",
+      segmentTools: "工具定义",
+      segmentMessages: "消息历史",
+      segmentTotal: "合计",
+      estimate: "token 为字符 / 4 估算",
       close: "关闭",
     },
   });

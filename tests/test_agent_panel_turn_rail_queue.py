@@ -106,7 +106,11 @@ def test_context_meter_opens_structured_panel() -> None:
     assert "agent.stats.turnLabel" in src
     assert "agent.stats.sessionLabel" in src
     assert ".-agent-ctx-panel" in css
+    assert "agent_context_breakdown" in src
+    assert "loadContextBreakdown" in src
+    assert "agent.stats.segmentSystem" in src
     zh = (APP / "i18n" / "zh-CN.js").read_text(encoding="utf-8")
     en = (APP / "i18n" / "en.js").read_text(encoding="utf-8")
     assert "stats: {" in zh and "stats: {" in en
     assert "上下文与用量" in zh
+    assert "segmentSystem: \"系统提示\"" in zh

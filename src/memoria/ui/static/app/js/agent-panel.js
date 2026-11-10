@@ -982,6 +982,40 @@ window.MemoriaAgentPanel = (function () {
     panel.insertAdjacentHTML("beforeend", '<div class="-agent-ctx-panel-note">' + esc(T("agent.stats.close")) + " · Esc</div>");
     panel.hidden = false;
     if (ring) ring.setAttribute("aria-expanded", "true");
+    loadContextBreakdown(panel);
+  }
+
+  /** 异步补 system / tools / messages 三段（后端唯一事实源；失败留空，不影响已有行）。 */
+  async function loadContextBreakdown(panel) {
+    if (!panel || !sessionId) return;
+    try {
+      const res = await call(
+        "agent_context_breakdown",
+        state.kbPath || null,
+        sessionId,
+        cfg.model || null
+      );
+      if (!panel || panel.hidden || !res || res.status !== "ok") return;
+      const segments = res.segments || {};
+      const rows = [
+        ["system", T("agent.stats.segmentSystem")],
+        ["tools", T("agent.stats.segmentTools")],
+        ["messages", T("agent.stats.segmentMessages")],
+      ].map(function (pair) {
+        const seg = segments[pair[0]] || {};
+        return [pair[1], "~" + fmtTokens(seg.tokens || 0) + " tok · " + fmtTokens(seg.chars || 0) + " 字符"];
+      });
+      if (res.total) rows.push([T("agent.stats.segmentTotal"), "~" + fmtTokens(res.total.tokens || 0) + " tok · " + fmtTokens(res.total.chars || 0) + " 字符"]);
+      let dl = panel.querySelector("dl");
+      if (!dl) {
+        panel.insertAdjacentHTML("beforeend", "<dl></dl>");
+        dl = panel.querySelector("dl");
+      }
+      dl.insertAdjacentHTML("beforeend", rows.map(function (pair) {
+        return "<dt>" + esc(pair[0]) + "</dt><dd>" + esc(pair[1]) + "</dd>";
+      }).join(""));
+      panel.insertAdjacentHTML("beforeend", '<div class="-agent-ctx-panel-note">' + esc(T("agent.stats.estimate")) + "</div>");
+    } catch (_e) { /* 只读面板：失败静默，保留本地字符/用量行 */ }
   }
 
   function bindContextRing(host) {
