@@ -572,7 +572,7 @@ window.MemoriaAgentPanel = (function () {
       handle.setAttribute("role", "separator");
       handle.setAttribute("aria-orientation", "horizontal");
       handle.tabIndex = 0;
-      composer.insertBefore(handle, input.nextSibling); // 下边缘把手：紧贴输入框下方
+      composer.insertBefore(handle, input); // 上边缘把手：紧贴输入框上方（人 2026-11-10）
     }
     const hint = T("agent.input.resizeHint");
     handle.title = hint;

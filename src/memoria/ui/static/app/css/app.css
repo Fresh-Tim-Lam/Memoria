@@ -8615,3 +8615,8 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
 .-agent-session-footer .-agent-cache-hit {
     font-size: 0.6875rem;
 }
+
+/* 2026-11-10：输入栏高度把手移到输入框上方（人要求） */
+.-agent-composer .-agent-input-resize {
+    margin: 0 0 -3px;
+}

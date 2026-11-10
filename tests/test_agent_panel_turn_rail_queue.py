@@ -86,6 +86,8 @@ def test_dsh_composer_bubble_and_session_footer_are_wired() -> None:
     assert 'footer.appendChild(statusAgent)' in src
     assert "M8.3125 0.980183" in src
     assert 'rect x="4" y="3"' in src and 'rect x="9" y="3"' in src
+    # 高度把手必须在输入框上方
+    assert "composer.insertBefore(handle, input);" in src
     status_usage = src.split("function renderStatusUsage(", 1)[1].split("\n  }", 1)[0]
     assert "spanCache" not in status_usage
     assert "agent-session-footer" in src
