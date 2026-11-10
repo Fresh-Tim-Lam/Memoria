@@ -210,7 +210,7 @@
 ## 13. 应用内对话（Agent 面板）
 
 > **索引（2026-10-26 索引化）**：本表只留索引（ID/主题/状态/详情）；**详情（AG 行原文 + 注记）**→ [todo/13-agent-panel.md](todo/13-agent-panel.md)。状态事实源 = 本表；历史批次叙述 = [design/agent-panel-batches.md](design/agent-panel-batches.md)。
-> 统计：107 行 = 活跃索引 **53**（✅10 / 🔄·K2 30 / 🔄 3 / ⏳7 / 💡1 / ⚠️1 / 🔴1）+ 已归档 ✅→§10.5 **27** + 已作废 ⛔ **27**。
+> 统计：108 行 = 活跃索引 **54**（✅10 / 🔄·K2 30 / 🔄 3 / ⏳8 / 💡1 / ⚠️1 / 🔴1）+ 已归档 ✅→§10.5 **27** + 已作废 ⛔ **27**。
 
 | ID | 主题 | 状态 | 详情 |
 | --- | --- | --- | --- |
@@ -267,6 +267,7 @@
 | AG107 | Release 标题/双语/造价段违反已文档化规范（v0.4.7/v0.4.8 两版 + 0.5.0… | ✅ | [详](todo/13-agent-panel.md#ag107) |
 | AG108 | 资产命名漂移：`-lite.zip`（v0.4.7/v0.4.8；0.5.0 撤回前用的是 canonical… | ⚠️ 留档 | [详](todo/13-agent-panel.md#ag108) |
 | AG109 | JS/CSS 常量双源：contentMinPx.def（display-settings.js:25 vs agent-panel.js:224） | 🔴 K1 | [详](todo/13-agent-panel.md#ag109) |
+| AG110 | agent 引用板块小 bug（人 2026-11-10 口述；具体复现待补） | ⏳ | [详](todo/13-agent-panel.md#ag110) |
 | — | 27 条已完成归档（§10.5） | ✅→§10.5 | [全部](todo/13-agent-panel.md#archived) |
 | — | 27 条已作废/已并入（AG59/60/63/71–96 等） | ⛔ | [全部](todo/13-agent-panel.md#voided) |
 

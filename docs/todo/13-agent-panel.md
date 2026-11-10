@@ -3,10 +3,10 @@
 > **本文件是 `docs/todo.md §13` 的活跃详情**（2026-10-26 索引化搬迁，**原文逐字**，未改写）。
 > **状态事实源 = `docs/todo.md §13` 索引行**；本文件只放详情（AG 行原文/状态原文/注记）。
 > 历史批次叙述仍留在 [design/agent-panel-batches.md](../design/agent-panel-batches.md)，**不在此重复**。
-> 行级锚点：`#ag01`…`#ag108`、`#archived`、`#voided`、`#notes`。
+> 行级锚点：`#ag01`…`#ag110`、`#archived`、`#voided`、`#notes`。
 
 <a id="archived"></a><a id="voided"></a><a id="notes"></a>
-<a id="ag01"></a><a id="ag02"></a><a id="ag03"></a><a id="ag04"></a><a id="ag05"></a><a id="ag06"></a><a id="ag07"></a><a id="ag08"></a><a id="ag09"></a><a id="ag10"></a><a id="ag11"></a><a id="ag12"></a><a id="ag13"></a><a id="ag14"></a><a id="ag15"></a><a id="ag16"></a><a id="ag17"></a><a id="ag18"></a><a id="ag19"></a><a id="ag20"></a><a id="ag21"></a><a id="ag22"></a><a id="ag23"></a><a id="ag24"></a><a id="ag25"></a><a id="ag26"></a><a id="ag27"></a><a id="ag28"></a><a id="ag29"></a><a id="ag30"></a><a id="ag31"></a><a id="ag32"></a><a id="ag33"></a><a id="ag34"></a><a id="ag35"></a><a id="ag36"></a><a id="ag37"></a><a id="ag38"></a><a id="ag39"></a><a id="ag40"></a><a id="ag41"></a><a id="ag42"></a><a id="ag43"></a><a id="ag44"></a><a id="ag45"></a><a id="ag46"></a><a id="ag47"></a><a id="ag48"></a><a id="ag49"></a><a id="ag50"></a><a id="ag51"></a><a id="ag52"></a><a id="ag53"></a><a id="ag54"></a><a id="ag55"></a><a id="ag56"></a><a id="ag57"></a><a id="ag58"></a><a id="ag59"></a><a id="ag60"></a><a id="ag61"></a><a id="ag62"></a><a id="ag63"></a><a id="ag64"></a><a id="ag65"></a><a id="ag66"></a><a id="ag67"></a><a id="ag68"></a><a id="ag69"></a><a id="ag70"></a><a id="ag71"></a><a id="ag72"></a><a id="ag73"></a><a id="ag74"></a><a id="ag76"></a><a id="ag77"></a><a id="ag78"></a><a id="ag79"></a><a id="ag80"></a><a id="ag81"></a><a id="ag82"></a><a id="ag83"></a><a id="ag84"></a><a id="ag85"></a><a id="ag86"></a><a id="ag87"></a><a id="ag88"></a><a id="ag89"></a><a id="ag90"></a><a id="ag91"></a><a id="ag92"></a><a id="ag93"></a><a id="ag94"></a><a id="ag95"></a><a id="ag96"></a><a id="ag100"></a><a id="ag105"></a><a id="ag103"></a><a id="ag104"></a><a id="ag102"></a><a id="ag101"></a><a id="ag99"></a><a id="ag98"></a><a id="ag106"></a><a id="ag107"></a><a id="ag108"></a>
+<a id="ag01"></a><a id="ag02"></a><a id="ag03"></a><a id="ag04"></a><a id="ag05"></a><a id="ag06"></a><a id="ag07"></a><a id="ag08"></a><a id="ag09"></a><a id="ag10"></a><a id="ag11"></a><a id="ag12"></a><a id="ag13"></a><a id="ag14"></a><a id="ag15"></a><a id="ag16"></a><a id="ag17"></a><a id="ag18"></a><a id="ag19"></a><a id="ag20"></a><a id="ag21"></a><a id="ag22"></a><a id="ag23"></a><a id="ag24"></a><a id="ag25"></a><a id="ag26"></a><a id="ag27"></a><a id="ag28"></a><a id="ag29"></a><a id="ag30"></a><a id="ag31"></a><a id="ag32"></a><a id="ag33"></a><a id="ag34"></a><a id="ag35"></a><a id="ag36"></a><a id="ag37"></a><a id="ag38"></a><a id="ag39"></a><a id="ag40"></a><a id="ag41"></a><a id="ag42"></a><a id="ag43"></a><a id="ag44"></a><a id="ag45"></a><a id="ag46"></a><a id="ag47"></a><a id="ag48"></a><a id="ag49"></a><a id="ag50"></a><a id="ag51"></a><a id="ag52"></a><a id="ag53"></a><a id="ag54"></a><a id="ag55"></a><a id="ag56"></a><a id="ag57"></a><a id="ag58"></a><a id="ag59"></a><a id="ag60"></a><a id="ag61"></a><a id="ag62"></a><a id="ag63"></a><a id="ag64"></a><a id="ag65"></a><a id="ag66"></a><a id="ag67"></a><a id="ag68"></a><a id="ag69"></a><a id="ag70"></a><a id="ag71"></a><a id="ag72"></a><a id="ag73"></a><a id="ag74"></a><a id="ag76"></a><a id="ag77"></a><a id="ag78"></a><a id="ag79"></a><a id="ag80"></a><a id="ag81"></a><a id="ag82"></a><a id="ag83"></a><a id="ag84"></a><a id="ag85"></a><a id="ag86"></a><a id="ag87"></a><a id="ag88"></a><a id="ag89"></a><a id="ag90"></a><a id="ag91"></a><a id="ag92"></a><a id="ag93"></a><a id="ag94"></a><a id="ag95"></a><a id="ag96"></a><a id="ag100"></a><a id="ag105"></a><a id="ag103"></a><a id="ag104"></a><a id="ag102"></a><a id="ag101"></a><a id="ag99"></a><a id="ag98"></a><a id="ag106"></a><a id="ag107"></a><a id="ag108"></a><a id="ag110"></a>
 
 ## 原文（逐字，自 docs/todo.md §13 搬迁）
 
@@ -143,3 +143,15 @@
   与 `src/memoria/ui/static/app/js/agent-panel.js:224` `const CONTENT_MIN_PX = 360;` **两处写死同一默认值**（`:222` 注释已写「必须同口径」）。
   **风险**：改默认值时只改一处会静默失效（2026-10-26 改 320→180 只改了 min/max，`def` 仍是双写）。
   **状态**：🔴 K1（未触发，潜在双源；不是当前故障）——待 JS Owner 收口（单一事实源或运行时互校）。
+
+## 交叉链接（2026-11-05）
+
+- **AG01「引用 agent 回复内容再追问」** 与**人提出的 I-30「会话引用有 bug」**同能力域，**但按 Lead 裁决不合并**：I-30 先修现有会话引用路径（缺陷/设计问题），AG01 作为新能力后续做。台账 → [ideas.md](ideas.md) 的 I-30 行。
+
+## 新增登记（2026-11-10）<a id="ag110"></a>
+
+- **AG110｜agent 引用板块小 bug**（来源：人 2026-11-10 口述「agent 引用板块功能有点小 bug，先纳入 todo」；**未给复现步骤/截图**）：
+  - **范围**：对话栏的 `@引用` / mention chip / 引用选择面板（具体是下拉、插入位置、去重、还是引用了错误对象，待复现后定）。
+  - **状态**：⏳ 待复现；**不是**“已定位”。
+  - **复现需记录**：输入内容、引用类型（文件/目录/会话）、触发位置（输入框/消息/历史）、期望 vs 实际、是否可稳定复现、截图。
+  - **排查入口**：`agent-panel.js` mention/chip 与 `insertMention`、引用面板（`@` 触发）相关函数；修前先补最小复现用例。
