@@ -109,6 +109,19 @@ def _attachment_list(items: Sequence[Mapping[str, Any]] | None) -> list[dict[str
 
 logger = logging.getLogger(__name__)
 
+#: 2026-11-10：模型端点的**断网/瞬断重试**默认策略。
+#:
+#: 与上游默认（5 次 / 0.5s 起 / 10s 上限 / 120s 总时限）相比，只放宽“网络瞬断”
+#: 场景的预算：更多次数、更长退避与总时限；仍只重试 `TRANSPORT` / `TIMEOUT` 等
+#: 可重试失败，确定性失败（DNS/证书/拒绝连接）不重试。流式一旦已经产出分片，
+#: `iter_with_retry` 不会重放（避免重复输出），这一约束不变。
+NETWORK_RETRY_POLICY = RetryPolicy(
+    max_retries=6,
+    initial_delay_s=0.8,
+    max_delay_s=15.0,
+    total_timeout_s=240.0,
+)
+
 __all__ = ["AskResult", "ask", "build_loop"]
 
 
@@ -163,6 +176,8 @@ def build_loop(
     （KV 前缀缓存对齐，见 `_compact_if_needed()`）而先建一次再传进来。省略时按
     `kb_path` + `model` 就地构建，与 M1 行为完全一致。`on_event`（**追加的可选参数**）是循环事件的外部消费者（面板实时过程行）：与「落盘 `session.append`」链式合并（先落盘、再回调，面板异常不漏落盘），见 `_chained_event()`。
     """
+    if retry_policy is None:
+        retry_policy = NETWORK_RETRY_POLICY
     if registry is None:
         # 写入要落在**这次对话**里（`propose_write` 直接落盘），故把会话 id 一并交给工具集
         registry = ToolRegistry(
