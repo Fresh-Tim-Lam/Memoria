@@ -187,6 +187,7 @@ window.MemoriaAgentPanel = (function () {
   let turnRailScroller = null;
   let turnPreviewEl = null;
   let turnMarks = [];
+  let contextBreakdownSeq = 0;
   // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
   let epoch = 0;
 
@@ -924,6 +925,7 @@ window.MemoriaAgentPanel = (function () {
   }
 
   function closeContextPanel() {
+    contextBreakdownSeq += 1;
     const panel = document.getElementById("agent-ctx-panel");
     const ring = document.getElementById("agent-ctx-ring");
     if (panel) panel.hidden = true;
@@ -935,6 +937,7 @@ window.MemoriaAgentPanel = (function () {
     const ring = document.getElementById("agent-ctx-ring");
     if (!panel) return;
     if (!panel.hidden) { closeContextPanel(); return; }
+    const seq = ++contextBreakdownSeq;
     const view = contextUsageView();
     const u = lastUsage;
     const su = sessionUsage;
@@ -982,11 +985,11 @@ window.MemoriaAgentPanel = (function () {
     panel.insertAdjacentHTML("beforeend", '<div class="-agent-ctx-panel-note">' + esc(T("agent.stats.close")) + " · Esc</div>");
     panel.hidden = false;
     if (ring) ring.setAttribute("aria-expanded", "true");
-    loadContextBreakdown(panel);
+    loadContextBreakdown(panel, seq);
   }
 
   /** 异步补 system / tools / messages 三段（后端唯一事实源；失败留空，不影响已有行）。 */
-  async function loadContextBreakdown(panel) {
+  async function loadContextBreakdown(panel, seq) {
     if (!panel || !sessionId) return;
     try {
       const res = await call(
@@ -995,7 +998,7 @@ window.MemoriaAgentPanel = (function () {
         sessionId,
         cfg.model || null
       );
-      if (!panel || panel.hidden || !res || res.status !== "ok") return;
+      if (!panel || panel.hidden || seq !== contextBreakdownSeq || !res || res.status !== "ok") return;
       const segments = res.segments || {};
       const rows = [
         ["system", T("agent.stats.segmentSystem")],
