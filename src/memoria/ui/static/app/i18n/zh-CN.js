@@ -2077,4 +2077,29 @@
     traces: "已点亮 {n} 颗星 · 你走过的笔记",
     tracesEmpty: "你的星图会随使用点亮",
   });
+  // ═════ 2026-11-10 追加：对话轮次导航 + 待发送队列（移植 DSH TurnNavigator / QueueDock）═════
+  Object.assign(g.MEMORIA_LOCALES["zh-CN"].agent, {
+    turnRail: {
+      label: "对话轮次导航",
+      jump: "跳到第 {turn} 轮",
+      prompt: "你",
+      response: "助手",
+    },
+    queue: {
+      count: "{n} 条待发送",
+      one: "1 条待发送",
+      sending: "发送中…",
+      edit: "编辑",
+      save: "保存",
+      cancelEdit: "取消",
+      remove: "删除",
+      steer: "打断当前回答并发送这条",
+      queued: "已加入待发送队列（{n} 条）",
+      attachWait: "当前回答结束前不能排队附件；请等回答结束后再发送图片",
+      editPlaceholder: "编辑待发送消息",
+      editEmpty: "消息不能为空",
+      collapsed: "折叠待发送队列",
+      expanded: "展开待发送队列",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

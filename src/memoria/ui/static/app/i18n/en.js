@@ -2183,4 +2183,29 @@
     traces: "{n} stars lit · notes you've visited",
     tracesEmpty: "Your star map lights up as you use it",
   });
+  // ═════ appended 2026-11-10: turn rail + pending queue (ported from DSH TurnNavigator / QueueDock) ═════
+  Object.assign(g.MEMORIA_LOCALES["en"].agent, {
+    turnRail: {
+      label: "Conversation turn navigation",
+      jump: "Jump to turn {turn}",
+      prompt: "You",
+      response: "Assistant",
+    },
+    queue: {
+      count: "{n} pending",
+      one: "1 pending",
+      sending: "Sending…",
+      edit: "Edit",
+      save: "Save",
+      cancelEdit: "Cancel",
+      remove: "Remove",
+      steer: "Interrupt the current answer and send this",
+      queued: "Added to the pending queue ({n})",
+      attachWait: "Attachments cannot be queued while an answer is running; wait for it to finish",
+      editPlaceholder: "Edit pending message",
+      editEmpty: "Message cannot be empty",
+      collapsed: "Collapse pending queue",
+      expanded: "Expand pending queue",
+    },
+  });
 })(typeof window !== "undefined" ? window : globalThis);

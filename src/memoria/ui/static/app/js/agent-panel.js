@@ -1,4 +1,4 @@
-﻿/**
+/**
  * 应用内对话面板（**右侧独立停靠栏** `#-agent-dock`，M1 首版曾挂在左栏第 4 页签）。
  *
  * 自包含：DOM/事件绑定全部由本模块 init() 完成，不依赖 app.js 的 bindEvents：
@@ -173,8 +173,20 @@ window.MemoriaAgentPanel = (function () {
   // 会话消息（渲染的唯一来源；清空 = 置空数组）
   const messages = []; // { role: "user"|"assistant", text, anchors, error, stopped }
   let job = null; // { id, cursor, epoch, kb }：在飞作业（null = 无）；kb = 提问时的库
-  let busy = false; // 生成/轮询中（禁用发送）
+  let busy = false; // 生成/轮询中（此时再发送 = 进待发送队列）
   let streamingEl = null; // 正在流式写入的消息体元素
+  // 2026-11-10：待发送队列（移植 DSH QueueDock 的本地轻量版；图片附件暂不排队）
+  const pendingQueue = []; // { id, text }
+  let queueSeq = 0;
+  let queueCollapsed = true;
+  let queueEditingId = null;
+  let queueEl = null;
+  let drainingQueue = false;
+  // 2026-11-10：右侧轮次导航（移植 DSH TurnNavigator 的固定刻度栏）
+  let turnRailEl = null;
+  let turnRailScroller = null;
+  let turnPreviewEl = null;
+  let turnMarks = [];
   // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
   let epoch = 0;
 
@@ -815,6 +827,315 @@ window.MemoriaAgentPanel = (function () {
     inputCaret = caret;
   }
 
+  /**
+   * 2026-11-10：把 `#agent-messages` 包进 `.-agent-stream`，在右侧挂轮次导航；
+   * 在 composer 前挂待发送队列。DOM 由 JS 创建 ⇒ `index.html` 行号锚点零漂移。
+   */
+  function ensureAgentChrome() {
+    const box = $("#agent-messages");
+    if (!box || !box.parentElement) return;
+    if (!box.parentElement.classList.contains("-agent-stream")) {
+      const stream = document.createElement("div");
+      stream.className = "-agent-stream";
+      box.parentElement.insertBefore(stream, box);
+      stream.appendChild(box);
+      const rail = document.createElement("nav");
+      rail.id = "agent-turn-rail";
+      rail.className = "-agent-turn-rail";
+      rail.hidden = true;
+      rail.setAttribute("aria-label", T("agent.turnRail.label"));
+      const scroller = document.createElement("div");
+      scroller.className = "-agent-turn-scroll";
+      const preview = document.createElement("div");
+      preview.className = "-agent-turn-preview";
+      preview.hidden = true;
+      rail.appendChild(scroller);
+      rail.appendChild(preview);
+      stream.appendChild(rail);
+      turnRailEl = rail;
+      turnRailScroller = scroller;
+      turnPreviewEl = preview;
+      box.addEventListener("scroll", updateTurnRailActive, { passive: true });
+      if (typeof ResizeObserver === "function") {
+        const ro = new ResizeObserver(function () { syncTurnRailVisibility(); });
+        ro.observe(stream);
+      }
+      renderTurnRail();
+    }
+    const composer = document.querySelector("#-agent-dock .-agent-composer");
+    if (composer && composer.parentElement && !$("#agent-queue")) {
+      const queue = document.createElement("div");
+      queue.id = "agent-queue";
+      queue.className = "-agent-queue";
+      queue.hidden = true;
+      composer.parentElement.insertBefore(queue, composer);
+      queueEl = queue;
+      renderQueue();
+    }
+  }
+
+  /** 当前 messages 按「用户消息 = 一轮」切出的轮次。 */
+  function conversationTurns() {
+    const turns = [];
+    messages.forEach(function (rec, index) {
+      if (rec.role === "user") {
+        turns.push({ turn: turns.length + 1, index: index, prompt: rec.text || "", response: "" });
+      } else if (turns.length) {
+        const last = turns[turns.length - 1];
+        if (rec.text) last.response += (last.response ? "\n" : "") + rec.text;
+      }
+    });
+    return turns;
+  }
+
+  function syncTurnRailVisibility() {
+    if (!turnRailEl) return;
+    const dock = $("#-agent-dock");
+    const turns = conversationTurns();
+    const narrow = dock ? dock.getBoundingClientRect().width < 280 : false;
+    turnRailEl.hidden = turns.length < 2 || narrow;
+  }
+
+  function updateTurnRailActive() {
+    const box = $("#agent-messages");
+    if (!box || !turnMarks.length) return;
+    const top = box.getBoundingClientRect().top + 8;
+    let active = turnMarks[0];
+    turnMarks.forEach(function (mark) {
+      const target = box.querySelector('[data-agent-turn="' + mark.dataset.turn + '"]');
+      if (target && target.getBoundingClientRect().top <= top) active = mark;
+    });
+    turnMarks.forEach(function (mark) { mark.classList.toggle("-is-active", mark === active); });
+  }
+
+  function scrollToTurn(turn) {
+    const box = $("#agent-messages");
+    if (!box) return;
+    const target = box.querySelector('[data-agent-turn="' + turn + '"]');
+    if (!target) return;
+    stickToBottom = false;
+    const top = target.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 6;
+    try {
+      box.scrollTo({ top: Math.max(0, top), behavior: "smooth" });
+    } catch (_err) {
+      box.scrollTop = Math.max(0, top);
+    }
+  }
+
+  function showTurnPreview(mark, item) {
+    if (!turnPreviewEl || !turnRailScroller) return;
+    turnPreviewEl.innerHTML = "";
+    const prompt = document.createElement("div");
+    prompt.className = "-agent-turn-preview-prompt";
+    prompt.textContent = T("agent.turnRail.prompt") + " · " + String(item.prompt || "").replace(/\s+/g, " ").slice(0, 160);
+    const response = document.createElement("div");
+    response.className = "-agent-turn-preview-response";
+    response.textContent = T("agent.turnRail.response") + " · " + String(item.response || "").replace(/\s+/g, " ").slice(0, 220);
+    turnPreviewEl.appendChild(prompt);
+    turnPreviewEl.appendChild(response);
+    turnPreviewEl.hidden = false;
+    const railRect = turnRailEl.getBoundingClientRect();
+    const markRect = mark.getBoundingClientRect();
+    const top = Math.max(0, Math.min(railRect.height - 100, markRect.top - railRect.top - 40));
+    turnPreviewEl.style.top = Math.round(top) + "px";
+  }
+
+  function hideTurnPreview() {
+    if (turnPreviewEl) turnPreviewEl.hidden = true;
+  }
+
+  function renderTurnRail() {
+    if (!turnRailEl || !turnRailScroller) return;
+    const turns = conversationTurns();
+    turnRailScroller.innerHTML = "";
+    turnMarks = [];
+    turns.forEach(function (item) {
+      const mark = document.createElement("button");
+      mark.type = "button";
+      mark.className = "-agent-turn-mark";
+      mark.dataset.turn = String(item.turn);
+      mark.setAttribute("aria-label", T("agent.turnRail.jump", { turn: item.turn }));
+      mark.title = "#" + item.turn + " " + String(item.prompt || "").replace(/\s+/g, " ").slice(0, 80);
+      mark.addEventListener("click", function () { scrollToTurn(item.turn); });
+      mark.addEventListener("pointerenter", function () { showTurnPreview(mark, item); });
+      mark.addEventListener("focus", function () { showTurnPreview(mark, item); });
+      mark.addEventListener("pointerleave", hideTurnPreview);
+      mark.addEventListener("blur", hideTurnPreview);
+      turnRailScroller.appendChild(mark);
+      turnMarks.push(mark);
+    });
+    const active = turnMarks.length ? turnMarks[0] : null;
+    if (active) active.classList.add("-is-active");
+    syncTurnRailVisibility();
+    updateTurnRailActive();
+  }
+
+  /** 队列条目预览（单行，200 字上限；与 DSH QueueDock 的 QUEUE_PREVIEW_CHARS 同量级）。 */
+  function queuePreview(text) {
+    const flat = String(text || "").replace(/\s+/g, " ").trim();
+    const chars = Array.from(flat);
+    return chars.length > 200 ? chars.slice(0, 200).join("") + "…" : flat;
+  }
+
+  function queueCountText() {
+    return pendingQueue.length === 1
+      ? T("agent.queue.one")
+      : T("agent.queue.count", { n: pendingQueue.length });
+  }
+
+  function renderQueue() {
+    if (!queueEl) return;
+    if (!pendingQueue.length) {
+      queueEl.hidden = true;
+      queueEl.innerHTML = "";
+      queueEditingId = null;
+      return;
+    }
+    queueEl.hidden = false;
+    queueEl.innerHTML = "";
+    const expanded = pendingQueue.length === 1 || !queueCollapsed || queueEditingId !== null;
+    if (pendingQueue.length > 1) {
+      const head = document.createElement("button");
+      head.type = "button";
+      head.className = "-agent-queue-head";
+      head.setAttribute("aria-expanded", expanded ? "true" : "false");
+      head.disabled = queueEditingId !== null;
+      head.title = T(expanded ? "agent.queue.collapsed" : "agent.queue.expanded");
+      const title = document.createElement("span");
+      title.className = "-agent-queue-title";
+      title.textContent = queueCountText();
+      const chevron = document.createElement("span");
+      chevron.className = "-agent-queue-chevron";
+      chevron.textContent = expanded ? "▴" : "▾";
+      head.appendChild(title);
+      head.appendChild(chevron);
+      head.addEventListener("click", function () {
+        queueCollapsed = !queueCollapsed;
+        renderQueue();
+      });
+      queueEl.appendChild(head);
+    }
+    if (!expanded) return;
+    const list = document.createElement("ul");
+    list.className = "-agent-queue-list";
+    pendingQueue.forEach(function (item) {
+      const row = document.createElement("li");
+      row.className = "-agent-queue-row";
+      if (queueEditingId === item.id) {
+        const edit = document.createElement("input");
+        edit.className = "-agent-queue-edit";
+        edit.type = "text";
+        edit.value = item.text;
+        edit.setAttribute("aria-label", T("agent.queue.editPlaceholder"));
+        row.appendChild(edit);
+        const actions = document.createElement("span");
+        actions.className = "-agent-queue-actions";
+        const save = document.createElement("button");
+        save.type = "button";
+        save.className = "-agent-queue-action";
+        save.textContent = "✓";
+        save.title = T("agent.queue.save");
+        save.addEventListener("click", function () {
+          const next = edit.value.trim();
+          if (!next) { setStatusText(T("agent.queue.editEmpty"), true); return; }
+          item.text = next;
+          queueEditingId = null;
+          renderQueue();
+        });
+        const cancel = document.createElement("button");
+        cancel.type = "button";
+        cancel.className = "-agent-queue-action";
+        cancel.textContent = "×";
+        cancel.title = T("agent.queue.cancelEdit");
+        cancel.addEventListener("click", function () { queueEditingId = null; renderQueue(); });
+        actions.appendChild(save);
+        actions.appendChild(cancel);
+        row.appendChild(actions);
+        queueEl.appendChild(list);
+        list.appendChild(row);
+        setTimeout(function () { edit.focus(); edit.select(); }, 0);
+        return;
+      }
+      const text = document.createElement("span");
+      text.className = "-agent-queue-text";
+      text.textContent = queuePreview(item.text);
+      row.appendChild(text);
+      const actions = document.createElement("span");
+      actions.className = "-agent-queue-actions";
+      const editBtn = document.createElement("button");
+      editBtn.type = "button";
+      editBtn.className = "-agent-queue-action";
+      editBtn.textContent = "✎";
+      editBtn.title = T("agent.queue.edit");
+      editBtn.addEventListener("click", function () { queueEditingId = item.id; renderQueue(); });
+      const removeBtn = document.createElement("button");
+      removeBtn.type = "button";
+      removeBtn.className = "-agent-queue-action -is-danger";
+      removeBtn.textContent = "×";
+      removeBtn.title = T("agent.queue.remove");
+      removeBtn.addEventListener("click", function () { removeQueueItem(item.id); });
+      const steerBtn = document.createElement("button");
+      steerBtn.type = "button";
+      steerBtn.className = "-agent-queue-action";
+      steerBtn.textContent = "↪";
+      steerBtn.title = T("agent.queue.steer");
+      steerBtn.disabled = !busy;
+      steerBtn.addEventListener("click", function () { steerQueueItem(item.id); });
+      actions.appendChild(editBtn);
+      actions.appendChild(removeBtn);
+      actions.appendChild(steerBtn);
+      row.appendChild(actions);
+      list.appendChild(row);
+    });
+    queueEl.appendChild(list);
+  }
+
+  function enqueueText(text) {
+    const clean = String(text || "").trim();
+    if (!clean) return false;
+    pendingQueue.push({ id: "q" + (++queueSeq), text: clean });
+    queueCollapsed = true;
+    renderQueue();
+    setStatusText(T("agent.queue.queued", { n: pendingQueue.length }));
+    return true;
+  }
+
+  function removeQueueItem(id) {
+    const index = pendingQueue.findIndex(function (item) { return item.id === id; });
+    if (index >= 0) pendingQueue.splice(index, 1);
+    if (queueEditingId === id) queueEditingId = null;
+    renderQueue();
+  }
+
+  function drainQueue() {
+    if (drainingQueue || busy || job || !pendingQueue.length) return;
+    const item = pendingQueue.shift();
+    queueEditingId = null;
+    queueCollapsed = true;
+    renderQueue();
+    const input = $("#agent-input");
+    if (!input) return;
+    input.value = item.text;
+    drainingQueue = true;
+    Promise.resolve(ask()).finally(function () {
+      drainingQueue = false;
+      // poll() 的收尾 drainQueue 发生在 ask() 的 promise resolve 之前（此时 drainingQueue 仍为 true）
+      // ⇒ 这里再排一次，保证连续队列逐条发完。
+      setTimeout(drainQueue, 0);
+    });
+  }
+
+  async function steerQueueItem(id) {
+    const index = pendingQueue.findIndex(function (item) { return item.id === id; });
+    if (index < 0 || !busy) return;
+    const item = pendingQueue.splice(index, 1)[0];
+    pendingQueue.unshift(item);
+    queueCollapsed = false;
+    renderQueue();
+    await stop();
+    drainQueue();
+  }
+
   function messageEl(rec) {
     const wrap = document.createElement("div");
     wrap.className = "-agent-msg " + (rec.role === "user" ? "-agent-msg--user" : "-agent-msg--assistant");
@@ -898,12 +1219,18 @@ window.MemoriaAgentPanel = (function () {
       empty.className = "-agent-empty -muted";
       empty.textContent = T("agent.empty");
       box.appendChild(empty);
+      renderTurnRail();
       return;
     }
+    let turn = 0;
     messages.forEach(function (rec) {
-      box.appendChild(messageEl(rec));
+      if (rec.role === "user") turn += 1;
+      const el = messageEl(rec);
+      if (rec.role === "user") el.setAttribute("data-agent-turn", String(turn));
+      box.appendChild(el);
     });
     scrollToBottom(true);
+    renderTurnRail();
   }
 
   function currentAssistant() {
@@ -1131,6 +1458,9 @@ window.MemoriaAgentPanel = (function () {
       return res || { status: "error" };
     }
     messages.length = 0;
+    pendingQueue.length = 0;
+    queueEditingId = null;
+    queueCollapsed = true;
     (res.messages || []).forEach(function (item) {
       const rec = item || {};
       messages.push({
@@ -1148,6 +1478,7 @@ window.MemoriaAgentPanel = (function () {
     renderedKb = kb; // 气泡区现在属于本库
     resetStatusUsage(); // 历史会话的旧用量无法回算（会话视图不含 usage）⇒ 本会话累计从 0 起
     renderMessages();
+    renderQueue();
     setStatusText(""); // 2026-09-19：状态行不再显示会话 id（用户不需要；会话身份在左栏「历史」列表里）
     restoreTurnUsage(); // 2026-09-24：**末轮的用量**后端已从 `loop/end` 带回（见文件尾）⇒ 重载/重启后用量行照旧显示；必须在 `renderMessages()` 之后（要按 `data-msg-index` 定位气泡）
     setLastSessionId(kb, sessionId); // 记住**本库**的会话，供下次自动恢复（并清掉旧全局键）
@@ -1208,8 +1539,12 @@ window.MemoriaAgentPanel = (function () {
       sessionKb = "";
       messages.length = 0;
       streamingEl = null;
+      pendingQueue.length = 0;
+      queueEditingId = null;
+      queueCollapsed = true;
       resetStatusUsage(); // 换库即作废本会话累计与状态栏用量格
       renderMessages();
+      renderQueue();
       setStatusText("");
       renderedKb = kb;
     }
@@ -1254,10 +1589,12 @@ window.MemoriaAgentPanel = (function () {
     const send = $("#agent-send");
     const stopBtn = $("#agent-stop");
     if (send) {
-      send.disabled = busy || !cfg.enabled;
-      send.title = !cfg.enabled ? T("agent.err.net_disabled") : "";
+      // 2026-11-10：生成中发送键仍可用 —— 点击/Enter 进待发送队列（不再 disabled 掉整个入口）。
+      send.disabled = !cfg.enabled;
+      send.title = !cfg.enabled ? T("agent.err.net_disabled") : (busy ? T("agent.queue.queued", { n: pendingQueue.length + 1 }) : "");
     }
     if (stopBtn) stopBtn.classList.toggle("hidden", !busy);
+    renderQueue();
   }
 
   // ── 配置读写 ────────────────────────────────────────────────────────
@@ -1335,9 +1672,11 @@ window.MemoriaAgentPanel = (function () {
       const empty = box.querySelector(".-agent-empty");
       if (empty) empty.remove();
       const el = messageEl(rec);
+      if (role === "user") el.setAttribute("data-agent-turn", String(conversationTurns().length));
       box.appendChild(el);
       streamingEl = el.querySelector(".-agent-msg-body");
       scrollToBottom(true);
+      renderTurnRail();
     }
     return rec;
   }
@@ -1370,12 +1709,27 @@ window.MemoriaAgentPanel = (function () {
     }
     streamingEl = null;
     scrollToBottom();
+    renderTurnRail();
   }
 
   async function ask() {
     const input = $("#agent-input");
     const text = expandSessionAliases(((input && input.value) || "").trim()); // 短别名 → 完整 dsh-session URI（发给后端与落盘的始终是可解析形式）
-    if (busy) return;
+    if (busy) {
+      // 2026-11-10：生成中再发送 = 进待发送队列（移植 DSH QueueDock 的核心交互）。
+      // 图片附件暂不排队：附件属于当前草稿，排队后无法可靠绑定到某一条队列项。
+      if (attachItems.length) {
+        showFlashError(T("agent.queue.attachWait"));
+        setStatusText(T("agent.queue.attachWait"), true);
+        return;
+      }
+      if (enqueueText(text) && input) {
+        input.value = "";
+        inputCaret = 0;
+        renderComposer();
+      }
+      return;
+    }
     if (!text) {
       setStatusText(T("agent.err.empty_question"), true);
       return;
@@ -1482,6 +1836,7 @@ window.MemoriaAgentPanel = (function () {
       busy = false;
       renderComposer();
       await refreshHistory(); await tagLiveBubblesWithSeqs(); // 会话进历史列表；并把事件 seq 标到刚生成的气泡上（拖拽引用靠它）
+      drainQueue();
       return;
     }
     if (job) {
@@ -1490,6 +1845,7 @@ window.MemoriaAgentPanel = (function () {
       stopWait();
       renderComposer();
       setStatusText(T("agent.status.timeout"), true);
+      drainQueue();
     }
   }
 
@@ -1526,6 +1882,7 @@ window.MemoriaAgentPanel = (function () {
       showFlashError(errorText(res), errorDetail(res));
     }
     refreshHistory();
+    drainQueue();
   }
 
   /**
@@ -1544,12 +1901,16 @@ window.MemoriaAgentPanel = (function () {
     job = null;
     messages.length = 0;
     streamingEl = null;
+    pendingQueue.length = 0;
+    queueEditingId = null;
+    queueCollapsed = true;
     sessionId = null;
     sessionKb = "";
     renderedKb = kb; // 清空后空面板仍属于当前库
     stopWait();
     resetStatusUsage(); // 开新会话：状态栏用量格与本会话累计一并清零
     renderMessages();
+    renderQueue();
     setStatusText("");
     if (jid) {
       try {
@@ -1583,6 +1944,7 @@ window.MemoriaAgentPanel = (function () {
 
   function init() {
     if (!$("#-agent-dock")) return; // 页面未登记右侧停靠栏（旧版 index.html）
+    ensureAgentChrome();
 
     const save = $("#agent-save-config");
     if (save) save.addEventListener("click", () => saveConfig());
