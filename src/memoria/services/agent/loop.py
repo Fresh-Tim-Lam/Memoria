@@ -31,7 +31,7 @@ from __future__ import annotations
 import logging
 import threading
 from collections.abc import Callable, Mapping, Sequence
-from dataclasses import dataclass
+from dataclasses import dataclass, replace
 from enum import Enum
 from typing import Any
 
@@ -54,6 +54,7 @@ from memoria.services.agent.llm import (
     estimate_usage,
     iter_with_retry,
 )
+from memoria.services.agent.pruner import PruneBudgets, apply_budget, prune_text
 from memoria.services.agent.tools.registry import ToolRegistry, ToolResult
 
 logger = logging.getLogger(__name__)
@@ -69,6 +70,16 @@ __all__ = [
 
 #: 单次提问允许的最大模型步数；**0 = 无上限**（= 上游口径：上游没有内置轮次预算，失控由用户取消兜底）。
 DEFAULT_MAX_ITERATIONS = 0
+
+#: 单步请求里**历史消息**的字符预算（system/tools/当前提问另计）。
+#: 没有它时，一个长 agent 回合会不断把工具结果追加进 history，下一步整份重发：
+#: 真机长回合可累计到数十万 token，DeepSeek 端点会在发完请求后**直接关闭连接**
+#: （`Remote end closed connection without response`），客户端只看到“生成失败”。
+#: 这里在**每次发请求前**只裁剪请求副本，落盘/返回的 history 仍是全文。
+REQUEST_HISTORY_CHAR_BUDGET = 32_000
+
+#: 单条旧工具结果被裁剪后的上限（头 2048 + 标记 + 尾 512）。
+_OLD_TOOL_PRUNE_BUDGET = PruneBudgets(threshold=4_096, head=2_048, tail=512)
 
 
 class CancelToken:
@@ -202,6 +213,83 @@ class AgentLoop:
     def _schemas(self) -> tuple[ToolSchema, ...]:
         return self.tools.schemas()
 
+    def _bounded_history(self, history: Sequence[Message]) -> list[Message]:
+        """返回**只用于本次请求**的历史副本；超预算时裁剪旧工具结果。
+
+        为什么不改 `history` 本体：`LoopResult.messages` 还要原样回给 `ask` 落盘，
+        审计/回放/检索需要全文；这里的裁剪只影响“这一次 HTTP 请求体”。
+        工具消息的 `tool_call_id` / `name` 必须保留，否则 OpenAI 兼容端点会 400。
+        """
+
+        def size(message: Message) -> int:
+            total = len(message.content or "")
+            for call in message.tool_calls or ():
+                total += len(call.arguments or "") + len(call.name or "")
+            return total
+
+        def is_tool(message: Message) -> bool:
+            return message.role is Role.TOOL or message.role == Role.TOOL.value
+
+        total = sum(size(message) for message in history)
+        if total <= REQUEST_HISTORY_CHAR_BUDGET:
+            return list(history)
+
+        out = list(history)
+        tool_indexes = [index for index, message in enumerate(out) if is_tool(message)]
+        last_tool = tool_indexes[-1] if tool_indexes else -1
+
+        # 第一遍：先裁“较旧的工具结果”，最新一条保留全文（通常正是本步刚拿到的结果）。
+        for index in tool_indexes:
+            if total <= REQUEST_HISTORY_CHAR_BUDGET:
+                break
+            if index == last_tool:
+                continue
+            message = out[index]
+            pruned = prune_text(message.content or "", budgets=_OLD_TOOL_PRUNE_BUDGET)
+            if pruned is not None:
+                total -= len(message.content or "") - len(pruned)
+                out[index] = replace(message, content=pruned)
+
+        # 第二遍：仍然超预算（例如唯一一条工具结果就巨大）⇒ 连最新的也裁。
+        for index in tool_indexes:
+            if total <= REQUEST_HISTORY_CHAR_BUDGET:
+                break
+            message = out[index]
+            pruned = prune_text(message.content or "", budgets=_OLD_TOOL_PRUNE_BUDGET)
+            if pruned is not None:
+                total -= len(message.content or "") - len(pruned)
+                out[index] = replace(message, content=pruned)
+
+        # 第三遍：还不够就裁到最小头（仍保留 tool_call_id，保证协议合法）。
+        for index in tool_indexes:
+            if total <= REQUEST_HISTORY_CHAR_BUDGET:
+                break
+            message = out[index]
+            body = message.content or ""
+            if len(body) <= 512:
+                continue
+            minimal = apply_budget(body, 256, 0)
+            total -= len(body) - len(minimal)
+            out[index] = replace(message, content=minimal)
+
+        if total > REQUEST_HISTORY_CHAR_BUDGET:
+            logger.warning(
+                "[agent-loop] 请求历史仍超预算：%d > %d 字符（消息 %d 条）；"
+                "继续发送但端点可能因上下文过大关闭连接",
+                total,
+                REQUEST_HISTORY_CHAR_BUDGET,
+                len(out),
+            )
+        else:
+            logger.info(
+                "[agent-loop] 请求历史已裁剪：%d -> %d 字符（预算 %d，消息 %d 条）",
+                sum(size(message) for message in history),
+                total,
+                REQUEST_HISTORY_CHAR_BUDGET,
+                len(out),
+            )
+        return out
+
     def _request(self, history: Sequence[Message]) -> LlmRequest:
         return LlmRequest(
             model=self.model,
@@ -300,7 +388,7 @@ class AgentLoop:
                 stop_reason = StopReason.ABORTED
                 break
             iterations = iteration
-            request = self._request(history)
+            request = self._request(self._bounded_history(history))
             self._emit("step/start", {"iteration": iteration, "message_count": len(history)})
             retry_counter = [0]
             try:

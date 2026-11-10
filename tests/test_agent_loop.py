@@ -965,3 +965,51 @@ def test_tool_call_and_result_stay_paired_even_when_the_tool_raises(kb: Path) ->
     assert types.count("tool/call") == 1 and types.count("tool/result") == 1
     assert types.index("tool/call") < types.index("tool/result")
     assert [call.is_error for call in result.tool_calls] == [True]
+
+
+def test_loop_bounds_each_request_history_without_losing_persisted_tool_outputs(kb: Path) -> None:
+    """长 agent 回合不得把无限增长的工具结果整份重发（客户机 RemoteDisconnected 的根因之一）。
+
+    每个工具结果 40k 字符、连续 4 次；旧实现第 5 次请求会带 ~160k 字符历史，DeepSeek
+    端点可能直接关连接。现在只裁剪**请求副本**：每步请求历史 <= 预算，落盘/返回的
+    `result.messages` 仍是全文。
+    """
+    from memoria.services.agent.loop import REQUEST_HISTORY_CHAR_BUDGET
+
+    def handler(_arguments: Mapping[str, Any]) -> ToolOutput:
+        return ToolOutput(text="y" * 40_000)
+
+    registry = ToolRegistry(
+        [Tool(name="dump", description="返回超大结果", parameters={"type": "object"}, handler=handler)]
+    )
+    provider = FakeProvider(
+        [
+            tool_step(ToolCall(id=f"c{i}", name="dump", arguments="{}"))
+            for i in range(1, 5)
+        ]
+        + [text_step("完成")]
+    )
+    loop = AgentLoop(provider=provider, tools=registry)
+
+    result = loop.run("连续读几个大文件")
+
+    def request_chars(request: LlmRequest) -> int:
+        total = 0
+        for message in request.messages:
+            total += len(message.content or "")
+            for call in message.tool_calls or ():
+                total += len(call.arguments or "") + len(call.name or "")
+        return total
+
+    assert result.stop_reason is StopReason.FINAL_ANSWER
+    assert len(provider.requests) == 5
+    assert all(request_chars(request) <= REQUEST_HISTORY_CHAR_BUDGET for request in provider.requests), (
+        "每次请求都必须受历史预算约束"
+    )
+    last_request = provider.requests[-1]
+    tool_messages = [m for m in last_request.messages if is_role(m, Role.TOOL)]
+    assert len(tool_messages) == 4, "裁剪不得丢工具消息（tool_call_id 配对）"
+    assert [m.tool_call_id for m in tool_messages] == ["c1", "c2", "c3", "c4"]
+    # 返回给 ask 落盘的 history 不被请求裁剪污染：四个工具结果仍是 40k 全文
+    persisted = [m for m in result.messages if is_role(m, Role.TOOL)]
+    assert [len(m.content or "") for m in persisted] == [40_000] * 4

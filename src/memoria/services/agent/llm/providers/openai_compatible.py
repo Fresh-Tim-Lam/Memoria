@@ -278,6 +278,16 @@ class OpenAICompatibleProvider:
         except OSError as exc:
             # 连接被拒 / DNS 失败 / 证书失败 / 无效 URL ⇒ UNREACHABLE（不重试）；
             # 超时、连接重置/中断等瞬时故障 ⇒ TRANSPORT（可重试）。
+            if isinstance(exc, http.client.RemoteDisconnected) or "Remote end closed" in str(exc):
+                # DeepSeek 在请求体/上下文过大、代理/防火墙提前断开、服务端限流时，
+                # 会在发完请求后**不给 HTTP 响应**直接关闭连接。把请求规模带进错误里，
+                # 客户机日志才能区分“上下文太大”与“网络链路问题”。
+                raise error_for(
+                    TRANSPORT_CODE,
+                    f"连接模型端点 {url} 失败：{exc}；"
+                    f"本次请求体 {len(payload)} 字节、{len(request.messages)} 条消息。"
+                    "常见原因：代理/VPN/防火墙提前断开、请求体或上下文过大、服务端限流。",
+                ) from exc
             raise _transport_error(f"连接模型端点 {url} 失败", exc) from exc
         with closing(response):
             yield from self._iter_events(response, request)
