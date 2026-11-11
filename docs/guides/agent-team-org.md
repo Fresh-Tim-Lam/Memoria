@@ -131,7 +131,7 @@ DSH 的 `agent-team` 插件此前**不能退役、不能改名**（roster 只有
 
 | 成员 | 职责 | 与领域 Owner 的区别 |
 |---|---|---|
-| `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项 | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
+| `todo-owner`（TODO 文档 Owner） | 维护 `docs/todo.md`、登记新缺陷/待办、审计陈旧与废弃项；**新建/状态变更的 TODO 必须带日期标签**（索引状态列 `📅` + 附件「台账日期标签」块，见 [ledger-maintenance.md](../conventions/ledger-maintenance.md) 规则 9） | 不拥有代码领域，只维护单一台账；按 §2.1「任务闭环即退役」判断是否保留 |
 | `team-plugin-creator`（DSH 插件改进者，Creator 模式） | 实现 `team-plugin-improvement-spec.md` 的 R1–R8（DSH 插件侧改动：roster 落盘 / 派发审计日志 / 强制 owner / complete 绑产物 / 快照生成 / 周期触发 / preset 暴露 / token 统计）；**唯一持有 DSH 插件源码与 preset 写权限的角色** | 不碰 Memoria 产品代码（`src/**`）与 Memoria 团队资产（`team/**`）；改动需重打包才生效 ⇒ 受 §13「打包是单向门」约束 |
 | `steward`（团队管理员，2026-10-24） | **组织资产 + 成员工作记录（动作/任务/决策三层）+ 过程审计 + 协议演进**。章程见 §2.6；已交付 `work_record.py` / `decide.py` / 6 类机检 / `findings.jsonl`。| 与领域 Owner：管全团队过程与行为，不拥有产品领域；与 `todo-owner`：steward 管「怎么干」，todo-owner 管「干什么/先干什么」 |
 | ↳ **代次记录**（已收口 2026-10-25） | 四代：`curator-r3`(v4-pro) → `steward`(v4-pro，已退役) → `steward`(flash，实例二，因同名重生 bug 不可唤醒，已 force 退役) → **`steward`(flash，实例三，原名 steward2，已改回)**。同名重生 bug 已修（`66c6dac129`）并部署，双实例已合并为一条。| 旧代卡片归档为 `team/memory/steward.gen2-retired-20261024.md` |

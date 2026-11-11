@@ -12,6 +12,7 @@
 4. **禁止双事实源**：同一段详细内容**不得**既在 `todo.md` 又在附件各写一版（状态以 todo 索引行为准，详情以附件为准）。
 5. **历史归档仍进 `docs/design/`**：本目录只放**活跃/现役**详情；已收口条目按既有规则归档到 `docs/design/**`（如 `ledger-archive-2026.md`、`agent-panel-batches.md`），不搬进本目录。
 6. **机检**：`python scripts/check_todo_size.py` 会校验 体积/单元格/死链/孤儿/未索引化，并含 `--selftest`。
+7. **日期标签（2026-11-11 硬规范）**：新建/状态变更的 TODO 索引行状态列必须带 `📅 YYYY-MM-DD`（首次登记/首次观测日；历史证据标 `（回溯）`，不知道写 `📅 待考`，禁止编日期）；附件对应条目须在头部「台账日期标签」块登记 `📅 首次登记` / `🕒 最近复核`。规则见 [ledger-maintenance.md](../conventions/ledger-maintenance.md) 规则 9。
 
 ## 现役文件
 

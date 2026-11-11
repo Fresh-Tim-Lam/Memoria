@@ -255,6 +255,12 @@ Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Packa
 .\packaging\run_release.cmd   # 运行 Package\Memoria.exe（发布态，pywebview 壳）
 ```
 
+- `Package/` **归打包脚本所有**：每次 `packaging/build.py` 会重建/覆盖；不要把它当个人测试安装目录改配置或手工替换文件。
+- 本地「发行版测试 / 更新机制测试」用独立副本：`Memoria-release-test/`（从 `Package/` 复制，gitignore，不入库）。这样可分别测试：
+  1. 网络更新（应用从线上 Release 拉取）；
+  2. 本地新版本压缩包更新（把新 zip 解压到该副本）。
+- 历史副本 `Memoria/` 已于 2026-11-11 更名为 `Memoria-release-test/`，避免与仓库根目录同名而造成“Memoria 是 Package 副本吗”的事实混淆。
+
 ## 7. 日志与临时产物
 
 - 调试日志按 [logging.md](../conventions/logging.md) 归置（默认 `artifacts/`，已被 gitignore）。

@@ -185,6 +185,7 @@ git worktree remove --force                              ← 会丢 worktree 内
 | 2.3 | description 必须含「**写域**」 | `write_scope` |
 | 2.4 | 若依赖其它任务 ⇒ `blocked_by` 显式声明（别靠口头顺序） | 人工 |
 | 2.5 | **先证红原则**：修复类任务的关闭条件必须包含"修复前该用例失败"的证据 | 人工 |
+| 2.6 | **台账日期标签**：凡会新建/变更 TODO 条目的任务，关闭条件必须含"索引行带 `📅` 日期 + 附件日期标签块"；缺日期视为台账不合格（规则见 [ledger-maintenance.md 规则 9](../conventions/ledger-maintenance.md)） | 人工（todo-owner 执行 / Lead 抽查） |
 
 ---
 

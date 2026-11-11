@@ -5,6 +5,7 @@
 > 状态标记：✅ 已收口 / 🔄 进行中 / ⏳ 待做 / 💡 方向性（需再规格化）/ 🔴 Bug / ⬇️ 最低优先级。
 > 2026-09-16 按规则 8 压缩至预算内：开发流水账出表（i18n 迁移明细见 [conventions/i18n.md](conventions/i18n.md) 修订记录；拆分与文档登记见 [docs-management.md](conventions/docs-management.md)；版本级变更见 [version.md §7](conventions/version.md)）；旧文末两段用户粘贴的 bug 记录按规则 8.3 归位（E22 补复现记录、新增 E23）。
 > 2026-09-19 按规则 8.2 再清理（表头逐日追述与 §10.4 流水账出表；新增 §13 AG12–AG16）。
+> **日期标签（2026-11-11 人指令，硬规范）**：**新建/状态变更**的 TODO 索引行状态列必须带 `📅 YYYY-MM-DD`（首次登记/首次观测日；历史证据标 `（回溯）`，不知道写 `📅 待考`，**禁止编日期**）；详情在 `docs/todo/` 附件头部「台账日期标签」块登记。规则见 [ledger-maintenance.md 规则 9](conventions/ledger-maintenance.md)。
 > **索引化（2026-10-26，人批准）**：本文件是**索引**——只允许 标题 / 状态 / 一行摘要 / 详情链接；详细内容只在 `docs/todo/` 附件（活跃详情）或 `docs/design/` 归档（已收口）。**引用本文件必须用 §-锚点或任务 ID，禁止用行号**。
 > **维护约定（2026-10-22，裁决 #9 固化）**：§10 归档区（§10.3 明细 / §10.4 作废存档 / **§10.5 索引表**）中的 ID **允许与正文重复**；做「编号唯一」自检时**必须排除 `## 10.` 段**（否则 §10.5 的 27 条 ✅ 索引会被误报为重复）。**活动区（§0–§9、§11–§13）内编号仍必须唯一**；**索引表不是证据** —— 证据锚与「未取证 / 下一步」一律以原条目行为准。
 
@@ -35,7 +36,7 @@
 | C04 | 🔄 K1 | [详](todo/01-config-window.md#c04) |
 | C06 | ⏳ K1 | [详](todo/01-config-window.md#c06) |
 | C08 | 🔄 K1 | [详](todo/01-config-window.md#c08) |
-| C10 | 🔴 K1 | [详](todo/01-config-window.md#c10) |
+| C10 | 🔴 K1 · 📅 2026-09-16（回溯） | [详](todo/01-config-window.md#c10) |
 
 ## 2. 链接系统
 
@@ -58,7 +59,7 @@
 | S03 | ⏳ K1 | [详](todo/03-search.md#s03) |
 | S04 | 🔄 K1 | [详](todo/03-search.md#s04) |
 | S05 | 🔄 K1 | [详](todo/03-search.md#s05) |
-| S06 | 🔴 K1 | [详](todo/03-search.md#s06) |
+| S06 | ⏳ 延后·0.7.x · 📅 2026-09-16（回溯） | [详](todo/03-search.md#s06) |
 
 ## 4. 图谱
 
@@ -97,7 +98,7 @@
 | E34 | 🔴 K1 | [详](todo/05-editor.md#e34) |
 | E35 | 🔴 K1 | [详](todo/05-editor.md#e35) |
 | E36 | ✅ 已收口 | [详](todo/05-editor.md#e36) |
-| E37 | 🔴 K1 | [详](todo/05-editor.md#e37) |
+| E37 | 🔴 K1 · 📅 2026-11-09 | [详](todo/05-editor.md#e37) |
 | DOC02 | — | [详](todo/05-editor.md#doc02) |
 | DOC03 | — | [详](todo/05-editor.md#doc03) |
 
@@ -118,8 +119,8 @@
 | I03 | 💡 K1 | [详](todo/07-import-media.md#i03) |
 | I04 | 💡 K1 | [详](todo/07-import-media.md#i04) |
 | I05 | ⬇️ | [详](todo/07-import-media.md#i05) |
-| I06 | 🔴 K1 | [详](todo/07-import-media.md#i06) |
-| I07 | 🔴 K1 | [详](todo/07-import-media.md#i07) |
+| I06 | ⏳ 延后·0.6.x · 📅 2026-09-16（回溯） | [详](todo/07-import-media.md#i06) |
+| I07 | 🔴 K1（待复现/待重新取证） · 📅 2026-09-16（回溯） | [详](todo/07-import-media.md#i07) |
 
 ## 8. 壳与发布
 
