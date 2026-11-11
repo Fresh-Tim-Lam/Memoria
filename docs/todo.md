@@ -135,7 +135,7 @@
 | P05 | ⏳ K1 | [详](todo/08-shell-release.md#p05) |
 | P06 | 🔄 K2 | [详](todo/08-shell-release.md#p06) |
 | P07 | 🔄 K2 | [详](todo/08-shell-release.md#p07) |
-| P08 | ⏳ K3 待设计/安全评审 · 📅 2026-11-11 | [详](todo/08-shell-release.md#p08) |
+| P08 | ⏳ K1 待实现·待 Worker 端点 · 📅 2026-11-11 | [详](todo/08-shell-release.md#p08) |
 
 ## 9. 学习产品（V2+）
 
