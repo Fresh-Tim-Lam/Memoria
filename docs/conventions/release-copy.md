@@ -3,7 +3,7 @@
 > **用途**：定义 Memoria 每次 GitHub Release 的**标题、双语正文、造价段**的固定写法与术语译法，
 > 使「对外宣传」可复制、可核对、不随写作者变化。规则本身见
 > [version.md「GitHub Release 规范」](./version.md)，本文档补充**为什么**、**模板**、**反例**与**术语表**。
-> **目标读者**：项目负责人（人）、`release-manager`（常驻 release Owner）、任何代写 release notes 的 Agent。
+> **目标读者**：项目负责人（人）、`release-manager`（文案 Owner）、`github-ops`（远程发布 Owner）、任何代写 release notes 的 Agent。
 > **关联文档**：[version.md](./version.md)（三条硬规则与 §6 发版流程）、
 > `scripts/agent/release_preflight.py`（机器检查，缺一条即 exit 1）、
 > [operations.md §5.1](../guides/operations.md)（发布资产命名）。

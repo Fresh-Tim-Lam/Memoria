@@ -159,6 +159,26 @@ Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Packa
 > **`Memoria.exe.config` 不可省**：它是 .NET 应用配置，缺了则 zip 解压出的文件带 Mark-of-the-Web 时
 > pythonnet 起不来（P06）。`packaging/build.py` 的 `_verify_release_bundle()` 会在构建末尾校验其存在。
 
+### 5.1.1 GitHub 远程操作专职 Agent 与大文件上传窗口（2026-11-11 人指令）
+
+> **规范来源**：用户 2026-11-11 明确要求。Lead、领域 Owner、临时成员**都不得**直接执行 GitHub 远程写操作。
+
+- **职责配对**：
+  - `github-ops` = **唯一**执行 GitHub 远程写的专职 Agent：`git push`（含 tag）、创建/修改 GitHub Release、上传/删除/替换 Release 资产、远端 tag/branch 删除、GitHub API 写请求。
+  - `release-manager` = 配套宣传 Agent：只负责 Release 文案/双语/造价/术语/宣传口径，不执行远程写。
+  - Lead 只负责建任务、给授权与验收；需要发版时把任务交给 `github-ops`，文案先由 `release-manager` 产出。
+- **不可逆操作**（远端 tag/Release 删除、强推、替换已发布资产）必须有人的明确授权，并先给出回滚方案。
+- **大文件上传窗口**（`github-ops` 每次上传前必须重新检查）：
+  1. 大文件定义：单个资产 **≥ 50 MiB**，或一次发布上传总量 **≥ 100 MiB**。
+  2. 以 **Asia/Shanghai** 时区读取当天日期/时间。
+  3. **周末**（周六/周日）或**中国大陆法定节假日**：允许上传。
+  4. **普通工作日**：**00:00–08:00 禁止上传**（该时段用户使用手机热点）；08:00 之后允许。
+  5. 在禁止窗口内不得开始上传，也不得续传/重试；应记录并排到当天 08:00 后或下一个允许窗口。跨 00:00 的长上传在开始前和每次重试前都要重新检查。
+  6. 不确定当天是否法定节假日时先问人，不得猜。
+  7. 上传完成后核对 GitHub 返回的 size / sha256 与本地 zip 一致，再跑 `release_preflight --verify-published`。
+- **凭据**：只从仓库根 `GH_TOKEN` 读取；不得打印/写日志/提交 token；临时 header 文件用完删除。
+- **历史**：v0.4.12 发布后建立该规则；v0.4.12 本身由 Lead 直接发布，作为规则生效前的最后一次例外，已在 release record 中披露。
+
 ### 5.2 Release 说明（双语 + 英语在前，机检）
 
 > **规则单一事实源**：[version.md「GitHub Release 规范」](../conventions/version.md)（三条硬规则 +

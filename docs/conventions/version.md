@@ -230,7 +230,7 @@ python scripts/agent/release_preflight.py --tag vx.y.z --verify-published
 
 ## GitHub Release 规范（三条硬规则，亘古不变）
 
-> **Owner**：`release-manager`（常驻 release 角色）。任何 release 必须按本规范核对后才能发布。
+> **Owner**：`release-manager`（文案/双语/造价/宣传口径）+ `github-ops`（远程写、tag/Release/资产上传与发布后审计）。任何 release 必须按本规范核对后才能发布。
 > **机器检查**：`scripts/agent/release_preflight.py`（缺一条即 exit 1，不得靠"记得住"）。
 
 ### 规则 1：标题只允许 `Memoria vX.Y.Z`
@@ -295,7 +295,8 @@ python scripts/agent/release_preflight.py --tag vx.y.z --verify-published
 □ 英文段与中文段都存在且非空（≤200 字符视为 stub，判不合格）
 □ 含 "## 造价（Agent 算力）"（中文）与 "## Cost (Agent compute)"（英文）
 □ 造价段含：量级（"元/人民币/USD/花费"等）+ 统计口径 + 成本结构一句话
-□ tag 已推送且 `git ls-remote` 可见
+□ tag 已推送且 `git ls-remote` 可见（由 `github-ops` 执行）
 □ 资产数量正确（win64 + lite）
+□ **大文件上传窗口已检查并记录**（由 `github-ops` 填写：Asia/Shanghai 日期时间、weekday/weekend/holiday、allowed/blocked；普通工作日 00:00–08:00 禁止）
 □ 版本三查一致（__version__.py / version.md §1 / Package/VERSION）
 ```
