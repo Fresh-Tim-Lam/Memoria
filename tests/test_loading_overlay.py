@@ -93,6 +93,7 @@ def test_turn_rail_is_positioned_as_a_minimap_not_equal_spacing() -> None:
     assert ".-agent-turn-mark {\n    position: absolute;" in css
     assert ".-agent-turn-preview {" in css
     assert "border-radius: 12px;" in css
-    # 2026-11-11：滚条与定位条之间必须留出独立 gutter
-    assert ".-agent-stream > .-agent-messages {\n    padding-right: 48px;" in css
-    assert ".-agent-turn-rail {\n    right: 18px;" in css
+    # 2026-11-11：滚条与定位条必须分侧——滚条在右，定位条在左
+    assert ".-agent-stream > .-agent-messages {\n    padding-left: 48px;" in css
+    assert ".-agent-turn-rail {\n    left: 4px;" in css
+    assert ".-agent-turn-preview {\n    left: 34px;" in css

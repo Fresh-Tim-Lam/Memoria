@@ -8869,3 +8869,22 @@ html[data-theme="light"] .-memoria-loading {
 .-agent-turn-rail {
     right: 18px;
 }
+
+/* 2026-11-11（人反馈）：滚条与定位条不能同侧。原生滚条在右，定位条改到左侧；
+   消息区左侧留 gutter，右侧只留普通内边距。 */
+.-agent-stream > .-agent-messages {
+    padding-left: 48px;
+    padding-right: 12px;
+}
+.-agent-turn-rail {
+    left: 4px;
+    right: auto;
+}
+.-agent-turn-mark::before {
+    left: 0;
+    right: auto;
+}
+.-agent-turn-preview {
+    left: 34px;
+    right: auto;
+}
