@@ -499,9 +499,12 @@
       cutClipboardFailed: "剪切失败：未能写入剪贴板，内容未删除（可重试）",
     },
     app: {
-      loading: {
+      loadingStage: {
         startup: "正在启动…",
         restoring: "正在恢复窗口…",
+        files: "{n} 个文件",
+        knowledgePoints: "{n} 个知识点",
+        subgraphs: "{n} 个子图",
       },
       status: {
         ready: "就绪",

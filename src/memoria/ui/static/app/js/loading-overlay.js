@@ -1,4 +1,4 @@
-/**
+﻿/**
  * 应用级加载蒙层（2026-11-11，人反馈：加载机制要模块化，窗口加载期间蒙版不能提前撤）。
  *
  * 设计约束：
@@ -33,12 +33,14 @@
   var skyRaf = 0;
   var skyStars = [];
   var skyMeteors = [];
+  var skyNebulae = [];
   var skyW = 0;
   var skyH = 0;
   var skyLast = 0;
   var skyNextMeteor = 0;
   var skyResizeBound = false;
-  /** 视觉名：星穹帷幕（Astral Veil）——程序生成的星场，不是固定关键帧。 */
+  var skyProfile = { files: 0, kps: 0, groups: 0, traces: 0 };
+  /** 视觉名：星穹帷幕（Astral Veil）——程序生成的星场 + 随知识库积累变化的星云。 */
   var VISUAL_NAME = "星穹帷幕 / Astral Veil";
   var stats = (global.__memoriaLoadingStats = {
     shown: 0,
@@ -46,6 +48,7 @@
     maxConcurrent: 0,
     visual: VISUAL_NAME,
     starfieldFrames: 0,
+    profile: skyProfile,
     errors: [],
   });
 
@@ -70,6 +73,115 @@
       : "rgba(232, 240, 255, " + alpha.toFixed(3) + ")";
   }
 
+  // ── 知识库星云：文件越多、知识点越多、子图越多，星场越密、星云层数/色相越丰富 ──
+  function readTraceCount() {
+    try {
+      var raw = global.localStorage && global.localStorage.getItem("memoria.splash.stars.v1");
+      var obj = raw ? JSON.parse(raw) : null;
+      return obj && Array.isArray(obj.stars) ? obj.stars.length : 0;
+    } catch (_) { return 0; }
+  }
+
+  function normalizeProfile(p) {
+    p = p || {};
+    return {
+      files: Math.max(0, Number(p.files) || 0),
+      kps: Math.max(0, Number(p.kps) || 0),
+      groups: Math.max(0, Number(p.groups) || 0),
+      traces: Math.max(0, Number(p.traces) || readTraceCount()),
+    };
+  }
+
+  function profileSeed() {
+    return (skyProfile.files * 17 + skyProfile.kps * 31 + skyProfile.groups * 7 + skyProfile.traces * 3) >>> 0;
+  }
+
+  function lcg(seed) {
+    var s = seed >>> 0;
+    return function () {
+      s = (s * 1664525 + 1013904223) >>> 0;
+      return s / 4294967296;
+    };
+  }
+
+  function seedNebulae() {
+    if (!skyW || !skyH) { skyNebulae = []; return; }
+    var rnd = lcg(profileSeed() || 1);
+    var n = 2 + Math.min(5, Math.floor(skyProfile.groups / 2));
+    var palette = [
+      [88, 142, 255],
+      [160, 108, 255],
+      [68, 212, 198],
+      [255, 172, 92],
+      [255, 112, 184],
+      [118, 206, 255],
+    ];
+    var richness = Math.min(1, skyProfile.files / 500 + skyProfile.kps / 1600);
+    skyNebulae = [];
+    for (var i = 0; i < n; i += 1) {
+      var color = palette[(i + skyProfile.groups) % palette.length];
+      skyNebulae.push({
+        x: 0.12 + rnd() * 0.76,
+        y: 0.15 + rnd() * 0.70,
+        r: 0.22 + rnd() * 0.22 + richness * 0.08,
+        color: color,
+        alpha: 0.055 + richness * 0.045 + rnd() * 0.025,
+        phase: rnd() * Math.PI * 2,
+      });
+    }
+  }
+
+  function drawNebulae(now) {
+    if (!skyNebulae.length) return;
+    skyCtx.save();
+    skyCtx.globalCompositeOperation = "lighter";
+    var light = false;
+    try { light = DOC.documentElement.getAttribute("data-theme") === "light"; } catch (_) { /* noop */ }
+    for (var i = 0; i < skyNebulae.length; i += 1) {
+      var n = skyNebulae[i];
+      var pulse = 0.82 + 0.18 * Math.sin(now * 0.00035 + n.phase);
+      var a = n.alpha * pulse * (light ? 0.62 : 1);
+      var r = Math.max(120, Math.min(skyW, skyH) * n.r);
+      var g = skyCtx.createRadialGradient(n.x * skyW, n.y * skyH, 0, n.x * skyW, n.y * skyH, r);
+      g.addColorStop(0, "rgba(" + n.color[0] + "," + n.color[1] + "," + n.color[2] + "," + a.toFixed(3) + ")");
+      g.addColorStop(0.45, "rgba(" + n.color[0] + "," + n.color[1] + "," + n.color[2] + "," + (a * 0.42).toFixed(3) + ")");
+      g.addColorStop(1, "rgba(" + n.color[0] + "," + n.color[1] + "," + n.color[2] + ",0)");
+      skyCtx.fillStyle = g;
+      skyCtx.beginPath();
+      skyCtx.arc(n.x * skyW, n.y * skyH, r, 0, Math.PI * 2);
+      skyCtx.fill();
+    }
+    skyCtx.restore();
+  }
+
+  function profileDetailText() {
+    var t = global.MemoriaI18n && global.MemoriaI18n.t;
+    function tr(key, fallback, params) {
+      try {
+        var v = t ? t(key, params) : "";
+        return v && v !== key ? v : fallback;
+      } catch (_e) { return fallback; }
+    }
+    var bits = [];
+    if (skyProfile.files) bits.push(tr("app.loadingStage.files", skyProfile.files + " files", { n: skyProfile.files }));
+    if (skyProfile.kps) bits.push(tr("app.loadingStage.knowledgePoints", skyProfile.kps + " knowledge points", { n: skyProfile.kps }));
+    if (skyProfile.groups) bits.push(tr("app.loadingStage.subgraphs", skyProfile.groups + " subgraphs", { n: skyProfile.groups }));
+    return bits.join(" · ");
+  }
+
+  function setKnowledgeProfile(profile) {
+    skyProfile = normalizeProfile(profile);
+    stats.profile = skyProfile;
+    if (detailEl) {
+      detailEl.textContent = profileDetailText();
+      detailEl.hidden = !detailEl.textContent;
+    }
+    if (sky) {
+      seedStars();
+      if (!root.hidden) startSky();
+    }
+  }
+
   function skySize() {
     if (!sky || !skyCtx || !root) return false;
     var rect = root.getBoundingClientRect();
@@ -88,7 +200,12 @@
   }
 
   function seedStars() {
-    var count = Math.max(90, Math.min(260, Math.round((skyW * skyH) / 12000)));
+    var base = Math.round((skyW * skyH) / 12000);
+    var density = 1
+      + Math.min(1.4, skyProfile.kps / 900)
+      + Math.min(0.6, skyProfile.files / 600)
+      + Math.min(0.35, skyProfile.traces / 240);
+    var count = Math.max(90, Math.min(420, Math.round(base * density)));
     skyStars = [];
     for (var i = 0; i < count; i += 1) {
       var depth = 0.35 + Math.random() * 0.65;
@@ -102,6 +219,7 @@
         drift: 2 + Math.random() * 8,
       });
     }
+    seedNebulae();
     skyNextMeteor = performance.now() + 1800 + Math.random() * 2600;
   }
 
@@ -110,6 +228,8 @@
     var dt = Math.min(0.05, Math.max(0.001, (now - skyLast) / 1000));
     skyLast = now;
     skyCtx.clearRect(0, 0, skyW, skyH);
+    // 星云先铺底：文件/知识点/子图越多，色相层数与亮度越高。
+    drawNebulae(now);
     // 星点：深度视差 + 呼吸式明暗；不是固定 CSS 关键帧。
     for (var i = 0; i < skyStars.length; i += 1) {
       var s = skyStars[i];
@@ -210,19 +330,27 @@
       sky.setAttribute("aria-hidden", "true");
       skyCtx = sky.getContext("2d");
       root.appendChild(sky);
-      var card = DOC.createElement("div");
-      card.className = "-memoria-loading__card";
-      var spinner = DOC.createElement("span");
-      spinner.className = "-memoria-loading__spinner";
-      spinner.setAttribute("aria-hidden", "true");
+      var stage = DOC.createElement("div");
+      stage.className = "-memoria-loading__stage";
+      var logo = DOC.createElement("img");
+      logo.className = "-memoria-loading__logo";
+      logo.src = "/icons/Memoria.png";
+      logo.alt = "";
+      logo.decoding = "async";
+      logo.draggable = false;
+      logo.setAttribute("aria-hidden", "true");
+      var word = DOC.createElement("div");
+      word.className = "-memoria-loading__word";
+      word.textContent = "Memoria";
       labelEl = DOC.createElement("span");
       labelEl.className = "-memoria-loading__label";
       detailEl = DOC.createElement("span");
       detailEl.className = "-memoria-loading__detail";
-      card.appendChild(spinner);
-      card.appendChild(labelEl);
-      card.appendChild(detailEl);
-      root.appendChild(card);
+      stage.appendChild(logo);
+      stage.appendChild(word);
+      stage.appendChild(labelEl);
+      stage.appendChild(detailEl);
+      root.appendChild(stage);
       (DOC.body || DOC.documentElement).appendChild(root);
       if (!skyResizeBound) {
         skyResizeBound = true;
@@ -256,8 +384,9 @@
     if (busy && labelEl) {
       var task = firstTask();
       labelEl.textContent = (task && task.label) || "";
-      detailEl.textContent = (task && task.detail) || "";
-      detailEl.hidden = !(task && task.detail);
+      var detail = (task && task.detail) || profileDetailText();
+      detailEl.textContent = detail;
+      detailEl.hidden = !detail;
     }
     if (busy) stats.shown += 1;
     else if (root) stats.hidden += 1;
@@ -304,6 +433,7 @@
     setLabel: setLabel,
     track: track,
     visualName: VISUAL_NAME,
+    setKnowledgeProfile: setKnowledgeProfile,
     isBusy: function () { return tasks.size > 0; },
     count: function () { return tasks.size; },
     labels: function () { return Array.from(tasks.values()).map(function (t) { return t.label; }); },

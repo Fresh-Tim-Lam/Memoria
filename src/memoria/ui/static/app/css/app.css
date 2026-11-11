@@ -8905,3 +8905,63 @@ html[data-theme="light"] .-memoria-loading {
     color: var(--text-primary);
     border-color: var(--theme-color);
 }
+
+/* 2026-11-11（人反馈）：加载蒙层不再显示悬浮卡片；中心 = Memoria 图标 + 艺术字，
+   图标复用启动态的“心脏跳动”脉冲（memoria-boot-pulse）；星云随知识库积累变化。 */
+.-memoria-loading__stage {
+    position: relative;
+    z-index: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 0.55rem;
+    padding: 1rem;
+    text-align: center;
+    pointer-events: none;
+}
+.-memoria-loading__logo {
+    width: 68px;
+    height: 68px;
+    object-fit: contain;
+    animation: memoria-boot-pulse 1.1s ease-in-out infinite;
+    transform-origin: center;
+    filter: drop-shadow(0 0 14px color-mix(in srgb, var(--theme-color) 45%, transparent))
+            drop-shadow(0 0 34px color-mix(in srgb, var(--theme-color) 22%, transparent));
+}
+.-memoria-loading__word {
+    font-family: var(--font-brand, var(--font-content, var(--font-sans, "Segoe UI", sans-serif)));
+    font-size: clamp(1.45rem, 3.2vw, 2.15rem);
+    font-weight: 600;
+    letter-spacing: 0.26em;
+    padding-left: 0.26em; /* 补掉末字母后的字距，视觉居中 */
+    background: linear-gradient(115deg,
+        var(--text-bright, #f4f7ff) 8%,
+        color-mix(in srgb, var(--theme-color) 72%, var(--text-bright, #fff)) 48%,
+        var(--text-bright, #f4f7ff) 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    color: transparent;
+    filter: drop-shadow(0 0 16px color-mix(in srgb, var(--theme-color) 38%, transparent));
+}
+html[data-theme="light"] .-memoria-loading__word {
+    background: linear-gradient(115deg, #1c2433 8%, color-mix(in srgb, var(--theme-color) 78%, #1c2433) 50%, #1c2433 92%);
+    -webkit-background-clip: text;
+    background-clip: text;
+    filter: drop-shadow(0 0 10px color-mix(in srgb, var(--theme-color) 22%, transparent));
+}
+.-memoria-loading__label {
+    margin-top: 0.15rem;
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    letter-spacing: 0.14em;
+    font-weight: 400;
+}
+.-memoria-loading__detail {
+    color: var(--text-secondary);
+    font-size: 0.6875rem;
+    letter-spacing: 0.06em;
+    opacity: 0.78;
+}
+@media (prefers-reduced-motion: reduce) {
+    .-memoria-loading__logo { animation: none; }
+}

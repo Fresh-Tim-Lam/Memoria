@@ -1,4 +1,4 @@
-(function () {
+﻿(function () {
   "use strict";
 
   const $ = (sel) => document.querySelector(sel);
@@ -1093,6 +1093,46 @@ async function call(fn, ...args) {
     }
   }
 
+  /** 把当前知识库的“积累痕迹”交给加载星云：文件 / 知识点 / 子图越多，星云越丰富。 */
+  function readCachedLoadingProfile(kb) {
+    try {
+      var raw = window.localStorage && window.localStorage.getItem("memoria.loading.kb-profile.v1");
+      var map = raw ? JSON.parse(raw) : null;
+      return map && kb && map[kb] ? map[kb] : null;
+    } catch (_e) { return null; }
+  }
+
+  function saveCachedLoadingProfile(kb, profile) {
+    if (!kb) return;
+    try {
+      var raw = window.localStorage && window.localStorage.getItem("memoria.loading.kb-profile.v1");
+      var map = raw ? JSON.parse(raw) : null;
+      if (!map || typeof map !== "object") map = {};
+      map[kb] = profile;
+      var keys = Object.keys(map);
+      if (keys.length > 24) {
+        keys.slice(0, keys.length - 24).forEach(function (k) { delete map[k]; });
+      }
+      window.localStorage.setItem("memoria.loading.kb-profile.v1", JSON.stringify(map));
+    } catch (_e) { /* 隐私模式/写满 ⇒ 下次重新积累 */ }
+  }
+
+  function syncLoadingKnowledgeProfile() {
+    if (!window.MemoriaLoading || typeof window.MemoriaLoading.setKnowledgeProfile !== "function") return;
+    var kb = state.kbPath || "";
+    var cached = readCachedLoadingProfile(kb) || {};
+    var files = Array.isArray(state.files) ? state.files.length : 0;
+    var kps = state.graphData && Array.isArray(state.graphData.nodes) ? state.graphData.nodes.length : 0;
+    var groups = state.graphEngine && state.graphEngine.groups && Array.isArray(state.graphEngine.groups.groups)
+      ? state.graphEngine.groups.groups.length : 0;
+    // 首屏图谱还没加载时，用上次落盘的形态先画星云（“积累痕迹”），图谱就绪后再校准。
+    if (!kps && Number(cached.kps) > 0) kps = Number(cached.kps);
+    if (!groups && Number(cached.groups) > 0) groups = Number(cached.groups);
+    var profile = { files: files, kps: kps, groups: groups };
+    window.MemoriaLoading.setKnowledgeProfile(profile);
+    if (kps > 0 || groups > 0) saveCachedLoadingProfile(kb, profile);
+  }
+
   /** 启动加载蒙层：把 token 交给 boot UX，initKb 结束后交给对话面板就绪再释放。 */
   function finishBootLoading() {
     window.__memoriaBootReady = true;
@@ -1397,6 +1437,7 @@ async function call(fn, ...args) {
     state.dirs = res.dirs || []; _previewCacheClear(); // 2026-09-23 性能：文件集合变了（重命名/删除/新建/导入/刷新）⇒ 预览缓存整体作废（避免留下失效的路径键）
     updateSidebarTabCounts();
     window.MemoriaFileTree?.render?.();
+    syncLoadingKnowledgeProfile();
   }
 
   // 文件树渲染/展开折叠/点击切换文档/右键新建·重命名·删除等已随文件树子系统迁至 file-tree.js
@@ -2981,6 +3022,7 @@ async function call(fn, ...args) {
       if (state.graphRendererMode === "multilevel") {
         await loadMultilevelGraphData().catch(() => {});
       }
+      syncLoadingKnowledgeProfile();
       updateGraphAuditHint();
     } catch (e) {
       setStatus(T("graph.loadFailed"), String(e.message || e));
@@ -22623,7 +22665,7 @@ async function call(fn, ...args) {
   // (c) 启动加载态：loading-overlay.js 的引用计数层（持续到 initKb 结束，不按时间自动撤）。
   var bootToken = null;
   if (window.MemoriaLoading) {
-    bootToken = window.MemoriaLoading.begin(loadingText("app.loading.startup", "正在启动…"));
+    bootToken = window.MemoriaLoading.begin(loadingText("app.loadingStage.startup", "正在启动…"));
     window.__memoriaBootLoadingToken = bootToken;
     if (window.__memoriaBootReady) {
       window.MemoriaLoading.end(bootToken);
@@ -22646,7 +22688,7 @@ async function call(fn, ...args) {
   function beginRestoreLoading() {
     if (!window.MemoriaLoading || restoreToken) return;
     wasAway = false;
-    restoreToken = window.MemoriaLoading.begin(loadingText("app.loading.restoring", "正在恢复窗口…"));
+    restoreToken = window.MemoriaLoading.begin(loadingText("app.loadingStage.restoring", "正在恢复窗口…"));
     var finish = function () {
       if (!restoreToken) return;
       window.MemoriaLoading.end(restoreToken);

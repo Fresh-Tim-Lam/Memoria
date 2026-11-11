@@ -499,9 +499,12 @@
       cutClipboardFailed: "Cut failed: could not write to the clipboard — nothing was deleted (you can retry).",
     },
     app: {
-      loading: {
+      loadingStage: {
         startup: "Starting\u2026",
         restoring: "Restoring window\u2026",
+        files: "{n} files",
+        knowledgePoints: "{n} knowledge points",
+        subgraphs: "{n} subgraphs",
       },
       status: {
         ready: "Ready",

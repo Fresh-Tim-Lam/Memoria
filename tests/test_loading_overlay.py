@@ -33,6 +33,13 @@ def test_loading_overlay_module_exists_with_ref_count_api() -> None:
     assert "seedStars" in src
     assert "skyStars" in src
     assert "canvas" in src
+    # 人反馈：不要悬浮加载卡片；中心是 Memoria 图标 + 艺术字 + 心跳
+    assert "-memoria-loading__card" not in src
+    assert "-memoria-loading__stage" in src
+    assert "Memoria.png" in src
+    assert "-memoria-loading__word" in src
+    assert "setKnowledgeProfile" in src
+    assert "seedNebulae" in src
 
 
 def test_loading_overlay_is_loaded_before_app_and_styled_by_theme() -> None:
@@ -42,6 +49,10 @@ def test_loading_overlay_is_loaded_before_app_and_styled_by_theme() -> None:
     assert ".-memoria-loading" in css
     assert ".-memoria-loading[hidden]" in css
     assert ".-memoria-loading__sky" in css
+    assert ".-memoria-loading__stage" in css
+    assert ".-memoria-loading__logo" in css
+    assert ".-memoria-loading__word" in css
+    assert "memoria-boot-pulse" in css
     assert "var(--theme-color" in css
     assert "var(--bg-secondary)" in css
     # 2026-11-11：底色必须与编辑器/预览区一致（同为 --bg-primary），不能再叠径向渐变
@@ -54,8 +65,8 @@ def test_boot_and_restore_paths_hold_the_mask_until_init_finishes() -> None:
     assert "window.__memoriaBootLoadingToken" in src
     assert "function finishBootLoading" in src
     assert "finishBootLoading();" in src
-    assert "loadingText(\"app.loading.startup\"" in src
-    assert "loadingText(\"app.loading.restoring\"" in src
+    assert "loadingText(\"app.loadingStage.startup\"" in src
+    assert "loadingText(\"app.loadingStage.restoring\"" in src
     assert "document.addEventListener(\"visibilitychange\"" in src
     # 启动/恢复都必须走同一个引用计数层，不允许再各自 setTimeout 隐藏
     assert "MemoriaLoading.begin(" in src
