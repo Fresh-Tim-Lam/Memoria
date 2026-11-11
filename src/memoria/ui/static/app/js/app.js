@@ -1093,6 +1093,16 @@ async function call(fn, ...args) {
     }
   }
 
+  /** 启动加载蒙层：把 token 交给 boot UX，initKb 结束时释放（成功/空库/异常都释放）。 */
+  function finishBootLoading() {
+    window.__memoriaBootReady = true;
+    var token = window.__memoriaBootLoadingToken;
+    if (token && window.MemoriaLoading) {
+      window.MemoriaLoading.end(token);
+      window.__memoriaBootLoadingToken = null;
+    }
+  }
+
   async function initKb() {
     try {
       state.kbPath = await resolveStartupKbPath();
@@ -1154,6 +1164,9 @@ async function call(fn, ...args) {
     } catch (e) {
       state.startupInFlight = false;
       setStatus(T("app.status.waitingBackend"));
+    } finally {
+      // 启动蒙层只在 initKb 真正结束（含空库/异常）后释放；不设“到点自动撤”。
+      finishBootLoading();
     }
   }
 
@@ -22591,7 +22604,23 @@ async function call(fn, ...args) {
 (function memoriaBootUX() {
   var root = document.documentElement;
   if (!root) return;
-  // (c) 启动加载态
+  function loadingText(key, fallback) {
+    try {
+      var t = window.MemoriaI18n && window.MemoriaI18n.t;
+      var v = t ? t(key) : "";
+      return v && v !== key ? v : fallback;
+    } catch (_e) { return fallback; }
+  }
+  // (c) 启动加载态：loading-overlay.js 的引用计数层（持续到 initKb 结束，不按时间自动撤）。
+  var bootToken = null;
+  if (window.MemoriaLoading) {
+    bootToken = window.MemoriaLoading.begin(loadingText("app.loading.startup", "正在启动…"));
+    window.__memoriaBootLoadingToken = bootToken;
+    if (window.__memoriaBootReady) {
+      window.MemoriaLoading.end(bootToken);
+      window.__memoriaBootLoadingToken = null;
+    }
+  }
   root.classList.add("-booting");
   var bootStart = Date.now();
   var bootTimer = setInterval(function () {
@@ -22601,6 +22630,25 @@ async function call(fn, ...args) {
       root.classList.remove("-booting");
     }
   }, 120);
+  // 窗口从最小化/后台回来：WebView2 会重排；用同一加载蒙层遮住恢复首帧，
+  // 仍由引用计数决定何时撤（restore 任务结束后若还有别的加载，层不消失）。
+  var restoreToken = 0;
+  var wasAway = false;
+  function beginRestoreLoading() {
+    if (!window.MemoriaLoading || restoreToken) return;
+    wasAway = false;
+    restoreToken = window.MemoriaLoading.begin(loadingText("app.loading.restoring", "正在恢复窗口…"));
+    var finish = function () {
+      if (!restoreToken) return;
+      window.MemoriaLoading.end(restoreToken);
+      restoreToken = 0;
+    };
+    requestAnimationFrame(function () {
+      requestAnimationFrame(function () {
+        setTimeout(finish, 120);
+      });
+    });
+  }
   // (a) 恢复时抑制过渡（只在"窗口从不可见/失焦回来"时，用户主动操作不抑制）
   var suppressTimer = 0;
   function suppressRestoreTransitions() {
@@ -22612,7 +22660,16 @@ async function call(fn, ...args) {
     }, 240);
   }
   document.addEventListener("visibilitychange", function () {
-    if (!document.hidden) suppressRestoreTransitions();
+    if (document.hidden) {
+      wasAway = true;
+      return;
+    }
+    if (wasAway) beginRestoreLoading();
+    suppressRestoreTransitions();
   });
-  window.addEventListener("focus", suppressRestoreTransitions);
+  window.addEventListener("blur", function () { wasAway = true; });
+  window.addEventListener("focus", function () {
+    if (wasAway) beginRestoreLoading();
+    suppressRestoreTransitions();
+  });
 })();

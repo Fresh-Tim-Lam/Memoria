@@ -445,6 +445,8 @@
   <!-- task-186：启动蒙层（星河）+ 空灵音效。放在应用脚本之前 ⇒ 蒙层先于应用首帧出现；
        模块置空/失败时 `splash.js` 自身保证不阻塞（见其顶部四条硬约束）。 -->
   <script src="/app/js/splash.js"></script>
+  <!-- 2026-11-11：应用级加载蒙层（引用计数；splash 冷启动层在其上，splash 淡出后仍由本层遮挡未完成的加载） -->
+  <script src="/app/js/loading-overlay.js"></script>
   <script src="/app/lib/three.min.js"></script>
   <script src="/app/lib/OrbitControls.js"></script>
   <script src="/app/js/graph-label.js"></script>

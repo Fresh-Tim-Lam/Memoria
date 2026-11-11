@@ -858,7 +858,7 @@ window.MemoriaAgentPanel = (function () {
       turnPreviewEl = preview;
       box.addEventListener("scroll", updateTurnRailActive, { passive: true });
       if (typeof ResizeObserver === "function") {
-        const ro = new ResizeObserver(function () { syncTurnRailVisibility(); });
+        const ro = new ResizeObserver(function () { syncTurnRailVisibility(); layoutTurnMarks(); });
         ro.observe(stream);
       }
       renderTurnRail();
@@ -1123,14 +1123,53 @@ window.MemoriaAgentPanel = (function () {
     turnPreviewEl.appendChild(prompt);
     turnPreviewEl.appendChild(response);
     turnPreviewEl.hidden = false;
-    const railRect = turnRailEl.getBoundingClientRect();
-    const markRect = mark.getBoundingClientRect();
-    const top = Math.max(0, Math.min(railRect.height - 100, markRect.top - railRect.top - 40));
+    const railH = turnRailEl.getBoundingClientRect().height;
+    const previewH = 104;
+    const markTop = mark.offsetTop;
+    const top = Math.max(0, Math.min(railH - previewH, markTop + 5 - previewH / 2));
     turnPreviewEl.style.top = Math.round(top) + "px";
   }
 
   function hideTurnPreview() {
     if (turnPreviewEl) turnPreviewEl.hidden = true;
+  }
+
+  /**
+   * 2026-11-11（人反馈）：DSH 的轮次横杠不是等距排布，而是按该轮在正文流中的
+   * 真实位置映射成“小地图”；当前轮/悬停的横杠宽度也不同。这里用用户气泡在
+   * `#agent-messages` 中的 offsetTop 比例定位，保留最小 10px 命中间距。
+   */
+  function layoutTurnMarks() {
+    if (!turnRailScroller || !turnMarks.length) return;
+    const box = $("#agent-messages");
+    const height = turnRailScroller.clientHeight;
+    const markHeight = 10;
+    if (!box || height <= markHeight) return;
+    const usable = height - markHeight;
+    const total = Math.max(1, box.scrollHeight - box.clientHeight);
+    const count = turnMarks.length;
+    const positions = turnMarks.map(function (mark) {
+      const target = box.querySelector('[data-agent-turn="' + mark.dataset.turn + '"]');
+      if (count === 1) return usable / 2;
+      const ratio = target
+        ? Math.max(0, Math.min(1, target.offsetTop / total))
+        : (Number(mark.dataset.turn) - 1) / Math.max(1, count - 1);
+      return ratio * usable;
+    });
+    // 保证点击目标不互相覆盖；内容密集时退化为等距，但不改变轮次顺序。
+    const gap = Math.min(markHeight, count > 1 ? usable / (count - 1) : usable);
+    for (let i = 1; i < positions.length; i += 1) {
+      positions[i] = Math.max(positions[i], positions[i - 1] + gap);
+    }
+    if (positions[positions.length - 1] > usable) {
+      positions[positions.length - 1] = usable;
+      for (let i = positions.length - 2; i >= 0; i -= 1) {
+        positions[i] = Math.min(positions[i], positions[i + 1] - gap);
+      }
+    }
+    turnMarks.forEach(function (mark, index) {
+      mark.style.top = Math.round(Math.max(0, positions[index])) + "px";
+    });
   }
 
   function renderTurnRail() {
@@ -1144,7 +1183,7 @@ window.MemoriaAgentPanel = (function () {
       mark.className = "-agent-turn-mark";
       mark.dataset.turn = String(item.turn);
       mark.setAttribute("aria-label", T("agent.turnRail.jump", { turn: item.turn }));
-      mark.title = "#" + item.turn + " " + String(item.prompt || "").replace(/\s+/g, " ").slice(0, 80);
+      // 不设原生 title：悬停用下方的主题化圆角浮层，避免浏览器原生 tooltip 混入。
       mark.addEventListener("click", function () { scrollToTurn(item.turn); });
       mark.addEventListener("pointerenter", function () { showTurnPreview(mark, item); });
       mark.addEventListener("focus", function () { showTurnPreview(mark, item); });
@@ -1157,6 +1196,7 @@ window.MemoriaAgentPanel = (function () {
     const active = turnMarks.length ? turnMarks[0] : null;
     if (active) active.classList.add("-is-active");
     syncTurnRailVisibility();
+    layoutTurnMarks();
     updateTurnRailActive();
   }
 

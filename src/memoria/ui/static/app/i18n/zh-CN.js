@@ -1,4 +1,4 @@
-﻿// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
+// 中文（简体）语言包 —— Memoria i18n 源语言（完整事实源，键不得缺失）
 // 由 docs/conventions/i18n.md 管理；界面文案必须走 MemoriaI18n.t('key')。
 (function (g) {
   "use strict";
@@ -499,6 +499,10 @@
       cutClipboardFailed: "剪切失败：未能写入剪贴板，内容未删除（可重试）",
     },
     app: {
+      loading: {
+        startup: "正在启动…",
+        restoring: "正在恢复窗口…",
+      },
       status: {
         ready: "就绪",
         kbLoaded: "已加载知识库",

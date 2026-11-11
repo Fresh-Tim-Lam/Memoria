@@ -1,4 +1,4 @@
-﻿// English language pack —— Memoria i18n.
+// English language pack —— Memoria i18n.
 // Managed by docs/conventions/i18n.md. Fallback to "zh-CN" for any missing key.
 (function (g) {
   "use strict";
@@ -499,6 +499,10 @@
       cutClipboardFailed: "Cut failed: could not write to the clipboard — nothing was deleted (you can retry).",
     },
     app: {
+      loading: {
+        startup: "Starting\u2026",
+        restoring: "Restoring window\u2026",
+      },
       status: {
         ready: "Ready",
         kbLoaded: "Knowledge base loaded",
