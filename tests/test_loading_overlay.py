@@ -27,6 +27,12 @@ def test_loading_overlay_module_exists_with_ref_count_api() -> None:
     # 不允许按时间自动撤：模块中没有“时间到了就隐藏”的计时器
     assert "CAP_MS" not in src
     assert "setTimeout" not in src
+    # 2026-11-11：加载蒙层视觉 = 程序化星场「星穹帷幕 / Astral Veil」，不是静态关键帧
+    assert "Astral Veil" in src and "星穹帷幕" in src
+    assert "requestAnimationFrame(skyLoop)" in src
+    assert "seedStars" in src
+    assert "skyStars" in src
+    assert "canvas" in src
 
 
 def test_loading_overlay_is_loaded_before_app_and_styled_by_theme() -> None:
@@ -35,6 +41,7 @@ def test_loading_overlay_is_loaded_before_app_and_styled_by_theme() -> None:
     css = CSS.read_text(encoding="utf-8")
     assert ".-memoria-loading" in css
     assert ".-memoria-loading[hidden]" in css
+    assert ".-memoria-loading__sky" in css
     assert "var(--theme-color" in css
     assert "var(--bg-secondary)" in css
 

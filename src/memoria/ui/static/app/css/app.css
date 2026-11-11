@@ -8825,3 +8825,31 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
 @media (prefers-reduced-motion: reduce) {
     .-memoria-loading__spinner { animation: none; }
 }
+
+/* 2026-11-11：加载蒙层的「星穹帷幕 / Astral Veil」程序化星场（canvas 在 card 下方） */
+.-memoria-loading {
+    overflow: hidden;
+    background:
+        radial-gradient(120% 85% at 50% -10%, rgba(255, 255, 255, 0.07), transparent 68%),
+        radial-gradient(80% 60% at 85% 100%, color-mix(in srgb, var(--theme-color, #4c8bf5) 14%, transparent), transparent 70%),
+        var(--bg-primary);
+}
+html[data-theme="light"] .-memoria-loading {
+    background:
+        radial-gradient(120% 85% at 50% -10%, rgba(0, 0, 0, 0.035), transparent 68%),
+        radial-gradient(80% 60% at 85% 100%, color-mix(in srgb, var(--theme-color, #0066bf) 10%, transparent), transparent 70%),
+        var(--bg-primary);
+}
+.-memoria-loading__sky {
+    position: absolute;
+    inset: 0;
+    width: 100%;
+    height: 100%;
+    pointer-events: none;
+}
+.-memoria-loading__card {
+    position: relative;
+    z-index: 1;
+    background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
+    backdrop-filter: blur(10px);
+}
