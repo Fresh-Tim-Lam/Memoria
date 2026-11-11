@@ -189,6 +189,11 @@ window.MemoriaAgentPanel = (function () {
   let turnMarks = [];
   let turnTargets = new Map();
   let turnTargetTops = new Map();
+  // 2026-11-11：轮次导航只显示最近一段；滚轮向旧方向滚动可找回更早历史。
+  // 间距按“越新越大”的非线性比例分配，而不是等距或按正文 offsetTop。
+  const RAIL_WINDOW_TURNS = 28;
+  const RAIL_WHEEL_STEP = 3;
+  let railEnd = 0;
   let contextBreakdownSeq = 0;
   // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
   let epoch = 0;
@@ -865,6 +870,12 @@ window.MemoriaAgentPanel = (function () {
       turnRailScroller = scroller;
       turnPreviewEl = preview;
       box.addEventListener("scroll", updateTurnRailActive, { passive: true });
+      // 滚轮在定位条上滚动“横条簇”本身：向动画上方找更早历史，不滚动正文。
+      rail.addEventListener("wheel", function (e) {
+        if (!e.deltaY) return;
+        e.preventDefault();
+        moveRailWindow(e.deltaY > 0 ? RAIL_WHEEL_STEP : -RAIL_WHEEL_STEP);
+      }, { passive: false });
       if (typeof ResizeObserver === "function") {
         const ro = new ResizeObserver(function () { syncTurnRailVisibility(); layoutTurnMarks(); });
         ro.observe(stream);
@@ -1094,10 +1105,28 @@ window.MemoriaAgentPanel = (function () {
     return n;
   }
 
+  /** 导航条当前窗口：默认最近 28 轮；滚轮向上可把窗口移向更早历史。 */
+  function railWindowTurns() {
+    const all = conversationTurns(messages);
+    if (!all.length) return [];
+    if (!railEnd || railEnd > all.length) railEnd = all.length;
+    return all.slice(Math.max(0, railEnd - RAIL_WINDOW_TURNS), railEnd);
+  }
+
+  function moveRailWindow(delta) {
+    const all = conversationTurns(messages);
+    if (all.length <= RAIL_WINDOW_TURNS) return;
+    const cur = railEnd || all.length;
+    const next = Math.max(RAIL_WINDOW_TURNS, Math.min(all.length, cur + delta));
+    if (next === cur) return;
+    railEnd = next;
+    renderTurnRail();
+  }
+
   function syncTurnRailVisibility() {
     if (!turnRailEl) return;
     const dock = $("#-agent-dock");
-    const turns = conversationTurns(renderedMessages(), renderedTurnOffset());
+    const turns = conversationTurns(messages);
     const narrow = dock ? dock.getBoundingClientRect().width < 240 : false;
     // DSH 的 rail 对每个已知 turn 都保留一个 tick；单轮也应可见（人 2026-11-11 要求迁移该控件）。
     turnRailEl.hidden = turns.length < 1 || narrow;
@@ -1125,7 +1154,17 @@ window.MemoriaAgentPanel = (function () {
   function scrollToTurn(turn) {
     const box = $("#agent-messages");
     if (!box) return;
-    const target = box.querySelector('[data-agent-turn="' + turn + '"]');
+    let target = box.querySelector('[data-agent-turn="' + turn + '"]');
+    if (!target) {
+      // 点的是导航条滚轮翻出来的旧轮次：先把消息窗口扩到该轮，再定位。
+      const all = conversationTurns(messages);
+      const item = all[Number(turn) - 1];
+      if (item && Number.isInteger(item.index) && item.index < renderStart) {
+        renderStart = Math.max(0, item.index);
+        renderMessages({ keepScroll: true });
+        target = box.querySelector('[data-agent-turn="' + turn + '"]');
+      }
+    }
     if (!target) return;
     stickToBottom = false;
     const top = target.getBoundingClientRect().top - box.getBoundingClientRect().top + box.scrollTop - 6;
@@ -1166,20 +1205,16 @@ window.MemoriaAgentPanel = (function () {
    */
   function layoutTurnMarks() {
     if (!turnRailScroller || !turnMarks.length) return;
-    const box = $("#agent-messages");
     const height = turnRailScroller.clientHeight;
     const markHeight = 10;
-    if (!box || height <= markHeight) return;
+    if (height <= markHeight) return;
     const usable = height - markHeight;
-    const total = Math.max(1, box.scrollHeight - box.clientHeight);
     const count = turnMarks.length;
-    const positions = turnMarks.map(function (mark) {
-      const targetTop = turnTargetTops.get(mark.dataset.turn);
+    // 2026-11-11（人反馈）：不是等距，也不是按正文 offsetTop 比例；
+    // 越新的轮次之间间隔越大，越旧的越压缩，形成“最近活跃”的视觉重心。
+    const positions = turnMarks.map(function (mark, index) {
       if (count === 1) return usable / 2;
-      const ratio = typeof targetTop === "number"
-        ? Math.max(0, Math.min(1, targetTop / total))
-        : (Number(mark.dataset.turn) - 1) / Math.max(1, count - 1);
-      return ratio * usable;
+      return Math.pow(index / (count - 1), 1.75) * usable;
     });
     // 保证点击目标不互相覆盖；内容密集时退化为等距，但不改变轮次顺序。
     const gap = Math.min(markHeight, count > 1 ? usable / (count - 1) : usable);
@@ -1199,7 +1234,7 @@ window.MemoriaAgentPanel = (function () {
 
   function renderTurnRail() {
     if (!turnRailEl || !turnRailScroller) return;
-    const turns = conversationTurns(renderedMessages(), renderedTurnOffset());
+    const turns = railWindowTurns();
     const box = $("#agent-messages");
     turnRailScroller.innerHTML = "";
     turnMarks = [];
@@ -1758,6 +1793,7 @@ window.MemoriaAgentPanel = (function () {
     });
     // 只先渲染最近一段；200+ 轮历史一次性 Markdown 渲染会让窗口冻结数十秒。
     renderStart = Math.max(0, messages.length - INITIAL_RENDER_MESSAGES);
+    railEnd = 0;
     streamingEl = null;
     sessionId = String(res.session_id || id);
     sessionKb = kb;
@@ -1825,6 +1861,7 @@ window.MemoriaAgentPanel = (function () {
       sessionKb = "";
       messages.length = 0;
       renderStart = 0;
+      railEnd = 0;
       streamingEl = null;
       pendingQueue.length = 0;
       queueEditingId = null;
@@ -1954,6 +1991,7 @@ window.MemoriaAgentPanel = (function () {
   function pushMessage(role, text, images) {
     const rec = { role: role, text: text || "", anchors: [], error: "", stopped: false, images: Array.isArray(images) ? images : [] };
     messages.push(rec);
+    railEnd = 0; // 新消息追加后导航条回到底部（最新）
     const box = $("#agent-messages");
     if (box) {
       const empty = box.querySelector(".-agent-empty");
@@ -2188,6 +2226,7 @@ window.MemoriaAgentPanel = (function () {
     job = null;
     messages.length = 0;
     renderStart = 0;
+    railEnd = 0;
     streamingEl = null;
     pendingQueue.length = 0;
     queueEditingId = null;

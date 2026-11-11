@@ -108,8 +108,10 @@ def test_long_session_window_and_load_earlier() -> None:
 def test_turn_rail_is_positioned_as_a_minimap_not_equal_spacing() -> None:
     src = (JS / "agent-panel.js").read_text(encoding="utf-8")
     assert "function layoutTurnMarks" in src
-    assert "targetTop / total" in src
-    assert "turnTargetTops" in src
+    assert "Math.pow(index / (count - 1), 1.75)" in src
+    assert "RAIL_WINDOW_TURNS" in src
+    assert "moveRailWindow" in src
+    assert "\"wheel\"" in src
     assert "mark.style.top" in src
     # 不设原生 title；悬停用主题化预览浮层
     assert "mark.title =" not in src
