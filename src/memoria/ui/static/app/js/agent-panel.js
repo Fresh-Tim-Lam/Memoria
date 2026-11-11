@@ -2085,6 +2085,15 @@ window.MemoriaAgentPanel = (function () {
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
+    // 2026-11-11：窗口意外断开/重载后，后端可能还留着上一轮在飞的作业（尤其在
+    // ask_user_question/审批处无限等待）。新面板没有它的 job 句柄，直接提交会收到
+    // busy；这里把“本面板不知道的旧作业”取消一次后重试，而不是把 busy 当普通错误。
+    if (res && res.status !== "ok" && res.code === "busy" && res.job_id && !job && !busy) {
+      try {
+        await call("agent_ask_cancel", String(res.job_id));
+        res = await callAskStart(text, kb || null, sessionForKb);
+      } catch (_e) { /* 保留原始 busy 错误 */ }
+    }
     if (epoch !== myEpoch) return; // 提交期间被「清空对话」/换库作废 ⇒ 丢弃，不写回面板
     if (!res || res.status !== "ok" || !res.job_id) {
       const msg = fullErrorText(res);

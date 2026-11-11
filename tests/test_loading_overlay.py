@@ -92,6 +92,13 @@ def test_loading_labels_exist_in_both_locales() -> None:
         assert "app.loading" not in text  # 键名在 app.loading 下，不写成扁平字符串
 
 
+def test_agent_panel_recovers_stale_busy_job_after_reconnect() -> None:
+    src = (JS / "agent-panel.js").read_text(encoding="utf-8")
+    assert "res.code === \"busy\"" in src
+    assert "agent_ask_cancel" in src
+    assert "本面板不知道的旧作业" in src
+
+
 def test_long_session_window_and_load_earlier() -> None:
     src = (JS / "agent-panel.js").read_text(encoding="utf-8")
     assert "INITIAL_RENDER_MESSAGES" in src
