@@ -8888,3 +8888,20 @@ html[data-theme="light"] .-memoria-loading {
     left: 34px;
     right: auto;
 }
+
+/* 2026-11-11（性能）：长会话初始只渲染最近 60 条，顶部按钮按帧补更早消息。 */
+.-agent-load-earlier {
+    display: block;
+    margin: 8px auto 12px;
+    padding: 4px 12px;
+    border: 0.5px solid var(--border);
+    border-radius: 999px;
+    background: var(--bg-tertiary);
+    color: var(--text-secondary);
+    font-size: 0.75rem;
+    cursor: pointer;
+}
+.-agent-load-earlier:hover {
+    color: var(--text-primary);
+    border-color: var(--theme-color);
+}

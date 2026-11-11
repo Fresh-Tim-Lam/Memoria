@@ -620,6 +620,7 @@
     },
     agent: {
       loading: { ready: "Preparing chat\u2026" },
+      loadEarlier: "Load {n} earlier messages",
       btnTitle: "Chat panel: show / collapse the right-side dock",
       dockAria: "Chat",
       dockResizeTitle: "Drag to resize the chat dock",

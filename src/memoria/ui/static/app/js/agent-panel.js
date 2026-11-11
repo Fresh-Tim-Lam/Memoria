@@ -200,6 +200,12 @@ window.MemoriaAgentPanel = (function () {
   // 当前气泡区（`messages`）属于哪个库——换库判据；提问开始 / 载入会话成功时更新。
   let renderedKb = "";
 
+  // 2026-11-11（性能）：长会话只先渲染最近一段，避免一次把 200 轮历史全量解析/Markdown 渲染
+  // 导致打开会话冻结；点顶部按钮按帧再补更早的消息。`messages` 始终保留完整会话。
+  const INITIAL_RENDER_MESSAGES = 60;
+  const LOAD_EARLIER_MESSAGES = 60;
+  let renderStart = 0;
+
   // 历史会话列表的缓存（供语言切换后就地重绘，无需重新请求）
   let historyRows = [];
   let historyDisabled = true;
@@ -1059,12 +1065,15 @@ window.MemoriaAgentPanel = (function () {
     }
   }
 
-  /** 当前 messages 按「用户消息 = 一轮」切出的轮次。 */
-  function conversationTurns() {
+  /** 当前 messages 按「用户消息 = 一轮」切出的轮次。
+   *  可传可视切片 + 全局轮次偏移：长会话只渲染最近一段时，横杠仍用全局轮次号。 */
+  function conversationTurns(list, turnOffset) {
+    const source = Array.isArray(list) ? list : messages;
+    const base = Number.isInteger(turnOffset) ? turnOffset : 0;
     const turns = [];
-    messages.forEach(function (rec, index) {
+    source.forEach(function (rec, index) {
       if (rec.role === "user") {
-        turns.push({ turn: turns.length + 1, index: index, prompt: rec.text || "", response: "" });
+        turns.push({ turn: base + turns.length + 1, index: index, prompt: rec.text || "", response: "" });
       } else if (turns.length) {
         const last = turns[turns.length - 1];
         if (rec.text) last.response += (last.response ? "\n" : "") + rec.text;
@@ -1073,10 +1082,22 @@ window.MemoriaAgentPanel = (function () {
     return turns;
   }
 
+  function renderedMessages() {
+    return messages.slice(Math.max(0, Math.min(renderStart, messages.length)));
+  }
+
+  function renderedTurnOffset() {
+    let n = 0;
+    for (let i = 0; i < renderStart && i < messages.length; i += 1) {
+      if (messages[i].role === "user") n += 1;
+    }
+    return n;
+  }
+
   function syncTurnRailVisibility() {
     if (!turnRailEl) return;
     const dock = $("#-agent-dock");
-    const turns = conversationTurns();
+    const turns = conversationTurns(renderedMessages(), renderedTurnOffset());
     const narrow = dock ? dock.getBoundingClientRect().width < 240 : false;
     // DSH 的 rail 对每个已知 turn 都保留一个 tick；单轮也应可见（人 2026-11-11 要求迁移该控件）。
     turnRailEl.hidden = turns.length < 1 || narrow;
@@ -1178,7 +1199,7 @@ window.MemoriaAgentPanel = (function () {
 
   function renderTurnRail() {
     if (!turnRailEl || !turnRailScroller) return;
-    const turns = conversationTurns();
+    const turns = conversationTurns(renderedMessages(), renderedTurnOffset());
     const box = $("#agent-messages");
     turnRailScroller.innerHTML = "";
     turnMarks = [];
@@ -1453,12 +1474,16 @@ window.MemoriaAgentPanel = (function () {
     return box;
   }
 
-  function renderMessages() {
+  function renderMessages(opts) {
     const box = $("#agent-messages");
     if (!box) return;
+    const keepScroll = !!(opts && opts.keepScroll);
+    const prevTop = box.scrollTop;
+    const prevHeight = box.scrollHeight;
     box.innerHTML = "";
     streamingEl = null;
     if (!messages.length) {
+      renderStart = 0;
       const empty = document.createElement("div");
       empty.className = "-agent-empty -muted";
       empty.textContent = T("agent.empty");
@@ -1466,14 +1491,27 @@ window.MemoriaAgentPanel = (function () {
       renderTurnRail();
       return;
     }
-    let turn = 0;
-    messages.forEach(function (rec) {
+    const visible = renderedMessages();
+    if (renderStart > 0) {
+      const earlier = document.createElement("button");
+      earlier.type = "button";
+      earlier.className = "-agent-load-earlier";
+      earlier.textContent = T("agent.loadEarlier", { n: Math.min(LOAD_EARLIER_MESSAGES, renderStart) });
+      earlier.addEventListener("click", function () {
+        renderStart = Math.max(0, renderStart - LOAD_EARLIER_MESSAGES);
+        renderMessages({ keepScroll: true });
+      });
+      box.appendChild(earlier);
+    }
+    let turn = renderedTurnOffset();
+    visible.forEach(function (rec) {
       if (rec.role === "user") turn += 1;
       const el = messageEl(rec);
       if (rec.role === "user") el.setAttribute("data-agent-turn", String(turn));
       box.appendChild(el);
     });
-    scrollToBottom(true);
+    if (keepScroll) box.scrollTop = prevTop + (box.scrollHeight - prevHeight);
+    else scrollToBottom(true);
     renderTurnRail();
   }
 
@@ -1718,6 +1756,8 @@ window.MemoriaAgentPanel = (function () {
         compact: rec.kind === "compaction" ? { covered: Number(rec.covered) || 0, summaryChars: Number(rec.summary_chars) || 0 } : null, // 2026-10-25（task-91）：压缩系统行（可回放）——后端 `conversation_messages(include_compaction=True)`
       });
     });
+    // 只先渲染最近一段；200+ 轮历史一次性 Markdown 渲染会让窗口冻结数十秒。
+    renderStart = Math.max(0, messages.length - INITIAL_RENDER_MESSAGES);
     streamingEl = null;
     sessionId = String(res.session_id || id);
     sessionKb = kb;
@@ -1784,6 +1824,7 @@ window.MemoriaAgentPanel = (function () {
       sessionId = null;
       sessionKb = "";
       messages.length = 0;
+      renderStart = 0;
       streamingEl = null;
       pendingQueue.length = 0;
       queueEditingId = null;
@@ -2146,6 +2187,7 @@ window.MemoriaAgentPanel = (function () {
     epoch += 1; // 作废在飞作业（若有）
     job = null;
     messages.length = 0;
+    renderStart = 0;
     streamingEl = null;
     pendingQueue.length = 0;
     queueEditingId = null;
@@ -6117,11 +6159,10 @@ window.MemoriaAgentPanel = (function () {
     rows = mergeToolRows(rows); // 同 id 的调用 / 结果两行合成一行（摘要取调用那行、状态取结果那行）
     rows = withThinkRows(rows, rec); // **按步**插思考行（最终答复那一步的思考排最后）
     if (!rows.length) return;
-    const nodes = [processRowsEl(rows)];
     if (transcriptMode() !== "compact" || !processFoldable(rec, rows)) {
       // normal 档 / 不是最终答复：过程**全部可见**（不渲染摘要行）
       const frag = document.createDocumentFragment();
-      nodes.forEach(function (node) { frag.appendChild(node); });
+      frag.appendChild(processRowsEl(rows));
       if (body) wrap.insertBefore(frag, body); else wrap.appendChild(frag);
       return;
     }
@@ -6137,9 +6178,12 @@ window.MemoriaAgentPanel = (function () {
     const inner = document.createElement("div");
     inner.className = "-agent-process-fold-body";
     inner.hidden = !open;
-    nodes.forEach(function (node) { inner.appendChild(node); });
+    // 2026-11-11（性能）：折叠态不预建过程 DOM。长会话回放时每个助手气泡都带几十条
+    // 工具/思考行；即使 inner.hidden 也先把几千个节点建出来，会拖死载入。改为展开时才建。
+    if (open) inner.appendChild(processRowsEl(rows));
     btn.addEventListener("click", function () {
       const next = inner.hidden; // 当前收起 ⇒ 这次点击的意图是展开
+      if (next && !inner.childElementCount) inner.appendChild(processRowsEl(rows));
       inner.hidden = !next;
       rec.processOpen = next;
       btn.setAttribute("aria-expanded", next ? "true" : "false");

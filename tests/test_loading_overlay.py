@@ -81,6 +81,19 @@ def test_loading_labels_exist_in_both_locales() -> None:
         assert "app.loading" not in text  # 键名在 app.loading 下，不写成扁平字符串
 
 
+def test_long_session_window_and_load_earlier() -> None:
+    src = (JS / "agent-panel.js").read_text(encoding="utf-8")
+    assert "INITIAL_RENDER_MESSAGES" in src
+    assert "LOAD_EARLIER_MESSAGES" in src
+    assert "renderStart" in src
+    assert "className = \"-agent-load-earlier\"" in src
+    assert "renderMessages({ keepScroll: true })" in src
+    assert "renderedMessages()" in src
+    assert "renderedTurnOffset()" in src
+    css = CSS.read_text(encoding="utf-8")
+    assert ".-agent-load-earlier {" in css
+
+
 def test_turn_rail_is_positioned_as_a_minimap_not_equal_spacing() -> None:
     src = (JS / "agent-panel.js").read_text(encoding="utf-8")
     assert "function layoutTurnMarks" in src
