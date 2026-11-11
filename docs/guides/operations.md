@@ -260,6 +260,11 @@ Compress-Archive -Path "Package\Memoria.exe","Package\Memoria.exe.config","Packa
   1. 网络更新（应用从线上 Release 拉取）；
   2. 本地新版本压缩包更新（把新 zip 解压到该副本）。
 - 历史副本 `Memoria/` 已于 2026-11-11 更名为 `Memoria-release-test/`，避免与仓库根目录同名而造成“Memoria 是 Package 副本吗”的事实混淆。
+- **低完整性目录陷阱**：如果副本是从旧下载目录/浏览器解压目录搬来的，目录可能带 `Mandatory Label\Low Mandatory Level`，双击后进程以低完整性运行，无法写 `%LOCALAPPDATA%\Memoria\config\ui-settings.json.tmp`，表现为“打不开”且 `crash.log` 报 `PermissionError`。修复（只对该副本）：
+  ```powershell
+  icacls "Memoria-release-test" /setintegritylevel "(OI)(CI)M" /T
+  ```
+  修复后再启动；`Package/` 构建产物不带低完整性标签。
 
 ## 7. 日志与临时产物
 
