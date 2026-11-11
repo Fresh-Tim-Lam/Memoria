@@ -1093,14 +1093,23 @@ async function call(fn, ...args) {
     }
   }
 
-  /** 启动加载蒙层：把 token 交给 boot UX，initKb 结束时释放（成功/空库/异常都释放）。 */
+  /** 启动加载蒙层：把 token 交给 boot UX，initKb 结束后交给对话面板就绪再释放。 */
   function finishBootLoading() {
     window.__memoriaBootReady = true;
-    var token = window.__memoriaBootLoadingToken;
-    if (token && window.MemoriaLoading) {
-      window.MemoriaLoading.end(token);
-      window.__memoriaBootLoadingToken = null;
+    function release() {
+      var token = window.__memoriaBootLoadingToken;
+      if (token && window.MemoriaLoading) {
+        window.MemoriaLoading.end(token);
+        window.__memoriaBootLoadingToken = null;
+      }
     }
+    // 人 2026-11-11：加载蒙层必须保持到 agent 面板能正常发送（否则早发消息会漏图片）。
+    // agent-panel.js 在 app.js 之后加载；它会在 init() 完成 config/history/session 后派发事件。
+    if (window.MemoriaAgentPanel && window.__memoriaAgentReady !== true) {
+      window.addEventListener("memoria:agent-ready", release, { once: true });
+      return;
+    }
+    release();
   }
 
   async function initKb() {

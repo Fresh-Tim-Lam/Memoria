@@ -619,6 +619,7 @@
       },
     },
     agent: {
+      loading: { ready: "正在准备对话…" },
       btnTitle: "对话面板：显示 / 收起右侧对话栏",
       dockAria: "对话",
       dockResizeTitle: "拖拽调整对话栏宽度",

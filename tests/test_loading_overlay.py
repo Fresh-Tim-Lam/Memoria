@@ -44,6 +44,9 @@ def test_loading_overlay_is_loaded_before_app_and_styled_by_theme() -> None:
     assert ".-memoria-loading__sky" in css
     assert "var(--theme-color" in css
     assert "var(--bg-secondary)" in css
+    # 2026-11-11：底色必须与编辑器/预览区一致（同为 --bg-primary），不能再叠径向渐变
+    assert "html[data-theme=\"light\"] .-memoria-loading" in css
+    assert "background: var(--bg-primary);" in css
 
 
 def test_boot_and_restore_paths_hold_the_mask_until_init_finishes() -> None:
@@ -57,6 +60,18 @@ def test_boot_and_restore_paths_hold_the_mask_until_init_finishes() -> None:
     # 启动/恢复都必须走同一个引用计数层，不允许再各自 setTimeout 隐藏
     assert "MemoriaLoading.begin(" in src
     assert "MemoriaLoading.end(" in src
+    # 2026-11-11：必须等 agent 面板可发送才释放 boot token
+    assert "memoria:agent-ready" in src
+    assert "window.__memoriaAgentReady" in src
+
+
+def test_agent_panel_reports_ready_after_config_and_history() -> None:
+    src = (JS / "agent-panel.js").read_text(encoding="utf-8")
+    assert "window.__memoriaAgentReady = false" in src
+    assert "memoria:agent-ready" in src
+    assert "Promise.allSettled([configReady, historyReady])" in src
+    assert "refreshConfig()" in src
+    assert "restoreLastSession()" in src
 
 
 def test_loading_labels_exist_in_both_locales() -> None:

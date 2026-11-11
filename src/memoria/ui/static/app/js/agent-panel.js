@@ -2172,6 +2172,18 @@ window.MemoriaAgentPanel = (function () {
 
   function init() {
     if (!$("#-agent-dock")) return; // 页面未登记右侧停靠栏（旧版 index.html）
+    // 2026-11-11：启动蒙层必须保持到对话面板真正可发送（配置 + 会话历史/恢复完成），
+    // 否则用户在初始化期间粘贴图片再点发送会漏附件。
+    window.__memoriaAgentReady = false;
+    const readyToken = window.MemoriaLoading
+      ? window.MemoriaLoading.begin(T("agent.loading.ready") || "正在准备对话…")
+      : null;
+    const finishReady = function () {
+      window.__memoriaAgentReady = true;
+      try { window.dispatchEvent(new Event("memoria:agent-ready")); } catch (_e) { /* noop */ }
+      if (!readyToken || !window.MemoriaLoading) return;
+      window.MemoriaLoading.end(readyToken);
+    };
     ensureAgentChrome();
 
     const save = $("#agent-save-config");
@@ -2277,9 +2289,10 @@ window.MemoriaAgentPanel = (function () {
 
     renderMessages();
     setStatusText("");
-    refreshConfig();
+    const configReady = refreshConfig();
     // 打开面板即刷新历史；若磁盘偏好里有「上次会话」且仍存在，则自动载入（静默）
-    refreshHistory().then(() => restoreLastSession());
+    const historyReady = refreshHistory().then(() => restoreLastSession());
+    Promise.allSettled([configReady, historyReady]).then(finishReady, finishReady);
   }
 
   // ── 助手回复的 Markdown 渲染 ────────────────────────────────────────────

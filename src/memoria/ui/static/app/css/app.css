@@ -8853,3 +8853,10 @@ html[data-theme="light"] .-memoria-loading {
     background: color-mix(in srgb, var(--bg-secondary) 88%, transparent);
     backdrop-filter: blur(10px);
 }
+
+/* 2026-11-11（人反馈）：加载蒙层底色必须与文本编辑区/预览区完全一致（两者都用 --bg-primary），
+   星场只叠加星点/流星，不再用径向渐变改变底色。 */
+.-memoria-loading,
+html[data-theme="light"] .-memoria-loading {
+    background: var(--bg-primary);
+}
