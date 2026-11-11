@@ -187,6 +187,8 @@ window.MemoriaAgentPanel = (function () {
   let turnRailScroller = null;
   let turnPreviewEl = null;
   let turnMarks = [];
+  let turnTargets = new Map();
+  let turnTargetTops = new Map();
   let contextBreakdownSeq = 0;
   // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
   let epoch = 0;
@@ -1083,11 +1085,13 @@ window.MemoriaAgentPanel = (function () {
   function updateTurnRailActive() {
     const box = $("#agent-messages");
     if (!box || !turnMarks.length) return;
-    const top = box.getBoundingClientRect().top + 8;
+    // 滚动路径不读 DOM 几何：目标 offsetTop 在 render/layout 时缓存一次，避免每帧
+    // 对每个 turn 做 querySelector + getBoundingClientRect 造成长会话滚动卡顿。
+    const threshold = box.scrollTop + 8;
     let active = turnMarks[0];
     turnMarks.forEach(function (mark) {
-      const target = box.querySelector('[data-agent-turn="' + mark.dataset.turn + '"]');
-      if (target && target.getBoundingClientRect().top <= top) active = mark;
+      const y = turnTargetTops.get(mark.dataset.turn);
+      if (typeof y === "number" && y <= threshold) active = mark;
     });
     turnMarks.forEach(function (mark) {
       const on = mark === active;
@@ -1149,10 +1153,10 @@ window.MemoriaAgentPanel = (function () {
     const total = Math.max(1, box.scrollHeight - box.clientHeight);
     const count = turnMarks.length;
     const positions = turnMarks.map(function (mark) {
-      const target = box.querySelector('[data-agent-turn="' + mark.dataset.turn + '"]');
+      const targetTop = turnTargetTops.get(mark.dataset.turn);
       if (count === 1) return usable / 2;
-      const ratio = target
-        ? Math.max(0, Math.min(1, target.offsetTop / total))
+      const ratio = typeof targetTop === "number"
+        ? Math.max(0, Math.min(1, targetTop / total))
         : (Number(mark.dataset.turn) - 1) / Math.max(1, count - 1);
       return ratio * usable;
     });
@@ -1175,8 +1179,11 @@ window.MemoriaAgentPanel = (function () {
   function renderTurnRail() {
     if (!turnRailEl || !turnRailScroller) return;
     const turns = conversationTurns();
+    const box = $("#agent-messages");
     turnRailScroller.innerHTML = "";
     turnMarks = [];
+    turnTargets.clear();
+    turnTargetTops.clear();
     turns.forEach(function (item) {
       const mark = document.createElement("button");
       mark.type = "button";
@@ -1190,6 +1197,13 @@ window.MemoriaAgentPanel = (function () {
       mark.addEventListener("pointerleave", hideTurnPreview);
       mark.addEventListener("blur", hideTurnPreview);
       turnRailScroller.appendChild(mark);
+      if (box) {
+        const target = box.querySelector('[data-agent-turn="' + item.turn + '"]');
+        if (target) {
+          turnTargets.set(String(item.turn), target);
+          turnTargetTops.set(String(item.turn), target.offsetTop);
+        }
+      }
       if (busy && item.turn === turns.length) mark.classList.add("-is-busy");
       turnMarks.push(mark);
     });
@@ -1684,6 +1698,10 @@ window.MemoriaAgentPanel = (function () {
         showFlashError(msg);
       }
       return res || { status: "error" };
+    }
+    // 后台恢复旧会话期间用户可能已经开始新对话：不要用旧 session 覆盖新消息。
+    if (silent && (busy || messages.length || sessionId)) {
+      return { status: "error", code: "superseded" };
     }
     messages.length = 0;
     pendingQueue.length = 0;
@@ -2290,9 +2308,12 @@ window.MemoriaAgentPanel = (function () {
     renderMessages();
     setStatusText("");
     const configReady = refreshConfig();
-    // 打开面板即刷新历史；若磁盘偏好里有「上次会话」且仍存在，则自动载入（静默）
-    const historyReady = refreshHistory().then(() => restoreLastSession());
+    const historyReady = refreshHistory();
+    // 只等「配置 + 历史列表」就撤启动蒙层；恢复上次会话（可能含大图/长历史）在后台继续。
+    // 人要求「能正常发送」即可，不能让旧会话恢复拖慢启动；loadSession 在 await 后另有
+    // 用户已开始新对话的取消守卫，避免旧会话回填新会话。
     Promise.allSettled([configReady, historyReady]).then(finishReady, finishReady);
+    historyReady.then(() => restoreLastSession());
   }
 
   // ── 助手回复的 Markdown 渲染 ────────────────────────────────────────────

@@ -84,7 +84,8 @@ def test_loading_labels_exist_in_both_locales() -> None:
 def test_turn_rail_is_positioned_as_a_minimap_not_equal_spacing() -> None:
     src = (JS / "agent-panel.js").read_text(encoding="utf-8")
     assert "function layoutTurnMarks" in src
-    assert "target.offsetTop / total" in src
+    assert "targetTop / total" in src
+    assert "turnTargetTops" in src
     assert "mark.style.top" in src
     # 不设原生 title；悬停用主题化预览浮层
     assert "mark.title =" not in src
@@ -92,3 +93,6 @@ def test_turn_rail_is_positioned_as_a_minimap_not_equal_spacing() -> None:
     assert ".-agent-turn-mark {\n    position: absolute;" in css
     assert ".-agent-turn-preview {" in css
     assert "border-radius: 12px;" in css
+    # 2026-11-11：滚条与定位条之间必须留出独立 gutter
+    assert ".-agent-stream > .-agent-messages {\n    padding-right: 48px;" in css
+    assert ".-agent-turn-rail {\n    right: 18px;" in css

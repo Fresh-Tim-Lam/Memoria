@@ -8860,3 +8860,12 @@ html[data-theme="light"] .-memoria-loading {
 html[data-theme="light"] .-memoria-loading {
     background: var(--bg-primary);
 }
+
+/* 2026-11-11（人反馈）：会话区滚条与轮次定位条不得重合。
+   给消息区右侧保留 48px（内容 + 原生细滚条），rail 再向左让 18px。 */
+.-agent-stream > .-agent-messages {
+    padding-right: 48px;
+}
+.-agent-turn-rail {
+    right: 18px;
+}
