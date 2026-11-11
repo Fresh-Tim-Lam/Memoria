@@ -124,7 +124,7 @@
 
 ## 8. 壳与发布
 
-> **索引（2026-10-26）**：本表 7 项（详情 → [todo/08-shell-release.md](todo/08-shell-release.md)）；状态事实源 = 本表。
+> **索引（2026-10-26；2026-11-11 增 P08 = 8 项）**：本表 8 项（详情 → [todo/08-shell-release.md](todo/08-shell-release.md)）；状态事实源 = 本表。
 
 | 项 | 状态 | 详情 |
 | --- | --- | --- |
@@ -135,6 +135,7 @@
 | P05 | ⏳ K1 | [详](todo/08-shell-release.md#p05) |
 | P06 | 🔄 K2 | [详](todo/08-shell-release.md#p06) |
 | P07 | 🔄 K2 | [详](todo/08-shell-release.md#p07) |
+| P08 | ⏳ K3 待设计/安全评审 · 📅 2026-11-11 | [详](todo/08-shell-release.md#p08) |
 
 ## 9. 学习产品（V2+）
 
