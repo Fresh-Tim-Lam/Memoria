@@ -152,6 +152,9 @@
 
 - **AG110｜agent 引用板块小 bug**（来源：人 2026-11-10 口述「agent 引用板块功能有点小 bug，先纳入 todo」；**未给复现步骤/截图**）：
   - **范围**：对话栏的 `@引用` / mention chip / 引用选择面板（具体是下拉、插入位置、去重、还是引用了错误对象，待复现后定）。
-  - **状态**：⏳ 待复现；**不是**“已定位”。
+  - **状态**：✅ 已收口（2026-11-12，`e1294a11`）；原状态 ⏳ 待复现（2026-11-10 登记）。
   - **复现需记录**：输入内容、引用类型（文件/目录/会话）、触发位置（输入框/消息/历史）、期望 vs 实际、是否可稳定复现、截图。
   - **排查入口**：`agent-panel.js` mention/chip 与 `insertMention`、引用面板（`@` 触发）相关函数；修前先补最小复现用例。
+  - **2026-11-12 复现**：History → Quote 插入 `@[@writing/...](dsh-session:s1)` 后，composer 镜像把 `@[...` 拆成文件 chip、尾部 `](dsh-session:s1)` 变纯文本。
+  - **修复**：`COMPOSER_TOKEN_RE` 所有 token 统一 `(^|\s)` 前缀、group 2 为完整 token；dev CDP 复测为单个 session chip。
+  - **验收/证据**：`tests/test_agent_panel_turn_rail_queue.py` 新增 AG110 pin；commit `e1294a11`；`artifacts/agent/verify/e37-e35-ag110-20261112.md`。
