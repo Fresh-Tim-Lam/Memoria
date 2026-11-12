@@ -8965,3 +8965,14 @@ html[data-theme="light"] .-memoria-loading__word {
 @media (prefers-reduced-motion: reduce) {
     .-memoria-loading__logo { animation: none; }
 }
+
+/* 待发送队列里的附件徽标：附件与消息一起排队，不能再要求用户等回答结束 */
+.-agent-queue-attach {
+    flex: none;
+    padding: 1px 5px;
+    border-radius: 3px;
+    background: color-mix(in srgb, var(--theme-color) 14%, transparent);
+    color: var(--text-secondary);
+    font-size: 0.625rem;
+    white-space: nowrap;
+}

@@ -44,8 +44,13 @@ def test_queue_queues_while_busy_and_drains_after_finish() -> None:
     assert "function drainQueue(" in src
     assert "function renderQueue(" in src
     assert "function steerQueueItem(" in src
-    # busy 时 ask() 进队列而不是丢弃
-    assert "if (busy) {" in src and "enqueueText(text)" in src
+    # busy 时 ask() 进队列而不是丢弃；附件也随消息快照入队（2026-11-12 人反馈）
+    assert "if (busy) {" in src
+    assert "function enqueueText(text, images, resources, resourceNote)" in src
+    assert "enqueueText(text, imgs, resources, note)" in src
+    assert "queueAttachCount(item)" in src
+    assert "options.detached" in src
+    assert "队列项自己的附件快照" in src
     # 生成中不得禁用发送键（否则无法入队）
     assert "send.disabled = !cfg.enabled;" in src
     # 结束后自动发送下一条
@@ -63,6 +68,7 @@ def test_turn_rail_and_queue_styles_and_i18n_exist() -> None:
         ".-agent-turn-preview",
         ".-agent-queue",
         ".-agent-queue-row",
+        ".-agent-queue-attach",
         ".-agent-session-footer",
         "#agent-send.-agent-send-btn",
         "#agent-stop.-agent-stop-btn",
@@ -75,6 +81,10 @@ def test_turn_rail_and_queue_styles_and_i18n_exist() -> None:
         assert f"    {key}:" in en, f"en 缺少 agent.{key}"
     assert "label: \"对话轮次导航\"" in zh
     assert "count: \"{n} 条待发送\"" in zh
+    assert "attachments: \"{n} 个附件\"" in zh
+    assert "attachments: \"{n} attachments\"" in en
+    assert "retry: \"重试发送\"" in zh
+    assert "retry: \"Retry send\"" in en
 
 
 def test_dsh_composer_bubble_and_session_footer_are_wired() -> None:

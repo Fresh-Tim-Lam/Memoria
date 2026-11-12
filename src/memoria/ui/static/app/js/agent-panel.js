@@ -175,13 +175,15 @@ window.MemoriaAgentPanel = (function () {
   let job = null; // { id, cursor, epoch, kb }：在飞作业（null = 无）；kb = 提问时的库
   let busy = false; // 生成/轮询中（此时再发送 = 进待发送队列）
   let streamingEl = null; // 正在流式写入的消息体元素
-  // 2026-11-10：待发送队列（移植 DSH QueueDock 的本地轻量版；图片附件暂不排队）
-  const pendingQueue = []; // { id, text }
+  // 2026-11-10：待发送队列（移植 DSH QueueDock 的本地轻量版；附件随消息快照入队）
+  const pendingQueue = []; // { id, text, images, resources, resourceNote }
   let queueSeq = 0;
   let queueCollapsed = true;
   let queueEditingId = null;
   let queueEl = null;
   let drainingQueue = false;
+  let queuePaused = false;
+  let queueGeneration = 0;
   // 2026-11-10：右侧轮次导航（移植 DSH TurnNavigator 的固定刻度栏）
   let turnRailEl = null;
   let turnRailScroller = null;
@@ -1283,6 +1285,11 @@ window.MemoriaAgentPanel = (function () {
       : T("agent.queue.count", { n: pendingQueue.length });
   }
 
+  function queueAttachCount(item) {
+    return (Array.isArray(item && item.images) ? item.images.length : 0)
+      + (Array.isArray(item && item.resources) ? item.resources.length : 0);
+  }
+
   function renderQueue() {
     if (!queueEl) return;
     if (!pendingQueue.length) {
@@ -1318,7 +1325,7 @@ window.MemoriaAgentPanel = (function () {
     if (!expanded) return;
     const list = document.createElement("ul");
     list.className = "-agent-queue-list";
-    pendingQueue.forEach(function (item) {
+    pendingQueue.forEach(function (item, itemIndex) {
       const row = document.createElement("li");
       row.className = "-agent-queue-row";
       if (queueEditingId === item.id) {
@@ -1360,8 +1367,29 @@ window.MemoriaAgentPanel = (function () {
       text.className = "-agent-queue-text";
       text.textContent = queuePreview(item.text);
       row.appendChild(text);
+      const attachCount = queueAttachCount(item);
+      if (attachCount) {
+        const badge = document.createElement("span");
+        badge.className = "-agent-queue-attach";
+        badge.textContent = T("agent.queue.attachments", { n: attachCount });
+        badge.title = T("agent.queue.attachments", { n: attachCount });
+        row.appendChild(badge);
+      }
       const actions = document.createElement("span");
       actions.className = "-agent-queue-actions";
+      if (queuePaused && itemIndex === 0) {
+        const retryBtn = document.createElement("button");
+        retryBtn.type = "button";
+        retryBtn.className = "-agent-queue-action";
+        retryBtn.textContent = "↻";
+        retryBtn.title = T("agent.queue.retry");
+        retryBtn.addEventListener("click", function () {
+          queuePaused = false;
+          renderQueue();
+          drainQueue();
+        });
+        actions.appendChild(retryBtn);
+      }
       const editBtn = document.createElement("button");
       editBtn.type = "button";
       editBtn.className = "-agent-queue-action";
@@ -1390,10 +1418,23 @@ window.MemoriaAgentPanel = (function () {
     queueEl.appendChild(list);
   }
 
-  function enqueueText(text) {
+  function enqueueText(text, images, resources, resourceNote) {
     const clean = String(text || "").trim();
     if (!clean) return false;
-    pendingQueue.push({ id: "q" + (++queueSeq), text: clean });
+    const imgs = (Array.isArray(images) ? images : []).map(function (img) {
+      return { rel_path: String(img.rel_path || ""), media_type: String(img.media_type || ""), name: String(img.name || "") };
+    }).filter(function (img) { return !!img.rel_path; });
+    const docs = (Array.isArray(resources) ? resources : []).map(function (res) {
+      return { rel_path: String(res.rel_path || ""), kind: String(res.kind || ""), name: String(res.name || "") };
+    }).filter(function (res) { return !!res.rel_path; });
+    pendingQueue.push({
+      id: "q" + (++queueSeq),
+      text: clean,
+      images: imgs,
+      resources: docs,
+      resourceNote: String(resourceNote || ""),
+    });
+    queuePaused = false;
     queueCollapsed = true;
     renderQueue();
     setStatusText(T("agent.queue.queued", { n: pendingQueue.length }));
@@ -1404,24 +1445,36 @@ window.MemoriaAgentPanel = (function () {
     const index = pendingQueue.findIndex(function (item) { return item.id === id; });
     if (index >= 0) pendingQueue.splice(index, 1);
     if (queueEditingId === id) queueEditingId = null;
+    if (!pendingQueue.length) queuePaused = false;
     renderQueue();
   }
 
   function drainQueue() {
-    if (drainingQueue || busy || job || !pendingQueue.length) return;
+    if (drainingQueue || busy || job || queuePaused || !pendingQueue.length) return;
     const item = pendingQueue.shift();
+    const gen = queueGeneration;
     queueEditingId = null;
     queueCollapsed = true;
     renderQueue();
-    const input = $("#agent-input");
-    if (!input) return;
-    input.value = item.text;
     drainingQueue = true;
-    Promise.resolve(ask()).finally(function () {
+    Promise.resolve(ask({
+      text: item.text,
+      images: item.images,
+      resources: item.resources,
+      resourceNote: item.resourceNote,
+      queueId: item.id,
+    })).then(function (ok) {
+      if (!ok && gen === queueGeneration) {
+        // 队列里的附件/文本不丢：放回队首并暂停自动重试，避免失败后被无限重发。
+        pendingQueue.unshift(item);
+        queuePaused = true;
+        renderQueue();
+      }
+    }).finally(function () {
       drainingQueue = false;
       // poll() 的收尾 drainQueue 发生在 ask() 的 promise resolve 之前（此时 drainingQueue 仍为 true）
-      // ⇒ 这里再排一次，保证连续队列逐条发完。
-      setTimeout(drainQueue, 0);
+      // ⇒ 这里再排一次，保证连续队列逐条发完；失败则暂停，等用户处理队首。
+      if (!queuePaused && gen === queueGeneration) setTimeout(drainQueue, 0);
     });
   }
 
@@ -1430,6 +1483,7 @@ window.MemoriaAgentPanel = (function () {
     if (index < 0 || !busy) return;
     const item = pendingQueue.splice(index, 1)[0];
     pendingQueue.unshift(item);
+    queuePaused = false;
     queueCollapsed = false;
     renderQueue();
     await stop();
@@ -1778,6 +1832,8 @@ window.MemoriaAgentPanel = (function () {
     }
     messages.length = 0;
     pendingQueue.length = 0;
+    queueGeneration += 1;
+    queuePaused = false;
     queueEditingId = null;
     queueCollapsed = true;
     (res.messages || []).forEach(function (item) {
@@ -1864,6 +1920,8 @@ window.MemoriaAgentPanel = (function () {
       railEnd = 0;
       streamingEl = null;
       pendingQueue.length = 0;
+      queueGeneration += 1;
+    queuePaused = false;
       queueEditingId = null;
       queueCollapsed = true;
       resetStatusUsage(); // 换库即作废本会话累计与状态栏用量格
@@ -2037,37 +2095,54 @@ window.MemoriaAgentPanel = (function () {
     renderTurnRail();
   }
 
-  async function ask() {
+  async function ask(draft) {
+    const isQueuedDraft = !!draft && typeof draft === "object";
     const input = $("#agent-input");
-    const text = expandSessionAliases(((input && input.value) || "").trim()); // 短别名 → 完整 dsh-session URI（发给后端与落盘的始终是可解析形式）
+    const text = expandSessionAliases((
+      isQueuedDraft ? String(draft.text || "") : ((input && input.value) || "")
+    ).trim()); // 短别名 → 完整 dsh-session URI（发给后端与落盘的始终是可解析形式）
+    const draftImages = isQueuedDraft && Array.isArray(draft.images) ? draft.images : null;
+    const draftResourceNote = isQueuedDraft && typeof draft.resourceNote === "string" ? draft.resourceNote : null;
+    const callOptions = isQueuedDraft
+      ? { attachments: draftImages || [], resourceNote: draftResourceNote || "", detached: true }
+      : undefined;
     if (busy) {
+      if (isQueuedDraft) return false;
       // 2026-11-10：生成中再发送 = 进待发送队列（移植 DSH QueueDock 的核心交互）。
-      // 图片附件暂不排队：附件属于当前草稿，排队后无法可靠绑定到某一条队列项。
-      if (attachItems.length) {
-        showFlashError(T("agent.queue.attachWait"));
-        setStatusText(T("agent.queue.attachWait"), true);
-        return;
+      // 2026-11-12：附件也随消息一起排队；入队时做快照并清空草稿，队列项自己持有附件引用。
+      if (attachItems.some(function (it) { return it.state === "pending"; })
+        || resourceItems.some(function (it) { return it.state === "pending"; })) {
+        showFlashError(T("agent.attach.uploading"));
+        setStatusText(T("agent.attach.uploading"), true);
+        return false;
       }
-      if (enqueueText(text) && input) {
+      const imgs = attachPayloads();
+      const resources = resourceItems
+        .filter(function (it) { return it && it.state === "ready" && !it.cancelled && it.rel_path; })
+        .map(function (it) { return { rel_path: it.rel_path, kind: it.kind, name: it.name }; });
+      const note = resourceNote();
+      if (enqueueText(text, imgs, resources, note) && input) {
         input.value = "";
         inputCaret = 0;
+        clearAttachItems();
+        clearResourceItems();
         renderComposer();
       }
-      return;
+      return false;
     }
     if (!text) {
       setStatusText(T("agent.err.empty_question"), true);
-      return;
+      return false;
     }
     if (!state.kbPath) {
       showFlashError(T("agent.err.no_kb"));
       setStatusText(T("agent.err.no_kb"), true);
-      return;
+      return false;
     }
     if (!cfg.enabled) {
       showFlashError(T("agent.err.net_disabled"));
       setStatusText(T("agent.err.net_disabled"), true);
-      return;
+      return false;
     }
     // 兜底断言：绝不把**别的库**的会话 id 发给后端（正常路径由 onKbChanged 无条件重置保证；
     // 这里再判一次是纵深防御，不改变 sessionId/sessionKb 本身）。
@@ -2077,11 +2152,12 @@ window.MemoriaAgentPanel = (function () {
     // 本问的世代号：清空/忽略/换库会递增 epoch，使本次提交与轮询结果一律作废
     const myEpoch = ++epoch;
 
-    pushMessage("user", text, attachPayloads()); // 图片附件快照进气泡（发送成功后才清草稿，见文件末「图片附件」块）
-    if (input) input.value = "";
+    const bubbleImages = isQueuedDraft ? (draftImages || []) : attachPayloads();
+    pushMessage("user", text, bubbleImages); // 附件快照进气泡；排队项在入队时就已从草稿移出
+    if (!isQueuedDraft && input) input.value = "";
     let res;
     try {
-      res = await callAskStart(text, kb || null, sessionForKb); // 有附件才带第 4 参；无附件严格保持既有 4 参调用形状
+      res = await callAskStart(text, kb || null, sessionForKb, callOptions); // 有附件才带第 4 参；无附件严格保持既有 4 参调用形状
     } catch (e) {
       res = { status: "error", message: String((e && e.message) || e) };
     }
@@ -2091,10 +2167,10 @@ window.MemoriaAgentPanel = (function () {
     if (res && res.status !== "ok" && res.code === "busy" && res.job_id && !job && !busy) {
       try {
         await call("agent_ask_cancel", String(res.job_id));
-        res = await callAskStart(text, kb || null, sessionForKb);
+        res = await callAskStart(text, kb || null, sessionForKb, callOptions);
       } catch (_e) { /* 保留原始 busy 错误 */ }
     }
-    if (epoch !== myEpoch) return; // 提交期间被「清空对话」/换库作废 ⇒ 丢弃，不写回面板
+    if (epoch !== myEpoch) return false; // 提交期间被「清空对话」/换库作废 ⇒ 丢弃，不写回面板
     if (!res || res.status !== "ok" || !res.job_id) {
       const msg = fullErrorText(res);
       const rec = pushMessage("assistant", "");
@@ -2102,13 +2178,14 @@ window.MemoriaAgentPanel = (function () {
       renderMessages();
       setStatusText(msg, true);
       showFlashError(msg);
-      return;
+      return false;
     }
     job = { id: res.job_id, cursor: 0, epoch: myEpoch, kb: kb };
     busy = true;
     pushMessage("assistant", "");
     renderComposer();
     await poll();
+    return true;
   }
 
   async function poll() {
@@ -2238,6 +2315,8 @@ window.MemoriaAgentPanel = (function () {
     railEnd = 0;
     streamingEl = null;
     pendingQueue.length = 0;
+    queueGeneration += 1;
+    queuePaused = false;
     queueEditingId = null;
     queueCollapsed = true;
     sessionId = null;
@@ -7243,15 +7322,17 @@ window.MemoriaAgentPanel = (function () {
       });
   }
 
-  /** `agent_ask_start`：**有附件才带第 4 参**；无附件严格保持既有 4 参（不传 undefined/null）。 */
-  function callAskStart(text, kb, sessionForKb) {
-    const atts = attachPayloads();
+  /** `agent_ask_start`：**有附件才带第 4 参**；无附件严格保持既有 4 参（不传 undefined/null）。
+   *  options.detached = 队列项自己的附件快照：发送时不清当前草稿（草稿可能已经是下一条）。 */
+  function callAskStart(text, kb, sessionForKb, options) {
+    const detached = !!(options && options.detached);
+    const atts = detached && Array.isArray(options.attachments) ? options.attachments : attachPayloads();
     const p = atts.length
       ? call("agent_ask_start", text, kb || null, sessionForKb, atts)
       : call("agent_ask_start", text, kb || null, sessionForKb);
     return Promise.resolve(p).then(function (res) {
       // 提交成功才清草稿（失败——如 MODEL_DOES_NOT_SUPPORT_IMAGES——保留图片让用户换模型重试）
-      if (res && res.status === "ok" && atts.length) clearAttachItems();
+      if (res && res.status === "ok" && atts.length && !detached) clearAttachItems();
       return res;
     });
   }
@@ -8190,11 +8271,12 @@ window.MemoriaAgentPanel = (function () {
 
   // ③ callAskStart：注入资源提示（agent 用 read_resource 读），成功后清资源草稿
   const baseCallAskStart = callAskStart;
-  callAskStart = function (text, kb, sessionForKb) {
-    const resNote = resourceNote();
+  callAskStart = function (text, kb, sessionForKb, options) {
+    const detached = !!(options && options.detached);
+    const resNote = detached && typeof options.resourceNote === "string" ? options.resourceNote : resourceNote();
     const finalText = resNote ? (String(text || "") + (text ? "\n\n" : "") + resNote) : text;
-    return Promise.resolve(baseCallAskStart(finalText, kb, sessionForKb)).then(function (res) {
-      if (res && res.status === "ok" && resNote) clearResourceItems();
+    return Promise.resolve(baseCallAskStart(finalText, kb, sessionForKb, options)).then(function (res) {
+      if (res && res.status === "ok" && resNote && !detached) clearResourceItems();
       return res;
     });
   };
