@@ -10,7 +10,7 @@
 | ID | 📅 首次登记 | 🕒 最近复核 | 备注 |
 |---|---|---|---|
 | E37 | 2026-11-09 | 2026-11-12 | ✅ 已收口（`e1294a11`）。证据：E36 用户报告 2026-11-07（`ca4b8ae8`）；2026-11-09 E36 收口独立复核发现 selection 为空并拆出 E37（`b463ebe6`）；2026-11-12 dev CDP 复现并修复，见文末收口记录 |
-| E35 | 2026-11-07 | 2026-11-12 | 部分验证（2026-11-12 dev CDP，见文末）；仍 🔴 K1（窄口已知），不升 ✅ |
+| E35 | 2026-11-07 | 2026-11-12 | ✅ 已收口（2026-11-12 dev CDP 矩阵；代码修复 `a1810ce9` 已随 0.4.12 发布，浏览器级证明补齐）；见文末 |
 
 <a id="e01"></a><a id="e02"></a><a id="e03"></a><a id="e06"></a><a id="e07"></a><a id="e08"></a><a id="e09"></a><a id="e10"></a><a id="e11"></a><a id="e13"></a><a id="e14"></a><a id="e18"></a><a id="e20"></a><a id="e22"></a><a id="e23"></a><a id="e24"></a><a id="e31"></a><a id="e33"></a><a id="e34"></a><a id="e35"></a><a id="e36"></a><a id="e37"></a><a id="doc02"></a><a id="doc03"></a>
 
@@ -65,7 +65,7 @@
 
 | ID | 任务 | 状态 / 优先级 |
 | --- | --- | --- |
-| E35 | Markdown 原文无法直接写 `$` 或转义 `\$`（用户报告；是否被数学公式解析器吞掉/编辑器转义链破坏待复现） | 🔴 K1 · P2（**2026-11-12 dev CDP 部分验证**：源码 `$5`/`\$` 均保留、预览两个 `-md-literal-dollar`、无 MathJax 吞字；仍待更广真机样本与定位；验收：源码区可直接输入并保存字面 `$` / `\$`，预览与源码往返不丢字符、不误渲染） |
+| E35 | Markdown 原文无法直接写 `$` 或转义 `\$`（用户报告；是否被数学公式解析器吞掉/编辑器转义链破坏待复现） | ✅ 已收口（2026-11-12，dev CDP 矩阵 + 既有修复 `a1810ce9`） · 原 🔴 K1 · P2（**2026-11-12 验证**：dev CDP 覆盖字面 `$`/`\$` 输入、保存、预览、往返；验收：源码区可直接输入并保存字面 `$` / `\$`，预览与源码往返不丢字符、不误渲染） |
 | E36 | 切换预览/源码到分栏模式时，定位漂移或错误（用户报告；是滚动/选区/锚点哪一层漂移待复现） | ✅ 滚动/块位置已收口（`79371332`：精确行+块内偏移锚点、双侧独立回声、稳定点补锚点、0.5px 顶行边界；真机 probe 6/6，`tests/test_split_preview_scroll_sync_guard.py` 6/6）；**选区/光标保持不在本条范围，见 E37** |
 | E37 | 切换源码/预览到分栏后，源码选区的选中文本与光标位置丢失（E36 收口时实测 line 50 选区切分栏后 selection 为空；重渲染替换 contenteditable DOM 导致） | ✅ 已收口（2026-11-12，`e1294a11`） · 原 🔴 K1 · P2（待实现/验收：切分栏后同一源码行/字符区间仍可恢复；至少不静默丢失选区；先做小范围保存/恢复，勿重写编辑内核） |
 
@@ -88,9 +88,17 @@
 - **验收**：dev CDP 复测切分栏后 `sel='below'`、`activeLine=50`、`activeTag=SPAN`（`-line-content`）；`tests/test_split_preview_scroll_sync_guard.py` 新增 E37 pin。
 - **证据**：`artifacts/agent/verify/e37-e35-ag110-20261112.md`；commit `e1294a11`。
 
-### E35 部分验证（**不升 ✅**）
+### E35 ✅ 已收口（2026-11-12，dev CDP 矩阵）
 
-- 2026-11-12 dev CDP：源码输入 `$5` 与 `\$` 均保留；预览渲染两个 `-md-literal-dollar` span，无 MathJax 吞字；现有 dollar 测试 52 passed（`test_markdown_preview_dollar.py` / `test_dollar_math_ast.py` / `test_math_inline_lexer.py`）。
-- **仍缺**：浏览器级仅本次样例；未证明所有位置/组合（表格/链接/多语言/粘贴/撤销）与“保存-重开-编辑往返”全链路；E35 仍为 🔴 K1 窄口，待更广真机样本后再议收口。
-- **证据**：同上。
+- **代码修复**：既有 `a1810ce9`（2026-11-09，`fix(preview): make dollar protection escape/currency aware`，已随 v0.4.12 发布）；2026-11-12 补齐**主预览 render-core 的浏览器级证明**后收口。
+- **dev CDP 矩阵（临时 KB copy `e35-probe.md`）**：
+  - `Currency $5 and $6 should stay literal.` → 2 个 `-md-literal-dollar`，`$5/$6` 原样；
+  - `Escaped \$dollar...` → 源码保留 `\$`，预览显示字面 `$`；
+  - inline math `$x + y$` → 1 个 MathJax 容器，无错误；display `$$...$$` → MathJax 容器，无错误；
+  - 表格 `| tea | $5 |`、链接 `[price $5]`、行内 code `` `$5` ``、CJK 行单独 `$` 均保留字面；
+  - 源码追加 ` $7` → 自动保存 → 刷新/重开同一文件，行内容仍为 `... $7`（保存/重开往返）；
+  - 全 probe：literal-dollar **6** 个、MathJax 容器 **6** 个、`.MathJax_Error`/`.katex-error` **0**。
+- **测试**：现有 dollar 测试 52 passed（`test_markdown_preview_dollar.py` / `test_dollar_math_ast.py` / `test_math_inline_lexer.py`）。
+- **残余边界（不阻塞收口，若用户报告再单列）**：多光标/跨行选区混合 `$` 与公式的撤销/重做链；极端嵌套（`<details>`、mermaid/表格深度混排、PDF 导入页）；非中文/全角标点紧邻 `$` 的边界；分栏右键菜单与富文本粘贴路径。
+- **证据**：`artifacts/agent/verify/e37-e35-ag110-20261112.md`（追加矩阵记录）。
 
