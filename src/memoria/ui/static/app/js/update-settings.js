@@ -22,6 +22,56 @@
       .replace(/>/g, "&gt;")
       .replace(/"/g, "&quot;");
 
+  // 发布说明是 GitHub Release 的 Markdown。只渲染白名单标签、剥掉全部属性：
+  // 更新文案来自远端，不能把任意 HTML（script/img/事件属性）直接塞进设置弹窗。
+  const NOTES_KEEP_TAGS = new Set([
+    "P", "DIV", "BR", "HR", "STRONG", "B", "EM", "I", "CODE", "PRE",
+    "BLOCKQUOTE", "UL", "OL", "LI", "H1", "H2", "H3", "H4", "H5", "H6", "A",
+  ]);
+  const NOTES_DROP_TAGS = new Set(["SCRIPT", "STYLE", "IFRAME", "OBJECT", "EMBED", "IMG", "SVG", "MATH"]);
+
+  function sanitizeNotesNode(node) {
+    if (node.nodeType === 3) return document.createTextNode(node.nodeValue || "");
+    if (node.nodeType !== 1) return null;
+    const tag = node.tagName.toUpperCase();
+    if (NOTES_DROP_TAGS.has(tag)) return null;
+    if (!NOTES_KEEP_TAGS.has(tag)) {
+      const frag = document.createDocumentFragment();
+      for (const child of Array.from(node.childNodes)) {
+        const clean = sanitizeNotesNode(child);
+        if (clean) frag.appendChild(clean);
+      }
+      return frag;
+    }
+    const el = document.createElement(tag.toLowerCase());
+    for (const child of Array.from(node.childNodes)) {
+      const clean = sanitizeNotesNode(child);
+      if (clean) el.appendChild(clean);
+    }
+    return el;
+  }
+
+  function renderNotesHtml(raw) {
+    const text = String(raw == null ? "" : raw);
+    if (!text) return "";
+    const md = global.marked;
+    if (!md || typeof md.parse !== "function") return esc(text).replace(/\n/g, "<br>");
+    let parsed;
+    try {
+      parsed = md.parse(text, { gfm: true, breaks: false });
+    } catch (_) {
+      return esc(text).replace(/\n/g, "<br>");
+    }
+    const tpl = document.createElement("template");
+    tpl.innerHTML = String(parsed || "");
+    const out = document.createElement("div");
+    for (const child of Array.from(tpl.content.childNodes)) {
+      const clean = sanitizeNotesNode(child);
+      if (clean) out.appendChild(clean);
+    }
+    return out.innerHTML;
+  }
+
   const state = {
     root: null,
     busy: false,
@@ -64,7 +114,16 @@
       .-update-card{border:1px solid var(--border-color,#3a3a3a);border-radius:8px;padding:12px;margin:8px 0;background:var(--panel-bg,rgba(127,127,127,.06))}
       .-update-row{display:flex;gap:12px;align-items:center;flex-wrap:wrap;margin:6px 0}
       .-update-label{min-width:7em;color:var(--text-secondary,#aaa)}
-      .-update-notes{white-space:pre-wrap;max-height:14em;overflow:auto;border-left:3px solid var(--theme-color,#007acc);padding:6px 10px;margin:6px 0;font-family:inherit;font-size:.92em}
+      .-update-notes{max-height:14em;overflow:auto;border-left:3px solid var(--theme-color,#007acc);padding:6px 10px;margin:6px 0;font-family:inherit;font-size:.92em;line-height:1.55}
+      .-update-notes h1,.-update-notes h2,.-update-notes h3,.-update-notes h4{font-size:1.05em;margin:.55em 0 .25em;line-height:1.35}
+      .-update-notes h1:first-child,.-update-notes h2:first-child{margin-top:0}
+      .-update-notes p{margin:.35em 0}
+      .-update-notes ul,.-update-notes ol{margin:.35em 0 .35em 1.25em;padding:0}
+      .-update-notes li{margin:.15em 0}
+      .-update-notes code{font-family:ui-monospace,Consolas,monospace;font-size:.92em;background:rgba(127,127,127,.16);border-radius:3px;padding:0 .2em}
+      .-update-notes pre{white-space:pre-wrap;margin:.35em 0;background:rgba(127,127,127,.12);padding:6px 8px;border-radius:4px;overflow:auto}
+      .-update-notes blockquote{margin:.35em 0;padding:.1em .7em;border-left:2px solid var(--border-color,#3a3a3a);color:var(--text-secondary,#aaa)}
+      .-update-notes hr{border:0;border-top:1px solid var(--border-color,#3a3a3a);margin:.6em 0}
       .-update-warn{color:#c78a00;margin:6px 0}
       .-update-progress{height:8px;border-radius:4px;background:rgba(127,127,127,.25);overflow:hidden;margin:6px 0}
       .-update-progress > i{display:block;height:100%;width:0;background:var(--theme-color,#007acc);transition:width .2s}
@@ -126,7 +185,7 @@
         <div class="-update-row"><strong>${esc(T("update.available", { latest: r.latest_version }))}</strong></div>
         ${rows.join("")}
         <div class="-update-row"><span class="-update-label">${esc(T("update.notes"))}</span></div>
-        <pre class="-update-notes" id="update-notes"></pre>
+        <div class="-update-notes" id="update-notes"></div>
         <div class="-update-row"><span class="-update-label">${esc(T("update.assets"))}</span></div>
         ${assetRows}
         <p class="-muted" id="update-asset-warn"></p>
@@ -207,7 +266,7 @@
     bind();
     if (state.result && state.result.notes) {
       const notes = state.root.querySelector("#update-notes");
-      if (notes) notes.textContent = state.result.notes;
+      if (notes) notes.innerHTML = renderNotesHtml(state.result.notes);
     }
     updateAssetWarn();
   }

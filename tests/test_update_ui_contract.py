@@ -45,6 +45,19 @@ def test_update_ui_has_manual_replacement_contract_without_auto_replace() -> Non
     assert "install_update" not in src
 
 
+def test_release_notes_render_as_markdown_with_a_tag_allowlist() -> None:
+    """0.4.13 真机反馈：更新页把 Markdown Release notes 原样显示成 `#` 文本。"""
+    src = _text(UPDATE_JS)
+    assert "function renderNotesHtml(" in src
+    assert "md.parse(text, { gfm: true, breaks: false })" in src
+    assert "notes.innerHTML = renderNotesHtml(state.result.notes);" in src
+    assert "notes.textContent = state.result.notes;" not in src
+    assert '<div class="-update-notes" id="update-notes"></div>' in src
+    assert "NOTES_KEEP_TAGS" in src and "NOTES_DROP_TAGS" in src
+    assert '"SCRIPT"' in src and '"STYLE"' in src and '"IMG"' in src
+    assert "sanitizeNotesNode(child)" in src
+
+
 def test_update_ui_has_no_misleading_security_claims() -> None:
     # 只检查**界面文案/代码字符串**；文件头注释允许写“禁止这些词”的纪律说明。
     lines = [
