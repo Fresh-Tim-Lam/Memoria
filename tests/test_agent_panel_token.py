@@ -174,7 +174,9 @@ console.log(JSON.stringify({
     # ② 发送路径先把别名展开成完整 URI（发后端 / 落盘 / 气泡渲染都用展开后的文本）
     assert "sessionAliasUri(id)" in extract_function("formatSessionMentionToken")
     assert "sessionAliasUri(id)" in extract_function("sessionFragmentToken")
-    assert 'const text = expandSessionAliases(((input && input.value) || "").trim());' in src
+    # 2026-11-12：ask() 现在同时服务 composer 与队列快照；别名展开仍必须覆盖两者。
+    assert "expandSessionAliases((" in src
+    assert 'isQueuedDraft ? String(draft.text || "") : ((input && input.value) || "")' in src
 
 
 def test_session_fragment_token_carries_message_char_range():
