@@ -112,6 +112,20 @@ def test_e36_reanchor_after_layout_settles_and_boundary_fix() -> None:
     assert "r.bottom > containerTop + 0.5" in src, "顶行判定必须排除恰好贴视口顶的上一行"
 
 
+def test_e37_source_selection_survives_view_switch() -> None:
+    """E37：源码 → 分栏会整篇重建 contenteditable DOM，选区必须快照并恢复。"""
+    src = _src()
+    assert "function _captureSourceSelection(" in src
+    assert "function _restoreSourceSelection(" in src
+    start = src.index("async function setViewMode(")
+    end = src.index("function _getViewTopSrcLine(", start)
+    body = src[start:end]
+    assert "_srcSelectionBefore = (!opts?.skipSave" in body
+    assert "_captureSourceSelection()" in body
+    assert "_restoreSourceSelection(_srcSelectionBefore);" in body
+    assert 'mode === "source" || mode === "split"' in body
+
+
 def test_e36_split_echo_has_per_pane_slots() -> None:
     """E36：切分栏时两侧同一拍各归位一次，回声槽必须按 mode 分开，否则后一次覆盖前一次。"""
     src = _src()

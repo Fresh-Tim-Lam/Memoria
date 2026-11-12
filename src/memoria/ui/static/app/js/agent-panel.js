@@ -4469,7 +4469,10 @@ window.MemoriaAgentPanel = (function () {
   }
 
   // ③ 打字框引用 chip：镜像层（同字体/内距/换行 + 同步滚动与尺寸），textarea 文字透明、光标归它自己。
-  const COMPOSER_TOKEN_RE = /(@\[(?:\\.|[^\\\]])*\]\(dsh-session:[^\s)]*\))|(^|\s)(@"[^"]*"?|@\S+)/g;
+  // 2026-11-12（AG110）：会话 token 必须也能在**行首/空白之后**被识别。
+  // 旧正则把会话分支放在 `(^|\s)` 分组之外 ⇒ 前面的空白先被文件分支吃掉，
+  // `@[label](dsh-session:...)` 会被拆成 `@[label` 文件 chip + 残余 URI。
+  const COMPOSER_TOKEN_RE = /(^|\s)(@\[(?:\\.|[^\\\]])*\]\(dsh-session:[^\s)]*\)|@"[^"]*"?|@\S+)/g;
 
   /** 单个 token → chip HTML（**逐字保留 token 原文** ⇒ 与 textarea 里那串字符同宽，镜像才不会错位）。 */
   function composerTokenHtml(token) {
@@ -4499,15 +4502,11 @@ window.MemoriaAgentPanel = (function () {
     let last = 0;
     COMPOSER_TOKEN_RE.lastIndex = 0;
     for (const m of raw.matchAll(COMPOSER_TOKEN_RE)) {
-      if (m[1] !== undefined) {
-        out += esc(raw.slice(last, m.index)) + composerTokenHtml(m[1]);
-        last = m.index + m[1].length;
-        continue;
-      }
-      const token = m[3] || "";
-      const start = m.index + (m[2] || "").length;
+      const token = m[2] || "";
+      if (!token) continue;
+      const start = m.index + (m[1] || "").length;
       out += esc(raw.slice(last, start));
-      out += token ? composerTokenHtml(token) : "";
+      out += composerTokenHtml(token);
       last = start + token.length;
     }
     return out + esc(raw.slice(last));
@@ -4757,9 +4756,9 @@ window.MemoriaAgentPanel = (function () {
     const spans = [];
     COMPOSER_TOKEN_RE.lastIndex = 0;
     for (const m of raw.matchAll(COMPOSER_TOKEN_RE)) {
-      const token = m[1] !== undefined ? m[1] : m[3] || "";
+      const token = m[2] || "";
       if (!token) continue;
-      const start = m[1] !== undefined ? m.index : m.index + (m[2] || "").length;
+      const start = m.index + (m[1] || "").length;
       spans.push({ start: start, end: start + token.length, token: token });
     }
     return spans;

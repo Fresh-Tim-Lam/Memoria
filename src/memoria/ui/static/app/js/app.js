@@ -1,4 +1,4 @@
-﻿(function () {
+(function () {
   "use strict";
 
   const $ = (sel) => document.querySelector(sel);
@@ -3631,6 +3631,61 @@ async function call(fn, ...args) {
     }
   }
 
+  /** E37：在源码编辑器整篇重建前快照选区（行 + 列）；重建后再恢复，避免切分栏静默丢失。 */
+  function _captureSourceSelection() {
+    const editor = $("#editor");
+    const sel = window.getSelection();
+    if (!editor || !sel || !sel.rangeCount) return null;
+    const range = sel.getRangeAt(0);
+    if (!editor.contains(range.startContainer) || !editor.contains(range.endContainer)) return null;
+    const anchorEl = closestLineEl(range.startContainer);
+    const focusEl = closestLineEl(range.endContainer);
+    if (!anchorEl || !focusEl) return null;
+    const anchorContent = anchorEl.querySelector(".-line-content");
+    const focusContent = focusEl.querySelector(".-line-content");
+    if (!anchorContent || !focusContent) return null;
+    return {
+      anchorLine: +(anchorEl.dataset.line || 0),
+      anchorCol: _srcColInLine(range.startContainer, range.startOffset, anchorContent),
+      focusLine: +(focusEl.dataset.line || 0),
+      focusCol: _srcColInLine(range.endContainer, range.endOffset, focusContent),
+      collapsed: range.collapsed,
+    };
+  }
+
+  function _restoreSourceSelection(snap) {
+    if (!snap) return false;
+    const anchorContent = document.querySelector("#line-" + snap.anchorLine + " .-line-content");
+    const focusContent = document.querySelector("#line-" + snap.focusLine + " .-line-content");
+    if (!anchorContent || !focusContent) return false;
+    const point = function (content, col) {
+      const text = content.firstChild && content.firstChild.nodeType === Node.TEXT_NODE
+        ? content.firstChild : null;
+      return text
+        ? { node: text, offset: Math.max(0, Math.min(col, text.textContent.length)) }
+        : { node: content, offset: 0 };
+    };
+    let start = point(anchorContent, snap.anchorCol);
+    let end = point(focusContent, snap.focusCol);
+    // Range 需要文档顺序；反向选区按行/列交换，文本内容与范围不变。
+    if (snap.anchorLine > snap.focusLine
+      || (snap.anchorLine === snap.focusLine && snap.anchorCol > snap.focusCol)) {
+      const tmp = start; start = end; end = tmp;
+    }
+    try {
+      anchorContent.focus({ preventScroll: true });
+      const range = document.createRange();
+      range.setStart(start.node, start.offset);
+      range.setEnd(end.node, end.offset);
+      const sel = window.getSelection();
+      sel.removeAllRanges();
+      sel.addRange(range);
+      return true;
+    } catch (_) {
+      return false;
+    }
+  }
+
   function renderEditor(doc) {
     if (!doc) return;   // E36：响应式重排可能在文档打开前触发 setViewMode；不得对 null 文档取 sidecar
     const desc = (doc.sidecar && doc.sidecar.description) || "";
@@ -3667,6 +3722,7 @@ async function call(fn, ...args) {
       localStorage.setItem("-view", mode);
     }
     // 页签切换前：将源码编辑器内容同步到内存，刷新两个视图
+    let _srcSelectionBefore = null;
     if (prevMode !== mode) { _previewCacheDrop(state.currentPath); _previewDomKey = null; // 2026-09-23 性能：视图模式变了 ⇒ 当前文档的预览缓存作废（渲染差异与视图模式相关）
       clearTimeout(_renderTimer);
       _renderTimer = null;
@@ -3678,6 +3734,9 @@ async function call(fn, ...args) {
       //   从分栏切回单视图时，锚点取**即将保留的那一侧**（回预览取 preview、回源码取 source），
       //   这样回切不会拿另一侧（分栏块首）的位置去覆盖用户看到的这一侧。
       const body = collectEditorBody();   var _viewAnchorBeforeRerender = _captureViewAnchor(prevMode === "split" ? mode : prevMode); _saveCurrentViewScroll(prevMode);
+      // E37：源码区整篇重建会替换 contenteditable DOM；在 renderEditor 前快照选区，切换后恢复。
+      _srcSelectionBefore = (!opts?.skipSave && (prevMode === "source" || prevMode === "split"))
+        ? _captureSourceSelection() : null;
       if (body !== null) {
         state.doc.body = body;
         state.doc.lines = _linesFromBody(body);
@@ -3737,6 +3796,10 @@ async function call(fn, ...args) {
       } else {
         _restoreCurrentViewScroll(mode);
       }
+    }
+    // E37：滚动/重排结束后恢复源码选区（切到 preview 时源码区不可见，不复原）。
+    if (_srcSelectionBefore && (mode === "source" || mode === "split")) {
+      _restoreSourceSelection(_srcSelectionBefore);
     }
   }
 

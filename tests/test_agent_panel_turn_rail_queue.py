@@ -59,6 +59,14 @@ def test_queue_queues_while_busy_and_drains_after_finish() -> None:
     assert "agent-queue-actions" in src
 
 
+def test_agent_composer_recognizes_session_mentions_after_whitespace() -> None:
+    """AG110：行首/空格后的 `@[label](dsh-session:...)` 不能被拆成文件 chip。"""
+    src = _panel()
+    assert "const COMPOSER_TOKEN_RE = /(^|\\s)(@\\[" in src
+    assert "const token = m[2] || \"\";" in src
+    assert "const start = m.index + (m[1] || \"\").length;" in src
+
+
 def test_turn_rail_and_queue_styles_and_i18n_exist() -> None:
     css = CSS.read_text(encoding="utf-8")
     for selector in (
