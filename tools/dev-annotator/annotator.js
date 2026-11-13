@@ -175,12 +175,15 @@
   const outline = document.createElement('div');
   outline.className = 'outline';
   outline.style.display = 'none';
-  (document.body || document.documentElement).appendChild(outline);
+  // 必须放在 shadow root 内：`.outline` 的 CSS 只定义在 shadow 的 <style> 里。
+  // 之前 append 到 document.body ⇒ 样式不生效，outline 变成普通块级元素，
+  // 每次 hover 都把页面撑高/下移，严重时整窗黑屏。
+  root.appendChild(outline);
 
   // 自愈：若页面框架重写 body/documentElement 把宿主摘掉，自动挂回。
   function ensureMounted() {
     if (!host.isConnected) (document.body || document.documentElement).appendChild(host);
-    if (!outline.isConnected) (document.body || document.documentElement).appendChild(outline);
+    if (!outline.isConnected) root.appendChild(outline);
   }
   try {
     new MutationObserver(ensureMounted).observe(document.documentElement, { childList: true, subtree: true });
