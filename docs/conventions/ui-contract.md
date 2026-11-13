@@ -163,12 +163,12 @@
 | 62 | `z62_sel_add` | 选区「加入对话」按钮 | `.-agent-sel-add` |
 | 90 | `z90_review_summon` | 复习召唤面板 | `#-review-summon` |
 | 900 | `z900_link_panel` | 链接面板（可驻留浮动面板） | `.-link-panel` |
-| 1000 | `z1000_modal` | 模态 | `.-modal` |
 | 9000 | `z9000_search_panel` | 搜索结果面板 | `.-toolbar-search-panel` |
 | 10000 | `z10000_resize_layer` | 窗口缩放手柄层 | `.-win-resize-layer` |
 | 10050 | `z10050_context_menu` | 右键菜单 / 格式下拉 | `.-context-menu`、`.-fmt-dropdown-menu` |
 | 12000 | `z12000_flash` | flash 反馈卡片 | `#-flash-host` |
 | 20000 | `z20000_color_picker` | 取色器遮罩 | `.-color-picker-mask` |
+| 21000 | `z21000_modal` | 模态（C10：高于后台浮层） | `.-modal` |
 | 99999 | `z99999_lightbox` | 图片灯箱 / 启动遮罩 | `.-lightbox-overlay`、`html.-booting` |
 
 ```json ui-contract:z-index-registry
@@ -192,12 +192,12 @@
     {"id": "z62_sel_add", "z": 62, "selector_contains": [".-agent-sel-add"], "file": "app/css/app.css"},
     {"id": "z90_review_summon", "z": 90, "selector_contains": ["#-review-summon"], "file": "app/css/app.css"},
     {"id": "z900_link_panel", "z": 900, "selector_contains": [".-link-panel"], "file": "app/css/app.css"},
-    {"id": "z1000_modal", "z": 1000, "selector_contains": [".-modal"], "file": "app/css/app.css"},
     {"id": "z9000_search_panel", "z": 9000, "selector_contains": [".-toolbar-search-panel"], "file": "app/css/app.css"},
     {"id": "z10000_resize_layer", "z": 10000, "selector_contains": [".-win-resize-layer"], "file": "app/css/app.css"},
     {"id": "z10050_context_menu", "z": 10050, "selector_contains": [".-context-menu", ".-fmt-dropdown-menu"], "file": "app/css/app.css"},
     {"id": "z12000_flash", "z": 12000, "selector_contains": ["#-flash-host"], "file": "app/css/app.css"},
     {"id": "z20000_color_picker", "z": 20000, "selector_contains": [".-color-picker-mask"], "file": "app/css/app.css"},
+    {"id": "z21000_modal", "z": 21000, "selector_contains": [".-modal"], "file": "app/css/app.css"},
     {"id": "z99999_lightbox", "z": 99999, "selector_contains": [".-lightbox-overlay", "html.-booting"], "file": "app/css/app.css"}
   ],
   "relations": [
@@ -206,21 +206,22 @@
     {"id": "submenu-above-menu", "upper": "z61_file_submenu", "lower": "z60_file_menu", "status": "ok"},
     {"id": "seladd-above-toolbar", "upper": "z62_sel_add", "lower": "z50_toolbar", "status": "ok"},
     {"id": "linkpanel-above-toolbar", "upper": "z900_link_panel", "lower": "z50_toolbar", "status": "ok"},
-    {"id": "modal-above-linkpanel", "upper": "z1000_modal", "lower": "z900_link_panel", "status": "ok"},
-    {"id": "modal-above-filemenu", "upper": "z1000_modal", "lower": "z60_file_menu", "status": "ok"},
-    {"id": "resize-above-modal", "upper": "z10000_resize_layer", "lower": "z1000_modal", "status": "ok"},
-    {"id": "flash-above-modal", "upper": "z12000_flash", "lower": "z1000_modal", "status": "ok", "note": "反馈必须盖住弹窗（弹窗会遮底栏）"},
-    {"id": "C10-modal-vs-search", "upper": "z9000_search_panel", "lower": "z1000_modal", "status": "known-issue", "note": "C10 登记在案：搜索面板 9000 > 模态 1000，弹窗可被搜索面板遮挡"},
-    {"id": "C10-modal-vs-contextmenu", "upper": "z10050_context_menu", "lower": "z1000_modal", "status": "known-issue", "note": "C10 登记在案：右键菜单 10050 > 模态 1000"},
-    {"id": "C10-modal-vs-colorpicker", "upper": "z20000_color_picker", "lower": "z1000_modal", "status": "known-issue", "note": "C10 登记在案：取色器 20000 > 模态 1000"}
+    {"id": "modal-above-linkpanel", "upper": "z21000_modal", "lower": "z900_link_panel", "status": "ok"},
+    {"id": "modal-above-filemenu", "upper": "z21000_modal", "lower": "z60_file_menu", "status": "ok"},
+    {"id": "modal-above-resize", "upper": "z21000_modal", "lower": "z10000_resize_layer", "status": "ok", "note": "C10：弹窗打开时缩放手柄不应盖住弹窗内容"},
+    {"id": "modal-above-search", "upper": "z21000_modal", "lower": "z9000_search_panel", "status": "ok", "note": "C10 已修：搜索面板不得遮挡弹窗"},
+    {"id": "modal-above-contextmenu", "upper": "z21000_modal", "lower": "z10050_context_menu", "status": "ok", "note": "C10 已修：右键菜单不得遮挡弹窗"},
+    {"id": "modal-above-flash", "upper": "z21000_modal", "lower": "z12000_flash", "status": "ok", "note": "C10：闪报保留在弹窗下方；弹窗内失败由弹窗自身反馈承载"},
+    {"id": "modal-above-colorpicker", "upper": "z21000_modal", "lower": "z20000_color_picker", "status": "ok", "note": "C10 已修：取色器不得遮挡弹窗"},
+    {"id": "lightbox-above-modal", "upper": "z99999_lightbox", "lower": "z21000_modal", "status": "ok", "note": "灯箱是页面级查看器，仍高于弹窗"}
   ]
 }
 ```
 
 **层级纪律**：
 1. 新浮层先登记再写 CSS；同一 z 值允许多个同类层（如菜单/下拉共用 10050），跨类复用必须写进 `note`。
-2. 模态（1000）是"页面级最上层"的基准；任何高于它的层都必须有明确理由（反馈、系统级交互、灯箱），并在 relations 里登记。
-3. 已知 C10（模态低于多个浮层）是**登记债务**，机器只 WARN；修复时同时改表与速查。
+2. 模态（21000）是"页面级最上层"的基准；任何高于它的层都必须有明确理由（系统级交互、灯箱），并在 relations 里登记。C10 已修：搜索/右键/闪报/取色器均在模态之下。
+3. C10 已收口（2026-11-13，`63278126`）：层级值用 `:root --z-*` token 单源；新增浮层仍先登记再写 CSS。
 
 ---
 
@@ -341,7 +342,7 @@ python scripts/check_ui_contract.py --strict        # 基线项也算 FAIL（清
 | C2 硬编码颜色 | **176** | 7 | 状态色回退值、链接/选区高亮、按钮实心色、调色板；中性 alpha 阴影 7 条 WARN |
 | C3 魔法 px | **21** | 30 | 字号 px 8 条 + 圆角离档 13 条；间距 WARN 30 条（1/3/5/7/11/13px） |
 | C4 双源范围 | 0 | **2** | `min/max`（`agent-panel.js:231`）与 `def`（`agent-panel.js:224` 的 `CONTENT_MIN_PX`）各一条；均与 `display-settings.js` 同口径，待 JS 侧收口 |
-| C5 z-index | **0**（36 条声明全部登记） | 3 | C10 已知层级债务（登记在案） |
+| C5 z-index | **0**（含 `--z-*` token 解析） | 0 | C10 已收口：模态 21000 高于后台浮层（`63278126`） |
 | C6 图标 | **0** | 0 | 4 个登记项（3 个动态构建器只核对登记）；13px 结构判据已由 fixture 证明能红 |
 | C7 token 一致性 | **13** | 19 | `--bg`×5（未定义无兜底，真 bug）、`--border-subtle`×3、`--text-muted`×5；WARN 含 `--theme-color` 浅色未覆盖 |
 | **合计** | **210** | **61** | 存量 271 条；**新增即红**，不要求一次清零 |
@@ -416,7 +417,7 @@ python scripts/check_ui_contract.py --strict        # 基线项也算 FAIL（清
 
 ### 7.2 其他登记
 
-- **C10 弹窗层级**：见 §4 relations（已登记债务）。
+- **C10 弹窗层级**：已收口（2026-11-13，`63278126`）；层级值见 §4 的 `--z-*` token 与 relations。
 - **`contentMinPx` 的双源覆盖面**：`min/max` 由范围守卫覆盖、`def` 由默认值守卫（`CONTENT_MIN_PX = 360`）覆盖；机检用命名捕获组逐字段比对（2026-10-26 补强）。**代码侧收口到单一导出**由 JS 域 Owner 执行，本契约只负责"一旦漂移立刻红"。
 - **图标定义表审查**（`file-tree.js` 的文件类型图标 20+ 枚）尚未逐项过 13px 判据，属后续批次。
 

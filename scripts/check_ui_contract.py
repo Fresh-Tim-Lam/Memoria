@@ -470,16 +470,37 @@ def check_c5(css_map: dict, contract: dict) -> list:
     layers = reg.get("layers", [])
     out = []
     seen_layer_ids = set()
+    # C10：允许 z-index: var(--z-*)；把 :root 里的数值 token 解析后再对账。
+    z_tokens = {}
+    for parsed in css_map.values():
+        for d in parsed["decls"]:
+            prop = d["prop"].strip()
+            if not prop.startswith("--z-"):
+                continue
+            try:
+                z_tokens[prop] = int(d["value"].strip())
+            except ValueError:
+                pass
     for rel, parsed in css_map.items():
         for d in parsed["decls"]:
             if d["prop"] != "z-index":
                 continue
-            try:
-                z = int(d["value"].strip())
-            except ValueError:
-                out.append(Finding("C5", "WARN", rel, d["line"], d["selector"],
-                                   "z-index 不是整数（无法登记/对账）", d["prop"], d["value"]))
-                continue
+            raw = d["value"].strip()
+            m = re.fullmatch(r"var\(\s*(--[-\w]+)\s*\)", raw)
+            if m:
+                z = z_tokens.get(m.group(1))
+                if z is None:
+                    out.append(Finding("C5", "WARN", rel, d["line"], d["selector"],
+                                       "z-index 变量 %s 没有数值 token 定义（无法登记/对账）" % raw,
+                                       d["prop"], raw))
+                    continue
+            else:
+                try:
+                    z = int(raw)
+                except ValueError:
+                    out.append(Finding("C5", "WARN", rel, d["line"], d["selector"],
+                                       "z-index 不是整数或可解析 token（无法登记/对账）", d["prop"], raw))
+                    continue
             sel = norm_ws(d["selector"])
             candidates = [
                 l for l in layers

@@ -36,7 +36,7 @@
 | C04 | 🔄 K1 | [详](todo/01-config-window.md#c04) |
 | C06 | ⏳ K1 | [详](todo/01-config-window.md#c06) |
 | C08 | 🔄 K1 | [详](todo/01-config-window.md#c08) |
-| C10 | 🔴 K1 · 📅 2026-09-16（回溯） | [详](todo/01-config-window.md#c10) |
+| C10 | ✅ 已收口（2026-11-13，`63278126`） | [详](todo/01-config-window.md#c10) |
 
 ## 2. 链接系统
 
