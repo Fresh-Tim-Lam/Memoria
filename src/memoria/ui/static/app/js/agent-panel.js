@@ -196,8 +196,8 @@ window.MemoriaAgentPanel = (function () {
   const RAIL_WINDOW_TURNS = 28;
   const RAIL_WHEEL_STEP = 3;
   // 2026-11-13（人反馈）：历史很短时不要把横条簇拉满整条 rail；
-  // 相邻横条最大间隔有上限，簇整体垂直居中。
-  const RAIL_MAX_GAP_PX = 36;
+  // 相邻横条最大间隔有上限，簇整体垂直居中。0.4.17 再收紧到 24px。
+  const RAIL_MAX_GAP_PX = 24;
   let railEnd = 0;
   let contextBreakdownSeq = 0;
   // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
