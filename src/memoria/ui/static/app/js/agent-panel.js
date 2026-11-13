@@ -195,6 +195,9 @@ window.MemoriaAgentPanel = (function () {
   // 间距按“越新越大”的非线性比例分配，而不是等距或按正文 offsetTop。
   const RAIL_WINDOW_TURNS = 28;
   const RAIL_WHEEL_STEP = 3;
+  // 2026-11-13（人反馈）：历史很短时不要把横条簇拉满整条 rail；
+  // 相邻横条最大间隔有上限，簇整体垂直居中。
+  const RAIL_MAX_GAP_PX = 36;
   let railEnd = 0;
   let contextBreakdownSeq = 0;
   // 世代号：每次提问递增；「清空对话」/「停止」/换库作废也递增 ⇒ 在飞回调据此作废
@@ -1214,19 +1217,45 @@ window.MemoriaAgentPanel = (function () {
     const count = turnMarks.length;
     // 2026-11-11（人反馈）：不是等距，也不是按正文 offsetTop 比例；
     // 越新的轮次之间间隔越大，越旧的越压缩，形成“最近活跃”的视觉重心。
-    const positions = turnMarks.map(function (mark, index) {
+    const raw = turnMarks.map(function (mark, index) {
       if (count === 1) return usable / 2;
       return Math.pow(index / (count - 1), 1.75) * usable;
     });
-    // 保证点击目标不互相覆盖；内容密集时退化为等距，但不改变轮次顺序。
-    const gap = Math.min(markHeight, count > 1 ? usable / (count - 1) : usable);
-    for (let i = 1; i < positions.length; i += 1) {
-      positions[i] = Math.max(positions[i], positions[i - 1] + gap);
+    if (count === 1) {
+      turnMarks[0].style.top = Math.round(raw[0]) + "px";
+      return;
     }
-    if (positions[positions.length - 1] > usable) {
-      positions[positions.length - 1] = usable;
-      for (let i = positions.length - 2; i >= 0; i -= 1) {
-        positions[i] = Math.min(positions[i], positions[i + 1] - gap);
+    // 2026-11-13（人反馈）：历史很短时，按比例分配会把 6 个横条拉满整条
+    // rail（实测最大间隔 133px），非常空。先对每个相邻间隔做上下限约束：
+    // 下限保证 10px 点击目标不重叠，上限约束最大间隔；总高度不足时整簇居中。
+    // 密集历史（约束后总高超过 rail）仍退回原来的铺满 + 最小间距算法。
+    const minGap = Math.min(markHeight, usable / (count - 1));
+    const gaps = [];
+    let total = 0;
+    for (let i = 1; i < count; i += 1) {
+      const rawGap = raw[i] - raw[i - 1];
+      const gap = Math.max(minGap, Math.min(RAIL_MAX_GAP_PX, rawGap));
+      gaps.push(gap);
+      total += gap;
+    }
+    let positions;
+    if (total > usable) {
+      positions = raw.slice();
+      for (let i = 1; i < positions.length; i += 1) {
+        positions[i] = Math.max(positions[i], positions[i - 1] + minGap);
+      }
+      if (positions[positions.length - 1] > usable) {
+        positions[positions.length - 1] = usable;
+        for (let i = positions.length - 2; i >= 0; i -= 1) {
+          positions[i] = Math.min(positions[i], positions[i + 1] - minGap);
+        }
+      }
+    } else {
+      let cursor = (usable - total) / 2;
+      positions = [cursor];
+      for (let i = 0; i < gaps.length; i += 1) {
+        cursor += gaps[i];
+        positions.push(cursor);
       }
     }
     turnMarks.forEach(function (mark, index) {

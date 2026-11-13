@@ -132,3 +132,18 @@ def test_context_meter_opens_structured_panel() -> None:
     assert "stats: {" in zh and "stats: {" in en
     assert "上下文与用量" in zh
     assert "segmentSystem: \"系统提示\"" in zh
+
+
+def test_turn_rail_caps_short_history_gap_and_centers_cluster() -> None:
+    """2026-11-13 人反馈：历史很短时不能让横条簇拉满整条 rail。
+
+    dev CDP 复现（6 轮）：tops=[0,25,82,168,277,410]，最大间隔 133px。
+    修复后：[121,145,181,217,253,289]，最大间隔 36px，簇垂直居中。
+    """
+    src = _panel()
+    assert "RAIL_MAX_GAP_PX = 36" in src
+    assert "Math.min(RAIL_MAX_GAP_PX, rawGap)" in src
+    assert "(usable - total) / 2" in src
+    # 长历史密集时仍保留旧的铺满 + 最小点击间距回退，不允许重叠
+    assert "positions[i + 1] - minGap" in src
+
