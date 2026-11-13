@@ -2575,7 +2575,7 @@ body.-win-dragging {
     border: 0.5px solid var(--border);
     border-radius: 4px;
     box-shadow: var(--shadow-float);
-    z-index: 9000;
+    z-index: var(--z-search-panel);
 }
 
 .-toolbar-search-panel .-search-placeholder {
@@ -2646,7 +2646,7 @@ body.-win-dragging {
     left: 50%;
     bottom: 2rem;
     transform: translateX(-50%);
-    z-index: 12000;
+    z-index: var(--z-flash);
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -3050,7 +3050,7 @@ body.-win-dragging {
 /* 链接 / 选区右键菜单 */
 .-context-menu {
     position: fixed;
-    z-index: 10050;
+    z-index: var(--z-context-menu);
     min-width: 12.5rem;
     max-width: 20rem;
     background: var(--bg-primary);
@@ -3663,7 +3663,7 @@ body.-win-dragging {
     left: auto;
     right: auto;
     bottom: auto;
-    z-index: 10050;
+    z-index: var(--z-context-menu);
     background: var(--bg-secondary);
     border: 0.5px solid var(--border);
     border-radius: 4px;
@@ -3758,7 +3758,7 @@ body.-win-dragging {
 .-color-picker-mask {
     position: fixed;
     inset: 0;
-    z-index: 20000;
+    z-index: var(--z-color-picker);
     background: rgba(0, 0, 0, .45);
     display: none;
     align-items: center;
@@ -4615,7 +4615,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .-lightbox-overlay {
     position: fixed;
     inset: 0;
-    z-index: 99999;
+    z-index: var(--z-lightbox);
     background: rgba(0, 0, 0, 0.85);
     display: flex;
     align-items: center;
@@ -4731,7 +4731,7 @@ mark[style*="color:"] { /* fg color set via inline style */ }
 .-modal {
     position: fixed;
     inset: 0;
-    z-index: 1000;
+    z-index: var(--z-modal);
     display: flex;
     align-items: center;
     justify-content: center;
@@ -5138,6 +5138,17 @@ mark[style*="color:"] { /* fg color set via inline style */ }
     --motion-ease: cubic-bezier(0.4, 0, 0.2, 1);
     --motion-fast: 120ms;
     --motion-base: 160ms;
+
+    /* 层级（C10）：所有"可能同时存在"的浮层共用一个单源顺序。
+       模态必须高于后台浮层（搜索/右键/取色/闪报），否则用户点开的弹窗会被
+       其它浮层盖住；灯箱与启动/加载层仍保持在模态之上。
+       取值只增不减：新增层先加到本表末尾并保持语义顺序。 */
+    --z-search-panel: 9000;
+    --z-context-menu: 10050;
+    --z-flash: 12000;
+    --z-color-picker: 20000;
+    --z-modal: 21000;
+    --z-lightbox: 99999;
 }
 
 /* ① 尊重系统「减少动态效果」：此前全仓 0 处（dsh 有 39 处）。
