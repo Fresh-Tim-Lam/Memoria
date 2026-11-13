@@ -1,8 +1,8 @@
 # 自动更新（Auto Update）设计
 
-> 状态：设计稿，待实现；当前 0.4.13 的更新页只做「检查 / 下载 / 手动替换」。
-> 目标版本：0.4.14 或之后。  
+> 状态：**已实现并发布于 0.4.15**（opt-in；`0bc17d8b`）。0.4.13/0.4.14 仍只有「检查 / 下载 / 手动替换」。
 > 原则：**用户显式触发、先校验、可回滚、绝不静默替换**。
+> 实现：`src/memoria/services/update_auto.py` + `resources/updater/apply_update.ps1`；E2E 证据 `artifacts/agent/verify/auto-update/`。
 
 ## 1. 为什么现在只有手动操作
 
