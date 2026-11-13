@@ -1813,6 +1813,32 @@ class UIAPI:
         except Exception as e:  # noqa: BLE001
             return {"status": "error", "message": str(e)[:300]}
 
+    def prepare_auto_update(self, job_id: str) -> dict:
+        """校验已完成的下载并写 job；不退出、不替换。"""
+        from memoria.services import update_auto
+
+        try:
+            return update_auto.prepare_auto_update(str(job_id or ""))
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "code": "exception", "message": str(e)[:300]}
+
+    def start_auto_update(self, job_id: str) -> dict:
+        """启动 helper；返回后约 1 秒关闭窗口，helper 等进程退出再替换。"""
+        from memoria.services import update_auto
+
+        try:
+            return update_auto.start_auto_update(str(job_id or ""))
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "code": "exception", "message": str(e)[:300]}
+
+    def get_auto_update_result(self) -> dict:
+        from memoria.services import update_auto
+
+        try:
+            return {"status": "ok", "result": update_auto.get_auto_update_result()}
+        except Exception as e:  # noqa: BLE001
+            return {"status": "error", "message": str(e)[:300]}
+
 
 
 # ── 写冲突保护（文件版本令牌）：import 刻意放在**文件末尾** —— 上方所有 `ui.py:<行>` 锚点

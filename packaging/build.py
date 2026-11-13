@@ -216,6 +216,7 @@ def _stage_runtime_resources() -> None:
         (ROOT / "resources" / "agent-prompts", RELEASE_RES / "agent-prompts", None),
         (ROOT / "resources" / "agent-capabilities", RELEASE_RES / "agent-capabilities", None),
         (ROOT / "resources" / "agent-skills", RELEASE_RES / "agent-skills", None),
+        (ROOT / "resources" / "updater", RELEASE_RES / "updater", None),
         (ROOT / "docs" / "example" / "showcase", RELEASE_RES / "examples", EXAMPLES_IGNORE),
     ]
     for src, dest, ignore in targets:
@@ -242,6 +243,7 @@ _REQUIRED_RELEASE_RESOURCES = (
     "agent-skills/web-research/SKILL.md",  # 内置技能：N 线联网工作法（`skills.py` 的 bundled 只读根读取）
     "agent-skills/skill-creator/SKILL.md",  # 内置技能：写技能元技能（`skills.py` 的 bundled 只读根读取）
     "agent-skills/kb-maintenance/SKILL.md",  # 内置技能：知识库维护工作法（`skills.py` 的 bundled 只读根读取）
+    "updater/apply_update.ps1",  # 一键自动更新 helper（用户确认后由 Memoria 启动；缺失则降级手动）
     "docs/preview-formats.md",  # 弹窗格式说明（get_reference_doc，发布态读取）
     "examples/README.md",  # 官方展示样例库入口（机器学习导论，随包可试用）
     "icons/Memoria.ico",

@@ -76,18 +76,19 @@ def _is_windows() -> bool:
     return sys.platform == "win32"
 
 
-def no_window_kwargs() -> dict[str, int]:
+def no_window_kwargs(extra_flags: int = 0) -> dict[str, int]:
     """返回 `subprocess.*` 的 kwargs：Windows 上加 `CREATE_NO_WINDOW`，其他平台返回 `{}`。
 
     结果可直接 `**` 展开进 `subprocess.run/Popen/call/check_output`。不改变任何其它语义；
-    拿不到 flag（异常运行时）时安全降级为 `{}`。
+    拿不到 flag（异常运行时）时安全降级为 `{}`。`extra_flags` 用于合法叠加
+    `CREATE_NEW_PROCESS_GROUP` / `DETACHED_PROCESS` 等（不要与 `CREATE_NEW_CONSOLE` 组合）。
     """
     if not _is_windows():
         return {}
     flags = int(getattr(subprocess, "CREATE_NO_WINDOW", 0) or 0)
     if not flags:
         return {}
-    return {"creationflags": flags}
+    return {"creationflags": flags | int(extra_flags or 0)}
 
 
 __all__ = ["CREATE_NO_WINDOW", "no_window_kwargs"]

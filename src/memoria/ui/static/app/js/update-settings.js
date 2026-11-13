@@ -196,6 +196,22 @@
       </div>`;
   }
 
+  function renderAutoResult() {
+    const r = state.info && state.info.auto_update_result;
+    if (!r || !r.status) return "";
+    if (r.status === "success") {
+      return `<div class="-update-card"><strong>${esc(T("update.autoResultTitle"))}</strong>
+        <p>${esc(T("update.autoSuccess", { version: r.to_version || "" }))}</p>
+        ${r.backup_dir ? `<p class="-update-muted">${esc(T("update.autoBackupKept", { backup: r.backup_dir }))}</p>` : ""}</div>`;
+    }
+    if (r.status === "failed") {
+      return `<div class="-update-card"><strong>${esc(T("update.autoFailed"))}</strong>
+        <p class="-update-warn">${esc(String(r.reason || "").slice(0, 400))}</p>
+        ${r.rolled_back ? `<p class="-muted">${esc(T("update.autoRolledBack"))}</p>` : ""}</div>`;
+    }
+    return "";
+  }
+
   function renderDownloadArea() {
     if (state.done && state.done.status === "done") {
       const v = state.verify || {};
@@ -206,12 +222,16 @@
         T("update.step3", { configDir: (state.info && state.info.config_dir) || "" }),
       ];
       if (state.done.assetKind === "lite") steps.push(T("update.stepLite"));
+      const autoSupported = !state.info || state.info.auto_update_supported !== false;
       return `<div class="-update-card">
         <strong>${esc(T("update.downloaded"))}</strong>
         <div class="-update-row"><span class="-update-label">${esc(T("update.savedTo"))}</span><span>${esc(state.done.path || "")}</span></div>
         <div class="-update-row"><span class="-update-label">${esc(T("update.integrity"))}</span><span>${esc(manifestMode ? T("update.verifiedManifest") : T("update.verifiedZipOnly"))}</span></div>
         ${manifestMode ? "" : `<p class="-update-warn">${esc(T("update.unverifiedWarn"))}</p>`}
+        ${state.autoError ? `<p class="-update-warn">${esc(state.autoError)}</p>` : ""}
+        ${state.autoStarting ? `<p class="-muted">${esc(T("update.autoStarting"))}</p>` : ""}
         <div class="-settings-actions">
+          ${autoSupported ? `<button type="button" class="-btn primary" id="update-auto" ${state.autoStarting ? "disabled" : ""}>${esc(T("update.autoUpdate"))}</button>` : `<p class="-update-warn">${esc(T("update.autoUnsupported"))}</p>`}
           <button type="button" class="-btn secondary" id="update-open-folder">${esc(T("update.openFolder"))}</button>
         </div>
         <h4>${esc(T("update.manualTitle"))}</h4>
@@ -258,6 +278,7 @@
           <button type="button" class="-btn primary" id="update-check" ${outbound ? "" : "disabled"}>${esc(state.busy ? T("update.checking") : T("update.check"))}</button>
         </div>
         ${outbound ? renderCheckResult() : ""}
+        ${renderAutoResult()}
         ${renderDownloadArea()}
         <p class="-update-muted">${esc(T("update.privacyNote"))}</p>
       </section>
@@ -297,6 +318,7 @@
       });
     });
     root.querySelector("#update-download")?.addEventListener("click", startDownload);
+    root.querySelector("#update-auto")?.addEventListener("click", startAutoUpdate);
     root.querySelector("#update-cancel")?.addEventListener("click", cancelDownload);
     root.querySelector("#update-open-folder")?.addEventListener("click", async () => {
       try {
@@ -344,6 +366,41 @@
       }
     } catch (e) {
       state.done = { status: "failed", failures: [String(e)] };
+      render();
+    }
+  }
+
+  async function startAutoUpdate() {
+    if (!state.done || state.done.status !== "done" || state.autoStarting) return;
+    const jobId = state.done.job_id || state.jobId;
+    if (!jobId) {
+      state.autoError = T("update.startFailed");
+      render();
+      return;
+    }
+    state.autoError = "";
+    try {
+      const prep = await call("prepare_auto_update", jobId);
+      if (!prep || prep.status !== "ok") {
+        state.autoError = (prep && prep.message) || T("update.autoUnsupported");
+        render();
+        return;
+      }
+      const msg = T("update.autoConfirm", {
+        to: prep.to_version || "",
+        backup: prep.backup_dir || "",
+      });
+      if (global.confirm && !global.confirm(msg)) return;
+      const res = await call("start_auto_update", jobId);
+      if (!res || res.status !== "ok") {
+        state.autoError = (res && res.message) || T("update.autoFailed");
+        render();
+        return;
+      }
+      state.autoStarting = true;
+      render();
+    } catch (e) {
+      state.autoError = String(e);
       render();
     }
   }

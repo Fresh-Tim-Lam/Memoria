@@ -32,6 +32,9 @@ import logging
 import os
 import re
 import shutil
+import subprocess
+import sys
+import tempfile
 import threading
 import time
 import urllib.parse
@@ -334,11 +337,22 @@ def get_update_state(*, state_file: Path | None = None) -> dict[str, Any]:
             cached.update({"status": "ok", "cached": True, "manual": False})
         except Exception:  # noqa: BLE001
             cached = None
+    auto_result: dict[str, Any] | None = None
+    auto_supported = False
+    try:
+        from memoria.services import update_auto
+
+        auto_result = update_auto.get_auto_update_result()
+        auto_supported = bool(update_auto.auto_update_supported().get("ok"))
+    except Exception:  # noqa: BLE001
+        pass
     return {
         "status": "ok",
         "current_version": __version__,
         "outbound_enabled": _outbound_enabled(),
         "auto_check": auto_enabled,
+        "auto_update_supported": auto_supported,
+        "auto_update_result": auto_result,
         "last_check_at": state.get("last_check_at") or "",
         "config_dir": str(_config_dir()),
         "downloads_dir": str(_downloads_dir()),

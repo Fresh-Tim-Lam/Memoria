@@ -220,7 +220,7 @@ def test_all_src_subprocess_launches_use_helper() -> None:
         for i, line in enumerate(lines):
             if "subprocess.Popen(" not in line and "subprocess.run(" not in line:
                 continue
-            window = "\n".join(lines[i : i + 16])
-            if "no_window_kwargs()" not in window:
+            window = "\n".join(lines[max(0, i - 16) : i + 16])
+            if "no_window_kwargs(" not in window:
                 offenders.append(f"{path.relative_to(src.parent)}:{i + 1}: {line.strip()}")
     assert not offenders, "以下 subprocess 启动点缺 no_window_kwargs()：\n" + "\n".join(offenders)
