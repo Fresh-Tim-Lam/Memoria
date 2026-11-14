@@ -361,3 +361,30 @@ def test_real_app_evidence_exists():
     abj = json.loads(ab.read_text(encoding="utf-8"))
     assert abj["on"]["n"] >= 3 and abj["off"]["n"] >= 3, "交错 A/B 两臂各需 ≥3 次"
     assert abj["delta_ms"] is not None
+
+
+# ── 2026-11-14：冷启动蒙层与“最小化再打开”蒙层同步 ───────────────────────────
+
+
+def test_startup_splash_visual_is_delegated_to_loading_overlay():
+    """人反馈两套蒙层观感不一致；splash 根层透明，视觉统一由 #memoria-loading 承担。
+
+    只允许透明根层 + 隐藏 splash 自己的 sky/inner/meteor；不允许删除 splash
+    的音效/设置/计时逻辑（那些仍由 splash.js 管）。
+    """
+    css = CSS.read_text(encoding="utf-8")
+    assert "html .-memoria-splash {\n    background: transparent;\n}" in css
+    block = css[css.index("html .-memoria-splash::before,"):]
+    block = block[: block.index("}")]
+    for selector in (
+        "html .-memoria-splash::before",
+        "html .-memoria-splash .-memoria-splash__sky",
+        "html .-memoria-splash .-memoria-splash__inner",
+        "html .-memoria-splash .-memoria-splash__meteor",
+    ):
+        assert selector in block, f"启动蒙层未隐藏 {selector}"
+    # loading-overlay 才是唯一可见视觉层；它的 logo/word/label 结构必须保留
+    loading = CSS.read_text(encoding="utf-8")
+    for selector in (".-memoria-loading__logo", ".-memoria-loading__word", ".-memoria-loading__label"):
+        assert selector in loading
+

@@ -8129,6 +8129,20 @@ html[data-theme="light"] .-memoria-splash__traces { opacity: 0.85; }
         radial-gradient(1.3px 1.3px at 92% 76%, var(--splash-star), transparent 60%);
     opacity: 0.8;
 }
+/* 2026-11-14（人反馈）：启动蒙层与“最小化再打开”蒙层不一样，统一成后者。
+   冷启动仍保留 splash.js（音效/设置/计时），但视觉全部让给其下方的
+   `#memoria-loading`（同一 logo + Memoria + 状态文案 + Astral Veil 星场），
+   两侧只差 splash 的透明淡出，不再出现第二套星穹/标题/使用痕迹布局。 */
+html .-memoria-splash {
+    background: transparent;
+}
+html .-memoria-splash::before,
+html .-memoria-splash .-memoria-splash__sky,
+html .-memoria-splash .-memoria-splash__inner,
+html .-memoria-splash .-memoria-splash__meteor {
+    display: none;
+}
+
 /* ★ 无障碍基线：reduced-motion ⇒ 无动画、无流星、无画布（只留静态蒙层 + 文字）
    不用 `!important`：`html .-memoria-splash *` = (0,1,1) 高于基础类 (0,1,0)。 */
 @media (prefers-reduced-motion: reduce) {
